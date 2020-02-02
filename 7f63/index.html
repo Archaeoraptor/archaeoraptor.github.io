@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/uploads/wizard-hat-16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/uploads/wizard-hat-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/uploads/wizard-hat-16.png">
+  <link rel="mask-icon" href="/uploads/wizard-hat-32.png" color="#222">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="google-site-verification" content="OwUki9pTQANwT767yFIY9v_Qx4gl55MFLe3lggNnHbw">
+  <meta name="msvalidate.01" content="872DC4637276109A6B54FF149DCABA8A">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Ma Shan Zheng:300,300italic,400,400italic,700,700italic|Noto Sans SC:300,300italic,400,400italic,700,700italic|Noto Serif SC:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://zhangjk98.xyz').hostname,
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.7.1',
+    exturl: true,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"padding":18},
+    copycode: {"enable":true,"show_result":false,"style":"default"},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: true,
+    lazyload: true,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="兼谈使用SSH转发加快教研室网上冲浪速度">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VSCode使用ssh-key远程登录Ubuntu">
+<meta property="og:url" content="https://zhangjk98.xyz/7f63/index.html">
+<meta property="og:site_name" content="止息的碎碎念">
+<meta property="og:description" content="兼谈使用SSH转发加快教研室网上冲浪速度">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-11-22T02:05:08.000Z">
+<meta property="article:modified_time" content="2020-01-30T13:19:15.513Z">
+<meta property="article:author" content="Zhang.jk">
+<meta property="article:tag" content="ssh">
+<meta property="article:tag" content="vscode">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://zhangjk98.xyz/7f63/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>VSCode使用ssh-key远程登录Ubuntu | 止息的碎碎念</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143393734-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-143393734-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="止息的碎碎念" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta custom-logo">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">止息的碎碎念</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <h1 class="site-subtitle" itemprop="description">阴，气温20℃至32℃</h1>
+      
+      <a>
+        <img class="custom-logo-image" src="/uploads/hollowknight.webp" alt="止息的碎碎念">
+      </a>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-heartbeat"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">51</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">8</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">39</span></a>
+
+  </li>
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FyY2hhZW9yYXB0b3I=" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zhangjk98.xyz/7f63/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/jinmao.webp">
+      <meta itemprop="name" content="Zhang.jk">
+      <meta itemprop="description" content="in darkest night">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="止息的碎碎念">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          VSCode使用ssh-key远程登录Ubuntu
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-22 10:05:08" itemprop="dateCreated datePublished" datetime="2019-11-22T10:05:08+08:00">2019-11-22</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/102%E7%BD%91%E5%90%A7%E6%97%A5%E5%B8%B8/" itemprop="url" rel="index">
+                    <span itemprop="name">102网吧日常</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>兼谈使用SSH转发加快教研室网上冲浪速度</p>
+<a id="more"></a>
+<p>Mobaxterm挺好用的，只是那个文本编辑器不舒服。<br />
+试着用一下VSCode的remote-ssh<br />
+通过ssh-key登录就不多讲了<sup id="fnref:1"><a href="#fn:1" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[设置 SSH 通过密钥登录](https://hyjk2000.github.io/2012/03/16/how-to-set-up-ssh-keys/)
+">[1]</span></a></sup></p>
+<h2 id="mobaxterm设置ssh密钥登录"><a class="markdownIt-Anchor" href="#mobaxterm设置ssh密钥登录"></a> Mobaxterm设置SSH密钥登录</h2>
+<p>ssh-keygen生成密钥之后在Mobaxterm的SSH设置找到Advanced SSH Setting里勾选import SSH key可以直接导入密钥。<br />
+退出再登录显示这样</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Authenticating with public key &quot;Imported-Openssh-Key: id_rsa&quot;</span><br></pre></td></tr></table></figure>
+<p>就是成功了（失败会提示这样<code>Server refused our key</code>)</p>
+<h2 id="vscode设置ssh密钥登录"><a class="markdownIt-Anchor" href="#vscode设置ssh密钥登录"></a> VSCode设置SSH密钥登录</h2>
+<p>装Remote-ssh插件，然后左边框会有个小电脑的图标，点那个图标，再点SSH TARGETS的设置（Configure），进行配置<br />
+它有个配置文件，一般在<code>C:/Users/&lt;username&gt;/.ssh</code>下面的config<br />
+编辑它的配置文件，Host随便填，HostName填ip，User填用户名，IdentityFile填私钥路径，Port填端口（默认22可以不填）<br />
+（要是认证失败什么的，建议把那些.ssh文件夹底下的文件删了，比如known_hosts）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Host workstation</span><br><span class="line">    HostName hostname</span><br><span class="line">    User user</span><br><span class="line">    IdentityFile C:&#x2F;Users&#x2F;XXX&#x2F;.ssh&#x2F;id_rsa</span><br><span class="line">    Port 22</span><br></pre></td></tr></table></figure>
+<p>连接的时候可能会让你手动在termial里的信息<br />
+这样应该就行了, 不用每次输密码了。看到那个</p>
+<p>什么？想用密码不想用ssh-key密钥登录，不能保存密码🐴？<br />
+您好，官方文档说不能</p>
+<blockquote>
+<p>Yes, you should be prompted to enter your token or password automatically. However, passwords are not saved, so using key based authentication is typically more convenient</p>
+</blockquote>
+<p>（当然这里是新出的功能，bug当然少不了，我就遇到过<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21pY3Jvc29mdC92c2NvZGUtcmVtb3RlLXJlbGVhc2UvaXNzdWVzLzEyMTc=" title="https://github.com/microsoft/vscode-remote-release/issues/1217">这样的<i class="fa fa-external-link"></i></span>, 一般遇到问题先升一下最新版或者用insider试试，再不行就去GitHub提issue）<br />
+其他的问题找官方文档<sup id="fnref:2"><a href="#fn:2" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[官方文档：Remote Development using SSH](https://code.visualstudio.com/docs/remote/ssh)
+">[2]</span></a></sup>看看，貌似可以SSH端口转发</p>
+<p>远程SSH的VSCode插件是单独的，可以自行安装<br />
+如果你要配置多台主机SSH,在配置文件里并列加配置就行了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Host workstation</span><br><span class="line">    HostName hostname</span><br><span class="line">    User user</span><br><span class="line">Host Server</span><br><span class="line">    HostName hostname</span><br><span class="line">    User user</span><br></pre></td></tr></table></figure>
+<h2 id="ssh端口转发"><a class="markdownIt-Anchor" href="#ssh端口转发"></a> SSH端口转发</h2>
+<p>老网民很熟悉的网上冲浪手段之一就是SSH Tunnel<sup id="fnref:3"><a href="#fn:3" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[墙与梯的较量](https://blog.yandere.moe/moe/gfw-vs-proxy/97.html)
+">[3]</span></a></sup>。当只开了22端口的时候可以用这种方法绕过防火墙用TCP之类的，当然，这种方法曾经也用来突破那个巨大的 防火墙 。<br />
+今天我突发奇想，看到工作站和服务器的专用线路的速度贼快啊，<s>专用线路从来不低于45Mb/s不高于50Mb/s的速度毫不含糊</s>，还有公网IP。<br />
+而102网吧由于老板太抠，四个人用一个路由器，辣鸡校园网网速10M/s都跑不到…</p>
+<p>使用Mobaxterm和SwityOmega插件可以满足大部分需求</p>
+<p>MobaXterm里选Tools &gt; MobaSHHtunnel &gt; New SHH tunnel &gt; Dynamic Port forwarding (SOCKS proxy)</p>
+<p>那个Dynamic Port 是动态转发，不是v2ray那种用来防止被封的动态端口，就是你本地的端口会被转到服务器上相同的端口，是sockets5代理<br />
+配置你的端口和密钥（最好把那个autostart和Autoconnect也选上），然后到SwityOmega之类的工具里面填上相应的端口，就可以愉快的上网了。从浏览器的IP查询网站看一下IP，已经是服务器的IP了</p>
+<p>更新，看错了，忘了分Mbps和MBps了，实际上快不了多少，只有6MBps/s。但是没人跟我抢，自己走专线还是快一点的。</p>
+<p>终端的命令可以看这篇，不多说了<sup id="fnref:4"><a href="#fn:4" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[实战 SSH 端口转发](https://www.ibm.com/developerworks/cn/linux/l-cn-sshforward/index.html)
+">[4]</span></a></sup></p>
+<h2 id="突然意识到"><a class="markdownIt-Anchor" href="#突然意识到"></a> 突然意识到</h2>
+<p>为什么要用SSH呢，现在不用担心被FIREWALL制裁, 流量特征明显的WireGuard可以用了呀…<br />
+有空试试这个闪闪发光的新生代VPN, 底层貌似是UDP，红龙LOGO挺拉风的(跑题了<br />
+WireGuard据说要加到新的Linux Kernel里面，但是现在教研室的老Ubuntu只能自己装（这个我18年就听说了要加进kernel啦，连Linus都说好要加辣<sup id="fnref:5"><a href="#fn:5" rel="footnote">&lt;span class=“hint–top hint–error hint–medium hint–rounded hint–bounce” aria-label=&quot;Linus在邮件中回复说：</p>
+<blockquote>
+<p>Btw, on an unrelated issue: I see that Jason actually made the pull<br />
+request to have wireguard included in the kernel.</p>
+<p>Can I just once again state my love for it and hope it gets merged<br />
+soon? Maybe the code isn’t perfect, but I’ve skimmed it, and compared to the horrors that are OpenVPN and IPSec, it’s a work of art.<br />
+见<span class="exturl" data-url="aHR0cHM6Ly9sa21sLm9yZy9sa21sLzIwMTgvOC8yLzY2Mw==" title="https://lkml.org/lkml/2018/8/2/663">https://lkml.org/lkml/2018/8/2/663<i class="fa fa-external-link"></i></span><br />
+&quot;&gt;[5]</span></a></sup>然而鸽到现在，还是没加，据说作者在搞windows的,现在做的差不多了，要回来折腾Linux了）<br />
+之前WireGuard由于流量特征太明显就换了v2，现在试试这个<br />
+安装比Openvpn简单，Ubuntu直接PPA装就行了（需要root权限）</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo add-apt-repository ppa:wireguard/wireguard</span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install wireguard</span><br></pre></td></tr></table></figure>
+<p>win10的官方客户端已经出了，之前18年那会我还用的Tunsafe，设置参考这里<sup id="fnref:6"><a href="#fn:6" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[Setting up WireGuard on Windows](https://golb.hplar.ch/2019/07/wireguard-windows.html)
+">[6]</span></a></sup><br />
+听八卦说Tunsafe和WireGuard作者还有过撕逼，此处不表</p>
+<h3 id="其他"><a class="markdownIt-Anchor" href="#其他"></a> 其他</h3>
+<h3 id="开机自启"><a class="markdownIt-Anchor" href="#开机自启"></a> 开机自启</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="built_in">enable</span> wg-quick@wg0</span><br></pre></td></tr></table></figure>
+<h3 id="使用vscode愉快的写cc"><a class="markdownIt-Anchor" href="#使用vscode愉快的写cc"></a> 使用VSCode愉快的写C/C++</h3>
+<p>装C/C++和coderunner插件就行了，现在可以自动配置运行和调试的文件了（就那个以前一堆坑还经常改一更新就配置失效的launch.json和config.json）</p>
+<h3 id="vscode连接docker"><a class="markdownIt-Anchor" href="#vscode连接docker"></a> VSCode连接Docker</h3>
+<p>安装Docker和Docker compose插件（在远程里面），然后直接用就行了</p>
+<h2 id="注"><a class="markdownIt-Anchor" href="#注"></a> 注</h2>
+<div id="footnotes"><hr><div id="footnotelist"><ol style="list-style: none; padding-left: 0; margin-left: 40px"><li id="fn:1"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">1.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><span class="exturl" data-url="aHR0cHM6Ly9oeWprMjAwMC5naXRodWIuaW8vMjAxMi8wMy8xNi9ob3ctdG8tc2V0LXVwLXNzaC1rZXlzLw==" title="https://hyjk2000.github.io/2012/03/16/how-to-set-up-ssh-keys/">设置 SSH 通过密钥登录<i class="fa fa-external-link"></i></span><a href="#fnref:1" rev="footnote"> ↩</a></span></li><li id="fn:2"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">2.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><span class="exturl" data-url="aHR0cHM6Ly9jb2RlLnZpc3VhbHN0dWRpby5jb20vZG9jcy9yZW1vdGUvc3No" title="https://code.visualstudio.com/docs/remote/ssh">官方文档：Remote Development using SSH<i class="fa fa-external-link"></i></span><a href="#fnref:2" rev="footnote"> ↩</a></span></li><li id="fn:3"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">3.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnlhbmRlcmUubW9lL21vZS9nZnctdnMtcHJveHkvOTcuaHRtbA==" title="https://blog.yandere.moe/moe/gfw-vs-proxy/97.html">墙与梯的较量<i class="fa fa-external-link"></i></span><a href="#fnref:3" rev="footnote"> ↩</a></span></li><li id="fn:4"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">4.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><span class="exturl" data-url="aHR0cHM6Ly93d3cuaWJtLmNvbS9kZXZlbG9wZXJ3b3Jrcy9jbi9saW51eC9sLWNuLXNzaGZvcndhcmQvaW5kZXguaHRtbA==" title="https://www.ibm.com/developerworks/cn/linux/l-cn-sshforward/index.html">实战 SSH 端口转发<i class="fa fa-external-link"></i></span><a href="#fnref:4" rev="footnote"> ↩</a></span></li><li id="fn:5"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">5.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">Linus在邮件中回复说：
+&gt;Btw, on an unrelated issue: I see that Jason actually made the pull
+&gt;request to have wireguard included in the kernel.
+&gt;
+&gt;Can I just once again state my love for it and hope it gets merged
+&gt;soon? Maybe the code isn't perfect, but I've skimmed it, and compared to the horrors that are OpenVPN and IPSec, it's a work of art.
+见<span class="exturl" data-url="aHR0cHM6Ly9sa21sLm9yZy9sa21sLzIwMTgvOC8yLzY2Mw==" title="https://lkml.org/lkml/2018/8/2/663">https://lkml.org/lkml/2018/8/2/663<i class="fa fa-external-link"></i></span><a href="#fnref:5" rev="footnote"> ↩</a></span></li><li id="fn:6"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">6.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><span class="exturl" data-url="aHR0cHM6Ly9nb2xiLmhwbGFyLmNoLzIwMTkvMDcvd2lyZWd1YXJkLXdpbmRvd3MuaHRtbA==" title="https://golb.hplar.ch/2019/07/wireguard-windows.html">Setting up WireGuard on Windows<i class="fa fa-external-link"></i></span><a href="#fnref:6" rev="footnote"> ↩</a></span></li></ol></div></div>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/ssh/" rel="tag"><i class="fa fa-tag"></i> ssh</a>
+              <a href="/tags/vscode/" rel="tag"><i class="fa fa-tag"></i> vscode</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2d5/" rel="prev" title="给服务器重装Ubuntu">
+      <i class="fa fa-chevron-left"></i> 给服务器重装Ubuntu
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/e9d5/" rel="next" title="尝试Netlify自动部署和CMS">
+      尝试Netlify自动部署和CMS <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+  
+  <div class="comments">
+  <script src="https://utteranc.es/client.js" repo="Archaeoraptor/archaeoraptor.github.io" issue-term="pathname" theme="github-light" crossorigin="anonymous" async></script>
+  </div>
+  
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#mobaxterm设置ssh密钥登录"><span class="nav-number">1.</span> <span class="nav-text"> Mobaxterm设置SSH密钥登录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vscode设置ssh密钥登录"><span class="nav-number">2.</span> <span class="nav-text"> VSCode设置SSH密钥登录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ssh端口转发"><span class="nav-number">3.</span> <span class="nav-text"> SSH端口转发</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#突然意识到"><span class="nav-number">4.</span> <span class="nav-text"> 突然意识到</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#其他"><span class="nav-number">4.1.</span> <span class="nav-text"> 其他</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开机自启"><span class="nav-number">4.2.</span> <span class="nav-text"> 开机自启</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用vscode愉快的写cc"><span class="nav-number">4.3.</span> <span class="nav-text"> 使用VSCode愉快的写C&#x2F;C++</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vscode连接docker"><span class="nav-number">4.4.</span> <span class="nav-text"> VSCode连接Docker</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注"><span class="nav-number">5.</span> <span class="nav-text"> 注</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Zhang.jk"
+      src="/uploads/jinmao.webp">
+  <p class="site-author-name" itemprop="name">Zhang.jk</p>
+  <div class="site-description" itemprop="description">in darkest night</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">39</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">51</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FyY2hhZW9yYXB0b3I=" title="GitHub → https://github.com/archaeoraptor"><i class="fa fa-fw fa-github"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOnpoYW5nams2N0BnbWFpbC5jb20=" title="E-Mail → mailto:zhangjk67@gmail.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → /atom.xml"><i class="fa fa-fw fa-rss"></i>RSS</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      友链
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly91ZXN0Yy5pY3U=" title="https://uestc.icu">uestc.icu</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly96aGFuZ3NodXFpYW8ub3Jn" title="https://zhangshuqiao.org">米米的博客</span>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">止息</span>
+</div>
+  <div class="powered-by">由 <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> 强力驱动 v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <span class="exturl theme-link" data-url="aHR0cHM6Ly9waXNjZXMudGhlbWUtbmV4dC5vcmc=">NexT.Pisces</span> v7.7.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-ribbon@1/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('div.pdf').length) {
+  NexT.utils.getScript('//cdnjs.cloudflare.com/ajax/libs/pdfobject/2.1.1/pdfobject.min.js', () => {
+    document.querySelectorAll('div.pdf').forEach(element => {
+      PDFObject.embed(element.getAttribute('target'), element, {
+        pdfOpenParams: {
+          navpanes: 0,
+          toolbar: 0,
+          statusbar: 0,
+          pagemode: 'thumbs',
+          view: 'FitH'
+        },
+        PDFJS_URL: '/lib/pdf/web/viewer.html',
+        height: element.getAttribute('height') || '500px'
+      });
+    });
+  }, window.PDFObject);
+}
+</script>
+
+
+
+
+  
+
+  
+      
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0/dist/katex.min.css">
+  <script src="//cdn.jsdelivr.net/npm/katex@0/dist/contrib/copy-tex.min.js"></script>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0/dist/contrib/copy-tex.min.css">
+
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout: 3000,
+        priority: true,
+        ignores: [uri => uri.includes('#'),uri => uri == 'https://zhangjk98.xyz/7f63/',]
+      });
+      });
+  </script>
+
+</body>
+</html>

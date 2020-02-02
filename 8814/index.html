@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/uploads/wizard-hat-16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/uploads/wizard-hat-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/uploads/wizard-hat-16.png">
+  <link rel="mask-icon" href="/uploads/wizard-hat-32.png" color="#222">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="google-site-verification" content="OwUki9pTQANwT767yFIY9v_Qx4gl55MFLe3lggNnHbw">
+  <meta name="msvalidate.01" content="872DC4637276109A6B54FF149DCABA8A">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Ma Shan Zheng:300,300italic,400,400italic,700,700italic|Noto Sans SC:300,300italic,400,400italic,700,700italic|Noto Serif SC:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://zhangjk98.xyz').hostname,
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.7.1',
+    exturl: true,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"padding":18},
+    copycode: {"enable":true,"show_result":false,"style":"default"},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: true,
+    lazyload: true,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="不知道该分到哪一类">
+<meta property="og:type" content="article">
+<meta property="og:title" content="瞎折腾记录">
+<meta property="og:url" content="https://zhangjk98.xyz/8814/index.html">
+<meta property="og:site_name" content="止息的碎碎念">
+<meta property="og:description" content="不知道该分到哪一类">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/ununtu-server-update.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/ubuntu-server.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/onefetch.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/jb.png">
+<meta property="article:published_time" content="2019-09-19T03:05:44.000Z">
+<meta property="article:modified_time" content="2020-01-30T13:19:15.563Z">
+<meta property="article:author" content="Zhang.jk">
+<meta property="article:tag" content="bug">
+<meta property="article:tag" content="LaTeX">
+<meta property="article:tag" content="折腾">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/ununtu-server-update.png">
+
+<link rel="canonical" href="https://zhangjk98.xyz/8814/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>瞎折腾记录 | 止息的碎碎念</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143393734-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-143393734-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="止息的碎碎念" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta custom-logo">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">止息的碎碎念</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <h1 class="site-subtitle" itemprop="description">阴，气温20℃至32℃</h1>
+      
+      <a>
+        <img class="custom-logo-image" src="/uploads/hollowknight.webp" alt="止息的碎碎念">
+      </a>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-heartbeat"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">51</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">8</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">39</span></a>
+
+  </li>
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FyY2hhZW9yYXB0b3I=" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zhangjk98.xyz/8814/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/jinmao.webp">
+      <meta itemprop="name" content="Zhang.jk">
+      <meta itemprop="description" content="in darkest night">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="止息的碎碎念">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          瞎折腾记录
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-09-19 11:05:44" itemprop="dateCreated datePublished" datetime="2019-09-19T11:05:44+08:00">2019-09-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/" itemprop="url" rel="index">
+                    <span itemprop="name">杂七杂八</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>不知道该分到哪一类</p>
+<a id="more"></a>
+<p><s>遇到问题主要靠IDE智能补全瞎猫碰死耗子撞大运改Bug</s></p>
+<h2 id="在ubuntu或者win10双开telegram账号"><a class="markdownIt-Anchor" href="#在ubuntu或者win10双开telegram账号"></a> 在ubuntu或者win10双开telegram账号</h2>
+<p>使用Docker（逃</p>
+<h2 id="latex和katex"><a class="markdownIt-Anchor" href="#latex和katex"></a> <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mtext>LaTeX</mtext></mrow><annotation encoding="application/x-tex">\LaTeX</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.89883em;vertical-align:-0.2155em;"></span><span class="mord text"><span class="mord textrm">L</span><span class="mspace" style="margin-right:-0.36em;"></span><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.68333em;"><span style="top:-2.904999em;"><span class="pstrut" style="height:2.7em;"></span><span class="mord text"><span class="mord textrm sizing reset-size6 size3">A</span></span></span></span></span></span><span class="mspace" style="margin-right:-0.15em;"></span><span class="mord text"><span class="mord textrm">T</span><span class="mspace" style="margin-right:-0.1667em;"></span><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.46782999999999997em;"><span style="top:-2.7845em;"><span class="pstrut" style="height:3em;"></span><span class="mord text"><span class="mord textrm">E</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2155em;"><span></span></span></span></span><span class="mspace" style="margin-right:-0.125em;"></span><span class="mord textrm">X</span></span></span></span></span></span>和Katex</h2>
+<p>打出矢量（加粗斜体）<code>\bmp</code><br />
+打出属于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>∈</mo></mrow><annotation encoding="application/x-tex">\in</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mrel">∈</span></span></span></span> : <code>\in</code><br />
+打出包含<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>⊂</mo><mo>⊆</mo></mrow><annotation encoding="application/x-tex">\subset\subseteq</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mrel">⊂</span></span><span class="base"><span class="strut" style="height:0.7719400000000001em;vertical-align:-0.13597em;"></span><span class="mrel">⊆</span></span></span></span> : <code>\subset\subseteq</code><br />
+集合的与和或<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>∪</mo><mo>∩</mo></mrow><annotation encoding="application/x-tex">\cup\cap</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.55556em;vertical-align:0em;"></span><span class="mord">∪</span><span class="mord">∩</span></span></span></span> : <code>\cup\cap</code></p>
+<h2 id="vscode"><a class="markdownIt-Anchor" href="#vscode"></a> VSCode</h2>
+<p>ctrl+鼠标滚轮缩放字体大小<br />
+在setting.json里加入<code>&quot;editor.mouseWheelZoom&quot;: true</code></p>
+<p>报错<code>Couldn't start client Clang Language Server</code>, 我远程连服务器并装了一个vscode-clangd插件<br />
+网上说可能是clang没装或者没有configure</p>
+<p>但是我已经装了LLVM，之前版本切过了<code>sudo update-alternatives --config c++</code></p>
+<p>看<span class="exturl" data-url="aHR0cHM6Ly9jbGFuZy5sbHZtLm9yZw==" title="https://clang.llvm.org">官网<i class="fa fa-external-link"></i></span>上的教程说是装一下clang-tools, 不行</p>
+<p>发现apt装上去默认的clang版本只有3.8, 卸了重装</p>
+<p>然后在官网上看到<code>Make sure the Microsoft C/C++ extension is not installed</code></p>
+<p>禁用了之后还是不行</p>
+<p>突然想起来服务器上没装nodejs，赶紧装上node10</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">curl -sL https://deb.nodesource.com/setup_10.x | sudo bash</span><br><span class="line">sudo apt update</span><br><span class="line">sudo apt -y install gcc g++ make</span><br><span class="line">sudo apt -y install nodejs</span><br></pre></td></tr></table></figure>
+<p>好吧，找到问题了</p>
+<h2 id="win10-jupyter-notebook-安装体验"><a class="markdownIt-Anchor" href="#win10-jupyter-notebook-安装体验"></a> win10 jupyter notebook 安装体验</h2>
+<p>不说了，我不用pip了还不行吗。<br />
+安装ananconda，jupyter notebook直接启动<br />
+现在可以在VSCode和Pycharm里写原生的juypter notebook了，jupyter-lab并不好用</p>
+<h2 id="让pandas像tf-keras那样显示进度条"><a class="markdownIt-Anchor" href="#让pandas像tf-keras那样显示进度条"></a> 让pandas像tf、keras那样显示进度条</h2>
+<p>用tqdm这个库</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> tqdm <span class="keyword">import</span> tqdm</span><br><span class="line">tqdm.pandas(desc=<span class="string">'pandas bar'</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="typora显示数学公式单个"><a class="markdownIt-Anchor" href="#typora显示数学公式单个"></a> typora显示数学公式（单个$）</h2>
+<p>VSCode 的markdown生成pdf插件不好使，现在用Typora生成，但是发现Typora的数学公式只能显示出双$$的，单个$不显示<br />
+查了一下发现设置  文件——偏好设置——Markdown——Markdown扩展语法-——内联公式  就好了</p>
+<h2 id="复制浏览器里图片中的文字"><a class="markdownIt-Anchor" href="#复制浏览器里图片中的文字"></a> 复制浏览器里图片中的文字</h2>
+<p>装插件Project Napatha（可惜火狐并没有这个插件）</p>
+<h2 id="微信中调试前端网页"><a class="markdownIt-Anchor" href="#微信中调试前端网页"></a> 微信中调试前端网页</h2>
+<p>我宣布最烦人的浏览器不是ie8，而是微信内置浏览器和小程序。<br />
+有个TBS Studio，是QQ浏览器的内核，可以将就着用一下</p>
+<h2 id="vscode里用jupyter-notebook"><a class="markdownIt-Anchor" href="#vscode里用jupyter-notebook"></a> VSCode里用jupyter-notebook</h2>
+<p>为啥不用pycharm呢，可能是我电脑内存不够固态也不行吧，Pycharm打开太慢<br />
+VSCode （10.8日以后新版）装那个Python官方</p>
+<h2 id="你电访问b站慢-steam下载只有几十k"><a class="markdownIt-Anchor" href="#你电访问b站慢-steam下载只有几十k"></a> 你电访问b站慢、steam下载只有几十k</h2>
+<p>更换DNS，路由器的最好也换了，再不行就把ipv6关掉。你电的校园网v6经常抽风，默认的DNS会把b站解析到奠信的路线，然而b站在奠信的路很卡，换个能解析到联通或者移动出口的DNS就好了。（大概就这样，最近也不怎么用这些玩意，没试过近况）</p>
+<h2 id="linux-qq-使用体验"><a class="markdownIt-Anchor" href="#linux-qq-使用体验"></a> Linux QQ 使用体验</h2>
+<p>？？？扫码登录，再见</p>
+<h2 id="vmware安装manjaro18kde"><a class="markdownIt-Anchor" href="#vmware安装manjaro18kde"></a> VMware安装Manjaro18（KDE）</h2>
+<p>到中科大的源或者官网下载镜像，当然你还得把hyper-v关了。分配内存尽量大一点，4G以上<br />
+VM配置一下，新建虚拟机后图形化界面应该就出来了，选boot，等一会（没多久，比ubuntu快多了），出来的图形化界面分完区点安装<br />
+换成USTC的镜像源。<br />
+用pacman安装软件，octopi也很好用</p>
+<h2 id="ubuntu安装软件报错has-install-snap-change-in-progress"><a class="markdownIt-Anchor" href="#ubuntu安装软件报错has-install-snap-change-in-progress"></a> ubuntu安装软件报错has “install-snap” change in progress</h2>
+<p>先<code>snap changes</code>，再<code>sudo snap abort ···</code>，将之前占用的安装进程停掉<br />
+再安装就行了</p>
+<h2 id="域名邮箱"><a class="markdownIt-Anchor" href="#域名邮箱"></a> 域名邮箱</h2>
+<p>挂在netlify上了，不打算拿VPS自己搭一个邮件服务器了（VPS要用来做科学上网这种事，反向解析需要伪装rDNS），拿yandex将就一下</p>
+<h2 id="更换vps服务商"><a class="markdownIt-Anchor" href="#更换vps服务商"></a> 更换VPS服务商</h2>
+<p>最近又要开会, 是个测试有多稳的好时机</p>
+<h2 id="git设置代理"><a class="markdownIt-Anchor" href="#git设置代理"></a> git设置代理</h2>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global http.proxy &#39;socks5:&#x2F;&#x2F;127.0.0.1:1080&#39;</span><br><span class="line">git config --global https.proxy &#39;socks5:&#x2F;&#x2F;127.0.0.1:1080&#39;</span><br></pre></td></tr></table></figure>
+<p>取消代理</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git config --global --unset http.proxy</span><br><span class="line"></span><br><span class="line">git config --global --unset https.proxy</span><br></pre></td></tr></table></figure>
+<h2 id="twitter换回旧版"><a class="markdownIt-Anchor" href="#twitter换回旧版"></a> Twitter换回旧版</h2>
+<p>太丑了，新版真的太丑了。<br />
+goodtwitter插件（现在对中文支持不是特别好，把系统调成英文将就用吧）</p>
+<h2 id="在word中打latex"><a class="markdownIt-Anchor" href="#在word中打latex"></a> 在Word中打<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mtext>LaTeX</mtext></mrow><annotation encoding="application/x-tex">\LaTeX</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.89883em;vertical-align:-0.2155em;"></span><span class="mord text"><span class="mord textrm">L</span><span class="mspace" style="margin-right:-0.36em;"></span><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.68333em;"><span style="top:-2.904999em;"><span class="pstrut" style="height:2.7em;"></span><span class="mord text"><span class="mord textrm sizing reset-size6 size3">A</span></span></span></span></span></span><span class="mspace" style="margin-right:-0.15em;"></span><span class="mord text"><span class="mord textrm">T</span><span class="mspace" style="margin-right:-0.1667em;"></span><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.46782999999999997em;"><span style="top:-2.7845em;"><span class="pstrut" style="height:3em;"></span><span class="mord text"><span class="mord textrm">E</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2155em;"><span></span></span></span></span><span class="mspace" style="margin-right:-0.125em;"></span><span class="mord textrm">X</span></span></span></span></span></span></h2>
+<p>在新版的Office中可以直接按<code>Alt+=</code>，在转换选项里把公式设置为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mtext>LaTeX</mtext></mrow><annotation encoding="application/x-tex">\LaTeX</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.89883em;vertical-align:-0.2155em;"></span><span class="mord text"><span class="mord textrm">L</span><span class="mspace" style="margin-right:-0.36em;"></span><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.68333em;"><span style="top:-2.904999em;"><span class="pstrut" style="height:2.7em;"></span><span class="mord text"><span class="mord textrm sizing reset-size6 size3">A</span></span></span></span></span></span><span class="mspace" style="margin-right:-0.15em;"></span><span class="mord text"><span class="mord textrm">T</span><span class="mspace" style="margin-right:-0.1667em;"></span><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.46782999999999997em;"><span style="top:-2.7845em;"><span class="pstrut" style="height:3em;"></span><span class="mord text"><span class="mord textrm">E</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2155em;"><span></span></span></span></span><span class="mspace" style="margin-right:-0.125em;"></span><span class="mord textrm">X</span></span></span></span></span></span>（默认的是UnicodeMath，word自带的，和LaTeX语法略有不同）<br />
+需要注意一个小问题，那个<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mtext>LaTeX</mtext></mrow><annotation encoding="application/x-tex">\LaTeX</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.89883em;vertical-align:-0.2155em;"></span><span class="mord text"><span class="mord textrm">L</span><span class="mspace" style="margin-right:-0.36em;"></span><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.68333em;"><span style="top:-2.904999em;"><span class="pstrut" style="height:2.7em;"></span><span class="mord text"><span class="mord textrm sizing reset-size6 size3">A</span></span></span></span></span></span><span class="mspace" style="margin-right:-0.15em;"></span><span class="mord text"><span class="mord textrm">T</span><span class="mspace" style="margin-right:-0.1667em;"></span><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.46782999999999997em;"><span style="top:-2.7845em;"><span class="pstrut" style="height:3em;"></span><span class="mord text"><span class="mord textrm">E</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2155em;"><span></span></span></span></span><span class="mspace" style="margin-right:-0.125em;"></span><span class="mord textrm">X</span></span></span></span></span></span>的字符不能像UnicodeMath一样打空格实时预览，需要按<code>Ctrl + =</code>预览（切换到专业模式），按<code>Ctrl + Shift + =</code>将公式重置为线性格式。（其实我感觉UnicodeMath的输入方式比LaTeX简单方便多了，建议不是非要用LaTeX的直接用word默认的那个就好了）</p>
+<p>要在公式块之外打字符（比如输入\alpha显示α之类的，在选项里面打开“在公式区以外使用‘数学自动更正’规则”就行了）<br />
+参考：<span class="exturl" data-url="aHR0cHM6Ly9zdXBwb3J0Lm9mZmljZS5jb20vemgtY24vYXJ0aWNsZS93b3JkLSVFNCVCOCVBRCVFNCVCRCVCRiVFNyU5NCVBOC11bmljb2RlbWF0aC0lRTUlOTIlOEMtbGF0ZXgtJUU3JTlBJTg0JUU3JUJBJUJGJUU2JTgwJUE3JUU2JUEwJUJDJUU1JUJDJThGJUU1JTg1JUFDJUU1JUJDJThGLTJlMDA2MThkLWIxZmQtNDlkOC04Y2I0LThkMTdmMjU3NTRmOA==" title="https://support.office.com/zh-cn/article/word-%E4%B8%AD%E4%BD%BF%E7%94%A8-unicodemath-%E5%92%8C-latex-%E7%9A%84%E7%BA%BF%E6%80%A7%E6%A0%BC%E5%BC%8F%E5%85%AC%E5%BC%8F-2e00618d-b1fd-49d8-8cb4-8d17f25754f8">Word 中使用 UnicodeMath 和 LaTeX 的线性格式公式<i class="fa fa-external-link"></i></span></p>
+<h2 id="markdown"><a class="markdownIt-Anchor" href="#markdown"></a> Markdown</h2>
+<p>图片超链接:<br />
+把图片的markdown放到链接的<code>[]</code>里就行了</p>
+<pre><code>[![]()]()
+</code></pre>
+<p>主副标题</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">主标题</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">副标题</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+<h2 id="flask报错requestsexceptionssslerror"><a class="markdownIt-Anchor" href="#flask报错requestsexceptionssslerror"></a> Flask报错requests.exceptions.SSLError</h2>
+<p>之前还是好的，今天就报这个错。但我也没用https或者配置SSL证书，临时将verify关了，好了。<br />
+但是应该verify也不会有问题，将代理关掉之后正常了，是代理冲突的问题</p>
+<h2 id="flask注册登录有延迟"><a class="markdownIt-Anchor" href="#flask注册登录有延迟"></a> Flask注册登录有延迟</h2>
+<p>之前师兄写的一个数据标注的Flask小网页，拿到之后注册后数据库里有用户名和密码，但是登录就显示未注册，之前注册的是可以的。等了很久之后，用户账号能用了，延迟了几分钟。有的时候等了几个小时也不行，重启也不行，很迷。</p>
+<p>发现MySQL和Docker的时间不对，差了8个小时，怀疑是时区的问题<br />
+使用<code>date -R</code>发现Ubuntu服务器的时间对的，MySQL和Docker时间不对</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; set global time_zone &#x3D; &#39;+8:00&#39;;</span><br><span class="line">mysql&gt; select now();</span><br><span class="line">mysql&gt; SELECT @@global.time_zone, @@session.time_zone;</span><br></pre></td></tr></table></figure>
+<p>结果还是MySQL时间不对，但是时区显示是+8:00<br />
+重启又试了一下<code>SET GLOBAL time_zone = 'Asia/Shanghai';</code></p>
+<p>给Docker同步时间，先用<code>Docker exec -it &lt;container id&gt;</code>进入容器，再查看时间，发现Docker时间也差了8小时</p>
+<p>修改时间：<code>docker cp /etc/localtime &lt;container id&gt;:/etc/localtime</code></p>
+<p>把时区都调成一致之后还是有问题。</p>
+<p>这个先等一下，有空再看看师兄的源码，好像还是前后端分离的，有点麻烦。师兄们也不知道是哪的问题，之前都是好的。而且放在教研室服务器一段时间之后也会登录不了，需要重启，不知道是哪的问题。这个坑等有空了再看看。</p>
+<h2 id="linux查看本地ip"><a class="markdownIt-Anchor" href="#linux查看本地ip"></a> Linux查看本地IP</h2>
+<p>ip addr show</p>
+<h2 id="退出-git-log"><a class="markdownIt-Anchor" href="#退出-git-log"></a> 退出 git log</h2>
+<p>按q就好了</p>
+<h2 id="文献管理"><a class="markdownIt-Anchor" href="#文献管理"></a> 文献管理</h2>
+<p>学校不给买Endnote，只好zotero了。（据说本来是要采购，钱都打过去了那边说你电涉军禁运不给卖又给退了）<br />
+（你别说，开源的zotero用了几天还挺香）</p>
+<h2 id="用css给markdown标题自动编号"><a class="markdownIt-Anchor" href="#用css给markdown标题自动编号"></a> 用CSS给Markdown标题自动编号</h2>
+<p>今天看师兄们写的Markdown文档，发现他们居然在手动打编号<br />
+搜了一下，可以拿CSS搞定自动编号，<span class="exturl" data-url="aHR0cHM6Ly9zdXBwb3J0LnR5cG9yYS5pby9BdXRvLU51bWJlcmluZy8=" title="https://support.typora.io/Auto-Numbering/">https://support.typora.io/Auto-Numbering/<i class="fa fa-external-link"></i></span><br />
+找到一个更好的<span class="exturl" data-url="aHR0cHM6Ly95YW53ZWkuZ2l0aHViLmlvL21pc2MvbWFya2Rvd24tYXV0by1udW1iZXItdGl0bGUuaHRtbA==" title="https://yanwei.github.io/misc/markdown-auto-number-title.html">https://yanwei.github.io/misc/markdown-auto-number-title.html<i class="fa fa-external-link"></i></span><br />
+加这段代码</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">&lt;style type="text/css"&gt;</span><br><span class="line">    <span class="selector-tag">h1</span> &#123; <span class="attribute">counter-reset</span>: h2counter; &#125;</span><br><span class="line">    <span class="selector-tag">h2</span> &#123; <span class="attribute">counter-reset</span>: h3counter; &#125;</span><br><span class="line">    <span class="selector-tag">h3</span> &#123; <span class="attribute">counter-reset</span>: h4counter; &#125;</span><br><span class="line">    <span class="selector-tag">h4</span> &#123; <span class="attribute">counter-reset</span>: h5counter; &#125;</span><br><span class="line">    <span class="selector-tag">h5</span> &#123; <span class="attribute">counter-reset</span>: h6counter; &#125;</span><br><span class="line">    <span class="selector-tag">h6</span> &#123; &#125;</span><br><span class="line">    <span class="selector-tag">h2</span><span class="selector-pseudo">:before</span> &#123;</span><br><span class="line">      <span class="attribute">counter-increment</span>: h2counter;</span><br><span class="line">      <span class="attribute">content</span>: <span class="built_in">counter</span>(h2counter) <span class="string">".\0000a0\0000a0"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="selector-tag">h3</span><span class="selector-pseudo">:before</span> &#123;</span><br><span class="line">      <span class="attribute">counter-increment</span>: h3counter;</span><br><span class="line">      <span class="attribute">content</span>: <span class="built_in">counter</span>(h2counter) <span class="string">"."</span></span><br><span class="line">                <span class="built_in">counter</span>(h3counter) <span class="string">".\0000a0\0000a0"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="selector-tag">h4</span><span class="selector-pseudo">:before</span> &#123;</span><br><span class="line">      <span class="attribute">counter-increment</span>: h4counter;</span><br><span class="line">      <span class="attribute">content</span>: <span class="built_in">counter</span>(h2counter) <span class="string">"."</span></span><br><span class="line">                <span class="built_in">counter</span>(h3counter) <span class="string">"."</span></span><br><span class="line">                <span class="built_in">counter</span>(h4counter) <span class="string">".\0000a0\0000a0"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="selector-tag">h5</span><span class="selector-pseudo">:before</span> &#123;</span><br><span class="line">      <span class="attribute">counter-increment</span>: h5counter;</span><br><span class="line">      <span class="attribute">content</span>: <span class="built_in">counter</span>(h2counter) <span class="string">"."</span></span><br><span class="line">                <span class="built_in">counter</span>(h3counter) <span class="string">"."</span></span><br><span class="line">                <span class="built_in">counter</span>(h4counter) <span class="string">"."</span></span><br><span class="line">                <span class="built_in">counter</span>(h5counter) <span class="string">".\0000a0\0000a0"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="selector-tag">h6</span><span class="selector-pseudo">:before</span> &#123;</span><br><span class="line">      <span class="attribute">counter-increment</span>: h6counter;</span><br><span class="line">      <span class="attribute">content</span>: <span class="built_in">counter</span>(h2counter) <span class="string">"."</span></span><br><span class="line">                <span class="built_in">counter</span>(h3counter) <span class="string">"."</span></span><br><span class="line">                <span class="built_in">counter</span>(h4counter) <span class="string">"."</span></span><br><span class="line">                <span class="built_in">counter</span>(h5counter) <span class="string">"."</span></span><br><span class="line">                <span class="built_in">counter</span>(h6counter) <span class="string">".\0000a0\0000a0"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+<p>或者用CSS文件外部引用</p>
+<h2 id="linux终端用户名和主机高亮"><a class="markdownIt-Anchor" href="#linux终端用户名和主机高亮"></a> Linux终端用户名和主机高亮</h2>
+<p>MobaXterm里面的终端经常找丢位置，决定搞点高亮<br />
+设置参考这里<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC81MTAwODA4Nw==" title="https://zhuanlan.zhihu.com/p/51008087">https://zhuanlan.zhihu.com/p/51008087<i class="fa fa-external-link"></i></span>，如果只是用户名高亮的话改改.bashrc就行了</p>
+<h2 id="ubuntu1604lts-强行升级"><a class="markdownIt-Anchor" href="#ubuntu1604lts-强行升级"></a> Ubuntu16.04LTS 强行升级</h2>
+<p>准备作大死来个滚动升级, 对，就是教研室那个服务器。滚过manjaro的我遇到什么背锅也不会怕，奥利给</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update &amp;&amp; sudo apt upgrade &amp;&amp; sudo apt autoremove</span><br></pre></td></tr></table></figure>
+<p>然后换源，把apt的镜像源从16.04LTS换到18.04LTS<br />
+直接<code>sudo do-release-upgrade -d</code>报错</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Upgrades to the development release are only available from the latest supported release</span><br></pre></td></tr></table></figure>
+<p>看到说要改一下，把那个<code>/etc/update-manager/release-upgrades</code>下的<code>Prompt=never</code>换成LTS或者normal（升完再换LTS）</p>
+<p>然后<code>sudo apt upgrade</code>报这种错</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">The following packages have unmet dependencies:</span><br><span class="line"> perl-modules-5.22 : Conflicts: perl-modules</span><br><span class="line">                     Conflicts: perl-modules:i386</span><br><span class="line">E: Broken packages</span><br></pre></td></tr></table></figure>
+<p>也不知道谁装的perl，package 还坏了<br />
+卸掉，再次试图upgrade，漫长的等待…妈耶，停在99%了<br />
+行了，吓死我了<br />
+成功滚成18.4，能apt装neofetch了<br />
+<img data-src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/ununtu-server-update.png" alt="Picture" style="zoom:80%;" /></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">root@labserver:~# neofetch</span><br><span class="line">            .-&#x2F;+oossssoo+&#x2F;-.               root@labserver</span><br><span class="line">        &#96;:+ssssssssssssssssss+:&#96;           --------------</span><br><span class="line">      -+ssssssssssssssssssyyssss+-         OS: Ubuntu 18.04.3 LTS x86_64</span><br><span class="line">    .ossssssssssssssssssdMMMNysssso.       Host: PowerEdge R730xd</span><br><span class="line">   &#x2F;ssssssssssshdmmNNmmyNMMMMhssssss&#x2F;      Kernel: 4.12.14-041214-generic</span><br><span class="line">  +ssssssssshmydMMMMMMMNddddyssssssss+     Uptime: 3 days, 14 hours, 3 mins</span><br><span class="line"> &#x2F;sssssssshNMMMyhhyyyyhmNMMMNhssssssss&#x2F;    Packages: 897</span><br><span class="line">.ssssssssdMMMNhsssssssssshNMMMdssssssss.   Shell: bash 4.4.20</span><br><span class="line">+sssshhhyNMMNyssssssssssssyNMMMysssssss+   Theme: Ambiance [GTK3]</span><br><span class="line">ossyNMMMNyMMhsssssssssssssshmmmhssssssso   Icons: Ubuntu-mono-dark [GTK3]</span><br><span class="line">ossyNMMMNyMMhsssssssssssssshmmmhssssssso   Terminal: &#x2F;dev&#x2F;pts&#x2F;0</span><br><span class="line">+sssshhhyNMMNyssssssssssssyNMMMysssssss+   CPU: Intel Xeon E5-2630 v4 (20) @ 3.100GHz</span><br><span class="line">.ssssssssdMMMNhsssssssssshNMMMdssssssss.   GPU: Matrox Electronics Systems Ltd. G200eR2</span><br><span class="line"> &#x2F;sssssssshNMMMyhhyyyyhdNMMMNhssssssss&#x2F;    Memory: 529MiB &#x2F; 32074MiB</span><br><span class="line">  +sssssssssdmydMMMMMMMMddddyssssssss+</span><br><span class="line">   &#x2F;ssssssssssshdmNNNNmyNMMMMhssssss&#x2F;</span><br><span class="line">    .ossssssssssssssssssdMMMNysssso.</span><br><span class="line">      -+sssssssssssssssssyyyssss+-</span><br><span class="line">        &#96;:+ssssssssssssssssss+:&#96;</span><br><span class="line">            .-&#x2F;+oossssoo+&#x2F;-.</span><br></pre></td></tr></table></figure>
+<img data-src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/ubuntu-server.png" alt="Picture" style="zoom:80%;" />
+<p>然后是清理遗留包, 用<code>sudo apt autoremove</code>把下面几个没用的包全清了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">The following packages were automatically installed and are no longer required:</span><br><span class="line">  g++-5 libbind9-140 libblas-common libboost-filesystem1.58.0 libboost-filesystem1.65.1 libboost-system1.58.0 libboost-system1.65.1 libcapnp-0.5.3 libcapnp-0.6.1 libdbus-glib-1-2 libdns162 libefivar0</span><br><span class="line">  libegl-mesa0 libegl1 libegl1-mesa libgbm1 libgdbm3 libgl1-mesa-glx libicu55 libisc160 libisccc140 libisccfg140 libllvm6.0 liblwres141 libmirclient9 libmircommon7 libmircore1 libmirprotobuf3</span><br><span class="line">  libprotobuf-lite10 libprotobuf-lite9v5 libpython3.5-dev librpm3 librpmbuild3 librpmio3 librpmsign3 libstdc++-5-dev libtxc-dxtn-s2tc0 libunistring0 libvpx3 libwayland-egl1-mesa libwayland-server0</span><br><span class="line">  libxcb-xfixes0 libxfont1 lua-lpeg python3.5-dev</span><br></pre></td></tr></table></figure>
+<p>然后是略有风险的</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt dist-upgrade</span><br></pre></td></tr></table></figure>
+<p>暂时还没有报错</p>
+<h2 id="powershell查看监听端口"><a class="markdownIt-Anchor" href="#powershell查看监听端口"></a> Powershell查看监听端口</h2>
+<p>之前在网上查的查看监听端口命令是</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -an | find <span class="string">"LISTEN"</span></span><br></pre></td></tr></table></figure>
+<p>发现只能在cmd下用，powershell 提示<code>FIND: 参数格式不正确</code>, 查了一下是find会转义&quot;&quot;的问题, 改成</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -an | find --% <span class="string">"LISTENING"</span></span><br></pre></td></tr></table></figure>
+<h2 id="安装onefetch"><a class="markdownIt-Anchor" href="#安装onefetch"></a> 安装onefetch</h2>
+<p>这是一个查看git仓库信息的命令行工具，跟neofetch差不多，snap就可以装</p>
+<p>这个使用rust写的，编译安装需要rustc，可以直接安装一下rustc</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl --proto <span class="string">'=https'</span> --tlsv1.2 -sSf https://sh.rustup.rs | sh</span><br></pre></td></tr></table></figure>
+<p>或者apt安装，只要<code>rustc --version</code>显示不小于1.3.6就行了</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/o2sh/onefetch.git</span><br><span class="line"><span class="built_in">cd</span> onefetch</span><br><span class="line">make install</span><br><span class="line">sudo cp target/release/onefetch /usr/<span class="built_in">local</span>/bin</span><br></pre></td></tr></table></figure>
+<p>然后切进仓库输入<code>onefetch</code>就行了<br />
+<img data-src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/onefetch.png" alt="Picture" style="zoom:80%;" /></p>
+<h2 id="git仓库更改权限不用每次sudo"><a class="markdownIt-Anchor" href="#git仓库更改权限不用每次sudo"></a> Git仓库更改权限不用每次sudo</h2>
+<p>发现.git的默认权限是root用户的</p>
+<p>只要切进仓库里面把文件夹的权限改了就行了</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chown -R username:username .git</span><br></pre></td></tr></table></figure>
+<h2 id="安全与环保知识网络教育及考试"><a class="markdownIt-Anchor" href="#安全与环保知识网络教育及考试"></a> 安全与环保知识网络教育及考试</h2>
+<p>行吧,你电啥有用的也不教,就整这些破玩意, 里面还有什么中医治烫伤。。。还都是13年的, 还要刷够120小时学习时间。这破网站还没有域名没HTTPs，右上角一个大大的不安全，滑稽。<br />
+<img width=600 data-src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/jb.png" alt="Picture" /><br />
+并没有任何反爬措施，试了一下，是5分钟断线自动下线，整个自动刷新就好了</p>
+<p>我做题的时候搜答案又看了一下，很多个学校都有这个，而且界面和内容完全一致，应该都能通用</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">timeout = <span class="number">200</span></span><br><span class="line">count=<span class="number">0</span></span><br><span class="line">current=location.href;</span><br><span class="line"><span class="keyword">if</span>(timeout&gt;<span class="number">0</span>)</span><br><span class="line">setTimeout(<span class="string">'reload()'</span>,<span class="number">1000</span>*timeout);</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">location.replace(current);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">reload</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">setTimeout(<span class="string">'reload()'</span>,<span class="number">1000</span>*timeout);</span><br><span class="line">count++;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'每（'</span>+timeout+<span class="string">'）秒自动新,刷新次数：'</span>+count);</span><br><span class="line">fr4me=<span class="string">'&lt;frameset cols=\'*\'&gt;\n&lt;framesrc=\''</span>+current+<span class="string">'\'/&gt;'</span>;</span><br><span class="line">fr4me+=<span class="string">'&lt;/frameset&gt;'</span>;</span><br><span class="line"><span class="keyword">with</span>(<span class="built_in">document</span>)&#123;write(fr4me);voi(close())&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="win10"><a class="markdownIt-Anchor" href="#win10"></a> Win10</h2>
+<p>禁用快速启动（感觉禁了这玩意能少一般的咖喱味）</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">powercfg /h off</span><br></pre></td></tr></table></figure>
+<p>禁用小娜进程，禁了能少三分之一的CPU跑满100%糟心事</p>
+<p>另外不要乱试瘟10全新咖喱味BUG体验计划，加入之后一不小心就退不回去了，只有重装大法了。</p>
+<p>我为了尝试20H1的wsl2，冒死试了一下，结果绿屏了，重启N次之后终于好了，结果发现显示有问题，屏幕经常一堆蓝线蓝点，然后UWP版QQ打不开了。CPU 100% 风扇狂转（这貌似是1909就有的问题）</p>
+<p>瘟10更新可比Arch滚动难受多了…</p>
+<p>突然发现你电给的正版激活工具还能激活企业版（之前一直以为只能激活学校官网给的那个咖喱味的专业版,唉，之前看到河畔上还有老哥卸了学校的专业版整个盗版LTSB），那就没那么多事了，直接搞个win10 LTSB.</p>
+<h2 id="gitlab占用过高"><a class="markdownIt-Anchor" href="#gitlab占用过高"></a> Gitlab占用过高</h2>
+<p>看了一下发现Gitlab的默认配置，开了很多进程，默认基本跑满了一半内存。<br />
+修改配置文件<code>/etc/gitlab/gitlab.rb</code>如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">unicorn[&#39;worker_processes&#39;] &#x3D; 2 # 改进程数为最小的2</span><br><span class="line">unicorn[&#39;worker_timeout&#39;] &#x3D; 60  # 无响应断开</span><br><span class="line">postgresql[&#39;shared_buffers&#39;] &#x3D; &quot;64MB&quot;  # 数据库缓存，默认是1&#x2F;4RAM,用不着，改小</span><br><span class="line">postgresql[&#39;max_worker_processes&#39;] &#x3D; 2 # 数据库并发数，也改成2</span><br><span class="line">prometheus_monitoring[&#39;enable&#39;] &#x3D; false # 关闭prometheus(一个报警监控，用不着)，这个吃内存也很厉害</span><br><span class="line">sidekiq[&#39;concurrency&#39;] &#x3D; 2  # 好像是一个异步的钩子，把并发改成2</span><br><span class="line">unicorn[&#39;worker_memory_limit_min&#39;] &#x3D; &quot;100 * 1 &lt;&lt; 20&quot; # 好像是监测内存泄露的配置，见unicorn-worker-killer</span><br><span class="line">unicorn[&#39;worker_memory_limit_max&#39;] &#x3D; &quot;250 * 1 &lt;&lt; 20&quot;</span><br></pre></td></tr></table></figure>
+<p>这里面最高的是哪个prometheus监控程序,CPU占用565.1%多（20核，1核算100%）</p>
+<blockquote>
+<p>veth6901d37                0b     0b   569.4  0.3   1.44G 98.7M  85885 gitlab-pr      0:53 29    0 S    0 0    /opt/gitlab/embedded/bin/prometheus --web.listen-address=localhost:9090 --storage.tsdb.path=/var/opt/gitl</p>
+</blockquote>
+<p>然后让配置生效，等一分钟</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gitlab-ctl reconfigure</span><br></pre></td></tr></table></figure>
+<p>这样CPU占用就不到10%了</p>
+<p>顺便把gitlab-ce的源换了</p>
+<blockquote>
+<p>/etc/apt/sources.list.d/gitlab_gitlab-ce.list # 按照清华镜像源的说明是gitlab-ce.list</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/bug/" rel="tag"><i class="fa fa-tag"></i> bug</a>
+              <a href="/tags/LaTeX/" rel="tag"><i class="fa fa-tag"></i> LaTeX</a>
+              <a href="/tags/%E6%8A%98%E8%85%BE/" rel="tag"><i class="fa fa-tag"></i> 折腾</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/96cd/" rel="prev" title="正则表达式笔记">
+      <i class="fa fa-chevron-left"></i> 正则表达式笔记
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/87d6/" rel="next" title="网上冲浪指北">
+      网上冲浪指北 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+  
+  <div class="comments">
+  <script src="https://utteranc.es/client.js" repo="Archaeoraptor/archaeoraptor.github.io" issue-term="pathname" theme="github-light" crossorigin="anonymous" async></script>
+  </div>
+  
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#在ubuntu或者win10双开telegram账号"><span class="nav-number">1.</span> <span class="nav-text"> 在ubuntu或者win10双开telegram账号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#latex和katex"><span class="nav-number">2.</span> <span class="nav-text"> LaTeX\LaTeXLATE​X和Katex</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vscode"><span class="nav-number">3.</span> <span class="nav-text"> VSCode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#win10-jupyter-notebook-安装体验"><span class="nav-number">4.</span> <span class="nav-text"> win10 jupyter notebook 安装体验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#让pandas像tf-keras那样显示进度条"><span class="nav-number">5.</span> <span class="nav-text"> 让pandas像tf、keras那样显示进度条</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#typora显示数学公式单个"><span class="nav-number">6.</span> <span class="nav-text"> typora显示数学公式（单个$）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复制浏览器里图片中的文字"><span class="nav-number">7.</span> <span class="nav-text"> 复制浏览器里图片中的文字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#微信中调试前端网页"><span class="nav-number">8.</span> <span class="nav-text"> 微信中调试前端网页</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vscode里用jupyter-notebook"><span class="nav-number">9.</span> <span class="nav-text"> VSCode里用jupyter-notebook</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#你电访问b站慢-steam下载只有几十k"><span class="nav-number">10.</span> <span class="nav-text"> 你电访问b站慢、steam下载只有几十k</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#linux-qq-使用体验"><span class="nav-number">11.</span> <span class="nav-text"> Linux QQ 使用体验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vmware安装manjaro18kde"><span class="nav-number">12.</span> <span class="nav-text"> VMware安装Manjaro18（KDE）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ubuntu安装软件报错has-install-snap-change-in-progress"><span class="nav-number">13.</span> <span class="nav-text"> ubuntu安装软件报错has “install-snap” change in progress</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#域名邮箱"><span class="nav-number">14.</span> <span class="nav-text"> 域名邮箱</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更换vps服务商"><span class="nav-number">15.</span> <span class="nav-text"> 更换VPS服务商</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git设置代理"><span class="nav-number">16.</span> <span class="nav-text"> git设置代理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#twitter换回旧版"><span class="nav-number">17.</span> <span class="nav-text"> Twitter换回旧版</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在word中打latex"><span class="nav-number">18.</span> <span class="nav-text"> 在Word中打LaTeX\LaTeXLATE​X</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#markdown"><span class="nav-number">19.</span> <span class="nav-text"> Markdown</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#flask报错requestsexceptionssslerror"><span class="nav-number">20.</span> <span class="nav-text"> Flask报错requests.exceptions.SSLError</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#flask注册登录有延迟"><span class="nav-number">21.</span> <span class="nav-text"> Flask注册登录有延迟</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#linux查看本地ip"><span class="nav-number">22.</span> <span class="nav-text"> Linux查看本地IP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#退出-git-log"><span class="nav-number">23.</span> <span class="nav-text"> 退出 git log</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文献管理"><span class="nav-number">24.</span> <span class="nav-text"> 文献管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用css给markdown标题自动编号"><span class="nav-number">25.</span> <span class="nav-text"> 用CSS给Markdown标题自动编号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#linux终端用户名和主机高亮"><span class="nav-number">26.</span> <span class="nav-text"> Linux终端用户名和主机高亮</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ubuntu1604lts-强行升级"><span class="nav-number">27.</span> <span class="nav-text"> Ubuntu16.04LTS 强行升级</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#powershell查看监听端口"><span class="nav-number">28.</span> <span class="nav-text"> Powershell查看监听端口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装onefetch"><span class="nav-number">29.</span> <span class="nav-text"> 安装onefetch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git仓库更改权限不用每次sudo"><span class="nav-number">30.</span> <span class="nav-text"> Git仓库更改权限不用每次sudo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安全与环保知识网络教育及考试"><span class="nav-number">31.</span> <span class="nav-text"> 安全与环保知识网络教育及考试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#win10"><span class="nav-number">32.</span> <span class="nav-text"> Win10</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gitlab占用过高"><span class="nav-number">33.</span> <span class="nav-text"> Gitlab占用过高</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Zhang.jk"
+      src="/uploads/jinmao.webp">
+  <p class="site-author-name" itemprop="name">Zhang.jk</p>
+  <div class="site-description" itemprop="description">in darkest night</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">39</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">51</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FyY2hhZW9yYXB0b3I=" title="GitHub → https://github.com/archaeoraptor"><i class="fa fa-fw fa-github"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOnpoYW5nams2N0BnbWFpbC5jb20=" title="E-Mail → mailto:zhangjk67@gmail.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → /atom.xml"><i class="fa fa-fw fa-rss"></i>RSS</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      友链
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly91ZXN0Yy5pY3U=" title="https://uestc.icu">uestc.icu</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly96aGFuZ3NodXFpYW8ub3Jn" title="https://zhangshuqiao.org">米米的博客</span>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">止息</span>
+</div>
+  <div class="powered-by">由 <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> 强力驱动 v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <span class="exturl theme-link" data-url="aHR0cHM6Ly9waXNjZXMudGhlbWUtbmV4dC5vcmc=">NexT.Pisces</span> v7.7.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-ribbon@1/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('div.pdf').length) {
+  NexT.utils.getScript('//cdnjs.cloudflare.com/ajax/libs/pdfobject/2.1.1/pdfobject.min.js', () => {
+    document.querySelectorAll('div.pdf').forEach(element => {
+      PDFObject.embed(element.getAttribute('target'), element, {
+        pdfOpenParams: {
+          navpanes: 0,
+          toolbar: 0,
+          statusbar: 0,
+          pagemode: 'thumbs',
+          view: 'FitH'
+        },
+        PDFJS_URL: '/lib/pdf/web/viewer.html',
+        height: element.getAttribute('height') || '500px'
+      });
+    });
+  }, window.PDFObject);
+}
+</script>
+
+
+
+
+  
+
+  
+      
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0/dist/katex.min.css">
+  <script src="//cdn.jsdelivr.net/npm/katex@0/dist/contrib/copy-tex.min.js"></script>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0/dist/contrib/copy-tex.min.css">
+
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout: 3000,
+        priority: true,
+        ignores: [uri => uri.includes('#'),uri => uri == 'https://zhangjk98.xyz/8814/',]
+      });
+      });
+  </script>
+
+</body>
+</html>
