@@ -16,14 +16,14 @@
 
 <link rel="stylesheet" href="/css/main.css">
 
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto+Serif+SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
   
   <link rel="stylesheet" href="/lib/animate-css/animate.min.css">
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"zhangjk98.xyz","root":"/","scheme":"Pisces","version":"8.0.0-rc.4","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":"Valine"},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"zhangjk98.xyz","root":"/","scheme":"Gemini","version":"8.0.0-rc.4","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":"Valine"},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 
   <meta name="description" content="BERT效果确实好，就是有点吃内存">
@@ -391,6 +391,9 @@ mjx-container[display="true"] + br {
         <a href="/atom.xml" title="RSS → /atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
       </span>
   </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></span>
+  </div>
 
 
   <div class="links-of-blogroll animated">
@@ -535,39 +538,39 @@ mjx-container[display="true"] + br {
 <blockquote>
 <p>注意 Docker镜像run之后会产生三个容器，doccona_nginx、doccona_backend、docker_frontend,其中docker_frontend在构建完成后会直接exit，这是一个feature，不是bug，它的主要作用是webpack打包</p>
 <figure>
-<img data-src="/9112/image-20200109220759931.png" alt="" /><figcaption>img</figcaption>
+<img src="/9112/image-20200109220759931.png" alt="" /><figcaption>img</figcaption>
 </figure>
 </blockquote>
 <h4 id="访问docker中的postgresql数据库中的数据">访问Docker中的PostgreSQL数据库中的数据</h4>
 <p>由于数据库安全问题，数据库分离再一个单独的容器中并且 首先执行<code>Docker exec</code>命令进入相应的PostgreSQL数据库容器</p>
 <p>应该看到下图这样，终端从宿主机切换进容器</p>
 <figure>
-<img data-src="/9112/image-20200109220232851.png" alt="" /><figcaption>img</figcaption>
+<img src="/9112/image-20200109220232851.png" alt="" /><figcaption>img</figcaption>
 </figure>
 <p>在容器的shell中用命令进入数据库</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">$ psql -h 127.0.0.1 -d doccano -U doccano -p 5432 # 注意你的host，数据库名、用户名和端口</span><br></pre></td></tr></table></figure>
 <p>应该看到下图这样，终端从Docker容器切进数据库</p>
 <figure>
-<img data-src="/9112/image-20200109220100751.png" alt="" /><figcaption>img</figcaption>
+<img src="/9112/image-20200109220100751.png" alt="" /><figcaption>img</figcaption>
 </figure>
 <p>然后执行<code>\l</code>等命令进入和查看数据库（执行SQL）</p>
 <h4 id="使用">使用</h4>
 <p>后台管理入口是这个http://yoursite/admin/，就是一个Django自带的后台管理</p>
 <figure>
-<img data-src="/9112/image-20200411204841203-1586654887394.png" alt="" /><figcaption>img</figcaption>
+<img src="/9112/image-20200411204841203-1586654887394.png" alt="" /><figcaption>img</figcaption>
 </figure>
 <figure>
-<img data-src="/9112/image-20200411205005107-1586654884937.png" alt="" /><figcaption>img</figcaption>
+<img src="/9112/image-20200411205005107-1586654884937.png" alt="" /><figcaption>img</figcaption>
 </figure>
 <figure>
-<img data-src="/9112/image-20200411205102588-1586654882966.png" alt="" /><figcaption>img</figcaption>
+<img src="/9112/image-20200411205102588-1586654882966.png" alt="" /><figcaption>img</figcaption>
 </figure>
 <p>登录进去后可自行添加账号和项目并设置权限和标签，标注项目选择sequential labeing即可，导出时选择JSONL格式</p>
 <p>这个数据比较多的时候没有自动跳转比较麻烦，请直接在浏览器地址栏使用url跳转</p>
 <p>比如，修改浏览器后面的url，#后面的offset改为685，直接回车，就可以从当前的689跳转到第685个数据</p>
 <p>http://yoursite/projects/6/#offset=685</p>
 <figure>
-<img data-src="/9112/image-20200307213544539.png" alt="" /><figcaption>img</figcaption>
+<img src="/9112/image-20200307213544539.png" alt="" /><figcaption>img</figcaption>
 </figure>
 <h2 id="注">注</h2>
 <p>https://github.com/doccano/doccano 一个开源的标注工具</p>
@@ -578,23 +581,6 @@ mjx-container[display="true"] + br {
     
     
     
-        
-
-<div>
-<ul class="post-copyright">
-  <li class="post-copyright-author">
-    <strong>本文作者： </strong>Zhang.jk
-  </li>
-  <li class="post-copyright-link">
-    <strong>本文链接：</strong>
-    <a href="https://zhangjk98.xyz/9112/" title="使用BERT进行电子病历的命名实体识别">https://zhangjk98.xyz/9112/</a>
-  </li>
-  <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
-  </li>
-</ul>
-</div>
-
 
       <footer class="post-footer">
           <div class="post-tags">
@@ -688,7 +674,7 @@ mjx-container[display="true"] + br {
   </span>
   <span class="author" itemprop="copyrightHolder">止息</span>
 </div>
-  <div class="powered-by">由 <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span> 强力驱动
+  <div class="powered-by">由 <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZw==">NexT.Gemini</span> 强力驱动
   </div>
 
         
@@ -708,7 +694,6 @@ mjx-container[display="true"] + br {
   <script src="/lib/anime.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/next-theme/pjax@0/pjax.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.5/medium-zoom.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
 
 <script src="/js/utils.js"></script>
 

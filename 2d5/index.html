@@ -16,14 +16,14 @@
 
 <link rel="stylesheet" href="/css/main.css">
 
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto+Serif+SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
   
   <link rel="stylesheet" href="/lib/animate-css/animate.min.css">
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"zhangjk98.xyz","root":"/","scheme":"Pisces","version":"8.0.0-rc.4","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":"Valine"},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"zhangjk98.xyz","root":"/","scheme":"Gemini","version":"8.0.0-rc.4","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":"Valine"},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 
   <meta name="description" content="祖传服务器传到了我的手里">
@@ -388,6 +388,9 @@ mjx-container[display="true"] + br {
         <a href="/atom.xml" title="RSS → /atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
       </span>
   </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></span>
+  </div>
 
 
   <div class="links-of-blogroll animated">
@@ -502,13 +505,13 @@ mjx-container[display="true"] + br {
     
     
     <div class="post-body" itemprop="articleBody">
-        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p><img width=100 data-src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/haixing.png" alt="Picture"/> 祖传服务器传到了我的手里 <a id="more"></a> 上回书说到，服务器一不小心卸载了iptables 现在准备重装。还是打算装Ubuntu Server（并不打算装Manjaro，也不适合搞桌面版，今天试过一下Ubuntu Desktop，图形化界面由于服务器没有独显直接卡到爆炸） <del>初步打算安装Ubuntu server 16.04.6LTS, 使用LVM分区</del> 安装Ubuntu18.04LTS，之前VPS用过一阵18，也没注意有什么新特性，据说还是改了一些东西⬇</p>
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p><img width=100 src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/haixing.png" alt="Picture"/> 祖传服务器传到了我的手里 <a id="more"></a> 上回书说到，服务器一不小心卸载了iptables 现在准备重装。还是打算装Ubuntu Server（并不打算装Manjaro，也不适合搞桌面版，今天试过一下Ubuntu Desktop，图形化界面由于服务器没有独显直接卡到爆炸） <del>初步打算安装Ubuntu server 16.04.6LTS, 使用LVM分区</del> 安装Ubuntu18.04LTS，之前VPS用过一阵18，也没注意有什么新特性，据说还是改了一些东西⬇</p>
 <blockquote>
 <p>据说 内核更新到了 Linux kernel 4.15，这就意味着新增了不少特性 bbr什么的 网络管理工具 ifupdown 已经彻底废弃，建议全面拥抱 ip 命令 DNS 由 systemd 全面接管，接口监听在 127.0.0.53:53，配置文件在 /etc/systemd/resolved.conf，修改后重启服务即可 systemctl restart systemd-resolved。不要听网上那些奇怪的教程教你如何修改 /etc/resolv.conf swap 文件来替代 swap 分区</p>
 </blockquote>
 <h2 id="装ubuntu16.04lts">装Ubuntu16.04LTS</h2>
 <h3 id="安装">安装</h3>
-<p>下载iso，制作启动盘，这里用的Rufus <img data-src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/rufus.png" alt="Picture" style="zoom:80%;" /></p>
+<p>下载iso，制作启动盘，这里用的Rufus <img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/rufus.png" alt="Picture" style="zoom:80%;" /></p>
 <p>然后直接装，网卡直接自动识别了，配置也没什么好说的，可以参考这里<sup id="fnref:1"><a href="#fn:1" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[tutorial-install-ubuntu-server](ttps://tutorials.ubuntu.com/tutorial/tutorial-install-ubuntu-server)
 ">[1]</span></a></sup>或这里<sup id="fnref:2"><a href="#fn:2" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[Ubuntu16.04.5以lvm方式安装全记录](https://blog.51cto.com/3241766/2323927)
  [LVM arch-wiki](https://wiki.archlinux.org/index.php/LVM_(简体中文))
@@ -523,7 +526,7 @@ mjx-container[display="true"] + br {
 `ssh-keygen -t rsa -C 'your_email@example.com'`
 再到Github的SSH设置里面把公钥填进去（id_rsa.pub里面的内容）
 然后测试一下是否成功
-<img data-src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/ssh-github.png" alt="Picture" style="zoom:80%;" />
+<img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/ssh-github.png" alt="Picture" style="zoom:80%;" />
 ） --></p>
 <p>然后是漫长的installing kernal （不知道为什么装server比desktop版慢那么多）</p>
 <p>bbr已经自带了，不用装了 设置root用户和用户组权限 装Docker参考这里<sup id="fnref:1"><a href="#fn:1" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[tutorial-install-ubuntu-server](ttps://tutorials.ubuntu.com/tutorial/tutorial-install-ubuntu-server)
@@ -550,7 +553,7 @@ mjx-container[display="true"] + br {
 <h3 id="感想">感想</h3>
 <p>服务器启动的声音真的大啊 一半以上的问题都是网络问题，校内这个网真的.... 靠镜像源救回半条狗命</p>
 <p>Ubuntu18安装时配置网卡时想选静态ip选择Manual进去填写subnet, 结果那个subnet选项是<code>XXX.XXX.XXX.XXX/XX</code> 看了教研室其他设备相同频段的子网掩码是<code>255.255.254.0</code>，但是填了不行，用网上计算子网掩码的工具算了一下，就是<code>255.255.254.0</code></p>
-<p><img data-src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/netmmask.png" alt="Picture" style="zoom:80%;" /></p>
+<p><img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/netmmask.png" alt="Picture" style="zoom:80%;" /></p>
 <p>暂时选了DHCP直接配置网卡，等进去再指定静态ip<sup id="fnref:4"><a href="#fn:4" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[How to Configure Network Static IP Address in Ubuntu 18.04](https://www.tecmint.com/configure-network-static-ip-address-in-ubuntu/)
 ">[4]</span></a></sup></p>
 <p>哦，netplan好像把子网掩码的格式改了 原来是这样 &gt;address = 192.168.225.50 netmask = 255.255.255.0</p>
@@ -586,23 +589,6 @@ mjx-container[display="true"] + br {
     
     
     
-        
-
-<div>
-<ul class="post-copyright">
-  <li class="post-copyright-author">
-    <strong>本文作者： </strong>Zhang.jk
-  </li>
-  <li class="post-copyright-link">
-    <strong>本文链接：</strong>
-    <a href="https://zhangjk98.xyz/2d5/" title="给服务器重装Ubuntu">https://zhangjk98.xyz/2d5/</a>
-  </li>
-  <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
-  </li>
-</ul>
-</div>
-
 
       <footer class="post-footer">
           <div class="post-tags">
@@ -696,7 +682,7 @@ mjx-container[display="true"] + br {
   </span>
   <span class="author" itemprop="copyrightHolder">止息</span>
 </div>
-  <div class="powered-by">由 <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span> 强力驱动
+  <div class="powered-by">由 <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZw==">NexT.Gemini</span> 强力驱动
   </div>
 
         
@@ -716,7 +702,6 @@ mjx-container[display="true"] + br {
   <script src="/lib/anime.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/next-theme/pjax@0/pjax.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.5/medium-zoom.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
 
 <script src="/js/utils.js"></script>
 

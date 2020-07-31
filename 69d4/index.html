@@ -16,14 +16,14 @@
 
 <link rel="stylesheet" href="/css/main.css">
 
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto+Serif+SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
   
   <link rel="stylesheet" href="/lib/animate-css/animate.min.css">
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"zhangjk98.xyz","root":"/","scheme":"Pisces","version":"8.0.0-rc.4","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":"Valine"},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"zhangjk98.xyz","root":"/","scheme":"Gemini","version":"8.0.0-rc.4","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":"Valine"},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 
   <meta name="description" content="开始折腾Docker，等待填坑">
@@ -384,6 +384,9 @@ mjx-container[display="true"] + br {
         <a href="/atom.xml" title="RSS → /atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
       </span>
   </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></span>
+  </div>
 
 
   <div class="links-of-blogroll animated">
@@ -606,7 +609,7 @@ mjx-container[display="true"] + br {
 <p>不对，我傻逼了，这是对外的端口啊。。。。</p>
 <p>等吧</p>
 <p><strong>更新</strong>是网费没了没充钱的问题...... 老蔡师兄不是校内的网连不上也是没充钱学校网管给断外网了...... 前几天那个Ubuntu Desktop的工作站最近也没钱了，但是http在终端可以用，镜像源什么的也能连，但是那个浏览器一打开就提示我登录账号。 突然意识到了不对，怀疑服务器的网也没钱了。 其实之前一直怀疑是被制裁了，但是工作站就是好的，才一直以为是SSL证书之类的问题 充钱之后，神奇的都能用了 看来是http神奇的逃脱了没钱的制裁 行吧，在这里排查了四五天，期间还重装过好几次Ubuntu Server 果然还是得充钱啊</p>
-<p><img data-src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/jiaqian.png" alt="Picture" style="zoom:60%;" /></p>
+<p><img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/jiaqian.png" alt="Picture" style="zoom:60%;" /></p>
 <h2 id="离线装docker镜像">离线装Docker镜像</h2>
 <p>教研室服务器的网一直出问题 决定离线搞Docker镜像 发现Docker有离线的方法，就是直接在别的机子上pull，然后</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker save -o mysql.tar mysql</span><br></pre></td></tr></table></figure>
@@ -635,23 +638,6 @@ http://dockone.io/article/660 https://jimmysong.io/docker-handbook/
     
     
     
-        
-
-<div>
-<ul class="post-copyright">
-  <li class="post-copyright-author">
-    <strong>本文作者： </strong>Zhang.jk
-  </li>
-  <li class="post-copyright-link">
-    <strong>本文链接：</strong>
-    <a href="https://zhangjk98.xyz/69d4/" title="Docker笔记">https://zhangjk98.xyz/69d4/</a>
-  </li>
-  <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
-  </li>
-</ul>
-</div>
-
 
       <footer class="post-footer">
           <div class="post-tags">
@@ -744,7 +730,7 @@ http://dockone.io/article/660 https://jimmysong.io/docker-handbook/
   </span>
   <span class="author" itemprop="copyrightHolder">止息</span>
 </div>
-  <div class="powered-by">由 <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span> 强力驱动
+  <div class="powered-by">由 <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZw==">NexT.Gemini</span> 强力驱动
   </div>
 
         
@@ -764,7 +750,6 @@ http://dockone.io/article/660 https://jimmysong.io/docker-handbook/
   <script src="/lib/anime.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/next-theme/pjax@0/pjax.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.5/medium-zoom.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
 
 <script src="/js/utils.js"></script>
 

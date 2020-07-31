@@ -16,14 +16,14 @@
 
 <link rel="stylesheet" href="/css/main.css">
 
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto+Serif+SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
   
   <link rel="stylesheet" href="/lib/animate-css/animate.min.css">
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"zhangjk98.xyz","root":"/","scheme":"Pisces","version":"8.0.0-rc.4","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":"Valine"},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"zhangjk98.xyz","root":"/","scheme":"Gemini","version":"8.0.0-rc.4","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":"Valine"},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 
   <meta name="description" content="等待填坑">
@@ -395,6 +395,9 @@ mjx-container[display="true"] + br {
         <a href="/atom.xml" title="RSS → /atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
       </span>
   </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></span>
+  </div>
 
 
   <div class="links-of-blogroll animated">
@@ -503,7 +506,7 @@ mjx-container[display="true"] + br {
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>等待填坑 <a id="more"></a></p>
 <h2 id="采集">采集</h2>
 <p>HRV测定的是NN间期(在正常的窦性心律时就是RR间期)的波动，主要与自主神经调控机制有关。标准的HRV根据正常窦性搏动的NN间期得出的（正常对正常间期，normal-to-normal,<em>NN</em> intervals，即由窦房结除极所致相邻QRS波群之间的所有间期）的变化来表示心率的变异性。</p>
-<p><img data-src="/2873/201804091523323502.png" alt="提取心率变异性" style="zoom: 67%;" /></p>
+<p><img src="/2873/201804091523323502.png" alt="提取心率变异性" style="zoom: 67%;" /></p>
 <h3 id="心电ecg">心电（ECG）</h3>
 <p>可以从心电图中直接提取R波尖峰并将RR间期的值用于心率变异性分析</p>
 <h3 id="心冲击图bcg">心冲击图（BCG）</h3>
@@ -511,7 +514,7 @@ mjx-container[display="true"] + br {
 <h3 id="光电容积图ppg">光电容积图（PPG）</h3>
 <p>目前市面上主要的脉搏波测量方法是光电容积脉搏波描记法（photoplethysmography），用光电传感器检测光经过人体的反射和衰减转换成电信号后得到，包括Apple Waltch等手环产品，用光电容积法检测血氧、心率、心率变异性等生理参数。</p>
 <figure>
-<img data-src="/2873/figure-1-optical-heart-rate-sensing.jpg" alt="" /><figcaption>光电容积法原理</figcaption>
+<img src="/2873/figure-1-optical-heart-rate-sensing.jpg" alt="" /><figcaption>光电容积法原理</figcaption>
 </figure>
 <p>PPG法采集到的脉搏波经过去噪和整流等处理后提取PP间期可以计算心率变异。</p>
 <h4 id="远程光电容积扫描">远程光电容积扫描</h4>
@@ -519,17 +522,17 @@ mjx-container[display="true"] + br {
 <p>但是这种方法成本高，易受到运动和光线变化的干扰。目前这个领域比较热门，进展也很快。一些补偿和增强鲁棒性的方法包括全局和局部运动跟踪和独立成分分析等。</p>
 <p>现在此类研究缺乏可靠的公开数据集支持，现有研究大多采用MAHNOB-HCI和DEAP等用于活体识别和情感识别的公开数据集和私有数据集。</p>
 <figure>
-<img data-src="/2873/figure-3-overview-hr-and-hrv.jpg" alt="" /><figcaption>rPPG-HRV</figcaption>
+<img src="/2873/figure-3-overview-hr-and-hrv.jpg" alt="" /><figcaption>rPPG-HRV</figcaption>
 </figure>
 <h2 id="产生机理和影响因素">产生机理和影响因素</h2>
 <figure>
-<img data-src="/2873/示意图.png" alt="" /><figcaption>示意图</figcaption>
+<img src="/2873/示意图.png" alt="" /><figcaption>示意图</figcaption>
 </figure>
 <blockquote>
 <p>HRV反映的是自主神经和非自主神经系统所有反馈回路极其复杂的非线性交互作用。自主神经系统是窦性节律条件下心率的主要调节机制。</p>
 </blockquote>
 <p>忽略微小的影响，HRV的高频部分主要受迷走神经的调节，低频部分受到迷走和交感神经的双重作用。</p>
-<p><img data-src="/2873/nero2.jpg" /></p>
+<p><img src="/2873/nero2.jpg" /></p>
 <blockquote>
 <p>交感神经增强自律性，而副交感神经抑制自律性。交感神经通过增加起搏点去极化程度产生变时性作用，而对心脏起搏点细胞的迷走刺激会引起超极化而降低去极化程度。自主神经的这两个分支均影响与心脏起搏细胞去极化相关的离子通道的活动。</p>
 </blockquote>
@@ -537,7 +540,7 @@ mjx-container[display="true"] + br {
 <p>在突然站立或倾斜时，压力反射活动也会引起心率的同步波动。</p>
 <p>在24小时HRV中，白天交感神经活动相对增强，心率较快，而夜间迷走神经活动增强，心率较慢。正常睡眠时，生理活动也随每个睡眠周期(约90分钟)而呈现明显节律。</p>
 <p>精神情绪的波动也会影响HRV，和迷走神经和交感神经系统的兴奋性有关。</p>
-<p><img data-src="/2873/image-20191225214555467.png" alt="image-20191225214555467" style="zoom:50%;" /></p>
+<p><img src="/2873/image-20191225214555467.png" alt="image-20191225214555467" style="zoom:50%;" /></p>
 <p>此外，非自主神经因素(如神经内分泌功能)也会影响HRV。</p>
 <p>心率变异性也和年龄、性别等因素有关。</p>
 <h2 id="主要指标和数据分析">主要指标和数据分析</h2>
@@ -567,10 +570,10 @@ mjx-container[display="true"] + br {
 <p>持续记录24小时或更久（几个月或一年以上）的长时间心电图数据，主要用来检测心律失常或传导异常和晕厥或晕厥前兆。</p>
 <p><span class="math inline">\(a\dot{b}c\)</span></p>
 <h5 id="洛伦兹散点图">洛伦兹散点图</h5>
-<p><img data-src="/2873/201804091524569747.png" alt="img" style="zoom:80%;" /></p>
+<p><img src="/2873/201804091524569747.png" alt="img" style="zoom:80%;" /></p>
 <p>把前1个心动周期长度（ms）定为横坐标、后1个心动周期长度（ms）定为纵坐标，即可在直角坐标系中确定一点。这样一个点就由3个QRS波（R波）、2个RR间期决定。第1个RR间期R1R2和第2个RR间期R2R3为第1个点，第2个RR间期R2R3和第3个RR间期R3R4为第2个点，依次类推，从R1 -&gt; Rn作图就可得到 n-2 个点，绘制心率散点图（洛伦兹散点图，Lorenz Plot），判断窦性心率、室上性和室性心率失常。正常窦性心律呈彗星状，心衰、房颤等症状会出现不同的散点图。窦性心律沿45°线分布，呈彗星状</p>
-<p><img data-src="/2873/image-20191224202624859.png" alt="室性早搏" style="zoom: 67%;" /></p>
-<p><img data-src="/2873/image-20191224202756257.png" alt="房性早搏" style="zoom: 67%;" /></p>
+<p><img src="/2873/image-20191224202624859.png" alt="室性早搏" style="zoom: 67%;" /></p>
+<p><img src="/2873/image-20191224202756257.png" alt="房性早搏" style="zoom: 67%;" /></p>
 <p>散点图可用于：</p>
 <p>评价心率波动范围（散点图的位置分布）</p>
 <p>评价自主神经调节（长轴）</p>
@@ -580,10 +583,10 @@ mjx-container[display="true"] + br {
 <p>首先对序列 <span class="math inline">\(RiR_{i+1}\)</span> 做一阶差分, 得到序列 <span class="math inline">\(d_j ,j=1,2,\dots N-1\)</span> 然后以 <span class="math inline">\((d_j, d_{j+1})\)</span> 为坐标绘制散点图（Poincaré散点图）。差值散点图反映了RR间期差值的离散度 ,对连续RR间期的变化十分敏感。</p>
 <p>首先对序列<span class="math inline">\(R_iR_{i\times1}\)</span>做一阶差分, 得到序列 <span class="math inline">\(d_j,j=1,2,\dots N-1\)</span> 然后以 <span class="math inline">\((d_j, d_{j+1})\)</span> 为坐标绘制散点图（Poincaré散点图）。差值散点图反映了RR间期差值的离散度 ,对连续RR间期的变化十分敏感。</p>
 <figure>
-<img data-src="/2873/image-20191225111057030.png" alt="" /><figcaption>健康人和CHF患者的散点图</figcaption>
+<img src="/2873/image-20191225111057030.png" alt="" /><figcaption>健康人和CHF患者的散点图</figcaption>
 </figure>
 <h5 id="三维散点图">三维散点图</h5>
-<p>三维散点图的一些意义还不明确，医院里实际用的也很少 <img data-src="/2873/3D-scatter-plot.png" alt="心率变异性三维散点图" /></p>
+<p>三维散点图的一些意义还不明确，医院里实际用的也很少 <img src="/2873/3D-scatter-plot.png" alt="心率变异性三维散点图" /></p>
 <h5 id="心率震荡hrt">心率震荡（HRT）</h5>
 <p>心率震荡（heart rate turbulence）是指发生室性早搏后，窦性心律出现短暂的加速和减速的过程。检测HRT异常有助于预测自主神经功能障碍以及心血管事件的风险增加。</p>
 <p>分析HRT通常需要24小时HRV动态心电图，主要有震荡初始(turbulence onset, TO)和震荡斜率(turbulence slope, TS)两个指标。</p>
@@ -632,23 +635,6 @@ mjx-container[display="true"] + br {
     
     
     
-        
-
-<div>
-<ul class="post-copyright">
-  <li class="post-copyright-author">
-    <strong>本文作者： </strong>Zhang.jk
-  </li>
-  <li class="post-copyright-link">
-    <strong>本文链接：</strong>
-    <a href="https://zhangjk98.xyz/2873/" title="也谈心率变异性">https://zhangjk98.xyz/2873/</a>
-  </li>
-  <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
-  </li>
-</ul>
-</div>
-
 
       <footer class="post-footer">
           <div class="post-tags">
@@ -742,7 +728,7 @@ mjx-container[display="true"] + br {
   </span>
   <span class="author" itemprop="copyrightHolder">止息</span>
 </div>
-  <div class="powered-by">由 <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span> 强力驱动
+  <div class="powered-by">由 <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZw==">NexT.Gemini</span> 强力驱动
   </div>
 
         
@@ -762,7 +748,6 @@ mjx-container[display="true"] + br {
   <script src="/lib/anime.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/next-theme/pjax@0/pjax.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.5/medium-zoom.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
 
 <script src="/js/utils.js"></script>
 

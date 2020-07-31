@@ -16,14 +16,14 @@
 
 <link rel="stylesheet" href="/css/main.css">
 
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto+Serif+SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
   
   <link rel="stylesheet" href="/lib/animate-css/animate.min.css">
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"zhangjk98.xyz","root":"/","scheme":"Pisces","version":"8.0.0-rc.4","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":"Valine"},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"zhangjk98.xyz","root":"/","scheme":"Gemini","version":"8.0.0-rc.4","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":"Valine"},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 
   <meta name="description" content="有两种鬼画符，一种是医生的字，一种是正则表达式">
@@ -387,6 +387,9 @@ mjx-container[display="true"] + br {
         <a href="/atom.xml" title="RSS → /atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
       </span>
   </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></span>
+  </div>
 
 
   <div class="links-of-blogroll animated">
@@ -536,7 +539,7 @@ mjx-container[display="true"] + br {
 <p>要提取的主要信息都在html部分里面，外层的xml里面没啥东西，我们直接把外层的xml扔了，解析里面的html</p>
 <p>另存为html就可以在浏览器里看到了，使用F12调试工具可以直接抓取html里面元素的xpath</p>
 <figure>
-<img data-src="/81d4/image-20200426094024186.png" alt="" /><figcaption>病历</figcaption>
+<img src="/81d4/image-20200426094024186.png" alt="" /><figcaption>病历</figcaption>
 </figure>
 <p>但是仔细一看发现这个病历的html标签每份不太一样，比如有的第10对p标签里面是主诉的东西，但是另一份病历第10对p标签里面是住院病人离院责任书。没有固定的标志位，不太好提，不如直接上正则。</p>
 <p>多看了几份病历发现小问题很多，格式一点也规整，比如主诉，不同病历有下面这几种</p>
@@ -544,13 +547,13 @@ mjx-container[display="true"] + br {
 <p>有的连冒号都被颜色标签截断了，最后索性用正则直接拉取含有主诉的p标签内的整段</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 主诉（re方法）</span></span><br><span class="line"><span class="comment"># chief_compliant = r&#x27;(?&lt;=&lt;STRONG&gt;主诉.*?&lt;/STRONG&gt;).*?(?=&lt;/FONT&gt;)|(?&lt;=&lt;STRONG&gt;主诉：&lt;/STRONG&gt;).*?(?=&lt;/FONT&gt;)&#x27;</span></span><br><span class="line">chief_compliant = <span class="string">r&#x27;&lt;P&gt;&lt;FONT color=steelblue&gt;.*?主诉.*?&lt;/P&gt;&#x27;</span></span><br><span class="line">chief = regex.search(chief_compliant, myhtml)</span><br></pre></td></tr></table></figure>
 <figure>
-<img data-src="/81d4/image-20200426220846518.png" alt="" /><figcaption>image-20200426220846518</figcaption>
+<img src="/81d4/image-20200426220846518.png" alt="" /><figcaption>image-20200426220846518</figcaption>
 </figure>
 <p>输出的结果再把标签、主诉二字和冒号等删去</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pyquery <span class="keyword">import</span> PyQuery</span><br><span class="line">chief_text = PyQuery(chief[<span class="number">0</span>])</span><br><span class="line"><span class="keyword">if</span> chief_text.text():</span><br><span class="line">    <span class="comment"># clean the chief compliant text</span></span><br><span class="line">    p1 = <span class="string">r&#x27;主诉|\n|:|：&#x27;</span></span><br><span class="line">    chief_clean = regex.sub(p1,<span class="string">&#x27;&#x27;</span>,str(chief_text.text()))</span><br><span class="line">    text.append(chief_clean)</span><br></pre></td></tr></table></figure>
 <p>差不多能看了</p>
 <figure>
-<img data-src="/81d4/image-20200426220726567.png" alt="" /><figcaption>image-20200426220726567</figcaption>
+<img src="/81d4/image-20200426220726567.png" alt="" /><figcaption>image-20200426220726567</figcaption>
 </figure>
 <p>再用同样的方法提现病史的时候遇到了问题，发现正则会把之前主诉的内容也匹配上，这是python正则的懒惰匹配只能向后没有向前。一个办法是抽出来然后删掉主诉</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 现病史（re方法）</span></span><br><span class="line">phpi = <span class="string">r&#x27;&lt;P&gt;&lt;FONT color=steelblue&gt;.*?现病史.*?&lt;/P&gt;&#x27;</span></span><br><span class="line">hpi = regex.search(phpi, myhtml)</span><br><span class="line"><span class="keyword">if</span> hpi:</span><br><span class="line">    <span class="comment"># remove_tag = r&#x27;&lt;[^&gt;]+&gt;&#x27;</span></span><br><span class="line">    <span class="comment"># hpi_no_tag = regex.sub(remove_tag,&#x27;&#x27;, hpi[0])</span></span><br><span class="line">    <span class="comment"># if hpi_no_tag:</span></span><br><span class="line">    <span class="comment">#     hpi_no_title_tag = regex.sub(r&#x27;主诉&#x27;,&#x27;&#x27;,hpi_no_tag[0])</span></span><br><span class="line">    <span class="comment">#     if hpi_no_title_tag:</span></span><br><span class="line">    <span class="comment">#         text.append(hpi_no_title_tag[0])</span></span><br><span class="line">    <span class="keyword">from</span> pyquery <span class="keyword">import</span> PyQuery</span><br><span class="line">    hpi_text = PyQuery(hpi[<span class="number">0</span>])</span><br><span class="line">    <span class="keyword">if</span> hpi_text.text():</span><br><span class="line">        <span class="comment"># clean the hpi compliant text</span></span><br><span class="line">        p1 = <span class="string">r&#x27;\n|:|：&#x27;</span></span><br><span class="line">        hpi_clean = regex.sub(p1,<span class="string">&#x27;&#x27;</span>,str(hpi_text.text()))</span><br><span class="line">        hpi_cut = regex.sub(<span class="string">&#x27;.*?(?=现病史)&#x27;</span>,<span class="string">&#x27;&#x27;</span>,hpi_clean)</span><br><span class="line">        hpi_end = regex.sub(<span class="string">&#x27;现病史&#x27;</span>,<span class="string">&#x27;&#x27;</span>,hpi_cut)</span><br><span class="line">        text.append(hpi_end)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    text.append(<span class="string">&#x27;Null&#x27;</span>)</span><br></pre></td></tr></table></figure>
@@ -576,23 +579,6 @@ mjx-container[display="true"] + br {
     
     
     
-        
-
-<div>
-<ul class="post-copyright">
-  <li class="post-copyright-author">
-    <strong>本文作者： </strong>Zhang.jk
-  </li>
-  <li class="post-copyright-link">
-    <strong>本文链接：</strong>
-    <a href="https://zhangjk98.xyz/81d4/" title="处理电子病历">https://zhangjk98.xyz/81d4/</a>
-  </li>
-  <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
-  </li>
-</ul>
-</div>
-
 
       <footer class="post-footer">
           <div class="post-tags">
@@ -686,7 +672,7 @@ mjx-container[display="true"] + br {
   </span>
   <span class="author" itemprop="copyrightHolder">止息</span>
 </div>
-  <div class="powered-by">由 <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span> 强力驱动
+  <div class="powered-by">由 <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZw==">NexT.Gemini</span> 强力驱动
   </div>
 
         
@@ -706,7 +692,6 @@ mjx-container[display="true"] + br {
   <script src="/lib/anime.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/next-theme/pjax@0/pjax.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.5/medium-zoom.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
 
 <script src="/js/utils.js"></script>
 

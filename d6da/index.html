@@ -16,14 +16,14 @@
 
 <link rel="stylesheet" href="/css/main.css">
 
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto+Serif+SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
   
   <link rel="stylesheet" href="/lib/animate-css/animate.min.css">
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"zhangjk98.xyz","root":"/","scheme":"Pisces","version":"8.0.0-rc.4","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":"Valine"},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"zhangjk98.xyz","root":"/","scheme":"Gemini","version":"8.0.0-rc.4","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":"Valine"},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 
   <meta name="description" content="教研室要倒闭啦，师兄毕业跑路啦！">
@@ -389,6 +389,9 @@ mjx-container[display="true"] + br {
         <a href="/atom.xml" title="RSS → /atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
       </span>
   </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></span>
+  </div>
 
 
   <div class="links-of-blogroll animated">
@@ -570,9 +573,9 @@ mjx-container[display="true"] + br {
 <p>看了一下，工作站那台DNS是<code>cat /etc/resolv.conf</code>是127.0.0.1，是DNSmasq托管的，而服务器上的还是你电的DNS，决定改了。 工作站上应该是这样的</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># &#x2F;etc&#x2F;network&#x2F;interfaces</span><br><span class="line">dns-nameservers 8.8.8.8</span><br></pre></td></tr></table></figure>
 <p>改了之后服务器的<code>resolv.conf</code>也是<code>127.0.0.1</code>了 又上大清的网站看了一下，发现居然在维护</p>
-<p><img data-src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/20191115103425.png" alt="Picture" style="zoom:80%;" /></p>
+<p><img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/20191115103425.png" alt="Picture" style="zoom:80%;" /></p>
 <p>换成你电的，好了，收工</p>
-<p><img data-src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/ubuntu-apt.png" alt="Picture" style="zoom:80%;" /></p>
+<p><img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/ubuntu-apt.png" alt="Picture" style="zoom:80%;" /></p>
 <p>又报了<code>Target Translations (main/i18n/Translation-en) is configured multiple times in</code>, 查了一下是指定apt源冲突了，删掉一个就好了</p>
 <h2 id="查看配置">查看配置</h2>
 <p>本来想用neofetch查看一下服务器的配置，结果apt装不了。 看了一下官方文档发现16.10要这样</p>
@@ -589,7 +592,7 @@ mjx-container[display="true"] + br {
 <h2 id="网络问题">网络问题</h2>
 <h3 id="网很慢">网很慢</h3>
 <p>很迷，有的地方很快，有的地方就几乎慢到断线。我的联通就经常ping不同。 据说老蔡师兄他那里也经常ping不通</p>
-<p><img data-src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/ping-ubuntu.jpg" alt="Picture" style="zoom:60%;" /></p>
+<p><img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/ping-ubuntu.jpg" alt="Picture" style="zoom:60%;" /></p>
 <p>就是网不好。。。而且上行网速更差，有的时候只有100k/s（用的是一个月20块的基础套餐，没加钱）</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Testing download speed..................................</span><br><span class="line">Download: 11.72 Mbyte&#x2F;s</span><br><span class="line">Testing upload speed....................................</span><br><span class="line">Upload: 2.45 Mbyte&#x2F;s</span><br></pre></td></tr></table></figure>
 <h3 id="掉线">掉线</h3>
@@ -608,17 +611,17 @@ mjx-container[display="true"] + br {
 <p>（其实MobaXterm有一个叫Multiexec的功能） 正在备份文件结果网断了（没办法，校园网就是这么....） 这时就要用tmux之类的工具了</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install tmux</span><br></pre></td></tr></table></figure>
 <h2 id="图形界面">图形界面</h2>
-<p>MobaXterm内嵌有Xserver，可以调出图形化窗口。 比如nedit,Emacs之类的 <img data-src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/xserver.png" alt="Picture" style="zoom:80%;" /> 已经足够应付简单的图形化界面需求了 完整的桌面需求请直接VNC或teamviewer到工作站操作。</p>
+<p>MobaXterm内嵌有Xserver，可以调出图形化窗口。 比如nedit,Emacs之类的 <img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/xserver.png" alt="Picture" style="zoom:80%;" /> 已经足够应付简单的图形化界面需求了 完整的桌面需求请直接VNC或teamviewer到工作站操作。</p>
 <h2 id="卸载遗留的docker并重装">卸载遗留的Docker并重装</h2>
 <p>目前还报这样的错</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cannot connect to the Docker daemon at unix:&#x2F;&#x2F;&#x2F;var&#x2F;run&#x2F;docker.sock. Is the docker daemon running?</span><br></pre></td></tr></table></figure>
 <p>似乎重装iptables的时候会直接把那个Docker的一部分依赖卸掉 （Docker好像还会直接修改默认的防火墙规则，emmmm)</p>
 <p>更新，解决了，是网络问题，离线装就好了</p>
 <h2 id="教研室的阿里云">教研室的阿里云</h2>
-<p>真的，有毒哇 <img data-src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/apt.png" alt="Picture" style="zoom:80%;" /> 是的，师兄跟我说没有apt。。。<strong>行吧</strong></p>
+<p>真的，有毒哇 <img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/apt.png" alt="Picture" style="zoom:80%;" /> 是的，师兄跟我说没有apt。。。<strong>行吧</strong></p>
 <p>装一个</p>
 <p>等等，不对劲，这是Centos啊</p>
-<p><img data-src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/centos.png" alt="Picture" style="zoom:80%;" /></p>
+<p><img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/centos.png" alt="Picture" style="zoom:80%;" /></p>
 <p>行吧...........那没事了。师兄真的.....我感觉我上了贼船</p>
 <h2 id="报备">报备</h2>
 <p>按学校信息中心的要求，固定IP都需要申请报备，还有一堆乱七八糟的事</p>
@@ -705,23 +708,6 @@ mjx-container[display="true"] + br {
     
     
     
-        
-
-<div>
-<ul class="post-copyright">
-  <li class="post-copyright-author">
-    <strong>本文作者： </strong>Zhang.jk
-  </li>
-  <li class="post-copyright-link">
-    <strong>本文链接：</strong>
-    <a href="https://zhangjk98.xyz/d6da/" title="教研室服务器维护">https://zhangjk98.xyz/d6da/</a>
-  </li>
-  <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
-  </li>
-</ul>
-</div>
-
 
       <footer class="post-footer">
           <div class="post-tags">
@@ -814,7 +800,7 @@ mjx-container[display="true"] + br {
   </span>
   <span class="author" itemprop="copyrightHolder">止息</span>
 </div>
-  <div class="powered-by">由 <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span> 强力驱动
+  <div class="powered-by">由 <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZw==">NexT.Gemini</span> 强力驱动
   </div>
 
         
@@ -834,7 +820,6 @@ mjx-container[display="true"] + br {
   <script src="/lib/anime.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/next-theme/pjax@0/pjax.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.5/medium-zoom.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
 
 <script src="/js/utils.js"></script>
 
