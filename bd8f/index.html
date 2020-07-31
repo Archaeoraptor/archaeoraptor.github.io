@@ -16,14 +16,14 @@
 
 <link rel="stylesheet" href="/css/main.css">
 
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto+Serif+SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
   
   <link rel="stylesheet" href="/lib/animate-css/animate.min.css">
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"zhangjk98.xyz","root":"/","scheme":"Pisces","version":"8.0.0-rc.4","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":"Valine"},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"zhangjk98.xyz","root":"/","scheme":"Gemini","version":"8.0.0-rc.4","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":"Valine"},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 
   <meta name="description" content="这里仅记录个人问题，找教程为什么不看看官方文档呢">
@@ -392,6 +392,9 @@ mjx-container[display="true"] + br {
         <a href="/atom.xml" title="RSS → /atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
       </span>
   </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></span>
+  </div>
 
 
   <div class="links-of-blogroll animated">
@@ -586,15 +589,15 @@ mjx-container[display="true"] + br {
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo@4.0.0</span><br></pre></td></tr></table></figure>
 <p>更新，现在hexo-cli包也上hexo4.0了，使用官网的那个带cli的命令就行了 升级之后试一下'hexo generate'</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">INFO  Files loaded in 1.94 s</span><br><span class="line">INFO  140 files generated in 3.07 s</span><br></pre></td></tr></table></figure>
-<p>好像是快了点 等等，更新了Hexo4.0以后下面的分页突然变成这个样子了，我先报个修 <img data-src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/20191016094709.png" alt="bug" style="zoom:80%;" /></p>
-<p><img data-src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/20191016095007.png" alt="bug" style="zoom:80%;" /></p>
+<p>好像是快了点 等等，更新了Hexo4.0以后下面的分页突然变成这个样子了，我先报个修 <img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/20191016094709.png" alt="bug" style="zoom:80%;" /></p>
+<p><img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/20191016095007.png" alt="bug" style="zoom:80%;" /></p>
 <p>找到了问题了，已经在<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2hleG9qcy9oZXhvL2lzc3Vlcy8zNzI5">issue#3729<i class="fa fa-external-link-alt"></i></span>里解决了 现在直接升级到master分支就行了</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> themes/next</span><br><span class="line">git pull https://github.com/theme-next/hexo-theme-next master</span><br><span class="line">git checkout master</span><br></pre></td></tr></table></figure>
 <p>看到显示这样就行了</p>
 <blockquote>
 <p>Already on 'master' Your branch is up to date with 'origin/master'.</p>
 </blockquote>
-<p><img data-src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/foot.png" alt="Picture" style="zoom:80%;" /> 好了，开心。目前没看到其他bug了，请放心更（cai）新（keng）</p>
+<p><img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/foot.png" alt="Picture" style="zoom:80%;" /> 好了，开心。目前没看到其他bug了，请放心更（cai）新（keng）</p>
 <p>更新，现在最新的master报这样的错：</p>
 <pre><code> ERROR Cannot read property &#39;replace&#39; of null</code></pre>
 <p>还有这样的错</p>
@@ -604,7 +607,7 @@ mjx-container[display="true"] + br {
 <p>先到namecheap或者namesilo等网站找个中意的域名，不介意在天朝备案腾讯和阿里云买也可以，不愿意花钱也可以申请个免费的。我这里0.99刀一年优惠买了个<a href="https://zhangjk98.xyz/">zhangjk98.xyz</a></p>
 <p>在netlify的domian setting里找到Custom domains按照提示来，可以参考这个<span class="exturl" data-url="aHR0cHM6Ly9tZWRpdW0uY29tL0BQdWRnZTE5OTYvMjAxOC0wMS0wMi03MDEzZWRkYzQxM2M=">使用 Netlify 托管个人网站 详细步骤<i class="fa fa-external-link-alt"></i></span></p>
 <h2 id="google-search-console-验证和配置">Google Search Console 验证和配置</h2>
-<p>这里以netlify为例，namesilo等域名商也可进行验证 <img data-src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/20190830141615.png" alt="dns验证" style="zoom:80%;" /> 有自己的域名可以直接选择domian验证，看<span class="exturl" data-url="aHR0cHM6Ly93d3cud29ndWlkZS5jb20vYXJjaGl2ZXMvNDg2MS5odG1s">这里<i class="fa fa-external-link-alt"></i></span> 打开netlify，找到dns setting，点击下方add new record 按钮 <img data-src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/20190830142257.png" alt="添加验证" /> value就填谷歌给你的那个值，等几分钟就好了</p>
+<p>这里以netlify为例，namesilo等域名商也可进行验证 <img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/20190830141615.png" alt="dns验证" style="zoom:80%;" /> 有自己的域名可以直接选择domian验证，看<span class="exturl" data-url="aHR0cHM6Ly93d3cud29ndWlkZS5jb20vYXJjaGl2ZXMvNDg2MS5odG1s">这里<i class="fa fa-external-link-alt"></i></span> 打开netlify，找到dns setting，点击下方add new record 按钮 <img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/20190830142257.png" alt="添加验证" /> value就填谷歌给你的那个值，等几分钟就好了</p>
 <h2 id="美化">美化</h2>
 <p>设置footer跳动的红心 在next配置里找到icon 设成下面这个样子</p>
 <pre><code>   icon: 
@@ -638,9 +641,9 @@ mjx-container[display="true"] + br {
 <h2 id="使用cloudflare和github-pages">使用Cloudflare和Github Pages</h2>
 <p>由于Netlify访问速度实在太慢（居然比Github Pages还慢），本来以为只是在国内慢，没想到收到一封邮件，说：</p>
 <p>然后我感觉不对劲，拿ping工具和网络测试工具（<span class="exturl" data-url="aHR0cHM6Ly9ndG1ldHJpeC5jb20=">https://gtmetrix.com<i class="fa fa-external-link-alt"></i></span>）看了一下，又查了一下，原来不仅国内慢啊，国外也比Github Pages慢啊 Netlify居然还说“Why You don't need clcoudflare”, 我。。。</p>
-<p><img width=450 data-src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/net5xx.png" alt="Picture" /></p>
+<p><img width=450 src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/net5xx.png" alt="Picture" /></p>
 <p>换回GitHub Pages和cloudlfare，还有CNAME Flatterning, 不需要备案的免费CDN也就cloudflare了。 ping检测结果终于不是一片飘红了。巨硬收购Github后说要建设Github国内的服务器，但是它自家的Azure、bing、onedrive都整天抽风，感觉指望不上了。</p>
-<p><img width=450 data-src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/ping.png" alt="Picture" /></p>
+<p><img width=450 src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/ping.png" alt="Picture" /></p>
 <p>现在唯一的问题就是图床用的Github，已经弃疗，国内速度不管了。</p>
 <p>可能的小坑：开启coludflare的 rocket loader 功能后会出错（这是个实验性的功能），Next主题会变成一片空白，一直加载不出来。关掉就好了。</p>
 <h2 id="提高加载速度">提高加载速度</h2>
@@ -669,23 +672,6 @@ mjx-container[display="true"] + br {
     
     
     
-        
-
-<div>
-<ul class="post-copyright">
-  <li class="post-copyright-author">
-    <strong>本文作者： </strong>Zhang.jk
-  </li>
-  <li class="post-copyright-link">
-    <strong>本文链接：</strong>
-    <a href="https://zhangjk98.xyz/bd8f/" title="Hexo博客部署和Next主题设置">https://zhangjk98.xyz/bd8f/</a>
-  </li>
-  <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
-  </li>
-</ul>
-</div>
-
 
       <footer class="post-footer">
           <div class="post-tags">
@@ -780,7 +766,7 @@ mjx-container[display="true"] + br {
   </span>
   <span class="author" itemprop="copyrightHolder">止息</span>
 </div>
-  <div class="powered-by">由 <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span> 强力驱动
+  <div class="powered-by">由 <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZw==">NexT.Gemini</span> 强力驱动
   </div>
 
         
@@ -800,7 +786,6 @@ mjx-container[display="true"] + br {
   <script src="/lib/anime.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/next-theme/pjax@0/pjax.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.5/medium-zoom.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
 
 <script src="/js/utils.js"></script>
 
