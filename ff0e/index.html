@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/uploads/wizard-hat-16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/uploads/wizard-hat-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/uploads/wizard-hat-16.png">
+  <link rel="mask-icon" href="/uploads/wizard-hat-32.png" color="#222">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="google-site-verification" content="OwUki9pTQANwT767yFIY9v_Qx4gl55MFLe3lggNnHbw">
+  <meta name="msvalidate.01" content="872DC4637276109A6B54FF149DCABA8A">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto+Serif+SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+  
+  <link rel="stylesheet" href="/lib/animate-css/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"zhangjk98.xyz","root":"/","scheme":"Pisces","version":"8.0.0-rc.4","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":"Valine"},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+
+  <meta name="description" content="本来我是想装个双系统的，但是想起教研室还有两个老主机，那就.....">
+<meta property="og:type" content="article">
+<meta property="og:title" content="你好，Manjaro。再见，Manjaro。">
+<meta property="og:url" content="https://zhangjk98.xyz/ff0e/index.html">
+<meta property="og:site_name" content="止息的碎碎念">
+<meta property="og:description" content="本来我是想装个双系统的，但是想起教研室还有两个老主机，那就.....">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://zhangjk98.xyz/ff0e/neofetch-manjaro.webp">
+<meta property="article:published_time" content="2020-01-17T02:41:09.000Z">
+<meta property="article:modified_time" content="2020-07-31T13:14:41.837Z">
+<meta property="article:author" content="Zhang.jk">
+<meta property="article:tag" content="manjaro">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zhangjk98.xyz/ff0e/neofetch-manjaro.webp">
+
+<link rel="canonical" href="https://zhangjk98.xyz/ff0e/">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>你好，Manjaro。再见，Manjaro。 | 止息的碎碎念</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143393734-1"></script>
+    <script data-pjax>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-143393734-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style><link rel="alternate" href="/atom.xml" title="止息的碎碎念" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <main class="main">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">止息的碎碎念</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">阴，气温20℃至32℃</p>
+      <img class="custom-logo-image" src="/uploads/hollowknight.webp" alt="止息的碎碎念">
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0%E5%86%8D%E8%A7%81manjaro"><span class="nav-number">1.</span> <span class="nav-text">更新———再见Manjaro</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE"><span class="nav-number">3.</span> <span class="nav-text">配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8D%A2%E9%95%9C%E5%83%8F%E6%BA%90"><span class="nav-number">3.1.</span> <span class="nav-text">换镜像源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%93%E5%85%A5%E6%B3%95"><span class="nav-number">3.2.</span> <span class="nav-text">输入法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E5%8C%85%E7%AE%A1%E7%90%86"><span class="nav-number">3.3.</span> <span class="nav-text">软件包管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#pacman"><span class="nav-number">3.3.1.</span> <span class="nav-text">pacman</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#yay%E5%AE%89%E8%A3%85aur%E8%BD%AF%E4%BB%B6"><span class="nav-number">3.3.2.</span> <span class="nav-text">yay安装AUR软件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pamac"><span class="nav-number">3.3.3.</span> <span class="nav-text">pamac</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E4%B8%8A%E5%86%B2%E6%B5%AA"><span class="nav-number">3.4.</span> <span class="nav-text">网上冲浪</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">3.5.</span> <span class="nav-text">其他</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E8%AE%BE%E7%BD%AE%E7%9A%84%E5%B0%8F%E9%97%AE%E9%A2%98"><span class="nav-number">3.5.1.</span> <span class="nav-text">一些设置的小问题</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8E%E8%AE%B0"><span class="nav-number">4.</span> <span class="nav-text">后记</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%B6%E9%9A%945%E4%B8%AA%E6%9C%88%E7%9A%84%E6%9B%B4%E6%96%B0"><span class="nav-number">5.</span> <span class="nav-text">时隔5个月的更新</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%94%E8%AE%B0%E6%9C%AC%E4%B9%9F%E6%8D%A2%E6%88%90manjaro%E4%BA%86"><span class="nav-number">6.</span> <span class="nav-text">笔记本也换成Manjaro了</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-1"><span class="nav-number">6.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%98%BE%E5%8D%A1%E9%A9%B1%E5%8A%A8%E9%97%AE%E9%A2%98"><span class="nav-number">6.2.</span> <span class="nav-text">显卡驱动问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%BA%A6%E5%85%8B%E9%A3%8E%E5%A3%B0%E5%8D%A1%E9%85%8D%E7%BD%AE"><span class="nav-number">6.3.</span> <span class="nav-text">麦克风声卡配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mm%E8%80%B3%E6%9C%BA%E6%B2%A1%E5%A3%B0%E9%9F%B3"><span class="nav-number">6.4.</span> <span class="nav-text">3.5mm耳机没声音</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%80%97%E7%94%B5%E9%97%AE%E9%A2%98"><span class="nav-number">6.5.</span> <span class="nav-text">耗电问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%A3%E7%83%AD"><span class="nav-number">6.6.</span> <span class="nav-text">散热</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E4%B8%AA%E4%BA%BA%E8%AE%BE%E7%BD%AE"><span class="nav-number">7.</span> <span class="nav-text">其他个人设置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6"><span class="nav-number">7.1.</span> <span class="nav-text">常用软件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%AD%E8%8B%B1%E8%AF%8D%E5%85%B8%E7%BF%BB%E8%AF%91%E5%92%8C%E5%8C%BB%E5%AD%A6%E8%AF%8D%E5%85%B8"><span class="nav-number">7.1.1.</span> <span class="nav-text">中英词典翻译和医学词典</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%9A%E5%AE%A2%E6%90%AC%E8%BF%81"><span class="nav-number">7.2.</span> <span class="nav-text">博客搬迁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#windows%E8%BD%AF%E4%BB%B6%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">7.3.</span> <span class="nav-text">windows软件解决方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E4%B8%8A%E5%86%B2%E6%B5%AA-1"><span class="nav-number">7.4.</span> <span class="nav-text">网上冲浪</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AD%E8%8B%B1%E6%96%87%E5%92%8C%E5%AD%97%E4%BD%93%E8%AE%BE%E7%BD%AE"><span class="nav-number">7.5.</span> <span class="nav-text">中英文和字体设置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8A%8A%E6%A1%8C%E9%9D%A2%E6%96%87%E4%BB%B6%E5%A4%B9%E6%94%B9%E5%9B%9E%E8%8B%B1%E6%96%87"><span class="nav-number">7.5.1.</span> <span class="nav-text">把桌面文件夹改回英文</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tty%E4%B8%AD%E6%96%87%E4%B8%8D%E6%98%BE%E7%A4%BA"><span class="nav-number">7.5.2.</span> <span class="nav-text">tty中文不显示</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%8D%E9%97%A8%E7%AD%89%E5%AD%97%E4%BD%93%E6%98%BE%E7%A4%BA%E6%97%A5%E6%96%87"><span class="nav-number">7.5.3.</span> <span class="nav-text">复门等字体显示日文</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8"><span class="nav-number">8.</span> <span class="nav-text">注</span></a></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Zhang.jk"
+      src="/uploads/jinmao.webp">
+  <p class="site-author-name" itemprop="name">Zhang.jk</p>
+  <div class="site-description" itemprop="description">in darkest night</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FyY2hhZW9yYXB0b3I=" title="GitHub → https://github.com/archaeoraptor"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOnpoYW5nams2N0BnbWFpbC5jb20=" title="E-Mail → mailto:zhangjk67@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → /atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      友链
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly91ZXN0Yy5pY3U=" title="https://uestc.icu">uestc.icu</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly96aGFuZ3NodXFpYW8ub3Jn" title="https://zhangshuqiao.org">米米的博客</span>
+        </li>
+    </ul>
+  </div>
+
+      </section>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </header>
+
+      
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FyY2hhZW9yYXB0b3I=" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+      <div class="main-inner">
+        
+
+        <div class="content post posts-expand">
+          
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zhangjk98.xyz/ff0e/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/jinmao.webp">
+      <meta itemprop="name" content="Zhang.jk">
+      <meta itemprop="description" content="in darkest night">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="止息的碎碎念">
+    </span>
+
+    
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          你好，Manjaro。再见，Manjaro。
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-01-17 10:41:09" itemprop="dateCreated datePublished" datetime="2020-01-17T10:41:09+08:00">2020-01-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-31 21:14:41" itemprop="dateModified" datetime="2020-07-31T21:14:41+08:00">2020-07-31</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/ff0e/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/ff0e/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>本来我是想装个双系统的，但是想起教研室还有两个老主机，那就..... <a id="more"></a></p>
+<p><del>装Arch是不可能装Arch的</del></p>
+<h2 id="更新再见manjaro">更新———再见Manjaro</h2>
+<p>前一阵Manjaro社区出的争吵让我跑路了，Manjaro之前用的还比较舒服（当然直到现在都比较舒服），以后就不知道怎么样了。外面Arch社区骂声一片，里面还总在内斗，不断有人出走，前几周连jonathon都气走了（跑去隔壁endeavour os了）</p>
+<p>jonathon的声明在<span class="exturl" data-url="aHR0cHM6Ly9mb3J1bS5tYW5qYXJvLm9yZy90L2NoYW5nZS1vZi10cmVhc3VyZXItZm9yLW1hbmphcm8tY29tbXVuaXR5LWZ1bmRzLzE1NDg4OA==">这篇帖子<i class="fa fa-external-link-alt"></i></span></p>
+<p>过程大概是这样的，philm（Manjaro的CEO，反正Manjaro社区的不少人都觉得此人非常讨厌）挪用社区赞助捐款2000欧元，用于给自己买的电脑。这次购买并没有跟掌钱管家jonathon商量，也没有在社区内征得同意。jonathon觉得按照规定这钱只能用于Manjaro项目的网站建设、项目推广之类的，不是给你们恰烂钱的，然后在论坛发帖子怼philm，然后帖子被删了一次，jonathon的管理员也被撤了。帖子下面众人纷纷表示philm不回应道歉以后再也不捐助Manjaro了，不少人表示以后再也不用Manjaro了，并考虑跑路到KDE Neon、Kubuntu、Arch、Endeavour OS。</p>
+<p>philm的回应闪烁其辞，一直说事情不是大家想的那个样子的，但是大家怼他让他公布他和jonathon的完整聊天记录他又不肯。最后philm屁事没有，jonathon跑路去了Endeavour OS。</p>
+<p>我之前从Ubuntu换到Manjaro，现在跟着jonathon跑到endeavour os（Antergos 的后继项目），因为懒得搞网卡驱动和g双显卡驱动了（这个Arch系的发行版显卡驱动、TLP和s-tui之类的也会附带装上，默认xfce桌面有很多系统自带的定制，我装的KDE，基本上相对于Arch没怎么魔改，附带了驱动个和很多常用的包）目前用着感觉还好，观察一下再评价。</p>
+<h2 id="安装">安装</h2>
+<p>选Manjaro是因为对华硕老主板的硬件和驱动支持比较好，安装也比较方便（我可不想自己折腾Nvida驱动）。</p>
+<p>（喜欢KDE桌面，又不想用openSUSE，Kubuntu之前试过体验不是特别好，转了一圈就Manjaro了）</p>
+<p>去官网下了最新版的 Manjaro18.1.5 KDE桌面版本，还是拿Rufus做好启动盘用UEFI装，这里把空闲的老机子直接擦除原来已毕业师兄的win10（erase disk），选 no Hibernate（我不太喜欢systemd，就没设休眠）</p>
+<p>看到选项里有个选择LibreOffice还是Free Office的选项，这里我选了FreeOffice试用，体验过两个月再回来填坑写体会。 （更新，还是WPS吧。。。）</p>
+<p>可以断网安装。没有遇到问题，直接装好了，超乎想象的顺利。唯一的小插曲是装完系统后U盘只剩4M空间，用win10默认的格式化找不回来了，看了<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8zNzc3MjgyNQ==">这里<i class="fa fa-external-link-alt"></i></span> 网上教程已经很多了，我也不打算再写一篇了，下面仅作个人记录(其实并不怎么需要教程，过时得太快，还不如直接看官方wiki或者iso里打包的安装手册，不想看直接照着提示直接装都没问题，比Ubuntu好装太多了) <img data-src="/ff0e/neofetch-manjaro.webp" alt="manjaro-neofetch" /> 内置python是3.8.1，我一时竟有些不习惯😂</p>
+<h2 id="配置">配置</h2>
+<h3 id="换镜像源">换镜像源</h3>
+<p>当然还是换成你电的，在<code>/​etc/​pacman.d/​mirrorlist</code>加上你电</p>
+<h3 id="输入法">输入法</h3>
+<p>更新，现在有一个官方打包的AUR： manjaro-asian-input-support，在community里面，有manjaro-asian-input-support-fcitx、manjaro-asian-input-support-ibus、manjaro-asian-input-support-ibus、manjaro-asian-input-support-fcitx5</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S manjaro-asian-input-support-fcitx</span><br></pre></td></tr></table></figure>
+<p>然后重启直接就能用了</p>
+<p>KDE推荐fcitx，Gnome下大概ibus体验会好一点？（好吧其实我之前在Ubuntu Gnome上用的也是fcitx）</p>
+<p><strong>下面这些都不用看了</strong></p>
+<p>我用的<del>sunpinyin</del>libpinyin（一个比sunpinyin更新的输入法），googlepinyin也可以，sougoupinyin不推荐，对于它的流氓行为我实在无法放心（如果非要装，记得装fcitx qt4 或 qt5）</p>
+<p>如果想要联网提示的功能可以装个cloudpinyin(要用archlinuxcn的源)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S fcitx-im fcitx-googlepinyin fcitx-libpinyin fcitx-cloudpinyin</span><br></pre></td></tr></table></figure>
+<p>有个小问题，那个很多教程都写的/.xproflie, 官方wiki里新版是 ~/.pam_environment里面加上那三行, fcitx官网上说是那个~./xprofile, 这里我放到.pam_enviroment里面了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GTK_IM_MODULE&#x3D;fcitx</span><br><span class="line">QT_IM_MODULE&#x3D;fcitx</span><br><span class="line">XMODIFIERS&#x3D;@im&#x3D;fcitx</span><br></pre></td></tr></table></figure>
+<p>然后点开右下角键盘的configure（配置）看不到输入法了，界面是空的，以为是系统语言非中文的问题，但是换了系统语言重启了以后还是不行。 运行了一下fcitx-diagnose, 报这个错误</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fcitx: BadWindow (invalid Window parameter)</span><br></pre></td></tr></table></figure>
+<p>感觉是看不知道哪个教程的时候在~/.xinitrc里面乱配置的时候出问题了</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> LC_ALL=zh_CN.UTF-8</span><br><span class="line"><span class="built_in">export</span> GTK_IM_MODULE=fcitx</span><br><span class="line"><span class="built_in">export</span> QT_IM_MODULE=fcitx</span><br><span class="line"><span class="built_in">export</span> XMODIFIERS=<span class="string">&quot;@im=fcitx&quot;</span></span><br></pre></td></tr></table></figure>
+<p>搜了一下是我弱智了，看<span class="exturl" data-url="aHR0cHM6Ly9iYnMuYXJjaGxpbnV4Y24ub3JnL3ZpZXd0b3BpYy5waHA/aWQ9MTg2Mg==">这里<i class="fa fa-external-link-alt"></i></span>，照着教程乱搞的时候都没注意到。 这里把exec放到后面就行了，或者放到.xprofile里面</p>
+<p>配置看这里 https://fcitx-im.org/wiki/Configure_(Other)/zh-hans</p>
+<p>我看很多教程都是用的fcitx-configtool，这里推荐KDE桌面用kcm-fcitx进行设置，也可以直接编辑config文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S kcm-fcitx</span><br></pre></td></tr></table></figure>
+<h3 id="软件包管理">软件包管理</h3>
+<h4 id="pacman">pacman</h4>
+<p>装包首选pacman，然后是AUR，然后是其他pip、npm、deb之类的包（貌似Manjaro发布的20版pamac软件商店还支持了snap和flatpac......），然后是自己编译（对自己打包技术自信的编译狂魔请无视), 这样可以避免不少包冲突。 yaourt已经停止维护了<sup id="fnref:1"><a href="#fn:1" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="https://wiki.archlinux.org/index.php/AUR_helpers
+">[1]</span></a></sup>，2020年了很多教程都还是这个，请自行换成yay<sup id="fnref:2"><a href="#fn:2" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="https://github.com/Jguer/yay
+">[2]</span></a></sup>等</p>
+<p>另外多说一句，Manjaro很多地方和Arch还是不一样的，随便添加arch源或者archlinuxcn源是要出问题的</p>
+<p>要加包优先从AUR里面加，尽量不要用archlinuxcn里的东西，Manjaro很多魔改和更新依赖版本速度和Arch不一样，非要使用archlinuxcn灵车漂移就把Manjaro设成unstable（并且出了事不要去archlinuxcn那里问，切记）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman-mirrors --api --<span class="built_in">set</span>-branch unstable</span><br></pre></td></tr></table></figure>
+<p>虽然名字叫unstable，但是它和Arch的stable基本上是类似的（它还要比Arch的stable慢三天），这意味着换成unstable再上archlinuxcn源灵车漂移翻车的几率会小一点。</p>
+<p>Manjaro的包会比Arch的更新频率慢一点，Manjaro有三种选项，stable，testing和unstable，unstable比Arch的stable慢三天左右，testing比unstable慢，stable比testing慢。一般只是延后了几周而已，可以放心上unstable</p>
+<h4 id="yay安装aur软件">yay安装AUR软件</h4>
+<p>这里用vscode举个栗子</p>
+<p>不像apt有官方包，VSCode在文档上说可以用这个<span class="exturl" data-url="aHR0cHM6Ly9jb2RlLnZpc3VhbHN0dWRpby5jb20vZG9jcy9zZXR1cC9saW51eCNfYXVyLXBhY2thZ2UtZm9yLWFyY2gtbGludXg=">非官方包<i class="fa fa-external-link-alt"></i></span></p>
+<p>按照正常的AUR安装方式是这样的</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S git</span><br><span class="line"><span class="built_in">cd</span> /Downloads</span><br><span class="line">git <span class="built_in">clone</span> https://AUR.archlinux.org/visual-studio-code-bin.git</span><br><span class="line"><span class="built_in">cd</span> visual-studio-code-bin/</span><br><span class="line">sudo pacman -U visual-studio-code-bin-*.pkg.tar.xz</span><br><span class="line"><span class="built_in">cd</span> ../ &amp;&amp; sudo rm -rfv visual-studio-code-bin/</span><br><span class="line">code .</span><br></pre></td></tr></table></figure>
+<p>这里我们有<code>yay -S visual-studio-code-bin</code>可以代替上面那一串命令（pacman现在也有了包，直接pacman就好了<code>pacman -S code</code>）</p>
+<h4 id="pamac">pamac</h4>
+<p>另一种方法是直接从软件商店里点击安装，pamac或者octopi，其实也不算win10 巨硬store或者snap那种软件商店，大概就是一个pacman的GUI客户端吧（很多时候报错和提示并不好用，建议下载和更新还是用命令）</p>
+<p>尤其不要同时开着pamac图形界面并打开pacman，pacman进程加锁出错系统容易崩了</p>
+<h3 id="网上冲浪">网上冲浪</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S v2ray</span><br></pre></td></tr></table></figure>
+<p>把config.json放到/etc/v2ray下面 然后配置开机自启和启动（这里用systemd）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="built_in">enable</span> v2ray  <span class="comment">#开机启动</span></span><br><span class="line">systemctl start v2ray</span><br></pre></td></tr></table></figure>
+<p>然后配合switchyomega或者<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21lbGxvdy1pby9tZWxsb3c=">mellow<i class="fa fa-external-link-alt"></i></span>或者<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3JvZmwwci9wcm94eWNoYWlucy1uZw==">proxychains-ng<i class="fa fa-external-link-alt"></i></span></p>
+<p>如果还是习惯客户端可以试试v2rayA<sup id="fnref:3"><a href="#fn:3" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="https://aur.archlinux.org/packages/v2raya
+">[3]</span></a></sup></p>
+<h3 id="其他">其他</h3>
+<p>暂时没什么要说了，过一个月再来说体验吧，美化什么的也不想搞了，老主机带不动，我也老了，哎呀，对花里胡哨的欣赏不来了，一律默认配置</p>
+<p>想起什么再说吧，ArchWiki真棒，看Wiki吧</p>
+<h4 id="一些设置的小问题">一些设置的小问题</h4>
+<p>装完输入法之后输入法调不出来了，发现Yakuake也调不出来了，感觉快捷键设置冲突，改快捷键设置就好了。</p>
+<h2 id="后记">后记</h2>
+<p>总能看到一大批Arch玩家在Linux群里发洗手图疯狂劝退Manjaro用户 但是看到下面这篇，我决定还是用Manjaro吧。各种洗手劝退根本没给出让我换系统的强力理由 <span class="exturl" data-url="aHR0cHM6Ly9yZW50cnkuY28vbWFuamFyby1jb250cm92ZXJzaWVz">Manjaro Controversies<i class="fa fa-external-link-alt"></i></span> 中文版<span class="exturl" data-url="aHR0cHM6Ly9zemNsc3lhLm1lL3poLWNuL3Bvc3RzL2xpbnV4L21hbmphcm9fY29udHJvdmVyc2llcy8=">[译] Manjaro 悖论<i class="fa fa-external-link-alt"></i></span> 我还用windows呢，我还用Ubuntu呢，本弱智儿童欢乐多，你们随便怎么鄙视。自从当了硬件逃兵不折腾板子不玩单片机树莓派我连C都不怎么用，欢乐的拿python乱写脚本呢，节省心智的东西有时候真是好东西</p>
+<p>人生苦短， In the long run, we are all dead（虽然我并不喜欢凯恩斯主义）</p>
+<p>我一直觉得商业化是个好事，尤其是操作系统这种东西。私以为大多数情况下知识产权是个好东西，收费也是个好东西，垄断是个坏东西。开源的一个重要贡献就是打破垄断。（虽然现在很多专利什么的都被玩坏了，特别是国内） 操作系统这种工业级的东西，商业化是正道，<strong>微软的问题在于它的垄断，而不是商业化</strong></p>
+<p>开源公司主动商业化上去抢市场抢用户，是好事哇 <!-- 
+开源挺好的，但我不是个自由软件的教徒，也不是一个马教教徒，我对乌托邦的幻梦没什么兴趣
+
+很多开源社区都有浓厚的抵触商业化的感情，但是现在经济并不好了，不少泡沫也要破了。软件传播成本接近零、容易破解、大家不愿意为软件买单，再加上近十几年国内外软件行业整体上升期，过的还不错，开源这么搞还能活得下去，靠着捐款和用爱发电也能过过日子。
+看看硬件行业，开源早就没多少地盘了，一个比一个封闭。
+你看论坛什么的，好多靠着版主和众筹能一直不盈利几十年活的好好的，烧钱的视频网站就不行，a站没几年就凉了。拒绝任何商业化却又需要很多投入又不直接带来太多价值的开源项目，只能越来越凉。
+有比例巨大的开源用户都是被免费吸引而来的白嫖党，开源社区没有像邪教分权那样的筹钱能力，消耗很大的大项目，吃枣要凉。
+个人英雄主义、理想主义、全球化的时代正在缓缓退去，孤立主义和贸易保护主义要来了，时间不等人。再这样下去，开源社区和小公司肯定要倒一大批，垄断集团只会越发强盛。
+再多出多几个红帽那种的公司都算是烧高香了，市场总有人要抢，SUN那种好公司倒了，Oracle那种讼棍公司能把你们恶心死。很多人不喜欢Java就是让Oracle给恶心的，开源警察和自由软件警察再这么搞下去，好社区和好公司只会倒闭得更快。
+
+扯远了，如果不怕滚炸，非重要工作环境，Manjaro是一个还不错的个人桌面版，大概像 Linux mint 那样值得一试。
+ --> （这Manjaro一股 Windows Vista 味，好看好用，bug多也能接受</p>
+<h2 id="时隔5个月的更新">时隔5个月的更新</h2>
+<p>终于返校了，这疫情闹得，哎呀</p>
+<p>据说长时间不追滚动更新可能滚炸，不管了，硬着头皮试一下</p>
+<p>直接</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -Syyu</span><br></pre></td></tr></table></figure>
+<p>更新后重启显示密码不对，不知道是什么问题，试着重置了一下密码</p>
+<p>（并不是我忘记密码了，这里据说前一阵不少人的KDE桌面密码出问题登录认证失败了）</p>
+<p>重启按esc进grub</p>
+<p>按e，在有<code>linux /boot /vmlinuz-linux</code>的那一行添加<code>init=/bin/bash</code></p>
+<p>ctrl+x出去输入<code>mount -n -o remount,rw /</code>给根目录读写权限，然后输<code>passwd</code>改密码，然后<code>reboot</code>重启</p>
+<p>看起来没什么问题了，隔了几个月也没滚炸（至少看起来没有）</p>
+<h2 id="笔记本也换成manjaro了">笔记本也换成Manjaro了</h2>
+<h3 id="安装-1">安装</h3>
+<p>小破本是灵越7591，不太想用win10了，Dell家的大部分系列都完美兼容Ubuntu（国外出售的7590的还有个developer版的装的就是Ubuntu，比预装win10少了一点微软授权费，可惜国内没有）</p>
+<p>看到他们好多用黑苹果，我的本子不是4k，就没上黑果。（黑果Nvida独显也用不了）</p>
+<p>Manjaro看到别人装上去还不错，索性就装Manjaro了（除了麦克风和显卡的驱动有点小麻烦，其他的蓝牙wifi触控板键盘休眠一切正常）Archwiki上也有同系列7590的参考<sup id="fnref:5"><a href="#fn:5" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="https://wiki.archlinux.org/index.php/Dell_Inspiron_15_(7590)">[5]</span></a></sup></p>
+<p>BIOS里关secureboot，改raid on为AHIC（不装双系统可以忽略，双系统记得改AHIC不然win10会蓝屏卡在启动界面）</p>
+<p>装完发现Manjaro 20居然添加了snap商店，这是要跟Canonical同流合污？（逐渐Ubuntu化</p>
+<p>KDE桌面内存占用在700M左右，还行</p>
+<p>Ubuntu的显卡和外接显示器对Dell的本子都配适的极好，有Dell官方担保，不想折腾可以直接上Ubuntu（这款海外版有的就是预装Ubuntu，双显卡解决方案应该是Prime）</p>
+<h3 id="显卡驱动问题">显卡驱动问题</h3>
+<p>不需要Nvida的卡就直接选free，装intel的核显就好了</p>
+<p>想用Nvida的卡（好歹是一块1650ti不用太浪费了），装的时候Manjaro驱动选项可以直接选nofree，会自带</p>
+<p>切换双显卡的配置可能导致看视频时卡成PPT，禁用硬件加速就好了，7591的丐版CPU硬解码也是带的动视频的（1080p没有任何问题）</p>
+<h3 id="麦克风声卡配置">麦克风声卡配置</h3>
+<p>之前7591的部分高通声卡驱动不行，麦克风用不了，后来有了一个开源的驱动<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3RoZXNvZnByb2plY3Qvc29m">Sound open firmware<i class="fa fa-external-link-alt"></i></span>，总归是能用了。</p>
+<p>在linux kernel在5.6或以上，安装麦克风声卡驱动用的sof-firmware，可以解决声音和麦克风问题</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S sof-firmware</span><br></pre></td></tr></table></figure>
+<p>然后重启，我第二次重启后失效，喇叭和耳机都没有声音。按照wiki里面修改<code>/etc/modprobe.d/audio-fix.conf</code>(新建一个)，然后写一行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">options snd-intel-dspcfg dsp_driver&#x3D;1</span><br></pre></td></tr></table></figure>
+<p>就行了。</p>
+<p>或者在Grub的配置文件<code>/etc/default/grub</code>里设置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">snd-intel-dspcfg.dsp_driver&#x3D;1</span><br></pre></td></tr></table></figure>
+<p>实在不行再试试内核参数(Kernel parameters)加上<code>snd_hda_intel.dmic_detect=0</code></p>
+<p>当然，仅仅是能用。声音效果不是太好，虽然灵越inspiron 7591/7590/7501 系列的扬声器声音本来就不太好，但是放点陶笛和埙的曲子还是有种凄婉呜咽感的，linux下用了sof之后感觉像是喇叭声。以后就只适合拿这个听刀郎了。</p>
+<p>还有一个问题就是有的时候休眠挂起后再打开就没声音了，需要重启才行。暂时没找到什么好的办法，这个毛病之前win10就有</p>
+<h3 id="mm耳机没声音">3.5mm耳机没声音</h3>
+<p>耳机孔没声音，wiki上的解决方案是</p>
+<blockquote>
+<p>In <code>pavucontrol</code>, try changing the Pulseaudio output profile from "Analog Stereo Output" to "Analog Stereo Duplex".</p>
+</blockquote>
+<p>系统语言调成中文的用户点开系统设置-》音频音量设置=》音频=》高级=》内置音频，选模拟立体双工。</p>
+<p>是的，这样就能用了（请忽略这个全损音质，耳机传来声音的时候我甚至觉得我的索尼耳机是拼多多10块钱买的）</p>
+<h3 id="耗电问题">耗电问题</h3>
+<p>这个目前我倒是没什么感觉，我的7591是97w的大电池版本，最好的省电办法是不用GNOME，KDE的掉电速度比GNOME大概能慢一半，轻度使用六七个小时没有太大问题。（跟win10上10个小时比还是有差距）。</p>
+<p>极致省电可以上i3wm和禁用独显，不过7591电池够大，不像游戏本一样分分钟没电，倒是没有必要。</p>
+<p>还有就是降压，给CPU降个50-75mV，效果感人。（对性能影响也很小）</p>
+<p>然后安装thermald和tlp并设置开机自启动（tlp有个图形界面可惜是gtk的并且还在beta版，不太KDE用户建议用）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S thermald tlp</span><br><span class="line">systemctl <span class="built_in">enable</span> thermald tlp</span><br></pre></td></tr></table></figure>
+<p>然后自行设置电池模式。</p>
+<h3 id="散热">散热</h3>
+<p>当然7591/7590更要命的显然是捉急的散热，重度使用建议降压、换散热贴硅脂散热条、垫橡皮垫都安排上。有个s-tui可以查看CPU温度。</p>
+<h2 id="其他个人设置">其他个人设置</h2>
+<h3 id="常用软件">常用软件</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># docker</span></span><br><span class="line">sudo pacman -S docker docker-compose</span><br><span class="line"><span class="comment"># 设置开机自启</span></span><br><span class="line">sudo systemctl <span class="built_in">enable</span> docker</span><br></pre></td></tr></table></figure>
+<h4 id="中英词典翻译和医学词典">中英词典翻译和医学词典</h4>
+<p>这里我用的开源的GoldenDict配合离线和在线词典</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S goldendict</span><br></pre></td></tr></table></figure>
+<p>下载医学词典和英文词典，体验还是不错的，想要翻译功能可以添加有道和谷歌翻译</p>
+<h3 id="博客搬迁">博客搬迁</h3>
+<p>先装node.js（这里我装的12的lts版）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -Sy nodejs-lts-erbium</span><br></pre></td></tr></table></figure>
+<p>然后从github拉取自己的博客备份repo</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/archaeoraptor/blog.git blog</span><br><span class="line"><span class="built_in">cd</span> blog</span><br></pre></td></tr></table></figure>
+<p>另外我用的hexo-renderer-pandoc插件，这个插件要先装pandoc（不然会报错）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S pandoc</span><br><span class="line">npm install</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/next-theme/hexo-theme-next.git themes/next</span><br><span class="line">hexo g &amp;&amp; hexo s</span><br></pre></td></tr></table></figure>
+<h3 id="windows软件解决方案">windows软件解决方案</h3>
+<p>装wine体验还是不太好，虚拟机装个win7上跑qq和word，反正7591能加内存，加到32G就完事了，还不够就加64G（是的，这个系列支持64G内存，虽然说明书上写的只支持到32G）</p>
+<h3 id="网上冲浪-1">网上冲浪</h3>
+<p>qv2ray还不错，electron-ssr装上v2ray插件也不错，但是electron内存占用太高了。喜欢web版的还有一个v2raya可以用。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay -S qv2ray</span><br></pre></td></tr></table></figure>
+<p>装wireguard</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S wireguard-tools wireguard-dkms</span><br></pre></td></tr></table></figure>
+<p>如果用机场的话，可以装个clash，然后配置开机自启和规则（那个win版clash的图形界面真的反直觉反人类，相当难受，clashy也没好到哪去），貌似也支持套个tun/tap用来全局代理(似乎并不怎么好用)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S clash</span><br></pre></td></tr></table></figure>
+<p>可以配置systemd让clash开机自启，<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0RyZWFtYWNyby9jbGFzaC93aWtpL2NsYXNoLWFzLWEtZGFlbW9u">wiki<i class="fa fa-external-link-alt"></i></span>上还提供了docker-compose和pm2的方法。(貌似pm2方便一点？尤其是装了nodejs的话，不过clash是go开发的官方推荐docker，不过docker和pm2要开机自启还是得用systemd)</p>
+<p>上个月发布的clash1.0版本是和老版本不兼容的<sup id="fnref:4"><a href="#fn:4" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="https://github.com/Dreamacro/clash/wiki/Breaking-Changes-in-1.0.0
+">[4]</span></a></sup>，AUR里打包的clash是不兼容的，所以要手动修改yml文件或者自己编译老版本的clash</p>
+<blockquote>
+<p><code>Proxy</code>, <code>Proxy Group</code> and <code>Rule</code> is no longer used. They are now respectively <code>proxies</code>, <code>proxy-groups</code> and `rules</p>
+</blockquote>
+<p>(修改的话一般只要修改<code>Proxy</code>, <code>Proxy Group</code> and <code>Rule</code> 这三个参数为<code>proxies</code>, <code>proxy-groups</code> and `rules就行了)</p>
+<p>设置完成后重启网络服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart systemd-networkd</span><br></pre></td></tr></table></figure>
+<h3 id="中英文和字体设置">中英文和字体设置</h3>
+<h4 id="把桌面文件夹改回英文">把桌面文件夹改回英文</h4>
+<p>这里我用的<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0dOT01FL3hkZy11c2VyLWRpcnMtZ3Rr">xdg-user-dirs-gtk<i class="fa fa-external-link-alt"></i></span>，GNOME出品，KDE上也能用</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -Sy xdg-user-dirs-gtk</span><br><span class="line"><span class="built_in">export</span> LANG=en_US</span><br><span class="line">xdg-user-dirs-gtk-update</span><br></pre></td></tr></table></figure>
+<p>然后想把LANG变量调回中文的可以再调回来</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> LANG=zh_CN.UTF-8</span><br></pre></td></tr></table></figure>
+<p>如果你用Dolphin文件夹管理器，你要把那几个桌面、文档、下载的路径在编辑里面手动改成英文</p>
+<h4 id="tty中文不显示">tty中文不显示</h4>
+<p>装点字体就好了，或者直接把全局的LANG=en.US</p>
+<h4 id="复门等字体显示日文">复门等字体显示日文</h4>
+<p>最简单的做法是把系统装的语言包卸载了，只装中文字体包,见<span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL0xvY2FsaXphdGlvbl8oJUU3JUFFJTgwJUU0JUJEJTkzJUU0JUI4JUFEJUU2JTk2JTg3KS9TaW1wbGlmaWVkX0NoaW5lc2VfKCVFNyVBRSU4MCVFNCVCRCU5MyVFNCVCOCVBRCVFNiU5NiU4Nyk=">Localization<i class="fa fa-external-link-alt"></i></span>。</p>
+<p>或者在<code>\etc\locale.conf</code>加上<code>LANG=zh_CN.UTF-8</code></p>
+<p>然后刷新字体缓存。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">fc</span>-cache -fv</span><br></pre></td></tr></table></figure>
+<h2 id="注">注</h2>
+<div id="footnotes">
+<hr>
+<div id="footnotelist">
+<ol style="list-style: none; padding-left: 0; margin-left: 40px">
+<li id="fn:1">
+<span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">1.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">https://wiki.archlinux.org/index.php/AUR_helpers<a href="#fnref:1" rev="footnote"> ↩︎</a></span>
+</li>
+<li id="fn:2">
+<span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">2.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">https://github.com/Jguer/yay<a href="#fnref:2" rev="footnote"> ↩︎</a></span>
+</li>
+<li id="fn:3">
+<span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">3.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">https://aur.archlinux.org/packages/v2raya<a href="#fnref:3" rev="footnote"> ↩︎</a></span>
+</li>
+<li id="fn:4">
+<span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">4.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">https://github.com/Dreamacro/clash/wiki/Breaking-Changes-in-1.0.0<a href="#fnref:4" rev="footnote"> ↩︎</a></span>
+</li>
+<li id="fn:5">
+<span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">5.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">https://wiki.archlinux.org/index.php/Dell_Inspiron_15_(7590)<a href="#fnref:5" rev="footnote"> ↩︎</a></span>
+</li>
+</ol>
+</div>
+</div>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Zhang.jk
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://zhangjk98.xyz/ff0e/" title="你好，Manjaro。再见，Manjaro。">https://zhangjk98.xyz/ff0e/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/manjaro/" rel="tag"><i class="fa fa-tag"></i> manjaro</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/aa1c/" rel="prev" title="写在被消灭的路上">
+      <i class="fa fa-chevron-left"></i> 写在被消灭的路上
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/70c8/" rel="next" title="毕竟狂澜挽不回，遽怜遗蜕化飞灰">
+      毕竟狂澜挽不回，遽怜遗蜕化飞灰 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+        </div>
+        
+      <div class="tabs tabs-comment">
+        <ul class="nav-tabs">
+            <li class="tab"><a href="#comment-utteranc">utteranc</a></li>
+            <li class="tab"><a href="#comment-valine">valine</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane utteranc" id="comment-utteranc">
+              
+  
+  <div class="comments">
+  <script src="https://utteranc.es/client.js" repo="Archaeoraptor/archaeoraptor.github.io" issue-term="pathname" theme="github-light" crossorigin="anonymous" async></script>
+  </div>
+  
+  
+            </div>
+            <div class="tab-pane valine" id="comment-valine">
+              <div class="comments" id="valine-comments"></div>
+            </div>
+        </div>
+      </div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">止息</span>
+</div>
+  <div class="powered-by">由 <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/next-theme/pjax@0/pjax.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.5/medium-zoom.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+<script data-pjax>
+document.querySelectorAll('.pdfobject-container').forEach(element => {
+  let url = element.dataset.target;
+  let pdfOpenParams = {
+    navpanes : 0,
+    toolbar  : 0,
+    statusbar: 0,
+    pagemode : 'thumbs',
+    view     : 'FitH'
+  };
+  let pdfOpenFragment = '#' + Object.entries(pdfOpenParams).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
+  let fullURL = `/lib/pdf/web/viewer.html?file=${encodeURIComponent(url)}${pdfOpenFragment}`;
+
+  if (NexT.utils.supportsPDFs()) {
+    element.innerHTML = `<embed class="pdfobject" src="${url + pdfOpenFragment}" type="application/pdf" style="height: ${element.dataset.height};">`;
+  } else {
+    element.innerHTML = `<iframe src="${fullURL}" style="height: ${element.dataset.height};" frameborder="0"></iframe>`;
+  }
+});
+</script>
+
+
+
+
+    <div class="pjax">
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('//cdnjs.cloudflare.com/ajax/libs/valine/1.4.14/Valine.min.js', () => {
+    new Valine(Object.assign({
+      el  : '#valine-comments',
+      path: location.pathname,
+    }, {"enable":true,"appId":"9HDUS9zSiY41T0Vp4naCoqcC-MdYXbMMI","appKey":"ufiyQKIMrlBkEYcA4bk1TrYj","placeholder":"林妙妙，没事不要老在我评论区捣乱","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"language":null,"visitor":false,"comment_count":true,"recordIP":false,"serverURLs":null,"enableQQ":true,"requiredFields":[]}
+    ));
+  }, window.Valine);
+});
+</script>
+
+    </div>
+</body>
+</html>
