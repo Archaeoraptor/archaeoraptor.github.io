@@ -3019,15 +3019,18 @@ body {
   background: url("/uploads/astro1.webp");
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background-size: cover;
+  background-size: 100% 100%;
   background-position: 50% 50%;
 }
 .content-wrap {
-  opacity: 0.8;
+  opacity: 0.95;
 }
 .sidebar {
-  opacity: 0.9;
+  opacity: 1;
 }
 .popup {
-  opacity: 0.9;
+  opacity: 1;
+}
+.main-inner {
+  opacity: 0.99;
 }
