@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.0.0">
+<meta name="generator" content="Hexo 5.1.1">
   <link rel="apple-touch-icon" sizes="180x180" href="/uploads/wizard-hat-16.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/uploads/wizard-hat-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/uploads/wizard-hat-16.png">
@@ -17,13 +17,13 @@
 <link rel="stylesheet" href="/css/main.css">
 
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto+Serif+SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
-  
-  <link rel="stylesheet" href="/lib/animate-css/animate.min.css">
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"zhangjk98.xyz","root":"/","scheme":"Pisces","version":"8.0.0-rc.4","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":"Valine"},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeInDown","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInDown"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"zhangjk98.xyz","root":"/","scheme":"Pisces","version":"8.0.0","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":"Valine"},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeInDown","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInDown"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 
   <meta name="description" content="这里仅记录个人问题，找教程为什么不看看官方文档呢">
@@ -41,7 +41,6 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/net5xx.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/ping.png">
 <meta property="article:published_time" content="2019-06-20T14:23:47.000Z">
-<meta property="article:modified_time" content="2020-07-31T13:36:31.818Z">
 <meta property="article:author" content="Zhang.jk">
 <meta property="article:tag" content="hexo">
 <meta property="article:tag" content="bug">
@@ -49,10 +48,11 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/20191016094709.png">
 
+
 <link rel="canonical" href="https://zhangjk98.xyz/bd8f/">
 
 
-<script data-pjax class="page-configurations">
+<script class="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
@@ -65,7 +65,7 @@
   <title>Hexo博客部署和Next主题设置 | 止息的碎碎念</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143393734-1"></script>
-    <script data-pjax>
+    <script>
       if (CONFIG.hostname === location.hostname) {
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
@@ -231,16 +231,14 @@ mjx-container[display="true"] {
 mjx-container[display="true"] + br {
   display: none;
 }
-</style><link rel="alternate" href="/atom.xml" title="止息的碎碎念" type="application/atom+xml">
-</head>
+</style></head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
 
-    <main class="main">
-      <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-        <div class="header-inner"><div class="site-brand-container">
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
     <div class="toggle" aria-label="切换导航栏">
         <span class="toggle-line"></span>
@@ -269,7 +267,7 @@ mjx-container[display="true"] + br {
 
 
 <nav class="site-nav">
-  <ul id="menu" class="main-menu menu">
+  <ul class="main-menu menu">
         <li class="menu-item menu-item-about">
 
     <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
@@ -314,8 +312,8 @@ mjx-container[display="true"] + br {
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result">
-  <div id="no-result">
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
     <i class="fa fa-spinner fa-pulse fa-5x"></i>
   </div>
 </div>
@@ -324,7 +322,7 @@ mjx-container[display="true"] + br {
   </div>
 
 </div>
-          
+        
   
   <div class="toggle sidebar-toggle">
     <span class="toggle-line"></span>
@@ -362,7 +360,7 @@ mjx-container[display="true"] + br {
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-count">41</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -382,13 +380,13 @@ mjx-container[display="true"] + br {
 </div>
   <div class="links-of-author animated">
       <span class="links-of-author-item">
-        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FyY2hhZW9yYXB0b3I=" title="GitHub → https://github.com/archaeoraptor"><i class="fab fa-github fa-fw"></i>GitHub</span>
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FyY2hhZW9yYXB0b3I=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;archaeoraptor"><i class="fab fa-github fa-fw"></i>GitHub</span>
       </span>
       <span class="links-of-author-item">
         <span class="exturl" data-url="bWFpbHRvOnpoYW5nams2N0BnbWFpbC5jb20=" title="E-Mail → mailto:zhangjk67@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
       </span>
       <span class="links-of-author-item">
-        <a href="/atom.xml" title="RSS → /atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
       </span>
   </div>
   <div class="cc-license animated" itemprop="license">
@@ -402,10 +400,10 @@ mjx-container[display="true"] + br {
     </div>
     <ul class="links-of-blogroll-list">
         <li class="links-of-blogroll-item">
-          <span class="exturl" data-url="aHR0cHM6Ly91ZXN0Yy5pY3U=" title="https://uestc.icu">uestc.icu</span>
+          <span class="exturl" data-url="aHR0cHM6Ly91ZXN0Yy5pY3U=" title="https:&#x2F;&#x2F;uestc.icu">uestc.icu</span>
         </li>
         <li class="links-of-blogroll-item">
-          <span class="exturl" data-url="aHR0cHM6Ly96aGFuZ3NodXFpYW8ub3Jn" title="https://zhangshuqiao.org">米米的博客</span>
+          <span class="exturl" data-url="aHR0cHM6Ly96aGFuZ3NodXFpYW8ub3Jn" title="https:&#x2F;&#x2F;zhangshuqiao.org">米米的博客</span>
         </li>
     </ul>
   </div>
@@ -413,12 +411,12 @@ mjx-container[display="true"] + br {
       </section>
     </div>
   </aside>
-  <div id="sidebar-dimmer"></div>
+  <div class="sidebar-dimmer"></div>
 
 
-      </header>
+    </header>
 
-      
+    
   <div class="back-to-top">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
@@ -427,15 +425,14 @@ mjx-container[display="true"] + br {
   <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FyY2hhZW9yYXB0b3I=" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
 
 <noscript>
-  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
 </noscript>
 
 
-      <div class="main-inner">
-        
+    <div class="main-inner post posts-expand">
+      
 
-        <div class="content post posts-expand">
-          
+      
 
     
   
@@ -454,38 +451,40 @@ mjx-container[display="true"] + br {
     </span>
 
     
+    
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           Hexo博客部署和Next主题设置
         </h1>
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2019-06-20 22:23:47" itemprop="dateCreated datePublished" datetime="2019-06-20T22:23:47+08:00">2019-06-20</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-31 21:36:31" itemprop="dateModified" datetime="2020-07-31T21:36:31+08:00">2020-07-31</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%8D%9A%E5%AE%A2/" itemprop="url" rel="index"><span itemprop="name">博客</span></a>
-                </span>
-            </span>
+      <time title="创建时间：2019-06-20 22:23:47" itemprop="dateCreated datePublished" datetime="2019-06-20T22:23:47+08:00">2019-06-20</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2020-09-17 23:48:13" itemprop="dateModified" datetime="2020-09-17T23:48:13+08:00">2020-09-17</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%8D%9A%E5%AE%A2/" itemprop="url" rel="index"><span itemprop="name">博客</span></a>
+        </span>
+    </span>
 
-          
+  
   
   <span class="post-meta-item">
     
@@ -500,6 +499,7 @@ mjx-container[display="true"] + br {
   </span>
   
   
+</div>
 
         </div>
       </header>
@@ -508,14 +508,14 @@ mjx-container[display="true"] + br {
     
     
     <div class="post-body" itemprop="articleBody">
-        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>这里仅记录个人问题，找教程为什么不看看官方文档呢 <a id="more"></a></p>
+        <p>这里仅记录个人问题，找教程为什么不看看官方文档呢 <a id="more"></a></p>
 <p>有问题先看这里啦，<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL25leHQtdGhlbWUvaGV4by10aGVtZS1uZXh0L2lzc3Vlcy80">更新说明及常见问题<i class="fa fa-external-link-alt"></i></span> 我自己的博客基本会跟着Next主题每月发布的release更新版本，偶尔直接跳到最新的master版本。 可能有的时候因为忙或者其他原因，并不会追最新版，有些之前写的东西过时了也没有改，请大家尽量以<span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0Lm9yZy8=">官方文档<i class="fa fa-external-link-alt"></i></span>为准。</p>
 <h2 id="更新升级至hexo5.0">更新升级至hexo5.0</h2>
 <p>没有什么太大魔改的话直接</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo@5.0.0</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> <span class="token function">install</span> hexo@5.0.0<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>然后把next.yml的配置（或者主题的_config.yml）配置放到根目录_config.next.yml下面。</p>
 <p>hexo 5 支持用npm安装主题了</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-theme-next</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> <span class="token function">install</span> hexo-theme-next<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <h2 id="升级7.x的大坑">升级7.X的大坑</h2>
 <p>NexT主题的顺畅更新好像很难，官方不推荐，之前乱改的5.X主题升级7.2分支合并出现问题，一堆warning，索性推倒重来直接新搞一个7.X。</p>
 <p>升级可以直接按照官网方法</p>
@@ -544,16 +544,33 @@ mjx-container[display="true"] + br {
 <p>似乎那几个背景特效和进度条都会拖慢网页加载速度，不填建议用（新版的Next已经把乱晃的那个canvas移除了）</p>
 <h3 id="报错">报错</h3>
 <p>可能出现的一类问题是yaml的配置出现了语法错误报错</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">YAMLException: duplicated mapping key at line ...</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-log" data-language="log"><code class="language-log">YAMLException: duplicated mapping key at line ...<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>这说明你的key重复了，比如在yaml里同时两段</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">calendar:</span></span><br><span class="line">     <span class="attr">calendar_id:</span> <span class="string">&lt;required&gt;</span> <span class="comment"># Your Google account E-Mail</span></span><br><span class="line">     <span class="attr">api_key:</span> <span class="string">&lt;required&gt;</span></span><br><span class="line"><span class="attr">calendar:</span></span><br><span class="line">     <span class="attr">calendar_id:</span> <span class="string">&lt;required&gt;</span> <span class="comment"># Your Google account E-Mail</span></span><br><span class="line">     <span class="attr">api_key:</span> <span class="string">&lt;required&gt;</span></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">calendar</span><span class="token punctuation">:</span>
+     <span class="token key atrule">calendar_id</span><span class="token punctuation">:</span> &lt;required<span class="token punctuation">></span> <span class="token comment"># Your Google account E-Mail</span>
+     <span class="token key atrule">api_key</span><span class="token punctuation">:</span> &lt;required<span class="token punctuation">></span>
+<span class="token key atrule">calendar</span><span class="token punctuation">:</span>
+     <span class="token key atrule">calendar_id</span><span class="token punctuation">:</span> &lt;required<span class="token punctuation">></span> <span class="token comment"># Your Google account E-Mail</span>
+     <span class="token key atrule">api_key</span><span class="token punctuation">:</span> &lt;required<span class="token punctuation">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>删掉一个calender或者将二者合并就可以了</p>
 <p>还有一种经常出现的问题</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ERROR read ECONNRESET</span><br><span class="line">Error: read ECONNRESET</span><br><span class="line">    at TLSWrap.onStreamRead (internal&#x2F;stream_base_commons.js:111:27)</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-log" data-language="log"><code class="language-log">ERROR read ECONNRESET
+Error: read ECONNRESET
+    at TLSWrap.onStreamRead (internal&#x2F;stream_base_commons.js:111:27)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <p>这种可能是配置出错了，比如引用了某个本地资源结果路径不对找不到资源。这种建议在浏览器里打开F12检查一下</p>
 <h3 id="新的自定义配置路径">新的自定义配置路径</h3>
 <p>next v7.3.0 版本的定制路径改了，比如custom.styl改成了source/_data/styles.styl，参见</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">custom_file_path:</span></span><br><span class="line">  <span class="comment">#head: source/_data/head.swig</span></span><br><span class="line">  <span class="comment">#header: source/_data/header.swig</span></span><br><span class="line">  <span class="comment">#sidebar: source/_data/sidebar.swig</span></span><br><span class="line">  <span class="comment">#postMeta: source/_data/post-meta.swig</span></span><br><span class="line">  <span class="comment">#postBodyEnd: source/_data/post-body-end.swig</span></span><br><span class="line">  <span class="comment">#footer: source/_data/footer.swig</span></span><br><span class="line">  <span class="comment">#bodyEnd: source/_data/body-end.swig</span></span><br><span class="line">  <span class="comment">#variable: source/_data/variables.styl</span></span><br><span class="line">  <span class="comment">#mixin: source/_data/mixins.styl</span></span><br><span class="line">  <span class="attr">style:</span> <span class="string">source/_data/styles.styl</span></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">custom_file_path</span><span class="token punctuation">:</span>
+  <span class="token comment">#head: source/_data/head.swig</span>
+  <span class="token comment">#header: source/_data/header.swig</span>
+  <span class="token comment">#sidebar: source/_data/sidebar.swig</span>
+  <span class="token comment">#postMeta: source/_data/post-meta.swig</span>
+  <span class="token comment">#postBodyEnd: source/_data/post-body-end.swig</span>
+  <span class="token comment">#footer: source/_data/footer.swig</span>
+  <span class="token comment">#bodyEnd: source/_data/body-end.swig</span>
+  <span class="token comment">#variable: source/_data/variables.styl</span>
+  <span class="token comment">#mixin: source/_data/mixins.styl</span>
+  <span class="token key atrule">style</span><span class="token punctuation">:</span> source/_data/styles.styl<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>当然也可以修改custom_file_path:来自定义定制内容路径，想放哪就放哪。 改成之后就可以每次顺畅的直接每次更新主题时直接<code>git pull</code>了，不需要再merge自定义修改了 很多老的Next主题自定义教程都是在custom.styl或者直接改主题的css文件，7.3以后的新版要把老教程里的路径改了。 还有一种方法是<span class="exturl" data-url="aHR0cHM6Ly93d3cuZG5vY20uY29tL2FydGljbGVzL2JlZWNobnV0L2hleG8tbmV4dC1pbmplY3RzLw==">用Injects自定义主题<i class="fa fa-external-link-alt"></i></span> 据说Hexo5.x之后就能用npm安装主题了，Hexo一直咕咕咕，我们慢慢等吧</p>
 <h3 id="标签">标签</h3>
 <p>Next v7.3.0 版本的标签不再支持 Full-image tag</p>
@@ -576,22 +593,48 @@ mjx-container[display="true"] + br {
 <p>这个找到提示的文件夹 source/font 路径,找到这三个缺失的文件,补上就可以了(可能没有这个文件夹,新建一下就行了)</p>
 <h3 id="夜间模式">夜间模式</h3>
 <p>现在新版Next已经有了自带的夜间模式，在配置里开启即可，会自动随着系统设置变</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Dark Mode</span></span><br><span class="line"><span class="attr">darkmode:</span> <span class="string">auto</span></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token comment"># Dark Mode</span>
+<span class="token key atrule">darkmode</span><span class="token punctuation">:</span> auto<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <h2 id="更新主题">更新主题</h2>
 <p>这里我使用的Next主题，参考<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3RoZW1lLW5leHQvaGV4by10aGVtZS1uZXh0L2Jsb2IvbWFzdGVyL2RvY3MvemgtQ04vREFUQS1GSUxFUy5tZA==">https://github.com/theme-next/hexo-theme-next/blob/master/docs/zh-CN/DATA-FILES.md<i class="fa fa-external-link-alt"></i></span> 在7.X以后大的更新还是需要手动处理冲突，但是Next主题将两个_config.yml文件合并搞了一个next.yml，在source/_data底下。这样更新的时候git pull后commit和merge就不用每次手动处理主题的_config.yml冲突了 merge之后指定版本</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout tags/v7.4.1</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">git</span> checkout tags/v7.4.1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>(可能会有nothing added to commit but untracked files present的提示，运行git clean -f清理不想要的文件，或者加到.gitignore里面, 还要就使用git add . ) 如果版本指定不对，会有detached HEAD出现，重新指定正确版本。如果还不行，可能git add等出了冲突，看<span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC9hZTQ4NTdkMmY4Njg=">这里<i class="fa fa-external-link-alt"></i></span></p>
 <h2 id="升级hexo4.0">升级Hexo4.0</h2>
 <p>今天检查更新的时候看到这样的提示，发现Hexo出4.0了。 跑到群里一看，说是什么Hexo 4.0.0 会有巨大的性能提升（相比 Hexo 3.2 生成速度提升 10%，内存占用减少 40%）。闲着没事就升级玩玩吧虽然我这也没几篇文章，生成速度本来也不慢。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">λ npm-upgrade</span><br><span class="line">Checking for outdated dependencies for &quot;D:\zjk\myblog2\package.json&quot;...</span><br><span class="line">[====================] 21/21 100%                                                                                            s can be used.</span><br><span class="line"></span><br><span class="line">New versions of active modules available:</span><br><span class="line"></span><br><span class="line">  hexo                      ^3.9.0   →   ^4.0.0</span><br><span class="line">  hexo-deployer-git         ^1.0.0   →   ^2.0.0</span><br><span class="line">  hexo-generator-archive    ^0.1.5   →   ^1.0.0</span><br><span class="line">  hexo-generator-category   ^0.1.3   →   ^1.0.0</span><br><span class="line">  hexo-generator-feed       ^1.2.2   →   ^2.0.0</span><br><span class="line">  hexo-generator-index      ^0.2.1   →   ^1.0.0</span><br><span class="line">  hexo-generator-tag        ^0.2.0   →   ^1.0.0</span><br><span class="line">  hexo-renderer-ejs         ^0.3.1   →   ^1.0.0</span><br><span class="line">  hexo-renderer-stylus      ^0.3.3   →   ^1.1.0</span><br><span class="line">  hexo-server               ^0.3.3   →   ^1.0.0</span><br><span class="line"></span><br><span class="line">? Update &quot;hexo&quot; in package.json from ^3.9.0 to ^4.0.0? (Use arrow keys)</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> Yes</span></span><br><span class="line">  No</span><br><span class="line">  Show changelog</span><br><span class="line">  Ignore</span><br><span class="line">  Finish update process</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">λ npm-upgrade
+Checking <span class="token keyword">for</span> outdated dependencies <span class="token keyword">for</span> <span class="token string">"D:\zjk\myblog2\package.json"</span><span class="token punctuation">..</span>.
+<span class="token punctuation">[</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token punctuation">]</span> <span class="token number">21</span>/21 <span class="token number">100</span>%                                                                                            s can be used.
+
+New versions of active modules available:
+
+  hexo                      ^3.9.0   →   ^4.0.0
+  hexo-deployer-git         ^1.0.0   →   ^2.0.0
+  hexo-generator-archive    ^0.1.5   →   ^1.0.0
+  hexo-generator-category   ^0.1.3   →   ^1.0.0
+  hexo-generator-feed       ^1.2.2   →   ^2.0.0
+  hexo-generator-index      ^0.2.1   →   ^1.0.0
+  hexo-generator-tag        ^0.2.0   →   ^1.0.0
+  hexo-renderer-ejs         ^0.3.1   →   ^1.0.0
+  hexo-renderer-stylus      ^0.3.3   →   ^1.1.0
+  hexo-server               ^0.3.3   →   ^1.0.0
+
+? Update <span class="token string">"hexo"</span> <span class="token keyword">in</span> package.json from ^3.9.0 to ^4.0.0? <span class="token punctuation">(</span>Use arrow keys<span class="token punctuation">)</span>
+<span class="token operator">></span> Yes
+  No
+  Show changelog
+  Ignore
+  Finish update process<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>直接升级</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo@4.0.0</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">npm</span> <span class="token function">install</span> -g hexo@4.0.0<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>更新，现在hexo-cli包也上hexo4.0了，使用官网的那个带cli的命令就行了 升级之后试一下'hexo generate'</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">INFO  Files loaded in 1.94 s</span><br><span class="line">INFO  140 files generated in 3.07 s</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-log" data-language="log"><code class="language-log">INFO  Files loaded in 1.94 s
+INFO  140 files generated in 3.07 s<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <p>好像是快了点 等等，更新了Hexo4.0以后下面的分页突然变成这个样子了，我先报个修 <img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/20191016094709.png" alt="bug" style="zoom:80%;" /></p>
 <p><img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/20191016095007.png" alt="bug" style="zoom:80%;" /></p>
 <p>找到了问题了，已经在<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2hleG9qcy9oZXhvL2lzc3Vlcy8zNzI5">issue#3729<i class="fa fa-external-link-alt"></i></span>里解决了 现在直接升级到master分支就行了</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> themes/next</span><br><span class="line">git pull https://github.com/theme-next/hexo-theme-next master</span><br><span class="line">git checkout master</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> themes/next
+<span class="token function">git</span> pull https://github.com/theme-next/hexo-theme-next master
+<span class="token function">git</span> checkout master<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <p>看到显示这样就行了</p>
 <blockquote>
 <p>Already on 'master' Your branch is up to date with 'origin/master'.</p>
@@ -632,9 +675,8 @@ mjx-container[display="true"] + br {
 <p>lazyload插件、fancybox插件(改用mediumzoom)、pjax插件、fliter-optimizer插件（经常跟很多地方冲突）等建议慎用</p>
 <h3 id="给mardown添加论文脚注效果">给Mardown添加论文脚注效果</h3>
 <p>安装插件：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-reference --save</span><br></pre></td></tr></table></figure>
-<p>注释测试<sup id="fnref:1"><a href="#fn:1" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="这是一个注释测试
-">[1]</span></a></sup></p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">npm</span> <span class="token function">install</span> hexo-reference --save<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>注释测试<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <h3 id="主页文章置顶">主页文章置顶</h3>
 <p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL25leHQtdGhlbWUvaGV4by1nZW5lcmF0b3ItaW5kZXhlZA==">hexo-generator-indexed<i class="fa fa-external-link-alt"></i></span></p>
 <h2 id="使用cloudflare和github-pages">使用Cloudflare和Github Pages</h2>
@@ -647,24 +689,18 @@ mjx-container[display="true"] + br {
 <p>可能的小坑：开启coludflare的 rocket loader 功能后会出错（这是个实验性的功能），Next主题会变成一片空白，一直加载不出来。关掉就好了。</p>
 <h2 id="提高加载速度">提高加载速度</h2>
 <p>在<span class="exturl" data-url="aHR0cHM6Ly9ndG1ldHJpeC5jb20v">GTmetrix<i class="fa fa-external-link-alt"></i></span>上看到我这得分才70多 发现首页两个图片占了很多，把两个图整成webp格式的，然后再调整一下大小(这里我用的这个<span class="exturl" data-url="aHR0cHM6Ly9jbG91ZGNvbnZlcnQuY29tLw==">网站<i class="fa fa-external-link-alt"></i></span>)。这里抛弃safari用户了 (cloudflare的business是有这个功能的，但是我用不起) 然后把velocityjs的那些动画效果关了（这个早就想关了，和其他组件各种冲突）</p>
-<p>虽然拉黑了百度<sup id="fnref:2"><a href="#fn:2" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="加了一个这个">[2]</span></a></sup>，但是发现我的流量统计还是有一大半是国内访问，为了照顾一下国内速度，还是用了Cloudflare的CDN 大多数时候，国内 cloudflare &gt; github pages &gt; netlify (如果不用个人域名，用netlify的二级域名会比XXX.github.io快一点)。raw.githubusercontent.com 是基本废了，想作为国内图床并不可行 （备案是不可能备案的）</p>
+<p>虽然拉黑了百度<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>，但是发现我的流量统计还是有一大半是国内访问，为了照顾一下国内速度，还是用了Cloudflare的CDN 大多数时候，国内 cloudflare &gt; github pages &gt; netlify (如果不用个人域名，用netlify的二级域名会比XXX.github.io快一点)。raw.githubusercontent.com 是基本废了，想作为国内图床并不可行 （备案是不可能备案的）</p>
 <h2 id="可能的问题请参考">可能的问题请参考</h2>
 <p><span class="exturl" data-url="aHR0cHM6Ly9zaHV5ZWxpZmUuZ2l0aHViLmlvL3Bvc3QvSGV4byVFNSVCOCVCOCVFOCVBNyU4MSVFOSU5NyVBRSVFOSVBMiU5OCVFOCVBNyVBMyVFNSU4NiVCMyVFNiU5NiVCOSVFNiVBMSU4OC8=">Hexo常见问题解决方案<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9kcDJweC5jb20vMjAxOS8wNC8yNS9oZXhvLW1laWh1YS8=">hexo主题美化<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnlsZWFvLmNvbS8yMDE4LzA5MDEvaGV4by1uZXh05Li76aKY5LiL55qE576O5YyWLmh0bWw=">hexo-next主题下的美化<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvLw==">hexo官网<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0Lm9yZy9kb2NzLw==">next文档(6.0以后)<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLWd1aWRlLnJlYWR0aGVkb2NzLmlv">hexo指南<i class="fa fa-external-link-alt"></i></span> 从node.js操作到next主题，很详细，自己折腾可以参考,也记录了很多坑，但是不全，非官方指南，都是个人博客的坑。他还写了别的<span class="exturl" data-url="aHR0cHM6Ly93d3cuemh1amlhbi50ZWNoL3Bvc3RzL2QyMmFiOTY3Lmh0bWw=">指南<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3RoZW1lLW5leHQvYXdlc29tZS1uZXh0I3BsdWdpbnM=">https://github.com/theme-next/awesome-next#plugins<i class="fa fa-external-link-alt"></i></span>Next主题的插件，7.X版本之后越来越多的功能都剥离出来做成了插件, 使用时要npm install 一下，不能会直接在设置里设为true <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0xlYXJuU2hhcmUvTGVhcm5pbmctTWFya2Rvd24vdHJlZS92Mg==">markdown教程<i class="fa fa-external-link-alt"></i></span></p>
 <h2 id="注释">注释</h2>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.jsdelivr.net/gh/lurongkai/anti-baidu/js/anti-baidu-latest.min.js&quot;</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<div id="footnotes">
-<hr>
-<div id="footnotelist">
-<ol style="list-style: none; padding-left: 0; margin-left: 40px">
-<li id="fn:1">
-<span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">1.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">这是一个注释测试<a href="#fnref:1" rev="footnote"> ↩︎</a></span>
-</li>
-<li id="fn:2">
-<span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">2.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">加了一个这个<a href="#fnref:2" rev="footnote"> ↩︎</a></span>
-</li>
+<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>text/javascript<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>https://cdn.jsdelivr.net/gh/lurongkai/anti-baidu/js/anti-baidu-latest.min.js<span class="token punctuation">"</span></span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>UTF-8<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<section class="footnotes" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>这是一个注释测试<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>加了一个这个<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</div>
-</div>
+</section>
 
     </div>
 
@@ -672,7 +708,7 @@ mjx-container[display="true"] + br {
     
     
 
-      <footer class="post-footer">
+    <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/hexo/" rel="tag"><i class="fa fa-tag"></i> hexo</a>
               <a href="/tags/bug/" rel="tag"><i class="fa fa-tag"></i> bug</a>
@@ -681,20 +717,19 @@ mjx-container[display="true"] + br {
 
         
 
-
-        
-    <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/fcd4/" rel="prev" title="AR模型谱估计的几种算法比较">
-      <i class="fa fa-chevron-left"></i> AR模型谱估计的几种算法比较
-    </a></div>
-      <div class="post-nav-item">
-    <a href="/25d3/" rel="next" title="轻关易道，通商宽衣">
-      轻关易道，通商宽衣 <i class="fa fa-chevron-right"></i>
-    </a></div>
-    </div>
-      </footer>
-    
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/fcd4/" rel="prev" title="AR模型谱估计的几种算法比较">
+                  <i class="fa fa-chevron-left"></i> AR模型谱估计的几种算法比较
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/25d3/" rel="next" title="轻关易道，通商宽衣">
+                  轻关易道，通商宽衣 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
   </article>
   
   
@@ -702,28 +737,8 @@ mjx-container[display="true"] + br {
 
 
 
-        </div>
-        
-      <div class="tabs tabs-comment">
-        <ul class="nav-tabs">
-            <li class="tab"><a href="#comment-utteranc">utteranc</a></li>
-            <li class="tab"><a href="#comment-valine">valine</a></li>
-        </ul>
-        <div class="tab-content">
-            <div class="tab-pane utteranc" id="comment-utteranc">
-              
-  
-  <div class="comments">
-  <script src="https://utteranc.es/client.js" repo="Archaeoraptor/archaeoraptor.github.io" issue-term="pathname" theme="github-light" crossorigin="anonymous" async></script>
-  </div>
-  
-  
-            </div>
-            <div class="tab-pane valine" id="comment-valine">
-              <div class="comments" id="valine-comments"></div>
-            </div>
-        </div>
-      </div>
+      
+    <div class="comments" id="valine-comments"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -732,7 +747,7 @@ mjx-container[display="true"] + br {
       activeClass = localStorage.getItem('comments_active') || activeClass;
     }
     if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
       if (activeTab) {
         activeTab.click();
       }
@@ -741,20 +756,20 @@ mjx-container[display="true"] + br {
   if (CONFIG.comments.storage) {
     window.addEventListener('tabs:click', event => {
       if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
+      const commentClass = event.target.classList[1];
       localStorage.setItem('comments_active', commentClass);
     });
   }
 </script>
 
-      </div>
-    </main>
+    </div>
+  </main>
 
-    <footer class="footer">
-      <div class="footer-inner">
-        
+  <footer class="footer">
+    <div class="footer-inner">
+      
 
-        
+      
 
 <div class="copyright">
   
@@ -765,75 +780,23 @@ mjx-container[display="true"] + br {
   </span>
   <span class="author" itemprop="copyrightHolder">止息</span>
 </div>
-  <div class="powered-by">由 <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span> 并不强力滴驱动，而且并没有备案
+  <div class="powered-by">由 <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span> 强力驱动
   </div>
 
-        
-
-
-
-
-
-
-
-
-      </div>
-    </footer>
-  </div>
+    </div>
+  </footer>
 
   
-  <script src="/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/gh/next-theme/pjax@0/pjax.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/next-boot.js"></script>
-
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '.page-configurations',
-    '.main-inner',
-    '.post-toc-wrap',
-    '.languages',
-    '.pjax'
-  ],
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-document.addEventListener('pjax:success', () => {
-  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.subMenu)
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  const hasTOC = document.querySelector('.post-toc');
-  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
-  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
 
   
 
 
 
 
-  
-<script src="/js/local-search.js"></script>
+  <script src="/js/local-search.js"></script>
 
 
 
@@ -842,19 +805,18 @@ document.addEventListener('pjax:success', () => {
 
 
 
-
-<script data-pjax>
+<script>
 document.querySelectorAll('.pdfobject-container').forEach(element => {
-  let url = element.dataset.target;
-  let pdfOpenParams = {
+  const url = element.dataset.target;
+  const pdfOpenParams = {
     navpanes : 0,
     toolbar  : 0,
     statusbar: 0,
     pagemode : 'thumbs',
     view     : 'FitH'
   };
-  let pdfOpenFragment = '#' + Object.entries(pdfOpenParams).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
-  let fullURL = `/lib/pdf/web/viewer.html?file=${encodeURIComponent(url)}${pdfOpenFragment}`;
+  const pdfOpenFragment = '#' + Object.entries(pdfOpenParams).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
+  const fullURL = `/lib/pdf/web/viewer.html?file=${encodeURIComponent(url)}${pdfOpenFragment}`;
 
   if (NexT.utils.supportsPDFs()) {
     element.innerHTML = `<embed class="pdfobject" src="${url + pdfOpenFragment}" type="application/pdf" style="height: ${element.dataset.height};">`;
@@ -867,24 +829,29 @@ document.querySelectorAll('.pdfobject-container').forEach(element => {
 
 
 
-    <div class="pjax">
-  
-
   
 
 
+
+
+
+
+
+
+  
+
+  
 <script>
 NexT.utils.loadComments('#valine-comments', () => {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
     new Valine(Object.assign({
       el  : '#valine-comments',
-      path: location.pathname,
-    }, {"enable":true,"appId":"9HDUS9zSiY41T0Vp4naCoqcC-MdYXbMMI","appKey":"ufiyQKIMrlBkEYcA4bk1TrYj","placeholder":"林妙妙，没事不要老在我评论区捣乱","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"language":null,"visitor":false,"comment_count":true,"recordIP":false,"serverURLs":null,"enableQQ":true,"requiredFields":[]}
+      path: "/bd8f/",
+    }, {"enable":true,"appId":"9HDUS9zSiY41T0Vp4naCoqcC-MdYXbMMI","appKey":"ufiyQKIMrlBkEYcA4bk1TrYj","placeholder":"林妙妙，没事不要老在我评论区捣乱","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":false,"comment_count":true,"recordIP":false,"serverURLs":null,"enableQQ":true,"requiredFields":[],"language":null}
     ));
   }, window.Valine);
 });
 </script>
 
-    </div>
 </body>
 </html>

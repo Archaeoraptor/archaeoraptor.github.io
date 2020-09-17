@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.0.0">
+<meta name="generator" content="Hexo 5.1.1">
   <link rel="apple-touch-icon" sizes="180x180" href="/uploads/wizard-hat-16.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/uploads/wizard-hat-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/uploads/wizard-hat-16.png">
@@ -17,13 +17,13 @@
 <link rel="stylesheet" href="/css/main.css">
 
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto+Serif+SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
-  
-  <link rel="stylesheet" href="/lib/animate-css/animate.min.css">
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"zhangjk98.xyz","root":"/","scheme":"Pisces","version":"8.0.0-rc.4","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":"Valine"},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeInDown","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInDown"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"zhangjk98.xyz","root":"/","scheme":"Pisces","version":"8.0.0","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":"Valine"},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeInDown","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInDown"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 
   <meta name="description" content="我就每天当瓜子嗑了，不刷题练练手真的要成一个废人了">
@@ -34,16 +34,16 @@
 <meta property="og:description" content="我就每天当瓜子嗑了，不刷题练练手真的要成一个废人了">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-10-13T11:40:29.000Z">
-<meta property="article:modified_time" content="2020-07-31T03:02:12.452Z">
 <meta property="article:author" content="Zhang.jk">
 <meta property="article:tag" content="算法">
 <meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary">
 
+
 <link rel="canonical" href="https://zhangjk98.xyz/6aa3/">
 
 
-<script data-pjax class="page-configurations">
+<script class="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
@@ -56,7 +56,7 @@
   <title>Leetcode刷题 | 止息的碎碎念</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143393734-1"></script>
-    <script data-pjax>
+    <script>
       if (CONFIG.hostname === location.hostname) {
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
@@ -222,16 +222,14 @@ mjx-container[display="true"] {
 mjx-container[display="true"] + br {
   display: none;
 }
-</style><link rel="alternate" href="/atom.xml" title="止息的碎碎念" type="application/atom+xml">
-</head>
+</style></head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
 
-    <main class="main">
-      <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-        <div class="header-inner"><div class="site-brand-container">
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
     <div class="toggle" aria-label="切换导航栏">
         <span class="toggle-line"></span>
@@ -260,7 +258,7 @@ mjx-container[display="true"] + br {
 
 
 <nav class="site-nav">
-  <ul id="menu" class="main-menu menu">
+  <ul class="main-menu menu">
         <li class="menu-item menu-item-about">
 
     <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
@@ -305,8 +303,8 @@ mjx-container[display="true"] + br {
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result">
-  <div id="no-result">
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
     <i class="fa fa-spinner fa-pulse fa-5x"></i>
   </div>
 </div>
@@ -315,7 +313,7 @@ mjx-container[display="true"] + br {
   </div>
 
 </div>
-          
+        
   
   <div class="toggle sidebar-toggle">
     <span class="toggle-line"></span>
@@ -353,7 +351,7 @@ mjx-container[display="true"] + br {
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-count">41</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -373,13 +371,13 @@ mjx-container[display="true"] + br {
 </div>
   <div class="links-of-author animated">
       <span class="links-of-author-item">
-        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FyY2hhZW9yYXB0b3I=" title="GitHub → https://github.com/archaeoraptor"><i class="fab fa-github fa-fw"></i>GitHub</span>
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FyY2hhZW9yYXB0b3I=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;archaeoraptor"><i class="fab fa-github fa-fw"></i>GitHub</span>
       </span>
       <span class="links-of-author-item">
         <span class="exturl" data-url="bWFpbHRvOnpoYW5nams2N0BnbWFpbC5jb20=" title="E-Mail → mailto:zhangjk67@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
       </span>
       <span class="links-of-author-item">
-        <a href="/atom.xml" title="RSS → /atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
       </span>
   </div>
   <div class="cc-license animated" itemprop="license">
@@ -393,10 +391,10 @@ mjx-container[display="true"] + br {
     </div>
     <ul class="links-of-blogroll-list">
         <li class="links-of-blogroll-item">
-          <span class="exturl" data-url="aHR0cHM6Ly91ZXN0Yy5pY3U=" title="https://uestc.icu">uestc.icu</span>
+          <span class="exturl" data-url="aHR0cHM6Ly91ZXN0Yy5pY3U=" title="https:&#x2F;&#x2F;uestc.icu">uestc.icu</span>
         </li>
         <li class="links-of-blogroll-item">
-          <span class="exturl" data-url="aHR0cHM6Ly96aGFuZ3NodXFpYW8ub3Jn" title="https://zhangshuqiao.org">米米的博客</span>
+          <span class="exturl" data-url="aHR0cHM6Ly96aGFuZ3NodXFpYW8ub3Jn" title="https:&#x2F;&#x2F;zhangshuqiao.org">米米的博客</span>
         </li>
     </ul>
   </div>
@@ -404,12 +402,12 @@ mjx-container[display="true"] + br {
       </section>
     </div>
   </aside>
-  <div id="sidebar-dimmer"></div>
+  <div class="sidebar-dimmer"></div>
 
 
-      </header>
+    </header>
 
-      
+    
   <div class="back-to-top">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
@@ -418,15 +416,14 @@ mjx-container[display="true"] + br {
   <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FyY2hhZW9yYXB0b3I=" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
 
 <noscript>
-  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
 </noscript>
 
 
-      <div class="main-inner">
-        
+    <div class="main-inner post posts-expand">
+      
 
-        <div class="content post posts-expand">
-          
+      
 
     
   
@@ -445,38 +442,40 @@ mjx-container[display="true"] + br {
     </span>
 
     
+    
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           Leetcode刷题
         </h1>
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2019-10-13 19:40:29" itemprop="dateCreated datePublished" datetime="2019-10-13T19:40:29+08:00">2019-10-13</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-31 11:02:12" itemprop="dateModified" datetime="2020-07-31T11:02:12+08:00">2020-07-31</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a>
-                </span>
-            </span>
+      <time title="创建时间：2019-10-13 19:40:29" itemprop="dateCreated datePublished" datetime="2019-10-13T19:40:29+08:00">2019-10-13</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2020-09-17 23:48:13" itemprop="dateModified" datetime="2020-09-17T23:48:13+08:00">2020-09-17</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a>
+        </span>
+    </span>
 
-          
+  
   
   <span class="post-meta-item">
     
@@ -491,6 +490,7 @@ mjx-container[display="true"] + br {
   </span>
   
   
+</div>
 
         </div>
       </header>
@@ -499,13 +499,13 @@ mjx-container[display="true"] + br {
     
     
     <div class="post-body" itemprop="articleBody">
-        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>我就每天当瓜子嗑了，不刷题练练手真的要成一个废人了 <a id="more"></a></p>
+        <p>我就每天当瓜子嗑了，不刷题练练手真的要成一个废人了 <a id="more"></a></p>
 <p>生活所迫，开始刷题练手</p>
 <p>装上了VSCode，开始在教研室摸鱼式刷题，再次感受到了VSCode本质上是一个浏览器。</p>
 <p>现在还有点纠结拿什么语言刷，哎，不行就先把那本算法竞赛入门经典刷一遍吧。大一学的数据结构都快忘光了。(⊙﹏⊙)</p>
 <h2 id="vscode-remotedevelopment插件连接wsl">VSCode RemoteDevelopment插件连接wsl</h2>
 <p>教研室分给我的坑位上那台即将报废回收破主机是个14年的i5，并没有独显，虚拟机和双系统是跑不太动了，而且我想用Docker，打开hyper-v之后VMware也不兼容，就弃坑VM了。 开始想在win10下装clang和gcc，后来发现用VSCode直接上wsl更省事，安装Remote Development插件就行了 在wsl新建目录输入<code>code-insiders .</code>或者<code>code .</code> 或者在VSCode里按F1，选择<code>Remote-WSL: New Window</code>，再打开文件夹就行了，看到左下角有个绿色的wsl标志就可以了 git还会有点小问题，要禁用换行符自动转换，不然win下面和linux下面不一样每次git的repo明明没改动，却显示新的变化，问题看<span class="exturl" data-url="aHR0cHM6Ly9jb2RlLnZpc3VhbHN0dWRpby5jb20vZG9jcy9yZW1vdGUvd3Ns">这里<i class="fa fa-external-link-alt"></i></span></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global core.autocrlf false</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-git" data-language="git"><code class="language-git">git config --global core.autocrlf false<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>wsl的Debian应该是buster版本的，镜像源选buster（Debian10）</p>
 <p>wsl里cd进<code>\mnt</code>目录就能和win10交换文件，win10下的wsl文件目录在<code>C:\Users\Username\AppData\Local\Packages\CanonicalGroupLimited.UbuntuonWindows_79rhkp1fndgsc\LocalState\rootfs</code></p>
 <p>wsl里的shell换成oh my zsh，哎，舒服 配置问题请参考<span class="exturl" data-url="aHR0cHM6Ly9jb2RlLnZpc3VhbHN0dWRpby5jb20vZG9jcy9jcHAvY29uZmlnLXdzbA==">官方文档<i class="fa fa-external-link-alt"></i></span>，可以装code runner插件像IDE一样直接运行 <span class="exturl" data-url="aHR0cHM6Ly9wcmludGVtcHcuZ2l0aHViLmlvL3ZzY29kZS1jLWNwcC1jb25maWd1cmF0aW9uLWZvci1hY20tb2ov">看这里<i class="fa fa-external-link-alt"></i></span> 更新，由于巨硬的VSCode频繁更新，json配置格式乱改，折腾来折腾去非常麻烦，请直接使用别人打包好的便携版或者直接转投Clion（有教育邮箱的我就转投Clion了，JB全家桶真香） 据说wsl2已经在20H1预览版上了，但是win10这个样子我又不敢乱更新，等等看吧，观望一下再决定黑巨硬还是微软真香。</p>
@@ -515,7 +515,7 @@ mjx-container[display="true"] + br {
 <p>二分法或者牛顿法</p>
 <p>[231] Power of Two</p>
 <p>不断除以二就行了，或者按位与</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">num &amp; (num<span class="number">-1</span>)</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">num <span class="token operator">&amp;</span> <span class="token punctuation">(</span>num<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>[193] Valid Phone Numbers 美国地区电话号码，直接用正则就好了<code>^(\d&#123;3&#125;-|\(\d&#123;3&#125;\) )\d&#123;3&#125;-\d&#123;4&#125;$</code></p>
 <h2 id="其他">其他</h2>
 <p>努力不写不求甚解的谭++ &gt;有一些很简单的鉴别方法 比如创建obj用的Type()而不是Type{}, 到处是类型声明, 各种子类继承叠罗汉 都是谭++的标志</p>
@@ -530,7 +530,7 @@ mjx-container[display="true"] + br {
     
     
 
-      <footer class="post-footer">
+    <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/%E7%AE%97%E6%B3%95/" rel="tag"><i class="fa fa-tag"></i> 算法</a>
               <a href="/tags/leetcode/" rel="tag"><i class="fa fa-tag"></i> leetcode</a>
@@ -538,20 +538,19 @@ mjx-container[display="true"] + br {
 
         
 
-
-        
-    <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/ff2b/" rel="prev" title="Flask开坑记">
-      <i class="fa fa-chevron-left"></i> Flask开坑记
-    </a></div>
-      <div class="post-nav-item">
-    <a href="/f641/" rel="next" title="沙河夜市">
-      沙河夜市 <i class="fa fa-chevron-right"></i>
-    </a></div>
-    </div>
-      </footer>
-    
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/ff2b/" rel="prev" title="Flask开坑记">
+                  <i class="fa fa-chevron-left"></i> Flask开坑记
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/f641/" rel="next" title="沙河夜市">
+                  沙河夜市 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
   </article>
   
   
@@ -559,28 +558,8 @@ mjx-container[display="true"] + br {
 
 
 
-        </div>
-        
-      <div class="tabs tabs-comment">
-        <ul class="nav-tabs">
-            <li class="tab"><a href="#comment-utteranc">utteranc</a></li>
-            <li class="tab"><a href="#comment-valine">valine</a></li>
-        </ul>
-        <div class="tab-content">
-            <div class="tab-pane utteranc" id="comment-utteranc">
-              
-  
-  <div class="comments">
-  <script src="https://utteranc.es/client.js" repo="Archaeoraptor/archaeoraptor.github.io" issue-term="pathname" theme="github-light" crossorigin="anonymous" async></script>
-  </div>
-  
-  
-            </div>
-            <div class="tab-pane valine" id="comment-valine">
-              <div class="comments" id="valine-comments"></div>
-            </div>
-        </div>
-      </div>
+      
+    <div class="comments" id="valine-comments"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -589,7 +568,7 @@ mjx-container[display="true"] + br {
       activeClass = localStorage.getItem('comments_active') || activeClass;
     }
     if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
       if (activeTab) {
         activeTab.click();
       }
@@ -598,20 +577,20 @@ mjx-container[display="true"] + br {
   if (CONFIG.comments.storage) {
     window.addEventListener('tabs:click', event => {
       if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
+      const commentClass = event.target.classList[1];
       localStorage.setItem('comments_active', commentClass);
     });
   }
 </script>
 
-      </div>
-    </main>
+    </div>
+  </main>
 
-    <footer class="footer">
-      <div class="footer-inner">
-        
+  <footer class="footer">
+    <div class="footer-inner">
+      
 
-        
+      
 
 <div class="copyright">
   
@@ -622,75 +601,23 @@ mjx-container[display="true"] + br {
   </span>
   <span class="author" itemprop="copyrightHolder">止息</span>
 </div>
-  <div class="powered-by">由 <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span> 并不强力滴驱动，而且并没有备案
+  <div class="powered-by">由 <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span> 强力驱动
   </div>
 
-        
-
-
-
-
-
-
-
-
-      </div>
-    </footer>
-  </div>
+    </div>
+  </footer>
 
   
-  <script src="/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/gh/next-theme/pjax@0/pjax.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/next-boot.js"></script>
-
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '.page-configurations',
-    '.main-inner',
-    '.post-toc-wrap',
-    '.languages',
-    '.pjax'
-  ],
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-document.addEventListener('pjax:success', () => {
-  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.subMenu)
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  const hasTOC = document.querySelector('.post-toc');
-  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
-  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
 
   
 
 
 
 
-  
-<script src="/js/local-search.js"></script>
+  <script src="/js/local-search.js"></script>
 
 
 
@@ -699,19 +626,18 @@ document.addEventListener('pjax:success', () => {
 
 
 
-
-<script data-pjax>
+<script>
 document.querySelectorAll('.pdfobject-container').forEach(element => {
-  let url = element.dataset.target;
-  let pdfOpenParams = {
+  const url = element.dataset.target;
+  const pdfOpenParams = {
     navpanes : 0,
     toolbar  : 0,
     statusbar: 0,
     pagemode : 'thumbs',
     view     : 'FitH'
   };
-  let pdfOpenFragment = '#' + Object.entries(pdfOpenParams).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
-  let fullURL = `/lib/pdf/web/viewer.html?file=${encodeURIComponent(url)}${pdfOpenFragment}`;
+  const pdfOpenFragment = '#' + Object.entries(pdfOpenParams).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
+  const fullURL = `/lib/pdf/web/viewer.html?file=${encodeURIComponent(url)}${pdfOpenFragment}`;
 
   if (NexT.utils.supportsPDFs()) {
     element.innerHTML = `<embed class="pdfobject" src="${url + pdfOpenFragment}" type="application/pdf" style="height: ${element.dataset.height};">`;
@@ -724,24 +650,29 @@ document.querySelectorAll('.pdfobject-container').forEach(element => {
 
 
 
-    <div class="pjax">
-  
-
   
 
 
+
+
+
+
+
+
+  
+
+  
 <script>
 NexT.utils.loadComments('#valine-comments', () => {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
     new Valine(Object.assign({
       el  : '#valine-comments',
-      path: location.pathname,
-    }, {"enable":true,"appId":"9HDUS9zSiY41T0Vp4naCoqcC-MdYXbMMI","appKey":"ufiyQKIMrlBkEYcA4bk1TrYj","placeholder":"林妙妙，没事不要老在我评论区捣乱","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"language":null,"visitor":false,"comment_count":true,"recordIP":false,"serverURLs":null,"enableQQ":true,"requiredFields":[]}
+      path: "/6aa3/",
+    }, {"enable":true,"appId":"9HDUS9zSiY41T0Vp4naCoqcC-MdYXbMMI","appKey":"ufiyQKIMrlBkEYcA4bk1TrYj","placeholder":"林妙妙，没事不要老在我评论区捣乱","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":false,"comment_count":true,"recordIP":false,"serverURLs":null,"enableQQ":true,"requiredFields":[],"language":null}
     ));
   }, window.Valine);
 });
 </script>
 
-    </div>
 </body>
 </html>
