@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.0.0">
+<meta name="generator" content="Hexo 5.1.1">
   <link rel="apple-touch-icon" sizes="180x180" href="/uploads/wizard-hat-16.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/uploads/wizard-hat-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/uploads/wizard-hat-16.png">
@@ -17,13 +17,13 @@
 <link rel="stylesheet" href="/css/main.css">
 
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto+Serif+SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
-  
-  <link rel="stylesheet" href="/lib/animate-css/animate.min.css">
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"zhangjk98.xyz","root":"/","scheme":"Pisces","version":"8.0.0-rc.4","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":"Valine"},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeInDown","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInDown"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"zhangjk98.xyz","root":"/","scheme":"Pisces","version":"8.0.0","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":"Valine"},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeInDown","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInDown"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 
   <meta name="description" content="等待填坑">
@@ -34,16 +34,16 @@
 <meta property="og:description" content="等待填坑">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-10-18T01:52:43.000Z">
-<meta property="article:modified_time" content="2020-07-31T03:02:12.452Z">
 <meta property="article:author" content="Zhang.jk">
 <meta property="article:tag" content="炼丹">
 <meta property="article:tag" content="推荐系统">
 <meta name="twitter:card" content="summary">
 
+
 <link rel="canonical" href="https://zhangjk98.xyz/bccd/">
 
 
-<script data-pjax class="page-configurations">
+<script class="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
@@ -56,7 +56,7 @@
   <title>推荐系统笔记 | 止息的碎碎念</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143393734-1"></script>
-    <script data-pjax>
+    <script>
       if (CONFIG.hostname === location.hostname) {
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
@@ -222,16 +222,14 @@ mjx-container[display="true"] {
 mjx-container[display="true"] + br {
   display: none;
 }
-</style><link rel="alternate" href="/atom.xml" title="止息的碎碎念" type="application/atom+xml">
-</head>
+</style></head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
 
-    <main class="main">
-      <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-        <div class="header-inner"><div class="site-brand-container">
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
     <div class="toggle" aria-label="切换导航栏">
         <span class="toggle-line"></span>
@@ -260,7 +258,7 @@ mjx-container[display="true"] + br {
 
 
 <nav class="site-nav">
-  <ul id="menu" class="main-menu menu">
+  <ul class="main-menu menu">
         <li class="menu-item menu-item-about">
 
     <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
@@ -305,8 +303,8 @@ mjx-container[display="true"] + br {
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result">
-  <div id="no-result">
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
     <i class="fa fa-spinner fa-pulse fa-5x"></i>
   </div>
 </div>
@@ -315,7 +313,7 @@ mjx-container[display="true"] + br {
   </div>
 
 </div>
-          
+        
   
   <div class="toggle sidebar-toggle">
     <span class="toggle-line"></span>
@@ -353,7 +351,7 @@ mjx-container[display="true"] + br {
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-count">41</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -373,13 +371,13 @@ mjx-container[display="true"] + br {
 </div>
   <div class="links-of-author animated">
       <span class="links-of-author-item">
-        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FyY2hhZW9yYXB0b3I=" title="GitHub → https://github.com/archaeoraptor"><i class="fab fa-github fa-fw"></i>GitHub</span>
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FyY2hhZW9yYXB0b3I=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;archaeoraptor"><i class="fab fa-github fa-fw"></i>GitHub</span>
       </span>
       <span class="links-of-author-item">
         <span class="exturl" data-url="bWFpbHRvOnpoYW5nams2N0BnbWFpbC5jb20=" title="E-Mail → mailto:zhangjk67@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
       </span>
       <span class="links-of-author-item">
-        <a href="/atom.xml" title="RSS → /atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
       </span>
   </div>
   <div class="cc-license animated" itemprop="license">
@@ -393,10 +391,10 @@ mjx-container[display="true"] + br {
     </div>
     <ul class="links-of-blogroll-list">
         <li class="links-of-blogroll-item">
-          <span class="exturl" data-url="aHR0cHM6Ly91ZXN0Yy5pY3U=" title="https://uestc.icu">uestc.icu</span>
+          <span class="exturl" data-url="aHR0cHM6Ly91ZXN0Yy5pY3U=" title="https:&#x2F;&#x2F;uestc.icu">uestc.icu</span>
         </li>
         <li class="links-of-blogroll-item">
-          <span class="exturl" data-url="aHR0cHM6Ly96aGFuZ3NodXFpYW8ub3Jn" title="https://zhangshuqiao.org">米米的博客</span>
+          <span class="exturl" data-url="aHR0cHM6Ly96aGFuZ3NodXFpYW8ub3Jn" title="https:&#x2F;&#x2F;zhangshuqiao.org">米米的博客</span>
         </li>
     </ul>
   </div>
@@ -404,12 +402,12 @@ mjx-container[display="true"] + br {
       </section>
     </div>
   </aside>
-  <div id="sidebar-dimmer"></div>
+  <div class="sidebar-dimmer"></div>
 
 
-      </header>
+    </header>
 
-      
+    
   <div class="back-to-top">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
@@ -418,15 +416,14 @@ mjx-container[display="true"] + br {
   <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FyY2hhZW9yYXB0b3I=" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
 
 <noscript>
-  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
 </noscript>
 
 
-      <div class="main-inner">
-        
+    <div class="main-inner post posts-expand">
+      
 
-        <div class="content post posts-expand">
-          
+      
 
     
   
@@ -445,38 +442,40 @@ mjx-container[display="true"] + br {
     </span>
 
     
+    
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           推荐系统笔记
         </h1>
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2019-10-18 09:52:43" itemprop="dateCreated datePublished" datetime="2019-10-18T09:52:43+08:00">2019-10-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-31 11:02:12" itemprop="dateModified" datetime="2020-07-31T11:02:12+08:00">2020-07-31</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a>
-                </span>
-            </span>
+      <time title="创建时间：2019-10-18 09:52:43" itemprop="dateCreated datePublished" datetime="2019-10-18T09:52:43+08:00">2019-10-18</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2020-09-17 23:48:13" itemprop="dateModified" datetime="2020-09-17T23:48:13+08:00">2020-09-17</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a>
+        </span>
+    </span>
 
-          
+  
   
   <span class="post-meta-item">
     
@@ -491,6 +490,7 @@ mjx-container[display="true"] + br {
   </span>
   
   
+</div>
 
         </div>
       </header>
@@ -499,7 +499,7 @@ mjx-container[display="true"] + br {
     
     
     <div class="post-body" itemprop="articleBody">
-        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>等待填坑 <a id="more"></a> 大概分为用户建模模块、推荐对象建模模块、推荐算法模块</p>
+        <p>等待填坑 <a id="more"></a> 大概分为用户建模模块、推荐对象建模模块、推荐算法模块</p>
 <h2 id="主要算法">主要算法</h2>
 <h3 id="协同过滤算法">协同过滤算法</h3>
 <p>最老最经典的一个算法了，大概是给用户推荐兴趣和关注点相似用户的感兴趣内容。</p>
@@ -521,16 +521,60 @@ mjx-container[display="true"] + br {
 <p>等待填坑</p>
 <h2 id="imdb电影评论推荐例子">imdb电影评论推荐例子</h2>
 <p>这里使用<span class="exturl" data-url="aHR0cDovL2ZpbGVzLmdyb3VwbGVucy5vcmcvZGF0YXNldHMvbW92aWVsZW5zLw==">movielens数据集<i class="fa fa-external-link-alt"></i></span>， 数据集的rating.csv包括用户id，物品id，评分，评论时间。(这个csv文件第一行是userid，movieid，·····，把第一行直接删掉或者从第二行开始读取，不然会报TypeError: unsupported operand type(s) for -: 'str' and 'int'的错) 使用的算法是SVD矩阵分解。构建一个用户-物品矩阵，每一项的值是评分，这是一个极其稀疏的矩阵 我们导入数据集并分割：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">header = [<span class="string">&#x27;user_id&#x27;</span>, <span class="string">&#x27;item_id&#x27;</span>, <span class="string">&#x27;rating&#x27;</span>, <span class="string">&#x27;timestamp&#x27;</span>]  <span class="comment"># 用户id，物品id，评分，评论时间</span></span><br><span class="line"></span><br><span class="line">df = pd.read_csv(<span class="string">&#x27;../data/u.data&#x27;</span>, sep=<span class="string">&#x27;\t&#x27;</span>, names=header)</span><br><span class="line">n_users = df.user_id.unique().shape[<span class="number">0</span>]  <span class="comment">#用户数量</span></span><br><span class="line">n_items = df.item_id.unique().shape[<span class="number">0</span>]  <span class="comment">#物品数量</span></span><br><span class="line">print(<span class="string">&#x27;Number of users = &#x27;</span> + str(n_users) + <span class="string">&#x27; | Number of movies = &#x27;</span> + str(n_items))</span><br><span class="line"><span class="comment"># 数据集分割——训练集：测试集 = 3:1</span></span><br><span class="line">train_data,test_data = train_test_split(df, test_size = <span class="number">0.25</span>)</span><br></pre></td></tr></table></figure>
-<p>建立评分矩阵 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">train_data_matrix = np.zeros((n_users, n_items))</span><br><span class="line">test_data_matrix = np.zeros((n_users, n_items))</span><br><span class="line"><span class="comment">#使用 pandas 遍历行数据</span></span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> train_data.itertuples():</span><br><span class="line">    <span class="comment">#训练集评分矩阵</span></span><br><span class="line">    train_data_matrix[line[<span class="number">1</span>]<span class="number">-1</span>, line[<span class="number">2</span>]<span class="number">-1</span>] = line[<span class="number">3</span>]</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> test_data.itertuples():</span><br><span class="line">    <span class="comment">#测试集评分矩阵</span></span><br><span class="line">    test_data_matrix[line[<span class="number">1</span>]<span class="number">-1</span>, line[<span class="number">2</span>]<span class="number">-1</span>] = line[<span class="number">3</span>]</span><br></pre></td></tr></table></figure></p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">header <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'user_id'</span><span class="token punctuation">,</span> <span class="token string">'item_id'</span><span class="token punctuation">,</span> <span class="token string">'rating'</span><span class="token punctuation">,</span> <span class="token string">'timestamp'</span><span class="token punctuation">]</span>  <span class="token comment"># 用户id，物品id，评分，评论时间</span>
+
+df <span class="token operator">=</span> pd<span class="token punctuation">.</span>read_csv<span class="token punctuation">(</span><span class="token string">'../data/u.data'</span><span class="token punctuation">,</span> sep<span class="token operator">=</span><span class="token string">'\t'</span><span class="token punctuation">,</span> names<span class="token operator">=</span>header<span class="token punctuation">)</span>
+n_users <span class="token operator">=</span> df<span class="token punctuation">.</span>user_id<span class="token punctuation">.</span>unique<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>  <span class="token comment">#用户数量</span>
+n_items <span class="token operator">=</span> df<span class="token punctuation">.</span>item_id<span class="token punctuation">.</span>unique<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>  <span class="token comment">#物品数量</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'Number of users = '</span> <span class="token operator">+</span> <span class="token builtin">str</span><span class="token punctuation">(</span>n_users<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">' | Number of movies = '</span> <span class="token operator">+</span> <span class="token builtin">str</span><span class="token punctuation">(</span>n_items<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token comment"># 数据集分割——训练集：测试集 = 3:1</span>
+train_data<span class="token punctuation">,</span>test_data <span class="token operator">=</span> train_test_split<span class="token punctuation">(</span>df<span class="token punctuation">,</span> test_size <span class="token operator">=</span> <span class="token number">0.25</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>建立评分矩阵 <pre class="line-numbers language-python" data-language="python"><code class="language-python">train_data_matrix <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span><span class="token punctuation">(</span>n_users<span class="token punctuation">,</span> n_items<span class="token punctuation">)</span><span class="token punctuation">)</span>
+test_data_matrix <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span><span class="token punctuation">(</span>n_users<span class="token punctuation">,</span> n_items<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token comment">#使用 pandas 遍历行数据</span>
+<span class="token keyword">for</span> line <span class="token keyword">in</span> train_data<span class="token punctuation">.</span>itertuples<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment">#训练集评分矩阵</span>
+    train_data_matrix<span class="token punctuation">[</span>line<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> line<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> line<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span>
+<span class="token keyword">for</span> line <span class="token keyword">in</span> test_data<span class="token punctuation">.</span>itertuples<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment">#测试集评分矩阵</span>
+    test_data_matrix<span class="token punctuation">[</span>line<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> line<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> line<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
 <p>计算余弦相似度：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">user_similarity = pairwise_distances(train_data_matrix, metric = <span class="string">&quot;cosine&quot;</span>)  <span class="comment"># 计算余弦距离</span></span><br><span class="line">item_similarity = pairwise_distances(train_data_matrix.T, metric = <span class="string">&quot;cosine&quot;</span>)</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">user_similarity <span class="token operator">=</span> pairwise_distances<span class="token punctuation">(</span>train_data_matrix<span class="token punctuation">,</span> metric <span class="token operator">=</span> <span class="token string">"cosine"</span><span class="token punctuation">)</span>  <span class="token comment"># 计算余弦距离</span>
+item_similarity <span class="token operator">=</span> pairwise_distances<span class="token punctuation">(</span>train_data_matrix<span class="token punctuation">.</span>T<span class="token punctuation">,</span> metric <span class="token operator">=</span> <span class="token string">"cosine"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <p>基于用户和基于物品的协同过滤</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">predict</span>(<span class="params">rating, similarity, type = <span class="string">&#x27;user&#x27;</span></span>):</span></span><br><span class="line">    <span class="keyword">if</span> type == <span class="string">&#x27;user&#x27;</span>:</span><br><span class="line">        <span class="comment"># </span></span><br><span class="line">        mean_user_rating = rating.mean(axis = <span class="number">1</span>)    <span class="comment">#mean函数：压缩列，对各行求均值，返回 m *1 矩阵</span></span><br><span class="line">        <span class="comment"># print(mean_user_rating)</span></span><br><span class="line">        rating_diff = (rating - mean_user_rating[:,np.newaxis])</span><br><span class="line">        pred = mean_user_rating[:,np.newaxis] + similarity.dot(rating_diff) / np.array([np.abs(similarity).sum(axis=<span class="number">1</span>)]).T</span><br><span class="line">        <span class="comment">#dot函数：矩阵相乘；np.abs()：矩阵元素的绝对值  .T:转置</span></span><br><span class="line">        <span class="comment"># print(&#x27;test&#x27;,pred.min())</span></span><br><span class="line">    <span class="keyword">elif</span> type == <span class="string">&#x27;item&#x27;</span>:</span><br><span class="line">        pred = rating.dot(similarity) / np.array([np.abs(similarity).sum(axis=<span class="number">1</span>)])</span><br><span class="line">        <span class="comment"># print(&#x27;test2&#x27;,pred.max())</span></span><br><span class="line">    <span class="keyword">return</span> pred</span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">item_prediction = predict(train_data_matrix, item_similarity, type = <span class="string">&#x27;item&#x27;</span>)</span><br><span class="line">user_prediction = predict(train_data_matrix, user_similarity, type = <span class="string">&#x27;user&#x27;</span>)</span><br><span class="line">print(len(item_prediction))</span><br><span class="line">print(len(item_prediction[<span class="number">0</span>]))</span><br><span class="line">print(np.argsort(item_prediction[<span class="number">0</span>]))</span><br></pre></td></tr></table></figure>
-<p>计算均方误差 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">rmse</span>(<span class="params">prediction, ground_truth</span>):</span></span><br><span class="line">    <span class="comment"># 计算均方误差</span></span><br><span class="line">    <span class="comment">#nonzero(a)返回数组a中值不为零的元素的下标</span></span><br><span class="line">    <span class="comment">#flatten()创建矩阵</span></span><br><span class="line">    prediction = prediction[ground_truth.nonzero()].flatten()</span><br><span class="line">    ground_truth = ground_truth[ground_truth.nonzero()].flatten()</span><br><span class="line">    <span class="keyword">return</span> sqrt(mean_squared_error(prediction, ground_truth))</span><br><span class="line">print(<span class="string">&#x27;User based CF RMSE: &#x27;</span> + str(rmse(user_prediction, test_data_matrix)))</span><br><span class="line">print(<span class="string">&#x27;Item based CF RMSE: &#x27;</span> + str(rmse(item_prediction, test_data_matrix)))</span><br></pre></td></tr></table></figure></p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">predict</span><span class="token punctuation">(</span>rating<span class="token punctuation">,</span> similarity<span class="token punctuation">,</span> <span class="token builtin">type</span> <span class="token operator">=</span> <span class="token string">'user'</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">if</span> <span class="token builtin">type</span> <span class="token operator">==</span> <span class="token string">'user'</span><span class="token punctuation">:</span>
+        <span class="token comment"># </span>
+        mean_user_rating <span class="token operator">=</span> rating<span class="token punctuation">.</span>mean<span class="token punctuation">(</span>axis <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">)</span>    <span class="token comment">#mean函数：压缩列，对各行求均值，返回 m *1 矩阵</span>
+        <span class="token comment"># print(mean_user_rating)</span>
+        rating_diff <span class="token operator">=</span> <span class="token punctuation">(</span>rating <span class="token operator">-</span> mean_user_rating<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span>np<span class="token punctuation">.</span>newaxis<span class="token punctuation">]</span><span class="token punctuation">)</span>
+        pred <span class="token operator">=</span> mean_user_rating<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span>np<span class="token punctuation">.</span>newaxis<span class="token punctuation">]</span> <span class="token operator">+</span> similarity<span class="token punctuation">.</span>dot<span class="token punctuation">(</span>rating_diff<span class="token punctuation">)</span> <span class="token operator">/</span> np<span class="token punctuation">.</span>array<span class="token punctuation">(</span><span class="token punctuation">[</span>np<span class="token punctuation">.</span><span class="token builtin">abs</span><span class="token punctuation">(</span>similarity<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span>axis<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">.</span>T
+        <span class="token comment">#dot函数：矩阵相乘；np.abs()：矩阵元素的绝对值  .T:转置</span>
+        <span class="token comment"># print('test',pred.min())</span>
+    <span class="token keyword">elif</span> <span class="token builtin">type</span> <span class="token operator">==</span> <span class="token string">'item'</span><span class="token punctuation">:</span>
+        pred <span class="token operator">=</span> rating<span class="token punctuation">.</span>dot<span class="token punctuation">(</span>similarity<span class="token punctuation">)</span> <span class="token operator">/</span> np<span class="token punctuation">.</span>array<span class="token punctuation">(</span><span class="token punctuation">[</span>np<span class="token punctuation">.</span><span class="token builtin">abs</span><span class="token punctuation">(</span>similarity<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span>axis<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        <span class="token comment"># print('test2',pred.max())</span>
+    <span class="token keyword">return</span> pred<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">item_prediction <span class="token operator">=</span> predict<span class="token punctuation">(</span>train_data_matrix<span class="token punctuation">,</span> item_similarity<span class="token punctuation">,</span> <span class="token builtin">type</span> <span class="token operator">=</span> <span class="token string">'item'</span><span class="token punctuation">)</span>
+user_prediction <span class="token operator">=</span> predict<span class="token punctuation">(</span>train_data_matrix<span class="token punctuation">,</span> user_similarity<span class="token punctuation">,</span> <span class="token builtin">type</span> <span class="token operator">=</span> <span class="token string">'user'</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>item_prediction<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>item_prediction<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>np<span class="token punctuation">.</span>argsort<span class="token punctuation">(</span>item_prediction<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>计算均方误差 <pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">rmse</span><span class="token punctuation">(</span>prediction<span class="token punctuation">,</span> ground_truth<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment"># 计算均方误差</span>
+    <span class="token comment">#nonzero(a)返回数组a中值不为零的元素的下标</span>
+    <span class="token comment">#flatten()创建矩阵</span>
+    prediction <span class="token operator">=</span> prediction<span class="token punctuation">[</span>ground_truth<span class="token punctuation">.</span>nonzero<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">.</span>flatten<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    ground_truth <span class="token operator">=</span> ground_truth<span class="token punctuation">[</span>ground_truth<span class="token punctuation">.</span>nonzero<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">.</span>flatten<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> sqrt<span class="token punctuation">(</span>mean_squared_error<span class="token punctuation">(</span>prediction<span class="token punctuation">,</span> ground_truth<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'User based CF RMSE: '</span> <span class="token operator">+</span> <span class="token builtin">str</span><span class="token punctuation">(</span>rmse<span class="token punctuation">(</span>user_prediction<span class="token punctuation">,</span> test_data_matrix<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'Item based CF RMSE: '</span> <span class="token operator">+</span> <span class="token builtin">str</span><span class="token punctuation">(</span>rmse<span class="token punctuation">(</span>item_prediction<span class="token punctuation">,</span> test_data_matrix<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
 <p>SVD分解的方法，其中k是特征值个数，指定将分解为<span class="math inline">\(m*k\)</span>和<span class="math inline">\(k*n\)</span>，中间的对角矩阵有k个特征值 &gt;k: int, optional,Number of singular values and vectors to compute. Must be 1 &lt;= k &lt; min(A.shape)</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">u, s, vt = svds(train_data_matrix, k=<span class="number">500</span>)</span><br><span class="line">s_diag_matrix = np.diag(s)</span><br><span class="line">X_pred = np.dot(np.dot(u, s_diag_matrix), vt)</span><br><span class="line"></span><br><span class="line">print(<span class="string">&#x27;User-based CF MSE: &#x27;</span> + str(rmse(X_pred, test_data_matrix)))</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">u<span class="token punctuation">,</span> s<span class="token punctuation">,</span> vt <span class="token operator">=</span> svds<span class="token punctuation">(</span>train_data_matrix<span class="token punctuation">,</span> k<span class="token operator">=</span><span class="token number">500</span><span class="token punctuation">)</span>
+s_diag_matrix <span class="token operator">=</span> np<span class="token punctuation">.</span>diag<span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+X_pred <span class="token operator">=</span> np<span class="token punctuation">.</span>dot<span class="token punctuation">(</span>np<span class="token punctuation">.</span>dot<span class="token punctuation">(</span>u<span class="token punctuation">,</span> s_diag_matrix<span class="token punctuation">)</span><span class="token punctuation">,</span> vt<span class="token punctuation">)</span>
+
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'User-based CF MSE: '</span> <span class="token operator">+</span> <span class="token builtin">str</span><span class="token punctuation">(</span>rmse<span class="token punctuation">(</span>X_pred<span class="token punctuation">,</span> test_data_matrix<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>参考</p>
 <p><span class="exturl" data-url="aHR0cHM6Ly9sdW1pbmdkb25nLmNuL3JlY29tbWVuZGF0aW9uLWFsZ29yaXRobS1iYXNlZC1vbi1tYXRyaXgtZGVjb21wb3NpdGlvbi5odG1s">基于矩阵分解的推荐算法<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3FjeW1reHljL1JlY1N5cw==">项亮的《推荐系统实践》的代码实现<i class="fa fa-external-link-alt"></i></span></p>
 
@@ -540,7 +584,7 @@ mjx-container[display="true"] + br {
     
     
 
-      <footer class="post-footer">
+    <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/%E7%82%BC%E4%B8%B9/" rel="tag"><i class="fa fa-tag"></i> 炼丹</a>
               <a href="/tags/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F/" rel="tag"><i class="fa fa-tag"></i> 推荐系统</a>
@@ -548,20 +592,19 @@ mjx-container[display="true"] + br {
 
         
 
-
-        
-    <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/f641/" rel="prev" title="沙河夜市">
-      <i class="fa fa-chevron-left"></i> 沙河夜市
-    </a></div>
-      <div class="post-nav-item">
-    <a href="/69d4/" rel="next" title="Docker笔记">
-      Docker笔记 <i class="fa fa-chevron-right"></i>
-    </a></div>
-    </div>
-      </footer>
-    
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/f641/" rel="prev" title="沙河夜市">
+                  <i class="fa fa-chevron-left"></i> 沙河夜市
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/69d4/" rel="next" title="Docker笔记">
+                  Docker笔记 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
   </article>
   
   
@@ -569,28 +612,8 @@ mjx-container[display="true"] + br {
 
 
 
-        </div>
-        
-      <div class="tabs tabs-comment">
-        <ul class="nav-tabs">
-            <li class="tab"><a href="#comment-utteranc">utteranc</a></li>
-            <li class="tab"><a href="#comment-valine">valine</a></li>
-        </ul>
-        <div class="tab-content">
-            <div class="tab-pane utteranc" id="comment-utteranc">
-              
-  
-  <div class="comments">
-  <script src="https://utteranc.es/client.js" repo="Archaeoraptor/archaeoraptor.github.io" issue-term="pathname" theme="github-light" crossorigin="anonymous" async></script>
-  </div>
-  
-  
-            </div>
-            <div class="tab-pane valine" id="comment-valine">
-              <div class="comments" id="valine-comments"></div>
-            </div>
-        </div>
-      </div>
+      
+    <div class="comments" id="valine-comments"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -599,7 +622,7 @@ mjx-container[display="true"] + br {
       activeClass = localStorage.getItem('comments_active') || activeClass;
     }
     if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
       if (activeTab) {
         activeTab.click();
       }
@@ -608,20 +631,20 @@ mjx-container[display="true"] + br {
   if (CONFIG.comments.storage) {
     window.addEventListener('tabs:click', event => {
       if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
+      const commentClass = event.target.classList[1];
       localStorage.setItem('comments_active', commentClass);
     });
   }
 </script>
 
-      </div>
-    </main>
+    </div>
+  </main>
 
-    <footer class="footer">
-      <div class="footer-inner">
-        
+  <footer class="footer">
+    <div class="footer-inner">
+      
 
-        
+      
 
 <div class="copyright">
   
@@ -632,75 +655,23 @@ mjx-container[display="true"] + br {
   </span>
   <span class="author" itemprop="copyrightHolder">止息</span>
 </div>
-  <div class="powered-by">由 <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span> 并不强力滴驱动，而且并没有备案
+  <div class="powered-by">由 <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span> 强力驱动
   </div>
 
-        
-
-
-
-
-
-
-
-
-      </div>
-    </footer>
-  </div>
+    </div>
+  </footer>
 
   
-  <script src="/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/gh/next-theme/pjax@0/pjax.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/next-boot.js"></script>
-
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '.page-configurations',
-    '.main-inner',
-    '.post-toc-wrap',
-    '.languages',
-    '.pjax'
-  ],
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-document.addEventListener('pjax:success', () => {
-  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.subMenu)
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  const hasTOC = document.querySelector('.post-toc');
-  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
-  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
 
   
 
 
 
 
-  
-<script src="/js/local-search.js"></script>
+  <script src="/js/local-search.js"></script>
 
 
 
@@ -709,19 +680,18 @@ document.addEventListener('pjax:success', () => {
 
 
 
-
-<script data-pjax>
+<script>
 document.querySelectorAll('.pdfobject-container').forEach(element => {
-  let url = element.dataset.target;
-  let pdfOpenParams = {
+  const url = element.dataset.target;
+  const pdfOpenParams = {
     navpanes : 0,
     toolbar  : 0,
     statusbar: 0,
     pagemode : 'thumbs',
     view     : 'FitH'
   };
-  let pdfOpenFragment = '#' + Object.entries(pdfOpenParams).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
-  let fullURL = `/lib/pdf/web/viewer.html?file=${encodeURIComponent(url)}${pdfOpenFragment}`;
+  const pdfOpenFragment = '#' + Object.entries(pdfOpenParams).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
+  const fullURL = `/lib/pdf/web/viewer.html?file=${encodeURIComponent(url)}${pdfOpenFragment}`;
 
   if (NexT.utils.supportsPDFs()) {
     element.innerHTML = `<embed class="pdfobject" src="${url + pdfOpenFragment}" type="application/pdf" style="height: ${element.dataset.height};">`;
@@ -734,24 +704,29 @@ document.querySelectorAll('.pdfobject-container').forEach(element => {
 
 
 
-    <div class="pjax">
-  
-
   
 
 
+
+
+
+
+
+
+  
+
+  
 <script>
 NexT.utils.loadComments('#valine-comments', () => {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
     new Valine(Object.assign({
       el  : '#valine-comments',
-      path: location.pathname,
-    }, {"enable":true,"appId":"9HDUS9zSiY41T0Vp4naCoqcC-MdYXbMMI","appKey":"ufiyQKIMrlBkEYcA4bk1TrYj","placeholder":"林妙妙，没事不要老在我评论区捣乱","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"language":null,"visitor":false,"comment_count":true,"recordIP":false,"serverURLs":null,"enableQQ":true,"requiredFields":[]}
+      path: "/bccd/",
+    }, {"enable":true,"appId":"9HDUS9zSiY41T0Vp4naCoqcC-MdYXbMMI","appKey":"ufiyQKIMrlBkEYcA4bk1TrYj","placeholder":"林妙妙，没事不要老在我评论区捣乱","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":false,"comment_count":true,"recordIP":false,"serverURLs":null,"enableQQ":true,"requiredFields":[],"language":null}
     ));
   }, window.Valine);
 });
 </script>
 
-    </div>
 </body>
 </html>
