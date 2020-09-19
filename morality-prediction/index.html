@@ -34,9 +34,9 @@
 <meta property="og:description" content="以急性心肌梗死和MIMIC数据库为例">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://zhangjk98.xyz/morality-prediction/%E6%95%B0%E6%8D%AE%E6%8F%90%E5%8F%96%E6%B5%81%E7%A8%8B.svg">
-<meta property="og:image" content="https://zhangjk98.xyz/morality-prediction/morality-prediction/image-20200603192151696.png">
-<meta property="og:image" content="https://zhangjk98.xyz/morality-prediction/morality-prediction/image-20200531203632378.png">
-<meta property="og:image" content="https://zhangjk98.xyz/morality-prediction/morality-prediction/image-20200531210528257.png">
+<meta property="og:image" content="https://zhangjk98.xyz/morality-prediction/image-20200603192151696.png">
+<meta property="og:image" content="https://zhangjk98.xyz/morality-prediction/image-20200531203632378.png">
+<meta property="og:image" content="https://zhangjk98.xyz/morality-prediction/image-20200531210528257.png">
 <meta property="article:published_time" content="2020-05-31T03:06:54.000Z">
 <meta property="article:author" content="Zhang.jk">
 <meta property="article:tag" content="MIMIC">
@@ -226,7 +226,8 @@ mjx-container[display="true"] {
 mjx-container[display="true"] + br {
   display: none;
 }
-</style></head>
+</style><link rel="alternate" href="/atom.xml" title="止息的碎碎念" type="application/atom+xml">
+</head>
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
   <div class="headband"></div>
@@ -467,7 +468,7 @@ mjx-container[display="true"] + br {
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-09-19 10:21:36" itemprop="dateModified" datetime="2020-09-19T10:21:36+08:00">2020-09-19</time>
+        <time title="修改时间：2020-09-19 10:31:09" itemprop="dateModified" datetime="2020-09-19T10:31:09+08:00">2020-09-19</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -682,7 +683,7 @@ mjx-container[display="true"] + br {
 <p>对于SVM等对于缺失值敏感的算法，用均值填补空缺数据的方法；对于缺失值不敏感的决策树类算法（如GBDT）和自带缺失值处理的算法（如XGBoost），将缺失值置为-1。</p>
 <p>（缺失率在40%左右的会影响模型的效果，但是收缩压之类的又很重要，不能轻易舍弃）</p>
 <figure>
-<img src="morality-prediction/image-20200603192151696.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+<img src="/morality-prediction/image-20200603192151696.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
 </figure>
 <h3 id="数据集不平衡的问题">数据集不平衡的问题</h3>
 <p>有的疾病可能会有，急性心肌梗死由于死亡率很高，正负样本比例已经超过了1：9，并不是那种极端不平衡的问题。有的疾病死亡率1%左右需要采样等方式构造平衡数据集。</p>
@@ -847,12 +848,12 @@ fpr_xgb<span class="token punctuation">,</span>tpr_xgb<span class="token punctua
 <p>由于数据集还是太小，就没有细分搞成多分类的问题预测一下短期（30天）和长期（90天以上）死亡率，数据集大了可以做一下。数据集再大可以做细分，比如STEMI和NSTEMI的细分或者</p>
 <h3 id="roc曲线">ROC曲线</h3>
 <figure>
-<img src="morality-prediction/image-20200531203632378.png" alt="几种机器学习方法的ROC曲线" /><figcaption aria-hidden="true">几种机器学习方法的ROC曲线</figcaption>
+<img src="/morality-prediction/image-20200531203632378.png" alt="几种机器学习方法的ROC曲线" /><figcaption aria-hidden="true">几种机器学习方法的ROC曲线</figcaption>
 </figure>
 <h3 id="特征权重">特征权重</h3>
 <p>以GBDT为例，提取训练模型的决策树权重，结果如图3-3所示。由图可知，梯度提升树模型认为最重要的10个指标为当日最小血清碳酸氢水平、平均动脉血二氧化碳分压、平均排尿量、心率范围、最小心率、肌酐、体温范围、当日最大收缩压、当日心率标准差、年龄。</p>
 <figure>
-<img src="morality-prediction/image-20200531210528257.png" alt="GBDT的特征权重" /><figcaption aria-hidden="true">GBDT的特征权重</figcaption>
+<img src="/morality-prediction/image-20200531210528257.png" alt="GBDT的特征权重" /><figcaption aria-hidden="true">GBDT的特征权重</figcaption>
 </figure>
 <h2 id="其他问题">其他问题</h2>
 <p>这个，急性心肌梗死这个直接看心电图或者彩超啥的更好一些，准确率一般不会低于90%。心血管疾病这种做这个预测基本没有太大意义。急性肾衰竭啥的可能更有意义一点</p>

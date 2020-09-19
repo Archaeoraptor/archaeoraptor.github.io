@@ -411,7 +411,7 @@ validation_data<span class="token operator">=</span><span class="token punctuati
 <p>一个小问题是初次加载依赖有点慢，原因见<span class="exturl" data-url="aHR0cHM6Ly9weXRob24tcG9ldHJ5Lm9yZy9kb2NzL2ZhcS8jd2h5LWlzLXRoZS1kZXBlbmRlbmN5LXJlc29sdXRpb24tcHJvY2Vzcy1zbG93">这里<i class="fa fa-external-link-alt"></i></span>。这也不能怪poetry，PyPI上那么多库，还有不少野库，很多库并没有规范声明Metadata，poetry没法通过调PyPI的API判断该下哪种版本的包，就只能把所有的都拉下来然后判断该用哪个</p>
 <p>我们打开poetry.lock文件,可以看到，一个版本所有的发行包（packages）都被拉了下来</p>
 <figure>
-<img src="Pythonic/image-20200427232343931.png" alt="poetry.lock" /><figcaption aria-hidden="true">poetry.lock</figcaption>
+<img src="/a343/image-20200427232343931.png" alt="poetry.lock" /><figcaption aria-hidden="true">poetry.lock</figcaption>
 </figure>
 <p>这个目前无解 &gt;At the moment there is no way around it.</p>
 <p>如果再次用到某个库，poetry之前缓存了发行信息，不会出现那种全下一遍的事了 &gt;Once Poetry has cached the releases' information, the dependency resolution process will be much faster.</p>
@@ -544,7 +544,7 @@ poetry <span class="token function">install</span><span aria-hidden="true" class
 <h2 id="庚子鼠年计划">庚子鼠年计划</h2>
 <p>还记得当年的梦想吗，不仅天涯变了，新浪搜狐变了，谷歌也免不了（也许没变，当年才是装的）。看了一圈，真诚可爱的反而就是花姐王垠之流。</p>
 <figure>
-<img src="before-vanish/google.jpg" alt="当年" /><figcaption aria-hidden="true">当年</figcaption>
+<img src="/aa1c/google.jpg" alt="当年" /><figcaption aria-hidden="true">当年</figcaption>
 </figure>
 <p>唯见日寒月暖，来煎人寿</p>
 <blockquote>
@@ -597,7 +597,7 @@ poetry <span class="token function">install</span><span aria-hidden="true" class
 <p><span class="exturl" data-url="aHR0cDovL2NxaDJvLmNvbS9mb3J1bS5waHA/bW9kPXZpZXd0aHJlYWQmYW1wO3RpZD0zMzUxMQ==">坚决反对修建小南海水电站<i class="fa fa-external-link-alt"></i></span></p>
 <p>也罢</p>
 <figure>
-<img src="before-vanish/old.jpg" alt="道子搜山" /><figcaption aria-hidden="true">道子搜山</figcaption>
+<img src="/aa1c/old.jpg" alt="道子搜山" /><figcaption aria-hidden="true">道子搜山</figcaption>
 </figure>
 <blockquote class="blockquote-center">
 <p>君不见，高堂明镜悲白发，朝如青丝暮成雪</p>
@@ -609,52 +609,6 @@ poetry <span class="token function">install</span><span aria-hidden="true" class
       </categories>
       <tags>
         <tag>2020</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>MySQL从入门到跑路</title>
-    <url>/45b9/</url>
-    <content><![CDATA[<p>用了这么久数据库，现在还只会增删查改，开个坑学学优化。 <a id="more"></a> 等待填坑</p>
-<p>这个图比较清晰</p>
-<p><img src="database-learning/db.webp" /></p>
-<p>看到clickhouse的速度很快，有空看一下</p>
-<h2 id="轻如鸿毛的sqlite">轻如鸿毛的SQLite</h2>
-<p>好东西，在性能严重受限的开发板上跑着非常舒服，反正以前我试着感觉比另一个嵌入式数据库BerkeleyDB感觉好用多了。</p>
-<p>其实我感觉很多小网站什么的，根本没必要上MySQL之类的东西，SQLite完全够了。什么存储过程啊，什么访问控制用户权限管理啊，基本上不怎么能用得到。数据量也小，那就索性连索引都不要了。 没有那一堆臃肿的东西，也没有那一堆乱七八糟的依赖。</p>
-<p>而且这个东西快啊，数据量不怎么大的情况下比MySQL快，配置也简单</p>
-<h2 id="你们这个是什么教材啊你们真的是害人不浅啊你们这个教材">你们这个是什么教材啊，你们真的是害人不浅啊你们这个教材</h2>
-<h3 id="一张大表不好吗">一张大表不好吗</h3>
-<blockquote>
-<p>范式，什么范式？</p>
-</blockquote>
-<p>课本上这个要新建一张表，那一张表，好多个表</p>
-<h3 id="隔离性">隔离性</h3>
-<p>clickhouse那么快的原因就是一定程度上破坏了隔离性</p>
-<h3 id="原子性">原子性</h3>
-<p>MySQL在5.7以后支持了json，或许是感受到了Postgres的压力。</p>
-<h2 id="好用的干活工具">好用的干活工具</h2>
-<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2RiY2xpL215Y2xp">mycli<i class="fa fa-external-link-alt"></i></span> MySQL的cli工具，能高亮和自动补全</p>
-]]></content>
-      <categories>
-        <category>笔记&amp;札记</category>
-      </categories>
-      <tags>
-        <tag>MySQL</tag>
-        <tag>Database</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>数字频率计</title>
-    <url>/9824/</url>
-    <content><![CDATA[<p>补档 <a id="more"></a> 泥电大三下的一门叫现代电子设计综合实验的实验课搞的数字频率计，拿VHDL和C51写的，工程文件扔在<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0FyY2hhZW9yYXB0b3IvbGF0Y2hfdGVzdA==">这里<i class="fa fa-external-link-alt"></i></span>了。这门课可能是你电为数不多不太水的实验课了，反正比手抄上万字的大物实验好多了（不知道现在还抄不抄了）</p>
-<p>先分频，再把门控、数显、锁存和计数都写出来就能用了 精度问题其实要求不高，本来FPGA的板子上那些器件精度就不错，想要提高精度可以折腾一下等精度之类的做法 <div class="pdfobject-container" data-target="/uploads/频率计.pdf" data-height="500px"></div> 顺便试试博客插入PDF的功能（在火狐上偶尔有问题，好像是CORS跨域的问题）</p>
-]]></content>
-      <categories>
-        <category>荒废的老本行</category>
-      </categories>
-      <tags>
-        <tag>VHDL</tag>
-        <tag>频率计</tag>
       </tags>
   </entry>
   <entry>
@@ -725,7 +679,7 @@ result <span class="token operator">=</span> etree<span class="token punctuation
 <p>要提取的主要信息都在html部分里面，外层的xml里面没啥东西，我们直接把外层的xml扔了，解析里面的html</p>
 <p>另存为html就可以在浏览器里看到了，使用F12调试工具可以直接抓取html里面元素的xpath</p>
 <figure>
-<img src="data-cleaning/image-20200426094024186.png" alt="病历" /><figcaption aria-hidden="true">病历</figcaption>
+<img src="/81d4/image-20200426094024186.png" alt="病历" /><figcaption aria-hidden="true">病历</figcaption>
 </figure>
 <p>但是仔细一看发现这个病历的html标签每份不太一样，比如有的第10对p标签里面是主诉的东西，但是另一份病历第10对p标签里面是住院病人离院责任书。没有固定的标志位，不太好提，不如直接上正则。</p>
 <p>多看了几份病历发现小问题很多，格式一点也规整，比如主诉，不同病历有下面这几种</p>
@@ -738,7 +692,7 @@ result <span class="token operator">=</span> etree<span class="token punctuation
 chief_compliant <span class="token operator">=</span> <span class="token string">r'&lt;P>&lt;FONT color=steelblue>.*?主诉.*?&lt;/P>'</span>
 chief <span class="token operator">=</span> regex<span class="token punctuation">.</span>search<span class="token punctuation">(</span>chief_compliant<span class="token punctuation">,</span> myhtml<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <figure>
-<img src="data-cleaning/image-20200426220846518.png" alt="image-20200426220846518" /><figcaption aria-hidden="true">image-20200426220846518</figcaption>
+<img src="/81d4/image-20200426220846518.png" alt="image-20200426220846518" /><figcaption aria-hidden="true">image-20200426220846518</figcaption>
 </figure>
 <p>输出的结果再把标签、主诉二字和冒号等删去</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> pyquery <span class="token keyword">import</span> PyQuery
@@ -750,7 +704,7 @@ chief_text <span class="token operator">=</span> PyQuery<span class="token punct
     text<span class="token punctuation">.</span>append<span class="token punctuation">(</span>chief_clean<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>差不多能看了</p>
 <figure>
-<img src="data-cleaning/image-20200426220726567.png" alt="image-20200426220726567" /><figcaption aria-hidden="true">image-20200426220726567</figcaption>
+<img src="/81d4/image-20200426220726567.png" alt="image-20200426220726567" /><figcaption aria-hidden="true">image-20200426220726567</figcaption>
 </figure>
 <p>再用同样的方法提现病史的时候遇到了问题，发现正则会把之前主诉的内容也匹配上，这是python正则的懒惰匹配只能向后没有向前。一个办法是抽出来然后删掉主诉</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># 现病史（re方法）</span>
@@ -834,6 +788,52 @@ connection<span class="token punctuation">.</span>commit<span class="token punct
       <tags>
         <tag>xml</tag>
         <tag>电子病历</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MySQL从入门到跑路</title>
+    <url>/45b9/</url>
+    <content><![CDATA[<p>用了这么久数据库，现在还只会增删查改，开个坑学学优化。 <a id="more"></a> 等待填坑</p>
+<p>这个图比较清晰</p>
+<p><img src="/45b9/db.webp" /></p>
+<p>看到clickhouse的速度很快，有空看一下</p>
+<h2 id="轻如鸿毛的sqlite">轻如鸿毛的SQLite</h2>
+<p>好东西，在性能严重受限的开发板上跑着非常舒服，反正以前我试着感觉比另一个嵌入式数据库BerkeleyDB感觉好用多了。</p>
+<p>其实我感觉很多小网站什么的，根本没必要上MySQL之类的东西，SQLite完全够了。什么存储过程啊，什么访问控制用户权限管理啊，基本上不怎么能用得到。数据量也小，那就索性连索引都不要了。 没有那一堆臃肿的东西，也没有那一堆乱七八糟的依赖。</p>
+<p>而且这个东西快啊，数据量不怎么大的情况下比MySQL快，配置也简单</p>
+<h2 id="你们这个是什么教材啊你们真的是害人不浅啊你们这个教材">你们这个是什么教材啊，你们真的是害人不浅啊你们这个教材</h2>
+<h3 id="一张大表不好吗">一张大表不好吗</h3>
+<blockquote>
+<p>范式，什么范式？</p>
+</blockquote>
+<p>课本上这个要新建一张表，那一张表，好多个表</p>
+<h3 id="隔离性">隔离性</h3>
+<p>clickhouse那么快的原因就是一定程度上破坏了隔离性</p>
+<h3 id="原子性">原子性</h3>
+<p>MySQL在5.7以后支持了json，或许是感受到了Postgres的压力。</p>
+<h2 id="好用的干活工具">好用的干活工具</h2>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2RiY2xpL215Y2xp">mycli<i class="fa fa-external-link-alt"></i></span> MySQL的cli工具，能高亮和自动补全</p>
+]]></content>
+      <categories>
+        <category>笔记&amp;札记</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+        <tag>Database</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数字频率计</title>
+    <url>/9824/</url>
+    <content><![CDATA[<p>补档 <a id="more"></a> 泥电大三下的一门叫现代电子设计综合实验的实验课搞的数字频率计，拿VHDL和C51写的，工程文件扔在<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0FyY2hhZW9yYXB0b3IvbGF0Y2hfdGVzdA==">这里<i class="fa fa-external-link-alt"></i></span>了。这门课可能是你电为数不多不太水的实验课了，反正比手抄上万字的大物实验好多了（不知道现在还抄不抄了）</p>
+<p>先分频，再把门控、数显、锁存和计数都写出来就能用了 精度问题其实要求不高，本来FPGA的板子上那些器件精度就不错，想要提高精度可以折腾一下等精度之类的做法 <div class="pdfobject-container" data-target="/uploads/频率计.pdf" data-height="500px"></div> 顺便试试博客插入PDF的功能（在火狐上偶尔有问题，好像是CORS跨域的问题）</p>
+]]></content>
+      <categories>
+        <category>荒废的老本行</category>
+      </categories>
+      <tags>
+        <tag>VHDL</tag>
+        <tag>频率计</tag>
       </tags>
   </entry>
   <entry>
@@ -981,7 +981,7 @@ document<span class="token punctuation">.</span><span class="token function">get
 <h3 id="光电容积图ppg">光电容积图（PPG）</h3>
 <p>目前市面上主要的脉搏波测量方法是光电容积脉搏波描记法（photoplethysmography），用光电传感器检测光经过人体的反射和衰减转换成电信号后得到，包括Apple Waltch等手环产品，用光电容积法检测血氧、心率、心率变异性等生理参数。</p>
 <figure>
-<img src="heart-rate-varibility/figure-1-optical-heart-rate-sensing.jpg" alt="光电容积法原理" /><figcaption aria-hidden="true">光电容积法原理</figcaption>
+<img src="/2873/figure-1-optical-heart-rate-sensing.jpg" alt="光电容积法原理" /><figcaption aria-hidden="true">光电容积法原理</figcaption>
 </figure>
 <p>PPG法采集到的脉搏波经过去噪和整流等处理后提取PP间期可以计算心率变异。</p>
 <h4 id="远程光电容积扫描">远程光电容积扫描</h4>
@@ -989,17 +989,17 @@ document<span class="token punctuation">.</span><span class="token function">get
 <p>但是这种方法成本高，易受到运动和光线变化的干扰。目前这个领域比较热门，进展也很快。一些补偿和增强鲁棒性的方法包括全局和局部运动跟踪和独立成分分析等。</p>
 <p>现在此类研究缺乏可靠的公开数据集支持，现有研究大多采用MAHNOB-HCI和DEAP等用于活体识别和情感识别的公开数据集和私有数据集。</p>
 <figure>
-<img src="heart-rate-varibility/figure-3-overview-hr-and-hrv.jpg" alt="rPPG-HRV" /><figcaption aria-hidden="true">rPPG-HRV</figcaption>
+<img src="/2873/figure-3-overview-hr-and-hrv.jpg" alt="rPPG-HRV" /><figcaption aria-hidden="true">rPPG-HRV</figcaption>
 </figure>
 <h2 id="产生机理和影响因素">产生机理和影响因素</h2>
 <figure>
-<img src="heart-rate-varibility/示意图.png" alt="示意图" /><figcaption aria-hidden="true">示意图</figcaption>
+<img src="/2873/示意图.png" alt="示意图" /><figcaption aria-hidden="true">示意图</figcaption>
 </figure>
 <blockquote>
 <p>HRV反映的是自主神经和非自主神经系统所有反馈回路极其复杂的非线性交互作用。自主神经系统是窦性节律条件下心率的主要调节机制。</p>
 </blockquote>
 <p>忽略微小的影响，HRV的高频部分主要受迷走神经的调节，低频部分受到迷走和交感神经的双重作用。</p>
-<p><img src="heart-rate-varibility/nero2.jpg" /></p>
+<p><img src="/2873/nero2.jpg" /></p>
 <blockquote>
 <p>交感神经增强自律性，而副交感神经抑制自律性。交感神经通过增加起搏点去极化程度产生变时性作用，而对心脏起搏点细胞的迷走刺激会引起超极化而降低去极化程度。自主神经的这两个分支均影响与心脏起搏细胞去极化相关的离子通道的活动。</p>
 </blockquote>
@@ -1050,10 +1050,10 @@ document<span class="token punctuation">.</span><span class="token function">get
 <p>首先对序列 <span class="math inline">\(RiR_{i+1}\)</span> 做一阶差分, 得到序列 <span class="math inline">\(d_j ,j=1,2,\dots N-1\)</span> 然后以 <span class="math inline">\((d_j, d_{j+1})\)</span> 为坐标绘制散点图（Poincaré散点图）。差值散点图反映了RR间期差值的离散度 ,对连续RR间期的变化十分敏感。</p>
 <p>首先对序列<span class="math inline">\(R_iR_{i\times1}\)</span>做一阶差分, 得到序列 <span class="math inline">\(d_j,j=1,2,\dots N-1\)</span> 然后以 <span class="math inline">\((d_j, d_{j+1})\)</span> 为坐标绘制散点图（Poincaré散点图）。差值散点图反映了RR间期差值的离散度 ,对连续RR间期的变化十分敏感。</p>
 <figure>
-<img src="heart-rate-varibility/image-20191225111057030.png" alt="健康人和CHF患者的散点图" /><figcaption aria-hidden="true">健康人和CHF患者的散点图</figcaption>
+<img src="/2873/image-20191225111057030.png" alt="健康人和CHF患者的散点图" /><figcaption aria-hidden="true">健康人和CHF患者的散点图</figcaption>
 </figure>
 <h5 id="三维散点图">三维散点图</h5>
-<p>三维散点图的一些意义还不明确，医院里实际用的也很少 <img src="heart-rate-varibility/3D-scatter-plot.png" alt="心率变异性三维散点图" /></p>
+<p>三维散点图的一些意义还不明确，医院里实际用的也很少 <img src="/2873/3D-scatter-plot.png" alt="心率变异性三维散点图" /></p>
 <h5 id="心率震荡hrt">心率震荡（HRT）</h5>
 <p>心率震荡（heart rate turbulence）是指发生室性早搏后，窦性心律出现短暂的加速和减速的过程。检测HRT异常有助于预测自主神经功能障碍以及心血管事件的风险增加。</p>
 <p>分析HRT通常需要24小时HRV动态心电图，主要有震荡初始(turbulence onset, TO)和震荡斜率(turbulence slope, TS)两个指标。</p>
@@ -1105,211 +1105,6 @@ document<span class="token punctuation">.</span><span class="token function">get
       <tags>
         <tag>HRV</tag>
         <tag>BCG</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo博客部署和Next主题设置</title>
-    <url>/bd8f/</url>
-    <content><![CDATA[<p>这里仅记录个人问题，找教程为什么不看看官方文档呢 <a id="more"></a></p>
-<p>有问题先看这里啦，<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL25leHQtdGhlbWUvaGV4by10aGVtZS1uZXh0L2lzc3Vlcy80">更新说明及常见问题<i class="fa fa-external-link-alt"></i></span> 我自己的博客基本会跟着Next主题每月发布的release更新版本，偶尔直接跳到最新的master版本。 可能有的时候因为忙或者其他原因，并不会追最新版，有些之前写的东西过时了也没有改，请大家尽量以<span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0Lm9yZy8=">官方文档<i class="fa fa-external-link-alt"></i></span>为准。</p>
-<h2 id="更新升级至hexo5.0">更新升级至hexo5.0</h2>
-<p>没有什么太大魔改的话直接</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> <span class="token function">install</span> hexo@5.0.0<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>然后把next.yml的配置（或者主题的_config.yml）配置放到根目录_config.next.yml下面。</p>
-<p>hexo 5 支持用npm安装主题了</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> <span class="token function">install</span> hexo-theme-next<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h2 id="升级7.x的大坑">升级7.X的大坑</h2>
-<p>NexT主题的顺畅更新好像很难，官方不推荐，之前乱改的5.X主题升级7.2分支合并出现问题，一堆warning，索性推倒重来直接新搞一个7.X。</p>
-<p>升级可以直接按照官网方法</p>
-<pre><code> cd themes/next
- git tag -l
- git checkout tags/v7.7.1</code></pre>
-<p>spawn failed 问题，删除.deploy_git文件夹并重新部署。 _config.yml配置请注意对齐问题</p>
-<p>给备份博客的repo添加README.md文档可在这个路径下，这样就会显示在首页 themes%yourtheme%.md</p>
-<p>为文章设置预览:添加 <code>&lt;!-- more --&gt;</code></p>
-<p>插入本地图片推荐hexo-asset-image插件,可以看<span class="exturl" data-url="aHR0cDovL2V0cmQub3JnLzIwMTcvMDEvMjMvaGV4b+S4reWujOe+juaPkuWFpeacrOWcsOWbvueJhy8=">这里<i class="fa fa-external-link-alt"></i></span></p>
-<h2 id="各种小问题">各种小问题</h2>
-<h3 id="公式问题">公式问题</h3>
-<p>原来采用的hexo-math插件，在hexo-inject插件上有坑，看了看官方推荐，换成<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3RoZW1lLW5leHQvaGV4by10aGVtZS1uZXh0L2Jsb2IvbWFzdGVyL2RvY3MvemgtQ04vTUFUSC5tZA==">新的插件<i class="fa fa-external-link-alt"></i></span>。换完记得卸载hexo-inject插件</p>
-<h3 id="配置出错">配置出错</h3>
-<p>设置_config.yml时那个rss如果开启，默认空着就好了，不要填true</p>
-<pre><code>rss: true</code></pre>
-<p>像这样就会报错</p>
-<h3 id="本地搜索">本地搜索</h3>
-<p>本地搜索一直转圈圈，看到issue里面说是插件的问题，卸载后重装，神奇的好了</p>
-<pre><code> npm uninstall hexo-generator-searchdb --save
- npm install hexo-generator-searchdb --save</code></pre>
-<p>在Next版本7.20以后（如7.30），hexo-generator-searchdb换成了hexo-generator-search，卸载并安装hexo-generator-search，本地搜索就可以正常使用了，不然会出现只能搜索标题内容的bug</p>
-<pre><code> npm uninstall hexo-generator-searchdb --save
- npm install hexo-generator-search --save</code></pre>
-<h3 id="canvas效果">canvas效果</h3>
-<p>似乎那几个背景特效和进度条都会拖慢网页加载速度，不填建议用（新版的Next已经把乱晃的那个canvas移除了）</p>
-<h3 id="报错">报错</h3>
-<p>可能出现的一类问题是yaml的配置出现了语法错误报错</p>
-<pre class="line-numbers language-log" data-language="log"><code class="language-log">YAMLException: duplicated mapping key at line ...<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>这说明你的key重复了，比如在yaml里同时两段</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">calendar</span><span class="token punctuation">:</span>
-     <span class="token key atrule">calendar_id</span><span class="token punctuation">:</span> &lt;required<span class="token punctuation">></span> <span class="token comment"># Your Google account E-Mail</span>
-     <span class="token key atrule">api_key</span><span class="token punctuation">:</span> &lt;required<span class="token punctuation">></span>
-<span class="token key atrule">calendar</span><span class="token punctuation">:</span>
-     <span class="token key atrule">calendar_id</span><span class="token punctuation">:</span> &lt;required<span class="token punctuation">></span> <span class="token comment"># Your Google account E-Mail</span>
-     <span class="token key atrule">api_key</span><span class="token punctuation">:</span> &lt;required<span class="token punctuation">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>删掉一个calender或者将二者合并就可以了</p>
-<p>还有一种经常出现的问题</p>
-<pre class="line-numbers language-log" data-language="log"><code class="language-log">ERROR read ECONNRESET
-Error: read ECONNRESET
-    at TLSWrap.onStreamRead (internal&#x2F;stream_base_commons.js:111:27)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>这种可能是配置出错了，比如引用了某个本地资源结果路径不对找不到资源。这种建议在浏览器里打开F12检查一下</p>
-<h3 id="新的自定义配置路径">新的自定义配置路径</h3>
-<p>next v7.3.0 版本的定制路径改了，比如custom.styl改成了source/_data/styles.styl，参见</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">custom_file_path</span><span class="token punctuation">:</span>
-  <span class="token comment">#head: source/_data/head.swig</span>
-  <span class="token comment">#header: source/_data/header.swig</span>
-  <span class="token comment">#sidebar: source/_data/sidebar.swig</span>
-  <span class="token comment">#postMeta: source/_data/post-meta.swig</span>
-  <span class="token comment">#postBodyEnd: source/_data/post-body-end.swig</span>
-  <span class="token comment">#footer: source/_data/footer.swig</span>
-  <span class="token comment">#bodyEnd: source/_data/body-end.swig</span>
-  <span class="token comment">#variable: source/_data/variables.styl</span>
-  <span class="token comment">#mixin: source/_data/mixins.styl</span>
-  <span class="token key atrule">style</span><span class="token punctuation">:</span> source/_data/styles.styl<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>当然也可以修改custom_file_path:来自定义定制内容路径，想放哪就放哪。 改成之后就可以每次顺畅的直接每次更新主题时直接<code>git pull</code>了，不需要再merge自定义修改了 很多老的Next主题自定义教程都是在custom.styl或者直接改主题的css文件，7.3以后的新版要把老教程里的路径改了。 还有一种方法是<span class="exturl" data-url="aHR0cHM6Ly93d3cuZG5vY20uY29tL2FydGljbGVzL2JlZWNobnV0L2hleG8tbmV4dC1pbmplY3RzLw==">用Injects自定义主题<i class="fa fa-external-link-alt"></i></span> 据说Hexo5.x之后就能用npm安装主题了，Hexo一直咕咕咕，我们慢慢等吧</p>
-<h3 id="标签">标签</h3>
-<p>Next v7.3.0 版本的标签不再支持 Full-image tag</p>
-<pre><code> WARN  Full-image tag is no longer supported.</code></pre>
-<p>使用</p>
-<pre><code> &#123;% fi https://image-url, 图片名称, , 35% %&#125;</code></pre>
-<p>这样的标签无法再进行图片缩放,可以改用html方式</p>
-<pre><code> &lt;img src=&quot;图片地址&quot; width=&quot;50%&quot; height=&quot;50%&quot;  style=&quot;margin: 0 auto;&quot;/&gt;
- &lt;img width=400 src=&quot; your-image-link&quot; alt=&quot;上海鲜花港 - 郁金香&quot; /&gt;</code></pre>
-<p>或</p>
-<pre><code>&lt;div style=&quot;width: 200px; margin: auto&quot;&gt;![picture name](example.jpeg)&lt;/div&gt;</code></pre>
-<p>或者hexo标签</p>
-<pre><code> &#123;% img [class names] /path/to/image [width] [height] "title text 'alt text'" %&#125;</code></pre>
-<h3 id="其他插件">其他插件</h3>
-<h4 id="fancybox">fancybox</h4>
-<p>fancybox虽然现在还支持，但是据说计划在8.0版移除，所有jQuery有关的东西都在逐步移除，目前已经支持 medium-zoom，可以在设置中开启</p>
-<pre><code> npm install medium-zoom</code></pre>
-<p>"在新版中 quicklink 不建议再使用，最起码不要与 pjax 同时开" 更新,这个在7.4版本以后修复了 无法加载 woff 字体资源 404 问题</p>
-<pre><code> Failed to load resource: the server responded with a status of 404 () fontawesome-webfont.woff2:1</code></pre>
-<p>这个找到提示的文件夹 source/font 路径,找到这三个缺失的文件,补上就可以了(可能没有这个文件夹,新建一下就行了)</p>
-<h3 id="夜间模式">夜间模式</h3>
-<p>现在新版Next已经有了自带的夜间模式，在配置里开启即可，会自动随着系统设置变</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token comment"># Dark Mode</span>
-<span class="token key atrule">darkmode</span><span class="token punctuation">:</span> auto<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<h2 id="更新主题">更新主题</h2>
-<p>这里我使用的Next主题，参考<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3RoZW1lLW5leHQvaGV4by10aGVtZS1uZXh0L2Jsb2IvbWFzdGVyL2RvY3MvemgtQ04vREFUQS1GSUxFUy5tZA==">https://github.com/theme-next/hexo-theme-next/blob/master/docs/zh-CN/DATA-FILES.md<i class="fa fa-external-link-alt"></i></span> 在7.X以后大的更新还是需要手动处理冲突，但是Next主题将两个_config.yml文件合并搞了一个next.yml，在source/_data底下。这样更新的时候git pull后commit和merge就不用每次手动处理主题的_config.yml冲突了 merge之后指定版本</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">git</span> checkout tags/v7.4.1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>(可能会有nothing added to commit but untracked files present的提示，运行git clean -f清理不想要的文件，或者加到.gitignore里面, 还要就使用git add . ) 如果版本指定不对，会有detached HEAD出现，重新指定正确版本。如果还不行，可能git add等出了冲突，看<span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC9hZTQ4NTdkMmY4Njg=">这里<i class="fa fa-external-link-alt"></i></span></p>
-<h2 id="升级hexo4.0">升级Hexo4.0</h2>
-<p>今天检查更新的时候看到这样的提示，发现Hexo出4.0了。 跑到群里一看，说是什么Hexo 4.0.0 会有巨大的性能提升（相比 Hexo 3.2 生成速度提升 10%，内存占用减少 40%）。闲着没事就升级玩玩吧虽然我这也没几篇文章，生成速度本来也不慢。</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">λ npm-upgrade
-Checking <span class="token keyword">for</span> outdated dependencies <span class="token keyword">for</span> <span class="token string">"D:\zjk\myblog2\package.json"</span><span class="token punctuation">..</span>.
-<span class="token punctuation">[</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token punctuation">]</span> <span class="token number">21</span>/21 <span class="token number">100</span>%                                                                                            s can be used.
-
-New versions of active modules available:
-
-  hexo                      ^3.9.0   →   ^4.0.0
-  hexo-deployer-git         ^1.0.0   →   ^2.0.0
-  hexo-generator-archive    ^0.1.5   →   ^1.0.0
-  hexo-generator-category   ^0.1.3   →   ^1.0.0
-  hexo-generator-feed       ^1.2.2   →   ^2.0.0
-  hexo-generator-index      ^0.2.1   →   ^1.0.0
-  hexo-generator-tag        ^0.2.0   →   ^1.0.0
-  hexo-renderer-ejs         ^0.3.1   →   ^1.0.0
-  hexo-renderer-stylus      ^0.3.3   →   ^1.1.0
-  hexo-server               ^0.3.3   →   ^1.0.0
-
-? Update <span class="token string">"hexo"</span> <span class="token keyword">in</span> package.json from ^3.9.0 to ^4.0.0? <span class="token punctuation">(</span>Use arrow keys<span class="token punctuation">)</span>
-<span class="token operator">></span> Yes
-  No
-  Show changelog
-  Ignore
-  Finish update process<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>直接升级</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">npm</span> <span class="token function">install</span> -g hexo@4.0.0<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>更新，现在hexo-cli包也上hexo4.0了，使用官网的那个带cli的命令就行了 升级之后试一下'hexo generate'</p>
-<pre class="line-numbers language-log" data-language="log"><code class="language-log">INFO  Files loaded in 1.94 s
-INFO  140 files generated in 3.07 s<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>好像是快了点 等等，更新了Hexo4.0以后下面的分页突然变成这个样子了，我先报个修 <img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/20191016094709.png" alt="bug" style="zoom:80%;" /></p>
-<p><img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/20191016095007.png" alt="bug" style="zoom:80%;" /></p>
-<p>找到了问题了，已经在<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2hleG9qcy9oZXhvL2lzc3Vlcy8zNzI5">issue#3729<i class="fa fa-external-link-alt"></i></span>里解决了 现在直接升级到master分支就行了</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> themes/next
-<span class="token function">git</span> pull https://github.com/theme-next/hexo-theme-next master
-<span class="token function">git</span> checkout master<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>看到显示这样就行了</p>
-<blockquote>
-<p>Already on 'master' Your branch is up to date with 'origin/master'.</p>
-</blockquote>
-<p><img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/foot.png" alt="Picture" style="zoom:80%;" /> 好了，开心。目前没看到其他bug了，请放心更（cai）新（keng）</p>
-<p>更新，现在最新的master报这样的错：</p>
-<pre><code> ERROR Cannot read property &#39;replace&#39; of null</code></pre>
-<p>还有这样的错</p>
-<pre><code> ERROR Process failed: layout/tag.swig</code></pre>
-<p>换到nunjucks分支，也有这个问题，先切到contrib分支里面，nunjucks那块正在施工，大家先用着旧版，我已经报修了。劳模mimi同学已经在修了（19.10.18） 更新，感谢劳模Mimi同学，已经修了<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3RoZW1lLW5leHQvaGV4by10aGVtZS1uZXh0L3B1bGwvMTIyNg==">Migrate to Nunjucks [3] #1226<i class="fa fa-external-link-alt"></i></span></p>
-<h2 id="绑定域名并托管到netlify">绑定域名并托管到netlify</h2>
-<p>先到namecheap或者namesilo等网站找个中意的域名，不介意在天朝备案腾讯和阿里云买也可以，不愿意花钱也可以申请个免费的。我这里0.99刀一年优惠买了个<a href="https://zhangjk98.xyz/">zhangjk98.xyz</a></p>
-<p>在netlify的domian setting里找到Custom domains按照提示来，可以参考这个<span class="exturl" data-url="aHR0cHM6Ly9tZWRpdW0uY29tL0BQdWRnZTE5OTYvMjAxOC0wMS0wMi03MDEzZWRkYzQxM2M=">使用 Netlify 托管个人网站 详细步骤<i class="fa fa-external-link-alt"></i></span></p>
-<h2 id="google-search-console-验证和配置">Google Search Console 验证和配置</h2>
-<p>这里以netlify为例，namesilo等域名商也可进行验证 <img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/20190830141615.png" alt="dns验证" style="zoom:80%;" /> 有自己的域名可以直接选择domian验证，看<span class="exturl" data-url="aHR0cHM6Ly93d3cud29ndWlkZS5jb20vYXJjaGl2ZXMvNDg2MS5odG1s">这里<i class="fa fa-external-link-alt"></i></span> 打开netlify，找到dns setting，点击下方add new record 按钮 <img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/20190830142257.png" alt="添加验证" /> value就填谷歌给你的那个值，等几分钟就好了</p>
-<h2 id="美化">美化</h2>
-<p>设置footer跳动的红心 在next配置里找到icon 设成下面这个样子</p>
-<pre><code>   icon: 
-      # Icon name in Font Awesome. See: https://fontawesome.com/v4.7.0/icons/
-      # `heart` is recommended with animation in red (#ff0000).
-      name: heartbeat
-      # If you want to animate the icon, set it to true.
-      animated: true
-      # Change the color of icon, using Hex Code.
-      color: &quot;#FF0000&quot;</code></pre>
-<p>自定义字体: _config.yml里找到</p>
-<pre><code> font:
-      enable: true</code></pre>
-<h2 id="使用caniuse测试浏览器兼容性">使用caniuse测试浏览器兼容性</h2>
-<iframe data-feature="fetch" src="https://caniuse.bitsofco.de/embed/index.html?feat=fetch&periods=current&accessible-colours=false" frameborder="0" width="100%" height="400px"></iframe>
-<iframe data-feature="sharedarraybuffer" src="https://caniuse.bitsofco.de/embed/index.html?feat=sharedarraybuffer&periods=current&accessible-colours=false" frameborder="0" width="100%" height="400px"></iframe>
-<iframe data-feature="link-rel-modulepreload" src="https://caniuse.bitsofco.de/embed/index.html?feat=link-rel-modulepreload&periods=past_1,past_2,past_3,past_4,past_5&accessible-colours=false" frameborder="0" width="100%" height="400px"></iframe>
-<h2 id="使用yarn管理npm包和travis-ci自动化部署">使用yarn管理npm包和travis-ci自动化部署</h2>
-<p>可选，本地生成速度够快或者不嫌麻烦也没太有必要上travis-ci 不愿意折腾就直接本地生成部署就好了，ci反而慢，而且就想发个博客的话完全没有必要！</p>
-<p>今天经人提醒，hexo s 是动态编译的，本地预览直接hexo s 就行了，不用先 hexo g 生成</p>
-<h2 id="插件选择">插件选择</h2>
-<h3 id="踩坑">踩坑</h3>
-<p>lazyload插件、fancybox插件(改用mediumzoom)、pjax插件、fliter-optimizer插件（经常跟很多地方冲突）等建议慎用</p>
-<h3 id="给mardown添加论文脚注效果">给Mardown添加论文脚注效果</h3>
-<p>安装插件：</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">npm</span> <span class="token function">install</span> hexo-reference --save<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>注释测试<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
-<h3 id="主页文章置顶">主页文章置顶</h3>
-<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL25leHQtdGhlbWUvaGV4by1nZW5lcmF0b3ItaW5kZXhlZA==">hexo-generator-indexed<i class="fa fa-external-link-alt"></i></span></p>
-<h2 id="使用cloudflare和github-pages">使用Cloudflare和Github Pages</h2>
-<p>由于Netlify访问速度实在太慢（居然比Github Pages还慢），本来以为只是在国内慢，没想到收到一封邮件，说：</p>
-<p>然后我感觉不对劲，拿ping工具和网络测试工具（<span class="exturl" data-url="aHR0cHM6Ly9ndG1ldHJpeC5jb20=">https://gtmetrix.com<i class="fa fa-external-link-alt"></i></span>）看了一下，又查了一下，原来不仅国内慢啊，国外也比Github Pages慢啊 Netlify居然还说“Why You don't need clcoudflare”, 我。。。</p>
-<p><img width=450 src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/net5xx.png" alt="Picture" /></p>
-<p>换回GitHub Pages和cloudlfare，还有CNAME Flatterning, 不需要备案的免费CDN也就cloudflare了。 ping检测结果终于不是一片飘红了。巨硬收购Github后说要建设Github国内的服务器，但是它自家的Azure、bing、onedrive都整天抽风，感觉指望不上了。</p>
-<p><img width=450 src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/ping.png" alt="Picture" /></p>
-<p>现在唯一的问题就是图床用的Github，已经弃疗，国内速度不管了。</p>
-<p>可能的小坑：开启coludflare的 rocket loader 功能后会出错（这是个实验性的功能），Next主题会变成一片空白，一直加载不出来。关掉就好了。</p>
-<h2 id="提高加载速度">提高加载速度</h2>
-<p>在<span class="exturl" data-url="aHR0cHM6Ly9ndG1ldHJpeC5jb20v">GTmetrix<i class="fa fa-external-link-alt"></i></span>上看到我这得分才70多 发现首页两个图片占了很多，把两个图整成webp格式的，然后再调整一下大小(这里我用的这个<span class="exturl" data-url="aHR0cHM6Ly9jbG91ZGNvbnZlcnQuY29tLw==">网站<i class="fa fa-external-link-alt"></i></span>)。这里抛弃safari用户了 (cloudflare的business是有这个功能的，但是我用不起) 然后把velocityjs的那些动画效果关了（这个早就想关了，和其他组件各种冲突）</p>
-<p>虽然拉黑了百度<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>，但是发现我的流量统计还是有一大半是国内访问，为了照顾一下国内速度，还是用了Cloudflare的CDN 大多数时候，国内 cloudflare &gt; github pages &gt; netlify (如果不用个人域名，用netlify的二级域名会比XXX.github.io快一点)。raw.githubusercontent.com 是基本废了，想作为国内图床并不可行 （备案是不可能备案的）</p>
-<h2 id="可能的问题请参考">可能的问题请参考</h2>
-<p><span class="exturl" data-url="aHR0cHM6Ly9zaHV5ZWxpZmUuZ2l0aHViLmlvL3Bvc3QvSGV4byVFNSVCOCVCOCVFOCVBNyU4MSVFOSU5NyVBRSVFOSVBMiU5OCVFOCVBNyVBMyVFNSU4NiVCMyVFNiU5NiVCOSVFNiVBMSU4OC8=">Hexo常见问题解决方案<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9kcDJweC5jb20vMjAxOS8wNC8yNS9oZXhvLW1laWh1YS8=">hexo主题美化<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnlsZWFvLmNvbS8yMDE4LzA5MDEvaGV4by1uZXh05Li76aKY5LiL55qE576O5YyWLmh0bWw=">hexo-next主题下的美化<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvLw==">hexo官网<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0Lm9yZy9kb2NzLw==">next文档(6.0以后)<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLWd1aWRlLnJlYWR0aGVkb2NzLmlv">hexo指南<i class="fa fa-external-link-alt"></i></span> 从node.js操作到next主题，很详细，自己折腾可以参考,也记录了很多坑，但是不全，非官方指南，都是个人博客的坑。他还写了别的<span class="exturl" data-url="aHR0cHM6Ly93d3cuemh1amlhbi50ZWNoL3Bvc3RzL2QyMmFiOTY3Lmh0bWw=">指南<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3RoZW1lLW5leHQvYXdlc29tZS1uZXh0I3BsdWdpbnM=">https://github.com/theme-next/awesome-next#plugins<i class="fa fa-external-link-alt"></i></span>Next主题的插件，7.X版本之后越来越多的功能都剥离出来做成了插件, 使用时要npm install 一下，不能会直接在设置里设为true <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0xlYXJuU2hhcmUvTGVhcm5pbmctTWFya2Rvd24vdHJlZS92Mg==">markdown教程<i class="fa fa-external-link-alt"></i></span></p>
-<h2 id="注释">注释</h2>
-<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>text/javascript<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>https://cdn.jsdelivr.net/gh/lurongkai/anti-baidu/js/anti-baidu-latest.min.js<span class="token punctuation">"</span></span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>UTF-8<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<section class="footnotes" role="doc-endnotes">
-<hr />
-<ol>
-<li id="fn1" role="doc-endnote"><p>这是一个注释测试<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2" role="doc-endnote"><p>加了一个这个<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section>
-]]></content>
-      <categories>
-        <category>杂七杂八</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
-        <tag>Next</tag>
       </tags>
   </entry>
   <entry>
@@ -1390,35 +1185,35 @@ network=<span class="token punctuation">{</span>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> gpasswd -a <span class="token variable">$&#123;<span class="token environment constant">USER</span>&#125;</span> docker<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <h3 id="更改静态为ip">更改静态为ip</h3>
 <p>网卡是eno1（服务器就一个网卡） Ubuntu18的配置改了，在<code>/etc/netplan/50-cloud-init.yaml</code>, 现在18使用netplan管理网络 配置文件是yaml格式，跟hexo和next主题的配置文件格式一样</p>
-<pre class="line-numbers language-yml" data-language="yml"><code class="language-yml"><span class="token comment"># network: &#123;config: disabled&#125;</span>
-<span class="token key atrule">network</span><span class="token punctuation">:</span>
-    <span class="token key atrule">ethernets</span><span class="token punctuation">:</span>
-        <span class="token key atrule">eno1</span><span class="token punctuation">:</span>
-            <span class="token key atrule">dhcp4</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
-    <span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token number">2</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-yml" data-language="yml"><code class="language-yml"># network: &#123;config: disabled&#125;
+network:
+    ethernets:
+        eno1:
+            dhcp4: true
+    version: 2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>改成</p>
-<pre class="line-numbers language-yml" data-language="yml"><code class="language-yml"><span class="token key atrule">network</span><span class="token punctuation">:</span>
-  <span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token number">2</span>
-  <span class="token key atrule">renderer</span><span class="token punctuation">:</span> networkd
-  <span class="token key atrule">ethernets</span><span class="token punctuation">:</span>
-    <span class="token key atrule">eno1</span><span class="token punctuation">:</span>   <span class="token comment">#配置的网卡名称</span>
-<span class="token comment">#      dhcp4: true    #dhcp4关闭</span>
-<span class="token comment">#      dhcp6: true    #dhcp6关闭</span>
-      <span class="token key atrule">addresses</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>211.83.111.224/23<span class="token punctuation">]</span>   <span class="token comment">#设置本机IP及掩码</span>
-      <span class="token key atrule">gateway4</span><span class="token punctuation">:</span> 211.83.110.1   <span class="token comment">#设置网关</span>
-      <span class="token key atrule">nameservers</span><span class="token punctuation">:</span>
-          <span class="token key atrule">addresses</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>114.114.114.114<span class="token punctuation">,</span> 8.8.8.8<span class="token punctuation">]</span>   <span class="token comment">#设置DNS</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-yml" data-language="yml"><code class="language-yml">network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    eno1:   #配置的网卡名称
+#      dhcp4: true    #dhcp4关闭
+#      dhcp6: true    #dhcp6关闭
+      addresses: [211.83.111.224&#x2F;23]   #设置本机IP及掩码
+      gateway4: 211.83.110.1   #设置网关
+      nameservers:
+          addresses: [114.114.114.114, 8.8.8.8]   #设置DNS<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>(网关地址用<code>route -n</code>查看，配置参考<span class="exturl" data-url="aHR0cDovL2Jsb2cuc2luYS5jb20uY24vcy9ibG9nXzUzNzNiY2Y0MDEwMnhrNWcuaHRtbA==">ubuntu 18.04 netplan yaml配置固定IP地址<i class="fa fa-external-link-alt"></i></span>)</p>
 <p>然后</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> netplan apply<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>不对啊，又炸了，ipv4的网关到底是啥啊</p>
 <p>看了一下官网<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>，好像nameserver和gateway4都是可选项，可以空着默认 直接改成这样试试</p>
-<pre class="line-numbers language-yml" data-language="yml"><code class="language-yml"><span class="token key atrule">network</span><span class="token punctuation">:</span>
-  <span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token number">2</span>
-<span class="token comment">#  renderer: networkd</span>
-  <span class="token key atrule">ethernets</span><span class="token punctuation">:</span>
-    <span class="token key atrule">eno1</span><span class="token punctuation">:</span>
-      <span class="token key atrule">addresses</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>211.83.111.224/23<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-yml" data-language="yml"><code class="language-yml">network:
+  version: 2
+#  renderer: networkd
+  ethernets:
+    eno1:
+      addresses: [211.83.111.224&#x2F;23]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>然后进/run/systemd/network看一下系统的网络配置文件</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> /run/systemd/network`
 <span class="token function">ls</span>
@@ -1821,40 +1616,40 @@ $ docker exec doccano tools&#x2F;create-admin.sh &quot;admin&quot; &quot;[email 
 <blockquote>
 <p>注意 Docker镜像run之后会产生三个容器，doccona_nginx、doccona_backend、docker_frontend,其中docker_frontend在构建完成后会直接exit，这是一个feature，不是bug，它的主要作用是webpack打包</p>
 <figure>
-<img src="ner-with-bert/image-20200109220759931.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+<img src="/9112/image-20200109220759931.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
 </figure>
 </blockquote>
 <h4 id="访问docker中的postgresql数据库中的数据">访问Docker中的PostgreSQL数据库中的数据</h4>
 <p>由于数据库安全问题，数据库分离再一个单独的容器中并且 首先执行<code>Docker exec</code>命令进入相应的PostgreSQL数据库容器</p>
 <p>应该看到下图这样，终端从宿主机切换进容器</p>
 <figure>
-<img src="ner-with-bert/image-20200109220232851.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+<img src="/9112/image-20200109220232851.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
 </figure>
 <p>在容器的shell中用命令进入数据库</p>
 <pre class="line-numbers language-none"><code class="language-none">
 $ psql -h 127.0.0.1 -d doccano -U doccano -p 5432 # 注意你的host，数据库名、用户名和端口<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <p>应该看到下图这样，终端从Docker容器切进数据库</p>
 <figure>
-<img src="ner-with-bert/image-20200109220100751.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+<img src="/9112/image-20200109220100751.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
 </figure>
 <p>然后执行<code>\l</code>等命令进入和查看数据库（执行SQL）</p>
 <h4 id="使用">使用</h4>
 <p>后台管理入口是这个http://yoursite/admin/，就是一个Django自带的后台管理</p>
 <figure>
-<img src="ner-with-bert/image-20200411204841203-1586654887394.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+<img src="/9112/image-20200411204841203-1586654887394.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
 </figure>
 <figure>
-<img src="ner-with-bert/image-20200411205005107-1586654884937.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+<img src="/9112/image-20200411205005107-1586654884937.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
 </figure>
 <figure>
-<img src="ner-with-bert/image-20200411205102588-1586654882966.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+<img src="/9112/image-20200411205102588-1586654882966.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
 </figure>
 <p>登录进去后可自行添加账号和项目并设置权限和标签，标注项目选择sequential labeing即可，导出时选择JSONL格式</p>
 <p>这个数据比较多的时候没有自动跳转比较麻烦，请直接在浏览器地址栏使用url跳转</p>
 <p>比如，修改浏览器后面的url，#后面的offset改为685，直接回车，就可以从当前的689跳转到第685个数据</p>
 <p>http://yoursite/projects/6/#offset=685</p>
 <figure>
-<img src="ner-with-bert/image-20200307213544539.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+<img src="/9112/image-20200307213544539.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
 </figure>
 <h2 id="注">注</h2>
 <p>https://github.com/doccano/doccano 一个开源的标注工具</p>
@@ -2098,7 +1893,7 @@ Host Server
 <p>生命的泥委弃在地面上，不生乔木，只生野草，这是我的罪过</p>
 </blockquote>
 <p><br><br/></p>
-<p><img src="博客开通/cyperpunk.png" /></p>
+<p><img src="/1a9a/cyperpunk.png" /></p>
 ]]></content>
       <categories>
         <category>杂七杂八</category>
@@ -2136,6 +1931,44 @@ Host Server
         <tag>测量</tag>
         <tag>传感器</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>无题</title>
+    <url>/e5e8/</url>
+    <content><![CDATA[<figure>
+<img src="photo_hk1.jpg" alt="null" /><figcaption aria-hidden="true">null</figcaption>
+</figure>
+<blockquote>
+<p>然而我的心很平安；没有爱憎，没有哀乐，也没有颜色和声音</p>
+<p>然而这是许多年前的事了</p>
+<a id="more"></a>
+<p>然而现在没有星和月光，没有僵坠的蝴蝶以至笑的渺茫，爱的翔舞。然而青年们很平安</p>
+</blockquote>
+<hr />
+<h2 id="君不见月如水">君不见，月如水</h2>
+<p>局域网之外的某些人纪念着三十年，一如一个月前局域网内官方纪念着一百年。昔日书生意气不再，只余残破躯壳，被人拿出来晒干了高高挂起，铸成新的图腾和血色大旗。</p>
+<p>走近一看，这旗帜不见血色，暗淡无光，轻轻一吹，灰尘抖落</p>
+<p>旖旎的生命不见踪影，在大风暴前，不见人哭，不见人笑。韭菜隐约发觉经济不好，电视只道稳中向好；不知大风波又将怎样到来，也不曾拥有灵便的手脚，只能抬头望像乌云聚集的天空。</p>
+<p>怎奈影帝临走前一席话一语成谶，时局至此，正未知几人称帝，几人称王。</p>
+<figure>
+<img src="pic1.jpg" alt="大清" /><figcaption aria-hidden="true">大清</figcaption>
+</figure>
+<blockquote>
+<p>彼黍离离，彼稷之苗。行迈靡靡，中心摇摇。</p>
+</blockquote>
+<p>承平日久十几年了，九十年代入世后的美(xue)好(han)时(gong)光(chang)，也该结束了，新时代，来了。08年四万亿之后，涨价去库存、棚改、15股灾救市、公鸡侧+环保左右出击，带路，那可真是治国鬼才，迪士尼捡到宝了。反正今天这个样子，也没有回头路了。（当然春秋大梦该做还是要做的，梦里啥都有）</p>
+<p>魑魅搏人应见惯，总输他、覆雨翻云手</p>
+<p>皆误在，今日不和，明日不战。鼎之轻重，可问否？</p>
+<blockquote>
+<p>冰与雪，周旋久.</p>
+</blockquote>
+<p>物价闯关，再来一次，不知如何？</p>
+<p>失业和通胀，会是哪个呢？难道.....</p>
+<p>尽道丰年瑞，丰年事若何？</p>
+]]></content>
+      <categories>
+        <category>彼黍离离</category>
+      </categories>
   </entry>
   <entry>
     <title>正则表达式笔记</title>
@@ -2197,44 +2030,6 @@ num <span class="token operator">=</span> re<span class="token punctuation">.</s
       </tags>
   </entry>
   <entry>
-    <title>无题</title>
-    <url>/e5e8/</url>
-    <content><![CDATA[<figure>
-<img src="photo_hk1.jpg" alt="null" /><figcaption aria-hidden="true">null</figcaption>
-</figure>
-<blockquote>
-<p>然而我的心很平安；没有爱憎，没有哀乐，也没有颜色和声音</p>
-<p>然而这是许多年前的事了</p>
-<a id="more"></a>
-<p>然而现在没有星和月光，没有僵坠的蝴蝶以至笑的渺茫，爱的翔舞。然而青年们很平安</p>
-</blockquote>
-<hr />
-<h2 id="君不见月如水">君不见，月如水</h2>
-<p>局域网之外的某些人纪念着三十年，一如一个月前局域网内官方纪念着一百年。昔日书生意气不再，只余残破躯壳，被人拿出来晒干了高高挂起，铸成新的图腾和血色大旗。</p>
-<p>走近一看，这旗帜不见血色，暗淡无光，轻轻一吹，灰尘抖落</p>
-<p>旖旎的生命不见踪影，在大风暴前，不见人哭，不见人笑。韭菜隐约发觉经济不好，电视只道稳中向好；不知大风波又将怎样到来，也不曾拥有灵便的手脚，只能抬头望像乌云聚集的天空。</p>
-<p>怎奈影帝临走前一席话一语成谶，时局至此，正未知几人称帝，几人称王。</p>
-<figure>
-<img src="pic1.jpg" alt="大清" /><figcaption aria-hidden="true">大清</figcaption>
-</figure>
-<blockquote>
-<p>彼黍离离，彼稷之苗。行迈靡靡，中心摇摇。</p>
-</blockquote>
-<p>承平日久十几年了，九十年代入世后的美(xue)好(han)时(gong)光(chang)，也该结束了，新时代，来了。08年四万亿之后，涨价去库存、棚改、15股灾救市、公鸡侧+环保左右出击，带路，那可真是治国鬼才，迪士尼捡到宝了。反正今天这个样子，也没有回头路了。（当然春秋大梦该做还是要做的，梦里啥都有）</p>
-<p>魑魅搏人应见惯，总输他、覆雨翻云手</p>
-<p>皆误在，今日不和，明日不战。鼎之轻重，可问否？</p>
-<blockquote>
-<p>冰与雪，周旋久.</p>
-</blockquote>
-<p>物价闯关，再来一次，不知如何？</p>
-<p>失业和通胀，会是哪个呢？难道.....</p>
-<p>尽道丰年瑞，丰年事若何？</p>
-]]></content>
-      <categories>
-        <category>彼黍离离</category>
-      </categories>
-  </entry>
-  <entry>
     <title>沙河夜市</title>
     <url>/f641/</url>
     <content><![CDATA[<p>这几天走过泥电沙河边上的建设路，早上晨光熹微，夜间车马喧嚣，仿佛回到了高二高三在一中上学的日子。 <a id="more"></a> 晚上路过建设路，卖小吃的沿街店铺生意似乎很火爆。到底还是网红街，比清水河西门外一片濒临倒闭的冷清店铺红火多了，显不出一点稳中向好共克时艰的样子。然而我这几天却没看到多少麻雀在路边找吃的，可能是人实在太多不太敢来吧。沙河校内倒是有些珠颈斑鸠和白颊噪鹛在路边捡樟树果子吃。鸟没看到，不到一周的时间却见了三次老鼠行色匆匆，穿梭在摊位间，可能是要回家养四个龟 不喜欢辣的我路过建设路，没有胃口，每次大晚上的走过去居然一点也不饿。</p>
@@ -2280,12 +2075,12 @@ num <span class="token operator">=</span> re<span class="token punctuation">.</s
 
 <p>插件测试</p>
 <figure>
-<img src="测试/emmm.jpg" alt="測試"><figcaption aria-hidden="true">測試</figcaption>
+<img src="/938d/emmm.jpg" alt="測試"><figcaption aria-hidden="true">測試</figcaption>
 </figure>
 <p>大小调整测试</p>
 <p><img width="200" src="测试/emmm.jpg"></p>
-<p>嘤花散 <img src="测试/yinghua.jfif" alt="測試"></p>
-<div class="group-picture"><div class="group-picture-row"><div class="group-picture-column"><img src="测试/emmm.jpg" alt="測試"></div></div><div class="group-picture-row"><div class="group-picture-column"><img src="测试/emmm.jpg" alt="測試"></div><div class="group-picture-column"><img src="测试/emmm.jpg" alt="測試"></div><div class="group-picture-column"><img src="测试/emmm.jpg" alt="測試"></div></div><div class="group-picture-row"><div class="group-picture-column"><img src="测试/emmm.jpg" alt="測試"></div><div class="group-picture-column"><img src="测试/emmm.jpg" alt="測試"></div></div></div>
+<p>嘤花散 <img src="/938d/yinghua.jfif" alt="測試"></p>
+<div class="group-picture"><div class="group-picture-row"><div class="group-picture-column"><img src="/938d/emmm.jpg" alt="測試"></div></div><div class="group-picture-row"><div class="group-picture-column"><img src="/938d/emmm.jpg" alt="測試"></div><div class="group-picture-column"><img src="/938d/emmm.jpg" alt="測試"></div><div class="group-picture-column"><img src="/938d/emmm.jpg" alt="測試"></div></div><div class="group-picture-row"><div class="group-picture-column"><img src="/938d/emmm.jpg" alt="測試"></div><div class="group-picture-column"><img src="/938d/emmm.jpg" alt="測試"></div></div></div>
 <p>首先对序列<span class="math inline"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.357ex" xmlns="http://www.w3.org/2000/svg" width="6.809ex" height="1.902ex" role="img" focusable="false" viewBox="0 -683 3009.6 840.8"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D445" d="M230 637Q203 637 198 638T193 649Q193 676 204 682Q206 683 378 683Q550 682 564 680Q620 672 658 652T712 606T733 563T739 529Q739 484 710 445T643 385T576 351T538 338L545 333Q612 295 612 223Q612 212 607 162T602 80V71Q602 53 603 43T614 25T640 16Q668 16 686 38T712 85Q717 99 720 102T735 105Q755 105 755 93Q755 75 731 36Q693 -21 641 -21H632Q571 -21 531 4T487 82Q487 109 502 166T517 239Q517 290 474 313Q459 320 449 321T378 323H309L277 193Q244 61 244 59Q244 55 245 54T252 50T269 48T302 46H333Q339 38 339 37T336 19Q332 6 326 0H311Q275 2 180 2Q146 2 117 2T71 2T50 1Q33 1 33 10Q33 12 36 24Q41 43 46 45Q50 46 61 46H67Q94 46 127 49Q141 52 146 61Q149 65 218 339T287 628Q287 635 230 637ZM630 554Q630 586 609 608T523 636Q521 636 500 636T462 637H440Q393 637 386 627Q385 624 352 494T319 361Q319 360 388 360Q466 361 492 367Q556 377 592 426Q608 449 619 486T630 554Z"></path></g><g data-mml-node="mi" transform="translate(759, -150) scale(0.707)"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g></g><g data-mml-node="msub" transform="translate(1053, 0)"><g data-mml-node="mi"><path data-c="1D445" d="M230 637Q203 637 198 638T193 649Q193 676 204 682Q206 683 378 683Q550 682 564 680Q620 672 658 652T712 606T733 563T739 529Q739 484 710 445T643 385T576 351T538 338L545 333Q612 295 612 223Q612 212 607 162T602 80V71Q602 53 603 43T614 25T640 16Q668 16 686 38T712 85Q717 99 720 102T735 105Q755 105 755 93Q755 75 731 36Q693 -21 641 -21H632Q571 -21 531 4T487 82Q487 109 502 166T517 239Q517 290 474 313Q459 320 449 321T378 323H309L277 193Q244 61 244 59Q244 55 245 54T252 50T269 48T302 46H333Q339 38 339 37T336 19Q332 6 326 0H311Q275 2 180 2Q146 2 117 2T71 2T50 1Q33 1 33 10Q33 12 36 24Q41 43 46 45Q50 46 61 46H67Q94 46 127 49Q141 52 146 61Q149 65 218 339T287 628Q287 635 230 637ZM630 554Q630 586 609 608T523 636Q521 636 500 636T462 637H440Q393 637 386 627Q385 624 352 494T319 361Q319 360 388 360Q466 361 492 367Q556 377 592 426Q608 449 619 486T630 554Z"></path></g><g data-mml-node="TeXAtom" transform="translate(759, -150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mo" transform="translate(345, 0)"><path data-c="D7" d="M630 29Q630 9 609 9Q604 9 587 25T493 118L389 222L284 117Q178 13 175 11Q171 9 168 9Q160 9 154 15T147 29Q147 36 161 51T255 146L359 250L255 354Q174 435 161 449T147 471Q147 480 153 485T168 490Q173 490 175 489Q178 487 284 383L389 278L493 382Q570 459 587 475T609 491Q630 491 630 471Q630 464 620 453T522 355L418 250L522 145Q606 61 618 48T630 29Z"></path></g><g data-mml-node="mn" transform="translate(1123, 0)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g></g></g></g></g></svg></mjx-container></span>做一阶差分, 得到序列 <span class="math inline"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.666ex" xmlns="http://www.w3.org/2000/svg" width="20.113ex" height="2.236ex" role="img" focusable="false" viewBox="0 -694 8890 988.2"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D451" d="M366 683Q367 683 438 688T511 694Q523 694 523 686Q523 679 450 384T375 83T374 68Q374 26 402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487H491Q506 153 506 145Q506 140 503 129Q490 79 473 48T445 8T417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157Q33 205 53 255T101 341Q148 398 195 420T280 442Q336 442 364 400Q369 394 369 396Q370 400 396 505T424 616Q424 629 417 632T378 637H357Q351 643 351 645T353 664Q358 683 366 683ZM352 326Q329 405 277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q233 26 290 98L298 109L352 326Z"></path></g><g data-mml-node="mi" transform="translate(520, -150) scale(0.707)"><path data-c="1D457" d="M297 596Q297 627 318 644T361 661Q378 661 389 651T403 623Q403 595 384 576T340 557Q322 557 310 567T297 596ZM288 376Q288 405 262 405Q240 405 220 393T185 362T161 325T144 293L137 279Q135 278 121 278H107Q101 284 101 286T105 299Q126 348 164 391T252 441Q253 441 260 441T272 442Q296 441 316 432Q341 418 354 401T367 348V332L318 133Q267 -67 264 -75Q246 -125 194 -164T75 -204Q25 -204 7 -183T-12 -137Q-12 -110 7 -91T53 -71Q70 -71 82 -81T95 -112Q95 -148 63 -167Q69 -168 77 -168Q111 -168 139 -140T182 -74L193 -32Q204 11 219 72T251 197T278 308T289 365Q289 372 288 376Z"></path></g></g><g data-mml-node="mo" transform="translate(861.3, 0)"><path data-c="2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path></g><g data-mml-node="mi" transform="translate(1306, 0)"><path data-c="1D457" d="M297 596Q297 627 318 644T361 661Q378 661 389 651T403 623Q403 595 384 576T340 557Q322 557 310 567T297 596ZM288 376Q288 405 262 405Q240 405 220 393T185 362T161 325T144 293L137 279Q135 278 121 278H107Q101 284 101 286T105 299Q126 348 164 391T252 441Q253 441 260 441T272 442Q296 441 316 432Q341 418 354 401T367 348V332L318 133Q267 -67 264 -75Q246 -125 194 -164T75 -204Q25 -204 7 -183T-12 -137Q-12 -110 7 -91T53 -71Q70 -71 82 -81T95 -112Q95 -148 63 -167Q69 -168 77 -168Q111 -168 139 -140T182 -74L193 -32Q204 11 219 72T251 197T278 308T289 365Q289 372 288 376Z"></path></g><g data-mml-node="mo" transform="translate(1995.8, 0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(3051.6, 0)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g><g data-mml-node="mo" transform="translate(3551.6, 0)"><path data-c="2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path></g><g data-mml-node="mn" transform="translate(3996.2, 0)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g><g data-mml-node="mo" transform="translate(4496.2, 0)"><path data-c="2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path></g><g data-mml-node="mo" transform="translate(4940.9, 0)"><path data-c="2026" d="M78 60Q78 84 95 102T138 120Q162 120 180 104T199 61Q199 36 182 18T139 0T96 17T78 60ZM525 60Q525 84 542 102T585 120Q609 120 627 104T646 61Q646 36 629 18T586 0T543 17T525 60ZM972 60Q972 84 989 102T1032 120Q1056 120 1074 104T1093 61Q1093 36 1076 18T1033 0T990 17T972 60Z"></path></g><g data-mml-node="mi" transform="translate(6279.6, 0)"><path data-c="1D441" d="M234 637Q231 637 226 637Q201 637 196 638T191 649Q191 676 202 682Q204 683 299 683Q376 683 387 683T401 677Q612 181 616 168L670 381Q723 592 723 606Q723 633 659 637Q635 637 635 648Q635 650 637 660Q641 676 643 679T653 683Q656 683 684 682T767 680Q817 680 843 681T873 682Q888 682 888 672Q888 650 880 642Q878 637 858 637Q787 633 769 597L620 7Q618 0 599 0Q585 0 582 2Q579 5 453 305L326 604L261 344Q196 88 196 79Q201 46 268 46H278Q284 41 284 38T282 19Q278 6 272 0H259Q228 2 151 2Q123 2 100 2T63 2T46 1Q31 1 31 10Q31 14 34 26T39 40Q41 46 62 46Q130 49 150 85Q154 91 221 362L289 634Q287 635 234 637Z"></path></g><g data-mml-node="mo" transform="translate(7389.8, 0)"><path data-c="2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path></g><g data-mml-node="mn" transform="translate(8390, 0)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g></g></g></svg></mjx-container></span> 然后以 <span class="math inline"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.666ex" xmlns="http://www.w3.org/2000/svg" width="8.708ex" height="2.363ex" role="img" focusable="false" viewBox="0 -750 3849 1044.2"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="msub" transform="translate(389, 0)"><g data-mml-node="mi"><path data-c="1D451" d="M366 683Q367 683 438 688T511 694Q523 694 523 686Q523 679 450 384T375 83T374 68Q374 26 402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487H491Q506 153 506 145Q506 140 503 129Q490 79 473 48T445 8T417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157Q33 205 53 255T101 341Q148 398 195 420T280 442Q336 442 364 400Q369 394 369 396Q370 400 396 505T424 616Q424 629 417 632T378 637H357Q351 643 351 645T353 664Q358 683 366 683ZM352 326Q329 405 277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q233 26 290 98L298 109L352 326Z"></path></g><g data-mml-node="mi" transform="translate(520, -150) scale(0.707)"><path data-c="1D457" d="M297 596Q297 627 318 644T361 661Q378 661 389 651T403 623Q403 595 384 576T340 557Q322 557 310 567T297 596ZM288 376Q288 405 262 405Q240 405 220 393T185 362T161 325T144 293L137 279Q135 278 121 278H107Q101 284 101 286T105 299Q126 348 164 391T252 441Q253 441 260 441T272 442Q296 441 316 432Q341 418 354 401T367 348V332L318 133Q267 -67 264 -75Q246 -125 194 -164T75 -204Q25 -204 7 -183T-12 -137Q-12 -110 7 -91T53 -71Q70 -71 82 -81T95 -112Q95 -148 63 -167Q69 -168 77 -168Q111 -168 139 -140T182 -74L193 -32Q204 11 219 72T251 197T278 308T289 365Q289 372 288 376Z"></path></g></g><g data-mml-node="mo" transform="translate(1250.3, 0)"><path data-c="2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path></g><g data-mml-node="msub" transform="translate(1695, 0)"><g data-mml-node="mi"><path data-c="1D451" d="M366 683Q367 683 438 688T511 694Q523 694 523 686Q523 679 450 384T375 83T374 68Q374 26 402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487H491Q506 153 506 145Q506 140 503 129Q490 79 473 48T445 8T417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157Q33 205 53 255T101 341Q148 398 195 420T280 442Q336 442 364 400Q369 394 369 396Q370 400 396 505T424 616Q424 629 417 632T378 637H357Q351 643 351 645T353 664Q358 683 366 683ZM352 326Q329 405 277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q233 26 290 98L298 109L352 326Z"></path></g><g data-mml-node="TeXAtom" transform="translate(520, -150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D457" d="M297 596Q297 627 318 644T361 661Q378 661 389 651T403 623Q403 595 384 576T340 557Q322 557 310 567T297 596ZM288 376Q288 405 262 405Q240 405 220 393T185 362T161 325T144 293L137 279Q135 278 121 278H107Q101 284 101 286T105 299Q126 348 164 391T252 441Q253 441 260 441T272 442Q296 441 316 432Q341 418 354 401T367 348V332L318 133Q267 -67 264 -75Q246 -125 194 -164T75 -204Q25 -204 7 -183T-12 -137Q-12 -110 7 -91T53 -71Q70 -71 82 -81T95 -112Q95 -148 63 -167Q69 -168 77 -168Q111 -168 139 -140T182 -74L193 -32Q204 11 219 72T251 197T278 308T289 365Q289 372 288 376Z"></path></g><g data-mml-node="mo" transform="translate(412, 0)"><path data-c="2B" d="M56 237T56 250T70 270H369V420L370 570Q380 583 389 583Q402 583 409 568V270H707Q722 262 722 250T707 230H409V-68Q401 -82 391 -82H389H387Q375 -82 369 -68V230H70Q56 237 56 250Z"></path></g><g data-mml-node="mn" transform="translate(1190, 0)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g></g></g><g data-mml-node="mo" transform="translate(3460, 0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g></g></g></svg></mjx-container></span> 为坐标绘制散点图（Poincaré散点图）。差值散点图反映了RR间期差值的离散度 ,对连续RR间期的变化十分敏感。</p>
 ]]></content>
       <tags>
@@ -2572,7 +2367,7 @@ r <span class="token operator">=</span> requests<span class="token punctuation">
 <p>（喜欢KDE桌面，又不想用openSUSE，Kubuntu之前试过体验不是特别好，转了一圈就Manjaro了）</p>
 <p>去官网下了最新版的 Manjaro18.1.5 KDE桌面版本，还是拿Rufus做好启动盘用UEFI装，这里把空闲的老机子直接擦除原来已毕业师兄的win10（erase disk），选 no Hibernate（我不太喜欢systemd，就没设休眠）</p>
 <p>看到选项里有个选择LibreOffice还是Free Office的选项，这里我选了FreeOffice试用，体验过两个月再回来填坑写体会。 （更新，还是WPS吧。。。）</p>
-<p>可以断网安装。没有遇到问题，直接装好了，超乎想象的顺利。唯一的小插曲是装完系统后U盘只剩4M空间，用win10默认的格式化找不回来了，看了<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8zNzc3MjgyNQ==">这里<i class="fa fa-external-link-alt"></i></span> 网上教程已经很多了，我也不打算再写一篇了，下面仅作个人记录(其实并不怎么需要教程，过时得太快，还不如直接看官方wiki或者iso里打包的安装手册，不想看直接照着提示直接装都没问题，比Ubuntu好装太多了) <img src="hello-manjaro/neofetch-manjaro.webp" alt="manjaro-neofetch" /> 内置python是3.8.1，我一时竟有些不习惯😂</p>
+<p>可以断网安装。没有遇到问题，直接装好了，超乎想象的顺利。唯一的小插曲是装完系统后U盘只剩4M空间，用win10默认的格式化找不回来了，看了<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8zNzc3MjgyNQ==">这里<i class="fa fa-external-link-alt"></i></span> 网上教程已经很多了，我也不打算再写一篇了，下面仅作个人记录(其实并不怎么需要教程，过时得太快，还不如直接看官方wiki或者iso里打包的安装手册，不想看直接照着提示直接装都没问题，比Ubuntu好装太多了) <img src="/ff0e/neofetch-manjaro.webp" alt="manjaro-neofetch" /> 内置python是3.8.1，我一时竟有些不习惯😂</p>
 <h2 id="配置">配置</h2>
 <h3 id="换镜像源">换镜像源</h3>
 <p>当然还是换成你电的，在<code>/​etc/​pacman.d/​mirrorlist</code>加上你电</p>
@@ -2767,6 +2562,231 @@ xdg-user-dirs-gtk-update<span aria-hidden="true" class="line-numbers-rows"><span
       </tags>
   </entry>
   <entry>
+    <title>Hexo博客部署和Next主题设置</title>
+    <url>/bd8f/</url>
+    <content><![CDATA[<p>这里仅记录个人问题，找教程为什么不看看官方文档呢 <a id="more"></a></p>
+<p>有问题先看这里啦，<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL25leHQtdGhlbWUvaGV4by10aGVtZS1uZXh0L2lzc3Vlcy80">更新说明及常见问题<i class="fa fa-external-link-alt"></i></span> 我自己的博客基本会跟着Next主题每月发布的release更新版本，偶尔直接跳到最新的master版本。 可能有的时候因为忙或者其他原因，并不会追最新版，有些之前写的东西过时了也没有改，请大家尽量以<span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0Lm9yZy8=">官方文档<i class="fa fa-external-link-alt"></i></span>为准。</p>
+<h2 id="更新升级至hexo5.0">更新升级至hexo5.0</h2>
+<p>没有什么太大魔改的话直接</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> <span class="token function">install</span> hexo@5.0.0<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>然后把next.yml的配置（或者主题的_config.yml）配置放到根目录_config.next.yml下面。</p>
+<p>hexo 5 支持用npm安装主题了</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> <span class="token function">install</span> hexo-theme-next<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h2 id="升级7.x的大坑">升级7.X的大坑</h2>
+<p>NexT主题的顺畅更新好像很难，官方不推荐，之前乱改的5.X主题升级7.2分支合并出现问题，一堆warning，索性推倒重来直接新搞一个7.X。</p>
+<p>升级可以直接按照官网方法</p>
+<pre><code> cd themes/next
+ git tag -l
+ git checkout tags/v7.7.1</code></pre>
+<p>spawn failed 问题，删除.deploy_git文件夹并重新部署。 _config.yml配置请注意对齐问题</p>
+<p>给备份博客的repo添加README.md文档可在这个路径下，这样就会显示在首页 themes%yourtheme%.md</p>
+<p>为文章设置预览:添加 <code>&lt;!-- more --&gt;</code></p>
+<p><del>插入本地图片推荐hexo-asset-image插件,可以看<span class="exturl" data-url="aHR0cDovL2V0cmQub3JnLzIwMTcvMDEvMjMvaGV4b+S4reWujOe+juaPkuWFpeacrOWcsOWbvueJhy8=">这里<i class="fa fa-external-link-alt"></i></span></del></p>
+<p>上面那个图片插件的repo已经时archived了，可以考虑换hexo-asset-link这个插件</p>
+<h2 id="各种小问题">各种小问题</h2>
+<h3 id="公式问题">公式问题</h3>
+<p>原来采用的hexo-math插件，在hexo-inject插件上有坑，看了看官方推荐，换成<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3RoZW1lLW5leHQvaGV4by10aGVtZS1uZXh0L2Jsb2IvbWFzdGVyL2RvY3MvemgtQ04vTUFUSC5tZA==">新的插件<i class="fa fa-external-link-alt"></i></span>。换完记得卸载hexo-inject插件</p>
+<h3 id="配置出错">配置出错</h3>
+<p>设置_config.yml时那个rss如果开启，默认空着就好了，不要填true</p>
+<pre><code>rss: true</code></pre>
+<p>像这样就会报错</p>
+<h3 id="本地搜索">本地搜索</h3>
+<p>本地搜索一直转圈圈，看到issue里面说是插件的问题，卸载后重装，神奇的好了</p>
+<pre><code> npm uninstall hexo-generator-searchdb --save
+ npm install hexo-generator-searchdb --save</code></pre>
+<p>在Next版本7.20以后（如7.30），hexo-generator-searchdb换成了hexo-generator-search，卸载并安装hexo-generator-search，本地搜索就可以正常使用了，不然会出现只能搜索标题内容的bug</p>
+<pre><code> npm uninstall hexo-generator-searchdb --save
+ npm install hexo-generator-search --save</code></pre>
+<h3 id="canvas效果">canvas效果</h3>
+<p>似乎那几个背景特效和进度条都会拖慢网页加载速度，不填建议用（新版的Next已经把乱晃的那个canvas移除了）</p>
+<h3 id="报错">报错</h3>
+<p>可能出现的一类问题是yaml的配置出现了语法错误报错</p>
+<pre class="line-numbers language-log" data-language="log"><code class="language-log">YAMLException: duplicated mapping key at line ...<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>这说明你的key重复了，比如在yaml里同时两段</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">calendar</span><span class="token punctuation">:</span>
+     <span class="token key atrule">calendar_id</span><span class="token punctuation">:</span> &lt;required<span class="token punctuation">></span> <span class="token comment"># Your Google account E-Mail</span>
+     <span class="token key atrule">api_key</span><span class="token punctuation">:</span> &lt;required<span class="token punctuation">></span>
+<span class="token key atrule">calendar</span><span class="token punctuation">:</span>
+     <span class="token key atrule">calendar_id</span><span class="token punctuation">:</span> &lt;required<span class="token punctuation">></span> <span class="token comment"># Your Google account E-Mail</span>
+     <span class="token key atrule">api_key</span><span class="token punctuation">:</span> &lt;required<span class="token punctuation">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>删掉一个calender或者将二者合并就可以了</p>
+<p>还有一种经常出现的问题</p>
+<pre class="line-numbers language-log" data-language="log"><code class="language-log">ERROR read ECONNRESET
+Error: read ECONNRESET
+    at TLSWrap.onStreamRead (internal&#x2F;stream_base_commons.js:111:27)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>这种可能是配置出错了，比如引用了某个本地资源结果路径不对找不到资源。这种建议在浏览器里打开F12检查一下</p>
+<h3 id="新的自定义配置路径">新的自定义配置路径</h3>
+<p>next v7.3.0 版本的定制路径改了，比如custom.styl改成了source/_data/styles.styl，参见</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">custom_file_path</span><span class="token punctuation">:</span>
+  <span class="token comment">#head: source/_data/head.swig</span>
+  <span class="token comment">#header: source/_data/header.swig</span>
+  <span class="token comment">#sidebar: source/_data/sidebar.swig</span>
+  <span class="token comment">#postMeta: source/_data/post-meta.swig</span>
+  <span class="token comment">#postBodyEnd: source/_data/post-body-end.swig</span>
+  <span class="token comment">#footer: source/_data/footer.swig</span>
+  <span class="token comment">#bodyEnd: source/_data/body-end.swig</span>
+  <span class="token comment">#variable: source/_data/variables.styl</span>
+  <span class="token comment">#mixin: source/_data/mixins.styl</span>
+  <span class="token key atrule">style</span><span class="token punctuation">:</span> source/_data/styles.styl<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>当然也可以修改custom_file_path:来自定义定制内容路径，想放哪就放哪。 改成之后就可以每次顺畅的直接每次更新主题时直接<code>git pull</code>了，不需要再merge自定义修改了 很多老的Next主题自定义教程都是在custom.styl或者直接改主题的css文件，7.3以后的新版要把老教程里的路径改了。 还有一种方法是<span class="exturl" data-url="aHR0cHM6Ly93d3cuZG5vY20uY29tL2FydGljbGVzL2JlZWNobnV0L2hleG8tbmV4dC1pbmplY3RzLw==">用Injects自定义主题<i class="fa fa-external-link-alt"></i></span> 据说Hexo5.x之后就能用npm安装主题了，Hexo一直咕咕咕，我们慢慢等吧</p>
+<h3 id="标签">标签</h3>
+<p>Next v7.3.0 版本的标签不再支持 Full-image tag</p>
+<pre><code> WARN  Full-image tag is no longer supported.</code></pre>
+<p>使用</p>
+<pre><code> &#123;% fi https://image-url, 图片名称, , 35% %&#125;</code></pre>
+<p>这样的标签无法再进行图片缩放,可以改用html方式</p>
+<pre><code> &lt;img src=&quot;图片地址&quot; width=&quot;50%&quot; height=&quot;50%&quot;  style=&quot;margin: 0 auto;&quot;/&gt;
+ &lt;img width=400 src=&quot; your-image-link&quot; alt=&quot;上海鲜花港 - 郁金香&quot; /&gt;</code></pre>
+<p>或</p>
+<pre><code>&lt;div style=&quot;width: 200px; margin: auto&quot;&gt;![picture name](example.jpeg)&lt;/div&gt;</code></pre>
+<p>或者hexo标签</p>
+<pre><code> &#123;% img [class names] /path/to/image [width] [height] "title text 'alt text'" %&#125;</code></pre>
+<h3 id="其他插件">其他插件</h3>
+<p>附上我安装的插件</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">npm</span> list --depth<span class="token operator">=</span><span class="token number">0</span>
+hexo-site@0.0.0 /home/zjk/blog
+├── hexo@5.1.1
+├── hexo-asset-link@2.1.0
+├── hexo-deployer-git@2.1.0
+├── hexo-filter-mathjax@0.6.0
+├── hexo-filter-nofollow@2.0.2
+├── hexo-generator-archive@1.0.0
+├── hexo-generator-category@1.0.0
+├── hexo-generator-feed@3.0.0
+├── hexo-generator-index@2.0.0
+├── hexo-generator-searchdb@1.3.2
+├── hexo-generator-tag@1.0.0
+├── hexo-hide-posts@0.1.1
+├── hexo-renderer-ejs@1.0.0
+├── hexo-renderer-pandoc@0.3.0
+├── hexo-renderer-stylus@2.0.0
+└── hexo-server@2.0.0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="fancybox">fancybox</h4>
+<p>fancybox虽然现在还支持，但是据说计划在8.0版移除，所有jQuery有关的东西都在逐步移除，目前已经支持 medium-zoom，可以在设置中开启</p>
+<pre><code> npm install medium-zoom</code></pre>
+<p>"在新版中 quicklink 不建议再使用，最起码不要与 pjax 同时开" 更新,这个在7.4版本以后修复了 无法加载 woff 字体资源 404 问题</p>
+<pre><code> Failed to load resource: the server responded with a status of 404 () fontawesome-webfont.woff2:1</code></pre>
+<p>这个找到提示的文件夹 source/font 路径,找到这三个缺失的文件,补上就可以了(可能没有这个文件夹,新建一下就行了)</p>
+<h3 id="夜间模式">夜间模式</h3>
+<p>现在新版Next已经有了自带的夜间模式，在配置里开启即可，会自动随着系统设置变</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token comment"># Dark Mode</span>
+<span class="token key atrule">darkmode</span><span class="token punctuation">:</span> auto<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h2 id="更新主题">更新主题</h2>
+<p>这里我使用的Next主题，参考<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3RoZW1lLW5leHQvaGV4by10aGVtZS1uZXh0L2Jsb2IvbWFzdGVyL2RvY3MvemgtQ04vREFUQS1GSUxFUy5tZA==">https://github.com/theme-next/hexo-theme-next/blob/master/docs/zh-CN/DATA-FILES.md<i class="fa fa-external-link-alt"></i></span> 在7.X以后大的更新还是需要手动处理冲突，但是Next主题将两个_config.yml文件合并搞了一个next.yml，在source/_data底下。这样更新的时候git pull后commit和merge就不用每次手动处理主题的_config.yml冲突了 merge之后指定版本</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">git</span> checkout tags/v7.4.1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>(可能会有nothing added to commit but untracked files present的提示，运行git clean -f清理不想要的文件，或者加到.gitignore里面, 还要就使用git add . ) 如果版本指定不对，会有detached HEAD出现，重新指定正确版本。如果还不行，可能git add等出了冲突，看<span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC9hZTQ4NTdkMmY4Njg=">这里<i class="fa fa-external-link-alt"></i></span></p>
+<h2 id="升级hexo4.0">升级Hexo4.0</h2>
+<p>今天检查更新的时候看到这样的提示，发现Hexo出4.0了。 跑到群里一看，说是什么Hexo 4.0.0 会有巨大的性能提升（相比 Hexo 3.2 生成速度提升 10%，内存占用减少 40%）。闲着没事就升级玩玩吧虽然我这也没几篇文章，生成速度本来也不慢。</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">λ npm-upgrade
+Checking <span class="token keyword">for</span> outdated dependencies <span class="token keyword">for</span> <span class="token string">"D:\zjk\myblog2\package.json"</span><span class="token punctuation">..</span>.
+<span class="token punctuation">[</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token punctuation">]</span> <span class="token number">21</span>/21 <span class="token number">100</span>%                                                                                            s can be used.
+
+New versions of active modules available:
+
+  hexo                      ^3.9.0   →   ^4.0.0
+  hexo-deployer-git         ^1.0.0   →   ^2.0.0
+  hexo-generator-archive    ^0.1.5   →   ^1.0.0
+  hexo-generator-category   ^0.1.3   →   ^1.0.0
+  hexo-generator-feed       ^1.2.2   →   ^2.0.0
+  hexo-generator-index      ^0.2.1   →   ^1.0.0
+  hexo-generator-tag        ^0.2.0   →   ^1.0.0
+  hexo-renderer-ejs         ^0.3.1   →   ^1.0.0
+  hexo-renderer-stylus      ^0.3.3   →   ^1.1.0
+  hexo-server               ^0.3.3   →   ^1.0.0
+
+? Update <span class="token string">"hexo"</span> <span class="token keyword">in</span> package.json from ^3.9.0 to ^4.0.0? <span class="token punctuation">(</span>Use arrow keys<span class="token punctuation">)</span>
+<span class="token operator">></span> Yes
+  No
+  Show changelog
+  Ignore
+  Finish update process<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>直接升级</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">npm</span> <span class="token function">install</span> -g hexo@4.0.0<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>更新，现在hexo-cli包也上hexo4.0了，使用官网的那个带cli的命令就行了 升级之后试一下'hexo generate'</p>
+<pre class="line-numbers language-log" data-language="log"><code class="language-log">INFO  Files loaded in 1.94 s
+INFO  140 files generated in 3.07 s<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>好像是快了点 等等，更新了Hexo4.0以后下面的分页突然变成这个样子了，我先报个修 <img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/20191016094709.png" alt="bug" style="zoom:80%;" /></p>
+<p><img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/20191016095007.png" alt="bug" style="zoom:80%;" /></p>
+<p>找到了问题了，已经在<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2hleG9qcy9oZXhvL2lzc3Vlcy8zNzI5">issue#3729<i class="fa fa-external-link-alt"></i></span>里解决了 现在直接升级到master分支就行了</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> themes/next
+<span class="token function">git</span> pull https://github.com/theme-next/hexo-theme-next master
+<span class="token function">git</span> checkout master<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>看到显示这样就行了</p>
+<blockquote>
+<p>Already on 'master' Your branch is up to date with 'origin/master'.</p>
+</blockquote>
+<p><img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/foot.png" alt="Picture" style="zoom:80%;" /> 好了，开心。目前没看到其他bug了，请放心更（cai）新（keng）</p>
+<p>更新，现在最新的master报这样的错：</p>
+<pre><code> ERROR Cannot read property &#39;replace&#39; of null</code></pre>
+<p>还有这样的错</p>
+<pre><code> ERROR Process failed: layout/tag.swig</code></pre>
+<p>换到nunjucks分支，也有这个问题，先切到contrib分支里面，nunjucks那块正在施工，大家先用着旧版，我已经报修了。劳模mimi同学已经在修了（19.10.18） 更新，感谢劳模Mimi同学，已经修了<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3RoZW1lLW5leHQvaGV4by10aGVtZS1uZXh0L3B1bGwvMTIyNg==">Migrate to Nunjucks [3] #1226<i class="fa fa-external-link-alt"></i></span></p>
+<h2 id="绑定域名并托管到netlify">绑定域名并托管到netlify</h2>
+<p>先到namecheap或者namesilo等网站找个中意的域名，不介意在天朝备案腾讯和阿里云买也可以，不愿意花钱也可以申请个免费的。我这里0.99刀一年优惠买了个<a href="https://zhangjk98.xyz/">zhangjk98.xyz</a></p>
+<p>在netlify的domian setting里找到Custom domains按照提示来，可以参考这个<span class="exturl" data-url="aHR0cHM6Ly9tZWRpdW0uY29tL0BQdWRnZTE5OTYvMjAxOC0wMS0wMi03MDEzZWRkYzQxM2M=">使用 Netlify 托管个人网站 详细步骤<i class="fa fa-external-link-alt"></i></span></p>
+<h2 id="google-search-console-验证和配置">Google Search Console 验证和配置</h2>
+<p>这里以netlify为例，namesilo等域名商也可进行验证 <img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/20190830141615.png" alt="dns验证" style="zoom:80%;" /> 有自己的域名可以直接选择domian验证，看<span class="exturl" data-url="aHR0cHM6Ly93d3cud29ndWlkZS5jb20vYXJjaGl2ZXMvNDg2MS5odG1s">这里<i class="fa fa-external-link-alt"></i></span> 打开netlify，找到dns setting，点击下方add new record 按钮 <img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/20190830142257.png" alt="添加验证" /> value就填谷歌给你的那个值，等几分钟就好了</p>
+<h2 id="美化">美化</h2>
+<p>设置footer跳动的红心 在next配置里找到icon 设成下面这个样子</p>
+<pre><code>   icon: 
+      # Icon name in Font Awesome. See: https://fontawesome.com/v4.7.0/icons/
+      # `heart` is recommended with animation in red (#ff0000).
+      name: heartbeat
+      # If you want to animate the icon, set it to true.
+      animated: true
+      # Change the color of icon, using Hex Code.
+      color: &quot;#FF0000&quot;</code></pre>
+<p>自定义字体: _config.yml里找到</p>
+<pre><code> font:
+      enable: true</code></pre>
+<h2 id="使用caniuse测试浏览器兼容性">使用caniuse测试浏览器兼容性</h2>
+<iframe data-feature="fetch" src="https://caniuse.bitsofco.de/embed/index.html?feat=fetch&periods=current&accessible-colours=false" frameborder="0" width="100%" height="400px"></iframe>
+<iframe data-feature="sharedarraybuffer" src="https://caniuse.bitsofco.de/embed/index.html?feat=sharedarraybuffer&periods=current&accessible-colours=false" frameborder="0" width="100%" height="400px"></iframe>
+<iframe data-feature="link-rel-modulepreload" src="https://caniuse.bitsofco.de/embed/index.html?feat=link-rel-modulepreload&periods=past_1,past_2,past_3,past_4,past_5&accessible-colours=false" frameborder="0" width="100%" height="400px"></iframe>
+<h2 id="使用yarn管理npm包和travis-ci自动化部署">使用yarn管理npm包和travis-ci自动化部署</h2>
+<p>可选，本地生成速度够快或者不嫌麻烦也没太有必要上travis-ci 不愿意折腾就直接本地生成部署就好了，ci反而慢，而且就想发个博客的话完全没有必要！</p>
+<p>今天经人提醒，hexo s 是动态编译的，本地预览直接hexo s 就行了，不用先 hexo g 生成</p>
+<h2 id="插件选择">插件选择</h2>
+<h3 id="踩坑">踩坑</h3>
+<p>lazyload插件、fancybox插件(改用mediumzoom)、pjax插件、fliter-optimizer插件（经常跟很多地方冲突）等建议慎用</p>
+<h3 id="给mardown添加论文脚注效果">给Mardown添加论文脚注效果</h3>
+<p>安装插件：</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">npm</span> <span class="token function">install</span> hexo-reference --save<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>注释测试<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<h3 id="主页文章置顶">主页文章置顶</h3>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL25leHQtdGhlbWUvaGV4by1nZW5lcmF0b3ItaW5kZXhlZA==">hexo-generator-indexed<i class="fa fa-external-link-alt"></i></span></p>
+<h2 id="使用cloudflare和github-pages">使用Cloudflare和Github Pages</h2>
+<p>由于Netlify访问速度实在太慢（居然比Github Pages还慢），本来以为只是在国内慢，没想到收到一封邮件，说：</p>
+<p>然后我感觉不对劲，拿ping工具和网络测试工具（<span class="exturl" data-url="aHR0cHM6Ly9ndG1ldHJpeC5jb20=">https://gtmetrix.com<i class="fa fa-external-link-alt"></i></span>）看了一下，又查了一下，原来不仅国内慢啊，国外也比Github Pages慢啊 Netlify居然还说“Why You don't need clcoudflare”, 我。。。</p>
+<p><img width=450 src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/net5xx.png" alt="Picture" /></p>
+<p>换回GitHub Pages和cloudlfare，还有CNAME Flatterning, 不需要备案的免费CDN也就cloudflare了。 ping检测结果终于不是一片飘红了。巨硬收购Github后说要建设Github国内的服务器，但是它自家的Azure、bing、onedrive都整天抽风，感觉指望不上了。</p>
+<p><img width=450 src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/ping.png" alt="Picture" /></p>
+<p>现在唯一的问题就是图床用的Github，已经弃疗，国内速度不管了。</p>
+<p>可能的小坑：开启coludflare的 rocket loader 功能后会出错（这是个实验性的功能），Next主题会变成一片空白，一直加载不出来。关掉就好了。</p>
+<h2 id="提高加载速度">提高加载速度</h2>
+<p>在<span class="exturl" data-url="aHR0cHM6Ly9ndG1ldHJpeC5jb20v">GTmetrix<i class="fa fa-external-link-alt"></i></span>上看到我这得分才70多 发现首页两个图片占了很多，把两个图整成webp格式的，然后再调整一下大小(这里我用的这个<span class="exturl" data-url="aHR0cHM6Ly9jbG91ZGNvbnZlcnQuY29tLw==">网站<i class="fa fa-external-link-alt"></i></span>)。这里抛弃safari用户了 (cloudflare的business是有这个功能的，但是我用不起) 然后把velocityjs的那些动画效果关了（这个早就想关了，和其他组件各种冲突）</p>
+<p>虽然拉黑了百度<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>，但是发现我的流量统计还是有一大半是国内访问，为了照顾一下国内速度，还是用了Cloudflare的CDN 大多数时候，国内 cloudflare &gt; github pages &gt; netlify (如果不用个人域名，用netlify的二级域名会比XXX.github.io快一点)。raw.githubusercontent.com 是基本废了，想作为国内图床并不可行 （备案是不可能备案的）</p>
+<h2 id="可能的问题请参考">可能的问题请参考</h2>
+<p><span class="exturl" data-url="aHR0cHM6Ly9zaHV5ZWxpZmUuZ2l0aHViLmlvL3Bvc3QvSGV4byVFNSVCOCVCOCVFOCVBNyU4MSVFOSU5NyVBRSVFOSVBMiU5OCVFOCVBNyVBMyVFNSU4NiVCMyVFNiU5NiVCOSVFNiVBMSU4OC8=">Hexo常见问题解决方案<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9kcDJweC5jb20vMjAxOS8wNC8yNS9oZXhvLW1laWh1YS8=">hexo主题美化<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnlsZWFvLmNvbS8yMDE4LzA5MDEvaGV4by1uZXh05Li76aKY5LiL55qE576O5YyWLmh0bWw=">hexo-next主题下的美化<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvLw==">hexo官网<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0Lm9yZy9kb2NzLw==">next文档(6.0以后)<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLWd1aWRlLnJlYWR0aGVkb2NzLmlv">hexo指南<i class="fa fa-external-link-alt"></i></span> 从node.js操作到next主题，很详细，自己折腾可以参考,也记录了很多坑，但是不全，非官方指南，都是个人博客的坑。他还写了别的<span class="exturl" data-url="aHR0cHM6Ly93d3cuemh1amlhbi50ZWNoL3Bvc3RzL2QyMmFiOTY3Lmh0bWw=">指南<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3RoZW1lLW5leHQvYXdlc29tZS1uZXh0I3BsdWdpbnM=">https://github.com/theme-next/awesome-next#plugins<i class="fa fa-external-link-alt"></i></span>Next主题的插件，7.X版本之后越来越多的功能都剥离出来做成了插件, 使用时要npm install 一下，不能会直接在设置里设为true <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0xlYXJuU2hhcmUvTGVhcm5pbmctTWFya2Rvd24vdHJlZS92Mg==">markdown教程<i class="fa fa-external-link-alt"></i></span></p>
+<h2 id="注释">注释</h2>
+<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>text/javascript<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>https://cdn.jsdelivr.net/gh/lurongkai/anti-baidu/js/anti-baidu-latest.min.js<span class="token punctuation">"</span></span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>UTF-8<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<section class="footnotes" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>这是一个注释测试<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>加了一个这个<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+]]></content>
+      <categories>
+        <category>杂七杂八</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+        <tag>Next</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>用疾病记录预测患者死亡风险</title>
     <url>/morality-prediction/</url>
     <content><![CDATA[<p>以急性心肌梗死和MIMIC数据库为例</p>
@@ -2948,7 +2968,7 @@ xdg-user-dirs-gtk-update<span aria-hidden="true" class="line-numbers-rows"><span
 <p>对于SVM等对于缺失值敏感的算法，用均值填补空缺数据的方法；对于缺失值不敏感的决策树类算法（如GBDT）和自带缺失值处理的算法（如XGBoost），将缺失值置为-1。</p>
 <p>（缺失率在40%左右的会影响模型的效果，但是收缩压之类的又很重要，不能轻易舍弃）</p>
 <figure>
-<img src="morality-prediction/image-20200603192151696.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+<img src="/morality-prediction/image-20200603192151696.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
 </figure>
 <h3 id="数据集不平衡的问题">数据集不平衡的问题</h3>
 <p>有的疾病可能会有，急性心肌梗死由于死亡率很高，正负样本比例已经超过了1：9，并不是那种极端不平衡的问题。有的疾病死亡率1%左右需要采样等方式构造平衡数据集。</p>
@@ -3113,12 +3133,12 @@ fpr_xgb<span class="token punctuation">,</span>tpr_xgb<span class="token punctua
 <p>由于数据集还是太小，就没有细分搞成多分类的问题预测一下短期（30天）和长期（90天以上）死亡率，数据集大了可以做一下。数据集再大可以做细分，比如STEMI和NSTEMI的细分或者</p>
 <h3 id="roc曲线">ROC曲线</h3>
 <figure>
-<img src="morality-prediction/image-20200531203632378.png" alt="几种机器学习方法的ROC曲线" /><figcaption aria-hidden="true">几种机器学习方法的ROC曲线</figcaption>
+<img src="/morality-prediction/image-20200531203632378.png" alt="几种机器学习方法的ROC曲线" /><figcaption aria-hidden="true">几种机器学习方法的ROC曲线</figcaption>
 </figure>
 <h3 id="特征权重">特征权重</h3>
 <p>以GBDT为例，提取训练模型的决策树权重，结果如图3-3所示。由图可知，梯度提升树模型认为最重要的10个指标为当日最小血清碳酸氢水平、平均动脉血二氧化碳分压、平均排尿量、心率范围、最小心率、肌酐、体温范围、当日最大收缩压、当日心率标准差、年龄。</p>
 <figure>
-<img src="morality-prediction/image-20200531210528257.png" alt="GBDT的特征权重" /><figcaption aria-hidden="true">GBDT的特征权重</figcaption>
+<img src="/morality-prediction/image-20200531210528257.png" alt="GBDT的特征权重" /><figcaption aria-hidden="true">GBDT的特征权重</figcaption>
 </figure>
 <h2 id="其他问题">其他问题</h2>
 <p>这个，急性心肌梗死这个直接看心电图或者彩超啥的更好一些，准确率一般不会低于90%。心血管疾病这种做这个预测基本没有太大意义。急性肾衰竭啥的可能更有意义一点</p>

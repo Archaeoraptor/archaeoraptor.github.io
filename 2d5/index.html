@@ -227,7 +227,8 @@ mjx-container[display="true"] {
 mjx-container[display="true"] + br {
   display: none;
 }
-</style></head>
+</style><link rel="alternate" href="/atom.xml" title="止息的碎碎念" type="application/atom+xml">
+</head>
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
   <div class="headband"></div>
@@ -468,7 +469,7 @@ mjx-container[display="true"] + br {
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-09-19 10:21:36" itemprop="dateModified" datetime="2020-09-19T10:21:36+08:00">2020-09-19</time>
+        <time title="修改时间：2020-09-19 10:31:09" itemprop="dateModified" datetime="2020-09-19T10:31:09+08:00">2020-09-19</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -531,35 +532,35 @@ mjx-container[display="true"] + br {
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> gpasswd -a <span class="token variable">$&#123;<span class="token environment constant">USER</span>&#125;</span> docker<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <h3 id="更改静态为ip">更改静态为ip</h3>
 <p>网卡是eno1（服务器就一个网卡） Ubuntu18的配置改了，在<code>/etc/netplan/50-cloud-init.yaml</code>, 现在18使用netplan管理网络 配置文件是yaml格式，跟hexo和next主题的配置文件格式一样</p>
-<pre class="line-numbers language-yml" data-language="yml"><code class="language-yml"><span class="token comment"># network: &#123;config: disabled&#125;</span>
-<span class="token key atrule">network</span><span class="token punctuation">:</span>
-    <span class="token key atrule">ethernets</span><span class="token punctuation">:</span>
-        <span class="token key atrule">eno1</span><span class="token punctuation">:</span>
-            <span class="token key atrule">dhcp4</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
-    <span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token number">2</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-yml" data-language="yml"><code class="language-yml"># network: &#123;config: disabled&#125;
+network:
+    ethernets:
+        eno1:
+            dhcp4: true
+    version: 2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>改成</p>
-<pre class="line-numbers language-yml" data-language="yml"><code class="language-yml"><span class="token key atrule">network</span><span class="token punctuation">:</span>
-  <span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token number">2</span>
-  <span class="token key atrule">renderer</span><span class="token punctuation">:</span> networkd
-  <span class="token key atrule">ethernets</span><span class="token punctuation">:</span>
-    <span class="token key atrule">eno1</span><span class="token punctuation">:</span>   <span class="token comment">#配置的网卡名称</span>
-<span class="token comment">#      dhcp4: true    #dhcp4关闭</span>
-<span class="token comment">#      dhcp6: true    #dhcp6关闭</span>
-      <span class="token key atrule">addresses</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>211.83.111.224/23<span class="token punctuation">]</span>   <span class="token comment">#设置本机IP及掩码</span>
-      <span class="token key atrule">gateway4</span><span class="token punctuation">:</span> 211.83.110.1   <span class="token comment">#设置网关</span>
-      <span class="token key atrule">nameservers</span><span class="token punctuation">:</span>
-          <span class="token key atrule">addresses</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>114.114.114.114<span class="token punctuation">,</span> 8.8.8.8<span class="token punctuation">]</span>   <span class="token comment">#设置DNS</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-yml" data-language="yml"><code class="language-yml">network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    eno1:   #配置的网卡名称
+#      dhcp4: true    #dhcp4关闭
+#      dhcp6: true    #dhcp6关闭
+      addresses: [211.83.111.224&#x2F;23]   #设置本机IP及掩码
+      gateway4: 211.83.110.1   #设置网关
+      nameservers:
+          addresses: [114.114.114.114, 8.8.8.8]   #设置DNS<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>(网关地址用<code>route -n</code>查看，配置参考<span class="exturl" data-url="aHR0cDovL2Jsb2cuc2luYS5jb20uY24vcy9ibG9nXzUzNzNiY2Y0MDEwMnhrNWcuaHRtbA==">ubuntu 18.04 netplan yaml配置固定IP地址<i class="fa fa-external-link-alt"></i></span>)</p>
 <p>然后</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> netplan apply<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>不对啊，又炸了，ipv4的网关到底是啥啊</p>
 <p>看了一下官网<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>，好像nameserver和gateway4都是可选项，可以空着默认 直接改成这样试试</p>
-<pre class="line-numbers language-yml" data-language="yml"><code class="language-yml"><span class="token key atrule">network</span><span class="token punctuation">:</span>
-  <span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token number">2</span>
-<span class="token comment">#  renderer: networkd</span>
-  <span class="token key atrule">ethernets</span><span class="token punctuation">:</span>
-    <span class="token key atrule">eno1</span><span class="token punctuation">:</span>
-      <span class="token key atrule">addresses</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>211.83.111.224/23<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-yml" data-language="yml"><code class="language-yml">network:
+  version: 2
+#  renderer: networkd
+  ethernets:
+    eno1:
+      addresses: [211.83.111.224&#x2F;23]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>然后进/run/systemd/network看一下系统的网络配置文件</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> /run/systemd/network`
 <span class="token function">ls</span>
