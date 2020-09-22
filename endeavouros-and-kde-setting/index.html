@@ -26,12 +26,12 @@
     var CONFIG = {"hostname":"zhangjk98.xyz","root":"/","scheme":"Pisces","version":"8.0.0","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":"Valine"},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeInDown","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInDown"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 
-  <meta name="description" content="一些个人配置，仅作记录">
+  <meta name="description" content="sudo pacman -Rs win10">
 <meta property="og:type" content="article">
-<meta property="og:title" content="EndeavourOS和KDE设置">
+<meta property="og:title" content="为什么不试试EndeavourOS和KDE呢">
 <meta property="og:url" content="https://zhangjk98.xyz/endeavouros-and-kde-setting/index.html">
 <meta property="og:site_name" content="止息的碎碎念">
-<meta property="og:description" content="一些个人配置，仅作记录">
+<meta property="og:description" content="sudo pacman -Rs win10">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://zhangjk98.xyz/endeavouros-and-kde-setting/endeavouros-and-kde/miao.png">
 <meta property="og:image" content="https://zhangjk98.xyz/endeavouros-and-kde-setting/endeavouros-and-kde/miaomiao.png">
@@ -57,7 +57,7 @@
   };
 </script>
 
-  <title>EndeavourOS和KDE设置 | 止息的碎碎念</title>
+  <title>为什么不试试EndeavourOS和KDE呢 | 止息的碎碎念</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143393734-1"></script>
     <script>
@@ -226,7 +226,8 @@ mjx-container[display="true"] {
 mjx-container[display="true"] + br {
   display: none;
 }
-</style></head>
+</style><link rel="alternate" href="/atom.xml" title="止息的碎碎念" type="application/atom+xml">
+</head>
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
   <div class="headband"></div>
@@ -339,7 +340,7 @@ mjx-container[display="true"] + br {
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85virtualbox%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="nav-number">1.</span> <span class="nav-text">安装virtualbox虚拟机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%88%E7%AB%AF%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">终端配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%86bashzsh%E7%9A%84%E7%BB%88%E7%AB%AF%E8%BE%93%E5%87%BA%E4%BF%A1%E6%81%AF%E5%92%8C%E6%97%A5%E5%BF%97%E6%94%B9%E5%9B%9E%E8%8B%B1%E6%96%87"><span class="nav-number">2.1.</span> <span class="nav-text">将bash&#x2F;zsh的终端输出信息和日志改回英文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%BB%98%E8%AE%A4%E7%BB%88%E7%AB%AF%E6%94%B9%E4%B8%BAzsh"><span class="nav-number">2.2.</span> <span class="nav-text">默认终端改为zsh</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%8D%A2lts%E5%86%85%E6%A0%B8"><span class="nav-number">3.</span> <span class="nav-text">更换lts内核</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%98%BE%E5%8D%A1%E9%A9%B1%E5%8A%A8"><span class="nav-number">4.</span> <span class="nav-text">显卡驱动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9Ade%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">5.</span> <span class="nav-text">多DE的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A1%AC%E7%9B%98%E6%89%A9%E5%AE%B9%E5%92%8C%E8%BF%81%E7%A7%BB"><span class="nav-number">5.1.</span> <span class="nav-text">硬盘扩容和迁移</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AEgrub"><span class="nav-number">6.</span> <span class="nav-text">修grub</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#kde%E4%BD%BF%E7%94%A8%E4%BA%8B%E9%A1%B9"><span class="nav-number">7.</span> <span class="nav-text">KDE使用事项</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%89%E4%B8%AA%E5%90%88%E9%80%82%E7%9A%84%E6%B7%B7%E6%88%90%E5%99%A8"><span class="nav-number">7.1.</span> <span class="nav-text">选个合适的混成器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#baloo"><span class="nav-number">7.2.</span> <span class="nav-text">baloo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#kde%E6%A1%8C%E9%9D%A2%E9%83%A8%E4%BB%B6"><span class="nav-number">7.3.</span> <span class="nav-text">KDE桌面部件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E7%82%B9%E9%97%B2%E8%AF%9D"><span class="nav-number">8.</span> <span class="nav-text">一点闲话</span></a></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%95%9C%E5%83%8F%E6%BA%90"><span class="nav-number">1.</span> <span class="nav-text">镜像源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85virtualbox%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="nav-number">2.</span> <span class="nav-text">安装virtualbox虚拟机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%88%E7%AB%AF%E9%85%8D%E7%BD%AE"><span class="nav-number">3.</span> <span class="nav-text">终端配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%86bashzsh%E7%9A%84%E7%BB%88%E7%AB%AF%E8%BE%93%E5%87%BA%E4%BF%A1%E6%81%AF%E5%92%8C%E6%97%A5%E5%BF%97%E6%94%B9%E5%9B%9E%E8%8B%B1%E6%96%87"><span class="nav-number">3.1.</span> <span class="nav-text">将bash&#x2F;zsh的终端输出信息和日志改回英文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%BB%98%E8%AE%A4%E7%BB%88%E7%AB%AF%E6%94%B9%E4%B8%BAzsh"><span class="nav-number">3.2.</span> <span class="nav-text">默认终端改为zsh</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%8D%A2lts%E5%86%85%E6%A0%B8"><span class="nav-number">4.</span> <span class="nav-text">更换lts内核</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%98%BE%E5%8D%A1%E9%A9%B1%E5%8A%A8"><span class="nav-number">5.</span> <span class="nav-text">显卡驱动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A1%8C%E9%9D%A2%E7%8E%AF%E5%A2%83"><span class="nav-number">6.</span> <span class="nav-text">桌面环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A1%AC%E7%9B%98%E6%89%A9%E5%AE%B9%E5%92%8C%E8%BF%81%E7%A7%BB"><span class="nav-number">6.1.</span> <span class="nav-text">硬盘扩容和迁移</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AEgrub"><span class="nav-number">7.</span> <span class="nav-text">修grub</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#kde%E4%BD%BF%E7%94%A8%E4%BA%8B%E9%A1%B9"><span class="nav-number">8.</span> <span class="nav-text">KDE使用事项</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#kde%E5%8D%A1%E6%AD%BB%E7%9A%84%E6%8A%A2%E6%95%91%E6%96%B9%E6%A1%88"><span class="nav-number">8.1.</span> <span class="nav-text">KDE卡死的抢救方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%B7%E6%88%90%E5%99%A8"><span class="nav-number">8.2.</span> <span class="nav-text">混成器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#baloo"><span class="nav-number">8.3.</span> <span class="nav-text">baloo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#kde%E6%A1%8C%E9%9D%A2%E9%83%A8%E4%BB%B6"><span class="nav-number">8.4.</span> <span class="nav-text">KDE桌面部件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E7%82%B9%E9%97%B2%E8%AF%9D"><span class="nav-number">9.</span> <span class="nav-text">一点闲话</span></a></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -368,7 +369,7 @@ mjx-container[display="true"] + br {
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">54</span>
+        <span class="site-state-item-count">56</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -449,7 +450,7 @@ mjx-container[display="true"] + br {
     
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          EndeavourOS和KDE设置
+          为什么不试试EndeavourOS和KDE呢
         </h1>
 
         <div class="post-meta-container">
@@ -467,7 +468,7 @@ mjx-container[display="true"] + br {
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-09-18 23:53:24" itemprop="dateModified" datetime="2020-09-18T23:53:24+08:00">2020-09-18</time>
+        <time title="修改时间：2020-09-22 23:45:49" itemprop="dateModified" datetime="2020-09-22T23:45:49+08:00">2020-09-22</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -503,8 +504,14 @@ mjx-container[display="true"] + br {
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>一些个人配置，仅作记录</p>
+        <p>sudo pacman -Rs win10</p>
 <a id="more"></a>
+<h2 id="镜像源">镜像源</h2>
+<p>清华已经安排上了EndeavourOS的镜像和<span class="exturl" data-url="aHR0cHM6Ly9taXJyb3JzLnR1bmEudHNpbmdodWEuZWR1LmNuL2VuZGVhdm91cm9zL2lzby8=">iso<i class="fa fa-external-link-alt"></i></span>，可以方便的下载iso和更新EndeavourOS的包了。（或者用PT种子下载，实测速度&gt;10Mb/s）</p>
+<p>更改<code>/etc/pacman.d/endeavouros-mirrorlist</code>中的内容，改为</p>
+<pre class="line-numbers language-config" data-language="config"><code class="language-config">## China
+Server &#x3D; https:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;endeavouros&#x2F;repo&#x2F;$repo&#x2F;$arch<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>然后<code>sudo pacman -Syy</code>刷新一下</p>
 <h2 id="安装virtualbox虚拟机">安装virtualbox虚拟机</h2>
 <p>我用的kernel是lts版本（偶滴本本是Nvidia独显，不敢上kernel一直滚，怕炸）</p>
 <p>装头文件、virtualbox组件、网络和vnc扩展（可选）</p>
@@ -537,8 +544,11 @@ chsh -s /usr/bin/zsh
 </blockquote>
 <p>算了，3080那么强，不黑英伟达了</p>
 <p>他们从以前Antergos那fork了一个驱动安装脚本，有个包叫nvidia-installer（lts等用户请用nvidia-installer-dkms），看<span class="exturl" data-url="aHR0cHM6Ly9lbmRlYXZvdXJvcy5jb20vZG9jcy9oYXJkd2FyZS1hbmQtbmV0d29yay9ncmFwaGljLWNhcmRzLWdwdS1kcml2ZXItYW5kLXNldHVwLw==">这里<i class="fa fa-external-link-alt"></i></span>。</p>
-<h2 id="多de的问题">多DE的问题</h2>
-<p>多桌面环境可能出问题，非要这样做的话建议每个不同的桌面环境分配一个单独的用户名。 貌似xfce4和KDE一起用没什么大问题（用ssdm） 我试了试i3wm, 用不习惯又换回KDE了。</p>
+<h2 id="桌面环境">桌面环境</h2>
+<p>EndeavourOS官方魔改定制了xfce的主题和图标，离线安装镜像也只有xfce，其他的几乎没怎么魔改。</p>
+<p>紫红配色看个人喜好吧，其实我不太能欣赏的来</p>
+<p>多桌面环境可能出问题，非要这样做的话建议每个不同的桌面环境分配一个单独的用户名。 （貌似xfce4和KDE一起用几乎问题（用ssdm），先装ssdm和KDE,然后装xfce4） 尝试了一下i3wm, 简洁是真的简洁，不太习惯又删了换回KDE了。</p>
+<p>KDE有一种 Windows Vista 的感觉，感觉是 linux 所有 Desktop Enviroment 里面最舒服的。xfce虽然是EndeavourOS默认的DE，但是xfce开发人手不够，用户和社区贡献者也比KDE少，而且内存占用最新的KDE已经比xfce低了.....现在xfce也不怎么轻量了，渣配置机器上表现没有LXDE好，感觉不少用户都转去用i3wm和KDE了...逐渐没落的夕阳DE，适合养老</p>
 <h3 id="硬盘扩容和迁移">硬盘扩容和迁移</h3>
 <p>趁打折买了一块西数SN550,之前只有500G还装了个双系统的笔记本可以扩容了</p>
 <p>现在把/home分区（大概60G）从老硬盘移动到新硬盘上，空出来的60G给/目录。我既不是LVM也没有组raid，文件系统用的ext4，500G老硬盘分了400G给win10,剩下100G给了linux，分了一个/，40G,一个/home，60G</p>
@@ -566,7 +576,22 @@ mkfs.ext4 /dev/nvme0n1p1
 <span class="token function">grub-mkconfig</span> -o /boot/grub/grub.cfg
 grub-install --target<span class="token operator">=</span>x86_64-efi --efi-directory<span class="token operator">=</span>/boot/efi --bootloader-id<span class="token operator">=</span>EndeavourOS-grub<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="kde使用事项">KDE使用事项</h2>
-<h3 id="选个合适的混成器">选个合适的混成器</h3>
+<h3 id="kde卡死的抢救方案">KDE卡死的抢救方案</h3>
+<p>KDE现在已经比较稳定了，但是Linux桌面程序还是偶尔把桌面搞到卡死，比如vscode内存泄漏。</p>
+<p>首先尝试<code>ctl+alt+t</code>呼出终端，如果不能就<code>ctl+alt+F2</code>调出tty，htop看一下那个进程占用高，kill掉，如果不行就重启tty</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">kquitapp5 plasmashell <span class="token operator">&amp;&amp;</span> kstart5 plasmashell<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>正常退出不行就直接killall</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">killall</span> plasmashell <span class="token operator">&amp;&amp;</span> kstart5 plasmashell<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>或者重启一下SDDM</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl restart sddm<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>还不行就杀掉tty1，然后重启xorg</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">ps</span> aux <span class="token operator">|</span> <span class="token function">grep</span> tty1 <span class="token comment"># 或者pgrep tty1</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>然后kill掉（或者直接<code>pkill -9 -t tty1</code>），重启 或者直接</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">pkill</span> x
+startx<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>再不行直接<code>reboot</code>就好了</p>
+<p>再不行就直接尝试长按电源关机了</p>
+<h3 id="混成器">混成器</h3>
 <p>有Nvidia显卡怕驱动更新出问题可以在设置中将渲染器（混成器）从OpenGL改为XRender，XRender出问题的情况会少一点，虽然很多特效都不支持，性能也略差。没有问题建议还是用OpenGL或者直接关闭特效，XRender没有硬件加速用起来感觉跟OpenGL有明显的体验差距。</p>
 <p>另外貌似非整数比缩放的时候透明特效之类的经常不支持，建议直接关了。</p>
 <h3 id="baloo">baloo</h3>
