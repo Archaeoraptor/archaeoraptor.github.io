@@ -226,7 +226,8 @@ mjx-container[display="true"] {
 mjx-container[display="true"] + br {
   display: none;
 }
-</style></head>
+</style><link rel="alternate" href="/atom.xml" title="止息的碎碎念" type="application/atom+xml">
+</head>
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
   <div class="headband"></div>
@@ -339,7 +340,7 @@ mjx-container[display="true"] + br {
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BD%92%E4%B8%80%E5%8C%96%E5%92%8C%E6%A0%87%E5%87%86%E5%8C%96"><span class="nav-number">1.</span> <span class="nav-text">归一化和标准化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%BA%E5%A4%B1%E5%80%BC%E5%A1%AB%E8%A1%A5"><span class="nav-number">2.</span> <span class="nav-text">缺失值填补</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%9B%86%E4%B8%8D%E5%B9%B3%E8%A1%A1%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">数据集不平衡的问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83"><span class="nav-number"></span> <span class="nav-text">模型训练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%BB%E4%BA%A1%E7%8E%87%E9%A2%84%E6%B5%8B"><span class="nav-number"></span> <span class="nav-text">死亡率预测</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E6%9E%9C"><span class="nav-number">1.</span> <span class="nav-text">结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#roc%E6%9B%B2%E7%BA%BF"><span class="nav-number">2.</span> <span class="nav-text">ROC曲线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E5%BE%81%E6%9D%83%E9%87%8D"><span class="nav-number">3.</span> <span class="nav-text">特征权重</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E9%97%AE%E9%A2%98"><span class="nav-number"></span> <span class="nav-text">其他问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A5%E5%85%85%E8%AF%B4%E6%98%8E"><span class="nav-number"></span> <span class="nav-text">补充说明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mimic%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A1%A8%E6%A0%BC%E5%90%8D%E7%A7%B0%E5%8F%8A%E7%94%A8%E9%80%94"><span class="nav-number">1.</span> <span class="nav-text">MIMIC数据库表格名称及用途</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mimic%E6%95%B0%E6%8D%AE%E8%A1%A8%E4%B8%AD%E4%B8%BB%E8%A6%81%E5%AD%97%E6%AE%B5"><span class="nav-number">2.</span> <span class="nav-text">MIMIC数据表中主要字段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%A5%E6%80%A7%E5%BF%83%E8%82%8C%E6%A2%97%E6%AD%BB%E6%82%A3%E8%80%85%E4%B8%BB%E8%A6%81%E7%89%B9%E5%BE%81"><span class="nav-number">3.</span> <span class="nav-text">急性心肌梗死患者主要特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">4.</span> <span class="nav-text">注意事项</span></a></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%82%A3%E8%80%85%E7%AD%9B%E9%80%89"><span class="nav-number">1.</span> <span class="nav-text">患者筛选</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BD%92%E4%B8%80%E5%8C%96%E5%92%8C%E6%A0%87%E5%87%86%E5%8C%96"><span class="nav-number">1.1.</span> <span class="nav-text">归一化和标准化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%BA%E5%A4%B1%E5%80%BC%E5%A1%AB%E8%A1%A5"><span class="nav-number">1.2.</span> <span class="nav-text">缺失值填补</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%9B%86%E4%B8%8D%E5%B9%B3%E8%A1%A1%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.3.</span> <span class="nav-text">数据集不平衡的问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83"><span class="nav-number">2.</span> <span class="nav-text">模型训练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%BB%E4%BA%A1%E7%8E%87%E9%A2%84%E6%B5%8B"><span class="nav-number">3.</span> <span class="nav-text">死亡率预测</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E6%9E%9C"><span class="nav-number">3.1.</span> <span class="nav-text">结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#roc%E6%9B%B2%E7%BA%BF"><span class="nav-number">3.2.</span> <span class="nav-text">ROC曲线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E5%BE%81%E6%9D%83%E9%87%8D"><span class="nav-number">3.3.</span> <span class="nav-text">特征权重</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E9%97%AE%E9%A2%98"><span class="nav-number">4.</span> <span class="nav-text">其他问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A5%E5%85%85%E8%AF%B4%E6%98%8E"><span class="nav-number">5.</span> <span class="nav-text">补充说明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mimic%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A1%A8%E6%A0%BC%E5%90%8D%E7%A7%B0%E5%8F%8A%E7%94%A8%E9%80%94"><span class="nav-number">5.1.</span> <span class="nav-text">MIMIC数据库表格名称及用途</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mimic%E6%95%B0%E6%8D%AE%E8%A1%A8%E4%B8%AD%E4%B8%BB%E8%A6%81%E5%AD%97%E6%AE%B5"><span class="nav-number">5.2.</span> <span class="nav-text">MIMIC数据表中主要字段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%A5%E6%80%A7%E5%BF%83%E8%82%8C%E6%A2%97%E6%AD%BB%E6%82%A3%E8%80%85%E4%B8%BB%E8%A6%81%E7%89%B9%E5%BE%81"><span class="nav-number">5.3.</span> <span class="nav-text">急性心肌梗死患者主要特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">5.4.</span> <span class="nav-text">注意事项</span></a></li></ol></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -368,7 +369,7 @@ mjx-container[display="true"] + br {
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">54</span>
+        <span class="site-state-item-count">56</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -467,7 +468,7 @@ mjx-container[display="true"] + br {
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-09-18 23:53:23" itemprop="dateModified" datetime="2020-09-18T23:53:23+08:00">2020-09-18</time>
+        <time title="修改时间：2020-09-22 23:45:49" itemprop="dateModified" datetime="2020-09-22T23:45:49+08:00">2020-09-22</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -508,7 +509,8 @@ mjx-container[display="true"] + br {
 <p>急性心肌梗死的发病率和死亡率都很高，MIMIC里面大概有5000次记录，用来构造数据集效果会比较好，这次就用MIMIC数据库里面的急性心肌梗死进行死亡风险的预测。</p>
 <p>早期心血管疾病采用TIMI（the Thrombolysis in Myocardial Infarction）风险评分、全球急性心脏事件注册表（GRACE）评分或医生经验判断。后来MIMIC、eICU等开放医学数据库的建立和公布，数据量足够支撑起机器学习，疾病风险预测逐渐开始采用机器学习等方法。 数据清洗和构造数据集</p>
 <p>目前开源的ICU重症数据库主要有MIMIC和eICU；eICU里面的患者数量多一点，但是貌似数据缺失很多，数据质量也不太好（eICU整合了几家不同医院的临床记录拼凑出来的数据库，数据质量参差不齐）</p>
-<p>这里我用的MIMIC-Ⅲ数据库，内有近四万名成年人以及七千多名新生儿的五万余次住院资料，其中急性心肌梗死入院记录大概5000多次。 患者筛选</p>
+<p>这里我用的MIMIC-Ⅲ数据库，内有近四万名成年人以及七千多名新生儿的五万余次住院资料，其中急性心肌梗死入院记录大概5000多次。</p>
+<h2 id="患者筛选">患者筛选</h2>
 <p>在MIMIC数据库中提取ICD-9疾病编号为410大类、疾病名称为 acute myocardial infarction的相关病人全部住院记录。数据表DIAGNOSE_ICD中的ICD9_CODE字段记录了患者的ICD-9编码，其中410大类编码根据发病部位被分为10个小类，例如第1个小类代表发病部位为前外侧壁、第2个小类代表发病部位为下外侧壁；这10 个小类又根据发病时期分为3个小类，0代表未细分，1代表初次入院，2代表再入院；例如，MIMIC数据库中ICD9_CODE字段为41031，对应的ICD-9编码为410.3.1，其中410代表急性心肌梗死，3代表下后壁，1代表初次入院。 <img src="%E6%95%B0%E6%8D%AE%E6%8F%90%E5%8F%96%E6%B5%81%E7%A8%8B.svg" alt="数据提取示意图" /></p>
 <p>提取到的除后续照顾类别以外的410大类患者数据中，共有5087次入院记录，去除同一患者重复的入院记录，共有4788名病人患有急性心肌梗死（包括同时患有急性心肌梗死的并发症），其中有727人死亡，总死亡率15.18%。男性患者共2924名，平均年龄为67.2岁，死亡391人，男性死亡率13.37%；女性患者共1864名，平均年龄为73.4岁，死亡337人,女性死亡率18.10%。统计急性心肌梗死患者人群种族信息，可以发现亚裔只有74次入院记录。 特征选取</p>
 <p>MIIMC里面能用的特征大概有性别年龄这些个人信息、心率血压这些生理指标、还有些用药记录之类的，为了预测患者初次发病的死亡率，只采用患者初次入院24小时内的记录检查项目作为预测指标</p>
