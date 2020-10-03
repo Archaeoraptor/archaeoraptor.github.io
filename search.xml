@@ -42,6 +42,71 @@
       </tags>
   </entry>
   <entry>
+    <title>Flask接锅记</title>
+    <url>/ff2b/</url>
+    <content><![CDATA[<p>动态语言一时爽，维护重构火葬场 <a id="more"></a> ## 前言</p>
+<p>国庆假期之后开始了偶滴搬砖生活，教研室有个师兄在拿Flask做微信公众号的文章推送后端。为了读祖传代码，准备折腾Flask。 据说Flask和Django差不了太多，之前Django用的很菜，也不打算拿Django或node之类的重构一边，索性就跳Flask的坑吧</p>
+<h2 id="配置">配置</h2>
+<p>[1] 开启Debug模式。1.0之后直接在Pycharm的Configuration里勾选开启就好了。或者</p>
+<pre><code>export Flask_Debug = 1 # win系统使用set命令</code></pre>
+<p>[2] 使用装饰器，在指定url或修改请求方式时常用，如</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token decorator annotation punctuation">@app<span class="token punctuation">.</span>route</span><span class="token punctuation">(</span><span class="token string">'/hello'</span><span class="token punctuation">)</span>
+<span class="token keyword">def</span> <span class="token function">hello</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> <span class="token string">'Hello, World'</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>指定请求方式</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token decorator annotation punctuation">@app<span class="token punctuation">.</span>route</span><span class="token punctuation">(</span><span class="token string">'/login'</span><span class="token punctuation">,</span> methods<span class="token operator">=</span><span class="token punctuation">[</span><span class="token string">'GET'</span><span class="token punctuation">,</span> <span class="token string">'POST'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>[3] 处理请求、文件传输和cookies等 都在flask的request库里</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> flask <span class="token keyword">import</span> request<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>[4] 数据库用SQLAlchemy可以像Django一样用python操作数据库，建表查询调用。</p>
+<h2 id="蓝图">蓝图</h2>
+<p>我们项目再大一些，就要拆分模块，Flask一般使用蓝图(Blueprint) 这样注册</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> flask <span class="token keyword">import</span> Flask
+<span class="token keyword">from</span> yourapplication<span class="token punctuation">.</span>simple_page <span class="token keyword">import</span> simple_page
+
+app <span class="token operator">=</span> Flask<span class="token punctuation">(</span>__name__<span class="token punctuation">)</span>
+app<span class="token punctuation">.</span>register_blueprint<span class="token punctuation">(</span>simple_page<span class="token punctuation">,</span> url_prefix<span class="token operator">=</span><span class="token string">'/pages'</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这样引用</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> flask <span class="token keyword">import</span> Flask
+<span class="token keyword">from</span> yourapplication<span class="token punctuation">.</span>simple_page <span class="token keyword">import</span> simple_page
+
+app <span class="token operator">=</span> Flask<span class="token punctuation">(</span>__name__<span class="token punctuation">)</span>
+app<span class="token punctuation">.</span>register_blueprint<span class="token punctuation">(</span>simple_page<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>也可以作为资源放置静态文件，详见官方文档</p>
+<h2 id="视图和模板">视图和模板</h2>
+<p>Flask的模板(template)用的Jinja2，基本都是标签的形式，和Django的模板非常像，类似这种</p>
+<pre class="line-numbers language-html" data-language="html"><code class="language-html">&#123;% block title %&#125;&#123;% endblock %&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>(我刚刚又查了一下，Django的自带模板就是基于Jinja的魔改版，应该是Django模板像Jinja2，说反了)</p>
+<p>视图函数一般用来处理入站请求，我们用装饰器把函数注册为事件处理程序，大概这个样子</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token decorator annotation punctuation">@app<span class="token punctuation">.</span>route</span><span class="token punctuation">(</span><span class="token string">'/user/&lt;name>'</span><span class="token punctuation">)</span>
+<span class="token keyword">def</span> <span class="token function">usr</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> <span class="token string">'Hello World,&#123;&#125;!'</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h2 id="项目填坑">项目填坑</h2>
+<p>要搞一个微信公众号推送内容，用Flask作为后端，微信接口的大坑等会再填 申请公众号，测试号之类的略过不表。（GRD腾讯真的烦啊，还要身份证号一堆乱七八糟的，开了个人号还一堆权限不给，文档也差，更新慢还经常404打不开，那个什么Telegram Channel，就是比微信高到不知哪里去了。算了，甲方有需求，那就忍了）<br />
+<del>先提前祝愿微信早日倒闭</del></p>
+<h2 id="其他">其他</h2>
+<p>跨域请求：安装flask-cors, 设置一下就行了</p>
+<pre class="line-numbers language-Python" data-language="Python"><code class="language-Python">from flask_cors import CORS
+···
+CORS(app, supports_credentials&#x3D;True)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>在chrome的新特性中，使用Same-Site Cookies来解决CSRF跨域攻击的问题，没设置会报这种警告, 在未来的版本中，没设置是不允许跨域的</p>
+<pre class="line-numbers language-none"><code class="language-none">A cookie associated with a cross-site resource at http:&#x2F;&#x2F;··· was set without the &#96;SameSite&#96; attribute. A future release of Chrome will only deliver cookies with cross-site requests if they are set with &#96;SameSite&#x3D;None&#96; and &#96;Secure&#96;.<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>设置一下属性就好了</p>
+<p>生成和导入requirements</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">pip freeze <span class="token operator">></span> requirements<span class="token punctuation">.</span>txt
+pip install <span class="token operator">-</span>r requirements<span class="token punctuation">.</span>txt<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>使用哈希值存储用户密码</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> werkzeug<span class="token punctuation">.</span>security <span class="token keyword">import</span> generate_password_hash<span class="token punctuation">,</span> check_password_hash<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h2 id="flask部署">Flask部署</h2>
+<p>这里我用的Docker。照着<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC83ODQzMjcxOQ==">这里<i class="fa fa-external-link-alt"></i></span>部署的 这里没有用Nginx，直接上的gunicorn，回头看一下Nginx怎么搞 这里有个<span class="exturl" data-url="aHR0cDovL2RvY3MuZ3VuaWNvcm4ub3JnL2VuL3N0YWJsZS9kZXBsb3kuaHRtbA==">官方文档<i class="fa fa-external-link-alt"></i></span></p>
+]]></content>
+      <categories>
+        <category>笔记&amp;札记</category>
+      </categories>
+      <tags>
+        <tag>Flask</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Docker笔记</title>
     <url>/69d4/</url>
     <content><![CDATA[<p>开始折腾Docker，等待填坑 <a id="more"></a> 容器化好像挺有意思，开始学学（指照着网上教程乱用<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>）。 VPS(Virtual Private Server)用的就是虚拟化技术，Docker比各种虚拟机、云服务虚拟程度低。大概相当于一个沙盒？一般用来打包安装环境，这样部署方便一些。（有很多安装脚本，但是CentOS、Ubuntu、Debian经常不一样，打成Docker image，就可以通用了）。Docker还带一层隔离，大概相当于加强版的chroot（并没有隔离硬件）</p>
@@ -203,71 +268,6 @@ Collecting backports.ssl_match_hostname
       </categories>
       <tags>
         <tag>Docker</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Flask接锅记</title>
-    <url>/ff2b/</url>
-    <content><![CDATA[<p>动态语言一时爽，维护重构火葬场 <a id="more"></a> ## 前言</p>
-<p>国庆假期之后开始了偶滴搬砖生活，教研室有个师兄在拿Flask做微信公众号的文章推送后端。为了读祖传代码，准备折腾Flask。 据说Flask和Django差不了太多，之前Django用的很菜，也不打算拿Django或node之类的重构一边，索性就跳Flask的坑吧</p>
-<h2 id="配置">配置</h2>
-<p>[1] 开启Debug模式。1.0之后直接在Pycharm的Configuration里勾选开启就好了。或者</p>
-<pre><code>export Flask_Debug = 1 # win系统使用set命令</code></pre>
-<p>[2] 使用装饰器，在指定url或修改请求方式时常用，如</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token decorator annotation punctuation">@app<span class="token punctuation">.</span>route</span><span class="token punctuation">(</span><span class="token string">'/hello'</span><span class="token punctuation">)</span>
-<span class="token keyword">def</span> <span class="token function">hello</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">return</span> <span class="token string">'Hello, World'</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>指定请求方式</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token decorator annotation punctuation">@app<span class="token punctuation">.</span>route</span><span class="token punctuation">(</span><span class="token string">'/login'</span><span class="token punctuation">,</span> methods<span class="token operator">=</span><span class="token punctuation">[</span><span class="token string">'GET'</span><span class="token punctuation">,</span> <span class="token string">'POST'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>[3] 处理请求、文件传输和cookies等 都在flask的request库里</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> flask <span class="token keyword">import</span> request<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>[4] 数据库用SQLAlchemy可以像Django一样用python操作数据库，建表查询调用。</p>
-<h2 id="蓝图">蓝图</h2>
-<p>我们项目再大一些，就要拆分模块，Flask一般使用蓝图(Blueprint) 这样注册</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> flask <span class="token keyword">import</span> Flask
-<span class="token keyword">from</span> yourapplication<span class="token punctuation">.</span>simple_page <span class="token keyword">import</span> simple_page
-
-app <span class="token operator">=</span> Flask<span class="token punctuation">(</span>__name__<span class="token punctuation">)</span>
-app<span class="token punctuation">.</span>register_blueprint<span class="token punctuation">(</span>simple_page<span class="token punctuation">,</span> url_prefix<span class="token operator">=</span><span class="token string">'/pages'</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>这样引用</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> flask <span class="token keyword">import</span> Flask
-<span class="token keyword">from</span> yourapplication<span class="token punctuation">.</span>simple_page <span class="token keyword">import</span> simple_page
-
-app <span class="token operator">=</span> Flask<span class="token punctuation">(</span>__name__<span class="token punctuation">)</span>
-app<span class="token punctuation">.</span>register_blueprint<span class="token punctuation">(</span>simple_page<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>也可以作为资源放置静态文件，详见官方文档</p>
-<h2 id="视图和模板">视图和模板</h2>
-<p>Flask的模板(template)用的Jinja2，基本都是标签的形式，和Django的模板非常像，类似这种</p>
-<pre class="line-numbers language-html" data-language="html"><code class="language-html">&#123;% block title %&#125;&#123;% endblock %&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>(我刚刚又查了一下，Django的自带模板就是基于Jinja的魔改版，应该是Django模板像Jinja2，说反了)</p>
-<p>视图函数一般用来处理入站请求，我们用装饰器把函数注册为事件处理程序，大概这个样子</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token decorator annotation punctuation">@app<span class="token punctuation">.</span>route</span><span class="token punctuation">(</span><span class="token string">'/user/&lt;name>'</span><span class="token punctuation">)</span>
-<span class="token keyword">def</span> <span class="token function">usr</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">return</span> <span class="token string">'Hello World,&#123;&#125;!'</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<h2 id="项目填坑">项目填坑</h2>
-<p>要搞一个微信公众号推送内容，用Flask作为后端，微信接口的大坑等会再填 申请公众号，测试号之类的略过不表。（GRD腾讯真的烦啊，还要身份证号一堆乱七八糟的，开了个人号还一堆权限不给，文档也差，更新慢还经常404打不开，那个什么Telegram Channel，就是比微信高到不知哪里去了。算了，甲方有需求，那就忍了）<br />
-<del>先提前祝愿微信早日倒闭</del></p>
-<h2 id="其他">其他</h2>
-<p>跨域请求：安装flask-cors, 设置一下就行了</p>
-<pre class="line-numbers language-Python" data-language="Python"><code class="language-Python">from flask_cors import CORS
-···
-CORS(app, supports_credentials&#x3D;True)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>在chrome的新特性中，使用Same-Site Cookies来解决CSRF跨域攻击的问题，没设置会报这种警告, 在未来的版本中，没设置是不允许跨域的</p>
-<pre class="line-numbers language-none"><code class="language-none">A cookie associated with a cross-site resource at http:&#x2F;&#x2F;··· was set without the &#96;SameSite&#96; attribute. A future release of Chrome will only deliver cookies with cross-site requests if they are set with &#96;SameSite&#x3D;None&#96; and &#96;Secure&#96;.<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>设置一下属性就好了</p>
-<p>生成和导入requirements</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python">pip freeze <span class="token operator">></span> requirements<span class="token punctuation">.</span>txt
-pip install <span class="token operator">-</span>r requirements<span class="token punctuation">.</span>txt<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>使用哈希值存储用户密码</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> werkzeug<span class="token punctuation">.</span>security <span class="token keyword">import</span> generate_password_hash<span class="token punctuation">,</span> check_password_hash<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h2 id="flask部署">Flask部署</h2>
-<p>这里我用的Docker。照着<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC83ODQzMjcxOQ==">这里<i class="fa fa-external-link-alt"></i></span>部署的 这里没有用Nginx，直接上的gunicorn，回头看一下Nginx怎么搞 这里有个<span class="exturl" data-url="aHR0cDovL2RvY3MuZ3VuaWNvcm4ub3JnL2VuL3N0YWJsZS9kZXBsb3kuaHRtbA==">官方文档<i class="fa fa-external-link-alt"></i></span></p>
-]]></content>
-      <categories>
-        <category>笔记&amp;札记</category>
-      </categories>
-      <tags>
-        <tag>Flask</tag>
       </tags>
   </entry>
   <entry>
@@ -1108,211 +1108,6 @@ document<span class="token punctuation">.</span><span class="token function">get
       </tags>
   </entry>
   <entry>
-    <title>Hexo博客部署和Next主题设置</title>
-    <url>/bd8f/</url>
-    <content><![CDATA[<p>这里仅记录个人问题，找教程为什么不看看官方文档呢 <a id="more"></a></p>
-<p>有问题先看这里啦，<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL25leHQtdGhlbWUvaGV4by10aGVtZS1uZXh0L2lzc3Vlcy80">更新说明及常见问题<i class="fa fa-external-link-alt"></i></span> 我自己的博客基本会跟着Next主题每月发布的release更新版本，偶尔直接跳到最新的master版本。 可能有的时候因为忙或者其他原因，并不会追最新版，有些之前写的东西过时了也没有改，请大家尽量以<span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0Lm9yZy8=">官方文档<i class="fa fa-external-link-alt"></i></span>为准。</p>
-<h2 id="更新升级至hexo5.0">更新升级至hexo5.0</h2>
-<p>没有什么太大魔改的话直接</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> <span class="token function">install</span> hexo@5.0.0<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>然后把next.yml的配置（或者主题的_config.yml）配置放到根目录_config.next.yml下面。</p>
-<p>hexo 5 支持用npm安装主题了</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> <span class="token function">install</span> hexo-theme-next<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h2 id="升级7.x的大坑">升级7.X的大坑</h2>
-<p>NexT主题的顺畅更新好像很难，官方不推荐，之前乱改的5.X主题升级7.2分支合并出现问题，一堆warning，索性推倒重来直接新搞一个7.X。</p>
-<p>升级可以直接按照官网方法</p>
-<pre><code> cd themes/next
- git tag -l
- git checkout tags/v7.7.1</code></pre>
-<p>spawn failed 问题，删除.deploy_git文件夹并重新部署。 _config.yml配置请注意对齐问题</p>
-<p>给备份博客的repo添加README.md文档可在这个路径下，这样就会显示在首页 themes%yourtheme%.md</p>
-<p>为文章设置预览:添加 <code>&lt;!-- more --&gt;</code></p>
-<p>插入本地图片推荐hexo-asset-image插件,可以看<span class="exturl" data-url="aHR0cDovL2V0cmQub3JnLzIwMTcvMDEvMjMvaGV4b+S4reWujOe+juaPkuWFpeacrOWcsOWbvueJhy8=">这里<i class="fa fa-external-link-alt"></i></span></p>
-<h2 id="各种小问题">各种小问题</h2>
-<h3 id="公式问题">公式问题</h3>
-<p>原来采用的hexo-math插件，在hexo-inject插件上有坑，看了看官方推荐，换成<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3RoZW1lLW5leHQvaGV4by10aGVtZS1uZXh0L2Jsb2IvbWFzdGVyL2RvY3MvemgtQ04vTUFUSC5tZA==">新的插件<i class="fa fa-external-link-alt"></i></span>。换完记得卸载hexo-inject插件</p>
-<h3 id="配置出错">配置出错</h3>
-<p>设置_config.yml时那个rss如果开启，默认空着就好了，不要填true</p>
-<pre><code>rss: true</code></pre>
-<p>像这样就会报错</p>
-<h3 id="本地搜索">本地搜索</h3>
-<p>本地搜索一直转圈圈，看到issue里面说是插件的问题，卸载后重装，神奇的好了</p>
-<pre><code> npm uninstall hexo-generator-searchdb --save
- npm install hexo-generator-searchdb --save</code></pre>
-<p>在Next版本7.20以后（如7.30），hexo-generator-searchdb换成了hexo-generator-search，卸载并安装hexo-generator-search，本地搜索就可以正常使用了，不然会出现只能搜索标题内容的bug</p>
-<pre><code> npm uninstall hexo-generator-searchdb --save
- npm install hexo-generator-search --save</code></pre>
-<h3 id="canvas效果">canvas效果</h3>
-<p>似乎那几个背景特效和进度条都会拖慢网页加载速度，不填建议用（新版的Next已经把乱晃的那个canvas移除了）</p>
-<h3 id="报错">报错</h3>
-<p>可能出现的一类问题是yaml的配置出现了语法错误报错</p>
-<pre class="line-numbers language-log" data-language="log"><code class="language-log">YAMLException: duplicated mapping key at line ...<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>这说明你的key重复了，比如在yaml里同时两段</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">calendar</span><span class="token punctuation">:</span>
-     <span class="token key atrule">calendar_id</span><span class="token punctuation">:</span> &lt;required<span class="token punctuation">></span> <span class="token comment"># Your Google account E-Mail</span>
-     <span class="token key atrule">api_key</span><span class="token punctuation">:</span> &lt;required<span class="token punctuation">></span>
-<span class="token key atrule">calendar</span><span class="token punctuation">:</span>
-     <span class="token key atrule">calendar_id</span><span class="token punctuation">:</span> &lt;required<span class="token punctuation">></span> <span class="token comment"># Your Google account E-Mail</span>
-     <span class="token key atrule">api_key</span><span class="token punctuation">:</span> &lt;required<span class="token punctuation">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>删掉一个calender或者将二者合并就可以了</p>
-<p>还有一种经常出现的问题</p>
-<pre class="line-numbers language-log" data-language="log"><code class="language-log">ERROR read ECONNRESET
-Error: read ECONNRESET
-    at TLSWrap.onStreamRead (internal&#x2F;stream_base_commons.js:111:27)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>这种可能是配置出错了，比如引用了某个本地资源结果路径不对找不到资源。这种建议在浏览器里打开F12检查一下</p>
-<h3 id="新的自定义配置路径">新的自定义配置路径</h3>
-<p>next v7.3.0 版本的定制路径改了，比如custom.styl改成了source/_data/styles.styl，参见</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">custom_file_path</span><span class="token punctuation">:</span>
-  <span class="token comment">#head: source/_data/head.swig</span>
-  <span class="token comment">#header: source/_data/header.swig</span>
-  <span class="token comment">#sidebar: source/_data/sidebar.swig</span>
-  <span class="token comment">#postMeta: source/_data/post-meta.swig</span>
-  <span class="token comment">#postBodyEnd: source/_data/post-body-end.swig</span>
-  <span class="token comment">#footer: source/_data/footer.swig</span>
-  <span class="token comment">#bodyEnd: source/_data/body-end.swig</span>
-  <span class="token comment">#variable: source/_data/variables.styl</span>
-  <span class="token comment">#mixin: source/_data/mixins.styl</span>
-  <span class="token key atrule">style</span><span class="token punctuation">:</span> source/_data/styles.styl<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>当然也可以修改custom_file_path:来自定义定制内容路径，想放哪就放哪。 改成之后就可以每次顺畅的直接每次更新主题时直接<code>git pull</code>了，不需要再merge自定义修改了 很多老的Next主题自定义教程都是在custom.styl或者直接改主题的css文件，7.3以后的新版要把老教程里的路径改了。 还有一种方法是<span class="exturl" data-url="aHR0cHM6Ly93d3cuZG5vY20uY29tL2FydGljbGVzL2JlZWNobnV0L2hleG8tbmV4dC1pbmplY3RzLw==">用Injects自定义主题<i class="fa fa-external-link-alt"></i></span> 据说Hexo5.x之后就能用npm安装主题了，Hexo一直咕咕咕，我们慢慢等吧</p>
-<h3 id="标签">标签</h3>
-<p>Next v7.3.0 版本的标签不再支持 Full-image tag</p>
-<pre><code> WARN  Full-image tag is no longer supported.</code></pre>
-<p>使用</p>
-<pre><code> &#123;% fi https://image-url, 图片名称, , 35% %&#125;</code></pre>
-<p>这样的标签无法再进行图片缩放,可以改用html方式</p>
-<pre><code> &lt;img src=&quot;图片地址&quot; width=&quot;50%&quot; height=&quot;50%&quot;  style=&quot;margin: 0 auto;&quot;/&gt;
- &lt;img width=400 src=&quot; your-image-link&quot; alt=&quot;上海鲜花港 - 郁金香&quot; /&gt;</code></pre>
-<p>或</p>
-<pre><code>&lt;div style=&quot;width: 200px; margin: auto&quot;&gt;![picture name](example.jpeg)&lt;/div&gt;</code></pre>
-<p>或者hexo标签</p>
-<pre><code> &#123;% img [class names] /path/to/image [width] [height] "title text 'alt text'" %&#125;</code></pre>
-<h3 id="其他插件">其他插件</h3>
-<h4 id="fancybox">fancybox</h4>
-<p>fancybox虽然现在还支持，但是据说计划在8.0版移除，所有jQuery有关的东西都在逐步移除，目前已经支持 medium-zoom，可以在设置中开启</p>
-<pre><code> npm install medium-zoom</code></pre>
-<p>"在新版中 quicklink 不建议再使用，最起码不要与 pjax 同时开" 更新,这个在7.4版本以后修复了 无法加载 woff 字体资源 404 问题</p>
-<pre><code> Failed to load resource: the server responded with a status of 404 () fontawesome-webfont.woff2:1</code></pre>
-<p>这个找到提示的文件夹 source/font 路径,找到这三个缺失的文件,补上就可以了(可能没有这个文件夹,新建一下就行了)</p>
-<h3 id="夜间模式">夜间模式</h3>
-<p>现在新版Next已经有了自带的夜间模式，在配置里开启即可，会自动随着系统设置变</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token comment"># Dark Mode</span>
-<span class="token key atrule">darkmode</span><span class="token punctuation">:</span> auto<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<h2 id="更新主题">更新主题</h2>
-<p>这里我使用的Next主题，参考<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3RoZW1lLW5leHQvaGV4by10aGVtZS1uZXh0L2Jsb2IvbWFzdGVyL2RvY3MvemgtQ04vREFUQS1GSUxFUy5tZA==">https://github.com/theme-next/hexo-theme-next/blob/master/docs/zh-CN/DATA-FILES.md<i class="fa fa-external-link-alt"></i></span> 在7.X以后大的更新还是需要手动处理冲突，但是Next主题将两个_config.yml文件合并搞了一个next.yml，在source/_data底下。这样更新的时候git pull后commit和merge就不用每次手动处理主题的_config.yml冲突了 merge之后指定版本</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">git</span> checkout tags/v7.4.1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>(可能会有nothing added to commit but untracked files present的提示，运行git clean -f清理不想要的文件，或者加到.gitignore里面, 还要就使用git add . ) 如果版本指定不对，会有detached HEAD出现，重新指定正确版本。如果还不行，可能git add等出了冲突，看<span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC9hZTQ4NTdkMmY4Njg=">这里<i class="fa fa-external-link-alt"></i></span></p>
-<h2 id="升级hexo4.0">升级Hexo4.0</h2>
-<p>今天检查更新的时候看到这样的提示，发现Hexo出4.0了。 跑到群里一看，说是什么Hexo 4.0.0 会有巨大的性能提升（相比 Hexo 3.2 生成速度提升 10%，内存占用减少 40%）。闲着没事就升级玩玩吧虽然我这也没几篇文章，生成速度本来也不慢。</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">λ npm-upgrade
-Checking <span class="token keyword">for</span> outdated dependencies <span class="token keyword">for</span> <span class="token string">"D:\zjk\myblog2\package.json"</span><span class="token punctuation">..</span>.
-<span class="token punctuation">[</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token punctuation">]</span> <span class="token number">21</span>/21 <span class="token number">100</span>%                                                                                            s can be used.
-
-New versions of active modules available:
-
-  hexo                      ^3.9.0   →   ^4.0.0
-  hexo-deployer-git         ^1.0.0   →   ^2.0.0
-  hexo-generator-archive    ^0.1.5   →   ^1.0.0
-  hexo-generator-category   ^0.1.3   →   ^1.0.0
-  hexo-generator-feed       ^1.2.2   →   ^2.0.0
-  hexo-generator-index      ^0.2.1   →   ^1.0.0
-  hexo-generator-tag        ^0.2.0   →   ^1.0.0
-  hexo-renderer-ejs         ^0.3.1   →   ^1.0.0
-  hexo-renderer-stylus      ^0.3.3   →   ^1.1.0
-  hexo-server               ^0.3.3   →   ^1.0.0
-
-? Update <span class="token string">"hexo"</span> <span class="token keyword">in</span> package.json from ^3.9.0 to ^4.0.0? <span class="token punctuation">(</span>Use arrow keys<span class="token punctuation">)</span>
-<span class="token operator">></span> Yes
-  No
-  Show changelog
-  Ignore
-  Finish update process<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>直接升级</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">npm</span> <span class="token function">install</span> -g hexo@4.0.0<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>更新，现在hexo-cli包也上hexo4.0了，使用官网的那个带cli的命令就行了 升级之后试一下'hexo generate'</p>
-<pre class="line-numbers language-log" data-language="log"><code class="language-log">INFO  Files loaded in 1.94 s
-INFO  140 files generated in 3.07 s<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>好像是快了点 等等，更新了Hexo4.0以后下面的分页突然变成这个样子了，我先报个修 <img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/20191016094709.png" alt="bug" style="zoom:80%;" /></p>
-<p><img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/20191016095007.png" alt="bug" style="zoom:80%;" /></p>
-<p>找到了问题了，已经在<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2hleG9qcy9oZXhvL2lzc3Vlcy8zNzI5">issue#3729<i class="fa fa-external-link-alt"></i></span>里解决了 现在直接升级到master分支就行了</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> themes/next
-<span class="token function">git</span> pull https://github.com/theme-next/hexo-theme-next master
-<span class="token function">git</span> checkout master<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>看到显示这样就行了</p>
-<blockquote>
-<p>Already on 'master' Your branch is up to date with 'origin/master'.</p>
-</blockquote>
-<p><img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/foot.png" alt="Picture" style="zoom:80%;" /> 好了，开心。目前没看到其他bug了，请放心更（cai）新（keng）</p>
-<p>更新，现在最新的master报这样的错：</p>
-<pre><code> ERROR Cannot read property &#39;replace&#39; of null</code></pre>
-<p>还有这样的错</p>
-<pre><code> ERROR Process failed: layout/tag.swig</code></pre>
-<p>换到nunjucks分支，也有这个问题，先切到contrib分支里面，nunjucks那块正在施工，大家先用着旧版，我已经报修了。劳模mimi同学已经在修了（19.10.18） 更新，感谢劳模Mimi同学，已经修了<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3RoZW1lLW5leHQvaGV4by10aGVtZS1uZXh0L3B1bGwvMTIyNg==">Migrate to Nunjucks [3] #1226<i class="fa fa-external-link-alt"></i></span></p>
-<h2 id="绑定域名并托管到netlify">绑定域名并托管到netlify</h2>
-<p>先到namecheap或者namesilo等网站找个中意的域名，不介意在天朝备案腾讯和阿里云买也可以，不愿意花钱也可以申请个免费的。我这里0.99刀一年优惠买了个<a href="https://zhangjk98.xyz/">zhangjk98.xyz</a></p>
-<p>在netlify的domian setting里找到Custom domains按照提示来，可以参考这个<span class="exturl" data-url="aHR0cHM6Ly9tZWRpdW0uY29tL0BQdWRnZTE5OTYvMjAxOC0wMS0wMi03MDEzZWRkYzQxM2M=">使用 Netlify 托管个人网站 详细步骤<i class="fa fa-external-link-alt"></i></span></p>
-<h2 id="google-search-console-验证和配置">Google Search Console 验证和配置</h2>
-<p>这里以netlify为例，namesilo等域名商也可进行验证 <img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/20190830141615.png" alt="dns验证" style="zoom:80%;" /> 有自己的域名可以直接选择domian验证，看<span class="exturl" data-url="aHR0cHM6Ly93d3cud29ndWlkZS5jb20vYXJjaGl2ZXMvNDg2MS5odG1s">这里<i class="fa fa-external-link-alt"></i></span> 打开netlify，找到dns setting，点击下方add new record 按钮 <img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/20190830142257.png" alt="添加验证" /> value就填谷歌给你的那个值，等几分钟就好了</p>
-<h2 id="美化">美化</h2>
-<p>设置footer跳动的红心 在next配置里找到icon 设成下面这个样子</p>
-<pre><code>   icon: 
-      # Icon name in Font Awesome. See: https://fontawesome.com/v4.7.0/icons/
-      # `heart` is recommended with animation in red (#ff0000).
-      name: heartbeat
-      # If you want to animate the icon, set it to true.
-      animated: true
-      # Change the color of icon, using Hex Code.
-      color: &quot;#FF0000&quot;</code></pre>
-<p>自定义字体: _config.yml里找到</p>
-<pre><code> font:
-      enable: true</code></pre>
-<h2 id="使用caniuse测试浏览器兼容性">使用caniuse测试浏览器兼容性</h2>
-<iframe data-feature="fetch" src="https://caniuse.bitsofco.de/embed/index.html?feat=fetch&periods=current&accessible-colours=false" frameborder="0" width="100%" height="400px"></iframe>
-<iframe data-feature="sharedarraybuffer" src="https://caniuse.bitsofco.de/embed/index.html?feat=sharedarraybuffer&periods=current&accessible-colours=false" frameborder="0" width="100%" height="400px"></iframe>
-<iframe data-feature="link-rel-modulepreload" src="https://caniuse.bitsofco.de/embed/index.html?feat=link-rel-modulepreload&periods=past_1,past_2,past_3,past_4,past_5&accessible-colours=false" frameborder="0" width="100%" height="400px"></iframe>
-<h2 id="使用yarn管理npm包和travis-ci自动化部署">使用yarn管理npm包和travis-ci自动化部署</h2>
-<p>可选，本地生成速度够快或者不嫌麻烦也没太有必要上travis-ci 不愿意折腾就直接本地生成部署就好了，ci反而慢，而且就想发个博客的话完全没有必要！</p>
-<p>今天经人提醒，hexo s 是动态编译的，本地预览直接hexo s 就行了，不用先 hexo g 生成</p>
-<h2 id="插件选择">插件选择</h2>
-<h3 id="踩坑">踩坑</h3>
-<p>lazyload插件、fancybox插件(改用mediumzoom)、pjax插件、fliter-optimizer插件（经常跟很多地方冲突）等建议慎用</p>
-<h3 id="给mardown添加论文脚注效果">给Mardown添加论文脚注效果</h3>
-<p>安装插件：</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">npm</span> <span class="token function">install</span> hexo-reference --save<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>注释测试<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
-<h3 id="主页文章置顶">主页文章置顶</h3>
-<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL25leHQtdGhlbWUvaGV4by1nZW5lcmF0b3ItaW5kZXhlZA==">hexo-generator-indexed<i class="fa fa-external-link-alt"></i></span></p>
-<h2 id="使用cloudflare和github-pages">使用Cloudflare和Github Pages</h2>
-<p>由于Netlify访问速度实在太慢（居然比Github Pages还慢），本来以为只是在国内慢，没想到收到一封邮件，说：</p>
-<p>然后我感觉不对劲，拿ping工具和网络测试工具（<span class="exturl" data-url="aHR0cHM6Ly9ndG1ldHJpeC5jb20=">https://gtmetrix.com<i class="fa fa-external-link-alt"></i></span>）看了一下，又查了一下，原来不仅国内慢啊，国外也比Github Pages慢啊 Netlify居然还说“Why You don't need clcoudflare”, 我。。。</p>
-<p><img width=450 src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/net5xx.png" alt="Picture" /></p>
-<p>换回GitHub Pages和cloudlfare，还有CNAME Flatterning, 不需要备案的免费CDN也就cloudflare了。 ping检测结果终于不是一片飘红了。巨硬收购Github后说要建设Github国内的服务器，但是它自家的Azure、bing、onedrive都整天抽风，感觉指望不上了。</p>
-<p><img width=450 src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/ping.png" alt="Picture" /></p>
-<p>现在唯一的问题就是图床用的Github，已经弃疗，国内速度不管了。</p>
-<p>可能的小坑：开启coludflare的 rocket loader 功能后会出错（这是个实验性的功能），Next主题会变成一片空白，一直加载不出来。关掉就好了。</p>
-<h2 id="提高加载速度">提高加载速度</h2>
-<p>在<span class="exturl" data-url="aHR0cHM6Ly9ndG1ldHJpeC5jb20v">GTmetrix<i class="fa fa-external-link-alt"></i></span>上看到我这得分才70多 发现首页两个图片占了很多，把两个图整成webp格式的，然后再调整一下大小(这里我用的这个<span class="exturl" data-url="aHR0cHM6Ly9jbG91ZGNvbnZlcnQuY29tLw==">网站<i class="fa fa-external-link-alt"></i></span>)。这里抛弃safari用户了 (cloudflare的business是有这个功能的，但是我用不起) 然后把velocityjs的那些动画效果关了（这个早就想关了，和其他组件各种冲突）</p>
-<p>虽然拉黑了百度<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>，但是发现我的流量统计还是有一大半是国内访问，为了照顾一下国内速度，还是用了Cloudflare的CDN 大多数时候，国内 cloudflare &gt; github pages &gt; netlify (如果不用个人域名，用netlify的二级域名会比XXX.github.io快一点)。raw.githubusercontent.com 是基本废了，想作为国内图床并不可行 （备案是不可能备案的）</p>
-<h2 id="可能的问题请参考">可能的问题请参考</h2>
-<p><span class="exturl" data-url="aHR0cHM6Ly9zaHV5ZWxpZmUuZ2l0aHViLmlvL3Bvc3QvSGV4byVFNSVCOCVCOCVFOCVBNyU4MSVFOSU5NyVBRSVFOSVBMiU5OCVFOCVBNyVBMyVFNSU4NiVCMyVFNiU5NiVCOSVFNiVBMSU4OC8=">Hexo常见问题解决方案<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9kcDJweC5jb20vMjAxOS8wNC8yNS9oZXhvLW1laWh1YS8=">hexo主题美化<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnlsZWFvLmNvbS8yMDE4LzA5MDEvaGV4by1uZXh05Li76aKY5LiL55qE576O5YyWLmh0bWw=">hexo-next主题下的美化<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvLw==">hexo官网<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0Lm9yZy9kb2NzLw==">next文档(6.0以后)<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLWd1aWRlLnJlYWR0aGVkb2NzLmlv">hexo指南<i class="fa fa-external-link-alt"></i></span> 从node.js操作到next主题，很详细，自己折腾可以参考,也记录了很多坑，但是不全，非官方指南，都是个人博客的坑。他还写了别的<span class="exturl" data-url="aHR0cHM6Ly93d3cuemh1amlhbi50ZWNoL3Bvc3RzL2QyMmFiOTY3Lmh0bWw=">指南<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3RoZW1lLW5leHQvYXdlc29tZS1uZXh0I3BsdWdpbnM=">https://github.com/theme-next/awesome-next#plugins<i class="fa fa-external-link-alt"></i></span>Next主题的插件，7.X版本之后越来越多的功能都剥离出来做成了插件, 使用时要npm install 一下，不能会直接在设置里设为true <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0xlYXJuU2hhcmUvTGVhcm5pbmctTWFya2Rvd24vdHJlZS92Mg==">markdown教程<i class="fa fa-external-link-alt"></i></span></p>
-<h2 id="注释">注释</h2>
-<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>text/javascript<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>https://cdn.jsdelivr.net/gh/lurongkai/anti-baidu/js/anti-baidu-latest.min.js<span class="token punctuation">"</span></span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>UTF-8<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<section class="footnotes" role="doc-endnotes">
-<hr />
-<ol>
-<li id="fn1" role="doc-endnote"><p>这是一个注释测试<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2" role="doc-endnote"><p>加了一个这个<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section>
-]]></content>
-      <categories>
-        <category>杂七杂八</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
-        <tag>Next</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>试图抢救吃灰的树莓派</title>
     <url>/7042/</url>
     <content><![CDATA[<p><span class="math display"><mjx-container class="MathJax" jax="SVG" display="true"><svg style="vertical-align: -1.602ex" xmlns="http://www.w3.org/2000/svg" width="2.127ex" height="4.638ex" role="img" focusable="false" viewBox="0 -1342 940 2050"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><g data-mml-node="math"><g data-mml-node="mfrac"><g data-mml-node="mn" transform="translate(220, 676)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g><g data-mml-node="mn" transform="translate(220, -686)"><path data-c="33" d="M127 463Q100 463 85 480T69 524Q69 579 117 622T233 665Q268 665 277 664Q351 652 390 611T430 522Q430 470 396 421T302 350L299 348Q299 347 308 345T337 336T375 315Q457 262 457 175Q457 96 395 37T238 -22Q158 -22 100 21T42 130Q42 158 60 175T105 193Q133 193 151 175T169 130Q169 119 166 110T159 94T148 82T136 74T126 70T118 67L114 66Q165 21 238 21Q293 21 321 74Q338 107 338 175V195Q338 290 274 322Q259 328 213 329L171 330L168 332Q166 335 166 348Q166 366 174 366Q202 366 232 371Q266 376 294 413T322 525V533Q322 590 287 612Q265 626 240 626Q208 626 181 615T143 592T132 580H135Q138 579 143 578T153 573T165 566T175 555T183 540T186 520Q186 498 172 481T127 463Z"></path></g><rect width="700" height="60" x="120" y="220"></rect></g></g></g></svg></mjx-container></span></p>
@@ -1390,35 +1185,35 @@ network=<span class="token punctuation">{</span>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> gpasswd -a <span class="token variable">$&#123;<span class="token environment constant">USER</span>&#125;</span> docker<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <h3 id="更改静态为ip">更改静态为ip</h3>
 <p>网卡是eno1（服务器就一个网卡） Ubuntu18的配置改了，在<code>/etc/netplan/50-cloud-init.yaml</code>, 现在18使用netplan管理网络 配置文件是yaml格式，跟hexo和next主题的配置文件格式一样</p>
-<pre class="line-numbers language-yml" data-language="yml"><code class="language-yml"><span class="token comment"># network: &#123;config: disabled&#125;</span>
-<span class="token key atrule">network</span><span class="token punctuation">:</span>
-    <span class="token key atrule">ethernets</span><span class="token punctuation">:</span>
-        <span class="token key atrule">eno1</span><span class="token punctuation">:</span>
-            <span class="token key atrule">dhcp4</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
-    <span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token number">2</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-yml" data-language="yml"><code class="language-yml"># network: &#123;config: disabled&#125;
+network:
+    ethernets:
+        eno1:
+            dhcp4: true
+    version: 2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>改成</p>
-<pre class="line-numbers language-yml" data-language="yml"><code class="language-yml"><span class="token key atrule">network</span><span class="token punctuation">:</span>
-  <span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token number">2</span>
-  <span class="token key atrule">renderer</span><span class="token punctuation">:</span> networkd
-  <span class="token key atrule">ethernets</span><span class="token punctuation">:</span>
-    <span class="token key atrule">eno1</span><span class="token punctuation">:</span>   <span class="token comment">#配置的网卡名称</span>
-<span class="token comment">#      dhcp4: true    #dhcp4关闭</span>
-<span class="token comment">#      dhcp6: true    #dhcp6关闭</span>
-      <span class="token key atrule">addresses</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>211.83.111.224/23<span class="token punctuation">]</span>   <span class="token comment">#设置本机IP及掩码</span>
-      <span class="token key atrule">gateway4</span><span class="token punctuation">:</span> 211.83.110.1   <span class="token comment">#设置网关</span>
-      <span class="token key atrule">nameservers</span><span class="token punctuation">:</span>
-          <span class="token key atrule">addresses</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>114.114.114.114<span class="token punctuation">,</span> 8.8.8.8<span class="token punctuation">]</span>   <span class="token comment">#设置DNS</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-yml" data-language="yml"><code class="language-yml">network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    eno1:   #配置的网卡名称
+#      dhcp4: true    #dhcp4关闭
+#      dhcp6: true    #dhcp6关闭
+      addresses: [211.83.111.224&#x2F;23]   #设置本机IP及掩码
+      gateway4: 211.83.110.1   #设置网关
+      nameservers:
+          addresses: [114.114.114.114, 8.8.8.8]   #设置DNS<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>(网关地址用<code>route -n</code>查看，配置参考<span class="exturl" data-url="aHR0cDovL2Jsb2cuc2luYS5jb20uY24vcy9ibG9nXzUzNzNiY2Y0MDEwMnhrNWcuaHRtbA==">ubuntu 18.04 netplan yaml配置固定IP地址<i class="fa fa-external-link-alt"></i></span>)</p>
 <p>然后</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> netplan apply<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>不对啊，又炸了，ipv4的网关到底是啥啊</p>
 <p>看了一下官网<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>，好像nameserver和gateway4都是可选项，可以空着默认 直接改成这样试试</p>
-<pre class="line-numbers language-yml" data-language="yml"><code class="language-yml"><span class="token key atrule">network</span><span class="token punctuation">:</span>
-  <span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token number">2</span>
-<span class="token comment">#  renderer: networkd</span>
-  <span class="token key atrule">ethernets</span><span class="token punctuation">:</span>
-    <span class="token key atrule">eno1</span><span class="token punctuation">:</span>
-      <span class="token key atrule">addresses</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>211.83.111.224/23<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-yml" data-language="yml"><code class="language-yml">network:
+  version: 2
+#  renderer: networkd
+  ethernets:
+    eno1:
+      addresses: [211.83.111.224&#x2F;23]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>然后进/run/systemd/network看一下系统的网络配置文件</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> /run/systemd/network`
 <span class="token function">ls</span>
@@ -2153,6 +1948,44 @@ Host Server
       </tags>
   </entry>
   <entry>
+    <title>无题</title>
+    <url>/e5e8/</url>
+    <content><![CDATA[<figure>
+<img src="photo_hk1.jpg" alt="null" /><figcaption aria-hidden="true">null</figcaption>
+</figure>
+<blockquote>
+<p>然而我的心很平安；没有爱憎，没有哀乐，也没有颜色和声音</p>
+<p>然而这是许多年前的事了</p>
+<a id="more"></a>
+<p>然而现在没有星和月光，没有僵坠的蝴蝶以至笑的渺茫，爱的翔舞。然而青年们很平安</p>
+</blockquote>
+<hr />
+<h2 id="君不见月如水">君不见，月如水</h2>
+<p>局域网之外的某些人纪念着三十年，一如一个月前局域网内官方纪念着一百年。昔日书生意气不再，只余残破躯壳，被人拿出来晒干了高高挂起，铸成新的图腾和血色大旗。</p>
+<p>走近一看，这旗帜不见血色，暗淡无光，轻轻一吹，灰尘抖落</p>
+<p>旖旎的生命不见踪影，在大风暴前，不见人哭，不见人笑。韭菜隐约发觉经济不好，电视只道稳中向好；不知大风波又将怎样到来，也不曾拥有灵便的手脚，只能抬头望像乌云聚集的天空。</p>
+<p>怎奈影帝临走前一席话一语成谶，时局至此，正未知几人称帝，几人称王。</p>
+<figure>
+<img src="pic1.jpg" alt="大清" /><figcaption aria-hidden="true">大清</figcaption>
+</figure>
+<blockquote>
+<p>彼黍离离，彼稷之苗。行迈靡靡，中心摇摇。</p>
+</blockquote>
+<p>承平日久十几年了，九十年代入世后的美(xue)好(han)时(gong)光(chang)，也该结束了，新时代，来了。08年四万亿之后，涨价去库存、棚改、15股灾救市、公鸡侧+环保左右出击，带路，那可真是治国鬼才，迪士尼捡到宝了。反正今天这个样子，也没有回头路了。（当然春秋大梦该做还是要做的，梦里啥都有）</p>
+<p>魑魅搏人应见惯，总输他、覆雨翻云手</p>
+<p>皆误在，今日不和，明日不战。鼎之轻重，可问否？</p>
+<blockquote>
+<p>冰与雪，周旋久.</p>
+</blockquote>
+<p>物价闯关，再来一次，不知如何？</p>
+<p>失业和通胀，会是哪个呢？难道.....</p>
+<p>尽道丰年瑞，丰年事若何？</p>
+]]></content>
+      <categories>
+        <category>彼黍离离</category>
+      </categories>
+  </entry>
+  <entry>
     <title>正则表达式笔记</title>
     <url>/96cd/</url>
     <content><![CDATA[<p>可能用得到 <a id="more"></a> #### 用法</p>
@@ -2210,44 +2043,6 @@ num <span class="token operator">=</span> re<span class="token punctuation">.</s
       <tags>
         <tag>正则表达式</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>无题</title>
-    <url>/e5e8/</url>
-    <content><![CDATA[<figure>
-<img src="photo_hk1.jpg" alt="null" /><figcaption aria-hidden="true">null</figcaption>
-</figure>
-<blockquote>
-<p>然而我的心很平安；没有爱憎，没有哀乐，也没有颜色和声音</p>
-<p>然而这是许多年前的事了</p>
-<a id="more"></a>
-<p>然而现在没有星和月光，没有僵坠的蝴蝶以至笑的渺茫，爱的翔舞。然而青年们很平安</p>
-</blockquote>
-<hr />
-<h2 id="君不见月如水">君不见，月如水</h2>
-<p>局域网之外的某些人纪念着三十年，一如一个月前局域网内官方纪念着一百年。昔日书生意气不再，只余残破躯壳，被人拿出来晒干了高高挂起，铸成新的图腾和血色大旗。</p>
-<p>走近一看，这旗帜不见血色，暗淡无光，轻轻一吹，灰尘抖落</p>
-<p>旖旎的生命不见踪影，在大风暴前，不见人哭，不见人笑。韭菜隐约发觉经济不好，电视只道稳中向好；不知大风波又将怎样到来，也不曾拥有灵便的手脚，只能抬头望像乌云聚集的天空。</p>
-<p>怎奈影帝临走前一席话一语成谶，时局至此，正未知几人称帝，几人称王。</p>
-<figure>
-<img src="pic1.jpg" alt="大清" /><figcaption aria-hidden="true">大清</figcaption>
-</figure>
-<blockquote>
-<p>彼黍离离，彼稷之苗。行迈靡靡，中心摇摇。</p>
-</blockquote>
-<p>承平日久十几年了，九十年代入世后的美(xue)好(han)时(gong)光(chang)，也该结束了，新时代，来了。08年四万亿之后，涨价去库存、棚改、15股灾救市、公鸡侧+环保左右出击，带路，那可真是治国鬼才，迪士尼捡到宝了。反正今天这个样子，也没有回头路了。（当然春秋大梦该做还是要做的，梦里啥都有）</p>
-<p>魑魅搏人应见惯，总输他、覆雨翻云手</p>
-<p>皆误在，今日不和，明日不战。鼎之轻重，可问否？</p>
-<blockquote>
-<p>冰与雪，周旋久.</p>
-</blockquote>
-<p>物价闯关，再来一次，不知如何？</p>
-<p>失业和通胀，会是哪个呢？难道.....</p>
-<p>尽道丰年瑞，丰年事若何？</p>
-]]></content>
-      <categories>
-        <category>彼黍离离</category>
-      </categories>
   </entry>
   <entry>
     <title>沙河夜市</title>
@@ -2782,6 +2577,231 @@ xdg-user-dirs-gtk-update<span aria-hidden="true" class="line-numbers-rows"><span
       </tags>
   </entry>
   <entry>
+    <title>Hexo博客部署和Next主题设置</title>
+    <url>/bd8f/</url>
+    <content><![CDATA[<p>这里仅记录个人问题，找教程为什么不看看官方文档呢 <a id="more"></a></p>
+<p>有问题先看这里啦，<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL25leHQtdGhlbWUvaGV4by10aGVtZS1uZXh0L2lzc3Vlcy80">更新说明及常见问题<i class="fa fa-external-link-alt"></i></span> 我自己的博客基本会跟着Next主题每月发布的release更新版本，偶尔直接跳到最新的master版本。 可能有的时候因为忙或者其他原因，并不会追最新版，有些之前写的东西过时了也没有改，请大家尽量以<span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0Lm9yZy8=">官方文档<i class="fa fa-external-link-alt"></i></span>为准。</p>
+<h2 id="更新升级至hexo5.0">更新升级至hexo5.0</h2>
+<p>没有什么太大魔改的话直接</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> <span class="token function">install</span> hexo@5.0.0<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>然后把next.yml的配置（或者主题的_config.yml）配置放到根目录_config.next.yml下面。</p>
+<p>hexo 5 支持用npm安装主题了</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> <span class="token function">install</span> hexo-theme-next<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h2 id="升级7.x的大坑">升级7.X的大坑</h2>
+<p>NexT主题的顺畅更新好像很难，官方不推荐，之前乱改的5.X主题升级7.2分支合并出现问题，一堆warning，索性推倒重来直接新搞一个7.X。</p>
+<p>升级可以直接按照官网方法</p>
+<pre><code> cd themes/next
+ git tag -l
+ git checkout tags/v7.7.1</code></pre>
+<p>spawn failed 问题，删除.deploy_git文件夹并重新部署。 _config.yml配置请注意对齐问题</p>
+<p>给备份博客的repo添加README.md文档可在这个路径下，这样就会显示在首页 themes%yourtheme%.md</p>
+<p>为文章设置预览:添加 <code>&lt;!-- more --&gt;</code></p>
+<p><del>插入本地图片推荐hexo-asset-image插件,可以看<span class="exturl" data-url="aHR0cDovL2V0cmQub3JnLzIwMTcvMDEvMjMvaGV4b+S4reWujOe+juaPkuWFpeacrOWcsOWbvueJhy8=">这里<i class="fa fa-external-link-alt"></i></span></del></p>
+<p>上面那个图片插件的repo已经时archived了，可以考虑换hexo-asset-link这个插件</p>
+<h2 id="各种小问题">各种小问题</h2>
+<h3 id="公式问题">公式问题</h3>
+<p>原来采用的hexo-math插件，在hexo-inject插件上有坑，看了看官方推荐，换成<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3RoZW1lLW5leHQvaGV4by10aGVtZS1uZXh0L2Jsb2IvbWFzdGVyL2RvY3MvemgtQ04vTUFUSC5tZA==">新的插件<i class="fa fa-external-link-alt"></i></span>。换完记得卸载hexo-inject插件</p>
+<h3 id="配置出错">配置出错</h3>
+<p>设置_config.yml时那个rss如果开启，默认空着就好了，不要填true</p>
+<pre><code>rss: true</code></pre>
+<p>像这样就会报错</p>
+<h3 id="本地搜索">本地搜索</h3>
+<p>本地搜索一直转圈圈，看到issue里面说是插件的问题，卸载后重装，神奇的好了</p>
+<pre><code> npm uninstall hexo-generator-searchdb --save
+ npm install hexo-generator-searchdb --save</code></pre>
+<p>在Next版本7.20以后（如7.30），hexo-generator-searchdb换成了hexo-generator-search，卸载并安装hexo-generator-search，本地搜索就可以正常使用了，不然会出现只能搜索标题内容的bug</p>
+<pre><code> npm uninstall hexo-generator-searchdb --save
+ npm install hexo-generator-search --save</code></pre>
+<h3 id="canvas效果">canvas效果</h3>
+<p>似乎那几个背景特效和进度条都会拖慢网页加载速度，不填建议用（新版的Next已经把乱晃的那个canvas移除了）</p>
+<h3 id="报错">报错</h3>
+<p>可能出现的一类问题是yaml的配置出现了语法错误报错</p>
+<pre class="line-numbers language-log" data-language="log"><code class="language-log">YAMLException: duplicated mapping key at line ...<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>这说明你的key重复了，比如在yaml里同时两段</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">calendar</span><span class="token punctuation">:</span>
+     <span class="token key atrule">calendar_id</span><span class="token punctuation">:</span> &lt;required<span class="token punctuation">></span> <span class="token comment"># Your Google account E-Mail</span>
+     <span class="token key atrule">api_key</span><span class="token punctuation">:</span> &lt;required<span class="token punctuation">></span>
+<span class="token key atrule">calendar</span><span class="token punctuation">:</span>
+     <span class="token key atrule">calendar_id</span><span class="token punctuation">:</span> &lt;required<span class="token punctuation">></span> <span class="token comment"># Your Google account E-Mail</span>
+     <span class="token key atrule">api_key</span><span class="token punctuation">:</span> &lt;required<span class="token punctuation">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>删掉一个calender或者将二者合并就可以了</p>
+<p>还有一种经常出现的问题</p>
+<pre class="line-numbers language-log" data-language="log"><code class="language-log">ERROR read ECONNRESET
+Error: read ECONNRESET
+    at TLSWrap.onStreamRead (internal&#x2F;stream_base_commons.js:111:27)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>这种可能是配置出错了，比如引用了某个本地资源结果路径不对找不到资源。这种建议在浏览器里打开F12检查一下</p>
+<h3 id="新的自定义配置路径">新的自定义配置路径</h3>
+<p>next v7.3.0 版本的定制路径改了，比如custom.styl改成了source/_data/styles.styl，参见</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">custom_file_path</span><span class="token punctuation">:</span>
+  <span class="token comment">#head: source/_data/head.swig</span>
+  <span class="token comment">#header: source/_data/header.swig</span>
+  <span class="token comment">#sidebar: source/_data/sidebar.swig</span>
+  <span class="token comment">#postMeta: source/_data/post-meta.swig</span>
+  <span class="token comment">#postBodyEnd: source/_data/post-body-end.swig</span>
+  <span class="token comment">#footer: source/_data/footer.swig</span>
+  <span class="token comment">#bodyEnd: source/_data/body-end.swig</span>
+  <span class="token comment">#variable: source/_data/variables.styl</span>
+  <span class="token comment">#mixin: source/_data/mixins.styl</span>
+  <span class="token key atrule">style</span><span class="token punctuation">:</span> source/_data/styles.styl<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>当然也可以修改custom_file_path:来自定义定制内容路径，想放哪就放哪。 改成之后就可以每次顺畅的直接每次更新主题时直接<code>git pull</code>了，不需要再merge自定义修改了 很多老的Next主题自定义教程都是在custom.styl或者直接改主题的css文件，7.3以后的新版要把老教程里的路径改了。 还有一种方法是<span class="exturl" data-url="aHR0cHM6Ly93d3cuZG5vY20uY29tL2FydGljbGVzL2JlZWNobnV0L2hleG8tbmV4dC1pbmplY3RzLw==">用Injects自定义主题<i class="fa fa-external-link-alt"></i></span> 据说Hexo5.x之后就能用npm安装主题了，Hexo一直咕咕咕，我们慢慢等吧</p>
+<h3 id="标签">标签</h3>
+<p>Next v7.3.0 版本的标签不再支持 Full-image tag</p>
+<pre><code> WARN  Full-image tag is no longer supported.</code></pre>
+<p>使用</p>
+<pre><code> &#123;% fi https://image-url, 图片名称, , 35% %&#125;</code></pre>
+<p>这样的标签无法再进行图片缩放,可以改用html方式</p>
+<pre><code> &lt;img src=&quot;图片地址&quot; width=&quot;50%&quot; height=&quot;50%&quot;  style=&quot;margin: 0 auto;&quot;/&gt;
+ &lt;img width=400 src=&quot; your-image-link&quot; alt=&quot;上海鲜花港 - 郁金香&quot; /&gt;</code></pre>
+<p>或</p>
+<pre><code>&lt;div style=&quot;width: 200px; margin: auto&quot;&gt;![picture name](example.jpeg)&lt;/div&gt;</code></pre>
+<p>或者hexo标签</p>
+<pre><code> &#123;% img [class names] /path/to/image [width] [height] "title text 'alt text'" %&#125;</code></pre>
+<h3 id="其他插件">其他插件</h3>
+<p>附上我安装的插件</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">npm</span> list --depth<span class="token operator">=</span><span class="token number">0</span>
+hexo-site@0.0.0 /home/zjk/blog
+├── hexo@5.1.1
+├── hexo-asset-link@2.1.0
+├── hexo-deployer-git@2.1.0
+├── hexo-filter-mathjax@0.6.0
+├── hexo-filter-nofollow@2.0.2
+├── hexo-generator-archive@1.0.0
+├── hexo-generator-category@1.0.0
+├── hexo-generator-feed@3.0.0
+├── hexo-generator-index@2.0.0
+├── hexo-generator-searchdb@1.3.2
+├── hexo-generator-tag@1.0.0
+├── hexo-hide-posts@0.1.1
+├── hexo-renderer-ejs@1.0.0
+├── hexo-renderer-pandoc@0.3.0
+├── hexo-renderer-stylus@2.0.0
+└── hexo-server@2.0.0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="fancybox">fancybox</h4>
+<p>fancybox虽然现在还支持，但是据说计划在8.0版移除，所有jQuery有关的东西都在逐步移除，目前已经支持 medium-zoom，可以在设置中开启</p>
+<pre><code> npm install medium-zoom</code></pre>
+<p>"在新版中 quicklink 不建议再使用，最起码不要与 pjax 同时开" 更新,这个在7.4版本以后修复了 无法加载 woff 字体资源 404 问题</p>
+<pre><code> Failed to load resource: the server responded with a status of 404 () fontawesome-webfont.woff2:1</code></pre>
+<p>这个找到提示的文件夹 source/font 路径,找到这三个缺失的文件,补上就可以了(可能没有这个文件夹,新建一下就行了)</p>
+<h3 id="夜间模式">夜间模式</h3>
+<p>现在新版Next已经有了自带的夜间模式，在配置里开启即可，会自动随着系统设置变</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token comment"># Dark Mode</span>
+<span class="token key atrule">darkmode</span><span class="token punctuation">:</span> auto<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h2 id="更新主题">更新主题</h2>
+<p>这里我使用的Next主题，参考<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3RoZW1lLW5leHQvaGV4by10aGVtZS1uZXh0L2Jsb2IvbWFzdGVyL2RvY3MvemgtQ04vREFUQS1GSUxFUy5tZA==">https://github.com/theme-next/hexo-theme-next/blob/master/docs/zh-CN/DATA-FILES.md<i class="fa fa-external-link-alt"></i></span> 在7.X以后大的更新还是需要手动处理冲突，但是Next主题将两个_config.yml文件合并搞了一个next.yml，在source/_data底下。这样更新的时候git pull后commit和merge就不用每次手动处理主题的_config.yml冲突了 merge之后指定版本</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">git</span> checkout tags/v7.4.1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>(可能会有nothing added to commit but untracked files present的提示，运行git clean -f清理不想要的文件，或者加到.gitignore里面, 还要就使用git add . ) 如果版本指定不对，会有detached HEAD出现，重新指定正确版本。如果还不行，可能git add等出了冲突，看<span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC9hZTQ4NTdkMmY4Njg=">这里<i class="fa fa-external-link-alt"></i></span></p>
+<h2 id="升级hexo4.0">升级Hexo4.0</h2>
+<p>今天检查更新的时候看到这样的提示，发现Hexo出4.0了。 跑到群里一看，说是什么Hexo 4.0.0 会有巨大的性能提升（相比 Hexo 3.2 生成速度提升 10%，内存占用减少 40%）。闲着没事就升级玩玩吧虽然我这也没几篇文章，生成速度本来也不慢。</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">λ npm-upgrade
+Checking <span class="token keyword">for</span> outdated dependencies <span class="token keyword">for</span> <span class="token string">"D:\zjk\myblog2\package.json"</span><span class="token punctuation">..</span>.
+<span class="token punctuation">[</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token punctuation">]</span> <span class="token number">21</span>/21 <span class="token number">100</span>%                                                                                            s can be used.
+
+New versions of active modules available:
+
+  hexo                      ^3.9.0   →   ^4.0.0
+  hexo-deployer-git         ^1.0.0   →   ^2.0.0
+  hexo-generator-archive    ^0.1.5   →   ^1.0.0
+  hexo-generator-category   ^0.1.3   →   ^1.0.0
+  hexo-generator-feed       ^1.2.2   →   ^2.0.0
+  hexo-generator-index      ^0.2.1   →   ^1.0.0
+  hexo-generator-tag        ^0.2.0   →   ^1.0.0
+  hexo-renderer-ejs         ^0.3.1   →   ^1.0.0
+  hexo-renderer-stylus      ^0.3.3   →   ^1.1.0
+  hexo-server               ^0.3.3   →   ^1.0.0
+
+? Update <span class="token string">"hexo"</span> <span class="token keyword">in</span> package.json from ^3.9.0 to ^4.0.0? <span class="token punctuation">(</span>Use arrow keys<span class="token punctuation">)</span>
+<span class="token operator">></span> Yes
+  No
+  Show changelog
+  Ignore
+  Finish update process<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>直接升级</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">npm</span> <span class="token function">install</span> -g hexo@4.0.0<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>更新，现在hexo-cli包也上hexo4.0了，使用官网的那个带cli的命令就行了 升级之后试一下'hexo generate'</p>
+<pre class="line-numbers language-log" data-language="log"><code class="language-log">INFO  Files loaded in 1.94 s
+INFO  140 files generated in 3.07 s<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>好像是快了点 等等，更新了Hexo4.0以后下面的分页突然变成这个样子了，我先报个修 <img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/20191016094709.png" alt="bug" style="zoom:80%;" /></p>
+<p><img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/20191016095007.png" alt="bug" style="zoom:80%;" /></p>
+<p>找到了问题了，已经在<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2hleG9qcy9oZXhvL2lzc3Vlcy8zNzI5">issue#3729<i class="fa fa-external-link-alt"></i></span>里解决了 现在直接升级到master分支就行了</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> themes/next
+<span class="token function">git</span> pull https://github.com/theme-next/hexo-theme-next master
+<span class="token function">git</span> checkout master<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>看到显示这样就行了</p>
+<blockquote>
+<p>Already on 'master' Your branch is up to date with 'origin/master'.</p>
+</blockquote>
+<p><img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/foot.png" alt="Picture" style="zoom:80%;" /> 好了，开心。目前没看到其他bug了，请放心更（cai）新（keng）</p>
+<p>更新，现在最新的master报这样的错：</p>
+<pre><code> ERROR Cannot read property &#39;replace&#39; of null</code></pre>
+<p>还有这样的错</p>
+<pre><code> ERROR Process failed: layout/tag.swig</code></pre>
+<p>换到nunjucks分支，也有这个问题，先切到contrib分支里面，nunjucks那块正在施工，大家先用着旧版，我已经报修了。劳模mimi同学已经在修了（19.10.18） 更新，感谢劳模Mimi同学，已经修了<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3RoZW1lLW5leHQvaGV4by10aGVtZS1uZXh0L3B1bGwvMTIyNg==">Migrate to Nunjucks [3] #1226<i class="fa fa-external-link-alt"></i></span></p>
+<h2 id="绑定域名并托管到netlify">绑定域名并托管到netlify</h2>
+<p>先到namecheap或者namesilo等网站找个中意的域名，不介意在天朝备案腾讯和阿里云买也可以，不愿意花钱也可以申请个免费的。我这里0.99刀一年优惠买了个<a href="https://zhangjk98.xyz/">zhangjk98.xyz</a></p>
+<p>在netlify的domian setting里找到Custom domains按照提示来，可以参考这个<span class="exturl" data-url="aHR0cHM6Ly9tZWRpdW0uY29tL0BQdWRnZTE5OTYvMjAxOC0wMS0wMi03MDEzZWRkYzQxM2M=">使用 Netlify 托管个人网站 详细步骤<i class="fa fa-external-link-alt"></i></span></p>
+<h2 id="google-search-console-验证和配置">Google Search Console 验证和配置</h2>
+<p>这里以netlify为例，namesilo等域名商也可进行验证 <img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/20190830141615.png" alt="dns验证" style="zoom:80%;" /> 有自己的域名可以直接选择domian验证，看<span class="exturl" data-url="aHR0cHM6Ly93d3cud29ndWlkZS5jb20vYXJjaGl2ZXMvNDg2MS5odG1s">这里<i class="fa fa-external-link-alt"></i></span> 打开netlify，找到dns setting，点击下方add new record 按钮 <img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/20190830142257.png" alt="添加验证" /> value就填谷歌给你的那个值，等几分钟就好了</p>
+<h2 id="美化">美化</h2>
+<p>设置footer跳动的红心 在next配置里找到icon 设成下面这个样子</p>
+<pre><code>   icon: 
+      # Icon name in Font Awesome. See: https://fontawesome.com/v4.7.0/icons/
+      # `heart` is recommended with animation in red (#ff0000).
+      name: heartbeat
+      # If you want to animate the icon, set it to true.
+      animated: true
+      # Change the color of icon, using Hex Code.
+      color: &quot;#FF0000&quot;</code></pre>
+<p>自定义字体: _config.yml里找到</p>
+<pre><code> font:
+      enable: true</code></pre>
+<h2 id="使用caniuse测试浏览器兼容性">使用caniuse测试浏览器兼容性</h2>
+<iframe data-feature="fetch" src="https://caniuse.bitsofco.de/embed/index.html?feat=fetch&periods=current&accessible-colours=false" frameborder="0" width="100%" height="400px"></iframe>
+<iframe data-feature="sharedarraybuffer" src="https://caniuse.bitsofco.de/embed/index.html?feat=sharedarraybuffer&periods=current&accessible-colours=false" frameborder="0" width="100%" height="400px"></iframe>
+<iframe data-feature="link-rel-modulepreload" src="https://caniuse.bitsofco.de/embed/index.html?feat=link-rel-modulepreload&periods=past_1,past_2,past_3,past_4,past_5&accessible-colours=false" frameborder="0" width="100%" height="400px"></iframe>
+<h2 id="使用yarn管理npm包和travis-ci自动化部署">使用yarn管理npm包和travis-ci自动化部署</h2>
+<p>可选，本地生成速度够快或者不嫌麻烦也没太有必要上travis-ci 不愿意折腾就直接本地生成部署就好了，ci反而慢，而且就想发个博客的话完全没有必要！</p>
+<p>今天经人提醒，hexo s 是动态编译的，本地预览直接hexo s 就行了，不用先 hexo g 生成</p>
+<h2 id="插件选择">插件选择</h2>
+<h3 id="踩坑">踩坑</h3>
+<p>lazyload插件、fancybox插件(改用mediumzoom)、pjax插件、fliter-optimizer插件（经常跟很多地方冲突）等建议慎用</p>
+<h3 id="给mardown添加论文脚注效果">给Mardown添加论文脚注效果</h3>
+<p>安装插件：</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">npm</span> <span class="token function">install</span> hexo-reference --save<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>注释测试<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<h3 id="主页文章置顶">主页文章置顶</h3>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL25leHQtdGhlbWUvaGV4by1nZW5lcmF0b3ItaW5kZXhlZA==">hexo-generator-indexed<i class="fa fa-external-link-alt"></i></span></p>
+<h2 id="使用cloudflare和github-pages">使用Cloudflare和Github Pages</h2>
+<p>由于Netlify访问速度实在太慢（居然比Github Pages还慢），本来以为只是在国内慢，没想到收到一封邮件，说：</p>
+<p>然后我感觉不对劲，拿ping工具和网络测试工具（<span class="exturl" data-url="aHR0cHM6Ly9ndG1ldHJpeC5jb20=">https://gtmetrix.com<i class="fa fa-external-link-alt"></i></span>）看了一下，又查了一下，原来不仅国内慢啊，国外也比Github Pages慢啊 Netlify居然还说“Why You don't need clcoudflare”, 我。。。</p>
+<p><img width=450 src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/net5xx.png" alt="Picture" /></p>
+<p>换回GitHub Pages和cloudlfare，还有CNAME Flatterning, 不需要备案的免费CDN也就cloudflare了。 ping检测结果终于不是一片飘红了。巨硬收购Github后说要建设Github国内的服务器，但是它自家的Azure、bing、onedrive都整天抽风，感觉指望不上了。</p>
+<p><img width=450 src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/ping.png" alt="Picture" /></p>
+<p>现在唯一的问题就是图床用的Github，已经弃疗，国内速度不管了。</p>
+<p>可能的小坑：开启coludflare的 rocket loader 功能后会出错（这是个实验性的功能），Next主题会变成一片空白，一直加载不出来。关掉就好了。</p>
+<h2 id="提高加载速度">提高加载速度</h2>
+<p>在<span class="exturl" data-url="aHR0cHM6Ly9ndG1ldHJpeC5jb20v">GTmetrix<i class="fa fa-external-link-alt"></i></span>上看到我这得分才70多 发现首页两个图片占了很多，把两个图整成webp格式的，然后再调整一下大小(这里我用的这个<span class="exturl" data-url="aHR0cHM6Ly9jbG91ZGNvbnZlcnQuY29tLw==">网站<i class="fa fa-external-link-alt"></i></span>)。这里抛弃safari用户了 (cloudflare的business是有这个功能的，但是我用不起) 然后把velocityjs的那些动画效果关了（这个早就想关了，和其他组件各种冲突）</p>
+<p>虽然拉黑了百度<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>，但是发现我的流量统计还是有一大半是国内访问，为了照顾一下国内速度，还是用了Cloudflare的CDN 大多数时候，国内 cloudflare &gt; github pages &gt; netlify (如果不用个人域名，用netlify的二级域名会比XXX.github.io快一点)。raw.githubusercontent.com 是基本废了，想作为国内图床并不可行 （备案是不可能备案的）</p>
+<h2 id="可能的问题请参考">可能的问题请参考</h2>
+<p><span class="exturl" data-url="aHR0cHM6Ly9zaHV5ZWxpZmUuZ2l0aHViLmlvL3Bvc3QvSGV4byVFNSVCOCVCOCVFOCVBNyU4MSVFOSU5NyVBRSVFOSVBMiU5OCVFOCVBNyVBMyVFNSU4NiVCMyVFNiU5NiVCOSVFNiVBMSU4OC8=">Hexo常见问题解决方案<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9kcDJweC5jb20vMjAxOS8wNC8yNS9oZXhvLW1laWh1YS8=">hexo主题美化<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnlsZWFvLmNvbS8yMDE4LzA5MDEvaGV4by1uZXh05Li76aKY5LiL55qE576O5YyWLmh0bWw=">hexo-next主题下的美化<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvLw==">hexo官网<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0Lm9yZy9kb2NzLw==">next文档(6.0以后)<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLWd1aWRlLnJlYWR0aGVkb2NzLmlv">hexo指南<i class="fa fa-external-link-alt"></i></span> 从node.js操作到next主题，很详细，自己折腾可以参考,也记录了很多坑，但是不全，非官方指南，都是个人博客的坑。他还写了别的<span class="exturl" data-url="aHR0cHM6Ly93d3cuemh1amlhbi50ZWNoL3Bvc3RzL2QyMmFiOTY3Lmh0bWw=">指南<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3RoZW1lLW5leHQvYXdlc29tZS1uZXh0I3BsdWdpbnM=">https://github.com/theme-next/awesome-next#plugins<i class="fa fa-external-link-alt"></i></span>Next主题的插件，7.X版本之后越来越多的功能都剥离出来做成了插件, 使用时要npm install 一下，不能会直接在设置里设为true <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0xlYXJuU2hhcmUvTGVhcm5pbmctTWFya2Rvd24vdHJlZS92Mg==">markdown教程<i class="fa fa-external-link-alt"></i></span></p>
+<h2 id="注释">注释</h2>
+<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>text/javascript<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>https://cdn.jsdelivr.net/gh/lurongkai/anti-baidu/js/anti-baidu-latest.min.js<span class="token punctuation">"</span></span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>UTF-8<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<section class="footnotes" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>这是一个注释测试<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>加了一个这个<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+]]></content>
+      <categories>
+        <category>杂七杂八</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+        <tag>Next</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>用疾病记录预测患者死亡风险</title>
     <url>/morality-prediction/</url>
     <content><![CDATA[<p>以急性心肌梗死和MIMIC数据库为例</p>
@@ -2795,89 +2815,87 @@ xdg-user-dirs-gtk-update<span aria-hidden="true" class="line-numbers-rows"><span
 <p>提取到的除后续照顾类别以外的410大类患者数据中，共有5087次入院记录，去除同一患者重复的入院记录，共有4788名病人患有急性心肌梗死（包括同时患有急性心肌梗死的并发症），其中有727人死亡，总死亡率15.18%。男性患者共2924名，平均年龄为67.2岁，死亡391人，男性死亡率13.37%；女性患者共1864名，平均年龄为73.4岁，死亡337人,女性死亡率18.10%。统计急性心肌梗死患者人群种族信息，可以发现亚裔只有74次入院记录。 特征选取</p>
 <p>MIIMC里面能用的特征大概有性别年龄这些个人信息、心率血压这些生理指标、还有些用药记录之类的，为了预测患者初次发病的死亡率，只采用患者初次入院24小时内的记录检查项目作为预测指标</p>
 <p>先把24小时ICUSTAY_ID选出来</p>
-<pre class="line-numbers language-none"><code class="language-none">
-CREATE TABLE k_AMI2 AS
-SELECT
-	ADMISSIONS.SUBJECT_ID,
-	ADMISSIONS.HADM_ID,
-	ADMISSIONS.ADMITTIME,
-	ADMISSIONS.DEATHTIME
-FROM
-	ADMISSIONS,
-	(
-		SELECT DISTINCT
-			A.SUBJECT_ID,
-			MAX(A.ADMITTIME) ADMITTIME
-		FROM
-			ADMISSIONS A,
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> k_AMI2 <span class="token keyword">AS</span>
+<span class="token keyword">SELECT</span>
+	ADMISSIONS<span class="token punctuation">.</span>SUBJECT_ID<span class="token punctuation">,</span>
+	ADMISSIONS<span class="token punctuation">.</span>HADM_ID<span class="token punctuation">,</span>
+	ADMISSIONS<span class="token punctuation">.</span>ADMITTIME<span class="token punctuation">,</span>
+	ADMISSIONS<span class="token punctuation">.</span>DEATHTIME
+<span class="token keyword">FROM</span>
+	ADMISSIONS<span class="token punctuation">,</span>
+	<span class="token punctuation">(</span>
+		<span class="token keyword">SELECT</span> <span class="token keyword">DISTINCT</span>
+			A<span class="token punctuation">.</span>SUBJECT_ID<span class="token punctuation">,</span>
+			<span class="token function">MAX</span><span class="token punctuation">(</span>A<span class="token punctuation">.</span>ADMITTIME<span class="token punctuation">)</span> ADMITTIME
+		<span class="token keyword">FROM</span>
+			ADMISSIONS A<span class="token punctuation">,</span>
 			DIAGNOSES_ICD B
-		WHERE
-			A.HADM_ID &#x3D; B.HADM_ID
-		AND (
-			ICD9_CODE &#x3D; &quot;41000&quot;
-			OR ICD9_CODE &#x3D; &quot;41001&quot;
-			OR ICD9_CODE &#x3D; &quot;41010&quot;
-			OR ICD9_CODE &#x3D; &quot;41011&quot;
-			OR ICD9_CODE &#x3D; &quot;41020&quot;
-			OR ICD9_CODE &#x3D; &quot;41021&quot;
-			OR ICD9_CODE &#x3D; &quot;41030&quot;
-			OR ICD9_CODE &#x3D; &quot;41031&quot;
-			OR ICD9_CODE &#x3D; &quot;41040&quot;
-			OR ICD9_CODE &#x3D; &quot;41041&quot;
-			OR ICD9_CODE &#x3D; &quot;41050&quot;
-			OR ICD9_CODE &#x3D; &quot;41051&quot;
-			OR ICD9_CODE &#x3D; &quot;41060&quot;
-			OR ICD9_CODE &#x3D; &quot;41061&quot;
-			OR ICD9_CODE &#x3D; &quot;41070&quot;
-			OR ICD9_CODE &#x3D; &quot;41081&quot;
-			OR ICD9_CODE &#x3D; &quot;41090&quot;
-			OR ICD9_CODE &#x3D; &quot;41091&quot;
-			OR ICD9_CODE &#x3D; &quot;41002&quot;
-			OR ICD9_CODE &#x3D; &quot;41012&quot;
-			OR ICD9_CODE &#x3D; &quot;41022&quot;
-			OR ICD9_CODE &#x3D; &quot;41032&quot;
-			OR ICD9_CODE &#x3D; &quot;41042&quot;
-			OR ICD9_CODE &#x3D; &quot;41052&quot;
-			OR ICD9_CODE &#x3D; &quot;41062&quot;
-			OR ICD9_CODE &#x3D; &quot;41072&quot;
-			OR ICD9_CODE &#x3D; &quot;41082&quot;
-			OR ICD9_CODE &#x3D; &quot;41092&quot;
-		)
-		GROUP BY
-			A.SUBJECT_ID
-	) AS T
-WHERE
-	ADMISSIONS.ADMITTIME &#x3D; T.ADMITTIME
-AND ADMISSIONS.SUBJECT_ID &#x3D; T.SUBJECT_ID<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+		<span class="token keyword">WHERE</span>
+			A<span class="token punctuation">.</span>HADM_ID <span class="token operator">=</span> B<span class="token punctuation">.</span>HADM_ID
+		<span class="token operator">AND</span> <span class="token punctuation">(</span>
+			ICD9_CODE <span class="token operator">=</span> <span class="token string">"41000"</span>
+			<span class="token operator">OR</span> ICD9_CODE <span class="token operator">=</span> <span class="token string">"41001"</span>
+			<span class="token operator">OR</span> ICD9_CODE <span class="token operator">=</span> <span class="token string">"41010"</span>
+			<span class="token operator">OR</span> ICD9_CODE <span class="token operator">=</span> <span class="token string">"41011"</span>
+			<span class="token operator">OR</span> ICD9_CODE <span class="token operator">=</span> <span class="token string">"41020"</span>
+			<span class="token operator">OR</span> ICD9_CODE <span class="token operator">=</span> <span class="token string">"41021"</span>
+			<span class="token operator">OR</span> ICD9_CODE <span class="token operator">=</span> <span class="token string">"41030"</span>
+			<span class="token operator">OR</span> ICD9_CODE <span class="token operator">=</span> <span class="token string">"41031"</span>
+			<span class="token operator">OR</span> ICD9_CODE <span class="token operator">=</span> <span class="token string">"41040"</span>
+			<span class="token operator">OR</span> ICD9_CODE <span class="token operator">=</span> <span class="token string">"41041"</span>
+			<span class="token operator">OR</span> ICD9_CODE <span class="token operator">=</span> <span class="token string">"41050"</span>
+			<span class="token operator">OR</span> ICD9_CODE <span class="token operator">=</span> <span class="token string">"41051"</span>
+			<span class="token operator">OR</span> ICD9_CODE <span class="token operator">=</span> <span class="token string">"41060"</span>
+			<span class="token operator">OR</span> ICD9_CODE <span class="token operator">=</span> <span class="token string">"41061"</span>
+			<span class="token operator">OR</span> ICD9_CODE <span class="token operator">=</span> <span class="token string">"41070"</span>
+			<span class="token operator">OR</span> ICD9_CODE <span class="token operator">=</span> <span class="token string">"41081"</span>
+			<span class="token operator">OR</span> ICD9_CODE <span class="token operator">=</span> <span class="token string">"41090"</span>
+			<span class="token operator">OR</span> ICD9_CODE <span class="token operator">=</span> <span class="token string">"41091"</span>
+			<span class="token operator">OR</span> ICD9_CODE <span class="token operator">=</span> <span class="token string">"41002"</span>
+			<span class="token operator">OR</span> ICD9_CODE <span class="token operator">=</span> <span class="token string">"41012"</span>
+			<span class="token operator">OR</span> ICD9_CODE <span class="token operator">=</span> <span class="token string">"41022"</span>
+			<span class="token operator">OR</span> ICD9_CODE <span class="token operator">=</span> <span class="token string">"41032"</span>
+			<span class="token operator">OR</span> ICD9_CODE <span class="token operator">=</span> <span class="token string">"41042"</span>
+			<span class="token operator">OR</span> ICD9_CODE <span class="token operator">=</span> <span class="token string">"41052"</span>
+			<span class="token operator">OR</span> ICD9_CODE <span class="token operator">=</span> <span class="token string">"41062"</span>
+			<span class="token operator">OR</span> ICD9_CODE <span class="token operator">=</span> <span class="token string">"41072"</span>
+			<span class="token operator">OR</span> ICD9_CODE <span class="token operator">=</span> <span class="token string">"41082"</span>
+			<span class="token operator">OR</span> ICD9_CODE <span class="token operator">=</span> <span class="token string">"41092"</span>
+		<span class="token punctuation">)</span>
+		<span class="token keyword">GROUP</span> <span class="token keyword">BY</span>
+			A<span class="token punctuation">.</span>SUBJECT_ID
+	<span class="token punctuation">)</span> <span class="token keyword">AS</span> T
+<span class="token keyword">WHERE</span>
+	ADMISSIONS<span class="token punctuation">.</span>ADMITTIME <span class="token operator">=</span> T<span class="token punctuation">.</span>ADMITTIME
+<span class="token operator">AND</span> ADMISSIONS<span class="token punctuation">.</span>SUBJECT_ID <span class="token operator">=</span> T<span class="token punctuation">.</span>SUBJECT_ID<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>然后用找患者检查项目、生理指标的ITEM_ID。写一个简单的SQL联接查询就可以了：</p>
-<pre class="line-numbers language-none"><code class="language-none">
-SELECT DISTINCT
-	SUBJECT_ID,
-	MAX(VALUEUOM) MAX_VALUE,
-	MIN(VALUEUOM) MIN_VALUE
-FROM
-	(
-	SELECT
-		CHARTEVENTS.SUBJECT_ID,
-		CHARTEVENTS.ICUSTAY_ID,
-		CHARTEVENTS.CHARTTIME,
-		CHARTEVENTS.&#96;VALUE&#96;,
-		CHARTEVENTS.VALUEUOM,
-		CHARTEVENTS.ERROR,
-		TIMESTAMPDIFF( HOUR, T.INTIME, CHARTEVENTS.CHARTTIME ) STAYHOUR 
-	FROM
-		CHARTEVENTS,
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SELECT</span> <span class="token keyword">DISTINCT</span>
+	SUBJECT_ID<span class="token punctuation">,</span>
+	<span class="token function">MAX</span><span class="token punctuation">(</span>VALUEUOM<span class="token punctuation">)</span> MAX_VALUE<span class="token punctuation">,</span>
+	<span class="token function">MIN</span><span class="token punctuation">(</span>VALUEUOM<span class="token punctuation">)</span> MIN_VALUE
+<span class="token keyword">FROM</span>
+	<span class="token punctuation">(</span>
+	<span class="token keyword">SELECT</span>
+		CHARTEVENTS<span class="token punctuation">.</span>SUBJECT_ID<span class="token punctuation">,</span>
+		CHARTEVENTS<span class="token punctuation">.</span>ICUSTAY_ID<span class="token punctuation">,</span>
+		CHARTEVENTS<span class="token punctuation">.</span>CHARTTIME<span class="token punctuation">,</span>
+		CHARTEVENTS<span class="token punctuation">.</span><span class="token punctuation">`</span><span class="token keyword">VALUE</span><span class="token punctuation">`</span><span class="token punctuation">,</span>
+		CHARTEVENTS<span class="token punctuation">.</span>VALUEUOM<span class="token punctuation">,</span>
+		CHARTEVENTS<span class="token punctuation">.</span>ERROR<span class="token punctuation">,</span>
+		TIMESTAMPDIFF<span class="token punctuation">(</span> <span class="token keyword">HOUR</span><span class="token punctuation">,</span> T<span class="token punctuation">.</span>INTIME<span class="token punctuation">,</span> CHARTEVENTS<span class="token punctuation">.</span>CHARTTIME <span class="token punctuation">)</span> STAYHOUR 
+	<span class="token keyword">FROM</span>
+		CHARTEVENTS<span class="token punctuation">,</span>
 		A_AKF_DEATH T 
-	WHERE
-		CHARTEVENTS.ICUSTAY_ID &#x3D; T.ICUSTAY_ID 
-		AND ( CHARTEVENTS.ITEMID &#x3D; 220546 OR CHARTEVENTS.ITEMID &#x3D; 1542 )
-	ORDER BY
-		CHARTEVENTS.SUBJECT_ID 
-	) AA
-WHERE
-	STAYHOUR &lt;&#x3D; 24 
-GROUP BY
-	SUBJECT_ID<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+	<span class="token keyword">WHERE</span>
+		CHARTEVENTS<span class="token punctuation">.</span>ICUSTAY_ID <span class="token operator">=</span> T<span class="token punctuation">.</span>ICUSTAY_ID 
+		<span class="token operator">AND</span> <span class="token punctuation">(</span> CHARTEVENTS<span class="token punctuation">.</span>ITEMID <span class="token operator">=</span> <span class="token number">220546</span> <span class="token operator">OR</span> CHARTEVENTS<span class="token punctuation">.</span>ITEMID <span class="token operator">=</span> <span class="token number">1542</span> <span class="token punctuation">)</span>
+	<span class="token keyword">ORDER</span> <span class="token keyword">BY</span>
+		CHARTEVENTS<span class="token punctuation">.</span>SUBJECT_ID 
+	<span class="token punctuation">)</span> AA
+<span class="token keyword">WHERE</span>
+	STAYHOUR <span class="token operator">&lt;=</span> <span class="token number">24</span> 
+<span class="token keyword">GROUP</span> <span class="token keyword">BY</span>
+	SUBJECT_ID<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>本次选取的急性心肌梗死患者主要特征见下表：</p>
 <table>
 <thead>
@@ -2972,72 +2990,71 @@ GROUP BY
 <p>有的疾病可能会有，急性心肌梗死由于死亡率很高，正负样本比例已经超过了1：9，并不是那种极端不平衡的问题。有的疾病死亡率1%左右需要采样等方式构造平衡数据集。</p>
 <h2 id="模型训练">模型训练</h2>
 <p>直接用的scikit-learn工具包，随便调了调参。决策树类的bsoosting算法表现都还不错，像GBDT啊，XGBoost啊，LightGBM啊。数据量还是有点小了，就没上深度学习那些网络。直接调sklearn的包调一下参：</p>
-<pre class="line-numbers language-none"><code class="language-none">
-import pandas as pd
-# pd.options.mode.chained_assignment &#x3D; None
-import numpy as np
-import lightgbm as lgb
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> pandas <span class="token keyword">as</span> pd
+<span class="token comment"># pd.options.mode.chained_assignment = None</span>
+<span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
+<span class="token keyword">import</span> lightgbm <span class="token keyword">as</span> lgb
 
 
-from sklearn import preprocessing
-from sklearn.model_selection import train_test_split,cross_val_score,cross_val_predict
-from sklearn.ensemble import RandomTreesEmbedding, RandomForestClassifier, GradientBoostingClassifier
-# criteria
-from sklearn.metrics import accuracy_score, roc_auc_score, f1_score,recall_score, precision_score, roc_curve
+<span class="token keyword">from</span> sklearn <span class="token keyword">import</span> preprocessing
+<span class="token keyword">from</span> sklearn<span class="token punctuation">.</span>model_selection <span class="token keyword">import</span> train_test_split<span class="token punctuation">,</span>cross_val_score<span class="token punctuation">,</span>cross_val_predict
+<span class="token keyword">from</span> sklearn<span class="token punctuation">.</span>ensemble <span class="token keyword">import</span> RandomTreesEmbedding<span class="token punctuation">,</span> RandomForestClassifier<span class="token punctuation">,</span> GradientBoostingClassifier
+<span class="token comment"># criteria</span>
+<span class="token keyword">from</span> sklearn<span class="token punctuation">.</span>metrics <span class="token keyword">import</span> accuracy_score<span class="token punctuation">,</span> roc_auc_score<span class="token punctuation">,</span> f1_score<span class="token punctuation">,</span>recall_score<span class="token punctuation">,</span> precision_score<span class="token punctuation">,</span> roc_curve
 
 
-# 加载数据
-data &#x3D; pd.read_csv(&#39;.&#x2F;data&#x2F;train_data_modified.csv&#39;, encoding&#x3D;&#39;utf-8&#39;)
-data &#x3D; data.sample(frac&#x3D;1, random_state&#x3D;42)
-data_x &#x3D; data.iloc[:,[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42]]
-# data_x &#x3D; data.iloc[:,[1,2,3,4,5,6,7,36]]
-lbl &#x3D; preprocessing.LabelEncoder()
-# data_x[&#39;M&#39;] &#x3D; lbl.fit_transform(data_x[&#39;M&#39;].astype(str))#将含有字符的类别特征这一列进行转换
-# data_x[&#39;EMERGENCY&#39;] &#x3D; lbl.fit_transform(data_x[&#39;EMERGENCY&#39;].astype(str))#将含有字符的类别特征这一列进行转换
-data_y &#x3D; data.iloc[:,[0]]
+<span class="token comment"># 加载数据</span>
+data <span class="token operator">=</span> pd<span class="token punctuation">.</span>read_csv<span class="token punctuation">(</span><span class="token string">'./data/train_data_modified.csv'</span><span class="token punctuation">,</span> encoding<span class="token operator">=</span><span class="token string">'utf-8'</span><span class="token punctuation">)</span>
+data <span class="token operator">=</span> data<span class="token punctuation">.</span>sample<span class="token punctuation">(</span>frac<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> random_state<span class="token operator">=</span><span class="token number">42</span><span class="token punctuation">)</span>
+data_x <span class="token operator">=</span> data<span class="token punctuation">.</span>iloc<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">9</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">11</span><span class="token punctuation">,</span><span class="token number">12</span><span class="token punctuation">,</span><span class="token number">13</span><span class="token punctuation">,</span><span class="token number">14</span><span class="token punctuation">,</span><span class="token number">15</span><span class="token punctuation">,</span><span class="token number">16</span><span class="token punctuation">,</span><span class="token number">17</span><span class="token punctuation">,</span><span class="token number">18</span><span class="token punctuation">,</span><span class="token number">19</span><span class="token punctuation">,</span><span class="token number">20</span><span class="token punctuation">,</span><span class="token number">21</span><span class="token punctuation">,</span><span class="token number">22</span><span class="token punctuation">,</span><span class="token number">23</span><span class="token punctuation">,</span><span class="token number">24</span><span class="token punctuation">,</span><span class="token number">25</span><span class="token punctuation">,</span><span class="token number">26</span><span class="token punctuation">,</span><span class="token number">27</span><span class="token punctuation">,</span><span class="token number">28</span><span class="token punctuation">,</span><span class="token number">29</span><span class="token punctuation">,</span><span class="token number">30</span><span class="token punctuation">,</span><span class="token number">31</span><span class="token punctuation">,</span><span class="token number">32</span><span class="token punctuation">,</span><span class="token number">33</span><span class="token punctuation">,</span><span class="token number">34</span><span class="token punctuation">,</span><span class="token number">35</span><span class="token punctuation">,</span><span class="token number">36</span><span class="token punctuation">,</span><span class="token number">37</span><span class="token punctuation">,</span><span class="token number">38</span><span class="token punctuation">,</span><span class="token number">39</span><span class="token punctuation">,</span><span class="token number">40</span><span class="token punctuation">,</span><span class="token number">41</span><span class="token punctuation">,</span><span class="token number">42</span><span class="token punctuation">]</span><span class="token punctuation">]</span>
+<span class="token comment"># data_x = data.iloc[:,[1,2,3,4,5,6,7,36]]</span>
+lbl <span class="token operator">=</span> preprocessing<span class="token punctuation">.</span>LabelEncoder<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token comment"># data_x['M'] = lbl.fit_transform(data_x['M'].astype(str))#将含有字符的类别特征这一列进行转换</span>
+<span class="token comment"># data_x['EMERGENCY'] = lbl.fit_transform(data_x['EMERGENCY'].astype(str))#将含有字符的类别特征这一列进行转换</span>
+data_y <span class="token operator">=</span> data<span class="token punctuation">.</span>iloc<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">]</span>
 
-# 准备一个train&#x2F;test来构建模型。
-x_train, x_test, y_train, y_test &#x3D; train_test_split(data_x,
-                                                    data_y, 
-                                                    test_size&#x3D;0.2, 
-                                                    random_state&#x3D;52,
-                                                    )
+<span class="token comment"># 准备一个train/test来构建模型。</span>
+x_train<span class="token punctuation">,</span> x_test<span class="token punctuation">,</span> y_train<span class="token punctuation">,</span> y_test <span class="token operator">=</span> train_test_split<span class="token punctuation">(</span>data_x<span class="token punctuation">,</span>
+                                                    data_y<span class="token punctuation">,</span> 
+                                                    test_size<span class="token operator">=</span><span class="token number">0.2</span><span class="token punctuation">,</span> 
+                                                    random_state<span class="token operator">=</span><span class="token number">52</span><span class="token punctuation">,</span>
+                                                    <span class="token punctuation">)</span>
 
-print(x_train.shape, x_test.shape, y_train.shape, y_test.shape)
-
-
-from xgboost.sklearn import XGBClassifier
-xgb &#x3D; XGBClassifier(
-    n_estimators&#x3D;100,
-    learning_rate &#x3D;0.09,
-    max_depth&#x3D;4,
-    min_child_weight&#x3D;1,
-    gamma&#x3D;0.3,
-    subsample&#x3D;0.8,
-    colsample_bytree&#x3D;0.8,
-    objective&#x3D; &#39;binary:logistic&#39;,
-    nthread&#x3D;12,
-    scale_pos_weight&#x3D;1,
-    reg_lambda&#x3D;1,
-    seed&#x3D;27)
-# xgb &#x3D; HistGradientBoostingClassifier(learning_rate&#x3D;0.09)
-xgb.fit(x_train, y_train)
-
-y_pred_xgb &#x3D; xgb.predict(x_test)
+<span class="token keyword">print</span><span class="token punctuation">(</span>x_train<span class="token punctuation">.</span>shape<span class="token punctuation">,</span> x_test<span class="token punctuation">.</span>shape<span class="token punctuation">,</span> y_train<span class="token punctuation">.</span>shape<span class="token punctuation">,</span> y_test<span class="token punctuation">.</span>shape<span class="token punctuation">)</span>
 
 
-y_pred_xgb_pr &#x3D; xgb.predict_proba(x_test)[:,1]
-fpr_xgb,tpr_xgb,thresholds  &#x3D; roc_curve(y_test,y_pred_xgb_pr)
+<span class="token keyword">from</span> xgboost<span class="token punctuation">.</span>sklearn <span class="token keyword">import</span> XGBClassifier
+xgb <span class="token operator">=</span> XGBClassifier<span class="token punctuation">(</span>
+    n_estimators<span class="token operator">=</span><span class="token number">100</span><span class="token punctuation">,</span>
+    learning_rate <span class="token operator">=</span><span class="token number">0.09</span><span class="token punctuation">,</span>
+    max_depth<span class="token operator">=</span><span class="token number">4</span><span class="token punctuation">,</span>
+    min_child_weight<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span>
+    gamma<span class="token operator">=</span><span class="token number">0.3</span><span class="token punctuation">,</span>
+    subsample<span class="token operator">=</span><span class="token number">0.8</span><span class="token punctuation">,</span>
+    colsample_bytree<span class="token operator">=</span><span class="token number">0.8</span><span class="token punctuation">,</span>
+    objective<span class="token operator">=</span> <span class="token string">'binary:logistic'</span><span class="token punctuation">,</span>
+    nthread<span class="token operator">=</span><span class="token number">12</span><span class="token punctuation">,</span>
+    scale_pos_weight<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span>
+    reg_lambda<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span>
+    seed<span class="token operator">=</span><span class="token number">27</span><span class="token punctuation">)</span>
+<span class="token comment"># xgb = HistGradientBoostingClassifier(learning_rate=0.09)</span>
+xgb<span class="token punctuation">.</span>fit<span class="token punctuation">(</span>x_train<span class="token punctuation">,</span> y_train<span class="token punctuation">)</span>
 
-# y_pred_xgb &#x3D; y_pred_xgb_pr &gt; 0.5
-# print(lr.coef_) #W
-# print(lr.intercept_) #b
-# 评价指标
-print(&quot;auc面积:&quot;,roc_auc_score(y_test, y_pred_xgb_pr))
-print(&quot;精确率:&quot;,precision_score(y_test, y_pred_xgb))
-print(&quot;召回率:&quot;,recall_score(y_test, y_pred_xgb))
-print(&quot;正确率:&quot;,accuracy_score(y_test, y_pred_xgb))
-print(&quot;F1值:&quot;,f1_score(y_test, y_pred_xgb))<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+y_pred_xgb <span class="token operator">=</span> xgb<span class="token punctuation">.</span>predict<span class="token punctuation">(</span>x_test<span class="token punctuation">)</span>
+
+
+y_pred_xgb_pr <span class="token operator">=</span> xgb<span class="token punctuation">.</span>predict_proba<span class="token punctuation">(</span>x_test<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">]</span>
+fpr_xgb<span class="token punctuation">,</span>tpr_xgb<span class="token punctuation">,</span>thresholds  <span class="token operator">=</span> roc_curve<span class="token punctuation">(</span>y_test<span class="token punctuation">,</span>y_pred_xgb_pr<span class="token punctuation">)</span>
+
+<span class="token comment"># y_pred_xgb = y_pred_xgb_pr > 0.5</span>
+<span class="token comment"># print(lr.coef_) #W</span>
+<span class="token comment"># print(lr.intercept_) #b</span>
+<span class="token comment"># 评价指标</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"auc面积:"</span><span class="token punctuation">,</span>roc_auc_score<span class="token punctuation">(</span>y_test<span class="token punctuation">,</span> y_pred_xgb_pr<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"精确率:"</span><span class="token punctuation">,</span>precision_score<span class="token punctuation">(</span>y_test<span class="token punctuation">,</span> y_pred_xgb<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"召回率:"</span><span class="token punctuation">,</span>recall_score<span class="token punctuation">(</span>y_test<span class="token punctuation">,</span> y_pred_xgb<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"正确率:"</span><span class="token punctuation">,</span>accuracy_score<span class="token punctuation">(</span>y_test<span class="token punctuation">,</span> y_pred_xgb<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"F1值:"</span><span class="token punctuation">,</span>f1_score<span class="token punctuation">(</span>y_test<span class="token punctuation">,</span> y_pred_xgb<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="死亡率预测">死亡率预测</h2>
 <h3 id="结果">结果</h3>
 <p>表3-3 几种机器学习方法的死亡率预测结果如下表：</p>
