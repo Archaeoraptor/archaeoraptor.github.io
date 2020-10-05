@@ -16,7 +16,7 @@
 
 <link rel="stylesheet" href="/css/main.css">
 
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto+Serif+SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
 
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
@@ -28,7 +28,7 @@
 
   <meta name="description" content="又开始了瞎折腾。话说我这种没人看的静态小破网站，真的有必要持续集成、持续部署吗？">
 <meta property="og:type" content="article">
-<meta property="og:title" content="尝试Netlify自动部署和CMS">
+<meta property="og:title" content="试用Netlify自动部署和CMS">
 <meta property="og:url" content="https://zhangjk98.xyz/e9d5/index.html">
 <meta property="og:site_name" content="止息的碎碎念">
 <meta property="og:description" content="又开始了瞎折腾。话说我这种没人看的静态小破网站，真的有必要持续集成、持续部署吗？">
@@ -54,7 +54,7 @@
   };
 </script>
 
-  <title>尝试Netlify自动部署和CMS | 止息的碎碎念</title>
+  <title>试用Netlify自动部署和CMS | 止息的碎碎念</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143393734-1"></script>
     <script>
@@ -366,7 +366,7 @@ mjx-container[display="true"] + br {
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">54</span>
+        <span class="site-state-item-count">56</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -447,7 +447,7 @@ mjx-container[display="true"] + br {
     
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          尝试Netlify自动部署和CMS
+          试用Netlify自动部署和CMS
         </h1>
 
         <div class="post-meta-container">
@@ -501,7 +501,7 @@ mjx-container[display="true"] + br {
 <p>不知道怎么都在搞CI/CD（Continuous Integration/Continuous Deployment），Github也搞了个Github Action。看了一圈感觉对于我这种半个月git commit一次备份博客的人并没有什么必要，而且不管是travis ci还是github action或netlify自己的在线build都很慢，博客东西多一点几分钟就过去了（没有特殊需求就想安安静静写个博客就不要搞这个了，本地hexo g，hexo d推到github pages或者netlify就完事了，速度还快）</p>
 <p>之前都是在本地生成，hexo g &amp;&amp; hexo d 推到Github pages，然后Netlify关联这个仓库自动拉取(好像是用的钩子吧)。备份的时候再 git commit &amp;&amp; git push 本地项目。 现在每次 git commit 备份并 git push，让Netlify从Hexo的项目直接在线 Hexo g ，按部就班授权，改仓库，改deploy命令为 hexo clean &amp;&amp; hexo generate 结果直接Deploy failed了 报错:</p>
 <pre class="line-numbers language-log" data-language="log"><code class="language-log">failed during stage &#39;preparing repo&#39;: Error checking out submodules: fatal: No url found for submodule path &#39;themes&#x2F;next&#39; in .gitmodules<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>查了一下发现是Netlify会把每一个包含.git的子目录当成是一个submodule，并且每次都要<code>git submodule update</code>一下，但是这个next主题的git仓库又没有在在我的.gitmodules配置里面设置为submodule, 那我们直接把themes/next加到.gitmodules里面就好了[^1]</p>
+<p>查了一下发现是Netlify会把每一个包含.git的子目录当成是一个submodule，并且每次都要<code>git submodule update</code>一下，但是这个next主题的git仓库又没有在在我的.gitmodules配置里面设置为submodule, 那我们直接把themes/next加到.gitmodules里面就好了<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <p>在根目录（执行hexo g &amp;&amp; hexo d的那个目录）新建<code>.gitmodules</code>写入</p>
 <pre class="line-numbers language-log" data-language="log"><code class="language-log">[submodule &quot;themes&#x2F;next&quot;]
 	path &#x3D; themes&#x2F;next
@@ -533,7 +533,7 @@ date: '2019-11-30 20:22:52'<span aria-hidden="true" class="line-numbers-rows"><s
 <p>（多说一句，Netlify官网打开是真的慢啊） 我已经踩过坑了，没有他们吹的那么好，大骗子，这个也就手机/平板写markdown和发布可以将就一下，真的都不如随身带个U盘里面装着博客工程或者markdown体验好 如果不是有多人协作之类的需求就不要乱试了（除非你真的吃饱了撑的没事干</p>
 <p>如果你还是要安装：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">yarn</span> <span class="token function">add</span> hexo-netlify-cms<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>然后在Netlify里面设置一下[^2], 开启git-gateway服务并在Snippet Injection加入一行代码</p>
+<p>然后在Netlify里面设置一下<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>, 开启git-gateway服务并在Snippet Injection加入一行代码</p>
 <pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>https://identity.netlify.com/v1/netlify-identity-widget.js<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>打开yoursite/admin就可以看到了 这个时候Settings-&gt;Identity-&gt;Registration是开放注册的，我们改成Invite only 然后在设置里面Settings-&gt;Identity-&gt;External providers里面进行Github授权或者在在identity页面发邮件邀请（是点进你的team里面identity页面输入邮件地址然后点invite users按钮，不是在设置里的identity） 由于我是白嫖用户，Indetity Level 0，什么Audit log之类的都用不了, 设置到这里基本就结束了。</p>
 <ul>
@@ -546,6 +546,13 @@ date: '2019-11-30 20:22:52'<span aria-hidden="true" class="line-numbers-rows"><s
 <p>当然netilify cms对于静态网站还是有它的意义的，不然也不会在Github有那么多star，但是对于不需要多人协作的个人博客，就别装了吧（已经装了的和不折腾不舒服斯基人士请随意）</p>
 <h2 id="参考">参考</h2>
 <p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2ppYW5ndGovaGV4by1uZXRsaWZ5LWNtcy9ibG9iL21hc3Rlci9SRUFETUUtWkgubWQ=">Hexo Netlify CMS<i class="fa fa-external-link-alt"></i></span></p>
+<section class="footnotes" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p><span class="exturl" data-url="aHR0cHM6Ly9naXQtc2NtLmNvbS9ib29rL3poL3YyL0dpdC3lt6Xlhbct5a2Q5qih5Z2X">Git 工具 - 子模块<i class="fa fa-external-link-alt"></i></span> 可能会有切换分支等其他问题<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p><span class="exturl" data-url="aHR0cHM6Ly93d3cuZG5vY20uY29tL2FydGljbGVzL2JlZWNobnV0L2hleG8tbmV0bGlmeS1jbXMv">https://www.dnocm.com/articles/beechnut/hexo-netlify-cms/<i class="fa fa-external-link-alt"></i></span><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
 
     </div>
 
