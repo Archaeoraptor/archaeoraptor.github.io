@@ -16,7 +16,7 @@
 
 <link rel="stylesheet" href="/css/main.css">
 
-<link rel="stylesheet" href="https://fonts.loli.net/css?family=Noto+Serif+SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
 
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.0/css/all.min.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
@@ -42,7 +42,7 @@
 <link rel="canonical" href="https://zhangjk98.xyz/193/">
 
 
-<script class="page-configurations">
+<script data-pjax class="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
@@ -55,7 +55,7 @@
   <title>Linux从入门到入土 | 止息的碎碎念</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143393734-1"></script>
-    <script>
+    <script data-pjax>
       if (CONFIG.hostname === location.hostname) {
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
@@ -335,7 +335,7 @@ mjx-container[display="true"] + br {
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8shell%E5%91%BD%E4%BB%A4"><span class="nav-number">1.</span> <span class="nav-text">常用Shell命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E7%8A%B6%E6%80%81"><span class="nav-number">1.1.</span> <span class="nav-text">系统状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C"><span class="nav-number">1.2.</span> <span class="nav-text">文件操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E6%89%BE"><span class="nav-number">1.3.</span> <span class="nav-text">查找</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vim%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C"><span class="nav-number">2.</span> <span class="nav-text">Vim基础操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E7%9A%84%E8%84%9A%E6%9C%AC"><span class="nav-number">2.1.</span> <span class="nav-text">简单的脚本</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8D%E5%BB%BA%E8%AE%AE%E8%BD%BB%E6%98%93%E5%B0%9D%E8%AF%95%E7%9A%84%E7%81%B5%E8%BD%A6%E6%BC%82%E7%A7%BB%E8%A1%8C%E4%B8%BA"><span class="nav-number">3.</span> <span class="nav-text">不建议轻易尝试的灵车漂移行为</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="nav-number">4.</span> <span class="nav-text">文件系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">5.</span> <span class="nav-text">其他</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%9D%E6%8C%81ssh%E8%BF%9E%E6%8E%A5%E4%B8%8D%E8%87%AA%E5%8A%A8%E9%80%80%E5%87%BA"><span class="nav-number">5.1.</span> <span class="nav-text">保持SSH连接不自动退出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E7%94%A8%E6%88%B7%E7%BB%84%E5%92%8C%E6%9D%83%E9%99%90"><span class="nav-number">5.2.</span> <span class="nav-text">设置用户组和权限</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A1%AC%E7%9B%98%E6%89%A9%E5%AE%B9%E5%92%8C%E8%BF%81%E7%A7%BB"><span class="nav-number">5.3.</span> <span class="nav-text">硬盘扩容和迁移</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%99%E5%9C%A8%E5%90%8E%E9%9D%A2%E7%9A%84%E8%AF%9D"><span class="nav-number">6.</span> <span class="nav-text">写在后面的话</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E8%8A%B1%E9%87%8C%E8%83%A1%E5%93%A8%E7%9A%84%E7%8E%A9%E6%84%8F"><span class="nav-number">7.</span> <span class="nav-text">一些花里胡哨的玩意</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E7%BD%91%E7%AB%99"><span class="nav-number">8.</span> <span class="nav-text">一些网站</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8"><span class="nav-number">9.</span> <span class="nav-text">注</span></a></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2%E7%9A%84%E8%AF%9D"><span class="nav-number">1.</span> <span class="nav-text">写在前面的话</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8shell%E5%91%BD%E4%BB%A4"><span class="nav-number">2.</span> <span class="nav-text">常用Shell命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E7%8A%B6%E6%80%81"><span class="nav-number">2.1.</span> <span class="nav-text">系统状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C"><span class="nav-number">2.2.</span> <span class="nav-text">文件操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E6%89%BE"><span class="nav-number">2.3.</span> <span class="nav-text">查找</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vim%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C"><span class="nav-number">3.</span> <span class="nav-text">Vim基础操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E7%9A%84%E8%84%9A%E6%9C%AC"><span class="nav-number">3.1.</span> <span class="nav-text">简单的脚本</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8D%E5%BB%BA%E8%AE%AE%E8%BD%BB%E6%98%93%E5%B0%9D%E8%AF%95%E7%9A%84%E7%81%B5%E8%BD%A6%E6%BC%82%E7%A7%BB%E8%A1%8C%E4%B8%BA"><span class="nav-number">4.</span> <span class="nav-text">不建议轻易尝试的灵车漂移行为</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="nav-number">5.</span> <span class="nav-text">文件系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">6.</span> <span class="nav-text">其他</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%9D%E6%8C%81ssh%E8%BF%9E%E6%8E%A5%E4%B8%8D%E8%87%AA%E5%8A%A8%E9%80%80%E5%87%BA"><span class="nav-number">6.1.</span> <span class="nav-text">保持SSH连接不自动退出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E7%94%A8%E6%88%B7%E7%BB%84%E5%92%8C%E6%9D%83%E9%99%90"><span class="nav-number">6.2.</span> <span class="nav-text">设置用户组和权限</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A1%AC%E7%9B%98%E6%89%A9%E5%AE%B9%E5%92%8C%E8%BF%81%E7%A7%BB"><span class="nav-number">6.3.</span> <span class="nav-text">硬盘扩容和迁移</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%99%E5%9C%A8%E5%90%8E%E9%9D%A2%E7%9A%84%E8%AF%9D"><span class="nav-number">7.</span> <span class="nav-text">写在后面的话</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E8%8A%B1%E9%87%8C%E8%83%A1%E5%93%A8%E7%9A%84%E7%8E%A9%E6%84%8F"><span class="nav-number">8.</span> <span class="nav-text">一些花里胡哨的玩意</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E7%BD%91%E7%AB%99%E5%92%8C%E6%96%87%E7%AB%A0"><span class="nav-number">9.</span> <span class="nav-text">一些网站和文章</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8"><span class="nav-number">10.</span> <span class="nav-text">注</span></a></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -397,7 +397,10 @@ mjx-container[display="true"] + br {
           <span class="exturl" data-url="aHR0cHM6Ly96aGFuZ3NodXFpYW8ub3Jn" title="https:&#x2F;&#x2F;zhangshuqiao.org">米米的博客</span>
         </li>
         <li class="links-of-blogroll-item">
-          <span class="exturl" data-url="aHR0cHM6Ly8yMzNoc3lzd2ViLm1sLw==" title="https:&#x2F;&#x2F;233hsysweb.ml&#x2F;">花花</span>
+          <span class="exturl" data-url="aHR0cHM6Ly8yMzNoc3lzd2ViLm1s" title="https:&#x2F;&#x2F;233hsysweb.ml">花花</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnNhbWNodS5jbg==" title="https:&#x2F;&#x2F;blog.samchu.cn">Sam'Blog</span>
         </li>
     </ul>
   </div>
@@ -467,7 +470,7 @@ mjx-container[display="true"] + br {
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-10-12 21:34:06" itemprop="dateModified" datetime="2020-10-12T21:34:06+08:00">2020-10-12</time>
+        <time title="修改时间：2020-10-18 11:07:01" itemprop="dateModified" datetime="2020-10-18T11:07:01+08:00">2020-10-18</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -503,7 +506,9 @@ mjx-container[display="true"] + br {
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>从小心翼翼到灵车漂移 <a id="more"></a> ## 写在前面的话</p>
+        <p>从小心翼翼到灵车漂移</p>
+<a id="more"></a>
+<h2 id="写在前面的话">写在前面的话</h2>
 <p>刚刚入坑Linux的时候我还迷信UINX哲学，看到别人在那<span class="exturl" data-url="aHR0cHM6Ly9zdWNrbGVzcy5vcmcvc3Vja3Mvc3lzdGVtZC8=">骂systemd<i class="fa fa-external-link-alt"></i></span>还有好有道理的样子。后来发现什么Keep it stupid Simple、去中心化在很多场景有很大的缺陷，还是systemd真香啊。linux桌面日用至今只是勉强能用的样子，wayland还是有好多软件和组件不配适，xorg又各种撕裂，不少国产软件能出个win版都烧高香了，软件生态也看不到多少希望。linux发行版本来就分裂，然后DE也五花八门，然后各种控件和面板都可以自行美化魔改，根本不可能稳定。目前比较喜欢的桌面是KDE，长期看好，虽然还是跟瘟斗士和Bug Sir差了很多。linux桌面绑一块都打不过MAC，甚至连Chrome OS都不一定能打过，还各种内斗和搞分裂。软件生态也是个无解的问题，建议大家要用各种办公软件和仿真设计软件的还是去用win和mac，不要来受这个罪。</p>
 <h2 id="常用shell命令">常用Shell命令</h2>
 <h3 id="系统状态">系统状态</h3>
@@ -709,8 +714,10 @@ mkfs.ext4 /dev/nvme0n1p1
 </tr>
 </tbody>
 </table>
-<h2 id="一些网站">一些网站</h2>
-<p><span class="exturl" data-url="aHR0cHM6Ly92aW0tY2hpbmEub3JnLw==">Vim中文社区<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9saW51eHRvb2xzLXJzdC5yZWFkdGhlZG9jcy5pby96aF9DTi9sYXRlc3QvaW5kZXguaHRtbA==">Linux工具快速教程<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9leHBsYWluc2hlbGwuY29tLw==">explainshell<i class="fa fa-external-link-alt"></i></span> 一个解释shell语句的网站</p>
+<p>ohmyzsh 广为人知的花里胡哨的东西，比bash花多了</p>
+<p>https://github.com/knqyf263/pet 一个terminal里的复制粘贴工具</p>
+<h2 id="一些网站和文章">一些网站和文章</h2>
+<p><span class="exturl" data-url="aHR0cHM6Ly92aW0tY2hpbmEub3JnLw==">Vim中文社区<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9saW51eHRvb2xzLXJzdC5yZWFkdGhlZG9jcy5pby96aF9DTi9sYXRlc3QvaW5kZXguaHRtbA==">Linux工具快速教程<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9leHBsYWluc2hlbGwuY29tLw==">explainshell<i class="fa fa-external-link-alt"></i></span> 一个shell网站 <span class="exturl" data-url="aHR0cHM6Ly9rZXJuZWxuZXdiaWVzLm9yZy9Eb2N1bWVudHM=">kernelnewbies<i class="fa fa-external-link-alt"></i></span> 好吧这其实不怎么newbie <span class="exturl" data-url="aHR0cHM6Ly9pLmxpbnV4dG95Lm9yZy9kb2NzL2d1aWRlL2NoNDkuaHRtbA==">GNOME与KDE的战争<i class="fa fa-external-link-alt"></i></span> 陈年旧事，社区的分裂</p>
 <h2 id="注">注</h2>
 <section class="footnotes" role="doc-endnotes">
 <hr />
@@ -805,8 +812,43 @@ mkfs.ext4 /dev/nvme0n1p1
 
   
   <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
 
   
 
@@ -822,7 +864,7 @@ mkfs.ext4 /dev/nvme0n1p1
 
 
 
-<script>
+<script data-pjax>
 document.querySelectorAll('.pdfobject-container').forEach(element => {
   const url = element.dataset.target;
   const pdfOpenParams = {
@@ -858,6 +900,7 @@ document.querySelectorAll('.pdfobject-container').forEach(element => {
 
 
 
+    <div class="pjax">
   
 
   
@@ -874,5 +917,6 @@ NexT.utils.loadComments('#valine-comments', () => {
 });
 </script>
 
+    </div>
 </body>
 </html>

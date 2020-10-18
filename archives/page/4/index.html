@@ -16,7 +16,7 @@
 
 <link rel="stylesheet" href="/css/main.css">
 
-<link rel="stylesheet" href="https://fonts.loli.net/css?family=Noto+Serif+SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
 
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.0/css/all.min.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
@@ -41,7 +41,7 @@
 <link rel="canonical" href="https://zhangjk98.xyz/archives/page/4/">
 
 
-<script class="page-configurations">
+<script data-pjax class="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
@@ -54,7 +54,7 @@
   <title>归档 | 止息的碎碎念</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143393734-1"></script>
-    <script>
+    <script data-pjax>
       if (CONFIG.hostname === location.hostname) {
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
@@ -395,7 +395,10 @@ mjx-container[display="true"] + br {
           <span class="exturl" data-url="aHR0cHM6Ly96aGFuZ3NodXFpYW8ub3Jn" title="https:&#x2F;&#x2F;zhangshuqiao.org">米米的博客</span>
         </li>
         <li class="links-of-blogroll-item">
-          <span class="exturl" data-url="aHR0cHM6Ly8yMzNoc3lzd2ViLm1sLw==" title="https:&#x2F;&#x2F;233hsysweb.ml&#x2F;">花花</span>
+          <span class="exturl" data-url="aHR0cHM6Ly8yMzNoc3lzd2ViLm1s" title="https:&#x2F;&#x2F;233hsysweb.ml">花花</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnNhbWNodS5jbg==" title="https:&#x2F;&#x2F;blog.samchu.cn">Sam'Blog</span>
         </li>
     </ul>
   </div>
@@ -705,8 +708,43 @@ mjx-container[display="true"] + br {
 
   
   <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
 
   
 
@@ -722,7 +760,7 @@ mjx-container[display="true"] + br {
 
 
 
-<script>
+<script data-pjax>
 document.querySelectorAll('.pdfobject-container').forEach(element => {
   const url = element.dataset.target;
   const pdfOpenParams = {
@@ -758,6 +796,7 @@ document.querySelectorAll('.pdfobject-container').forEach(element => {
 
 
 
+    <div class="pjax">
   
 
   
@@ -774,5 +813,6 @@ NexT.utils.loadComments('#valine-comments', () => {
 });
 </script>
 
+    </div>
 </body>
 </html>

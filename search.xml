@@ -601,38 +601,6 @@ poetry <span class="token function">install</span><span aria-hidden="true" class
       </tags>
   </entry>
   <entry>
-    <title>MySQL从入门到跑路</title>
-    <url>/45b9/</url>
-    <content><![CDATA[<p>用了这么久数据库，现在还只会增删查改，开个坑学学优化。 <a id="more"></a> 等待填坑</p>
-<p>这个图比较清晰</p>
-<p><img src="/45b9/db.webp" /></p>
-<p>看到clickhouse的速度很快，有空看一下</p>
-<h2 id="轻如鸿毛的sqlite">轻如鸿毛的SQLite</h2>
-<p>好东西，在性能严重受限的开发板上跑着非常舒服，反正以前我试着感觉比另一个嵌入式数据库BerkeleyDB感觉好用多了。</p>
-<p>其实我感觉很多小网站什么的，根本没必要上MySQL之类的东西，SQLite完全够了。什么存储过程啊，什么访问控制用户权限管理啊，基本上不怎么能用得到。数据量也小，那就索性连索引都不要了。 没有那一堆臃肿的东西，也没有那一堆乱七八糟的依赖。</p>
-<p>而且这个东西快啊，数据量不怎么大的情况下比MySQL快，配置也简单</p>
-<h2 id="你们这个是什么教材啊你们真的是害人不浅啊你们这个教材">你们这个是什么教材啊，你们真的是害人不浅啊你们这个教材</h2>
-<h3 id="一张大表不好吗">一张大表不好吗</h3>
-<blockquote>
-<p>范式，什么范式？</p>
-</blockquote>
-<p>课本上这个要新建一张表，那一张表，好多个表</p>
-<h3 id="隔离性">隔离性</h3>
-<p>clickhouse那么快的原因就是一定程度上破坏了隔离性</p>
-<h3 id="原子性">原子性</h3>
-<p>MySQL在5.7以后支持了json，或许是感受到了Postgres的压力。</p>
-<h2 id="好用的干活工具">好用的干活工具</h2>
-<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2RiY2xpL215Y2xp">mycli<i class="fa fa-external-link-alt"></i></span> MySQL的cli工具，能高亮和自动补全</p>
-]]></content>
-      <categories>
-        <category>笔记&amp;札记</category>
-      </categories>
-      <tags>
-        <tag>MySQL</tag>
-        <tag>Database</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>处理电子病历</title>
     <url>/81d4/</url>
     <content><![CDATA[<p>有两种鬼画符，一种是医生的字，一种是正则表达式 <a id="more"></a> 周某出狱了，而我也开始打工了，咳咳</p>
@@ -812,6 +780,38 @@ connection<span class="token punctuation">.</span>commit<span class="token punct
       </tags>
   </entry>
   <entry>
+    <title>MySQL从入门到跑路</title>
+    <url>/45b9/</url>
+    <content><![CDATA[<p>用了这么久数据库，现在还只会增删查改，开个坑学学优化。 <a id="more"></a> 等待填坑</p>
+<p>这个图比较清晰</p>
+<p><img src="/45b9/db.webp" /></p>
+<p>看到clickhouse的速度很快，有空看一下</p>
+<h2 id="轻如鸿毛的sqlite">轻如鸿毛的SQLite</h2>
+<p>好东西，在性能严重受限的开发板上跑着非常舒服，反正以前我试着感觉比另一个嵌入式数据库BerkeleyDB感觉好用多了。</p>
+<p>其实我感觉很多小网站什么的，根本没必要上MySQL之类的东西，SQLite完全够了。什么存储过程啊，什么访问控制用户权限管理啊，基本上不怎么能用得到。数据量也小，那就索性连索引都不要了。 没有那一堆臃肿的东西，也没有那一堆乱七八糟的依赖。</p>
+<p>而且这个东西快啊，数据量不怎么大的情况下比MySQL快，配置也简单</p>
+<h2 id="你们这个是什么教材啊你们真的是害人不浅啊你们这个教材">你们这个是什么教材啊，你们真的是害人不浅啊你们这个教材</h2>
+<h3 id="一张大表不好吗">一张大表不好吗</h3>
+<blockquote>
+<p>范式，什么范式？</p>
+</blockquote>
+<p>课本上这个要新建一张表，那一张表，好多个表</p>
+<h3 id="隔离性">隔离性</h3>
+<p>clickhouse那么快的原因就是一定程度上破坏了隔离性</p>
+<h3 id="原子性">原子性</h3>
+<p>MySQL在5.7以后支持了json，或许是感受到了Postgres的压力。</p>
+<h2 id="好用的干活工具">好用的干活工具</h2>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2RiY2xpL215Y2xp">mycli<i class="fa fa-external-link-alt"></i></span> MySQL的cli工具，能高亮和自动补全</p>
+]]></content>
+      <categories>
+        <category>笔记&amp;札记</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+        <tag>Database</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>数字频率计</title>
     <url>/9824/</url>
     <content><![CDATA[<p>补档 <a id="more"></a> 泥电大三下的一门叫现代电子设计综合实验的实验课搞的数字频率计，拿VHDL和C51写的，工程文件扔在<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0FyY2hhZW9yYXB0b3IvbGF0Y2hfdGVzdA==">这里<i class="fa fa-external-link-alt"></i></span>了。这门课可能是你电为数不多不太水的实验课了，反正比手抄上万字的大物实验好多了（不知道现在还抄不抄了）</p>
@@ -860,6 +860,9 @@ connection<span class="token punctuation">.</span>commit<span class="token punct
     <content><![CDATA[<p>sudo pacman -Rs win10</p>
 <a id="more"></a>
 <h2 id="镜像源">镜像源</h2>
+<p>再次更新，你电镜像源有EndeavourOS了： <span class="exturl" data-url="aHR0cDovL21pcnJvcnMudWVzdGMuY24vZW5kZWF2b3Vyb3Mv">http://mirrors.uestc.cn/endeavouros/<i class="fa fa-external-link-alt"></i></span></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">echo</span> <span class="token string">"Server = http://mirrors.tuna.tsinghua.edu.cn/endeavouros/repo/<span class="token variable">$repo</span>/<span class="token variable">$arch</span>"</span> <span class="token operator">></span> /etc/pacman.d/endeavouros-mirrorlist<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>iso镜像在<span class="exturl" data-url="aHR0cDovL21pcnJvcnMudWVzdGMuY24vZW5kZWF2b3Vyb3MvaXNvLw==">这里<i class="fa fa-external-link-alt"></i></span></p>
 <p>清华已经安排上了EndeavourOS的镜像和<span class="exturl" data-url="aHR0cHM6Ly9taXJyb3JzLnR1bmEudHNpbmdodWEuZWR1LmNuL2VuZGVhdm91cm9zL2lzby8=">iso<i class="fa fa-external-link-alt"></i></span>，可以方便的下载iso和更新EndeavourOS的包了。（或者用PT种子下载，实测速度均&gt;10Mb/s）</p>
 <p>更改<code>/etc/pacman.d/endeavouros-mirrorlist</code>中的内容，改为</p>
 <pre class="line-numbers language-config" data-language="config"><code class="language-config">## China
@@ -983,6 +986,9 @@ autorandr --save test1<span aria-hidden="true" class="line-numbers-rows"><span><
 <figure>
 <img src="/endeavouros-and-kde-setting/image-20200923222725926.png" alt="xrandr" /><figcaption aria-hidden="true">xrandr</figcaption>
 </figure>
+<h2 id="macwin10上的一些软件">Mac/win10上的一些软件</h2>
+<p><del>请阅读王垠经典博文完全用linux工作</del> 不少时候用wine还是能搞定的（如果你不在乎wine的稳定性的话），包括一些大型软件，比如PS 当然有的东西用wine体验远没有虚拟机好，拿Virtualbox或者KVM开个虚拟机是个不错的选择。或者身边有闲置安卓机用scrcpy投屏，或者KDE Connect传文件。</p>
+<p>部分国产软件开个黑果虚拟机感觉体验比windows虚拟机略好一点 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2ZveGxldC9tYWNPUy1TaW1wbGUtS1ZN">https://github.com/foxlet/macOS-Simple-KVM<i class="fa fa-external-link-alt"></i></span></p>
 <h2 id="一点闲话">一点闲话</h2>
 <p>其实我一直很期待Arch系诞生一批用户友好的桌面发行版，就像Debian那样衍生出Ubuntu、Linux Mint那样。（虽然这很不Arch）</p>
 <ol type="1">
@@ -1477,7 +1483,9 @@ Address&#x3D;211.83.111.224&#x2F;23<span aria-hidden="true" class="line-numbers-
   <entry>
     <title>Linux从入门到入土</title>
     <url>/193/</url>
-    <content><![CDATA[<p>从小心翼翼到灵车漂移 <a id="more"></a> ## 写在前面的话</p>
+    <content><![CDATA[<p>从小心翼翼到灵车漂移</p>
+<a id="more"></a>
+<h2 id="写在前面的话">写在前面的话</h2>
 <p>刚刚入坑Linux的时候我还迷信UINX哲学，看到别人在那<span class="exturl" data-url="aHR0cHM6Ly9zdWNrbGVzcy5vcmcvc3Vja3Mvc3lzdGVtZC8=">骂systemd<i class="fa fa-external-link-alt"></i></span>还有好有道理的样子。后来发现什么Keep it stupid Simple、去中心化在很多场景有很大的缺陷，还是systemd真香啊。linux桌面日用至今只是勉强能用的样子，wayland还是有好多软件和组件不配适，xorg又各种撕裂，不少国产软件能出个win版都烧高香了，软件生态也看不到多少希望。linux发行版本来就分裂，然后DE也五花八门，然后各种控件和面板都可以自行美化魔改，根本不可能稳定。目前比较喜欢的桌面是KDE，长期看好，虽然还是跟瘟斗士和Bug Sir差了很多。linux桌面绑一块都打不过MAC，甚至连Chrome OS都不一定能打过，还各种内斗和搞分裂。软件生态也是个无解的问题，建议大家要用各种办公软件和仿真设计软件的还是去用win和mac，不要来受这个罪。</p>
 <h2 id="常用shell命令">常用Shell命令</h2>
 <h3 id="系统状态">系统状态</h3>
@@ -1683,8 +1691,10 @@ mkfs.ext4 /dev/nvme0n1p1
 </tr>
 </tbody>
 </table>
-<h2 id="一些网站">一些网站</h2>
-<p><span class="exturl" data-url="aHR0cHM6Ly92aW0tY2hpbmEub3JnLw==">Vim中文社区<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9saW51eHRvb2xzLXJzdC5yZWFkdGhlZG9jcy5pby96aF9DTi9sYXRlc3QvaW5kZXguaHRtbA==">Linux工具快速教程<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9leHBsYWluc2hlbGwuY29tLw==">explainshell<i class="fa fa-external-link-alt"></i></span> 一个解释shell语句的网站</p>
+<p>ohmyzsh 广为人知的花里胡哨的东西，比bash花多了</p>
+<p>https://github.com/knqyf263/pet 一个terminal里的复制粘贴工具</p>
+<h2 id="一些网站和文章">一些网站和文章</h2>
+<p><span class="exturl" data-url="aHR0cHM6Ly92aW0tY2hpbmEub3JnLw==">Vim中文社区<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9saW51eHRvb2xzLXJzdC5yZWFkdGhlZG9jcy5pby96aF9DTi9sYXRlc3QvaW5kZXguaHRtbA==">Linux工具快速教程<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9leHBsYWluc2hlbGwuY29tLw==">explainshell<i class="fa fa-external-link-alt"></i></span> 一个shell网站 <span class="exturl" data-url="aHR0cHM6Ly9rZXJuZWxuZXdiaWVzLm9yZy9Eb2N1bWVudHM=">kernelnewbies<i class="fa fa-external-link-alt"></i></span> 好吧这其实不怎么newbie <span class="exturl" data-url="aHR0cHM6Ly9pLmxpbnV4dG95Lm9yZy9kb2NzL2d1aWRlL2NoNDkuaHRtbA==">GNOME与KDE的战争<i class="fa fa-external-link-alt"></i></span> 陈年旧事，社区的分裂</p>
 <h2 id="注">注</h2>
 <section class="footnotes" role="doc-endnotes">
 <hr />
@@ -1704,7 +1714,9 @@ mkfs.ext4 /dev/nvme0n1p1
   <entry>
     <title>数学知识补习</title>
     <url>/0/</url>
-    <content><![CDATA[<p>数理基础太差，被关了起来 <img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/found.png" alt="Picture" style="zoom:40%;"> <a id="more"></a> ## 矩阵</p>
+    <content><![CDATA[<p>数理基础太差，被关了起来 <img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/found.png" alt="Picture" style="zoom:40%;"></p>
+<a id="more"></a>
+<h2 id="矩阵">矩阵</h2>
 <h3 id="雅可比矩阵">雅可比矩阵</h3>
 <p>将梯度记为沿各坐标轴偏导的一组坐标,可以表示成向量形式</p>
 <p><span class="math display"><mjx-container class="MathJax" jax="SVG" display="true"><svg style="vertical-align: -6.51ex" xmlns="http://www.w3.org/2000/svg" width="13.049ex" height="14.152ex" role="img" focusable="false" viewBox="0 -3377.5 5767.6 6255"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><g data-mml-node="math"><g data-mml-node="mfrac"><g data-mml-node="mrow" transform="translate(261, 676)"><g data-mml-node="mi"><path data-c="1D715" d="M202 508Q179 508 169 520T158 547Q158 557 164 577T185 624T230 675T301 710L333 715H345Q378 715 384 714Q447 703 489 661T549 568T566 457Q566 362 519 240T402 53Q321 -22 223 -22Q123 -22 73 56Q42 102 42 148V159Q42 276 129 370T322 465Q383 465 414 434T455 367L458 378Q478 461 478 515Q478 603 437 639T344 676Q266 676 223 612Q264 606 264 572Q264 547 246 528T202 508ZM430 306Q430 372 401 400T333 428Q270 428 222 382Q197 354 183 323T150 221Q132 149 132 116Q132 21 232 21Q244 21 250 22Q327 35 374 112Q389 137 409 196T430 306Z"></path></g><g data-mml-node="mi" transform="translate(566, 0)"><path data-c="1D466" d="M21 287Q21 301 36 335T84 406T158 442Q199 442 224 419T250 355Q248 336 247 334Q247 331 231 288T198 191T182 105Q182 62 196 45T238 27Q261 27 281 38T312 61T339 94Q339 95 344 114T358 173T377 247Q415 397 419 404Q432 431 462 431Q475 431 483 424T494 412T496 403Q496 390 447 193T391 -23Q363 -106 294 -155T156 -205Q111 -205 77 -183T43 -117Q43 -95 50 -80T69 -58T89 -48T106 -45Q150 -45 150 -87Q150 -107 138 -122T115 -142T102 -147L99 -148Q101 -153 118 -160T152 -167H160Q177 -167 186 -165Q219 -156 247 -127T290 -65T313 -9T321 21L315 17Q309 13 296 6T270 -6Q250 -11 231 -11Q185 -11 150 11T104 82Q103 89 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path></g></g><g data-mml-node="mrow" transform="translate(220, -686)"><g data-mml-node="mi"><path data-c="1D715" d="M202 508Q179 508 169 520T158 547Q158 557 164 577T185 624T230 675T301 710L333 715H345Q378 715 384 714Q447 703 489 661T549 568T566 457Q566 362 519 240T402 53Q321 -22 223 -22Q123 -22 73 56Q42 102 42 148V159Q42 276 129 370T322 465Q383 465 414 434T455 367L458 378Q478 461 478 515Q478 603 437 639T344 676Q266 676 223 612Q264 606 264 572Q264 547 246 528T202 508ZM430 306Q430 372 401 400T333 428Q270 428 222 382Q197 354 183 323T150 221Q132 149 132 116Q132 21 232 21Q244 21 250 22Q327 35 374 112Q389 137 409 196T430 306Z"></path></g><g data-mml-node="mi" transform="translate(566, 0)"><path data-c="1D465" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path></g></g><rect width="1338" height="60" x="120" y="220"></rect></g><g data-mml-node="mo" transform="translate(1855.8, 0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mrow" transform="translate(2911.6, 0)"><g data-mml-node="mo"><path data-c="23A1" d="M319 -645V1154H666V1070H403V-645H319Z" transform="translate(0, 2223.5)"></path><path data-c="23A3" d="M319 -644V1155H403V-560H666V-644H319Z" transform="translate(0, -2233.5)"></path><svg width="667" height="2857" y="-1178.5" x="0" viewBox="0 714.3 667 2857"><path data-c="23A2" d="M319 0V602H403V0H319Z" transform="scale(1, 7.119)"></path></svg></g><g data-mml-node="mtable" transform="translate(667, 0)"><g data-mml-node="mtr" transform="translate(0, 2387)"><g data-mml-node="mtd" transform="translate(25, 0)"><g data-mml-node="mfrac"><g data-mml-node="mrow" transform="translate(220, 485) scale(0.707)"><g data-mml-node="mi"><path data-c="1D715" d="M202 508Q179 508 169 520T158 547Q158 557 164 577T185 624T230 675T301 710L333 715H345Q378 715 384 714Q447 703 489 661T549 568T566 457Q566 362 519 240T402 53Q321 -22 223 -22Q123 -22 73 56Q42 102 42 148V159Q42 276 129 370T322 465Q383 465 414 434T455 367L458 378Q478 461 478 515Q478 603 437 639T344 676Q266 676 223 612Q264 606 264 572Q264 547 246 528T202 508ZM430 306Q430 372 401 400T333 428Q270 428 222 382Q197 354 183 323T150 221Q132 149 132 116Q132 21 232 21Q244 21 250 22Q327 35 374 112Q389 137 409 196T430 306Z"></path></g><g data-mml-node="msub" transform="translate(566, 0)"><g data-mml-node="mi"><path data-c="1D466" d="M21 287Q21 301 36 335T84 406T158 442Q199 442 224 419T250 355Q248 336 247 334Q247 331 231 288T198 191T182 105Q182 62 196 45T238 27Q261 27 281 38T312 61T339 94Q339 95 344 114T358 173T377 247Q415 397 419 404Q432 431 462 431Q475 431 483 424T494 412T496 403Q496 390 447 193T391 -23Q363 -106 294 -155T156 -205Q111 -205 77 -183T43 -117Q43 -95 50 -80T69 -58T89 -48T106 -45Q150 -45 150 -87Q150 -107 138 -122T115 -142T102 -147L99 -148Q101 -153 118 -160T152 -167H160Q177 -167 186 -165Q219 -156 247 -127T290 -65T313 -9T321 21L315 17Q309 13 296 6T270 -6Q250 -11 231 -11Q185 -11 150 11T104 82Q103 89 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mn" transform="translate(490, -150) scale(0.707)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g></g></g><g data-mml-node="mrow" transform="translate(333.7, -345.6) scale(0.707)"><g data-mml-node="mi"><path data-c="1D715" d="M202 508Q179 508 169 520T158 547Q158 557 164 577T185 624T230 675T301 710L333 715H345Q378 715 384 714Q447 703 489 661T549 568T566 457Q566 362 519 240T402 53Q321 -22 223 -22Q123 -22 73 56Q42 102 42 148V159Q42 276 129 370T322 465Q383 465 414 434T455 367L458 378Q478 461 478 515Q478 603 437 639T344 676Q266 676 223 612Q264 606 264 572Q264 547 246 528T202 508ZM430 306Q430 372 401 400T333 428Q270 428 222 382Q197 354 183 323T150 221Q132 149 132 116Q132 21 232 21Q244 21 250 22Q327 35 374 112Q389 137 409 196T430 306Z"></path></g><g data-mml-node="mi" transform="translate(566, 0)"><path data-c="1D465" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path></g></g><rect width="1232.1" height="60" x="120" y="220"></rect></g></g></g><g data-mml-node="mtr" transform="translate(0, 635.3)"><g data-mml-node="mtd" transform="translate(25, 0)"><g data-mml-node="mfrac"><g data-mml-node="mrow" transform="translate(220, 485) scale(0.707)"><g data-mml-node="mi"><path data-c="1D715" d="M202 508Q179 508 169 520T158 547Q158 557 164 577T185 624T230 675T301 710L333 715H345Q378 715 384 714Q447 703 489 661T549 568T566 457Q566 362 519 240T402 53Q321 -22 223 -22Q123 -22 73 56Q42 102 42 148V159Q42 276 129 370T322 465Q383 465 414 434T455 367L458 378Q478 461 478 515Q478 603 437 639T344 676Q266 676 223 612Q264 606 264 572Q264 547 246 528T202 508ZM430 306Q430 372 401 400T333 428Q270 428 222 382Q197 354 183 323T150 221Q132 149 132 116Q132 21 232 21Q244 21 250 22Q327 35 374 112Q389 137 409 196T430 306Z"></path></g><g data-mml-node="msub" transform="translate(566, 0)"><g data-mml-node="mi"><path data-c="1D466" d="M21 287Q21 301 36 335T84 406T158 442Q199 442 224 419T250 355Q248 336 247 334Q247 331 231 288T198 191T182 105Q182 62 196 45T238 27Q261 27 281 38T312 61T339 94Q339 95 344 114T358 173T377 247Q415 397 419 404Q432 431 462 431Q475 431 483 424T494 412T496 403Q496 390 447 193T391 -23Q363 -106 294 -155T156 -205Q111 -205 77 -183T43 -117Q43 -95 50 -80T69 -58T89 -48T106 -45Q150 -45 150 -87Q150 -107 138 -122T115 -142T102 -147L99 -148Q101 -153 118 -160T152 -167H160Q177 -167 186 -165Q219 -156 247 -127T290 -65T313 -9T321 21L315 17Q309 13 296 6T270 -6Q250 -11 231 -11Q185 -11 150 11T104 82Q103 89 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mn" transform="translate(490, -150) scale(0.707)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g></g><g data-mml-node="mrow" transform="translate(333.7, -345.6) scale(0.707)"><g data-mml-node="mi"><path data-c="1D715" d="M202 508Q179 508 169 520T158 547Q158 557 164 577T185 624T230 675T301 710L333 715H345Q378 715 384 714Q447 703 489 661T549 568T566 457Q566 362 519 240T402 53Q321 -22 223 -22Q123 -22 73 56Q42 102 42 148V159Q42 276 129 370T322 465Q383 465 414 434T455 367L458 378Q478 461 478 515Q478 603 437 639T344 676Q266 676 223 612Q264 606 264 572Q264 547 246 528T202 508ZM430 306Q430 372 401 400T333 428Q270 428 222 382Q197 354 183 323T150 221Q132 149 132 116Q132 21 232 21Q244 21 250 22Q327 35 374 112Q389 137 409 196T430 306Z"></path></g><g data-mml-node="mi" transform="translate(566, 0)"><path data-c="1D465" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path></g></g><rect width="1232.1" height="60" x="120" y="220"></rect></g></g></g><g data-mml-node="mtr" transform="translate(0, -875.8)"><g data-mml-node="mtd" transform="translate(177.4, 0)"><g data-mml-node="mo"><path data-c="2E" d="M78 60Q78 84 95 102T138 120Q162 120 180 104T199 61Q199 36 182 18T139 0T96 17T78 60Z"></path></g><g data-mml-node="mo" transform="translate(444.7, 0)"><path data-c="2E" d="M78 60Q78 84 95 102T138 120Q162 120 180 104T199 61Q199 36 182 18T139 0T96 17T78 60Z"></path></g><g data-mml-node="mo" transform="translate(889.3, 0)"><path data-c="2E" d="M78 60Q78 84 95 102T138 120Q162 120 180 104T199 61Q199 36 182 18T139 0T96 17T78 60Z"></path></g></g></g><g data-mml-node="mtr" transform="translate(0, -2516.4)"><g data-mml-node="mtd"><g data-mml-node="mfrac"><g data-mml-node="mrow" transform="translate(220, 485) scale(0.707)"><g data-mml-node="mi"><path data-c="1D715" d="M202 508Q179 508 169 520T158 547Q158 557 164 577T185 624T230 675T301 710L333 715H345Q378 715 384 714Q447 703 489 661T549 568T566 457Q566 362 519 240T402 53Q321 -22 223 -22Q123 -22 73 56Q42 102 42 148V159Q42 276 129 370T322 465Q383 465 414 434T455 367L458 378Q478 461 478 515Q478 603 437 639T344 676Q266 676 223 612Q264 606 264 572Q264 547 246 528T202 508ZM430 306Q430 372 401 400T333 428Q270 428 222 382Q197 354 183 323T150 221Q132 149 132 116Q132 21 232 21Q244 21 250 22Q327 35 374 112Q389 137 409 196T430 306Z"></path></g><g data-mml-node="msub" transform="translate(566, 0)"><g data-mml-node="mi"><path data-c="1D466" d="M21 287Q21 301 36 335T84 406T158 442Q199 442 224 419T250 355Q248 336 247 334Q247 331 231 288T198 191T182 105Q182 62 196 45T238 27Q261 27 281 38T312 61T339 94Q339 95 344 114T358 173T377 247Q415 397 419 404Q432 431 462 431Q475 431 483 424T494 412T496 403Q496 390 447 193T391 -23Q363 -106 294 -155T156 -205Q111 -205 77 -183T43 -117Q43 -95 50 -80T69 -58T89 -48T106 -45Q150 -45 150 -87Q150 -107 138 -122T115 -142T102 -147L99 -148Q101 -153 118 -160T152 -167H160Q177 -167 186 -165Q219 -156 247 -127T290 -65T313 -9T321 21L315 17Q309 13 296 6T270 -6Q250 -11 231 -11Q185 -11 150 11T104 82Q103 89 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(490, -150) scale(0.707)"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g></g></g><g data-mml-node="mrow" transform="translate(358.7, -345.6) scale(0.707)"><g data-mml-node="mi"><path data-c="1D715" d="M202 508Q179 508 169 520T158 547Q158 557 164 577T185 624T230 675T301 710L333 715H345Q378 715 384 714Q447 703 489 661T549 568T566 457Q566 362 519 240T402 53Q321 -22 223 -22Q123 -22 73 56Q42 102 42 148V159Q42 276 129 370T322 465Q383 465 414 434T455 367L458 378Q478 461 478 515Q478 603 437 639T344 676Q266 676 223 612Q264 606 264 572Q264 547 246 528T202 508ZM430 306Q430 372 401 400T333 428Q270 428 222 382Q197 354 183 323T150 221Q132 149 132 116Q132 21 232 21Q244 21 250 22Q327 35 374 112Q389 137 409 196T430 306Z"></path></g><g data-mml-node="mi" transform="translate(566, 0)"><path data-c="1D465" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path></g></g><rect width="1282.1" height="60" x="120" y="220"></rect></g></g></g></g><g data-mml-node="mo" transform="translate(2189.1, 0)"><path data-c="23A4" d="M0 1070V1154H347V-645H263V1070H0Z" transform="translate(0, 2223.5)"></path><path data-c="23A6" d="M263 -560V1155H347V-644H0V-560H263Z" transform="translate(0, -2233.5)"></path><svg width="667" height="2857" y="-1178.5" x="0" viewBox="0 714.3 667 2857"><path data-c="23A5" d="M263 0V602H347V0H263Z" transform="scale(1, 7.119)"></path></svg></g></g></g></g></svg></mjx-container></span></p>
@@ -2148,26 +2160,28 @@ Host Server
   <entry>
     <title>正则表达式笔记</title>
     <url>/96cd/</url>
-    <content><![CDATA[<p>可能用得到 <a id="more"></a> #### 用法</p>
-<h5 id="防止过度匹配">防止过度匹配</h5>
+    <content><![CDATA[<p>可能用得到</p>
+<a id="more"></a>
+<h2 id="用法">用法</h2>
+<h3 id="防止过度匹配">防止过度匹配</h3>
 <p>使用? 比如</p>
-<pre><code>* 改为 *?
+<pre class="line-numbers language-none"><code class="language-none">* 改为 *?
 
 匹配\&lt;b\&gt;标签:
 
-&lt;[Bb]&gt;.*?&lt;/[Bb]&gt;</code></pre>
-<h5 id="单词边界">单词边界</h5>
+&lt;[Bb]&gt;.*?&lt;/[Bb]&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="单词边界">单词边界</h3>
 <p>使用不匹配边界使用,比如  匹配字符串使用^元字符</p>
-<h5 id="子表达式">子表达式</h5>
+<h3 id="子表达式">子表达式</h3>
 <p>使用(),例如</p>
-<pre><code>(&amp;nbsp;){2,}</code></pre>
+<pre class="line-numbers language-regex" data-language="regex"><code class="language-regex"><span class="token group punctuation">(</span>&amp;nbsp;<span class="token group punctuation">)</span><span class="token quantifier number">{2,}</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>匹配两个非换行空格</p>
-<h5 id="回溯引用">回溯引用</h5>
+<h3 id="回溯引用">回溯引用</h3>
 <p>使用\1, 匹配一对html标签:</p>
 <pre><code>\&lt;H1&gt;\&lt;/H1&gt;使用
 &lt;Hh([1-6])&gt;.*?&lt;/[Hh]\1&gt; 匹配</code></pre>
 <p>替换中也会用到\1 使用python的re库可以完成一些替换</p>
-<pre><code>re.sub(pattern, repl, string, count=0, flags=0)</code></pre>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">re<span class="token punctuation">.</span>sub<span class="token punctuation">(</span>pattern<span class="token punctuation">,</span> repl<span class="token punctuation">,</span> string<span class="token punctuation">,</span> count<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span> flags<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>这里重新排版电话号码</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> re
 
@@ -2177,24 +2191,28 @@ phone <span class="token operator">=</span> <span class="token string">"123-456-
 num <span class="token operator">=</span> re<span class="token punctuation">.</span>sub<span class="token punctuation">(</span><span class="token string">r"(\d{3})(-)(\d{3})(-)(\d{4})"</span><span class="token punctuation">,</span> <span class="token string">r"(\1) \3-\5"</span><span class="token punctuation">,</span> phone<span class="token punctuation">)</span>
 <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"phone-number: "</span><span class="token punctuation">,</span> num<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>结果</p>
-<pre><code>phone-number:  (123) 456-7891</code></pre>
-<h5 id="前向查找">前向查找</h5>
+<pre class="line-numbers language-none"><code class="language-none">phone-number:  (123) 456-7891<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="前向查找">前向查找</h3>
 <p>使用?=进行前向查找,?&lt;=向后查找</p>
 <p>比如,从<code>https://zhangjk98.xyz/</code>中找出协议https:</p>
-<pre><code>.+(?=:)</code></pre>
-<h4 id="一些坑">一些坑</h4>
+<pre class="line-numbers language-none"><code class="language-none">.+(?=:)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h2 id="实例">实例</h2>
+<p>比如下面这个匹配邮箱的正则 https://regex101.com/library/lP7vL3</p>
+<pre class="line-numbers language-none"><code class="language-none">(?:(?:\r\n)?[\t])*(?:(?:(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[\t]))*"(?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[\t]))*"(?:(?:\r\n)?[\t])*))*@(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*|(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[\t]))*"(?:(?:\r\n)?[\t])*)*\&lt;(?:(?:\r\n)?[\t])*(?:@(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*(?:,@(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*)*:(?:(?:\r\n)?[\t])*)?(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[\t]))*"(?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[\t]))*"(?:(?:\r\n)?[\t])*))*@(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*\&gt;(?:(?:\r\n)?[\t])*)|(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[\t]))*"(?:(?:\r\n)?[\t])*)*:(?:(?:\r\n)?[\t])*(?:(?:(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[\t]))*"(?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[\t]))*"(?:(?:\r\n)?[\t])*))*@(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*|(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[\t]))*"(?:(?:\r\n)?[\t])*)*\&lt;(?:(?:\r\n)?[\t])*(?:@(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*(?:,@(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*)*:(?:(?:\r\n)?[\t])*)?(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[\t]))*"(?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[\t]))*"(?:(?:\r\n)?[\t])*))*@(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*\&gt;(?:(?:\r\n)?[\t])*)(?:,\s*(?:(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[\t]))*"(?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[\t]))*"(?:(?:\r\n)?[\t])*))*@(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*|(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[\t]))*"(?:(?:\r\n)?[\t])*)*\&lt;(?:(?:\r\n)?[\t])*(?:@(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*(?:,@(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*)*:(?:(?:\r\n)?[\t])*)?(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[\t]))*"(?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[\t]))*"(?:(?:\r\n)?[\t])*))*@(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*\&gt;(?:(?:\r\n)?[\t])*))*)?;\s*)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>我反正看不懂</p>
+<h2 id="一些坑">一些坑</h2>
 <ol type="1">
 <li>很多支持正则表达式的地方差异很大，有的甚至不支持完整的正则表达式，比如linux命令中grep，只支持Basic RegEx，像<code>? + () |</code>这种元字符全都不支持，需要用<code>-e</code>或<code>-P</code>参数使用扩展的正则或直接用Perl正则。Vim里面的正则也自己搞了一套，跟别的不太一样</li>
 <li>win下面的空格和换行和linux下面不一样</li>
 <li>懒惰匹配基本大部分正则库都是向后的，双向的懒惰匹配并没法用，比如<code>&lt;p&gt;.*?主诉.*?&lt;/p&gt;</code>并不能找出包含主诉的段落，实际上会找出从第一个p到包含主诉那个段落结束</li>
 </ol>
-<h4 id="参考">参考</h4>
+<h2 id="参考">参考</h2>
 <ol type="1">
 <li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3ppaXNoYW5lZC9sZWFybi1yZWdleC9ibG9iL21hc3Rlci90cmFuc2xhdGlvbnMvUkVBRE1FLWNuLm1k">https://github.com/ziishaned/learn-regex/blob/master/translations/README-cn.md<i class="fa fa-external-link-alt"></i></span> 一个简短教程</li>
 <li><span class="exturl" data-url="aHR0cHM6Ly9yZWdleDEwMS5jb20v">https://regex101.com/<i class="fa fa-external-link-alt"></i></span> 在线练习和测试网站</li>
 <li><span class="exturl" data-url="aHR0cHM6Ly9yZWdleHIuY29tLw==">https://regexr.com/<i class="fa fa-external-link-alt"></i></span> 另一个网站，感觉功能比上面那个强，但只支持javascript和php</li>
 </ol>
-<h4 id="其他">其他</h4>
+<h2 id="其他">其他</h2>
 <p>等待填坑</p>
 ]]></content>
       <categories>
@@ -2485,18 +2503,19 @@ r <span class="token operator">=</span> requests<span class="token punctuation">
   <entry>
     <title>网上冲浪指北</title>
     <url>/87d6/</url>
-    <content><![CDATA[<p>欢 度 国 庆 <a id="more"></a> ## 近况</p>
+    <content><![CDATA[<p>欢 度 国 庆 <a id="more"></a></p>
+<h2 id="近况">近况</h2>
 <p>听说9月16号风雨交加,电闪雷鸣，好多梯子集体。AWS的ip据说都被封了一批。 使用v2ray的我依然苟活，我这一阵使用体验是，ws+tls+cdn是最稳的。嫌麻烦可以直接ws，反正不建议v2ray用http伪装了，容易被制裁。最近我的MTproto也挂了，貌似最近telegram的专用代理被针对得很厉害。 另外建议避开美日港等线路。 备用应急找几个还勉强能用的备着，比如setup v某n</p>
 <p>更新,kcptun,mkcp,finalspeed . GIA线路最好不要用。 最近ss和ssr大面积爆破，v2ray还能苟，不行直接上trojan。 使用aes加密基本都被搞，好像是ssr有混淆，墙无法识别，直接封。 祝你ping安</p>
 <p>还是要保持优良传统,努力学习<del>元件耦合</del>计算机网络: &gt;大一的电路分析老师曾说过：“在文化大革命的时候，国家曾封锁电台。我们的同学们啊用自己的器件组装了一个电台，他能覆盖整个四川地区甚至云南和贵州也能收到。于是四川人民天天就听着成电广播，后来这事闹大了，办电台的同学要被批斗，还是周总理亲自来把这事压下去了。能做出那么好的电台，是元件耦合做得好，同学们，可见元件耦合有多么重要啊！”</p>
-<p>另，移动网经常搞些dns劫持之类的动作，会造成一些干扰，我们参照这个配置https://github.com/v2ray/v2ray-core/issues/1808 改一下服务器dns配置：</p>
-<pre><code>&quot;dns&quot;: &#123;
-&quot;server&quot;: [
-&quot;8.8.8.8&quot;,
-&quot;1.1.1.1&quot;,
-&quot;localhost&quot;
-]
-&#125;,</code></pre>
+<p>另，移动网经常搞些dns劫持之类的动作，会造成一些干扰，我们参照这个配置 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3YycmF5L3YycmF5LWNvcmUvaXNzdWVzLzE4MDg=">https://github.com/v2ray/v2ray-core/issues/1808<i class="fa fa-external-link-alt"></i></span> 改一下服务器dns配置：</p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token property">"dns"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+<span class="token property">"server"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+<span class="token string">"8.8.8.8"</span><span class="token punctuation">,</span>
+<span class="token string">"1.1.1.1"</span><span class="token punctuation">,</span>
+<span class="token string">"localhost"</span>
+<span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">,</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>其实这个时候可以直接上dnscrypt解决问题</p>
 <p>另外, v2ray的服务器和本地的时间一定要记得用ntp同步一下,不然两边时间不一样也会拒绝连接的</p>
 <h2 id="trojan的方案">Trojan的方案</h2>
@@ -2505,8 +2524,10 @@ r <span class="token operator">=</span> requests<span class="token punctuation">
 <h2 id="更新">更新</h2>
 <p>最近<span class="exturl" data-url="aHR0cHM6Ly9maWxlcy5jYXRib3gubW9lL3ZtemowNC5wZGY=">基于长短期记忆网络的V2ray流量识别方法<i class="fa fa-external-link-alt"></i></span>好像在微博等地引起了小小的恐慌。这个大概就是解包后上神经网络之类的，和之前的一篇 <span class="exturl" data-url="aHR0cHM6Ly9pZWVleHBsb3JlLmllZWUub3JnL2RvY3VtZW50LzgwNDgxMTY=">https://ieeexplore.ieee.org/document/8048116<i class="fa fa-external-link-alt"></i></span> 步骤、程序都是一样的，就把随机森林换成了k近邻，高度怀疑是水论文。这个也就针对一下vmess、tcp，tls估计搞不定。</p>
 <p>不过v2ray作者弃坑几个月了，不知道近况如何</p>
+<h3 id="最后还是选择了机场">最后还是选择了机场</h3>
+<p>现在性价比还是机场最高，同样是每月5美元机场大概能提供远高于自建的速度和线路选择（还有很多Netflix线路和低延迟节点）。</p>
 <h3 id="移动dns投毒解决方案2019">移动DNS投毒解决方案2019</h3>
-<p>使用Pcap_DNSProxy, 先下载<span class="exturl" data-url="aHR0cHM6Ly9ubWFwLm9yZy9kb3dubG9hZC5odG1s">nmap<i class="fa fa-external-link-alt"></i></span>再选winpcap兼容模式安装,再下载Pcap_DNSProxy安装时可能需要管理员权限。然后在网卡设定 DNS 解析为 127.0.0.1 (IPv4) 和 ::1 (IPv6) 。（适合电脑上折腾，有条件还是直接折腾路由器。） 详情参考<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2NoZW5ncjI4L1BjYXBfRE5TUHJveHkvdHJlZS9tYXN0ZXIvRG9jdW1lbnRz">https://github.com/chengr28/Pcap_DNSProxy/tree/master/Documents<i class="fa fa-external-link-alt"></i></span> 以及&lt;https://blog.bgme.me/posts/some-ideas-about-anti-pollution-dns-server</p>
+<p>使用Pcap_DNSProxy, 先下载<span class="exturl" data-url="aHR0cHM6Ly9ubWFwLm9yZy9kb3dubG9hZC5odG1s">nmap<i class="fa fa-external-link-alt"></i></span>再选winpcap兼容模式安装,再下载Pcap_DNSProxy安装时可能需要管理员权限。然后在网卡设定 DNS 解析为 127.0.0.1 (IPv4) 和 ::1 (IPv6) 。（适合电脑上折腾，有条件还是直接折腾路由器。） 详情参考<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2NoZW5ncjI4L1BjYXBfRE5TUHJveHkvdHJlZS9tYXN0ZXIvRG9jdW1lbnRz">https://github.com/chengr28/Pcap_DNSProxy/tree/master/Documents<i class="fa fa-external-link-alt"></i></span> 以及<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmJnbWUubWUvcG9zdHMvc29tZS1pZGVhcy1hYm91dC1hbnRpLXBvbGx1dGlvbi1kbnMtc2VydmVy">https://blog.bgme.me/posts/some-ideas-about-anti-pollution-dns-server<i class="fa fa-external-link-alt"></i></span></p>
 <h3 id="更换vps厂商为hostwinds更换websocket协议为http2">更换VPS厂商为hostwinds,更换websocket协议为HTTP2</h3>
 <p>决定把vultr换成速度更快的hostwinds，世界加钱可及（并没有钱搞Google Fi之类的物理穿越） hostwinds选项有VPS和cloud，cloud是按小时收费的，这个价位当然也不是aws或google cloud那种真正的云主机，问了下客服，答复如下：</p>
 <p>The Difference Between VPS &amp; cloud There is no difference other than the name. The VPSs come with more of a preconfigured set up, Linux/Windows, managed/unmanaged, etc, where the Cloud would start as an unmanaged Linux VPS that you can add additional set up to.</p>

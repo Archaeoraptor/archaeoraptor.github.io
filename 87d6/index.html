@@ -16,7 +16,7 @@
 
 <link rel="stylesheet" href="/css/main.css">
 
-<link rel="stylesheet" href="https://fonts.loli.net/css?family=Noto+Serif+SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
 
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.0/css/all.min.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
@@ -44,7 +44,7 @@
 <link rel="canonical" href="https://zhangjk98.xyz/87d6/">
 
 
-<script class="page-configurations">
+<script data-pjax class="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
@@ -57,7 +57,7 @@
   <title>网上冲浪指北 | 止息的碎碎念</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143393734-1"></script>
-    <script>
+    <script data-pjax>
       if (CONFIG.hostname === location.hostname) {
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
@@ -337,7 +337,7 @@ mjx-container[display="true"] + br {
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#trojan%E7%9A%84%E6%96%B9%E6%A1%88"><span class="nav-number">1.</span> <span class="nav-text">Trojan的方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0"><span class="nav-number">2.</span> <span class="nav-text">更新</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8dns%E6%8A%95%E6%AF%92%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%882019"><span class="nav-number">2.1.</span> <span class="nav-text">移动DNS投毒解决方案2019</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E6%8D%A2vps%E5%8E%82%E5%95%86%E4%B8%BAhostwinds%E6%9B%B4%E6%8D%A2websocket%E5%8D%8F%E8%AE%AE%E4%B8%BAhttp2"><span class="nav-number">2.2.</span> <span class="nav-text">更换VPS厂商为hostwinds,更换websocket协议为HTTP2</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%8E%A8%E8%8D%90"><span class="nav-number">3.</span> <span class="nav-text">配置推荐</span></a></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%91%E5%86%B5"><span class="nav-number">1.</span> <span class="nav-text">近况</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#trojan%E7%9A%84%E6%96%B9%E6%A1%88"><span class="nav-number">2.</span> <span class="nav-text">Trojan的方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0"><span class="nav-number">3.</span> <span class="nav-text">更新</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E5%90%8E%E8%BF%98%E6%98%AF%E9%80%89%E6%8B%A9%E4%BA%86%E6%9C%BA%E5%9C%BA"><span class="nav-number">3.1.</span> <span class="nav-text">最后还是选择了机场</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8dns%E6%8A%95%E6%AF%92%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%882019"><span class="nav-number">3.2.</span> <span class="nav-text">移动DNS投毒解决方案2019</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E6%8D%A2vps%E5%8E%82%E5%95%86%E4%B8%BAhostwinds%E6%9B%B4%E6%8D%A2websocket%E5%8D%8F%E8%AE%AE%E4%B8%BAhttp2"><span class="nav-number">3.3.</span> <span class="nav-text">更换VPS厂商为hostwinds,更换websocket协议为HTTP2</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%8E%A8%E8%8D%90"><span class="nav-number">4.</span> <span class="nav-text">配置推荐</span></a></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -399,7 +399,10 @@ mjx-container[display="true"] + br {
           <span class="exturl" data-url="aHR0cHM6Ly96aGFuZ3NodXFpYW8ub3Jn" title="https:&#x2F;&#x2F;zhangshuqiao.org">米米的博客</span>
         </li>
         <li class="links-of-blogroll-item">
-          <span class="exturl" data-url="aHR0cHM6Ly8yMzNoc3lzd2ViLm1sLw==" title="https:&#x2F;&#x2F;233hsysweb.ml&#x2F;">花花</span>
+          <span class="exturl" data-url="aHR0cHM6Ly8yMzNoc3lzd2ViLm1s" title="https:&#x2F;&#x2F;233hsysweb.ml">花花</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnNhbWNodS5jbg==" title="https:&#x2F;&#x2F;blog.samchu.cn">Sam'Blog</span>
         </li>
     </ul>
   </div>
@@ -469,7 +472,7 @@ mjx-container[display="true"] + br {
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-10-12 21:34:06" itemprop="dateModified" datetime="2020-10-12T21:34:06+08:00">2020-10-12</time>
+        <time title="修改时间：2020-10-18 11:07:01" itemprop="dateModified" datetime="2020-10-18T11:07:01+08:00">2020-10-18</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -505,18 +508,19 @@ mjx-container[display="true"] + br {
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>欢 度 国 庆 <a id="more"></a> ## 近况</p>
+        <p>欢 度 国 庆 <a id="more"></a></p>
+<h2 id="近况">近况</h2>
 <p>听说9月16号风雨交加,电闪雷鸣，好多梯子集体。AWS的ip据说都被封了一批。 使用v2ray的我依然苟活，我这一阵使用体验是，ws+tls+cdn是最稳的。嫌麻烦可以直接ws，反正不建议v2ray用http伪装了，容易被制裁。最近我的MTproto也挂了，貌似最近telegram的专用代理被针对得很厉害。 另外建议避开美日港等线路。 备用应急找几个还勉强能用的备着，比如setup v某n</p>
 <p>更新,kcptun,mkcp,finalspeed . GIA线路最好不要用。 最近ss和ssr大面积爆破，v2ray还能苟，不行直接上trojan。 使用aes加密基本都被搞，好像是ssr有混淆，墙无法识别，直接封。 祝你ping安</p>
 <p>还是要保持优良传统,努力学习<del>元件耦合</del>计算机网络: &gt;大一的电路分析老师曾说过：“在文化大革命的时候，国家曾封锁电台。我们的同学们啊用自己的器件组装了一个电台，他能覆盖整个四川地区甚至云南和贵州也能收到。于是四川人民天天就听着成电广播，后来这事闹大了，办电台的同学要被批斗，还是周总理亲自来把这事压下去了。能做出那么好的电台，是元件耦合做得好，同学们，可见元件耦合有多么重要啊！”</p>
-<p>另，移动网经常搞些dns劫持之类的动作，会造成一些干扰，我们参照这个配置https://github.com/v2ray/v2ray-core/issues/1808 改一下服务器dns配置：</p>
-<pre><code>&quot;dns&quot;: &#123;
-&quot;server&quot;: [
-&quot;8.8.8.8&quot;,
-&quot;1.1.1.1&quot;,
-&quot;localhost&quot;
-]
-&#125;,</code></pre>
+<p>另，移动网经常搞些dns劫持之类的动作，会造成一些干扰，我们参照这个配置 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3YycmF5L3YycmF5LWNvcmUvaXNzdWVzLzE4MDg=">https://github.com/v2ray/v2ray-core/issues/1808<i class="fa fa-external-link-alt"></i></span> 改一下服务器dns配置：</p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token property">"dns"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+<span class="token property">"server"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+<span class="token string">"8.8.8.8"</span><span class="token punctuation">,</span>
+<span class="token string">"1.1.1.1"</span><span class="token punctuation">,</span>
+<span class="token string">"localhost"</span>
+<span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">,</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>其实这个时候可以直接上dnscrypt解决问题</p>
 <p>另外, v2ray的服务器和本地的时间一定要记得用ntp同步一下,不然两边时间不一样也会拒绝连接的</p>
 <h2 id="trojan的方案">Trojan的方案</h2>
@@ -525,8 +529,10 @@ mjx-container[display="true"] + br {
 <h2 id="更新">更新</h2>
 <p>最近<span class="exturl" data-url="aHR0cHM6Ly9maWxlcy5jYXRib3gubW9lL3ZtemowNC5wZGY=">基于长短期记忆网络的V2ray流量识别方法<i class="fa fa-external-link-alt"></i></span>好像在微博等地引起了小小的恐慌。这个大概就是解包后上神经网络之类的，和之前的一篇 <span class="exturl" data-url="aHR0cHM6Ly9pZWVleHBsb3JlLmllZWUub3JnL2RvY3VtZW50LzgwNDgxMTY=">https://ieeexplore.ieee.org/document/8048116<i class="fa fa-external-link-alt"></i></span> 步骤、程序都是一样的，就把随机森林换成了k近邻，高度怀疑是水论文。这个也就针对一下vmess、tcp，tls估计搞不定。</p>
 <p>不过v2ray作者弃坑几个月了，不知道近况如何</p>
+<h3 id="最后还是选择了机场">最后还是选择了机场</h3>
+<p>现在性价比还是机场最高，同样是每月5美元机场大概能提供远高于自建的速度和线路选择（还有很多Netflix线路和低延迟节点）。</p>
 <h3 id="移动dns投毒解决方案2019">移动DNS投毒解决方案2019</h3>
-<p>使用Pcap_DNSProxy, 先下载<span class="exturl" data-url="aHR0cHM6Ly9ubWFwLm9yZy9kb3dubG9hZC5odG1s">nmap<i class="fa fa-external-link-alt"></i></span>再选winpcap兼容模式安装,再下载Pcap_DNSProxy安装时可能需要管理员权限。然后在网卡设定 DNS 解析为 127.0.0.1 (IPv4) 和 ::1 (IPv6) 。（适合电脑上折腾，有条件还是直接折腾路由器。） 详情参考<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2NoZW5ncjI4L1BjYXBfRE5TUHJveHkvdHJlZS9tYXN0ZXIvRG9jdW1lbnRz">https://github.com/chengr28/Pcap_DNSProxy/tree/master/Documents<i class="fa fa-external-link-alt"></i></span> 以及&lt;https://blog.bgme.me/posts/some-ideas-about-anti-pollution-dns-server</p>
+<p>使用Pcap_DNSProxy, 先下载<span class="exturl" data-url="aHR0cHM6Ly9ubWFwLm9yZy9kb3dubG9hZC5odG1s">nmap<i class="fa fa-external-link-alt"></i></span>再选winpcap兼容模式安装,再下载Pcap_DNSProxy安装时可能需要管理员权限。然后在网卡设定 DNS 解析为 127.0.0.1 (IPv4) 和 ::1 (IPv6) 。（适合电脑上折腾，有条件还是直接折腾路由器。） 详情参考<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2NoZW5ncjI4L1BjYXBfRE5TUHJveHkvdHJlZS9tYXN0ZXIvRG9jdW1lbnRz">https://github.com/chengr28/Pcap_DNSProxy/tree/master/Documents<i class="fa fa-external-link-alt"></i></span> 以及<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmJnbWUubWUvcG9zdHMvc29tZS1pZGVhcy1hYm91dC1hbnRpLXBvbGx1dGlvbi1kbnMtc2VydmVy">https://blog.bgme.me/posts/some-ideas-about-anti-pollution-dns-server<i class="fa fa-external-link-alt"></i></span></p>
 <h3 id="更换vps厂商为hostwinds更换websocket协议为http2">更换VPS厂商为hostwinds,更换websocket协议为HTTP2</h3>
 <p>决定把vultr换成速度更快的hostwinds，世界加钱可及（并没有钱搞Google Fi之类的物理穿越） hostwinds选项有VPS和cloud，cloud是按小时收费的，这个价位当然也不是aws或google cloud那种真正的云主机，问了下客服，答复如下：</p>
 <p>The Difference Between VPS &amp; cloud There is no difference other than the name. The VPSs come with more of a preconfigured set up, Linux/Windows, managed/unmanaged, etc, where the Cloud would start as an unmanaged Linux VPS that you can add additional set up to.</p>
@@ -624,8 +630,43 @@ mjx-container[display="true"] + br {
 
   
   <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
 
   
 
@@ -641,7 +682,7 @@ mjx-container[display="true"] + br {
 
 
 
-<script>
+<script data-pjax>
 document.querySelectorAll('.pdfobject-container').forEach(element => {
   const url = element.dataset.target;
   const pdfOpenParams = {
@@ -677,6 +718,7 @@ document.querySelectorAll('.pdfobject-container').forEach(element => {
 
 
 
+    <div class="pjax">
   
 
   
@@ -693,5 +735,6 @@ NexT.utils.loadComments('#valine-comments', () => {
 });
 </script>
 
+    </div>
 </body>
 </html>
