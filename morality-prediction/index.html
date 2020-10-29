@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
 <meta name="generator" content="Hexo 5.2.0">
+
+
   <link rel="apple-touch-icon" sizes="180x180" href="/uploads/wizard-hat-16.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/uploads/wizard-hat-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/uploads/wizard-hat-16.png">
@@ -338,14 +340,15 @@ mjx-container[display="true"] + br {
         </li>
       </ul>
 
-      <!--noindex-->
-      <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0"><span class="nav-number">1.</span> <span class="nav-text">更新</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%82%A3%E8%80%85%E7%AD%9B%E9%80%89"><span class="nav-number">2.</span> <span class="nav-text">患者筛选</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BD%92%E4%B8%80%E5%8C%96%E5%92%8C%E6%A0%87%E5%87%86%E5%8C%96"><span class="nav-number">2.1.</span> <span class="nav-text">归一化和标准化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%BA%E5%A4%B1%E5%80%BC%E5%A1%AB%E8%A1%A5"><span class="nav-number">2.2.</span> <span class="nav-text">缺失值填补</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%9B%86%E4%B8%8D%E5%B9%B3%E8%A1%A1%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">2.3.</span> <span class="nav-text">数据集不平衡的问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83"><span class="nav-number">3.</span> <span class="nav-text">模型训练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%BB%E4%BA%A1%E7%8E%87%E9%A2%84%E6%B5%8B"><span class="nav-number">4.</span> <span class="nav-text">死亡率预测</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E6%9E%9C"><span class="nav-number">4.1.</span> <span class="nav-text">结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#roc%E6%9B%B2%E7%BA%BF"><span class="nav-number">4.2.</span> <span class="nav-text">ROC曲线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E5%BE%81%E6%9D%83%E9%87%8D"><span class="nav-number">4.3.</span> <span class="nav-text">特征权重</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E9%97%AE%E9%A2%98"><span class="nav-number">5.</span> <span class="nav-text">其他问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A5%E5%85%85%E8%AF%B4%E6%98%8E"><span class="nav-number">6.</span> <span class="nav-text">补充说明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mimic%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A1%A8%E6%A0%BC%E5%90%8D%E7%A7%B0%E5%8F%8A%E7%94%A8%E9%80%94"><span class="nav-number">6.1.</span> <span class="nav-text">MIMIC数据库表格名称及用途</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mimic%E6%95%B0%E6%8D%AE%E8%A1%A8%E4%B8%AD%E4%B8%BB%E8%A6%81%E5%AD%97%E6%AE%B5"><span class="nav-number">6.2.</span> <span class="nav-text">MIMIC数据表中主要字段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%A5%E6%80%A7%E5%BF%83%E8%82%8C%E6%A2%97%E6%AD%BB%E6%82%A3%E8%80%85%E4%B8%BB%E8%A6%81%E7%89%B9%E5%BE%81"><span class="nav-number">6.3.</span> <span class="nav-text">急性心肌梗死患者主要特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">6.4.</span> <span class="nav-text">注意事项</span></a></li></ol></li></ol></div>
-      </section>
-      <!--/noindex-->
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0"><span class="nav-number">1.</span> <span class="nav-text">更新</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%82%A3%E8%80%85%E7%AD%9B%E9%80%89"><span class="nav-number">2.</span> <span class="nav-text">患者筛选</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BD%92%E4%B8%80%E5%8C%96%E5%92%8C%E6%A0%87%E5%87%86%E5%8C%96"><span class="nav-number">2.1.</span> <span class="nav-text">归一化和标准化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%BA%E5%A4%B1%E5%80%BC%E5%A1%AB%E8%A1%A5"><span class="nav-number">2.2.</span> <span class="nav-text">缺失值填补</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%9B%86%E4%B8%8D%E5%B9%B3%E8%A1%A1%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">2.3.</span> <span class="nav-text">数据集不平衡的问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83"><span class="nav-number">3.</span> <span class="nav-text">模型训练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%BB%E4%BA%A1%E7%8E%87%E9%A2%84%E6%B5%8B"><span class="nav-number">4.</span> <span class="nav-text">死亡率预测</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E6%9E%9C"><span class="nav-number">4.1.</span> <span class="nav-text">结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#roc%E6%9B%B2%E7%BA%BF"><span class="nav-number">4.2.</span> <span class="nav-text">ROC曲线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E5%BE%81%E6%9D%83%E9%87%8D"><span class="nav-number">4.3.</span> <span class="nav-text">特征权重</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E9%97%AE%E9%A2%98"><span class="nav-number">5.</span> <span class="nav-text">其他问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A5%E5%85%85%E8%AF%B4%E6%98%8E"><span class="nav-number">6.</span> <span class="nav-text">补充说明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mimic%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A1%A8%E6%A0%BC%E5%90%8D%E7%A7%B0%E5%8F%8A%E7%94%A8%E9%80%94"><span class="nav-number">6.1.</span> <span class="nav-text">MIMIC数据库表格名称及用途</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mimic%E6%95%B0%E6%8D%AE%E8%A1%A8%E4%B8%AD%E4%B8%BB%E8%A6%81%E5%AD%97%E6%AE%B5"><span class="nav-number">6.2.</span> <span class="nav-text">MIMIC数据表中主要字段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%A5%E6%80%A7%E5%BF%83%E8%82%8C%E6%A2%97%E6%AD%BB%E6%82%A3%E8%80%85%E4%B8%BB%E8%A6%81%E7%89%B9%E5%BE%81"><span class="nav-number">6.3.</span> <span class="nav-text">急性心肌梗死患者主要特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">6.4.</span> <span class="nav-text">注意事项</span></a></li></ol></li></ol></div>
+        </section>
+        <!--/noindex-->
 
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="Zhang.jk"
       src="/uploads/jinmao.webp">
   <p class="site-author-name" itemprop="name">Zhang.jk</p>
@@ -369,7 +372,7 @@ mjx-container[display="true"] + br {
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">57</span>
+        <span class="site-state-item-count">60</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -410,7 +413,8 @@ mjx-container[display="true"] + br {
     </ul>
   </div>
 
-      </section>
+        </section>
+      </div>
     </div>
   </aside>
   <div class="sidebar-dimmer"></div>
@@ -475,7 +479,7 @@ mjx-container[display="true"] + br {
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-10-26 22:01:22" itemprop="dateModified" datetime="2020-10-26T22:01:22+08:00">2020-10-26</time>
+        <time title="修改时间：2020-10-29 21:03:42" itemprop="dateModified" datetime="2020-10-29T21:03:42+08:00">2020-10-29</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1204,8 +1208,8 @@ fpr_xgb<span class="token punctuation">,</span>tpr_xgb<span class="token punctua
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/endeavouros-and-kde-setting/" rel="next" title="为什么不试试EndeavourOS和KDE呢">
-                  为什么不试试EndeavourOS和KDE呢 <i class="fa fa-chevron-right"></i>
+                <a href="/why-not-try-endeavouros/" rel="next" title="为什么不试试EndeavourOS呢">
+                  为什么不试试EndeavourOS呢 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
@@ -1365,7 +1369,7 @@ document.querySelectorAll('.pdfobject-container').forEach(element => {
 <script>
 NexT.utils.loadComments('#valine-comments', () => {
   NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
-    new Valine(Object.assign({"enable":true,"appId":"9HDUS9zSiY41T0Vp4naCoqcC-MdYXbMMI","appKey":"ufiyQKIMrlBkEYcA4bk1TrYj","serverURLs":null,"placeholder":"林妙妙，没事不要老在我评论区捣乱","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":false,"comment_count":true,"recordIP":false,"enableQQ":true,"requiredFields":[],"language":null}, {
+    new Valine(Object.assign({"enable":true,"appId":"9HDUS9zSiY41T0Vp4naCoqcC-MdYXbMMI","appKey":"ufiyQKIMrlBkEYcA4bk1TrYj","serverURLs":null,"placeholder":"留言可能会过一段时间才看到,急事请发邮件","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":false,"comment_count":true,"recordIP":false,"enableQQ":true,"requiredFields":[],"language":null}, {
       el: '#valine-comments',
       path: "/morality-prediction/",
       serverURLs: "https://9hdus9zs.api.lncldglobal.com"
