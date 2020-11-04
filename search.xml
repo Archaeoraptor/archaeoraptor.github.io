@@ -899,12 +899,16 @@ chsh -s /usr/bin/zsh
 <blockquote>
 <p>so, nvidia f.....</p>
 </blockquote>
-<p>算了，3080那么强，不黑英伟达了</p>
+<p>算了，3080那么强，不黑英伟达了(更新，AMD新卡出了，好家伙</p>
 <p>他们从以前Antergos那fork了一个驱动安装脚本，有个包叫nvidia-installer（lts等用户请用nvidia-installer-dkms），看<span class="exturl" data-url="aHR0cHM6Ly9lbmRlYXZvdXJvcy5jb20vZG9jcy9oYXJkd2FyZS1hbmQtbmV0d29yay9ncmFwaGljLWNhcmRzLWdwdS1kcml2ZXItYW5kLXNldHVwLw==">这里<i class="fa fa-external-link-alt"></i></span>。</p>
 <h2 id="桌面环境">桌面环境</h2>
 <p>EndeavourOS官方魔改定制了xfce的主题和图标，离线安装镜像也只有xfce，其他的几乎没怎么魔改。</p>
 <p>如果要装其他DE的话</p>
 <p>紫红配色看个人喜好吧，其实我不太能欣赏的来（这个配色，Gitlab同款）</p>
+<p>更新，KDE 的 5.20.2 配色和EndeavourOS完全一致，建议他们火速从XFCE迁往KDE（不是</p>
+<figure>
+<img src="/why-not-try-endeavouros/image-20201031190318540.png" alt="KDE新官网样子" /><figcaption aria-hidden="true">KDE新官网样子</figcaption>
+</figure>
 <p>多桌面环境可能出问题，非要这样做的话建议每个不同的桌面环境分配一个单独的用户名。 （貌似xfce4和KDE一起用几乎问题（用ssdm），先装ssdm和KDE,然后装xfce4） 尝试了一下i3wm, 简洁是真的简洁，不太习惯又删了换回KDE了。</p>
 <p>KDE有一种 Windows Vista 的感觉，感觉是 linux 所有 Desktop Enviroment 里面最舒服的。xfce虽然是EndeavourOS默认的DE，但是xfce开发人手不够，用户和社区贡献者也比KDE少，而且内存占用最新的KDE已经比xfce低了.....现在xfce也不怎么轻量了，渣配置机器上表现没有LXDE好，感觉不少用户都转去用i3wm和KDE了...逐渐没落的夕阳DE，适合养老</p>
 <h2 id="硬盘扩容和迁移">硬盘扩容和迁移</h2>
@@ -1914,7 +1918,9 @@ $ psql -h 127.0.0.1 -d doccano -U doccano -p 5432 # 注意你的host，数据库
 <img src="/openwrt/image-20201030191838215.webp" alt="这么多插排...." /><figcaption aria-hidden="true">这么多插排....</figcaption>
 </figure>
 <p>本来Openclash都整好了，结果发现室友的安卓电报没法自行分流。换成了 ssr plus</p>
-<p>装好之后发现风扇声音有点大........直接把风扇线拔了，世界终于清净了。至于散热，问题不大。</p>
+<p>装好之后发现风扇声音有点大........直接把风扇线拔了，世界终于清净了。至于散热，问题不大（这么点负载总不可能把CPU给烧了）。</p>
+<p>ps. 正确的做法是SSH上去</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">fanspeedctl stop --all --now<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>固态闲置了100多个G</p>
 <h2 id="突然发现了clash的正确使用方式">突然发现了clash的正确使用方式</h2>
 <p>之前一直很不喜欢clash，clash for win10的图形界面操作在我看起来特别反人类，安卓和平板上clash的app耗电惊人。自动切换线路和分流对我来说又没什么用，一直觉得clash鸡肋，不知道为什么这么多人都在说clash香。</p>

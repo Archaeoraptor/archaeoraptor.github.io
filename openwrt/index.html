@@ -15,6 +15,7 @@
   <meta http-equiv="Cache-Control" content="no-siteapp">
   <meta name="google-site-verification" content="OwUki9pTQANwT767yFIY9v_Qx4gl55MFLe3lggNnHbw">
   <meta name="msvalidate.01" content="872DC4637276109A6B54FF149DCABA8A">
+  <meta name="yandex-verification" content="0d554b4a05a80f0d">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -470,10 +471,16 @@ mjx-container[display="true"] + br {
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2020-10-30 19:15:19 / 修改时间：20:54:22" itemprop="dateCreated datePublished" datetime="2020-10-30T19:15:19+08:00">2020-10-30</time>
+      <time title="创建时间：2020-10-30 19:15:19" itemprop="dateCreated datePublished" datetime="2020-10-30T19:15:19+08:00">2020-10-30</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2020-11-04 18:52:28" itemprop="dateModified" datetime="2020-11-04T18:52:28+08:00">2020-11-04</time>
+      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -550,7 +557,9 @@ mjx-container[display="true"] + br {
 <img src="/openwrt/image-20201030191838215.webp" alt="这么多插排...." /><figcaption aria-hidden="true">这么多插排....</figcaption>
 </figure>
 <p>本来Openclash都整好了，结果发现室友的安卓电报没法自行分流。换成了 ssr plus</p>
-<p>装好之后发现风扇声音有点大........直接把风扇线拔了，世界终于清净了。至于散热，问题不大。</p>
+<p>装好之后发现风扇声音有点大........直接把风扇线拔了，世界终于清净了。至于散热，问题不大（这么点负载总不可能把CPU给烧了）。</p>
+<p>ps. 正确的做法是SSH上去</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">fanspeedctl stop --all --now<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>固态闲置了100多个G</p>
 <h2 id="突然发现了clash的正确使用方式">突然发现了clash的正确使用方式</h2>
 <p>之前一直很不喜欢clash，clash for win10的图形界面操作在我看起来特别反人类，安卓和平板上clash的app耗电惊人。自动切换线路和分流对我来说又没什么用，一直觉得clash鸡肋，不知道为什么这么多人都在说clash香。</p>
