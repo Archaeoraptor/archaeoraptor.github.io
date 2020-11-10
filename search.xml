@@ -3762,7 +3762,7 @@ fpr_xgb<span class="token punctuation">,</span>tpr_xgb<span class="token punctua
   <entry>
     <title>systemd-homed简介和homectl设置用户、用户组</title>
     <url>/systemd-homed/</url>
-    <content><![CDATA[<p>在2020.3 发布的systemd 245增加了systemd-homed，改变了<code>\home</code>目录的加密和工作方式，采用homectl这个cli工具设置用户组。快来当小白鼠吧。 <a id="more"></a></p>
+    <content><![CDATA[<p>在2020.3 发布的systemd 245增加了systemd-homed，改变了<code>/home</code>目录的加密和工作方式，采用homectl这个cli工具设置用户组。快来当小白鼠吧。 <a id="more"></a></p>
 <h2 id="太长不看版">太长不看版</h2>
 <h3 id="使用homectl新建用户用户组">使用homectl新建用户、用户组</h3>
 <p>首先你的systemd要在245以后，版本较低或使用SysV或者OpenRC、Upstart的玩家请跳过。</p>
@@ -3862,25 +3862,25 @@ getent group <span class="token number">1000</span><span aria-hidden="true" clas
 <p>通常使用<code>useradd</code>或<code>adduser</code>新建用户（不同发行版这两条命令有一点区别），比如</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">useradd</span> -U temp
 <span class="token function">sudo</span> <span class="token function">useradd</span> temp1 -m -G temp<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>新建一个temp用户组并给temp用户组中新建一个叫temp1的用户（同时在<code>\home</code>下新建一个<code>temp1</code>目录作为用户目录）。</p>
+<p>新建一个temp用户组并给temp用户组中新建一个叫temp1的用户（同时在<code>/home</code>下新建一个<code>temp1</code>目录作为用户目录）。</p>
 <p>然后使用<code>passwd temp1</code>为用户temp1指定密码</p>
 <p>（虽然useradd有<code>-p</code>选项可以直接指定密码，通常不建议这样做，因为这样子恁的密码会明文留在历史命令里，如果有人不怀好意的执行一下<code>history</code>或者<code>more /home/$USER/.bash_history</code>或者<code>ctrl+r</code>搜索useradd，他将轻易获取你的密码），你用了sudo也可能会被找到，比如<span class="exturl" data-url="aHR0cHM6Ly9zdXBlcnVzZXIuY29tL3F1ZXN0aW9ucy8zMDk0MzQvaG93LXRvLXZpZXctY29tbWFuZC1oaXN0b3J5LW9mLWFub3RoZXItdXNlci1pbi1saW51eA==">这个<i class="fa fa-external-link-alt"></i></span></p>
 <p>https://www.freebuf.com/news/135845.html history -c 也不太保险</p>
-<p>你的用户名、密码、用户组、权限配置基本都放在<code>/etc</code>目录下面，比如<code>\etc\passwd</code>里面存你的密码，<code>etc/group</code>里面放用户组的设置。<code>/etc/sudoers</code>是超级用户的设置。每个用户的配置散落在各个地方，一些个人设置还被放在了<code>\home\user</code>底下。</p>
+<p>你的用户名、密码、用户组、权限配置基本都放在<code>/etc</code>目录下面，比如<code>/etc/passwd</code>里面存你的密码，<code>etc/group</code>里面放用户组的设置。<code>/etc/sudoers</code>是超级用户的设置。每个用户的配置散落在各个地方，一些个人设置还被放在了<code>/home/user</code>底下。</p>
 <p>这个样子你需要<code>/etc</code>的写权限，一个用户不同系统迁移的时候需要同时迁移其他的目录（而且UID还得一样），想对<code>/home</code>单独加密也不太方便。</p>
 <h3 id="变化">变化</h3>
-<p>主要的变化就是你的个人用户都扔到<code>\home\yourusername</code>下面了。（据说）这样更方便加密和迁移。默认采用LUKS，在用户登陆的时候解密并挂载<code>\home\user</code>，在用户退出登陆的时候加密并取消挂载。休眠挂起（Suspend）的时候也会加密锁住。</p>
+<p>主要的变化就是你的个人用户都扔到<code>/home/yourusername</code>下面了。（据说）这样更方便加密和迁移。默认采用LUKS，在用户登陆的时候解密并挂载<code>/home/user</code>，在用户退出登陆的时候加密并取消挂载。休眠挂起（Suspend）的时候也会加密锁住。</p>
 <p>比如你有一个u盘，里面装了你的用户目录，到别的电脑上插上去就能用了，不需要那边给你新建一个用户（现在基本不太行，对面电脑起码得也是systemd 245 版本以上还得启用<code>systemd-home</code>，我乐观估计等这玩意普及至少得两年吧，那些用老CentOS的万年钉子户更别想了）</p>
 <p>这样也方便全盘加密（我不是那种对物理安全都看的很在乎的申必人士，据说全盘加密会有点性能问题，而且休眠睡眠也比较容易起不来，所以我没试过）（不过恁不用这个systemd-home其实也能全盘加密）</p>
 <p>现在使用<code>systemd-homed.service</code>和<code>systemd-userdbd.service</code>两个daemon管理用户，登陆的时候是<code>systemd-logind</code> 在管。大概是这么个流程：</p>
 <p><img src="/systemd-homed/image-20201108172857040.png" /></p>
 <p><img src="/systemd-homed/image-20201108172321494.png" /></p>
-<p>另外，Yubikeys现在是一等公民（说的好像这小玩意这么贵我买得起一样）</p>
+<p>另外，Yubikeys现在是一等公民（说的好像这小玩意这么贵我买得起一样） Yubikeys或者别的加密设备我手头没有，而且LUKS加密home目录之类的我也没有那么高的安全需求，哪位好心人要是愿意送/借我一个玩玩，我把这部分内容补上</p>
 <h3 id="现在的样子">现在的样子</h3>
 <p>使用<code>homectl activate</code>激活用户目录后你会看到在<code>/home</code>目录下多了一个用户目录</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ homectl activate zhixi
 🔐 Please enter password <span class="token keyword">for</span> user zhixi: ****** <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>原来<code>\home</code>下只有一个zhixi.home，activate之后多了一个zhixi目录</p>
+<p>原来<code>/home</code>下只有一个zhixi.home，activate之后多了一个zhixi目录</p>
 <p>我们看一下这个目录下面有什么</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token builtin class-name">cd</span> /home/zhixi <span class="token operator">&amp;&amp;</span> <span class="token function">ls</span> -a
 <span class="token builtin class-name">.</span>  <span class="token punctuation">..</span>  .bash_logout  .bash_profile  .bashrc  .identity<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
