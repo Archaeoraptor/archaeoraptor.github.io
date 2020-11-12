@@ -780,6 +780,20 @@ connection<span class="token punctuation">.</span>commit<span class="token punct
       </tags>
   </entry>
   <entry>
+    <title>数字频率计</title>
+    <url>/9824/</url>
+    <content><![CDATA[<p>补档 <a id="more"></a> 泥电大三下的一门叫现代电子设计综合实验的实验课搞的数字频率计，拿VHDL和C51写的，工程文件扔在<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0FyY2hhZW9yYXB0b3IvbGF0Y2hfdGVzdA==">这里<i class="fa fa-external-link-alt"></i></span>了。这门课可能是你电为数不多不太水的实验课了，反正比手抄上万字的大物实验好多了（不知道现在还抄不抄了）</p>
+<p>先分频，再把门控、数显、锁存和计数都写出来就能用了 精度问题其实要求不高，本来FPGA的板子上那些器件精度就不错，想要提高精度可以折腾一下等精度之类的做法 <div class="pdfobject-container" data-target="/uploads/频率计.pdf" data-height="500px"></div> 顺便试试博客插入PDF的功能（在火狐上偶尔有问题，好像是CORS跨域的问题）</p>
+]]></content>
+      <categories>
+        <category>荒废的老本行</category>
+      </categories>
+      <tags>
+        <tag>VHDL</tag>
+        <tag>频率计</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>MySQL从入门到跑路</title>
     <url>/45b9/</url>
     <content><![CDATA[<p>用了这么久数据库，现在还只会增删查改，开个坑学学优化。 <a id="more"></a> 等待填坑</p>
@@ -809,20 +823,6 @@ connection<span class="token punctuation">.</span>commit<span class="token punct
       <tags>
         <tag>MySQL</tag>
         <tag>Database</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>数字频率计</title>
-    <url>/9824/</url>
-    <content><![CDATA[<p>补档 <a id="more"></a> 泥电大三下的一门叫现代电子设计综合实验的实验课搞的数字频率计，拿VHDL和C51写的，工程文件扔在<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0FyY2hhZW9yYXB0b3IvbGF0Y2hfdGVzdA==">这里<i class="fa fa-external-link-alt"></i></span>了。这门课可能是你电为数不多不太水的实验课了，反正比手抄上万字的大物实验好多了（不知道现在还抄不抄了）</p>
-<p>先分频，再把门控、数显、锁存和计数都写出来就能用了 精度问题其实要求不高，本来FPGA的板子上那些器件精度就不错，想要提高精度可以折腾一下等精度之类的做法 <div class="pdfobject-container" data-target="/uploads/频率计.pdf" data-height="500px"></div> 顺便试试博客插入PDF的功能（在火狐上偶尔有问题，好像是CORS跨域的问题）</p>
-]]></content>
-      <categories>
-        <category>荒废的老本行</category>
-      </categories>
-      <tags>
-        <tag>VHDL</tag>
-        <tag>频率计</tag>
       </tags>
   </entry>
   <entry>
@@ -2025,6 +2025,72 @@ X_pred <span class="token operator">=</span> np<span class="token punctuation">.
       </tags>
   </entry>
   <entry>
+    <title>VSCode使用ssh-key远程登录Ubuntu</title>
+    <url>/7f63/</url>
+    <content><![CDATA[<p>兼谈使用SSH转发加快教研室网上冲浪速度 <a id="more"></a> Mobaxterm挺好用的，只是那个文本编辑器不舒服。 试着用一下VSCode的remote-ssh 通过ssh-key登录就不多讲了<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<h2 id="mobaxterm设置ssh密钥登录">Mobaxterm设置SSH密钥登录</h2>
+<p>ssh-keygen生成密钥之后在Mobaxterm的SSH设置找到Advanced SSH Setting里勾选import SSH key可以直接导入密钥。 退出再登录显示这样</p>
+<pre class="line-numbers language-log" data-language="log"><code class="language-log">Authenticating with public key &quot;Imported-Openssh-Key: id_rsa&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>就是成功了（失败会提示这样<code>Server refused our key</code>)</p>
+<h2 id="vscode设置ssh密钥登录">VSCode设置SSH密钥登录</h2>
+<p>装Remote-ssh插件，然后左边框会有个小电脑的图标，点那个图标，再点SSH TARGETS的设置（Configure），进行配置 它有个配置文件，一般在<code>C:/Users/&lt;username&gt;/.ssh</code>下面的config 编辑它的配置文件，Host随便填，HostName填ip，User填用户名，IdentityFile填私钥路径，Port填端口（默认22可以不填） （要是认证失败什么的，建议把那些.ssh文件夹底下的文件删了，比如known_hosts）</p>
+<pre class="line-numbers language-config" data-language="config"><code class="language-config">Host workstation
+    HostName hostname
+    User user
+    IdentityFile C:&#x2F;Users&#x2F;XXX&#x2F;.ssh&#x2F;id_rsa
+    Port 22<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>连接的时候可能会让你手动在termial里的信息 这样应该就行了, 不用每次输密码了。看到那个</p>
+<p>什么？想用密码不想用ssh-key密钥登录，不能保存密码🐴？ 您好，官方文档说不能 &gt;Yes, you should be prompted to enter your token or password automatically. However, passwords are not saved, so using key based authentication is typically more convenient</p>
+<p>（当然这里是新出的功能，bug当然少不了，我就遇到过<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21pY3Jvc29mdC92c2NvZGUtcmVtb3RlLXJlbGVhc2UvaXNzdWVzLzEyMTc=">这样的<i class="fa fa-external-link-alt"></i></span>, 一般遇到问题先升一下最新版或者用insider试试，再不行就去GitHub提issue） 其他的问题找官方文档<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>看看，貌似可以SSH端口转发</p>
+<p>远程SSH的VSCode插件是单独的，可以自行安装 如果你要配置多台主机SSH,在配置文件里并列加配置就行了</p>
+<pre class="line-numbers language-config" data-language="config"><code class="language-config">Host workstation
+    HostName hostname
+    User user
+Host Server
+    HostName hostname
+    User user<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="ssh端口转发">SSH端口转发</h2>
+<p>老网民很熟悉的网上冲浪手段之一就是SSH Tunnel<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>。当只开了22端口的时候可以用这种方法绕过防火墙用TCP之类的，当然，这种方法曾经也用来突破那个巨大的 防火墙 。 今天我突发奇想，看到工作站和服务器的专用线路的速度贼快啊，<del>专用线路从来不低于45Mb/s不高于50Mb/s的速度毫不含糊</del>，还有公网IP。 而102网吧由于老板太抠，四个人用一个路由器，辣鸡校园网网速10M/s都跑不到...</p>
+<p>使用Mobaxterm和SwityOmega插件可以满足大部分需求</p>
+<p>MobaXterm里选Tools &gt; MobaSHHtunnel &gt; New SHH tunnel &gt; Dynamic Port forwarding (SOCKS proxy)</p>
+<p>那个Dynamic Port 是动态转发，不是v2ray那种用来防止被封的动态端口，就是你本地的端口会被转到服务器上相同的端口，是sockets5代理 配置你的端口和密钥（最好把那个autostart和Autoconnect也选上），然后到SwityOmega之类的工具里面填上相应的端口，就可以愉快的上网了。从浏览器的IP查询网站看一下IP，已经是服务器的IP了</p>
+<p>更新，看错了，忘了分Mbps和MBps了，实际上快不了多少，只有6MBps/s。但是没人跟我抢，自己走专线还是快一点的。</p>
+<p>终端的命令可以看这篇，不多说了<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
+<h2 id="突然意识到">突然意识到</h2>
+<p>为什么要用SSH呢，现在不用担心被FIREWALL制裁, 流量特征明显的WireGuard可以用了呀... 有空试试这个闪闪发光的新生代VPN, 底层貌似是UDP，红龙LOGO挺拉风的(跑题了 WireGuard据说要加到新的Linux Kernel里面，但是现在教研室的老Ubuntu只能自己装（这个我18年就听说了要加进kernel啦，连Linus都说好要加辣<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>然而鸽到现在，还是没加，据说作者在搞windows的,现在做的差不多了，要回来折腾Linux了） 之前WireGuard由于流量特征太明显就换了v2，现在试试这个 安装比Openvpn简单，Ubuntu直接PPA装就行了（需要root权限）</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> add-apt-repository ppa:wireguard/wireguard
+<span class="token function">sudo</span> <span class="token function">apt-get</span> update
+<span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> wireguard<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>win10的官方客户端已经出了，之前18年那会我还用的Tunsafe，设置参考这里<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> 听八卦说Tunsafe和WireGuard作者还有过撕逼，此处不表</p>
+<h3 id="其他">其他</h3>
+<h3 id="开机自启">开机自启</h3>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl <span class="token builtin class-name">enable</span> wg-quick@wg0<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="使用vscode愉快的写cc">使用VSCode愉快的写C/C++</h3>
+<p>装C/C++和coderunner插件就行了，现在可以自动配置运行和调试的文件了（就那个以前一堆坑还经常改一更新就配置失效的launch.json和config.json）</p>
+<h3 id="vscode连接docker">VSCode连接Docker</h3>
+<p>安装Docker和Docker compose插件（在远程里面），然后直接用就行了</p>
+<h2 id="注">注</h2>
+<section class="footnotes" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p><span class="exturl" data-url="aHR0cHM6Ly9oeWprMjAwMC5naXRodWIuaW8vMjAxMi8wMy8xNi9ob3ctdG8tc2V0LXVwLXNzaC1rZXlzLw==">设置 SSH 通过密钥登录<i class="fa fa-external-link-alt"></i></span><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p><span class="exturl" data-url="aHR0cHM6Ly9jb2RlLnZpc3VhbHN0dWRpby5jb20vZG9jcy9yZW1vdGUvc3No">官方文档：Remote Development using SSH<i class="fa fa-external-link-alt"></i></span><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnlhbmRlcmUubW9lL21vZS9nZnctdnMtcHJveHkvOTcuaHRtbA==">墙与梯的较量<i class="fa fa-external-link-alt"></i></span><a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4" role="doc-endnote"><p><span class="exturl" data-url="aHR0cHM6Ly93d3cuaWJtLmNvbS9kZXZlbG9wZXJ3b3Jrcy9jbi9saW51eC9sLWNuLXNzaGZvcndhcmQvaW5kZXguaHRtbA==">实战 SSH 端口转发<i class="fa fa-external-link-alt"></i></span><a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5" role="doc-endnote"><p>Linus在邮件中回复说： &gt;Btw, on an unrelated issue: I see that Jason actually made the pull &gt;request to have wireguard included in the kernel. &gt; &gt;Can I just once again state my love for it and hope it gets merged &gt;soon? Maybe the code isn't perfect, but I've skimmed it, and compared to the horrors that are OpenVPN and IPSec, it's a work of art. 见<span class="exturl" data-url="aHR0cHM6Ly9sa21sLm9yZy9sa21sLzIwMTgvOC8yLzY2Mw==">https://lkml.org/lkml/2018/8/2/663<i class="fa fa-external-link-alt"></i></span><a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6" role="doc-endnote"><p><span class="exturl" data-url="aHR0cHM6Ly9nb2xiLmhwbGFyLmNoLzIwMTkvMDcvd2lyZWd1YXJkLXdpbmRvd3MuaHRtbA==">Setting up WireGuard on Windows<i class="fa fa-external-link-alt"></i></span><a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+]]></content>
+      <categories>
+        <category>102网吧日常</category>
+      </categories>
+      <tags>
+        <tag>ssh</tag>
+        <tag>vscode</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>试用Netlify自动部署和CMS</title>
     <url>/e9d5/</url>
     <content><![CDATA[<p>又开始了瞎折腾。话说我这种没人看的静态小破网站，真的有必要持续集成、持续部署吗？</p>
@@ -2092,72 +2158,6 @@ date: '2019-11-30 20:22:52'<span aria-hidden="true" class="line-numbers-rows"><s
       <tags>
         <tag>netlify</tag>
         <tag>ci</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>VSCode使用ssh-key远程登录Ubuntu</title>
-    <url>/7f63/</url>
-    <content><![CDATA[<p>兼谈使用SSH转发加快教研室网上冲浪速度 <a id="more"></a> Mobaxterm挺好用的，只是那个文本编辑器不舒服。 试着用一下VSCode的remote-ssh 通过ssh-key登录就不多讲了<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
-<h2 id="mobaxterm设置ssh密钥登录">Mobaxterm设置SSH密钥登录</h2>
-<p>ssh-keygen生成密钥之后在Mobaxterm的SSH设置找到Advanced SSH Setting里勾选import SSH key可以直接导入密钥。 退出再登录显示这样</p>
-<pre class="line-numbers language-log" data-language="log"><code class="language-log">Authenticating with public key &quot;Imported-Openssh-Key: id_rsa&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>就是成功了（失败会提示这样<code>Server refused our key</code>)</p>
-<h2 id="vscode设置ssh密钥登录">VSCode设置SSH密钥登录</h2>
-<p>装Remote-ssh插件，然后左边框会有个小电脑的图标，点那个图标，再点SSH TARGETS的设置（Configure），进行配置 它有个配置文件，一般在<code>C:/Users/&lt;username&gt;/.ssh</code>下面的config 编辑它的配置文件，Host随便填，HostName填ip，User填用户名，IdentityFile填私钥路径，Port填端口（默认22可以不填） （要是认证失败什么的，建议把那些.ssh文件夹底下的文件删了，比如known_hosts）</p>
-<pre class="line-numbers language-config" data-language="config"><code class="language-config">Host workstation
-    HostName hostname
-    User user
-    IdentityFile C:&#x2F;Users&#x2F;XXX&#x2F;.ssh&#x2F;id_rsa
-    Port 22<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>连接的时候可能会让你手动在termial里的信息 这样应该就行了, 不用每次输密码了。看到那个</p>
-<p>什么？想用密码不想用ssh-key密钥登录，不能保存密码🐴？ 您好，官方文档说不能 &gt;Yes, you should be prompted to enter your token or password automatically. However, passwords are not saved, so using key based authentication is typically more convenient</p>
-<p>（当然这里是新出的功能，bug当然少不了，我就遇到过<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21pY3Jvc29mdC92c2NvZGUtcmVtb3RlLXJlbGVhc2UvaXNzdWVzLzEyMTc=">这样的<i class="fa fa-external-link-alt"></i></span>, 一般遇到问题先升一下最新版或者用insider试试，再不行就去GitHub提issue） 其他的问题找官方文档<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>看看，貌似可以SSH端口转发</p>
-<p>远程SSH的VSCode插件是单独的，可以自行安装 如果你要配置多台主机SSH,在配置文件里并列加配置就行了</p>
-<pre class="line-numbers language-config" data-language="config"><code class="language-config">Host workstation
-    HostName hostname
-    User user
-Host Server
-    HostName hostname
-    User user<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="ssh端口转发">SSH端口转发</h2>
-<p>老网民很熟悉的网上冲浪手段之一就是SSH Tunnel<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>。当只开了22端口的时候可以用这种方法绕过防火墙用TCP之类的，当然，这种方法曾经也用来突破那个巨大的 防火墙 。 今天我突发奇想，看到工作站和服务器的专用线路的速度贼快啊，<del>专用线路从来不低于45Mb/s不高于50Mb/s的速度毫不含糊</del>，还有公网IP。 而102网吧由于老板太抠，四个人用一个路由器，辣鸡校园网网速10M/s都跑不到...</p>
-<p>使用Mobaxterm和SwityOmega插件可以满足大部分需求</p>
-<p>MobaXterm里选Tools &gt; MobaSHHtunnel &gt; New SHH tunnel &gt; Dynamic Port forwarding (SOCKS proxy)</p>
-<p>那个Dynamic Port 是动态转发，不是v2ray那种用来防止被封的动态端口，就是你本地的端口会被转到服务器上相同的端口，是sockets5代理 配置你的端口和密钥（最好把那个autostart和Autoconnect也选上），然后到SwityOmega之类的工具里面填上相应的端口，就可以愉快的上网了。从浏览器的IP查询网站看一下IP，已经是服务器的IP了</p>
-<p>更新，看错了，忘了分Mbps和MBps了，实际上快不了多少，只有6MBps/s。但是没人跟我抢，自己走专线还是快一点的。</p>
-<p>终端的命令可以看这篇，不多说了<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
-<h2 id="突然意识到">突然意识到</h2>
-<p>为什么要用SSH呢，现在不用担心被FIREWALL制裁, 流量特征明显的WireGuard可以用了呀... 有空试试这个闪闪发光的新生代VPN, 底层貌似是UDP，红龙LOGO挺拉风的(跑题了 WireGuard据说要加到新的Linux Kernel里面，但是现在教研室的老Ubuntu只能自己装（这个我18年就听说了要加进kernel啦，连Linus都说好要加辣<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>然而鸽到现在，还是没加，据说作者在搞windows的,现在做的差不多了，要回来折腾Linux了） 之前WireGuard由于流量特征太明显就换了v2，现在试试这个 安装比Openvpn简单，Ubuntu直接PPA装就行了（需要root权限）</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> add-apt-repository ppa:wireguard/wireguard
-<span class="token function">sudo</span> <span class="token function">apt-get</span> update
-<span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> wireguard<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>win10的官方客户端已经出了，之前18年那会我还用的Tunsafe，设置参考这里<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> 听八卦说Tunsafe和WireGuard作者还有过撕逼，此处不表</p>
-<h3 id="其他">其他</h3>
-<h3 id="开机自启">开机自启</h3>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl <span class="token builtin class-name">enable</span> wg-quick@wg0<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h3 id="使用vscode愉快的写cc">使用VSCode愉快的写C/C++</h3>
-<p>装C/C++和coderunner插件就行了，现在可以自动配置运行和调试的文件了（就那个以前一堆坑还经常改一更新就配置失效的launch.json和config.json）</p>
-<h3 id="vscode连接docker">VSCode连接Docker</h3>
-<p>安装Docker和Docker compose插件（在远程里面），然后直接用就行了</p>
-<h2 id="注">注</h2>
-<section class="footnotes" role="doc-endnotes">
-<hr />
-<ol>
-<li id="fn1" role="doc-endnote"><p><span class="exturl" data-url="aHR0cHM6Ly9oeWprMjAwMC5naXRodWIuaW8vMjAxMi8wMy8xNi9ob3ctdG8tc2V0LXVwLXNzaC1rZXlzLw==">设置 SSH 通过密钥登录<i class="fa fa-external-link-alt"></i></span><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2" role="doc-endnote"><p><span class="exturl" data-url="aHR0cHM6Ly9jb2RlLnZpc3VhbHN0dWRpby5jb20vZG9jcy9yZW1vdGUvc3No">官方文档：Remote Development using SSH<i class="fa fa-external-link-alt"></i></span><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3" role="doc-endnote"><p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnlhbmRlcmUubW9lL21vZS9nZnctdnMtcHJveHkvOTcuaHRtbA==">墙与梯的较量<i class="fa fa-external-link-alt"></i></span><a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4" role="doc-endnote"><p><span class="exturl" data-url="aHR0cHM6Ly93d3cuaWJtLmNvbS9kZXZlbG9wZXJ3b3Jrcy9jbi9saW51eC9sLWNuLXNzaGZvcndhcmQvaW5kZXguaHRtbA==">实战 SSH 端口转发<i class="fa fa-external-link-alt"></i></span><a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5" role="doc-endnote"><p>Linus在邮件中回复说： &gt;Btw, on an unrelated issue: I see that Jason actually made the pull &gt;request to have wireguard included in the kernel. &gt; &gt;Can I just once again state my love for it and hope it gets merged &gt;soon? Maybe the code isn't perfect, but I've skimmed it, and compared to the horrors that are OpenVPN and IPSec, it's a work of art. 见<span class="exturl" data-url="aHR0cHM6Ly9sa21sLm9yZy9sa21sLzIwMTgvOC8yLzY2Mw==">https://lkml.org/lkml/2018/8/2/663<i class="fa fa-external-link-alt"></i></span><a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6" role="doc-endnote"><p><span class="exturl" data-url="aHR0cHM6Ly9nb2xiLmhwbGFyLmNoLzIwMTkvMDcvd2lyZWd1YXJkLXdpbmRvd3MuaHRtbA==">Setting up WireGuard on Windows<i class="fa fa-external-link-alt"></i></span><a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section>
-]]></content>
-      <categories>
-        <category>102网吧日常</category>
-      </categories>
-      <tags>
-        <tag>ssh</tag>
-        <tag>vscode</tag>
       </tags>
   </entry>
   <entry>
@@ -2639,6 +2639,329 @@ r <span class="token operator">=</span> requests<span class="token punctuation">
       </categories>
       <tags>
         <tag>v2ray</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>给Archlinux添加blackarch仓库镜像源</title>
+    <url>/add-blackarch-repo-mirrors/</url>
+    <content><![CDATA[<p>我可没干坏事啊</p>
+<a id="more"></a>
+<p>2020.11 目测有效，不保证该方法以后可能过时，建议自行翻阅官方文档。</p>
+<h2 id="导入仓库和设置国内镜像">导入仓库和设置国内镜像</h2>
+<h3 id="导入仓库">导入仓库</h3>
+<p>按照官方文档来：</p>
+<p>下载官网的脚本</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">curl</span> -O https://blackarch.org/strap.sh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>修改权限：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">chmod</span> +x strap.sh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>运行</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">./strap.sh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>然后应该就好了</p>
+<p>看看是不是装好了：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">pacman -Sg <span class="token operator">|</span> <span class="token function">grep</span> blackarch<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>然后更新一下</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> pacman -Syyu<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>这时候应该会给你安装<code>blackarch-keying</code>这个包，然后就可以用了</p>
+<h3 id="镜像源">镜像源</h3>
+<p>修改<code>/etc/pacman.conf</code>，在最后加上</p>
+<pre class="line-numbers language-conf" data-language="conf"><code class="language-conf">[blackarch]
+Server &#x3D; http:&#x2F;&#x2F;mirrors.uestc.cn&#x2F;blackarch&#x2F;$repo&#x2F;os&#x2F;$arch<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>Server请改成你在那里提供服务而且网速比较快的，比如tuna的</p>
+<pre class="line-numbers language-conf" data-language="conf"><code class="language-conf">[blackarch]
+Server &#x3D; https:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;blackarch&#x2F;$repo&#x2F;os&#x2F;$arch<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h2 id="为何要写这么水的一篇博客">为何要写这么水的一篇博客</h2>
+<p>我之前谷歌随手搜出了ustc的镜像使用帮助，然后就开始了飘红报错，试了一圈中文的解决方案，并没有用。 （当然中文博客基本都过时了，还是有很多好好写的，不止CSDN,比如这个：<span class="exturl" data-url="aHR0cHM6Ly93ZWVwaW5nZG9nZWwuZ2l0aHViLmlvL3Bvc3RzL+eUqGFyY2hfbGludXjmiZPpgKDlroznvo7muJfpgI/njq/looMv">用 Arch Linux 打造完美渗透环境<i class="fa fa-external-link-alt"></i></span>）</p>
+<p>报错：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">error: blackarch: key <span class="token string">"F9A6E68A711354D84A9B91637533BAFE69A25079"</span> is unknown
+:: Import PGP key F9A6E68A711354D84A9B91637533BAFE69A25079? <span class="token punctuation">[</span>Y/n<span class="token punctuation">]</span> Y
+Y
+error: key <span class="token string">"F9A6E68A711354D84A9B91637533BAFE69A25079"</span> could not be looked up remotely
+:: Synchronizing package databases<span class="token punctuation">..</span>.
+
+
+error: blackarch: key <span class="token string">"F9A6E68A711354D84A9B91637533BAFE69A25079"</span> is unknown
+:: Import PGP key F9A6E68A711354D84A9B91637533BAFE69A25079? <span class="token punctuation">[</span>Y/n<span class="token punctuation">]</span> 
+error: key <span class="token string">"F9A6E68A711354D84A9B91637533BAFE69A25079"</span> could not be looked up remotely
+error: failed to update blackarch <span class="token punctuation">(</span>invalid or corrupted database <span class="token punctuation">(</span>PGP signature<span class="token punctuation">))</span>
+error: failed to synchronize all databases
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>发现中文的几个解决方案全都过时了。安装<code>blackarch-keying</code>导入key会产生先有鸡还是先有蛋的问题。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">sudo</span> pacman -S blackarch-keyring
+error: blackarch: key <span class="token string">"F9A6E68A711354D84A9B91637533BAFE69A25079"</span> is unknown
+:: Import PGP key F9A6E68A711354D84A9B91637533BAFE69A25079? <span class="token punctuation">[</span>Y/n<span class="token punctuation">]</span> Y
+error: key <span class="token string">"F9A6E68A711354D84A9B91637533BAFE69A25079"</span> could not be looked up remotely
+error: database <span class="token string">'blackarch'</span> is not valid <span class="token punctuation">(</span>invalid or corrupted database <span class="token punctuation">(</span>PGP signature<span class="token punctuation">))</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>转了一圈还是翻了官方文档，世界瞬间清净了。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>+<span class="token punctuation">]</span> installing blackarch keyring<span class="token punctuation">..</span>.
+
+loading packages<span class="token punctuation">..</span>.
+resolving dependencies<span class="token punctuation">..</span>.
+looking <span class="token keyword">for</span> conflicting packages<span class="token punctuation">..</span>.
+
+Packages <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> blackarch-keyring-20140118-3
+
+Total Installed Size:  <span class="token number">0.04</span> MiB
+
+:: Proceed with installation? <span class="token punctuation">[</span>Y/n<span class="token punctuation">]</span> 
+<span class="token punctuation">(</span><span class="token number">1</span>/1<span class="token punctuation">)</span> checking keys <span class="token keyword">in</span> keyring                                         <span class="token punctuation">[</span><span class="token comment">#######################################] 100%</span>
+<span class="token punctuation">(</span><span class="token number">1</span>/1<span class="token punctuation">)</span> checking package integrity                                       <span class="token punctuation">[</span><span class="token comment">#######################################] 100%</span>
+<span class="token punctuation">(</span><span class="token number">1</span>/1<span class="token punctuation">)</span> loading package files                                            <span class="token punctuation">[</span><span class="token comment">#######################################] 100%</span>
+<span class="token punctuation">(</span><span class="token number">1</span>/1<span class="token punctuation">)</span> checking <span class="token keyword">for</span> <span class="token function">file</span> conflicts                                      <span class="token punctuation">[</span><span class="token comment">#######################################] 100%</span>
+:: Processing package changes<span class="token punctuation">..</span>.
+<span class="token punctuation">(</span><span class="token number">1</span>/1<span class="token punctuation">)</span> installing blackarch-keyring                                     <span class="token punctuation">[</span><span class="token comment">#######################################] 100%</span>
+<span class="token operator">==</span><span class="token operator">></span> Appending keys from blackarch.gpg<span class="token punctuation">..</span>.
+gpg: public key DB323392796CA067 is <span class="token number">3037</span> days newer than the signature
+gpg: public key CF66D153D884358F is <span class="token number">16</span> seconds newer than the signature
+<span class="token operator">==</span><span class="token operator">></span> Locally signing trusted keys <span class="token keyword">in</span> keyring<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key A0917C4147A37007CB54C1CFD295AA940EFDDF62<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 4345771566D76038C7FEB43863EC0ADBEA87E4E3<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key CBA3C7D4798912702DCF568E67D8BDF42AD93F4E<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 8F9A9793CB8591147C2EC70566E0CDBD1E01F333<span class="token punctuation">..</span>.
+<span class="token operator">==</span><span class="token operator">></span> Importing owner trust values<span class="token punctuation">..</span>.
+gpg: inserting ownertrust of <span class="token number">4</span>
+gpg: setting ownertrust to <span class="token number">4</span>
+gpg: setting ownertrust to <span class="token number">4</span>
+gpg: setting ownertrust to <span class="token number">4</span>
+<span class="token operator">==</span><span class="token operator">></span> Updating trust database<span class="token punctuation">..</span>.
+gpg: key 1EB2638FF56C0C53: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 1EB2638FF56C0C53: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: public key DB323392796CA067 is <span class="token number">3037</span> days newer than the signature
+gpg: marginals needed: <span class="token number">3</span>  completes needed: <span class="token number">1</span>  trust model: pgp
+gpg: public key CF66D153D884358F is <span class="token number">16</span> seconds newer than the signature
+gpg: depth: <span class="token number">0</span>  valid:   <span class="token number">1</span>  signed:  <span class="token number">56</span>  trust: <span class="token number">0</span>-, 0q, 0n, 0m, 0f, 1u
+gpg: depth: <span class="token number">1</span>  valid:  <span class="token number">56</span>  signed:  <span class="token number">81</span>  trust: <span class="token number">1</span>-, 0q, 0n, 55m, 0f, 0u
+gpg: depth: <span class="token number">2</span>  valid:  <span class="token number">77</span>  signed:  <span class="token number">26</span>  trust: <span class="token number">77</span>-, 0q, 0n, 0m, 0f, 0u
+gpg: next trustdb check due at <span class="token number">2020</span>-12-03
+:: Running post-transaction hooks<span class="token punctuation">..</span>.
+<span class="token punctuation">(</span><span class="token number">1</span>/1<span class="token punctuation">)</span> Arming ConditionNeedsUpdate<span class="token punctuation">..</span>.
+<span class="token operator">==</span><span class="token operator">></span> Appending keys from archlinuxcn.gpg<span class="token punctuation">..</span>.
+<span class="token operator">==</span><span class="token operator">></span> Appending keys from archlinux.gpg<span class="token punctuation">..</span>.
+<span class="token operator">==</span><span class="token operator">></span> Appending keys from blackarch.gpg<span class="token punctuation">..</span>.
+<span class="token operator">==</span><span class="token operator">></span> Appending keys from endeavouros.gpg<span class="token punctuation">..</span>.
+<span class="token operator">==</span><span class="token operator">></span> Locally signing trusted keys <span class="token keyword">in</span> keyring<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 57957BAD5D038B07C28EF49A15B26377262268C1<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 9AF7EED0F7CE3639965C85619BA8AAAAAAAAAAAA<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 87F2E316E0ABC98B9DE8D4EF042FD810600954EF<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 99399D88F7B752BF364CD485A85E3925A6211F05<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 90403E12F4CE5E0E950E4AD2C96492E347202001<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key F905932C85D705FD2A3CC9E47C63370395FF0792<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 1F255DC97A5431001F9D01F8CDABD988DD8AD93B<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key D8AFDDA07A5B6EDFA7D8CCDAD6D055F927843F1C<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 4A6D297E6F74638E4D5F8E99152AC7B5F7608B26<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 4B1DE545A801D4549BFD3FEF90CB3D62C13D4796<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key DC6FB7FC761E848F76E98B4FCCAF35548C65530F<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 0AABCAF6773D5B6E1F4ECF794E72AF09097DAE2E<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key A0917C4147A37007CB54C1CFD295AA940EFDDF62<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 43A253584139DC6D923B6EFC34F1E61A0EEB4F51<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 3167205DC1F2582F226007FAB012733142D79E59<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 9BE836747F3533EAABA99F1485AEA2926167AD32<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 708DFB13CBED9AB39449DBFB41C04120C297B594<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key F357BC80BE28C292B40ECEC8997995DF61A0959A<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key DDB867B92AA789C165EEFA799B729B06A680C281<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 7B314BE77DBCA20E02DDBBC050BF8B712DCAD7EA<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key D88390B2991F8242FABD2A3C07F45E2A1937DD32<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 53641635F498CDD60227A7ED0832F151DB0FB18E<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 1C874172781545C15399D4CF7E9BA67AD5E38E78<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 38009E1FD96C320609BF05870A5BAD445D80C1CC<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 4CFF42599833CF3AE98A2F098850CBC20940E3F9<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 1C9084FAFE017CEAE4AF59C91DF6CF104433578C<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 1D5AB52A241CC492A724FE14E8D79E63E3D142F3<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 356690A1E7404E30D0E902B2E64D049594A54F54<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 0285FB6900D102030550F20A34908FFBC0BFAC35<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 1B53ED6B05A88B45FE02AE6186CC4303D870877E<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 02E02B85AF209AA00F784A1DD48313B447CD9E46<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key BEA7E7644AE093AB557E521A26D9876AC0719A0B<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 4345771566D76038C7FEB43863EC0ADBEA87E4E3<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 48ADDE10F27BAFB47BB0CCAF2D2595A00D08ACE0<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key CBA3C7D4798912702DCF568E67D8BDF42AD93F4E<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 2AC4CFDB42972D38F105800BC0EB1AA4536A8318<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key B5971F2C5C10A9A08C60030F786C63F330D7CB92<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 8F9A9793CB8591147C2EC70566E0CDBD1E01F333<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key D87D10B4E132FFA40DEC232B7A3A9FA6E4FD4A8D<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 21E347C47A6A13CDE64713CBAE62544C55609060<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 22D8A46B2CDA6605A1C0CFD1E060B3E215CE49BB<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 83F817213361BF5F02E7E124F9F9FA97A403F63E<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 243C14E5339E1B88EDCB29C595FC83B3084A5ADD<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 86EEEC214D245137446F4AB195304B04071CCDB4<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key CF73A9AE20AD483CE51130E0303A369BE11E4BE7<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key A0B55B12351C08FED81DAAF4840A50A14EEF0D58<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 481C4474AF1572165AE4C6AF3FDDD575826C5C30<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 91FFE0700E80619CEB73235CA88E23E377514E00<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 7028E1F320C45EE98473B1C35F1BC1A1BF2B11D0<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 688E1D093C3638F588890D4450268311C7AD3F62<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 00e716120987a801cd25070828d10c49a44f261e<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 0E8B644079F599DFC1DDC3973348882F6AC6A4C2<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 9AD42FE922425C9D93E60B43BAD2804227A0AF05<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key AB19265E5D7D20687D303246BA1DFB64FFF979E7<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key C41D545A576AC1FE4DBE90C9B6CF41D1879E8002<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 504357523094066C67E56CF58D99AA5CAD3908B0<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 1FDBDCE2D26BD8F100EE2E73B1B9AAD8BE7E7326<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 5984EA8F3C6C92945EB2EE40BE378C0A19C6421B<span class="token punctuation">..</span>.
+<span class="token operator">==</span><span class="token operator">></span> Importing owner trust values<span class="token punctuation">..</span>.
+<span class="token operator">==</span><span class="token operator">></span> Disabling revoked keys <span class="token keyword">in</span> keyring<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Disabling key 8F76BEEA0289F9E1D3E229C05F946DED983D4366<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Disabling key 63F395DE2D6398BBE458F281F2DBB4931985A992<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Disabling key 50F33E2E5B0C3D900424ABE89BDCF497A4BBCC7F<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Disabling key 27FFC4769E19F096D41D9265A04F9397CDFD6BB0<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Disabling key 39F880E50E49A4D11341E8F939E4F17F295AFBF4<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Disabling key 8840BD07FC24CB7CE394A07CCF7037A4F27FB7DA<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Disabling key 5559BC1A32B8F76B3FCCD9555FA5E5544F010D48<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Disabling key 0B20CA1931F5DA3A70D0F8D2EA6836E1AB441196<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Disabling key 07DFD3A0BC213FA12EDC217559B3122E2FA915EC<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Disabling key 4FCF887689C41B09506BE8D5F3E1D5C5D30DB0AD<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Disabling key 2A83ADADD054CB3C4CF7DF9D2D1E72461CCBBA98<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Disabling key 5A2257D19FF7E1E0E415968CE62F853100F0D0F0<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Disabling key 4E43CCE7ADF712FF75C7B4A5EF50AB125C83BB2D<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Disabling key D921CABED130A5690EF1896E81AF739EC0711BF1<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Disabling key 7FA647CD89891DEDC060287BB9113D1ED21E1A55<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Disabling key BC1FBE4D2826A0B51E47ED62E2539214C6C11350<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Disabling key 24F24E986EB2FE628DBDD3CFB9E701221C820178<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Disabling key 4A8B17E20B88ACA61860009B5CED81B7C2E5C0D2<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Disabling key 417A75A94D7DCA0FE37EBA89BF971BB9D4D40A3B<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Disabling key 5696C003B0854206450C8E5BE613C09CB4440678<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Disabling key AA0CBF3859E580B97D9F04638FDE3D8FC99F40AE<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Disabling key 684148BB25B49E986A4944C55184252D824B18E8<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Disabling key 8CF934E339CAD8ABF342E822E711306E3C4F88BC<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Disabling key F5A361A3A13554B85E57DDDAAF7EF7873CFD4BB6<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Disabling key 5E7585ADFF106BFFBBA319DC654B877A0864983E<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Disabling key 65EEFE022108E2B708CBFCF7F9E712E59AF5F22A<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Disabling key 40440DC037C05620984379A6761FAD69BA06C6A9<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Disabling key 34C5D94FE7E7913E86DC427E7FB1A3800C84C0A5<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Disabling key 1A60DC44245D06FEF90623D6EEEEE2EEEE2EEEEE<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Disabling key 81D7F8241DB38BC759C80FCE3A726C6170E80477<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Disabling key 86F797B20DE062D8540D6D243CD72EBFE6DE17D8<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Disabling key A373F9E056E8E4912F842CF596D6420DD2E3A1F0<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Disabling key E7210A59715F6940CF9A4E36A001876699AD6E84<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Disabling key 5357F3B111688D88C1D88119FCF2CB179205AC90<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Disabling key 4D913AECD81726D9A6C74F0ADA6426DD215B37AD<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Disabling key FB871F0131FEA4FB5A9192B4C8880A6406361833<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Disabling key 66BD74A036D522F51DD70A3C7F2A16726521E06D<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Disabling key 487EACC08557AD082088DABA1EB2638FF56C0C53<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Disabling key B1F2C889CB2CCB2ADA36D963097D629E437520BD<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Disabling key 9515D8A8EAB88E49BB65EDBCE6B456CAF15447D5<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Disabling key 76B4192E902C0A52642C63C273B8ED52F1D357C1<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Disabling key 40776A5221EF5AD468A4906D42A1DB15EC133BAD<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Disabling key D4DE5ABDE2A7287644EAC7E36D1A9E70E19DAA50<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Disabling key 44D4A033AC140143927397D47EFD567D4C7EA887<span class="token punctuation">..</span>.
+<span class="token operator">==</span><span class="token operator">></span> Updating trust database<span class="token punctuation">..</span>.
+gpg: next trustdb check due at <span class="token number">2020</span>-12-03
+
+<span class="token punctuation">[</span>+<span class="token punctuation">]</span> keyring installed successfully
+<span class="token punctuation">[</span>+<span class="token punctuation">]</span> updating package databases
+:: Synchronizing package databases<span class="token punctuation">..</span>.
+ core                                      <span class="token number">129.9</span> KiB  <span class="token number">6.34</span> MiB/s 00:00 <span class="token punctuation">[</span>---------------------------------------<span class="token punctuation">]</span> <span class="token number">100</span>%
+ extra                                    <span class="token number">1634.4</span> KiB  <span class="token number">4.09</span> MiB/s 00:00 <span class="token punctuation">[</span>---------------------------------------<span class="token punctuation">]</span> <span class="token number">100</span>%
+ community                                   <span class="token number">5.2</span> MiB  <span class="token number">11.1</span> MiB/s 00:00 <span class="token punctuation">[</span>---------------------------------------<span class="token punctuation">]</span> <span class="token number">100</span>%
+ multilib                                  <span class="token number">154.2</span> KiB  <span class="token number">7.53</span> MiB/s 00:00 <span class="token punctuation">[</span>---------------------------------------<span class="token punctuation">]</span> <span class="token number">100</span>%
+ endeavouros                                <span class="token number">14.2</span> KiB  <span class="token number">0.00</span>   B/s 00:00 <span class="token punctuation">[</span>---------------------------------------<span class="token punctuation">]</span> <span class="token number">100</span>%
+ archlinuxcn                              <span class="token number">1354.5</span> KiB  <span class="token number">11.0</span> MiB/s 00:00 <span class="token punctuation">[</span>---------------------------------------<span class="token punctuation">]</span> <span class="token number">100</span>%
+ blackarch                                   <span class="token number">3.3</span> MiB   <span class="token number">500</span> KiB/s 00:07 <span class="token punctuation">[</span>---------------------------------------<span class="token punctuation">]</span> <span class="token number">100</span>%
+ blackarch.sig                             <span class="token number">566.0</span>   B  <span class="token number">0.00</span>   B/s 00:00 <span class="token punctuation">[</span>---------------------------------------<span class="token punctuation">]</span> <span class="token number">100</span>%<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">Packages <span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span> blackarch-keyring-20180925-2  perl-expect-1.35-6
+
+Total Download Size:   <span class="token number">0.07</span> MiB
+Total Installed Size:  <span class="token number">0.15</span> MiB
+Net Upgrade Size:      <span class="token number">0.00</span> MiB
+
+:: Proceed with installation? <span class="token punctuation">[</span>Y/n<span class="token punctuation">]</span> Y
+:: Retrieving packages<span class="token punctuation">..</span>.
+ blackarch-keyring-20180925-2-any                                                                   <span class="token number">18.1</span> KiB  <span class="token number">0.00</span>   B/s 00:00 <span class="token punctuation">[</span>-----------------------------------------------------------------------------<span class="token punctuation">]</span> <span class="token number">100</span>%
+ perl-expect-1.35-6-any                                                                             <span class="token number">50.9</span> KiB  <span class="token number">1698</span> KiB/s 00:00 <span class="token punctuation">[</span>-----------------------------------------------------------------------------<span class="token punctuation">]</span> <span class="token number">100</span>%
+<span class="token punctuation">(</span><span class="token number">2</span>/2<span class="token punctuation">)</span> checking keys <span class="token keyword">in</span> keyring                                                                                                 <span class="token punctuation">[</span>-----------------------------------------------------------------------------<span class="token punctuation">]</span> <span class="token number">100</span>%
+<span class="token punctuation">(</span><span class="token number">2</span>/2<span class="token punctuation">)</span> checking package integrity                                                                                               <span class="token punctuation">[</span>-----------------------------------------------------------------------------<span class="token punctuation">]</span> <span class="token number">100</span>%
+<span class="token punctuation">(</span><span class="token number">2</span>/2<span class="token punctuation">)</span> loading package files                                                                                                    <span class="token punctuation">[</span>-----------------------------------------------------------------------------<span class="token punctuation">]</span> <span class="token number">100</span>%
+<span class="token punctuation">(</span><span class="token number">2</span>/2<span class="token punctuation">)</span> checking <span class="token keyword">for</span> <span class="token function">file</span> conflicts                                                                                              <span class="token punctuation">[</span>-----------------------------------------------------------------------------<span class="token punctuation">]</span> <span class="token number">100</span>%
+:: Processing package changes<span class="token punctuation">..</span>.
+<span class="token punctuation">(</span><span class="token number">1</span>/2<span class="token punctuation">)</span> upgrading blackarch-keyring                                                                                              <span class="token punctuation">[</span>-----------------------------------------------------------------------------<span class="token punctuation">]</span> <span class="token number">100</span>%
+<span class="token operator">==</span><span class="token operator">></span> Appending keys from blackarch.gpg<span class="token punctuation">..</span>.
+<span class="token operator">==</span><span class="token operator">></span> Locally signing trusted keys <span class="token keyword">in</span> keyring<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key A0917C4147A37007CB54C1CFD295AA940EFDDF62<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 4345771566D76038C7FEB43863EC0ADBEA87E4E3<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key CBA3C7D4798912702DCF568E67D8BDF42AD93F4E<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 8F9A9793CB8591147C2EC70566E0CDBD1E01F333<span class="token punctuation">..</span>.
+<span class="token operator">==</span><span class="token operator">></span> Importing owner trust values<span class="token punctuation">..</span>.
+<span class="token operator">==</span><span class="token operator">></span> Disabling revoked keys <span class="token keyword">in</span> keyring<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Disabling key 5E210889BBB5C48500E0C4F9C75E985FF8B993B4<span class="token punctuation">..</span>.
+<span class="token operator">==</span><span class="token operator">></span> Updating trust database<span class="token punctuation">..</span>.
+gpg: key 1EB2638FF56C0C53: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 1EB2638FF56C0C53: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: public key DB323392796CA067 is <span class="token number">3037</span> days newer than the signature
+gpg: marginals needed: <span class="token number">3</span>  completes needed: <span class="token number">1</span>  trust model: pgp
+gpg: public key CF66D153D884358F is <span class="token number">16</span> seconds newer than the signature
+gpg: depth: <span class="token number">0</span>  valid:   <span class="token number">1</span>  signed:  <span class="token number">56</span>  trust: <span class="token number">0</span>-, 0q, 0n, 0m, 0f, 1u
+gpg: depth: <span class="token number">1</span>  valid:  <span class="token number">56</span>  signed:  <span class="token number">81</span>  trust: <span class="token number">1</span>-, 0q, 0n, 55m, 0f, 0u
+gpg: depth: <span class="token number">2</span>  valid:  <span class="token number">77</span>  signed:  <span class="token number">26</span>  trust: <span class="token number">77</span>-, 0q, 0n, 0m, 0f, 0u
+gpg: next trustdb check due at <span class="token number">2020</span>-12-03
+<span class="token punctuation">(</span><span class="token number">2</span>/2<span class="token punctuation">)</span> upgrading perl-expect                                                                                                    <span class="token punctuation">[</span>-----------------------------------------------------------------------------<span class="token punctuation">]</span> <span class="token number">100</span>%
+:: Running post-transaction hooks<span class="token punctuation">..</span>.
+<span class="token punctuation">(</span><span class="token number">1</span>/2<span class="token punctuation">)</span> Arming ConditionNeedsUpdate<span class="token punctuation">..</span>.
+<span class="token punctuation">(</span><span class="token number">2</span>/2<span class="token punctuation">)</span> Warn about old perl modules
+:: Searching databases <span class="token keyword">for</span> updates<span class="token punctuation">..</span>.
+:: Searching AUR <span class="token keyword">for</span> updates<span class="token punctuation">..</span>.
+ -<span class="token operator">></span> python-pgspecial: <span class="token builtin class-name">local</span> <span class="token punctuation">(</span><span class="token number">1.11</span>.10-2<span class="token punctuation">)</span> is newer than blackarch <span class="token punctuation">(</span><span class="token number">1.11</span>.10-1<span class="token punctuation">)</span>
+ there is nothing to <span class="token keyword">do</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>事实证明还是得看官方文档解决问题，以后直接看官方文档啊同学们！</p>
+<h2 id="参考">参考</h2>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0JsYWNrQXJjaC9ibGFja2FyY2g=">https://github.com/BlackArch/blackarch<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly93d3cuYmxhY2thcmNoLm9yZy9kb3dubG9hZHMuaHRtbCNpbnN0YWxsLXJlcG8=">https://www.blackarch.org/downloads.html#install-repo<i class="fa fa-external-link-alt"></i></span></p>
+]]></content>
+      <tags>
+        <tag>blackarch</tag>
       </tags>
   </entry>
   <entry>
@@ -3935,6 +4258,9 @@ lines <span class="token number">2</span>-36/36 <span class="token punctuation">
 <p>不过对于笔记本个人用户来说SSH到自己的加密盘貌似不是什么刚需，还是等完善了随身带着硬盘走比较好。</p>
 <h4 id="休眠">休眠</h4>
 <p>貌似不少人会碰到奇奇怪怪的休眠问题，很在意休眠的笔记本用户请谨慎上车。</p>
+<h4 id="删除用户后sddm仍有残留">删除用户后SDDM仍有残留</h4>
+<p>用<code>homectl activate</code>激活了一个用户temp1，然后用<code>homectl remove</code>删除了这个用户temp1，结果发现我的SDDM在登陆页面仍然有原来的temp1。检查<code>/home</code>发现这下面已经没有temp1.home文件了，但是还有temp1这个文件夹（受保护）。</p>
+<p>我又用刚才新建的用户zhixi试了一下，在inactive情况下会比较干净的remove。</p>
 <h2 id="可能的报错">可能的报错</h2>
 <pre class="line-numbers language-none"><code class="language-none">homectl su: Authentication service cannot retrieve authentication info<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>可能是你的daemon没启动，试试启动daemon并重启一下试试。</p>

@@ -357,7 +357,7 @@ mjx-container[display="true"] + br {
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-count">46</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -370,7 +370,7 @@ mjx-container[display="true"] + br {
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-count">65</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -477,7 +477,7 @@ mjx-container[display="true"] + br {
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-11-10 18:57:58" itemprop="dateModified" datetime="2020-11-10T18:57:58+08:00">2020-11-10</time>
+        <time title="修改时间：2020-11-12 22:34:30" itemprop="dateModified" datetime="2020-11-12T22:34:30+08:00">2020-11-12</time>
       </span>
 
   
@@ -511,7 +511,7 @@ mjx-container[display="true"] + br {
 <ol type="1">
 <li><p>在“首选项-入站设置”的下方启用透明代理选项。</p>
 <ul>
-<li>监听ipv4地址可填127.0.0.1或0.0.0.0，建议前者。若需双栈代理，则在监听ipv6地址填上[::1]（如果监听ipv4填了0.0.0.0则可不填）。</li>
+<li>监听ipv4地址可填127.0.0.1或0.0.0.0，建议前者。若需双栈代理，则在监听ipv6地址填上<code>::1</code>（如果监听ipv4填了0.0.0.0则可不填）。</li>
 <li>在“网络模式”中勾选需要透明代理的协议。模式选择“tproxy”。</li>
 <li>如果希望在透明代理环境里让v2ray的内置dns接管本地dns，则勾选“dns拦截”。注意，在透明代理环境下，如果系统dns或v2ray的内置dns配置不当，可能导致系统无法解析域名从而无法正常上网。详见后文说明。</li>
 </ul>
@@ -537,12 +537,12 @@ mjx-container[display="true"] + br {
 <li><p>在每次连接代理节点时，让<code>qv2ray</code>自己把自己移到透明代理环境外面：</p>
 <ul>
 <li><p>安装Qvplugin-Command插件，在插件设置里的“pre-connection”栏里加上一句</p>
-<pre class="line-numbers language-none"><code class="language-none">sh -c &quot;cgnoproxy --pid $(pgrep -x qv2ray)&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sh</span> -c <span class="token string">"cgnoproxy --pid <span class="token variable"><span class="token variable">$(</span>pgrep -x qv2ray<span class="token variable">)</span></span>"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>即可。</p></li>
 </ul></li>
 </ul></li>
 <li><p>（重要）如果启用了udp的透明代理（dns也是udp），则给v2ray二进制文件加上相应的特权：</p>
-<pre class="line-numbers language-none"><code class="language-none">sudo setcap &quot;cap_net_admin,cap_net_bind_service&#x3D;ep&quot; &#x2F;path&#x2F;of&#x2F;your&#x2F;v2ray<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> setcap <span class="token string">"cap_net_admin,cap_net_bind_service=ep"</span> /path/of/your/v2ray<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>否则udp的透明代理可能会出问题。</p></li>
 <li><p>启动透明代理服务：<code>systemctl start cgproxy.service</code>或<code>systemctl enable --now cgproxy.service</code>。</p></li>
 </ol>
