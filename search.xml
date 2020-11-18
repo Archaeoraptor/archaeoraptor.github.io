@@ -3,7 +3,8 @@
   <entry>
     <title>AR模型谱估计的几种算法比较</title>
     <url>/fcd4/</url>
-    <content><![CDATA[<p>Burg法,L-D法等 <a id="more"></a> ### AR（自回归）模型</p>
+    <content><![CDATA[<p>Burg法,L-D法等 <a id="more"></a></p>
+<h3 id="ar自回归模型">AR（自回归）模型</h3>
 <p>AR模型适用于平稳、宽平稳的随机序列，是一个差分方程模型。 可以认为是一个带微扰的马尔可夫过程。一个最简单的例子是<span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vc3VwZXItemhhbmctODI4L3AvNzEwNjk3MC5odG1s">单摆<i class="fa fa-external-link-alt"></i></span>。一些不满足平稳条件的事件，AR模型的分析效果是很差的（如股票预测）</p>
 <p>从时域讨论稳定参见<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8zNTA5MzgzNQ==">时间序列的自回归模型—从线性代数的角度来看<i class="fa fa-external-link-alt"></i></span>, 当Y-W方程的系数矩阵正定时，传递函数的极点在单位圆内，模型稳定。</p>
 <h3 id="ar模型及功率谱的估计">AR模型及功率谱的估计</h3>
@@ -44,7 +45,8 @@
   <entry>
     <title>Docker笔记</title>
     <url>/69d4/</url>
-    <content><![CDATA[<p>开始折腾Docker，等待填坑 <a id="more"></a> 容器化到底拿来干什么呢</p>
+    <content><![CDATA[<p>开始折腾Docker，等待填坑 <a id="more"></a></p>
+<p>容器化到底拿来干什么呢</p>
 <p>Docker还可以套娃，Docker里面跑Docker</p>
 <h2 id="基本设置和操作">基本设置和操作</h2>
 <h3 id="docker设置">Docker设置</h3>
@@ -197,7 +199,8 @@ tcp6       0      0 211.83.111.224:443      211.83.111.221:40294    ESTABLISHED 
   <entry>
     <title>Flask接锅记</title>
     <url>/ff2b/</url>
-    <content><![CDATA[<p>动态语言一时爽，维护重构火葬场 <a id="more"></a> ## 前言</p>
+    <content><![CDATA[<p>动态语言一时爽，维护重构火葬场 <a id="more"></a></p>
+<h2 id="前言">前言</h2>
 <p>国庆假期之后开始了偶滴搬砖生活，教研室有个师兄在拿Flask做微信公众号的文章推送后端。为了读祖传代码，准备折腾Flask。 据说Flask和Django差不了太多，之前Django用的很菜，也不打算拿Django或node之类的重构一边，索性就跳Flask的坑吧</p>
 <h2 id="配置">配置</h2>
 <p>[1] 开启Debug模式。1.0之后直接在Pycharm的Configuration里勾选开启就好了。或者</p>
@@ -262,7 +265,8 @@ pip install <span class="token operator">-</span>r requirements<span class="toke
   <entry>
     <title>Keras笔记</title>
     <url>/d5cc/</url>
-    <content><![CDATA[<p>瞎写的 <a id="more"></a> ## Keras函数式API</p>
+    <content><![CDATA[<p>瞎写的 <a id="more"></a></p>
+<h2 id="keras函数式api">Keras函数式API</h2>
 <p>构造张量</p>
 <pre><code>inputs = Input(shape=(64,))</code></pre>
 <p>创建层</p>
@@ -310,7 +314,8 @@ validation_data<span class="token operator">=</span><span class="token punctuati
   <entry>
     <title>喜欢的东东</title>
     <url>/b27a/</url>
-    <content><![CDATA[<p>My Collection <a id="more"></a> <img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/20190916114948.png"/></p>
+    <content><![CDATA[<p>My Collection <a id="more"></a></p>
+<p><img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/20190916114948.png"/></p>
 <h2 id="关于入侵物种的题外话">关于入侵物种的题外话</h2>
 <p>这是题外话，可以直接跳过本节看后面的</p>
 <p>首先讲一句题外话，流浪猫、流浪狗是危害相当大的入侵物种，威胁一点不比红耳龟、罗非、克氏原螯虾、食蚊鱼小，可以参见<span class="exturl" data-url="aHR0cHM6Ly93d3cubmF0dXJlLmNvbS9hcnRpY2xlcy9uY29tbXMyMzgw">关于散养猫的nature主页文章<i class="fa fa-external-link-alt"></i></span> 应该<font size="4">直接扑杀或关在室内收养</font><br />
@@ -601,9 +606,180 @@ poetry <span class="token function">install</span><span aria-hidden="true" class
       </tags>
   </entry>
   <entry>
+    <title>上线一个Spring Cloud的课程管理服务项目</title>
+    <url>/course-managemnet/</url>
+    <content><![CDATA[<p>先说一下感想：小作坊不适合微服务，请不起年薪五十万的架构师、年薪三十万的DevOps，没有各种没事造轮子重构刷KPI的目的，没有服务器集群的、开发一只手能数过来的，都谨慎尝试微服务。</p>
+<a id="more"></a>
+<h2 id="大概情况">大概情况</h2>
+<ul>
+<li><p>瞎折腾微服务玩，然而并没有集群（手里三台服务器垃圾配置只够乱开几个Docker玩）</p></li>
+<li><p>并没有Golang，用的java（别问为什么又是java）</p></li>
+<li><p>目测用户量不超过100，很有可能并发量不超过10（对，比我这博客网站还门可罗雀）</p></li>
+<li><p>不过比较麻烦的一点是有视频播放的问题，流量根本顶不住，目前是打算买阿里云的视频点播</p></li>
+</ul>
+<p><del>我感觉到时候日均用户访问量都没有拆分出来的微服务个数多</del></p>
+<ul>
+<li>用的Spring Cloud全家桶（你看我们像是有闲功夫能自研框架人吗）</li>
+<li>写的挺好，一上线幺蛾子就多了</li>
+</ul>
+<p>cm_admin: 后台管理系统前端代码，vue写的 cm_frontweb: 主页面前端代码，Nuxt.js的 cm_parent: 后端代码 Spring Cloud 拆成了个微服务</p>
+<p><del>过度设计，问就是过度设计</del></p>
+<figure>
+<img src="/course-managemnet/image-20201118214736704.png" alt="后台管理" /><figcaption aria-hidden="true">后台管理</figcaption>
+</figure>
+<figure>
+<img src="/course-managemnet/image-20201118215636817.png" alt="前台界面" /><figcaption aria-hidden="true">前台界面</figcaption>
+</figure>
+<h2 id="环境配置">环境配置</h2>
+<h3 id="数据库">数据库</h3>
+<p>docker安装mysql8（其实不是很推荐把数据库扔到Docker里面）</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> docker pull mysql:8.0
+<span class="token function">sudo</span> docker images mysql:8.0
+<span class="token function">netstat</span> -tunlp
+docker run -p <span class="token number">3309</span>:3306 --name mysql8.0 -e <span class="token assign-left variable">MYSQL_ROOT_PASSWORD</span><span class="token operator">=</span><span class="token number">102</span>@uestc -d mysql:8.0
+docker <span class="token function">ps</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>初始化数据库，运行</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">mycli -u root -h your_ip_address -P <span class="token number">3309</span> -p your_password<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">create database course_management
+use course_management
+source ~&#x2F;codes&#x2F;course_management&#x2F;course_management.sql<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>看一下是否成功</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">mysql root@211.83.255.255:course_management&gt; show tables
++-----------------------------+
+| Tables_in_course_management |
++-----------------------------+
+| crm_banner                  |
+| edu_chapter                 |
+| edu_comment                 |
+| edu_course                  |
+| edu_course_collect          |
+| edu_course_description      |
+| edu_subject                 |
+| edu_teacher                 |
+| edu_video                   |
+| statistics_daily            |
+| t_order                     |
+| t_pay_log                   |
+| ucenter_member              |
++-----------------------------+
+13 rows in set
+Time: 0.009s<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="spring-cloud的8个微服务">Spring Cloud的8个微服务</h3>
+<p>分别打包好8个jar包</p>
+<p>启动服务：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">nohup</span> java -jar <span class="token punctuation">&#123;</span>微服务名.jar<span class="token punctuation">&#125;</span> -Dspring.config.location<span class="token operator">=</span><span class="token punctuation">&#123;</span>配置文件名.properties<span class="token punctuation">&#125;</span> <span class="token operator">></span> java_cm.log <span class="token operator"><span class="token file-descriptor important">2</span>></span><span class="token file-descriptor important">&amp;1</span> <span class="token operator">&amp;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>配置可以从指定的<code>application.properties</code> 中覆盖</p>
+<h3 id="修改配置">修改配置</h3>
+<p>将<code>src/main/resources/application.properties</code>和<code>src/test/java/CodeGenerator.java</code>中的配置文件（包括数据库端口、密码、密钥等）改成自己的</p>
+<p>或者启动的时候在`<code>application.properties</code> 中覆盖</p>
+<h3 id="nacos">NACOS</h3>
+<p>一个阿里的动态监控监控服务，有一个控制台。我们只要单机版就够了。还有其他的功能，暂时都没用到。</p>
+<p>阿里官方的建库脚本</p>
+<p>https://github.com/alibaba/nacos/blob/master/distribution/conf/nacos-mysql.sql</p>
+<p>或者不要数据库记录日志，直接存成文件。这个直接照着官方的说明启动就行了</p>
+<h3 id="nginx">Nginx</h3>
+<p>使用Nginx进行端口映射，还是把Nginx扔到Docker里面了</p>
+<p>编写<code>nginx.conf</code>:</p>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token keyword">server</span> <span class="token punctuation">&#123;</span>
+		<span class="token keyword">listen</span>	<span class="token number">9001</span><span class="token punctuation">;</span>
+		<span class="token keyword">server_name</span>	localhost<span class="token punctuation">;</span>
+		<span class="token keyword">location</span> <span class="token operator">~</span> <span class="token operator">/</span>eduservice<span class="token operator">/</span> <span class="token punctuation">&#123;</span>
+			 <span class="token keyword">proxy_pass</span> <span class="token keyword">http</span><span class="token punctuation">:</span><span class="token operator">/</span><span class="token operator">/</span>localhost<span class="token punctuation">:</span><span class="token number">8001</span><span class="token punctuation">;</span>
+		<span class="token punctuation">&#125;</span>
+		<span class="token keyword">location</span> <span class="token operator">~</span> <span class="token operator">/</span>eduoss<span class="token operator">/</span> <span class="token punctuation">&#123;</span>
+			 <span class="token keyword">proxy_pass</span> <span class="token keyword">http</span><span class="token punctuation">:</span><span class="token operator">/</span><span class="token operator">/</span>localhost<span class="token punctuation">:</span><span class="token number">8002</span><span class="token punctuation">;</span>
+		<span class="token punctuation">&#125;</span>
+		<span class="token keyword">location</span> <span class="token operator">~</span> <span class="token operator">/</span>eduvod<span class="token operator">/</span> <span class="token punctuation">&#123;</span>
+			 <span class="token keyword">proxy_pass</span> <span class="token keyword">http</span><span class="token punctuation">:</span><span class="token operator">/</span><span class="token operator">/</span>localhost<span class="token punctuation">:</span><span class="token number">8003</span><span class="token punctuation">;</span>
+		<span class="token punctuation">&#125;</span>
+        <span class="token keyword">location</span> <span class="token operator">~</span> <span class="token operator">/</span>educms<span class="token operator">/</span> <span class="token punctuation">&#123;</span>
+			 <span class="token keyword">proxy_pass</span> <span class="token keyword">http</span><span class="token punctuation">:</span><span class="token operator">/</span><span class="token operator">/</span>localhost<span class="token punctuation">:</span><span class="token number">8004</span><span class="token punctuation">;</span>
+		<span class="token punctuation">&#125;</span>
+		<span class="token keyword">location</span> <span class="token operator">~</span> <span class="token operator">/</span>edumsm<span class="token operator">/</span> <span class="token punctuation">&#123;</span>
+			 <span class="token keyword">proxy_pass</span> <span class="token keyword">http</span><span class="token punctuation">:</span><span class="token operator">/</span><span class="token operator">/</span>localhost<span class="token punctuation">:</span><span class="token number">8005</span><span class="token punctuation">;</span>
+		<span class="token punctuation">&#125;</span>
+		<span class="token keyword">location</span> <span class="token operator">~</span> <span class="token operator">/</span>eduucenter<span class="token operator">/</span> <span class="token punctuation">&#123;</span>
+			 <span class="token keyword">proxy_pass</span> <span class="token keyword">http</span><span class="token punctuation">:</span><span class="token operator">/</span><span class="token operator">/</span>localhost<span class="token punctuation">:</span><span class="token number">8006</span><span class="token punctuation">;</span>
+		<span class="token punctuation">&#125;</span>
+		<span class="token keyword">location</span> <span class="token operator">~</span> <span class="token operator">/</span>eduorder<span class="token operator">/</span> <span class="token punctuation">&#123;</span>
+			 <span class="token keyword">proxy_pass</span> <span class="token keyword">http</span><span class="token punctuation">:</span><span class="token operator">/</span><span class="token operator">/</span>localhost<span class="token punctuation">:</span><span class="token number">8007</span><span class="token punctuation">;</span>
+		<span class="token punctuation">&#125;</span>
+		<span class="token keyword">location</span> <span class="token operator">~</span> <span class="token operator">/</span>edustatistics<span class="token operator">/</span> <span class="token punctuation">&#123;</span>
+			 <span class="token keyword">proxy_pass</span> <span class="token keyword">http</span><span class="token punctuation">:</span><span class="token operator">/</span><span class="token operator">/</span>localhost<span class="token punctuation">:</span><span class="token number">8008</span><span class="token punctuation">;</span>
+		<span class="token punctuation">&#125;</span>
+	<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>编写<code>Dockerfile</code>：</p>
+<pre class="line-numbers language-dockerfile" data-language="dockerfile"><code class="language-dockerfile">FROM nginx:alpine
+COPY default.conf &#x2F;etc&#x2F;nginx&#x2F;conf.d&#x2F;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>构建<code>Docker image</code></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> docker build -t nginxcm <span class="token builtin class-name">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>启动Docker image</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> docker run -d nginxcm<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="其他的问题">其他的问题</h3>
+<p>阿里云aliyun-sdk-vod-upload这玩意未开源，需要手动下</p>
+<pre class="line-numbers language-none"><code class="language-none">Cannot resolve com.aliyun:aliyun-sdk-vod-upload:1.4.11<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>去<span class="exturl" data-url="aHR0cDovL2RvY3MtYWxpeXVuLmNuLWhhbmd6aG91Lm9zcy5hbGl5dW4taW5jLmNvbS9hc3NldHMvYXR0YWNoLzUxOTkyL2NuX3poLzE2MDA4NDgxOTk5NTIvVk9EVXBsb2FkRGVtby1qYXZhLTEuNC4xMy56aXA/c3BtPWEyYzRnLjExMTg2NjIzLjIuNDAuNDVjMDE5MmJpUEh4Y2omYW1wO2ZpbGU9Vk9EVXBsb2FkRGVtby1qYXZhLTEuNC4xMy56aXA=">这里<i class="fa fa-external-link-alt"></i></span>下载运行</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">mvn install:install-file -DgroupId<span class="token operator">=</span>com.aliyun -DartifactId<span class="token operator">=</span>aliyun-sdk-vod-upload -Dversion<span class="token operator">=</span><span class="token number">1.4</span>.11 -Dpackaging<span class="token operator">=</span>jar -Dfile<span class="token operator">=</span>aliyun-java-vod-upload-1.4.13.jar<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h2 id="前端">前端</h2>
+<p>分别在两个目录里运行npm命令即可</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> run build<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="nacos-1">nacos</h3>
+<p>一个阿里搞的配置工具</p>
+<p>见<span class="exturl" data-url="aHR0cHM6Ly9uYWNvcy5pby96aC1jbi9kb2NzL3F1aWNrLXN0YXJ0Lmh0bWw=">https://nacos.io/zh-cn/docs/quick-start.html<i class="fa fa-external-link-alt"></i></span></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> clone https://github.com/alibaba/nacos.git
+<span class="token builtin class-name">cd</span> nacos/
+mvn -Prelease-nacos -Dmaven.test.skip<span class="token operator">=</span>true clean <span class="token function">install</span> -U
+<span class="token function">ls</span> -al distribution/target/<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>不想自己打包的直接下那个release好了</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FsaWJhYmEvbmFjb3MvcmVsZWFzZXM=">https://github.com/alibaba/nacos/releases<i class="fa fa-external-link-alt"></i></span></p>
+<p>运行：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">nacos/distribution/bin
+<span class="token function">sh</span> startup.sh -m standalone<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure>
+<img src="/course-managemnet/image-20201116215705790.png" alt="这样子就是运行成功了" /><figcaption aria-hidden="true">这样子就是运行成功了</figcaption>
+</figure>
+<h2 id="可能的报错">可能的报错</h2>
+<pre class="line-numbers language-none"><code class="language-none">npm ERR! code ELIFECYCLE
+npm ERR! errno 126
+npm ERR! cm_front@1.0.0 dev: &#96;nuxt&#96;
+npm ERR! Exit status 126
+npm ERR! 
+npm ERR! Failed at the cm_front@1.0.0 dev script.
+npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     &#x2F;root&#x2F;.npm&#x2F;_logs&#x2F;2020-11-16T14_13_24_937Z-debug.log<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>运行</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> cache clean --force
+<span class="token function">rm</span> -rf node_modules package-lock.json
+<span class="token function">npm</span> <span class="token function">install</span>
+<span class="token function">npm</span> run dev<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>报错</p>
+<pre class="line-numbers language-none"><code class="language-none">Failed to execute goal org.springframework.boot:spring-boot-maven-plugin:2.2.1.RELEASE:repackage (repackage) on project cm_parent: Execution repackage of goal org.springframework.boot:spring-boot-maven-plugin:2.2.1.RELEASE:repackage failed: Plugin org.springframework.boot:spring-boot-maven-plugin:2.2.1.RELEASE or one of its dependencies could not be resolved: Could not transfer artifact org.vafer:jdependency:jar:2.1.1 from&#x2F;to central (https:&#x2F;&#x2F;repo.maven.apache.org&#x2F;maven2): &#x2F;home&#x2F;zjk&#x2F;.m2&#x2F;repository&#x2F;org&#x2F;vafer&#x2F;jdependency&#x2F;2.1.1&#x2F;jdependency-2.1.1.jar.part (没有那个文件或目录) -&gt; [Help 1]<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>build报错</p>
+<pre class="line-numbers language-none"><code class="language-none">The POM for com.itwny:service_base:jar:0.0.1-SNAPSHOT is missing, no dependency information available<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-none"><code class="language-none">Failed to execute goal org.springframework.boot:spring-boot-maven-plugin:2.2.1.RELEASE:repackage (repackage) on project service_base: Execution repackage of goal org.springframework.boot:spring-boot-maven-plugin:2.2.1.RELEASE:repackage failed: Unable to find main class<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>貌似是由于spring-boot-maven-plugin插件打出的包无法被依赖</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">sh: /home/zjk/codes/course_management/cm_frontweb/node_modules/.bin/nuxt: Permission denied<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>请用root权限运行。</p>
+<pre class="line-numbers language-none"><code class="language-none">2020-11-17 16:02:57 |ERROR |ThreadPoolTaskScheduler-1 |NacosWatch.java:171 |org.springframework.cloud.alibaba.nacos.discovery.NacosWatch |Error watching Nacos Service change<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>检查一下nacos是否正确启动了(不过这个项目不用NACOS也能完成面向客户的功能)</p>
+<h2 id="其他">其他</h2>
+<p>未完待续</p>
+]]></content>
+      <categories>
+        <category>102网吧日常</category>
+      </categories>
+      <tags>
+        <tag>Spring Cloud</tag>
+        <tag>microservices</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>处理电子病历</title>
     <url>/81d4/</url>
-    <content><![CDATA[<p>有两种鬼画符，一种是医生的字，一种是正则表达式 <a id="more"></a> 周某出狱了，而我也开始打工了，咳咳</p>
+    <content><![CDATA[<p>有两种鬼画符，一种是医生的字，一种是正则表达式 <a id="more"></a></p>
+<p>周某出狱了，而我也开始打工了，咳咳</p>
 <p>最近开始折腾电子病历之类的东西，有几家医院的原始数据，几乎都是xml之类的（都是接口导出的，反正从医院要不到数据库里面的原始数据），不同医院数据格式和医生书写风格差的还挺大。</p>
 <p><em>下面这些基本都是用的python的库</em></p>
 <h2 id="解析和提取内容">解析和提取内容</h2>
@@ -780,20 +956,6 @@ connection<span class="token punctuation">.</span>commit<span class="token punct
       </tags>
   </entry>
   <entry>
-    <title>数字频率计</title>
-    <url>/9824/</url>
-    <content><![CDATA[<p>补档 <a id="more"></a> 泥电大三下的一门叫现代电子设计综合实验的实验课搞的数字频率计，拿VHDL和C51写的，工程文件扔在<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0FyY2hhZW9yYXB0b3IvbGF0Y2hfdGVzdA==">这里<i class="fa fa-external-link-alt"></i></span>了。这门课可能是你电为数不多不太水的实验课了，反正比手抄上万字的大物实验好多了（不知道现在还抄不抄了）</p>
-<p>先分频，再把门控、数显、锁存和计数都写出来就能用了 精度问题其实要求不高，本来FPGA的板子上那些器件精度就不错，想要提高精度可以折腾一下等精度之类的做法 <div class="pdfobject-container" data-target="/uploads/频率计.pdf" data-height="500px"></div> 顺便试试博客插入PDF的功能（在火狐上偶尔有问题，好像是CORS跨域的问题）</p>
-]]></content>
-      <categories>
-        <category>荒废的老本行</category>
-      </categories>
-      <tags>
-        <tag>VHDL</tag>
-        <tag>频率计</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>MySQL从入门到跑路</title>
     <url>/45b9/</url>
     <content><![CDATA[<p>用了这么久数据库，现在还只会增删查改，开个坑学学优化。 <a id="more"></a> 等待填坑</p>
@@ -826,9 +988,25 @@ connection<span class="token punctuation">.</span>commit<span class="token punct
       </tags>
   </entry>
   <entry>
+    <title>数字频率计</title>
+    <url>/9824/</url>
+    <content><![CDATA[<p>补档 <a id="more"></a></p>
+<p>泥电大三下的一门叫现代电子设计综合实验的实验课搞的数字频率计，拿VHDL和C51写的，工程文件扔在<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0FyY2hhZW9yYXB0b3IvbGF0Y2hfdGVzdA==">这里<i class="fa fa-external-link-alt"></i></span>了。这门课可能是你电为数不多不太水的实验课了，反正比手抄上万字的大物实验好多了（不知道现在还抄不抄了）</p>
+<p>先分频，再把门控、数显、锁存和计数都写出来就能用了 精度问题其实要求不高，本来FPGA的板子上那些器件精度就不错，想要提高精度可以折腾一下等精度之类的做法 <div class="pdfobject-container" data-target="/uploads/频率计.pdf" data-height="500px"></div> 顺便试试博客插入PDF的功能（在火狐上偶尔有问题，好像是CORS跨域的问题）</p>
+]]></content>
+      <categories>
+        <category>荒废的老本行</category>
+      </categories>
+      <tags>
+        <tag>VHDL</tag>
+        <tag>频率计</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>不要尝试sudo apt remove iptables</title>
     <url>/a7d1/</url>
-    <content><![CDATA[<p><img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/emmm.jpg" alt="Picture" style="zoom:80%;" /> <a id="more"></a> 在Ubuntu和Debian里卸载iptables会发生严重的后果（大佬请无视） 一开始我们觉得是防火墙把443端口给办了用不了https，结果我用UFW设置不管用，怀疑是iptables的问题，问了花花师兄，也不清楚，我们决定先把iptables禁用了。随手一谷歌，也忘了哪个神仙说的</p>
+    <content><![CDATA[<p><img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/emmm.jpg" alt="Picture" style="zoom:80%;" /> <a id="more"></a></p>
+<p>在Ubuntu和Debian里卸载iptables会发生严重的后果（大佬请无视） 一开始我们觉得是防火墙把443端口给办了用不了https，结果我用UFW设置不管用，怀疑是iptables的问题，问了花花师兄，也不清楚，我们决定先把iptables禁用了。随手一谷歌，也忘了哪个神仙说的</p>
 <pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">apt</span> remove iptables <span class="token comment"># 不要乱试！</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>感觉对的嘛，卸个防火墙能出什么问题嘛<br />
 然后提示是否卸载我选了y，然后突然在卸载的log发现一堆Docker，瞬间感觉不对劲。然后，然后Docker直接不能用了！ 血泪教训啊，防火墙卸了Docker就不能用了！</p>
@@ -1038,7 +1216,8 @@ autorandr --save test1<span aria-hidden="true" class="line-numbers-rows"><span><
   <entry>
     <title>糊个网页吧</title>
     <url>/4a8d/</url>
-    <content><![CDATA[<p>开始补习 <a id="more"></a> 写markdown偶尔要用html的标签，折腾这个博客一堆前端知识，想写个爬虫玩也要在浏览器抡起F12，教研室那个项目也要折腾js，这样下去不行，得整点前端了。 先从html，css，javascript三个补起吧</p>
+    <content><![CDATA[<p>开始补习 <a id="more"></a></p>
+<p>写markdown偶尔要用html的标签，折腾这个博客一堆前端知识，想写个爬虫玩也要在浏览器抡起F12，教研室那个项目也要折腾js，这样下去不行，得整点前端了。 先从html，css，javascript三个补起吧</p>
 <pre class="line-numbers language-text" data-language="text"><code class="language-text">1. HTML to define the content of web pages
 
 2. CSS to specify the layout of web pages
@@ -1281,7 +1460,8 @@ document<span class="token punctuation">.</span><span class="token function">get
     <title>试图抢救吃灰的树莓派</title>
     <url>/7042/</url>
     <content><![CDATA[<p><span class="math display"><mjx-container class="MathJax" jax="SVG" display="true"><svg style="vertical-align: -1.602ex" xmlns="http://www.w3.org/2000/svg" width="2.127ex" height="4.638ex" role="img" focusable="false" viewBox="0 -1342 940 2050"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><g data-mml-node="math"><g data-mml-node="mfrac"><g data-mml-node="mn" transform="translate(220, 676)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g><g data-mml-node="mn" transform="translate(220, -686)"><path data-c="33" d="M127 463Q100 463 85 480T69 524Q69 579 117 622T233 665Q268 665 277 664Q351 652 390 611T430 522Q430 470 396 421T302 350L299 348Q299 347 308 345T337 336T375 315Q457 262 457 175Q457 96 395 37T238 -22Q158 -22 100 21T42 130Q42 158 60 175T105 193Q133 193 151 175T169 130Q169 119 166 110T159 94T148 82T136 74T126 70T118 67L114 66Q165 21 238 21Q293 21 321 74Q338 107 338 175V195Q338 290 274 322Q259 328 213 329L171 330L168 332Q166 335 166 348Q166 366 174 366Q202 366 232 371Q266 376 294 413T322 525V533Q322 590 287 612Q265 626 240 626Q208 626 181 615T143 592T132 580H135Q138 579 143 578T153 573T165 566T175 555T183 540T186 520Q186 498 172 481T127 463Z"></path></g><rect width="700" height="60" x="120" y="220"></rect></g></g></g></svg></mjx-container></span></p>
-<p>自从来到沙河102网吧，都是在工作站/服务器/台式机上折腾，树莓派一直仍在清水河宿舍吃灰。今天回了趟清水河，把树莓派拿回来，试试能不能用，打算做备用测试机了。 <a id="more"></a> ## 装系统</p>
+<p>自从来到沙河102网吧，都是在工作站/服务器/台式机上折腾，树莓派一直仍在清水河宿舍吃灰。今天回了趟清水河，把树莓派拿回来，试试能不能用，打算做备用测试机了。 <a id="more"></a></p>
+<h2 id="装系统">装系统</h2>
 <p>从官网下载<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, 我下的Raspbian Buster（SD卡就只有16G，不打算搞那些recommend software了），解压之后已经是3.56G了</p>
 <p>然后用Rufus烧进SD卡（很多教程全是推荐Win32Diskimager，那个并没有Rufus好用），只选第一行的目标设备和第二行引导镜像，其他默认（卡里之前有东西的话还是用SD Formatter先刷一遍）</p>
 <p>2020.3 更新</p>
@@ -1328,7 +1508,8 @@ network=<span class="token punctuation">{</span>
   <entry>
     <title>给服务器重装Ubuntu</title>
     <url>/2d5/</url>
-    <content><![CDATA[<p><img width=100 src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/haixing.png" alt="Picture"/> 祖传服务器传到了我的手里 <a id="more"></a> 上回书说到，服务器一不小心卸载了iptables 现在准备重装。还是打算装Ubuntu Server（并不打算装Manjaro，也不适合搞桌面版，今天试过一下Ubuntu Desktop，图形化界面由于服务器没有独显直接卡到爆炸） <del>初步打算安装Ubuntu server 16.04.6LTS, 使用LVM分区</del> 安装Ubuntu18.04LTS，之前VPS用过一阵18，也没注意有什么新特性，据说还是改了一些东西⬇</p>
+    <content><![CDATA[<p><img width=100 src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/haixing.png" alt="Picture"/> 祖传服务器传到了我的手里 <a id="more"></a></p>
+<p>上回书说到，服务器一不小心卸载了iptables 现在准备重装。还是打算装Ubuntu Server（并不打算装Manjaro，也不适合搞桌面版，今天试过一下Ubuntu Desktop，图形化界面由于服务器没有独显直接卡到爆炸） <del>初步打算安装Ubuntu server 16.04.6LTS, 使用LVM分区</del> 安装Ubuntu18.04LTS，之前VPS用过一阵18，也没注意有什么新特性，据说还是改了一些东西⬇</p>
 <blockquote>
 <p>据说 内核更新到了 Linux kernel 4.15，这就意味着新增了不少特性 bbr什么的 网络管理工具 ifupdown 已经彻底废弃，建议全面拥抱 ip 命令 DNS 由 systemd 全面接管，接口监听在 127.0.0.53:53，配置文件在 /etc/systemd/resolved.conf，修改后重启服务即可 systemctl restart systemd-resolved。不要听网上那些奇怪的教程教你如何修改 /etc/resolv.conf swap 文件来替代 swap 分区</p>
 </blockquote>
@@ -1429,7 +1610,9 @@ Address&#x3D;211.83.111.224&#x2F;23<span aria-hidden="true" class="line-numbers-
   <entry>
     <title>λ演算&amp;函数式编程</title>
     <url>/a10f/</url>
-    <content><![CDATA[<p>等待填坑 <a id="more"></a> ## 摸鱼一时爽</p>
+    <content><![CDATA[<p>等待填坑</p>
+<a id="more"></a>
+<h2 id="摸鱼一时爽">摸鱼一时爽</h2>
 <p>函数式编程(Functional Programming)好像比面向对象抽象程度更高。但是之前折腾硬件的时候都没有用到过，可能是不太适合处理IO接口和操作时序吧。 之前在图书馆乱翻，看到一本七周七语言的书，翻到函数式，感觉还挺有意思，教研室的摸鱼生活就搞点这个吧，反正干正事是不可能干正事的 <del>正在进JavaScript的坑，将就着用js来练练手吧。</del> javascript味不对，还是直接上了Lisp</p>
 <h2 id="λ演算λ-calculus">λ演算(λ-calculus)</h2>
 <ul>
@@ -2025,72 +2208,6 @@ X_pred <span class="token operator">=</span> np<span class="token punctuation">.
       </tags>
   </entry>
   <entry>
-    <title>VSCode使用ssh-key远程登录Ubuntu</title>
-    <url>/7f63/</url>
-    <content><![CDATA[<p>兼谈使用SSH转发加快教研室网上冲浪速度 <a id="more"></a> Mobaxterm挺好用的，只是那个文本编辑器不舒服。 试着用一下VSCode的remote-ssh 通过ssh-key登录就不多讲了<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
-<h2 id="mobaxterm设置ssh密钥登录">Mobaxterm设置SSH密钥登录</h2>
-<p>ssh-keygen生成密钥之后在Mobaxterm的SSH设置找到Advanced SSH Setting里勾选import SSH key可以直接导入密钥。 退出再登录显示这样</p>
-<pre class="line-numbers language-log" data-language="log"><code class="language-log">Authenticating with public key &quot;Imported-Openssh-Key: id_rsa&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>就是成功了（失败会提示这样<code>Server refused our key</code>)</p>
-<h2 id="vscode设置ssh密钥登录">VSCode设置SSH密钥登录</h2>
-<p>装Remote-ssh插件，然后左边框会有个小电脑的图标，点那个图标，再点SSH TARGETS的设置（Configure），进行配置 它有个配置文件，一般在<code>C:/Users/&lt;username&gt;/.ssh</code>下面的config 编辑它的配置文件，Host随便填，HostName填ip，User填用户名，IdentityFile填私钥路径，Port填端口（默认22可以不填） （要是认证失败什么的，建议把那些.ssh文件夹底下的文件删了，比如known_hosts）</p>
-<pre class="line-numbers language-config" data-language="config"><code class="language-config">Host workstation
-    HostName hostname
-    User user
-    IdentityFile C:&#x2F;Users&#x2F;XXX&#x2F;.ssh&#x2F;id_rsa
-    Port 22<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>连接的时候可能会让你手动在termial里的信息 这样应该就行了, 不用每次输密码了。看到那个</p>
-<p>什么？想用密码不想用ssh-key密钥登录，不能保存密码🐴？ 您好，官方文档说不能 &gt;Yes, you should be prompted to enter your token or password automatically. However, passwords are not saved, so using key based authentication is typically more convenient</p>
-<p>（当然这里是新出的功能，bug当然少不了，我就遇到过<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21pY3Jvc29mdC92c2NvZGUtcmVtb3RlLXJlbGVhc2UvaXNzdWVzLzEyMTc=">这样的<i class="fa fa-external-link-alt"></i></span>, 一般遇到问题先升一下最新版或者用insider试试，再不行就去GitHub提issue） 其他的问题找官方文档<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>看看，貌似可以SSH端口转发</p>
-<p>远程SSH的VSCode插件是单独的，可以自行安装 如果你要配置多台主机SSH,在配置文件里并列加配置就行了</p>
-<pre class="line-numbers language-config" data-language="config"><code class="language-config">Host workstation
-    HostName hostname
-    User user
-Host Server
-    HostName hostname
-    User user<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="ssh端口转发">SSH端口转发</h2>
-<p>老网民很熟悉的网上冲浪手段之一就是SSH Tunnel<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>。当只开了22端口的时候可以用这种方法绕过防火墙用TCP之类的，当然，这种方法曾经也用来突破那个巨大的 防火墙 。 今天我突发奇想，看到工作站和服务器的专用线路的速度贼快啊，<del>专用线路从来不低于45Mb/s不高于50Mb/s的速度毫不含糊</del>，还有公网IP。 而102网吧由于老板太抠，四个人用一个路由器，辣鸡校园网网速10M/s都跑不到...</p>
-<p>使用Mobaxterm和SwityOmega插件可以满足大部分需求</p>
-<p>MobaXterm里选Tools &gt; MobaSHHtunnel &gt; New SHH tunnel &gt; Dynamic Port forwarding (SOCKS proxy)</p>
-<p>那个Dynamic Port 是动态转发，不是v2ray那种用来防止被封的动态端口，就是你本地的端口会被转到服务器上相同的端口，是sockets5代理 配置你的端口和密钥（最好把那个autostart和Autoconnect也选上），然后到SwityOmega之类的工具里面填上相应的端口，就可以愉快的上网了。从浏览器的IP查询网站看一下IP，已经是服务器的IP了</p>
-<p>更新，看错了，忘了分Mbps和MBps了，实际上快不了多少，只有6MBps/s。但是没人跟我抢，自己走专线还是快一点的。</p>
-<p>终端的命令可以看这篇，不多说了<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
-<h2 id="突然意识到">突然意识到</h2>
-<p>为什么要用SSH呢，现在不用担心被FIREWALL制裁, 流量特征明显的WireGuard可以用了呀... 有空试试这个闪闪发光的新生代VPN, 底层貌似是UDP，红龙LOGO挺拉风的(跑题了 WireGuard据说要加到新的Linux Kernel里面，但是现在教研室的老Ubuntu只能自己装（这个我18年就听说了要加进kernel啦，连Linus都说好要加辣<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>然而鸽到现在，还是没加，据说作者在搞windows的,现在做的差不多了，要回来折腾Linux了） 之前WireGuard由于流量特征太明显就换了v2，现在试试这个 安装比Openvpn简单，Ubuntu直接PPA装就行了（需要root权限）</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> add-apt-repository ppa:wireguard/wireguard
-<span class="token function">sudo</span> <span class="token function">apt-get</span> update
-<span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> wireguard<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>win10的官方客户端已经出了，之前18年那会我还用的Tunsafe，设置参考这里<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> 听八卦说Tunsafe和WireGuard作者还有过撕逼，此处不表</p>
-<h3 id="其他">其他</h3>
-<h3 id="开机自启">开机自启</h3>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl <span class="token builtin class-name">enable</span> wg-quick@wg0<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h3 id="使用vscode愉快的写cc">使用VSCode愉快的写C/C++</h3>
-<p>装C/C++和coderunner插件就行了，现在可以自动配置运行和调试的文件了（就那个以前一堆坑还经常改一更新就配置失效的launch.json和config.json）</p>
-<h3 id="vscode连接docker">VSCode连接Docker</h3>
-<p>安装Docker和Docker compose插件（在远程里面），然后直接用就行了</p>
-<h2 id="注">注</h2>
-<section class="footnotes" role="doc-endnotes">
-<hr />
-<ol>
-<li id="fn1" role="doc-endnote"><p><span class="exturl" data-url="aHR0cHM6Ly9oeWprMjAwMC5naXRodWIuaW8vMjAxMi8wMy8xNi9ob3ctdG8tc2V0LXVwLXNzaC1rZXlzLw==">设置 SSH 通过密钥登录<i class="fa fa-external-link-alt"></i></span><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2" role="doc-endnote"><p><span class="exturl" data-url="aHR0cHM6Ly9jb2RlLnZpc3VhbHN0dWRpby5jb20vZG9jcy9yZW1vdGUvc3No">官方文档：Remote Development using SSH<i class="fa fa-external-link-alt"></i></span><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3" role="doc-endnote"><p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnlhbmRlcmUubW9lL21vZS9nZnctdnMtcHJveHkvOTcuaHRtbA==">墙与梯的较量<i class="fa fa-external-link-alt"></i></span><a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4" role="doc-endnote"><p><span class="exturl" data-url="aHR0cHM6Ly93d3cuaWJtLmNvbS9kZXZlbG9wZXJ3b3Jrcy9jbi9saW51eC9sLWNuLXNzaGZvcndhcmQvaW5kZXguaHRtbA==">实战 SSH 端口转发<i class="fa fa-external-link-alt"></i></span><a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5" role="doc-endnote"><p>Linus在邮件中回复说： &gt;Btw, on an unrelated issue: I see that Jason actually made the pull &gt;request to have wireguard included in the kernel. &gt; &gt;Can I just once again state my love for it and hope it gets merged &gt;soon? Maybe the code isn't perfect, but I've skimmed it, and compared to the horrors that are OpenVPN and IPSec, it's a work of art. 见<span class="exturl" data-url="aHR0cHM6Ly9sa21sLm9yZy9sa21sLzIwMTgvOC8yLzY2Mw==">https://lkml.org/lkml/2018/8/2/663<i class="fa fa-external-link-alt"></i></span><a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6" role="doc-endnote"><p><span class="exturl" data-url="aHR0cHM6Ly9nb2xiLmhwbGFyLmNoLzIwMTkvMDcvd2lyZWd1YXJkLXdpbmRvd3MuaHRtbA==">Setting up WireGuard on Windows<i class="fa fa-external-link-alt"></i></span><a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section>
-]]></content>
-      <categories>
-        <category>102网吧日常</category>
-      </categories>
-      <tags>
-        <tag>ssh</tag>
-        <tag>vscode</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>试用Netlify自动部署和CMS</title>
     <url>/e9d5/</url>
     <content><![CDATA[<p>又开始了瞎折腾。话说我这种没人看的静态小破网站，真的有必要持续集成、持续部署吗？</p>
@@ -2161,6 +2278,91 @@ date: '2019-11-30 20:22:52'<span aria-hidden="true" class="line-numbers-rows"><s
       </tags>
   </entry>
   <entry>
+    <title>VSCode使用ssh-key远程登录Ubuntu</title>
+    <url>/7f63/</url>
+    <content><![CDATA[<p>更新：已经把win10格了，跟Mobaxterm说再见了，Arch下vscode总是内存泄漏，感觉比win10下小问题也多不少</p>
+<a id="more"></a>
+<h2 id="更新">更新</h2>
+<h3 id="linux下的一些问题">Linux下的一些问题</h3>
+<h4 id="vscode-remote远程登陆后打开终端报错">VSCode Remote远程登陆后打开终端报错</h4>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">The terminal process failed to launch: Path to shell executable <span class="token string">"/usr/bin/zsh"</span> does not exist.<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>症状是这样的：我本地Arch的terminal是zsh，在VSCode的<code>erminal.integrated.shell</code>配置默认shell为zsh，远程连接的 Ubuntu Server 没装zsh、用的是非root用户登陆，登陆一切正常，然而呼出integrated terminal的时候就报错了。</p>
+<p>然后我在issue评论区扒拉出来好多相同的问题，貌似是本地的VSCode配置会干扰远程</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21pY3Jvc29mdC92c2NvZGUtcmVtb3RlLXJlbGVhc2UvaXNzdWVzLzI1Nzk=">https://github.com/microsoft/vscode-remote-release/issues/2579<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21pY3Jvc29mdC92c2NvZGUtcmVtb3RlLXJlbGVhc2UvaXNzdWVzLzIzMTM=">https://github.com/microsoft/vscode-remote-release/issues/2313<i class="fa fa-external-link-alt"></i></span></p>
+<p>issue里面的解决方案有</p>
+<blockquote>
+<p>I have the same issue.Fixed after ssh as root</p>
+</blockquote>
+<p>试了一下确实可行，不过root登陆是不可能root登陆的（这哪天又得被黑了）</p>
+<p>还有：把VSCode里面的设置改为bash（不可能）</p>
+<p>于是我给Ubuntu装了个zsh，好了。</p>
+<h4 id="vscode内存泄漏">VScode内存泄漏</h4>
+<p>我在Arch上不管是insider还是code-oss还是visual-studio-code-bin都有这个问题 （最后加钱把8G内存换成了32G，你随便泄漏去吧）</p>
+<h2 id="原文章">原文章</h2>
+<p>Mobaxterm挺好用的，只是那个文本编辑器不舒服。 试着用一下VSCode的remote-ssh 通过ssh-key登录就不多讲了<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<h3 id="mobaxterm设置ssh密钥登录">Mobaxterm设置SSH密钥登录</h3>
+<p>ssh-keygen生成密钥之后在Mobaxterm的SSH设置找到Advanced SSH Setting里勾选import SSH key可以直接导入密钥。 退出再登录显示这样</p>
+<pre class="line-numbers language-log" data-language="log"><code class="language-log">Authenticating with public key &quot;Imported-Openssh-Key: id_rsa&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>就是成功了（失败会提示这样<code>Server refused our key</code>)</p>
+<h3 id="vscode设置ssh密钥登录">VSCode设置SSH密钥登录</h3>
+<p>装Remote-ssh插件，然后左边框会有个小电脑的图标，点那个图标，再点SSH TARGETS的设置（Configure），进行配置 它有个配置文件，一般在<code>C:/Users/&lt;username&gt;/.ssh</code>下面的config 编辑它的配置文件，Host随便填，HostName填ip，User填用户名，IdentityFile填私钥路径，Port填端口（默认22可以不填） （要是认证失败什么的，建议把那些.ssh文件夹底下的文件删了，比如known_hosts）</p>
+<pre class="line-numbers language-config" data-language="config"><code class="language-config">Host workstation
+    HostName hostname
+    User user
+    IdentityFile C:&#x2F;Users&#x2F;XXX&#x2F;.ssh&#x2F;id_rsa
+    Port 22<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>连接的时候可能会让你手动在termial里的信息 这样应该就行了, 不用每次输密码了。看到那个</p>
+<p>什么？想用密码不想用ssh-key密钥登录，不能保存密码🐴？ 您好，官方文档说不能 &gt;Yes, you should be prompted to enter your token or password automatically. However, passwords are not saved, so using key based authentication is typically more convenient</p>
+<p>（当然这里是新出的功能，bug当然少不了，我就遇到过<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21pY3Jvc29mdC92c2NvZGUtcmVtb3RlLXJlbGVhc2UvaXNzdWVzLzEyMTc=">这样的<i class="fa fa-external-link-alt"></i></span>, 一般遇到问题先升一下最新版或者用insider试试，再不行就去GitHub提issue） 其他的问题找官方文档<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>看看，貌似可以SSH端口转发</p>
+<p>远程SSH的VSCode插件是单独的，可以自行安装 如果你要配置多台主机SSH,在配置文件里并列加配置就行了</p>
+<pre class="line-numbers language-config" data-language="config"><code class="language-config">Host workstation
+    HostName hostname
+    User user
+Host Server
+    HostName hostname
+    User user<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="ssh端口转发">SSH端口转发</h3>
+<p>老网民很熟悉的网上冲浪手段之一就是SSH Tunnel<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>。当只开了22端口的时候可以用这种方法绕过防火墙用TCP之类的，当然，这种方法曾经也用来突破那个巨大的 防火墙 。 今天我突发奇想，看到工作站和服务器的专用线路的速度贼快啊，<del>专用线路从来不低于45Mb/s不高于50Mb/s的速度毫不含糊</del>，还有公网IP。 而102网吧由于老板太抠，四个人用一个路由器，辣鸡校园网网速10M/s都跑不到...</p>
+<p>使用Mobaxterm和SwityOmega插件可以满足大部分需求</p>
+<p>MobaXterm里选Tools &gt; MobaSHHtunnel &gt; New SHH tunnel &gt; Dynamic Port forwarding (SOCKS proxy)</p>
+<p>那个Dynamic Port 是动态转发，不是v2ray那种用来防止被封的动态端口，就是你本地的端口会被转到服务器上相同的端口，是sockets5代理 配置你的端口和密钥（最好把那个autostart和Autoconnect也选上），然后到SwityOmega之类的工具里面填上相应的端口，就可以愉快的上网了。从浏览器的IP查询网站看一下IP，已经是服务器的IP了</p>
+<p>更新，看错了，忘了分Mbps和MBps了，实际上快不了多少，只有6MBps/s。但是没人跟我抢，自己走专线还是快一点的。</p>
+<p>终端的命令可以看这篇，不多说了<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
+<h3 id="题外话">题外话</h3>
+<p>新生代VPN, 底层貌似是UDP，红龙LOGO挺拉风的(跑题了 WireGuard据说要加到新的Linux Kernel里面，但是现在教研室的老Ubuntu只能自己装（这个我18年就听说了要加进kernel啦，连Linus都说好要加辣<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>然而鸽到现在，还是没加，据说作者在搞windows的,现在做的差不多了，要回来折腾Linux了） 之前WireGuard由于流量特征太明显就换了v2，现在试试这个 安装比Openvpn简单，Ubuntu直接PPA装就行了（需要root权限）</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> add-apt-repository ppa:wireguard/wireguard
+<span class="token function">sudo</span> <span class="token function">apt-get</span> update
+<span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> wireguard<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>win10的官方客户端已经出了，之前18年那会我还用的Tunsafe，设置参考这里<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> 听八卦说Tunsafe和WireGuard作者还有过撕逼，此处不表</p>
+<h3 id="其他">其他</h3>
+<h4 id="开机自启">开机自启</h4>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl <span class="token builtin class-name">enable</span> wg-quick@wg0<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="使用vscode愉快的写cc">使用VSCode愉快的写C/C++</h4>
+<p>装C/C++和coderunner插件就行了，现在可以自动配置运行和调试的文件了（就那个以前一堆坑还经常改一更新就配置失效的launch.json和config.json）</p>
+<h4 id="vscode连接docker">VSCode连接Docker</h4>
+<p>安装Docker和Docker compose插件（在远程里面），然后直接用就行了</p>
+<h2 id="注">注</h2>
+<section class="footnotes" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p><span class="exturl" data-url="aHR0cHM6Ly9oeWprMjAwMC5naXRodWIuaW8vMjAxMi8wMy8xNi9ob3ctdG8tc2V0LXVwLXNzaC1rZXlzLw==">设置 SSH 通过密钥登录<i class="fa fa-external-link-alt"></i></span><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p><span class="exturl" data-url="aHR0cHM6Ly9jb2RlLnZpc3VhbHN0dWRpby5jb20vZG9jcy9yZW1vdGUvc3No">官方文档：Remote Development using SSH<i class="fa fa-external-link-alt"></i></span><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnlhbmRlcmUubW9lL21vZS9nZnctdnMtcHJveHkvOTcuaHRtbA==">墙与梯的较量<i class="fa fa-external-link-alt"></i></span><a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4" role="doc-endnote"><p><span class="exturl" data-url="aHR0cHM6Ly93d3cuaWJtLmNvbS9kZXZlbG9wZXJ3b3Jrcy9jbi9saW51eC9sLWNuLXNzaGZvcndhcmQvaW5kZXguaHRtbA==">实战 SSH 端口转发<i class="fa fa-external-link-alt"></i></span><a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5" role="doc-endnote"><p>Linus在邮件中回复说： &gt;Btw, on an unrelated issue: I see that Jason actually made the pull &gt;request to have wireguard included in the kernel. &gt; &gt;Can I just once again state my love for it and hope it gets merged &gt;soon? Maybe the code isn't perfect, but I've skimmed it, and compared to the horrors that are OpenVPN and IPSec, it's a work of art. 见<span class="exturl" data-url="aHR0cHM6Ly9sa21sLm9yZy9sa21sLzIwMTgvOC8yLzY2Mw==">https://lkml.org/lkml/2018/8/2/663<i class="fa fa-external-link-alt"></i></span><a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6" role="doc-endnote"><p><span class="exturl" data-url="aHR0cHM6Ly9nb2xiLmhwbGFyLmNoLzIwMTkvMDcvd2lyZWd1YXJkLXdpbmRvd3MuaHRtbA==">Setting up WireGuard on Windows<i class="fa fa-external-link-alt"></i></span><a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+]]></content>
+      <categories>
+        <category>102网吧日常</category>
+      </categories>
+      <tags>
+        <tag>ssh</tag>
+        <tag>vscode</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>博客开通</title>
     <url>/1a9a/</url>
     <content><![CDATA[<p>我的新博客开通了，不定期更新</p>
@@ -2221,6 +2423,8 @@ date: '2019-11-30 20:22:52'<span aria-hidden="true" class="line-numbers-rows"><s
 <p>然而我的心很平安；没有爱憎，没有哀乐，也没有颜色和声音</p>
 <p>然而这是许多年前的事了</p>
 <a id="more"></a>
+</blockquote>
+<blockquote>
 <p>然而现在没有星和月光，没有僵坠的蝴蝶以至笑的渺茫，爱的翔舞。然而青年们很平安</p>
 </blockquote>
 <hr />
@@ -2317,7 +2521,8 @@ num <span class="token operator">=</span> re<span class="token punctuation">.</s
   <entry>
     <title>沙河夜市</title>
     <url>/f641/</url>
-    <content><![CDATA[<p>这几天走过泥电沙河边上的建设路，早上晨光熹微，夜间车马喧嚣，仿佛回到了高二高三在一中上学的日子。 <a id="more"></a> 晚上路过建设路，卖小吃的沿街店铺生意似乎很火爆。到底还是网红街，比清水河西门外一片濒临倒闭的冷清店铺红火多了，显不出一点稳中向好共克时艰的样子。然而我这几天却没看到多少麻雀在路边找吃的，可能是人实在太多不太敢来吧。沙河校内倒是有些珠颈斑鸠和白颊噪鹛在路边捡樟树果子吃。鸟没看到，不到一周的时间却见了三次老鼠行色匆匆，穿梭在摊位间，可能是要回家养四个龟 不喜欢辣的我路过建设路，没有胃口，每次大晚上的走过去居然一点也不饿。</p>
+    <content><![CDATA[<p>这几天走过泥电沙河边上的建设路，早上晨光熹微，夜间车马喧嚣，仿佛回到了高二高三在一中上学的日子。 <a id="more"></a></p>
+<p>晚上路过建设路，卖小吃的沿街店铺生意似乎很火爆。到底还是网红街，比清水河西门外一片濒临倒闭的冷清店铺红火多了，显不出一点稳中向好共克时艰的样子。然而我这几天却没看到多少麻雀在路边找吃的，可能是人实在太多不太敢来吧。沙河校内倒是有些珠颈斑鸠和白颊噪鹛在路边捡樟树果子吃。鸟没看到，不到一周的时间却见了三次老鼠行色匆匆，穿梭在摊位间，可能是要回家养四个龟 不喜欢辣的我路过建设路，没有胃口，每次大晚上的走过去居然一点也不饿。</p>
 <p>今天实习回来的师姐请我们吃螺蛳粉，不习惯嗦粉并不知道哪里好吃。 听说建设路吃的自从炒作过度就不如以前了，我也不晓得，反正没有市井气息，像旅游区。看那个某签签土豆每天都有那么多人在排队，我就好奇一个土豆到底有什么好吃的。反正去了西伯利亚，天天都有土豆吃。 这些跟我一个低端人口又有什么关系呢 浮世繁华，与我无关。 16年涨了房价的成都不像是那首不知道怎么火的《成都》，倒像是《北京北京》。 咖啡馆离广场有三个街区，仿佛霓虹灯到月亮的距离，哦，不对，成都看不到月亮。</p>
 <p>晚上回到租的房子，八二信箱家属区，老房子刷了一层屎黄色的漆，那感觉，和当年我长大的物探小区刷了一层红色的漆一样难受。我果然还是喜欢老小区。</p>
 <p>成都夜雨，点点滴滴到天明</p>
@@ -2375,7 +2580,8 @@ num <span class="token operator">=</span> re<span class="token punctuation">.</s
   <entry>
     <title>爬虫笔记</title>
     <url>/fd19/</url>
-    <content><![CDATA[<p>未完待续 <a id="more"></a> #### 浏览器F12调试和抓包</p>
+    <content><![CDATA[<p>未完待续 <a id="more"></a></p>
+<h4 id="浏览器f12调试和抓包">浏览器F12调试和抓包</h4>
 <p>略</p>
 <h4 id="urllib库">urllib库</h4>
 <h5 id="打开并读取url">打开并读取url</h5>
@@ -2525,7 +2731,8 @@ r <span class="token operator">=</span> requests<span class="token punctuation">
     <content><![CDATA[<p>知己一声拜拜远去这都市... 梦醒,却不是2008</p>
 <div style="display: none">
 <h4 id="皇后大道中人民如潮涌">皇后大道中人民如潮涌</h4>
-<p>皇后大道中为何无皇宫？ <a id="more"></a> 七十年前收惶恐是顺手的事，执意攻台却对港澳装聋作哑，不收，故意留个洗钱和走私的通道<br />
+<p>皇后大道中为何无皇宫？ <a id="more"></a></p>
+<p>七十年前收惶恐是顺手的事，执意攻台却对港澳装聋作哑，不收，故意留个洗钱和走私的通道<br />
 惶恐至今仍是大陆重要的的洗钱出逃通道<br />
 惶恐高房价高地租早就榨干了平民，倒是没见诸位市民群情激愤搞出这么大的抵制。<br />
 这次一群人跑出来，自由民主神圣事，骗了无涯过客，这才过去几年呐，都忘啦<sub>不长记性</sub> 反了反了，走错了，南辕北辙 惶恐金融地位的衰落目前看来早晚的事，金融中心地位不保<br />
@@ -2956,9 +3163,14 @@ gpg: next trustdb check due at <span class="token number">2020</span>-12-03
 :: Searching AUR <span class="token keyword">for</span> updates<span class="token punctuation">..</span>.
  -<span class="token operator">></span> python-pgspecial: <span class="token builtin class-name">local</span> <span class="token punctuation">(</span><span class="token number">1.11</span>.10-2<span class="token punctuation">)</span> is newer than blackarch <span class="token punctuation">(</span><span class="token number">1.11</span>.10-1<span class="token punctuation">)</span>
  there is nothing to <span class="token keyword">do</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>事实证明还是得看官方文档解决问题，以后直接看官方文档啊同学们！</p>
+<p>事实证明还是得看官方文档解决问题，以后直接看官方文档啊同志们！</p>
+<p>CSDN和一堆过时文档害人啊！</p>
 <h2 id="参考">参考</h2>
-<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0JsYWNrQXJjaC9ibGFja2FyY2g=">https://github.com/BlackArch/blackarch<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly93d3cuYmxhY2thcmNoLm9yZy9kb3dubG9hZHMuaHRtbCNpbnN0YWxsLXJlcG8=">https://www.blackarch.org/downloads.html#install-repo<i class="fa fa-external-link-alt"></i></span></p>
+<ol type="1">
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0JsYWNrQXJjaC9ibGFja2FyY2g=">https://github.com/BlackArch/blackarch<i class="fa fa-external-link-alt"></i></span><br />
+</li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cuYmxhY2thcmNoLm9yZy9kb3dubG9hZHMuaHRtbCNpbnN0YWxsLXJlcG8=">https://www.blackarch.org/downloads.html#install-repo<i class="fa fa-external-link-alt"></i></span></li>
+</ol>
 ]]></content>
       <tags>
         <tag>blackarch</tag>
@@ -4571,7 +4783,8 @@ lines <span class="token number">2</span>-36/36 <span class="token punctuation">
   <entry>
     <title>郑文锋老师的四大发明事件始末</title>
     <url>/16e8/</url>
-    <content><![CDATA[<p>今天在<span class="exturl" data-url="aHR0cHM6Ly91ZXN0Yy5pY3U=">uestc.icu<i class="fa fa-external-link-alt"></i></span>和微博上看见好几次，貌似出了个红头文件处理结果，无法确定真假。当时最早那个知乎问题上了知乎热搜第一的时候我也目睹了。在这里随便扯一下吧，夹杂大量个人主观判断。 <a id="more"></a> <img width=200 src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/xzx.jpg" alt="镇楼"/></p>
+    <content><![CDATA[<p>今天在<span class="exturl" data-url="aHR0cHM6Ly91ZXN0Yy5pY3U=">uestc.icu<i class="fa fa-external-link-alt"></i></span>和微博上看见好几次，貌似出了个红头文件处理结果，无法确定真假。当时最早那个知乎问题上了知乎热搜第一的时候我也目睹了。在这里随便扯一下吧，夹杂大量个人主观判断。 <a id="more"></a></p>
+<p><img width=200 src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/xzx.jpg" alt="镇楼"/></p>
 <p>起因是一名研究生<span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzMyOTQ5NTM2NC9sb2c=">在知乎发帖<i class="fa fa-external-link-alt"></i></span>，想搞个大新闻，此前貌似就在河畔发帖试图搞个大新闻未遂，被獾狸猿删除后转战知乎。然而事与愿违，确实火了，但是是被喷上热搜的，而且登顶热搜第一。这里不得不再一次说你电公关确实了得，大半夜的热搜瞬间被撤，掉下来后又上了热搜，又瞬间从第二名掉到十几名;而且问题下面的回答还在以肉眼可见的速度不断减少，从接近两千变成一千五百多，又变成一千三百多，即便算上被折叠的评论，也是有问题的。而且该问题还被隐藏了，直接知乎站内搜索你是搜不到的（现在直接搜依然搜不到） <img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/pic1.PNG" alt="最初的问题" /></p>
 <h3 id="想搞个大新闻的学生">想搞个大新闻的学生</h3>
 <p>对于该研究生，我个人是鄙夷的。当时几乎目睹了全过程。将老师挂起来公然批斗。然而匿名提问，还把自己在QQ截图中的头像名称全都打码，知乎提问却直接指名道姓，上来就“公然侮辱”，滑天下之大稽。 此外还有该生之前完全旷课理亏在先等，此处不表。</p>
@@ -4670,7 +4883,8 @@ lines <span class="token number">2</span>-36/36 <span class="token punctuation">
   <entry>
     <title>教研室服务器维护</title>
     <url>/d6da/</url>
-    <content><![CDATA[<p>教研室要倒闭啦，师兄毕业跑路啦！ <a id="more"></a> ## 写在前面的话</p>
+    <content><![CDATA[<p>教研室要倒闭啦，师兄毕业跑路啦！ <a id="more"></a></p>
+<h2 id="写在前面的话">写在前面的话</h2>
 <p>top、ls命令并不总是好用，特别是挖矿恶意程序使用rookit等方式隐藏进程、篡改系统命令，会出现CPU跑满但是top命令看不到高占用进程的情况</p>
 <p>不想用vim又不得不在linux下改东西，可以不用nano了，这有个<span class="exturl" data-url="aHR0cHM6Ly93bWRwZC5jb20vcWlhbmctbGllLXR1aS1qaWFuLWxpbnV4emhvbmctZHVhbi13ZW4tYmVuLWJpYW4tamktcWktbWljcm8v">micro<i class="fa fa-external-link-alt"></i></span>, 拿好</p>
 <p>安装：</p>
