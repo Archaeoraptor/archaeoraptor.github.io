@@ -39,6 +39,8 @@
 <meta property="og:image" content="https://zhangjk98.xyz/course-managemnet/image-20201118214736704.png">
 <meta property="og:image" content="https://zhangjk98.xyz/course-managemnet/image-20201118215636817.png">
 <meta property="og:image" content="https://zhangjk98.xyz/course-managemnet/image-20201116215705790.png">
+<meta property="og:image" content="https://zhangjk98.xyz/course-managemnet/image-20201122112918925.png">
+<meta property="og:image" content="https://zhangjk98.xyz/course-managemnet/image-20201122114528875.png">
 <meta property="article:published_time" content="2020-11-18T13:40:24.000Z">
 <meta property="article:author" content="Zhang.jk">
 <meta property="article:tag" content="Spring Cloud">
@@ -344,7 +346,7 @@ mjx-container[display="true"] + br {
       <div class="sidebar-panel-container">
         <!--noindex-->
         <section class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E6%A6%82%E6%83%85%E5%86%B5"><span class="nav-number">1.</span> <span class="nav-text">大概情况</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">环境配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">2.1.</span> <span class="nav-text">数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#spring-cloud%E7%9A%848%E4%B8%AA%E5%BE%AE%E6%9C%8D%E5%8A%A1"><span class="nav-number">2.2.</span> <span class="nav-text">Spring Cloud的8个微服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE"><span class="nav-number">2.3.</span> <span class="nav-text">修改配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nacos"><span class="nav-number">2.4.</span> <span class="nav-text">NACOS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nginx"><span class="nav-number">2.5.</span> <span class="nav-text">Nginx</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">2.6.</span> <span class="nav-text">其他的问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF"><span class="nav-number">3.</span> <span class="nav-text">前端</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#nacos-1"><span class="nav-number">3.1.</span> <span class="nav-text">nacos</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E8%83%BD%E7%9A%84%E6%8A%A5%E9%94%99"><span class="nav-number">4.</span> <span class="nav-text">可能的报错</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">5.</span> <span class="nav-text">其他</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E6%A6%82%E6%83%85%E5%86%B5"><span class="nav-number">1.</span> <span class="nav-text">大概情况</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">环境配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">2.1.</span> <span class="nav-text">数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#spring-cloud%E7%9A%848%E4%B8%AA%E5%BE%AE%E6%9C%8D%E5%8A%A1"><span class="nav-number">2.2.</span> <span class="nav-text">Spring Cloud的8个微服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE"><span class="nav-number">2.3.</span> <span class="nav-text">修改配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nacos"><span class="nav-number">2.4.</span> <span class="nav-text">NACOS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nginx"><span class="nav-number">2.5.</span> <span class="nav-text">Nginx</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">2.6.</span> <span class="nav-text">其他的问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF"><span class="nav-number">3.</span> <span class="nav-text">前端</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8E%E5%8F%B0%E7%AE%A1%E7%90%86%E7%95%8C%E9%9D%A2"><span class="nav-number">3.1.</span> <span class="nav-text">后台管理界面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E5%8F%B0%E7%95%8C%E9%9D%A2"><span class="nav-number">3.2.</span> <span class="nav-text">前台界面</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E8%83%BD%E7%9A%84%E6%8A%A5%E9%94%99"><span class="nav-number">4.</span> <span class="nav-text">可能的报错</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">5.</span> <span class="nav-text">其他</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
         </section>
         <!--/noindex-->
 
@@ -360,7 +362,7 @@ mjx-container[display="true"] + br {
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-count">48</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -373,7 +375,7 @@ mjx-container[display="true"] + br {
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">69</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -472,10 +474,16 @@ mjx-container[display="true"] + br {
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2020-11-18 21:40:24 / 修改时间：22:15:37" itemprop="dateCreated datePublished" datetime="2020-11-18T21:40:24+08:00">2020-11-18</time>
+      <time title="创建时间：2020-11-18 21:40:24" itemprop="dateCreated datePublished" datetime="2020-11-18T21:40:24+08:00">2020-11-18</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2020-11-22 21:41:17" itemprop="dateModified" datetime="2020-11-22T21:41:17+08:00">2020-11-22</time>
+      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -571,17 +579,31 @@ Time: 0.009s<span aria-hidden="true" class="line-numbers-rows"><span></span><spa
 <p>启动服务：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">nohup</span> java -jar <span class="token punctuation">&#123;</span>微服务名.jar<span class="token punctuation">&#125;</span> -Dspring.config.location<span class="token operator">=</span><span class="token punctuation">&#123;</span>配置文件名.properties<span class="token punctuation">&#125;</span> <span class="token operator">></span> java_cm.log <span class="token operator"><span class="token file-descriptor important">2</span>></span><span class="token file-descriptor important">&amp;1</span> <span class="token operator">&amp;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>配置可以从指定的<code>application.properties</code> 中覆盖</p>
+<p>(本来是都扔在Docker里面的，发现docker images有点大，内存消耗也上去了)</p>
 <h3 id="修改配置">修改配置</h3>
 <p>将<code>src/main/resources/application.properties</code>和<code>src/test/java/CodeGenerator.java</code>中的配置文件（包括数据库端口、密码、密钥等）改成自己的</p>
 <p>或者启动的时候在`<code>application.properties</code> 中覆盖</p>
 <h3 id="nacos">NACOS</h3>
 <p>一个阿里的动态监控监控服务，有一个控制台。我们只要单机版就够了。还有其他的功能，暂时都没用到。</p>
 <p>阿里官方的建库脚本</p>
-<p>https://github.com/alibaba/nacos/blob/master/distribution/conf/nacos-mysql.sql</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FsaWJhYmEvbmFjb3MvYmxvYi9tYXN0ZXIvZGlzdHJpYnV0aW9uL2NvbmYvbmFjb3MtbXlzcWwuc3Fs">https://github.com/alibaba/nacos/blob/master/distribution/conf/nacos-mysql.sql<i class="fa fa-external-link-alt"></i></span></p>
 <p>或者不要数据库记录日志，直接存成文件。这个直接照着官方的说明启动就行了</p>
+<p>见<span class="exturl" data-url="aHR0cHM6Ly9uYWNvcy5pby96aC1jbi9kb2NzL3F1aWNrLXN0YXJ0Lmh0bWw=">https://nacos.io/zh-cn/docs/quick-start.html<i class="fa fa-external-link-alt"></i></span></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> clone https://github.com/alibaba/nacos.git
+<span class="token builtin class-name">cd</span> nacos/
+mvn -Prelease-nacos -Dmaven.test.skip<span class="token operator">=</span>true clean <span class="token function">install</span> -U
+<span class="token function">ls</span> -al distribution/target/<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>不想自己打包的直接下那个release好了</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FsaWJhYmEvbmFjb3MvcmVsZWFzZXM=">https://github.com/alibaba/nacos/releases<i class="fa fa-external-link-alt"></i></span></p>
+<p>运行：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> nacos/bin
+<span class="token function">sh</span> startup.sh -m standalone<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<figure>
+<img src="/course-managemnet/image-20201116215705790.png" alt="这样子就是运行成功了" /><figcaption aria-hidden="true">这样子就是运行成功了</figcaption>
+</figure>
 <h3 id="nginx">Nginx</h3>
 <p>使用Nginx进行端口映射，还是把Nginx扔到Docker里面了</p>
-<p>编写<code>nginx.conf</code>:</p>
+<p>编写<code>default.conf</code>:</p>
 <pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token keyword">server</span> <span class="token punctuation">&#123;</span>
 		<span class="token keyword">listen</span>	<span class="token number">9001</span><span class="token punctuation">;</span>
 		<span class="token keyword">server_name</span>	localhost<span class="token punctuation">;</span>
@@ -610,6 +632,13 @@ Time: 0.009s<span aria-hidden="true" class="line-numbers-rows"><span></span><spa
 			 <span class="token keyword">proxy_pass</span> <span class="token keyword">http</span><span class="token punctuation">:</span><span class="token operator">/</span><span class="token operator">/</span>localhost<span class="token punctuation">:</span><span class="token number">8008</span><span class="token punctuation">;</span>
 		<span class="token punctuation">&#125;</span>
 	<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>nginx.conf</p>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token keyword">events</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">worker_connections</span>  <span class="token number">4096</span><span class="token punctuation">;</span>  <span class="token comment">## Default: 1024</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">http</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">include</span> <span class="token operator">/</span>etc<span class="token operator">/</span>nginx<span class="token operator">/</span>conf<span class="token punctuation">.</span>d<span class="token operator">/</span><span class="token operator">*</span><span class="token punctuation">.</span>conf<span class="token punctuation">;</span> <span class="token comment">#includes all files of file type.conf</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>编写<code>Dockerfile</code>：</p>
 <pre class="line-numbers language-dockerfile" data-language="dockerfile"><code class="language-dockerfile">FROM nginx:alpine
 COPY default.conf &#x2F;etc&#x2F;nginx&#x2F;conf.d&#x2F;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
@@ -623,22 +652,57 @@ COPY default.conf &#x2F;etc&#x2F;nginx&#x2F;conf.d&#x2F;<span aria-hidden="true"
 <p>去<span class="exturl" data-url="aHR0cDovL2RvY3MtYWxpeXVuLmNuLWhhbmd6aG91Lm9zcy5hbGl5dW4taW5jLmNvbS9hc3NldHMvYXR0YWNoLzUxOTkyL2NuX3poLzE2MDA4NDgxOTk5NTIvVk9EVXBsb2FkRGVtby1qYXZhLTEuNC4xMy56aXA/c3BtPWEyYzRnLjExMTg2NjIzLjIuNDAuNDVjMDE5MmJpUEh4Y2omYW1wO2ZpbGU9Vk9EVXBsb2FkRGVtby1qYXZhLTEuNC4xMy56aXA=">这里<i class="fa fa-external-link-alt"></i></span>下载运行</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">mvn install:install-file -DgroupId<span class="token operator">=</span>com.aliyun -DartifactId<span class="token operator">=</span>aliyun-sdk-vod-upload -Dversion<span class="token operator">=</span><span class="token number">1.4</span>.11 -Dpackaging<span class="token operator">=</span>jar -Dfile<span class="token operator">=</span>aliyun-java-vod-upload-1.4.13.jar<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <h2 id="前端">前端</h2>
-<p>分别在两个目录里运行npm命令即可</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> run build<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h3 id="nacos-1">nacos</h3>
-<p>一个阿里搞的配置工具</p>
-<p>见<span class="exturl" data-url="aHR0cHM6Ly9uYWNvcy5pby96aC1jbi9kb2NzL3F1aWNrLXN0YXJ0Lmh0bWw=">https://nacos.io/zh-cn/docs/quick-start.html<i class="fa fa-external-link-alt"></i></span></p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> clone https://github.com/alibaba/nacos.git
-<span class="token builtin class-name">cd</span> nacos/
-mvn -Prelease-nacos -Dmaven.test.skip<span class="token operator">=</span>true clean <span class="token function">install</span> -U
-<span class="token function">ls</span> -al distribution/target/<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p>不想自己打包的直接下那个release好了</p>
-<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FsaWJhYmEvbmFjb3MvcmVsZWFzZXM=">https://github.com/alibaba/nacos/releases<i class="fa fa-external-link-alt"></i></span></p>
-<p>运行：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">nacos/distribution/bin
-<span class="token function">sh</span> startup.sh -m standalone<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>现在很多教程直接<code>npm run dev</code>，好家伙，直接给我看傻了。（CSDN之类的东西实在屏蔽不过来，SEO排名还一个个都贼靠前）</p>
+<p>又看了看，貌似静态页面可以直接</p>
+<p>然后又看到好多教程，大部分用的<code>pm2</code>运行<code>npm start</code>作为damon，js一统江湖哎，可能都是nodejs全干写的，感觉不太像运维的风格。可我想找nginx的抄作业，扒拉vue的文档拉到最底下才看到一个Docker里跑Nginx的。</p>
+<h3 id="后台管理界面">后台管理界面</h3>
+<p>先在<code>cm_admin</code>和<code>cm_forntweb</code>两个文件夹下<code>build</code></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> cm_admin
+<span class="token function">npm</span> run build<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>然后会在<code>.dist</code>文件夹下生成压缩后的静态页面。</p>
+<p>扔到服务器上跑就行了，用Nginx配置一下端口映射和域名（我这域名没有，老板嫌备案麻烦没向学校申请）</p>
+<pre class="line-numbers language-dockerfile" data-language="dockerfile"><code class="language-dockerfile">FROM nginx
+COPY dist&#x2F; &#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html&#x2F;
+COPY nginx.conf &#x2F;etc&#x2F;nginx&#x2F;conf.d&#x2F;default.conf<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token keyword">server</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">listen</span>       <span class="token number">9528</span><span class="token punctuation">;</span>
+    <span class="token keyword">server_name</span>  localhost<span class="token punctuation">;</span>
+	<span class="token keyword">server</span> <span class="token number">0.0</span><span class="token number">.0</span><span class="token number">.0</span><span class="token punctuation">;</span>
+
+    <span class="token comment">#charset koi8-r;</span>
+    <span class="token keyword">access_log</span>  <span class="token operator">/</span>var<span class="token operator">/</span>log<span class="token operator">/</span>nginx<span class="token operator">/</span>host<span class="token punctuation">.</span>access<span class="token punctuation">.</span>log  main<span class="token punctuation">;</span>
+    <span class="token keyword">error_log</span>  <span class="token operator">/</span>var<span class="token operator">/</span>log<span class="token operator">/</span>nginx<span class="token operator">/</span>error<span class="token punctuation">.</span>log  error<span class="token punctuation">;</span>
+
+    <span class="token keyword">location</span> <span class="token operator">/</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">root</span>   <span class="token operator">/</span>usr<span class="token operator">/</span>share<span class="token operator">/</span>nginx<span class="token operator">/</span>html<span class="token punctuation">;</span>
+        <span class="token keyword">index</span>  <span class="token keyword">index</span><span class="token punctuation">.</span>html <span class="token keyword">index</span><span class="token punctuation">.</span>htm<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="前台界面">前台界面</h3>
+<p>Nuxt.js写的，就直接用的<code>nuxt start</code></p>
+<p>在<code>packages.json</code>里面指定一下端口和IP</p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token property">"config"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+  <span class="token property">"nuxt"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">"host"</span><span class="token operator">:</span> <span class="token string">"0.0.0.0"</span><span class="token punctuation">,</span>
+    <span class="token property">"port"</span><span class="token operator">:</span> <span class="token string">"3000"</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>测试一下</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> cm_frontweb
+<span class="token function">npm</span> run build
+<span class="token function">npm</span> run start<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <figure>
-<img src="/course-managemnet/image-20201116215705790.png" alt="这样子就是运行成功了" /><figcaption aria-hidden="true">这样子就是运行成功了</figcaption>
+<img src="/course-managemnet/image-20201122112918925.png" alt="这个内存占用看起来可以接受" /><figcaption aria-hidden="true">这个内存占用看起来可以接受</figcaption>
+</figure>
+<p>在服务器上</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">npm</span> isntall pm2 -g
+<span class="token builtin class-name">cd</span> cm_frontweb
+<span class="token function">npm</span> <span class="token function">install</span> --save
+nuxt build
+pm2 start <span class="token function">npm</span> --name <span class="token string">"cm_frontweb"</span> -- run start
+pm2 startup<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<figure>
+<img src="/course-managemnet/image-20201122114528875.png" alt="内存占用也还好" /><figcaption aria-hidden="true">内存占用也还好</figcaption>
 </figure>
 <h2 id="可能的报错">可能的报错</h2>
 <pre class="line-numbers language-none"><code class="language-none">npm ERR! code ELIFECYCLE
@@ -666,8 +730,19 @@ npm ERR!     &#x2F;root&#x2F;.npm&#x2F;_logs&#x2F;2020-11-16T14_13_24_937Z-debug
 <p>请用root权限运行。</p>
 <pre class="line-numbers language-none"><code class="language-none">2020-11-17 16:02:57 |ERROR |ThreadPoolTaskScheduler-1 |NacosWatch.java:171 |org.springframework.cloud.alibaba.nacos.discovery.NacosWatch |Error watching Nacos Service change<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>检查一下nacos是否正确启动了(不过这个项目不用NACOS也能完成面向客户的功能)</p>
+<p>npm run build 报错</p>
+<pre class="line-numbers language-none"><code class="language-none">ERROR in Template execution failed: ReferenceError: BASE_URL is not defined<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>修改<code>index.html</code>中<code>BASE_URL</code>为<code>htmlWebpackPlugin.options.url</code></p>
+<p>警告可以不用管</p>
+<pre class="line-numbers language-none"><code class="language-none">WARNING in asset size limit: The following asset(s) exceed the recommended size limit (244 KiB).<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <h2 id="其他">其他</h2>
 <p>未完待续</p>
+<h2 id="参考">参考</h2>
+<p><span class="exturl" data-url="aHR0cHM6Ly9jbGkudnVlanMub3JnL3poL2d1aWRlL2RlcGxveW1lbnQuaHRtbCPpgJrnlKjmjIfljZc=">vue官方文档的部署通用指南<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9zZWdtZW50ZmF1bHQuY29tL2EvMTE5MDAwMDAxMjc3NDY1MA==">next.js nuxt.js等服务端渲染框架构建的项目部署到服务器,并用PM2守护程序<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9zZWdtZW50ZmF1bHQuY29tL2EvMTE5MDAwMDAxMjY3NTAxMg==">vue、react等单页面项目应该这样子部署到服务器<i class="fa fa-external-link-alt"></i></span></p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://segmentfault.com/q/1010000008477568"></a></p>
+<p>https://juejin.cn/post/6844903666701320205</p>
 
     </div>
 
@@ -690,6 +765,9 @@ npm ERR!     &#x2F;root&#x2F;.npm&#x2F;_logs&#x2F;2020-11-16T14_13_24_937Z-debug
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/spring-cloud-performance-optimization/" rel="next" title="记一次Spring Cloud上线内存优化">
+                  记一次Spring Cloud上线内存优化 <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>
