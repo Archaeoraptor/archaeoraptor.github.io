@@ -482,7 +482,7 @@ mjx-container[display="true"] + br {
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-11-22 21:41:17" itemprop="dateModified" datetime="2020-11-22T21:41:17+08:00">2020-11-22</time>
+        <time title="修改时间：2020-11-24 18:13:44" itemprop="dateModified" datetime="2020-11-24T18:13:44+08:00">2020-11-24</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -678,6 +678,8 @@ COPY nginx.conf &#x2F;etc&#x2F;nginx&#x2F;conf.d&#x2F;default.conf<span aria-hid
         <span class="token keyword">index</span>  <span class="token keyword">index</span><span class="token punctuation">.</span>html <span class="token keyword">index</span><span class="token punctuation">.</span>htm<span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> docker build -t cm_admin <span class="token builtin class-name">.</span>
+sodo docker run cm_admin<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <h3 id="前台界面">前台界面</h3>
 <p>Nuxt.js写的，就直接用的<code>nuxt start</code></p>
 <p>在<code>packages.json</code>里面指定一下端口和IP</p>
@@ -716,7 +718,7 @@ npm ERR! This is probably not a problem with npm. There is likely additional log
 npm ERR! A complete log of this run can be found in:
 npm ERR!     &#x2F;root&#x2F;.npm&#x2F;_logs&#x2F;2020-11-16T14_13_24_937Z-debug.log<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>运行</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> cache clean --force
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> cache clean --forceeno1                     14Kb   10Kb   <span class="token number">0.0</span>    <span class="token number">3.4</span>   <span class="token number">6</span>.83G <span class="token number">1</span>.06G  <span class="token number">7152</span> xi102          <span class="token number">1</span>:45 <span class="token number">50</span>    <span class="token number">0</span> S    ? ?    java -server -Xms2g -Xmx2g -Xmn1g -XX:MetaspaceSize<span class="token operator">=</span>128m -XX:MaxMetaspaceSize<span class="token operator">=</span>320m -XX:-OmitStackTraceInFastThrow -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath<span class="token operator">=</span>/home/xi102/course_management/nacos/logs/java_heapdump.hprof -XX:-UseLargePages -Dnacos.member.list<span class="token operator">=</span> -Djava.
 <span class="token function">rm</span> -rf node_modules package-lock.json
 <span class="token function">npm</span> <span class="token function">install</span>
 <span class="token function">npm</span> run dev<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
@@ -735,6 +737,9 @@ npm ERR!     &#x2F;root&#x2F;.npm&#x2F;_logs&#x2F;2020-11-16T14_13_24_937Z-debug
 <p>修改<code>index.html</code>中<code>BASE_URL</code>为<code>htmlWebpackPlugin.options.url</code></p>
 <p>警告可以不用管</p>
 <pre class="line-numbers language-none"><code class="language-none">WARNING in asset size limit: The following asset(s) exceed the recommended size limit (244 KiB).<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>nginx报错<code>nginx: [emerg] “server” directive is not allowed here</code></p>
+<p>见https://stackoverflow.com/questions/41766195/nginx-emerg-server-directive-is-not-allowed-here</p>
+<p>可能是配置没写好</p>
 <h2 id="其他">其他</h2>
 <p>未完待续</p>
 <h2 id="参考">参考</h2>

@@ -39,10 +39,15 @@
 <meta property="og:image" content="https://zhangjk98.xyz/spring-cloud-performance-optimization/image-20201118095216036.png">
 <meta property="og:image" content="https://zhangjk98.xyz/spring-cloud-performance-optimization/image-20201120103456546.png">
 <meta property="og:image" content="https://zhangjk98.xyz/spring-cloud-performance-optimization/image-20201120212626344.png">
+<meta property="og:image" content="https://zhangjk98.xyz/spring-cloud-performance-optimization/image-20201124123102440.png">
+<meta property="og:image" content="https://zhangjk98.xyz/spring-cloud-performance-optimization/image-20201124170847425.png">
+<meta property="og:image" content="https://zhangjk98.xyz/spring-cloud-performance-optimization/image-20201124165004678.png">
+<meta property="og:image" content="https://zhangjk98.xyz/spring-cloud-performance-optimization/image-20201124120817137.png">
+<meta property="og:image" content="https://zhangjk98.xyz/spring-cloud-performance-optimization/image-20201124120944296.png">
 <meta property="article:published_time" content="2020-11-19T12:30:06.000Z">
 <meta property="article:author" content="Zhang.jk">
 <meta property="article:tag" content="jvm">
-<meta property="article:tag" content="Sping">
+<meta property="article:tag" content="Spring">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://zhangjk98.xyz/spring-cloud-performance-optimization/image-20201118095216036.png">
 
@@ -344,7 +349,7 @@ mjx-container[display="true"] + br {
       <div class="sidebar-panel-container">
         <!--noindex-->
         <section class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%8E%E4%B9%88%E5%9B%9E%E4%BA%8B"><span class="nav-number">1.</span> <span class="nav-text">怎么回事</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">2.</span> <span class="nav-text">服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%80%83%E8%99%91%E6%89%94%E6%8E%89docker"><span class="nav-number">3.</span> <span class="nav-text">考虑扔掉Docker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E8%83%BD%E6%89%94%E7%9A%84"><span class="nav-number">4.</span> <span class="nav-text">其他能扔的</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#redis"><span class="nav-number">4.1.</span> <span class="nav-text">Redis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nacos"><span class="nav-number">4.2.</span> <span class="nav-text">NACOS</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jdk%E7%89%88%E6%9C%AC"><span class="nav-number">5.</span> <span class="nav-text">JDK版本</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%AC%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8"><span class="nav-number">5.1.</span> <span class="nav-text">不同版本内存占用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%8D%E5%92%8C64%E4%BD%8D%E7%9A%84%E5%B7%AE%E5%BC%82"><span class="nav-number">5.2.</span> <span class="nav-text">32位和64位的差异</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jvm%E8%B0%83%E5%8F%82"><span class="nav-number">6.</span> <span class="nav-text">JVM调参</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E6%9E%84"><span class="nav-number">7.</span> <span class="nav-text">重构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E7%BB%88%E7%BB%93%E6%9E%9C"><span class="nav-number">8.</span> <span class="nav-text">最终结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">9.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%8E%E4%B9%88%E5%9B%9E%E4%BA%8B"><span class="nav-number">1.</span> <span class="nav-text">怎么回事</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">2.</span> <span class="nav-text">服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%80%83%E8%99%91%E6%89%94%E6%8E%89docker"><span class="nav-number">3.</span> <span class="nav-text">考虑扔掉Docker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E8%83%BD%E6%89%94%E7%9A%84"><span class="nav-number">4.</span> <span class="nav-text">其他能扔的</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#redis"><span class="nav-number">4.1.</span> <span class="nav-text">Redis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nacos"><span class="nav-number">4.2.</span> <span class="nav-text">NACOS</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jdk%E7%89%88%E6%9C%AC"><span class="nav-number">5.</span> <span class="nav-text">JDK版本</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%AC%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8"><span class="nav-number">5.1.</span> <span class="nav-text">不同版本内存占用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%8D%E5%92%8C64%E4%BD%8D%E7%9A%84%E5%B7%AE%E5%BC%82"><span class="nav-number">5.2.</span> <span class="nav-text">32位和64位的差异</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jvm%E8%B0%83%E5%8F%82"><span class="nav-number">6.</span> <span class="nav-text">JVM调参</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%8B%E7%BC%A9mysql%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8"><span class="nav-number">7.</span> <span class="nav-text">压缩MySQL内存占用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9"><span class="nav-number">8.</span> <span class="nav-text">图片压缩</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E6%9E%84"><span class="nav-number">9.</span> <span class="nav-text">重构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E7%BB%88%E7%BB%93%E6%9E%9C"><span class="nav-number">10.</span> <span class="nav-text">最终结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">11.</span> <span class="nav-text">参考</span></a></li></ol></div>
         </section>
         <!--/noindex-->
 
@@ -480,7 +485,7 @@ mjx-container[display="true"] + br {
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-11-22 21:41:17" itemprop="dateModified" datetime="2020-11-22T21:41:17+08:00">2020-11-22</time>
+        <time title="修改时间：2020-11-24 18:13:44" itemprop="dateModified" datetime="2020-11-24T18:13:44+08:00">2020-11-24</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -549,6 +554,9 @@ mjx-container[display="true"] + br {
 <p>那就都试试吧。在Arch上打的jar包，就在本地测试了一下，没在服务器上试。</p>
 <h3 id="不同版本内存占用">不同版本内存占用</h3>
 <p>Arch有个脚本，可以切换OpenJDK的版本，</p>
+<figure>
+<img src="/spring-cloud-performance-optimization/image-20201124123102440.png" alt="archlinux-java" /><figcaption aria-hidden="true">archlinux-java</figcaption>
+</figure>
 <p>Oracle JDK 由于甲骨文公司不武德，跟各路开源组织（以及很多闭源福报公司）都闹僵了，Arch仓库不提供支持，得自己安装。</p>
 <p>从AUR安装结果报错说<code>**==&gt; ERROR:** **Failure while downloading manual://jdk-8u271-linux-x64.tar.gz**    **Aborting...** error downloading sources: jdk8</code>，看了一下还得跑到<span class="exturl" data-url="aHR0cHM6Ly93d3cub3JhY2xlLmNvbS9qYXZhL3RlY2hub2xvZ2llcy9qYXZhc2UvamF2YXNlLWpkazgtZG93bmxvYWRzLmh0bWw=">Oracle<i class="fa fa-external-link-alt"></i></span>那里去注册下载然后pkgbuild</p>
 <p>从阿里云的镜像可以不用注册下载<span class="exturl" data-url="aHR0cHM6Ly9jb2RlLmFsaXl1bi5jb20va2FyL29qZGs4LTh1MjcxL3Jhdy9tYXN0ZXIvamRrLTh1MjcxLWxpbnV4LXg2NC50YXIuZ3o=">jdk8<i class="fa fa-external-link-alt"></i></span>和<span class="exturl" data-url="aHR0cHM6Ly9jb2RlLmFsaXl1bi5jb20va2FyL29qZGsxMS0xMS4wLjkvcmF3L21hc3Rlci9qZGstMTEuMC45X2xpbnV4LXg2NF9iaW4udGFyLmd6">jdk11<i class="fa fa-external-link-alt"></i></span>，然后扔到<code>~/Downloads</code>里面，再运行<code>yay -Syu jdk8 jdk11</code>就好了。</p>
@@ -557,14 +565,38 @@ mjx-container[display="true"] + br {
 <p>试了一下java8的32位和64位，貌似有一点区别，32位是节省一点资源。大概差距也在十几兆左右，区别不太大。</p>
 <h2 id="jvm调参">JVM调参</h2>
 <p>大概调了调，冲着压榨内存占用调的</p>
+<p>几个比较重要的参数：</p>
+<ul>
+<li>-Xms</li>
+<li>-Xmx</li>
+<li></li>
+</ul>
 <p>暂时把参数改成这样子了：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">java -Xms16m -Xmx32m -XX:MaxMetaspaceSize<span class="token operator">=</span>48m -XX:CompressedClassSpaceSize<span class="token operator">=</span>8m -Xss256k -Xmn8m -XX:InitialCodeCacheSize<span class="token operator">=</span>4m -XX:ReservedCodeCacheSize<span class="token operator">=</span>8m -XX:MaxDirectMemorySize<span class="token operator">=</span>16m -jar service_ucenter-0.0.1-SNAPSHOT.jar<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">java -Xms16m -Xmx32m -XX:MaxMetaspaceSize<span class="token operator">=</span>48m -XX:CompressedClassSpaceSize<span class="token operator">=</span>8m -Xss256k -Xmn300m -XX:InitialCodeCacheSize<span class="token operator">=</span>4m -XX:ReservedCodeCacheSize<span class="token operator">=</span>8m -XX:MaxDirectMemorySize<span class="token operator">=</span>16m -jar service_ucenter-0.0.1-SNAPSHOT.jar<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>不太敢压榨的太狠，怕上线了OutofMemory。</p>
 <p>现在每个jar包跑起来大概内存占用在300M以下。</p>
+<h2 id="压缩mysql内存占用">压缩MySQL内存占用</h2>
+<p>MySQL的内存占用压缩一下还是很低的，之前还在用wordpress的时候128M内存的灵车VPS跑起来没什么大问题。</p>
+<h2 id="图片压缩">图片压缩</h2>
+<p>浏览器F12 可以看到，在加载首页的时候，大部分html、css、js资源在300ms内加载完成，500ms以后开始加载图床资源，一直到最4000ms以后才加载完成。</p>
+<figure>
+<img src="/spring-cloud-performance-optimization/image-20201124170847425.png" alt="加载首页" /><figcaption aria-hidden="true">加载首页</figcaption>
+</figure>
+<p>下图是打开首页时png图片（阿里云图床，大小 926k）的时候的加载速度，耗时最长的就是下载图片的过程。</p>
+<figure>
+<img src="/spring-cloud-performance-optimization/image-20201124165004678.png" alt="image load speed" /><figcaption aria-hidden="true">image load speed</figcaption>
+</figure>
+<p>主要就是压缩图片大小了，jpg和png全换成webp，今年6月份Safari14已经支持webp了，现在主流浏览器都问题不大。</p>
 <h2 id="重构">重构</h2>
-<p>暂时不考虑，不过上线的时候砍掉几个无关紧要的功能倒是问题不大，这样只开4个就差不多能用了。</p>
+<p>暂时不考虑，不过上线的时候砍掉几个无关紧要的功能倒是问题不大，这样只开4个微服务就差不多能用了。</p>
 <h2 id="最终结果">最终结果</h2>
 <p>如果不跑别的东西，一个4G内存的VPS已经够用了。</p>
+<figure>
+<img src="/spring-cloud-performance-optimization/image-20201124120817137.png" alt="首页" /><figcaption aria-hidden="true">首页</figcaption>
+</figure>
+<figure>
+<img src="/spring-cloud-performance-optimization/image-20201124120944296.png" alt="全部课程页面" /><figcaption aria-hidden="true">全部课程页面</figcaption>
+</figure>
 <h2 id="参考">参考</h2>
 <p>https://developers.redhat.com/blog/2017/04/04/openjdk-and-containers/</p>
 <p>https://blog.kelu.org/tech/2018/05/30/running-a-jvm-in-a-container-without-getting-killed.html</p>
@@ -581,7 +613,7 @@ mjx-container[display="true"] + br {
     <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/jvm/" rel="tag"><i class="fa fa-tag"></i> jvm</a>
-              <a href="/tags/Sping/" rel="tag"><i class="fa fa-tag"></i> Sping</a>
+              <a href="/tags/Spring/" rel="tag"><i class="fa fa-tag"></i> Spring</a>
           </div>
 
         
