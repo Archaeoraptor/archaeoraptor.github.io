@@ -46,8 +46,7 @@
     <title>Docker笔记</title>
     <url>/69d4/</url>
     <content><![CDATA[<p>开始折腾Docker，等待填坑 <a id="more"></a></p>
-<p>容器化到底拿来干什么呢</p>
-<p>Docker还可以套娃，Docker里面跑Docker</p>
+<p>好耶，是容器。坏耶，是容器。</p>
 <h2 id="基本设置和操作">基本设置和操作</h2>
 <h3 id="docker设置">Docker设置</h3>
 <p>一定要先启动, 不然有可能<code>Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?</code></p>
@@ -116,8 +115,8 @@
 </tbody>
 </table>
 <h2 id="踩坑记录">踩坑记录</h2>
-<p>各位看官散了吧，都是一堆弱智操作搞的</p>
 <h3 id="一次弱智的踩坑">一次弱智的踩坑</h3>
+<p>各位看官散了吧，都是一堆弱智操作搞的</p>
 <p><code>Failed to enable unit: Unit file /etc/systemd/system/docker.service is masked.</code></p>
 <p>执行</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl unmask docker.service
@@ -186,7 +185,6 @@ tcp6       0      0 211.83.111.224:443      211.83.111.221:40294    ESTABLISHED 
 <h2 id="参考">参考</h2>
 <h2 id="再看docker">再看Docker</h2>
 <p>被人骗入坑Docker，甚至教研室服务器上基本全是Docker跑的一个个容器，甚至MySQL都是跑在Docker上的。</p>
-<p>Docker 网络那里</p>
 <p><span class="exturl" data-url="aHR0cDovL2RvY2tvbmUuaW8vYXJ0aWNsZS82NjA=">http://dockone.io/article/660<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9qaW1teXNvbmcuaW8vZG9ja2VyLWhhbmRib29rLw==">https://jimmysong.io/docker-handbook/<i class="fa fa-external-link-alt"></i></span></p>
 ]]></content>
       <categories>
@@ -604,6 +602,12 @@ poetry <span class="token function">install</span><span aria-hidden="true" class
       <tags>
         <tag>2020</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>本站评论由valine更换为DisqusJS</title>
+    <url>/change-comment-to-disqusjs/</url>
+    <content><![CDATA[<p>由于近日不少采用valine作为评论系统网站的遭到几千个垃圾评论刷屏攻击，外加valine存在的安全隐患问题，放弃好看的valine，换用DisqusJS。 utteranc继续使用。</p>
+]]></content>
   </entry>
   <entry>
     <title>上线一个Spring Cloud的课程管理服务项目</title>
@@ -1075,36 +1079,6 @@ connection<span class="token punctuation">.</span>commit<span class="token punct
       </tags>
   </entry>
   <entry>
-    <title>不要尝试sudo apt remove iptables</title>
-    <url>/a7d1/</url>
-    <content><![CDATA[<p><img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/emmm.jpg" alt="Picture" style="zoom:80%;" /> <a id="more"></a></p>
-<p>在Ubuntu和Debian里卸载iptables会发生严重的后果（大佬请无视） 一开始我们觉得是防火墙把443端口给办了用不了https，结果我用UFW设置不管用，怀疑是iptables的问题，问了花花师兄，也不清楚，我们决定先把iptables禁用了。随手一谷歌，也忘了哪个神仙说的</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">apt</span> remove iptables <span class="token comment"># 不要乱试！</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>感觉对的嘛，卸个防火墙能出什么问题嘛<br />
-然后提示是否卸载我选了y，然后突然在卸载的log发现一堆Docker，瞬间感觉不对劲。然后，然后Docker直接不能用了！ 血泪教训啊，防火墙卸了Docker就不能用了！</p>
-<p>随手一搜发现不止我一个人中招啊</p>
-<p><img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/iptables-docker.png" alt="Picture" style="zoom:80%;" /></p>
-<p>我现在心中一万头草泥马飘过</p>
-<p><img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/cnm.png" alt="Picture" style="zoom:80%;" /></p>
-<p>行吧，一堆依赖比python2还多</p>
-<p>不说了，准备重装系统了<img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/mmm.jpg" alt="Picture" style="zoom:80%;" /></p>
-<hr />
-<p>停用iptables请使用<code>chkconfig iptables off</code>命令</p>
-<hr />
-<p>更新，试图垂死挣扎使用</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">apt</span> <span class="token function">install</span> network-manager<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>既然把网卡配置删了那就再配置一遍 等会，装了NetworkManager选了默认配置之后连22端口也连不上了。。。 行吧，准备重装 <img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/wa.jpg" alt="Picture" style="zoom:80%;" /></p>
-]]></content>
-      <categories>
-        <category>102网吧日常</category>
-      </categories>
-      <tags>
-        <tag>iptables</tag>
-        <tag>删库跑路</tag>
-        <tag>服务器</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>为什么不试试EndeavourOS呢</title>
     <url>/why-not-try-endeavouros/</url>
     <content><![CDATA[<p>sudo pacman -Rs win10</p>
@@ -1283,6 +1257,36 @@ autorandr --save test1<span aria-hidden="true" class="line-numbers-rows"><span><
       <tags>
         <tag>KDE</tag>
         <tag>EndeavourOS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>不要尝试sudo apt remove iptables</title>
+    <url>/a7d1/</url>
+    <content><![CDATA[<p><img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/emmm.jpg" alt="Picture" style="zoom:80%;" /> <a id="more"></a></p>
+<p>在Ubuntu和Debian里卸载iptables会发生严重的后果（大佬请无视） 一开始我们觉得是防火墙把443端口给办了用不了https，结果我用UFW设置不管用，怀疑是iptables的问题，问了花花师兄，也不清楚，我们决定先把iptables禁用了。随手一谷歌，也忘了哪个神仙说的</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">apt</span> remove iptables <span class="token comment"># 不要乱试！</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>感觉对的嘛，卸个防火墙能出什么问题嘛<br />
+然后提示是否卸载我选了y，然后突然在卸载的log发现一堆Docker，瞬间感觉不对劲。然后，然后Docker直接不能用了！ 血泪教训啊，防火墙卸了Docker就不能用了！</p>
+<p>随手一搜发现不止我一个人中招啊</p>
+<p><img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/iptables-docker.png" alt="Picture" style="zoom:80%;" /></p>
+<p>我现在心中一万头草泥马飘过</p>
+<p><img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/cnm.png" alt="Picture" style="zoom:80%;" /></p>
+<p>行吧，一堆依赖比python2还多</p>
+<p>不说了，准备重装系统了<img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/mmm.jpg" alt="Picture" style="zoom:80%;" /></p>
+<hr />
+<p>停用iptables请使用<code>chkconfig iptables off</code>命令</p>
+<hr />
+<p>更新，试图垂死挣扎使用</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">apt</span> <span class="token function">install</span> network-manager<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>既然把网卡配置删了那就再配置一遍 等会，装了NetworkManager选了默认配置之后连22端口也连不上了。。。 行吧，准备重装 <img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/wa.jpg" alt="Picture" style="zoom:80%;" /></p>
+]]></content>
+      <categories>
+        <category>102网吧日常</category>
+      </categories>
+      <tags>
+        <tag>iptables</tag>
+        <tag>删库跑路</tag>
+        <tag>服务器</tag>
       </tags>
   </entry>
   <entry>
@@ -2277,6 +2281,64 @@ X_pred <span class="token operator">=</span> np<span class="token punctuation">.
       </categories>
       <tags>
         <tag>推荐系统</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>解决标注工具doccano卡顿缓慢问题（以及二次开发）</title>
+    <url>/solve-doccano-slow-and-secondary-development/</url>
+    <content><![CDATA[<p>这是鸽了很久的一篇</p>
+<a id="more"></a>
+<h2 id="老鸽子发言">老鸽子发言</h2>
+<p>去年年底还没爆发疫情的时候，润润实习回来说他们那用的标注工具是二次开发的doccano。大家一看确实好，决定用doccano替换之前教研室卖酱N年前拿Flask+jQuery写的</p>
+<p>疫情在家的时候找不到什么苦力，教研室集体当工具人标注了几千份电子病历。doccano好用是挺好用的，然而这个东西经常卡顿严重。教研室配置不算差的服务器。 之前想着解决一下这个问题的，然而<strong>又不是不能用</strong>，就一直这么用了下去。当时Django已经忘的差不多了，前端Nuxt.js那一堆东西也不怎么熟。</p>
+<p>一年过去了，doccano一直在维护更新，还加了不少新功能、升级了node、Django、python版本。连中文都有了，感动。</p>
+<figure>
+<img src="/solve-doccano-slow-and-secondary-development/image-20201126155932795.png" alt="doccano" /><figcaption aria-hidden="true">doccano</figcaption>
+</figure>
+<p>然而最近试了一下，更卡了，在issue随便一搜slow，能看到一堆，不过貌似都暂时没有解决。</p>
+<p>当时在README的文档里面还有直接运行<code>django server</code>和<code>npm run</code>的方式，后来就变成Docker了。再后来变成Docker compose了，最后开发环境的搭建也变成Docker compose了。今年年初的时候（据某个师兄说，我没试过）在win10上面直接运行Nuxt前端和Django后端跑在本地没什么问题，也不卡。 之前我直接扔了一个在服务器上就卡，当时以为是教研室上传速度只有感天动地的1M/s校园网在疫情期间连到家里的网速瓶颈造成的。 这几天师兄跟我说他又搞了一个Docker的在服务器上，还是卡。</p>
+<p>现在有两种怀疑，一个是Docker Compose的镜像没有精简，另一个是前端加载了太多东西（比如字体资源和一大堆图片还有动画什么的）</p>
+<p>现在本地照着官方文档的方式跑一个看看</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> clone https://github.com/doccano/doccano.git
+<span class="token builtin class-name">cd</span> doccano/app
+pyenv virtualenv <span class="token number">3.8</span>.6 doccano
+pip <span class="token function">install</span> -r requirements.txt
+python manage.py migrate
+python manage.py create_roles
+python manage.py create_admin --noinput --username <span class="token string">"admin"</span> --email <span class="token string">"admin@example.com"</span> --password <span class="token string">"password"</span>
+python manage.py runserver
+<span class="token builtin class-name">cd</span> <span class="token punctuation">..</span>/<span class="token punctuation">..</span>
+<span class="token builtin class-name">cd</span> doccano/frontend
+<span class="token function">npm</span> <span class="token function">install</span>
+<span class="token function">npm</span> run dev<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>安装过程中报错<code>Running setup.py install for pyodbc ... error</code>,是个连 sql server 的库，不需要，删了 （如果你需要，在Arch上要装这个包<code>sudo pacman -S unixodbc</code>） 同理，<code>Running setup.py install for psycopg2-binary ... error</code>postgresql可以直接在arch仓库里面装包<code>yay -Syu python-psycopg2</code></p>
+<p>本地看起来没什么大问题</p>
+<h2 id="字体资源等cdn加载的问题">字体资源等CDN加载的问题</h2>
+<p>感觉应该还是那几个资源加载的问题。在<code>/app/server/templates</code>里面</p>
+<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>link</span> <span class="token attr-name">rel</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>stylesheet<span class="token punctuation">"</span></span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>https://use.fontawesome.com/releases/v5.0.13/css/all.css<span class="token punctuation">"</span></span> <span class="token attr-name">integrity</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp<span class="token punctuation">"</span></span>
+  <span class="token attr-name">crossorigin</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>anonymous<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>link</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>https://fonts.googleapis.com/css?family=Open+Sans:300,400,700<span class="token punctuation">"</span></span> <span class="token attr-name">rel</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>stylesheet<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>link</span> <span class="token attr-name">rel</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>stylesheet<span class="token punctuation">"</span></span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css<span class="token punctuation">"</span></span> <span class="token attr-name">crossorigin</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>anonymous<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>```<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>前面两个在国内速度可能很慢，可以寻找国内的CDN替代，比如换为</p>
+<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>link</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">'</span>https://fonts.loli.net/css?family=Open+Sans<span class="token punctuation">'</span></span> <span class="token attr-name">rel</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">'</span>stylesheet<span class="token punctuation">'</span></span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>link</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>https://cdn.bootcdn.net/ajax/libs/bulma/0.7.1/css/bulma.min.css<span class="token punctuation">"</span></span> <span class="token attr-name">rel</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>stylesheet<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>或者将字体直接删了用系统默认字体。那个cloudflare的CDN移动用户可能比较慢</p>
+<p>还有一个<code>frontend/nuxt.config.js</code>里面的第25行，Material Icon 的CDN，可以改为<code>'https://fonts.googleapis.com/icon?family=Material+Icons'</code></p>
+<h2 id="docker的问题">Docker的问题？</h2>
+<p>Docker images没做好是容易出这些问题，然后就看了一下它的Dockerfile</p>
+<p>貌似没什么大问题，也没有很多layers之类的会导致很慢的写法。</p>
+<p>貌似这个Docker Compose装了一大堆的东西。我用的podman，貌似和docker-compose不一样的地方还挺多的。本地<code>podman-compose</code>了一下报错了。不太行。</p>
+<p>一上来就装了一个Alpine，正常，然后上来又装了一堆<code>python3-dev libpq postgresql-dev unixodbc-dev musl-dev g++ libffi-dev</code> 那个<code>unixodbc-dev g++</code>是sql server的依赖，<code>libpq</code>是postgresql的依赖</p>
+<h2 id="链接">链接</h2>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2RvY2Nhbm8vZG9jY2Fubw==">https://github.com/doccano/doccano<i class="fa fa-external-link-alt"></i></span> doccano的github repo<br />
+<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC80ODMyMDkwMQ==">https://zhuanlan.zhihu.com/p/48320901<i class="fa fa-external-link-alt"></i></span> 几年前的一个doccano介绍<br />
+<span class="exturl" data-url="aHR0cHM6Ly9kb2NjYW5vLmdpdGh1Yi5pby9kb2NjYW5vLw==">https://doccano.github.io/doccano/<i class="fa fa-external-link-alt"></i></span></p>
+]]></content>
+      <tags>
+        <tag>doccano</tag>
+        <tag>docker</tag>
+        <tag>Nuxt.js</tag>
+        <tag>Django</tag>
       </tags>
   </entry>
   <entry>

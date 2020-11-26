@@ -353,7 +353,7 @@ mjx-container[display="true"] + br {
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-count">50</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -366,7 +366,7 @@ mjx-container[display="true"] + br {
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-count">73</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -471,7 +471,13 @@ mjx-container[display="true"] + br {
 
 
       
-    <div class="comments" id="valine-comments"></div>
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -614,15 +620,20 @@ document.querySelectorAll('.pdfobject-container').forEach(element => {
 
   
 
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/disqusjs@1.3.0/dist/disqusjs.css">
+
 <script>
-NexT.utils.loadComments('#valine-comments', () => {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
-    new Valine(Object.assign({"enable":true,"appId":"9HDUS9zSiY41T0Vp4naCoqcC-MdYXbMMI","appKey":"ufiyQKIMrlBkEYcA4bk1TrYj","serverURLs":null,"placeholder":"留言可能会过一段时间才看到,急事请发邮件","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":false,"comment_count":true,"recordIP":false,"enableQQ":true,"requiredFields":[],"language":null}, {
-      el: '#valine-comments',
-      path: "/schedule/",
-      serverURLs: "https://9hdus9zs.api.lncldglobal.com"
-    }));
-  }, window.Valine);
+NexT.utils.loadComments('#disqus_thread', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/disqusjs@1.3.0/dist/disqus.js', () => {
+    window.dsqjs = new DisqusJS({
+      api       : 'https://disqus.skk.moe/disqus/' || 'https://disqus.com/api/',
+      apikey    : '3qJ515uApWlP58gXhzPCCk3L0NlOvrMLwt5dDITBndS8fp8She7PT1gvBdDcgwrt',
+      shortname : 'arcaheoraptor',
+      url       : "https://zhangjk98.xyz/schedule/index.html",
+      identifier: "schedule/index.html",
+      title     : "schedule",
+    });
+  }, window.DisqusJS);
 });
 </script>
 
