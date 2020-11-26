@@ -1079,6 +1079,36 @@ connection<span class="token punctuation">.</span>commit<span class="token punct
       </tags>
   </entry>
   <entry>
+    <title>不要尝试sudo apt remove iptables</title>
+    <url>/a7d1/</url>
+    <content><![CDATA[<p><img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/emmm.jpg" alt="Picture" style="zoom:80%;" /> <a id="more"></a></p>
+<p>在Ubuntu和Debian里卸载iptables会发生严重的后果（大佬请无视） 一开始我们觉得是防火墙把443端口给办了用不了https，结果我用UFW设置不管用，怀疑是iptables的问题，问了花花师兄，也不清楚，我们决定先把iptables禁用了。随手一谷歌，也忘了哪个神仙说的</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">apt</span> remove iptables <span class="token comment"># 不要乱试！</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>感觉对的嘛，卸个防火墙能出什么问题嘛<br />
+然后提示是否卸载我选了y，然后突然在卸载的log发现一堆Docker，瞬间感觉不对劲。然后，然后Docker直接不能用了！ 血泪教训啊，防火墙卸了Docker就不能用了！</p>
+<p>随手一搜发现不止我一个人中招啊</p>
+<p><img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/iptables-docker.png" alt="Picture" style="zoom:80%;" /></p>
+<p>我现在心中一万头草泥马飘过</p>
+<p><img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/cnm.png" alt="Picture" style="zoom:80%;" /></p>
+<p>行吧，一堆依赖比python2还多</p>
+<p>不说了，准备重装系统了<img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/mmm.jpg" alt="Picture" style="zoom:80%;" /></p>
+<hr />
+<p>停用iptables请使用<code>chkconfig iptables off</code>命令</p>
+<hr />
+<p>更新，试图垂死挣扎使用</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">apt</span> <span class="token function">install</span> network-manager<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>既然把网卡配置删了那就再配置一遍 等会，装了NetworkManager选了默认配置之后连22端口也连不上了。。。 行吧，准备重装 <img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/wa.jpg" alt="Picture" style="zoom:80%;" /></p>
+]]></content>
+      <categories>
+        <category>102网吧日常</category>
+      </categories>
+      <tags>
+        <tag>iptables</tag>
+        <tag>删库跑路</tag>
+        <tag>服务器</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>为什么不试试EndeavourOS呢</title>
     <url>/why-not-try-endeavouros/</url>
     <content><![CDATA[<p>sudo pacman -Rs win10</p>
@@ -1257,36 +1287,6 @@ autorandr --save test1<span aria-hidden="true" class="line-numbers-rows"><span><
       <tags>
         <tag>KDE</tag>
         <tag>EndeavourOS</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>不要尝试sudo apt remove iptables</title>
-    <url>/a7d1/</url>
-    <content><![CDATA[<p><img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/emmm.jpg" alt="Picture" style="zoom:80%;" /> <a id="more"></a></p>
-<p>在Ubuntu和Debian里卸载iptables会发生严重的后果（大佬请无视） 一开始我们觉得是防火墙把443端口给办了用不了https，结果我用UFW设置不管用，怀疑是iptables的问题，问了花花师兄，也不清楚，我们决定先把iptables禁用了。随手一谷歌，也忘了哪个神仙说的</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">apt</span> remove iptables <span class="token comment"># 不要乱试！</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>感觉对的嘛，卸个防火墙能出什么问题嘛<br />
-然后提示是否卸载我选了y，然后突然在卸载的log发现一堆Docker，瞬间感觉不对劲。然后，然后Docker直接不能用了！ 血泪教训啊，防火墙卸了Docker就不能用了！</p>
-<p>随手一搜发现不止我一个人中招啊</p>
-<p><img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/iptables-docker.png" alt="Picture" style="zoom:80%;" /></p>
-<p>我现在心中一万头草泥马飘过</p>
-<p><img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/cnm.png" alt="Picture" style="zoom:80%;" /></p>
-<p>行吧，一堆依赖比python2还多</p>
-<p>不说了，准备重装系统了<img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/mmm.jpg" alt="Picture" style="zoom:80%;" /></p>
-<hr />
-<p>停用iptables请使用<code>chkconfig iptables off</code>命令</p>
-<hr />
-<p>更新，试图垂死挣扎使用</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">apt</span> <span class="token function">install</span> network-manager<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>既然把网卡配置删了那就再配置一遍 等会，装了NetworkManager选了默认配置之后连22端口也连不上了。。。 行吧，准备重装 <img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/wa.jpg" alt="Picture" style="zoom:80%;" /></p>
-]]></content>
-      <categories>
-        <category>102网吧日常</category>
-      </categories>
-      <tags>
-        <tag>iptables</tag>
-        <tag>删库跑路</tag>
-        <tag>服务器</tag>
       </tags>
   </entry>
   <entry>
