@@ -65,16 +65,16 @@
   </url>
   
   <url>
-    <loc>https://zhangjk98.xyz/course-managemnet/</loc>
+    <loc>https://zhangjk98.xyz/81d4/</loc>
     
-    <lastmod>2020-11-18</lastmod>
+    <lastmod>2020-04-23</lastmod>
     
   </url>
   
   <url>
-    <loc>https://zhangjk98.xyz/81d4/</loc>
+    <loc>https://zhangjk98.xyz/course-managemnet/</loc>
     
-    <lastmod>2020-04-23</lastmod>
+    <lastmod>2020-11-18</lastmod>
     
   </url>
   
@@ -529,20 +529,6 @@
   </url>
   
   <url>
-    <loc>https://zhangjk98.xyz/tags/Spring-Cloud/</loc>
-    <lastmod>2020-12-04</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://zhangjk98.xyz/tags/microservices/</loc>
-    <lastmod>2020-12-04</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://zhangjk98.xyz/tags/xml/</loc>
     <lastmod>2020-12-04</lastmod>
     <changefreq>daily</changefreq>
@@ -551,6 +537,20 @@
   
   <url>
     <loc>https://zhangjk98.xyz/tags/%E7%94%B5%E5%AD%90%E7%97%85%E5%8E%86/</loc>
+    <lastmod>2020-12-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://zhangjk98.xyz/tags/Spring-Cloud/</loc>
+    <lastmod>2020-12-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://zhangjk98.xyz/tags/microservices/</loc>
     <lastmod>2020-12-04</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
