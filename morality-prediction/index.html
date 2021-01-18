@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.1.1">
+<meta name="generator" content="Hexo 5.3.0">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/uploads/wizard-hat-16.png">
@@ -34,9 +34,9 @@
 <meta property="og:description" content="以急性心肌梗死和MIMIC数据库为例">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://zhangjk98.xyz/morality-prediction/%E6%95%B0%E6%8D%AE%E6%8F%90%E5%8F%96%E6%B5%81%E7%A8%8B.svg">
-<meta property="og:image" content="https://zhangjk98.xyz/morality-prediction/morality-prediction/image-20200603192151696.png">
-<meta property="og:image" content="https://zhangjk98.xyz/morality-prediction/morality-prediction/image-20200531203632378.png">
-<meta property="og:image" content="https://zhangjk98.xyz/morality-prediction/morality-prediction/image-20200531210528257.png">
+<meta property="og:image" content="https://zhangjk98.xyz/morality-prediction/image-20200603192151696.png">
+<meta property="og:image" content="https://zhangjk98.xyz/morality-prediction/image-20200531203632378.png">
+<meta property="og:image" content="https://zhangjk98.xyz/morality-prediction/image-20200531210528257.png">
 <meta property="article:published_time" content="2020-05-31T03:06:54.000Z">
 <meta property="article:author" content="Zhang.jk">
 <meta property="article:tag" content="MIMIC">
@@ -106,124 +106,7 @@
   </style>
 </noscript>
 
-<style>mjx-container[jax="SVG"] {
-  direction: ltr;
-}
-
-mjx-container[jax="SVG"] > svg {
-  overflow: visible;
-}
-
-mjx-container[jax="SVG"] > svg a {
-  fill: blue;
-  stroke: blue;
-}
-
-mjx-container[jax="SVG"][display="true"] {
-  display: block;
-  text-align: center;
-  margin: 1em 0;
-}
-
-mjx-container[jax="SVG"][justify="left"] {
-  text-align: left;
-}
-
-mjx-container[jax="SVG"][justify="right"] {
-  text-align: right;
-}
-
-g[data-mml-node="merror"] > g {
-  fill: red;
-  stroke: red;
-}
-
-g[data-mml-node="merror"] > rect[data-background] {
-  fill: yellow;
-  stroke: none;
-}
-
-g[data-mml-node="mtable"] > line[data-line] {
-  stroke-width: 70px;
-  fill: none;
-}
-
-g[data-mml-node="mtable"] > rect[data-frame] {
-  stroke-width: 70px;
-  fill: none;
-}
-
-g[data-mml-node="mtable"] > .mjx-dashed {
-  stroke-dasharray: 140;
-}
-
-g[data-mml-node="mtable"] > .mjx-dotted {
-  stroke-linecap: round;
-  stroke-dasharray: 0,140;
-}
-
-g[data-mml-node="mtable"] > svg {
-  overflow: visible;
-}
-
-[jax="SVG"] mjx-tool {
-  display: inline-block;
-  position: relative;
-  width: 0;
-  height: 0;
-}
-
-[jax="SVG"] mjx-tool > mjx-tip {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-mjx-tool > mjx-tip {
-  display: inline-block;
-  padding: .2em;
-  border: 1px solid #888;
-  font-size: 70%;
-  background-color: #F8F8F8;
-  color: black;
-  box-shadow: 2px 2px 5px #AAAAAA;
-}
-
-g[data-mml-node="maction"][data-toggle] {
-  cursor: pointer;
-}
-
-mjx-status {
-  display: block;
-  position: fixed;
-  left: 1em;
-  bottom: 1em;
-  min-width: 25%;
-  padding: .2em .4em;
-  border: 1px solid #888;
-  font-size: 90%;
-  background-color: #F8F8F8;
-  color: black;
-}
-
-foreignObject[data-mjx-xml] {
-  font-family: initial;
-  line-height: normal;
-  overflow: visible;
-}
-
-.MathJax path {
-  stroke-width: 3;
-}
-
-mjx-container[display="true"] {
-  overflow: auto hidden;
-}
-
-mjx-container[display="true"] + br {
-  display: none;
-}
-</style><link rel="alternate" href="/atom.xml" title="止息的碎碎念" type="application/atom+xml">
+<link rel="alternate" href="/atom.xml" title="止息的碎碎念" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
@@ -455,7 +338,7 @@ mjx-container[display="true"] + br {
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-01-01 12:47:17" itemprop="dateModified" datetime="2021-01-01T12:47:17+08:00">2021-01-01</time>
+        <time title="修改时间：2021-01-18 22:47:53" itemprop="dateModified" datetime="2021-01-18T22:47:53+08:00">2021-01-18</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -665,7 +548,7 @@ mjx-container[display="true"] + br {
 <p>对于SVM等对于缺失值敏感的算法，用均值填补空缺数据的方法；对于缺失值不敏感的决策树类算法（如GBDT）和自带缺失值处理的算法（如XGBoost），将缺失值置为-1。</p>
 <p>（缺失率在40%左右的会影响模型的效果，但是收缩压之类的又很重要，不能轻易舍弃）</p>
 <figure>
-<img src="morality-prediction/image-20200603192151696.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+<img src="/morality-prediction/image-20200603192151696.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
 </figure>
 <h3 id="数据集不平衡的问题">数据集不平衡的问题</h3>
 <p>有的疾病可能会有，急性心肌梗死由于死亡率很高，正负样本比例已经超过了1：9，并不是那种极端不平衡的问题。有的疾病死亡率1%左右需要采样等方式构造平衡数据集。</p>
@@ -830,12 +713,12 @@ fpr_xgb<span class="token punctuation">,</span>tpr_xgb<span class="token punctua
 <p>由于数据集还是太小，就没有细分搞成多分类的问题预测一下短期（30天）和长期（90天以上）死亡率，数据集大了可以做一下。数据集再大可以做细分，比如STEMI和NSTEMI的细分或者</p>
 <h3 id="roc曲线">ROC曲线</h3>
 <figure>
-<img src="morality-prediction/image-20200531203632378.png" alt="几种机器学习方法的ROC曲线" /><figcaption aria-hidden="true">几种机器学习方法的ROC曲线</figcaption>
+<img src="/morality-prediction/image-20200531203632378.png" alt="几种机器学习方法的ROC曲线" /><figcaption aria-hidden="true">几种机器学习方法的ROC曲线</figcaption>
 </figure>
 <h3 id="特征权重">特征权重</h3>
 <p>以GBDT为例，提取训练模型的决策树权重，结果如图3-3所示。由图可知，梯度提升树模型认为最重要的10个指标为当日最小血清碳酸氢水平、平均动脉血二氧化碳分压、平均排尿量、心率范围、最小心率、肌酐、体温范围、当日最大收缩压、当日心率标准差、年龄。</p>
 <figure>
-<img src="morality-prediction/image-20200531210528257.png" alt="GBDT的特征权重" /><figcaption aria-hidden="true">GBDT的特征权重</figcaption>
+<img src="/morality-prediction/image-20200531210528257.png" alt="GBDT的特征权重" /><figcaption aria-hidden="true">GBDT的特征权重</figcaption>
 </figure>
 <h2 id="其他问题">其他问题</h2>
 <p>这个，急性心肌梗死这个直接看心电图或者彩超啥的更好一些，准确率一般不会低于90%。心血管疾病这种做这个预测基本没有太大意义。急性肾衰竭啥的可能更有意义一点</p>
@@ -1316,6 +1199,8 @@ if (document.querySelectorAll('.pdf-container').length) {
 
 
     <div class="pjax">
+
+  
 
 
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/disqusjs@1.3.0/dist/disqusjs.css">

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.1.1">
+<meta name="generator" content="Hexo 5.3.0">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/uploads/wizard-hat-16.png">
@@ -33,20 +33,20 @@
 <meta property="og:site_name" content="止息的碎碎念">
 <meta property="og:description" content="没钱买 256G 内存的服务器的人是这样的">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://zhangjk98.xyz/spring-cloud-performance-optimization/spring-cloud-performance-optimization/image-20201118095216036.png">
-<meta property="og:image" content="https://zhangjk98.xyz/spring-cloud-performance-optimization/spring-cloud-performance-optimization/image-20201120103456546.png">
-<meta property="og:image" content="https://zhangjk98.xyz/spring-cloud-performance-optimization/spring-cloud-performance-optimization/image-20201120212626344.png">
-<meta property="og:image" content="https://zhangjk98.xyz/spring-cloud-performance-optimization/spring-cloud-performance-optimization/image-20201124123102440.png">
-<meta property="og:image" content="https://zhangjk98.xyz/spring-cloud-performance-optimization/spring-cloud-performance-optimization/image-20201124170847425.png">
-<meta property="og:image" content="https://zhangjk98.xyz/spring-cloud-performance-optimization/spring-cloud-performance-optimization/image-20201124165004678.png">
-<meta property="og:image" content="https://zhangjk98.xyz/spring-cloud-performance-optimization/spring-cloud-performance-optimization/image-20201124120817137.png">
-<meta property="og:image" content="https://zhangjk98.xyz/spring-cloud-performance-optimization/spring-cloud-performance-optimization/image-20201124120944296.png">
+<meta property="og:image" content="https://zhangjk98.xyz/spring-cloud-performance-optimization/image-20201118095216036.png">
+<meta property="og:image" content="https://zhangjk98.xyz/spring-cloud-performance-optimization/image-20201120103456546.png">
+<meta property="og:image" content="https://zhangjk98.xyz/spring-cloud-performance-optimization/image-20201120212626344.png">
+<meta property="og:image" content="https://zhangjk98.xyz/spring-cloud-performance-optimization/image-20201124123102440.png">
+<meta property="og:image" content="https://zhangjk98.xyz/spring-cloud-performance-optimization/image-20201124170847425.png">
+<meta property="og:image" content="https://zhangjk98.xyz/spring-cloud-performance-optimization/image-20201124165004678.png">
+<meta property="og:image" content="https://zhangjk98.xyz/spring-cloud-performance-optimization/image-20201124120817137.png">
+<meta property="og:image" content="https://zhangjk98.xyz/spring-cloud-performance-optimization/image-20201124120944296.png">
 <meta property="article:published_time" content="2020-11-19T12:30:06.000Z">
 <meta property="article:author" content="Zhang.jk">
 <meta property="article:tag" content="jvm">
 <meta property="article:tag" content="Spring">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://zhangjk98.xyz/spring-cloud-performance-optimization/spring-cloud-performance-optimization/image-20201118095216036.png">
+<meta name="twitter:image" content="https://zhangjk98.xyz/spring-cloud-performance-optimization/image-20201118095216036.png">
 
 
 <link rel="canonical" href="https://zhangjk98.xyz/spring-cloud-performance-optimization/">
@@ -111,124 +111,7 @@
   </style>
 </noscript>
 
-<style>mjx-container[jax="SVG"] {
-  direction: ltr;
-}
-
-mjx-container[jax="SVG"] > svg {
-  overflow: visible;
-}
-
-mjx-container[jax="SVG"] > svg a {
-  fill: blue;
-  stroke: blue;
-}
-
-mjx-container[jax="SVG"][display="true"] {
-  display: block;
-  text-align: center;
-  margin: 1em 0;
-}
-
-mjx-container[jax="SVG"][justify="left"] {
-  text-align: left;
-}
-
-mjx-container[jax="SVG"][justify="right"] {
-  text-align: right;
-}
-
-g[data-mml-node="merror"] > g {
-  fill: red;
-  stroke: red;
-}
-
-g[data-mml-node="merror"] > rect[data-background] {
-  fill: yellow;
-  stroke: none;
-}
-
-g[data-mml-node="mtable"] > line[data-line] {
-  stroke-width: 70px;
-  fill: none;
-}
-
-g[data-mml-node="mtable"] > rect[data-frame] {
-  stroke-width: 70px;
-  fill: none;
-}
-
-g[data-mml-node="mtable"] > .mjx-dashed {
-  stroke-dasharray: 140;
-}
-
-g[data-mml-node="mtable"] > .mjx-dotted {
-  stroke-linecap: round;
-  stroke-dasharray: 0,140;
-}
-
-g[data-mml-node="mtable"] > svg {
-  overflow: visible;
-}
-
-[jax="SVG"] mjx-tool {
-  display: inline-block;
-  position: relative;
-  width: 0;
-  height: 0;
-}
-
-[jax="SVG"] mjx-tool > mjx-tip {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-mjx-tool > mjx-tip {
-  display: inline-block;
-  padding: .2em;
-  border: 1px solid #888;
-  font-size: 70%;
-  background-color: #F8F8F8;
-  color: black;
-  box-shadow: 2px 2px 5px #AAAAAA;
-}
-
-g[data-mml-node="maction"][data-toggle] {
-  cursor: pointer;
-}
-
-mjx-status {
-  display: block;
-  position: fixed;
-  left: 1em;
-  bottom: 1em;
-  min-width: 25%;
-  padding: .2em .4em;
-  border: 1px solid #888;
-  font-size: 90%;
-  background-color: #F8F8F8;
-  color: black;
-}
-
-foreignObject[data-mjx-xml] {
-  font-family: initial;
-  line-height: normal;
-  overflow: visible;
-}
-
-.MathJax path {
-  stroke-width: 3;
-}
-
-mjx-container[display="true"] {
-  overflow: auto hidden;
-}
-
-mjx-container[display="true"] + br {
-  display: none;
-}
-</style><link rel="alternate" href="/atom.xml" title="止息的碎碎念" type="application/atom+xml">
+<link rel="alternate" href="/atom.xml" title="止息的碎碎念" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
@@ -460,7 +343,7 @@ mjx-container[display="true"] + br {
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-01-01 12:47:16" itemprop="dateModified" datetime="2021-01-01T12:47:16+08:00">2021-01-01</time>
+        <time title="修改时间：2021-01-18 22:47:53" itemprop="dateModified" datetime="2021-01-18T22:47:53+08:00">2021-01-18</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -486,11 +369,11 @@ mjx-container[display="true"] + br {
 <a id="more"></a>
 <p>其实本来想说Spring Cloud上线性能优化的，想了想不是，这波，这波啊是性能反向优化（性能不性能的已经不重要了，用户量应该也不太大，先把成本压下来再说吧）。</p>
 <h2 id="怎么回事">怎么回事</h2>
-<p>朋友们好啊， 我是浑元形意太极门掌门人马保国。 刚才有个朋友问我： “马老师发生肾么事了？” 我说怎么回事。给我发了几张截图。 我一看！哦，原来是昨天，有两个微服务， 上线一天，一个内存<strong>996M</strong>，一个内存<strong>888M</strong>。 <img src="spring-cloud-performance-optimization/image-20201118095216036.png" alt="它也说，啊，它截图也说了" /> <del>其实是我调了一下凑出来的这两个数</del> 它说要吃一点资源，我说可以。 诶，我一说它“啪”就站起来了，很快啊！ 然后上来就是，一个虚拟机，一个Docker，一个mysql，我全部防出去，防出去了啊。 防出去以后，自然是，上线部署以点到为止。没有限制它内存。 我笑一下，准备收工，因为这时间，按传统部署的点到为止，服务器已经够用了。我收工的时间回宿舍啦。 它突然袭击，还有8个微服务，来打我机子，啊。我大意了啊，没有闪。 来，抢！来，偷吃，我DDR3的，老内存，这好吗？这不好。 它说它是乱占用的，它可不是乱占用的。一个996，一个888，这明显是，有备而来！</p>
+<p>朋友们好啊， 我是浑元形意太极门掌门人马保国。 刚才有个朋友问我： “马老师发生肾么事了？” 我说怎么回事。给我发了几张截图。 我一看！哦，原来是昨天，有两个微服务， 上线一天，一个内存<strong>996M</strong>，一个内存<strong>888M</strong>。 <img src="/spring-cloud-performance-optimization/image-20201118095216036.png" alt="它也说，啊，它截图也说了" /> <del>其实是我调了一下凑出来的这两个数</del> 它说要吃一点资源，我说可以。 诶，我一说它“啪”就站起来了，很快啊！ 然后上来就是，一个虚拟机，一个Docker，一个mysql，我全部防出去，防出去了啊。 防出去以后，自然是，上线部署以点到为止。没有限制它内存。 我笑一下，准备收工，因为这时间，按传统部署的点到为止，服务器已经够用了。我收工的时间回宿舍啦。 它突然袭击，还有8个微服务，来打我机子，啊。我大意了啊，没有闪。 来，抢！来，偷吃，我DDR3的，老内存，这好吗？这不好。 它说它是乱占用的，它可不是乱占用的。一个996，一个888，这明显是，有备而来！</p>
 <h2 id="服务器">服务器</h2>
 <p>正常的操作是加钱上大一点的内存，但是大内存VPS、杜甫它贵啊。以套路云香港为例，明晃晃的抢钱。而且16G内存及以上的版本已经无了。其他华南华北的VPS更贵一点，而且全都是1M小水管。</p>
 <figure>
-<img src="spring-cloud-performance-optimization/image-20201120103456546.png" alt="套路云香港" /><figcaption aria-hidden="true">套路云香港</figcaption>
+<img src="/spring-cloud-performance-optimization/image-20201120103456546.png" alt="套路云香港" /><figcaption aria-hidden="true">套路云香港</figcaption>
 </figure>
 <p><del>服务器内存比本地台式还小是要出大问题的,上线炸内存警告</del></p>
 <p>102网吧里面服务器是有32G内存的，然而网速.....</p>
@@ -507,7 +390,7 @@ mjx-container[display="true"] + br {
 <p>动态注册发现之类的单机版也没必要用了，直接手动排查和维护吧。</p>
 <p>NACOS的内存占用单机版在几百M左右（默认参数是<code>-Xms512m -Xmx512m -Xmn256m</code>，可以在startup.sh里面改，不过还是直接关掉比较清静。</p>
 <figure>
-<img src="spring-cloud-performance-optimization/image-20201120212626344.png" alt="NACOS内存使用情况" /><figcaption aria-hidden="true">NACOS内存使用情况</figcaption>
+<img src="/spring-cloud-performance-optimization/image-20201120212626344.png" alt="NACOS内存使用情况" /><figcaption aria-hidden="true">NACOS内存使用情况</figcaption>
 </figure>
 <h2 id="jdk版本">JDK版本</h2>
 <p>之前一直用的java8-Openjdk。</p>
@@ -516,7 +399,7 @@ mjx-container[display="true"] + br {
 <h3 id="不同版本内存占用">不同版本内存占用</h3>
 <p>Arch有个脚本，可以切换OpenJDK的版本，</p>
 <figure>
-<img src="spring-cloud-performance-optimization/image-20201124123102440.png" alt="archlinux-java" /><figcaption aria-hidden="true">archlinux-java</figcaption>
+<img src="/spring-cloud-performance-optimization/image-20201124123102440.png" alt="archlinux-java" /><figcaption aria-hidden="true">archlinux-java</figcaption>
 </figure>
 <p>Oracle JDK 由于甲骨文公司不武德，跟各路开源组织（以及很多闭源福报公司）都闹僵了，Arch仓库不提供支持，得自己安装。</p>
 <p>从AUR安装结果报错说<code>**==&gt; ERROR:** **Failure while downloading manual://jdk-8u271-linux-x64.tar.gz**    **Aborting...** error downloading sources: jdk8</code>，看了一下还得跑到<span class="exturl" data-url="aHR0cHM6Ly93d3cub3JhY2xlLmNvbS9qYXZhL3RlY2hub2xvZ2llcy9qYXZhc2UvamF2YXNlLWpkazgtZG93bmxvYWRzLmh0bWw=">Oracle<i class="fa fa-external-link-alt"></i></span>那里去注册下载然后pkgbuild</p>
@@ -541,11 +424,11 @@ mjx-container[display="true"] + br {
 <h2 id="图片压缩">图片压缩</h2>
 <p>浏览器F12 可以看到，在加载首页的时候，大部分html、css、js资源在300ms内加载完成，500ms以后开始加载图床资源，一直到最4000ms以后才加载完成。</p>
 <figure>
-<img src="spring-cloud-performance-optimization/image-20201124170847425.png" alt="加载首页" /><figcaption aria-hidden="true">加载首页</figcaption>
+<img src="/spring-cloud-performance-optimization/image-20201124170847425.png" alt="加载首页" /><figcaption aria-hidden="true">加载首页</figcaption>
 </figure>
 <p>下图是打开首页时png图片（阿里云图床，大小 926k）的时候的加载速度，耗时最长的就是下载图片的过程。</p>
 <figure>
-<img src="spring-cloud-performance-optimization/image-20201124165004678.png" alt="image load speed" /><figcaption aria-hidden="true">image load speed</figcaption>
+<img src="/spring-cloud-performance-optimization/image-20201124165004678.png" alt="image load speed" /><figcaption aria-hidden="true">image load speed</figcaption>
 </figure>
 <p>主要就是压缩图片大小了，jpg和png全换成webp，今年6月份Safari14已经支持webp了，现在主流浏览器都问题不大。</p>
 <h2 id="重构">重构</h2>
@@ -553,10 +436,10 @@ mjx-container[display="true"] + br {
 <h2 id="最终结果">最终结果</h2>
 <p>如果不跑别的东西，一个4G内存的VPS已经够用了。</p>
 <figure>
-<img src="spring-cloud-performance-optimization/image-20201124120817137.png" alt="首页" /><figcaption aria-hidden="true">首页</figcaption>
+<img src="/spring-cloud-performance-optimization/image-20201124120817137.png" alt="首页" /><figcaption aria-hidden="true">首页</figcaption>
 </figure>
 <figure>
-<img src="spring-cloud-performance-optimization/image-20201124120944296.png" alt="全部课程页面" /><figcaption aria-hidden="true">全部课程页面</figcaption>
+<img src="/spring-cloud-performance-optimization/image-20201124120944296.png" alt="全部课程页面" /><figcaption aria-hidden="true">全部课程页面</figcaption>
 </figure>
 <h2 id="参考">参考</h2>
 <p>https://developers.redhat.com/blog/2017/04/04/openjdk-and-containers/</p>
@@ -732,6 +615,8 @@ if (document.querySelectorAll('.pdf-container').length) {
 
 
     <div class="pjax">
+
+  
 
 
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/disqusjs@1.3.0/dist/disqusjs.css">
