@@ -26,12 +26,12 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"zhangjk98.xyz","root":"/","images":"/images","scheme":"Pisces","version":"8.2.0","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqusjs","storage":true,"lazyload":false,"nav":{"disqusjs":{"text":"Load Disqus","order":-1},"utterances":{"order":-2}},"activeClass":"disqusjs"},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeInDown","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInDown"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
-<meta name="description" content="在2020.3 发布的systemd 245增加了systemd-homed，改变了&#x2F;home目录的加密和工作方式，采用homectl这个cli工具设置用户组。快来当小白鼠吧。">
+<meta name="description" content="在2020.3 发布的systemd 245增加了systemd-homed，改变了&#x2F;home目录的加密和工作方式。用homectl设置用户组，直接加密整个&#x2F;home目录更方便了，快来当小白鼠吧。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="systemd-homed简介和homectl设置用户、用户组">
+<meta property="og:title" content="systemd-homed简介(homectl设置用户、用户组)">
 <meta property="og:url" content="https://zhangjk98.xyz/systemd-homed/index.html">
 <meta property="og:site_name" content="止息的碎碎念">
-<meta property="og:description" content="在2020.3 发布的systemd 245增加了systemd-homed，改变了&#x2F;home目录的加密和工作方式，采用homectl这个cli工具设置用户组。快来当小白鼠吧。">
+<meta property="og:description" content="在2020.3 发布的systemd 245增加了systemd-homed，改变了&#x2F;home目录的加密和工作方式。用homectl设置用户组，直接加密整个&#x2F;home目录更方便了，快来当小白鼠吧。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://zhangjk98.xyz/systemd-homed/image-20201108172857040.png">
 <meta property="og:image" content="https://zhangjk98.xyz/systemd-homed/image-20201108172321494.png">
@@ -57,7 +57,7 @@
     lang   : 'zh-CN'
   };
 </script>
-<title>systemd-homed简介和homectl设置用户、用户组 | 止息的碎碎念</title>
+<title>systemd-homed简介(homectl设置用户、用户组) | 止息的碎碎念</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143393734-1"></script>
     <script data-pjax>
@@ -205,7 +205,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%AA%E9%95%BF%E4%B8%8D%E7%9C%8B%E7%89%88"><span class="nav-number">1.</span> <span class="nav-text">太长不看版</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8homectl%E6%96%B0%E5%BB%BA%E7%94%A8%E6%88%B7%E7%94%A8%E6%88%B7%E7%BB%84"><span class="nav-number">1.1.</span> <span class="nav-text">使用homectl新建用户、用户组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8E%E5%8E%9F%E6%9D%A5%E7%9A%84%E7%94%A8%E6%88%B7%E7%BB%84%E7%AE%A1%E7%90%86%E6%96%B9%E5%BC%8F%E8%BF%81%E5%BE%80systemd-home"><span class="nav-number">1.2.</span> <span class="nav-text">从原来的用户组管理方式迁往systemd-home</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F"><span class="nav-number">1.3.</span> <span class="nav-text">注意</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#systemd-home%E7%AE%80%E4%BB%8B"><span class="nav-number">2.</span> <span class="nav-text">systemd-home简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A5%E5%89%8D%E7%9A%84%E7%94%A8%E6%88%B7%E5%92%8C%E7%94%A8%E6%88%B7%E7%BB%84%E7%AE%A1%E7%90%86"><span class="nav-number">2.1.</span> <span class="nav-text">以前的用户和用户组管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%98%E5%8C%96"><span class="nav-number">2.2.</span> <span class="nav-text">变化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%B0%E5%9C%A8%E7%9A%84%E6%A0%B7%E5%AD%90"><span class="nav-number">2.3.</span> <span class="nav-text">现在的样子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%98%E5%9C%A8%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98"><span class="nav-number">2.4.</span> <span class="nav-text">存在的一些问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ssh%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">2.4.1.</span> <span class="nav-text">SSH的问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%91%E7%9C%A0"><span class="nav-number">2.4.2.</span> <span class="nav-text">休眠</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E7%94%A8%E6%88%B7%E5%90%8Esddm%E4%BB%8D%E6%9C%89%E6%AE%8B%E7%95%99"><span class="nav-number">2.4.3.</span> <span class="nav-text">删除用户后SDDM仍有残留</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E8%83%BD%E7%9A%84%E6%8A%A5%E9%94%99"><span class="nav-number">3.</span> <span class="nav-text">可能的报错</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%99%84"><span class="nav-number">4.</span> <span class="nav-text">附</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#homectl%E5%91%BD%E4%BB%A4%E9%80%89%E9%A1%B9"><span class="nav-number">4.1.</span> <span class="nav-text">homectl命令选项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#userdbctl%E5%91%BD%E4%BB%A4%E9%80%89%E9%A1%B9"><span class="nav-number">4.2.</span> <span class="nav-text">userdbctl命令选项</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%AA%E9%95%BF%E4%B8%8D%E7%9C%8B%E7%89%88"><span class="nav-number">1.</span> <span class="nav-text">太长不看版</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8homectl%E6%96%B0%E5%BB%BA%E7%94%A8%E6%88%B7%E7%94%A8%E6%88%B7%E7%BB%84"><span class="nav-number">1.1.</span> <span class="nav-text">使用homectl新建用户、用户组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8E%E5%8E%9F%E6%9D%A5%E7%9A%84%E7%94%A8%E6%88%B7%E7%BB%84%E7%AE%A1%E7%90%86%E6%96%B9%E5%BC%8F%E8%BF%81%E5%BE%80systemd-homed"><span class="nav-number">1.2.</span> <span class="nav-text">从原来的用户组管理方式迁往systemd-homed</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F"><span class="nav-number">1.3.</span> <span class="nav-text">注意</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#systemd-homed%E7%AE%80%E4%BB%8B"><span class="nav-number">2.</span> <span class="nav-text">systemd-homed简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A5%E5%89%8D%E7%9A%84%E7%94%A8%E6%88%B7%E5%92%8C%E7%94%A8%E6%88%B7%E7%BB%84%E7%AE%A1%E7%90%86"><span class="nav-number">2.1.</span> <span class="nav-text">以前的用户和用户组管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%98%E5%8C%96"><span class="nav-number">2.2.</span> <span class="nav-text">变化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%B0%E5%9C%A8%E7%9A%84%E6%A0%B7%E5%AD%90"><span class="nav-number">2.3.</span> <span class="nav-text">现在的样子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%98%E5%9C%A8%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98"><span class="nav-number">2.4.</span> <span class="nav-text">存在的一些问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ssh%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">2.4.1.</span> <span class="nav-text">SSH的问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%91%E7%9C%A0"><span class="nav-number">2.4.2.</span> <span class="nav-text">休眠</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E7%94%A8%E6%88%B7%E5%90%8Esddm%E4%BB%8D%E6%9C%89%E6%AE%8B%E7%95%99"><span class="nav-number">2.4.3.</span> <span class="nav-text">删除用户后SDDM仍有残留</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E8%83%BD%E7%9A%84%E6%8A%A5%E9%94%99"><span class="nav-number">3.</span> <span class="nav-text">可能的报错</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%99%84"><span class="nav-number">4.</span> <span class="nav-text">附</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#homectl%E5%91%BD%E4%BB%A4%E9%80%89%E9%A1%B9"><span class="nav-number">4.1.</span> <span class="nav-text">homectl命令选项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#userdbctl%E5%91%BD%E4%BB%A4%E9%80%89%E9%A1%B9"><span class="nav-number">4.2.</span> <span class="nav-text">userdbctl命令选项</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -321,7 +321,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          systemd-homed简介和homectl设置用户、用户组
+          systemd-homed简介(homectl设置用户、用户组)
         </h1>
 
         <div class="post-meta-container">
@@ -339,7 +339,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-01-27 19:59:17" itemprop="dateModified" datetime="2021-01-27T19:59:17+08:00">2021-01-27</time>
+        <time title="修改时间：2021-01-30 11:50:02" itemprop="dateModified" datetime="2021-01-30T11:50:02+08:00">2021-01-30</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -361,10 +361,11 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>在2020.3 发布的systemd 245增加了systemd-homed，改变了<code>/home</code>目录的加密和工作方式，采用homectl这个cli工具设置用户组。快来当小白鼠吧。 <a id="more"></a></p>
+        <p>在2020.3 发布的systemd 245增加了systemd-homed，改变了<code>/home</code>目录的加密和工作方式。用homectl设置用户组，直接加密整个<code>/home</code>目录更方便了，快来当小白鼠吧。 <a id="more"></a></p>
 <h2 id="太长不看版">太长不看版</h2>
 <h3 id="使用homectl新建用户用户组">使用homectl新建用户、用户组</h3>
 <p>首先你的systemd要在245以后，版本较低或使用SysV或者OpenRC、Upstart的玩家请跳过。</p>
+<p>更新：systemd-247以后的版本默认采用Btrfs，还加了一个可选的恢复密码（recovery key），你的密钥丢了可以用这个重置</p>
 <p>homectl是systemd-homed.service的一个cli工具，用来配置用户组、用户，包括新建、删除、修改权限和密码等。考虑到systemd近乎一统江湖的的市场占有率，可能你们将不得不面对这种方式。</p>
 <p>没开启的先开启一下<code>systemd-homed.service</code></p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl <span class="token builtin class-name">enable</span> systemd-homed
@@ -430,7 +431,7 @@ lines 2-36&#x2F;36 (END)<span aria-hidden="true" class="line-numbers-rows"><span
 <p>然后激活用户</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">homectl activate zhixi<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>退出当前用户并切换用户就可以了(你可能需要更改PAM设置才能正常使用su切换用户)</p>
-<h3 id="从原来的用户组管理方式迁往systemd-home">从原来的用户组管理方式迁往systemd-home</h3>
+<h3 id="从原来的用户组管理方式迁往systemd-homed">从原来的用户组管理方式迁往systemd-homed</h3>
 <blockquote>
 <p>这里直接复读一下systemd官网的警告，需要手动操作、有风险、做好备份、出了事自行承担</p>
 </blockquote>
@@ -453,8 +454,8 @@ getent group <span class="token number">1000</span><span aria-hidden="true" clas
 <p>然后rsync把原来备份了的东西放回<code>/home/zhixi</code></p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">homectl with zhixi -- <span class="token function">rsync</span> -aHAXv --remove-source-files /home/zhixi.saved/ <span class="token builtin class-name">.</span> <span class="token operator">&amp;&amp;</span>  <span class="token function">rmdir</span> /home/foobar.saved<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <h3 id="注意">注意</h3>
-<p>systemd-home是一个用户一个私有用户组。如果你一个用户组设置了多个用户的话，可能要调整一下。</p>
-<h2 id="systemd-home简介">systemd-home简介</h2>
+<p>systemd-homed是一个用户一个私有用户组。如果你一个用户组设置了多个用户的话，可能要调整一下。</p>
+<h2 id="systemd-homed简介">systemd-homed简介</h2>
 <p><del>感觉这下子systemd接管的东西更多了</del></p>
 <h3 id="以前的用户和用户组管理">以前的用户和用户组管理</h3>
 <p>好吧，以前要加引号，现在这个在大部分Linux都还没人用呢（甚至连一篇中文介绍都没有）。</p>
@@ -464,13 +465,13 @@ getent group <span class="token number">1000</span><span aria-hidden="true" clas
 <p>新建一个temp用户组并给temp用户组中新建一个叫temp1的用户（同时在<code>/home</code>下新建一个<code>temp1</code>目录作为用户目录）。</p>
 <p>然后使用<code>passwd temp1</code>为用户temp1指定密码</p>
 <p>（虽然useradd有<code>-p</code>选项可以直接指定密码，通常不建议这样做，因为这样子恁的密码会明文留在历史命令里，如果有人不怀好意的执行一下<code>history</code>或者<code>more /home/$USER/.bash_history</code>或者<code>ctrl+r</code>搜索useradd，他将轻易获取你的密码），你用了sudo也可能会被找到，比如<span class="exturl" data-url="aHR0cHM6Ly9zdXBlcnVzZXIuY29tL3F1ZXN0aW9ucy8zMDk0MzQvaG93LXRvLXZpZXctY29tbWFuZC1oaXN0b3J5LW9mLWFub3RoZXItdXNlci1pbi1saW51eA==">这个<i class="fa fa-external-link-alt"></i></span></p>
-<p>https://www.freebuf.com/news/135845.html history -c 也不太保险</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuZnJlZWJ1Zi5jb20vbmV3cy8xMzU4NDUuaHRtbA==">https://www.freebuf.com/news/135845.html<i class="fa fa-external-link-alt"></i></span> history -c 也不太保险</p>
 <p>你的用户名、密码、用户组、权限配置基本都放在<code>/etc</code>目录下面，比如<code>/etc/passwd</code>里面存你的密码，<code>etc/group</code>里面放用户组的设置。<code>/etc/sudoers</code>是超级用户的设置。每个用户的配置散落在各个地方，一些个人设置还被放在了<code>/home/user</code>底下。</p>
 <p>这个样子你需要<code>/etc</code>的写权限，一个用户不同系统迁移的时候需要同时迁移其他的目录（而且UID还得一样），想对<code>/home</code>单独加密也不太方便。</p>
 <h3 id="变化">变化</h3>
 <p>主要的变化就是你的个人用户都扔到<code>/home/yourusername</code>下面了。（据说）这样更方便加密和迁移。默认采用LUKS，在用户登陆的时候解密并挂载<code>/home/user</code>，在用户退出登陆的时候加密并取消挂载。休眠挂起（Suspend）的时候也会加密锁住。</p>
-<p>比如你有一个u盘，里面装了你的用户目录，到别的电脑上插上去就能用了，不需要那边给你新建一个用户（现在基本不太行，对面电脑起码得也是systemd 245 版本以上还得启用<code>systemd-home</code>，我乐观估计等这玩意普及至少得两年吧，那些用老CentOS的万年钉子户更别想了）</p>
-<p>这样也方便全盘加密（我不是那种对物理安全都看的很在乎的申必人士，据说全盘加密会有点性能问题，而且休眠睡眠也比较容易起不来，所以我没试过）（不过恁不用这个systemd-home其实也能全盘加密）</p>
+<p>比如你有一个u盘，里面装了你的用户目录，到别的电脑上插上去就能用了，不需要那边给你新建一个用户（现在基本不太行，对面电脑起码得也是systemd 245 版本以上还得启用<code>systemd-homed</code>，我乐观估计等这玩意普及至少得两年吧，那些用老CentOS的万年钉子户更别想了）</p>
+<p>这样也方便全盘加密（我不是那种对物理安全都看的很在乎的申必人士，据说全盘加密会有点性能问题，而且休眠睡眠也比较容易起不来，所以我没试过）（不过恁不用这个systemd-homed其实也能全盘加密）</p>
 <p>现在使用<code>systemd-homed.service</code>和<code>systemd-userdbd.service</code>两个daemon管理用户，登陆的时候是<code>systemd-logind</code> 在管。大概是这么个流程：</p>
 <p><img src="/systemd-homed/image-20201108172857040.png" /></p>
 <p><img src="/systemd-homed/image-20201108172321494.png" /></p>
@@ -713,7 +714,7 @@ lines <span class="token number">2</span>-36/36 <span class="token punctuation">
 </table>
 <h2 id="参考">参考</h2>
 <p><span class="exturl" data-url="aHR0cHM6Ly9zeXN0ZW1kLmlvL0hPTUVfRElSRUNUT1JZLw==">https://systemd.io/HOME_DIRECTORY/<i class="fa fa-external-link-alt"></i></span> 官方文档</p>
-<p><span class="exturl" data-url="aHR0cHM6Ly93d3cubWFuNy5vcmcvbGludXgvbWFuLXBhZ2VzL21hbjEvaG9tZWN0bC4xLmh0bWw=">https://www.man7.org/linux/man-pages/man1/homectl.1.html<i class="fa fa-external-link-alt"></i></span> https://www.freedesktop.org/software/systemd/man/homectl.html</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cubWFuNy5vcmcvbGludXgvbWFuLXBhZ2VzL21hbjEvaG9tZWN0bC4xLmh0bWw=">https://www.man7.org/linux/man-pages/man1/homectl.1.html<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly93d3cuZnJlZWRlc2t0b3Aub3JnL3NvZnR3YXJlL3N5c3RlbWQvbWFuL2hvbWVjdGwuaHRtbA==">https://www.freedesktop.org/software/systemd/man/homectl.html<i class="fa fa-external-link-alt"></i></span></p>
 <p><span class="exturl" data-url="aHR0cHM6Ly9sd24ubmV0L0FydGljbGVzLzgxNDA2OC8=">systemd 245 released<i class="fa fa-external-link-alt"></i></span> systemd第245次更新详情</p>
 <p><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL1N5c3RlbWQtaG9tZWQ=">https://wiki.archlinux.org/index.php/Systemd-homed<i class="fa fa-external-link-alt"></i></span></p>
 <p><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL1VzZXJzX2FuZF9ncm91cHNfKOeugOS9k+S4reaWhyk=">https://wiki.archlinux.org/index.php/Users_and_groups_(简体中文)<i class="fa fa-external-link-alt"></i></span></p>
@@ -907,7 +908,7 @@ NexT.utils.loadComments('#disqus_thread', () => {
       shortname : 'arcaheoraptor',
       url       : "https://zhangjk98.xyz/systemd-homed/",
       identifier: "systemd-homed/",
-      title     : "systemd-homed简介和homectl设置用户、用户组",
+      title     : "systemd-homed简介(homectl设置用户、用户组)",
     });
   }, window.DisqusJS);
 });

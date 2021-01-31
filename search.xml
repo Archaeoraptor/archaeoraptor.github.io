@@ -858,27 +858,36 @@ npm ERR!     &#x2F;root&#x2F;.npm&#x2F;_logs&#x2F;2020-11-16T14_13_24_937Z-debug
 <p>快来当AUR打包工具人/打包苦力吧(笑</p>
 
 </blockquote>
+<p>其实还是建议你去先看看官方文档</p>
 <h2 id="大致流程">大致流程</h2>
 <h3 id="新建一个测试环境">新建一个测试环境</h3>
-<p>在本机上直接打包可能会把你自己的机子环境搞乱搞崩，或者忽略了已经在自己电脑上装了了但是没有的依赖，又或者你想... 反正弄一个干净的测试环境是有必要的。</p>
+<p>在本机上直接打包可能会把你自己的机子环境搞乱搞崩，或者忽略了已经在自己电脑上装了了但是没有的依赖，又或者你想... 反正弄一个干净的测试环境是有必要的。可以参考官方Wiki：<span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL0RldmVsb3Blcldpa2k6QnVpbGRpbmdfaW5fYV9jbGVhbl9jaHJvb3Q=">DeveloperWiki:Building in a clean chroot<i class="fa fa-external-link-alt"></i></span>, 或者看肥猫这篇：<span class="exturl" data-url="aHR0cHM6Ly9mZWxpeGMuYXQvMjAxNy8wOC9pbnRyb2R1Y3Rpb24tdG8tYXJjaC1saW51eC1kZXZ0b29scy1idWlsZC1wYWNrYWdlcy1mcm9tLWEtY2xlYW4tY2hyb290Lw==">Arch Linux devtools 简介 – 在干净的环境里编译软件包<i class="fa fa-external-link-alt"></i></span></p>
 <p>当然打包一些很简单、依赖很明确的东西，确定没必要也可以不要这一步。</p>
 <h3 id="编写pkgbuild">编写PKGBUILD</h3>
 <p>最快的方法是去找找有没有和你要打包的东西类似的包，然后抄一下它的PKGBUILD。</p>
-<h3 id="检查和测试">检查和测试</h3>
+<h3 id="检查">检查</h3>
 <p>先用namcap检查一下，有没有语法错误或者其他不符合规范的地方</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">namcap PKGBUILD<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <h3 id="编译">编译</h3>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">makepkg -s<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>生成的<code>XXX.tar.xz</code>可以再用<code>namcap</code>检查一下</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">namcap XXX.tar.xz<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <h3 id="上传和分享">上传和分享</h3>
 <h4 id="aur">AUR</h4>
 <p>如果想分享出来，你可以上传到AUR仓库里面。AUR帐号随便就能注册几乎没有审查的（所以传点恶意代码上去也能传的），但是尽量不要把有版权问题之类的东西传上去（虽然出了事应该是你自己负责）</p>
 <p>新建一个账号，然后上传你的SSH公钥和密钥指纹。</p>
+<p>用<code>git clone</code>拉取一个</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> clone <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>AUR软件仓库需要<span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwLy5TUkNJTkZPXyjnroDkvZPkuK3mlocp">SRCINFO<i class="fa fa-external-link-alt"></i></span>,不然会拒绝你的提交</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">makepkg --printsrcinfo <span class="token operator">></span> .SRCINFO<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <h4 id="非官方软件仓库">非官方软件仓库</h4>
 <p>或者你可以去其他非官方的仓库，这有一大堆：<span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL1Vub2ZmaWNpYWxfdXNlcl9yZXBvc2l0b3JpZXNfKOeugOS9k+S4reaWhyk=">Unofficial user repositories<i class="fa fa-external-link-alt"></i></span></p>
 <p>中文用户人最多的是ArchlinuxCN，我猜你很熟悉这个了。</p>
 <p>其他的还有chaotic-aur（里面的包不少，但是国内速度很慢，镜像都在国外，直接访问可能比从AUR拉下来编译还慢），arch4edu（一些教育软件和包，清华的弄得，国内速度还行），blackarch（这个包也很多，约等于arch系的kali源）</p>
 <p>要添加到这些非官方仓库里，可以请求打包，或者跟仓库管理员py。</p>
 <p>或者可以自建一个仓库。</p>
+<p>可参考：</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuYWxveGFmLmNvbS8yMDIwLzA2L2J1aWxkX2F1cl93aXRoX2dpdGh1Yl9hY3Rpb25zLw==">利用 GitHub Actions 编译 AUR 包并建立自己的软件源<i class="fa fa-external-link-alt"></i></span></p>
 <h2 id="一些工具">一些工具</h2>
 <h3 id="namcap">namcap</h3>
 <p>用来检查打包是否正确</p>
@@ -896,19 +905,49 @@ debtap -p XXX.deb <span class="token comment"># -p 选项生成PKGBUILD</span>
 <h3 id="pip2pkgbuilds">pip2pkgbuilds</h3>
 <p>将pip的包转成aur的包，这个工具很久没更新了（But it works）</p>
 <h2 id="自动化">自动化</h2>
-<p>人肉测试每个包然后传上去给大家用是最好的，不过有的上游更新太勤测试不过来，或者一些用 <del>又或者有的时候你想让用户当小白鼠</del></p>
+<p>人肉测试每个包然后传上去给大家用是最好的，不过有的上游更新太勤测试不过来，或者一些<span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL1ZDU19wYWNrYWdlX2d1aWRlbGluZXNfKOeugOS9k+S4reaWhyk=">用版本控制紧跟上游的包<i class="fa fa-external-link-alt"></i></span> <del>又或者有的时候你想让用户当小白鼠</del></p>
+<p>可以试试Travis CI、Github Action 之类的CI/CD工具，不过最好还是更新之前人肉测试一下</p>
+<h3 id="github-action">Github Action</h3>
+<p>Github Action的好处是可以白嫖（划掉</p>
+<p>可以用Github Action自动生成PKGBUILD： <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21hcmtldHBsYWNlL2FjdGlvbnMvcHVibGlzaC1hdXItcGFja2FnZQ==">publish-aur-package<i class="fa fa-external-link-alt"></i></span></p>
+<p>鸭鸭的<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0R1Y2tTb2Z0L2J1aWxkLWF1ci1hY3Rpb24=">build-aur-action<i class="fa fa-external-link-alt"></i></span>,用Github Action编译一个AUR包（有时候你不想在自己电脑上编译可以试试这个）</p>
+<p>使用见：<span class="exturl" data-url="aHR0cHM6Ly92aWZseXRoaW5rLmNvbS9Vc2VfR2l0SHViQWN0aW9uc190b19idWlsZF9BVVIv">GitHub Actions 打造 AUR 打包下载一条龙服务<i class="fa fa-external-link-alt"></i></span></p>
 <h2 id="一些小问题">一些小问题</h2>
+<h3 id="aur的依赖包makepkg无法自动识别">AUR的依赖包makepkg无法自动识别</h3>
 <p>打包的时候如果依赖AUR的包，在<code>makepkg -s</code>pacman是不会自动安装的需要手动安装</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">error: target not found: python-django-cors-headers
 <span class="token operator">==</span><span class="token operator">></span> ERROR: <span class="token string">'pacman'</span> failed to <span class="token function">install</span> missing dependencies.
 <span class="token operator">==</span><span class="token operator">></span> ERROR: Could not resolve all dependencies.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>如果依赖太多装不过来，可以加<code>makepkg -d</code>参数忽略依赖，然后对生成的<code>XXX.tar.xz</code>使用</p>
+<p>如果依赖太多装不过来，可以加<code>makepkg -d</code>参数忽略依赖，然后对生成的<code>XXX.tar.xz</code>使用yay或者pikaur之类的AUR helper</p>
+<h3 id="git初次commit不包含srcinfo导致拒绝提交">git初次commit不包含SRCINFO导致拒绝提交</h3>
+<p>可以用<code>git filter branch</code></p>
+<p>（其实直接删了重新<code>git init</code>可能更快）</p>
+<h2 id="常见写法和命令">常见写法和命令</h2>
+<h3 id="install命令">install命令</h3>
+<p>用过<code>cmake</code>等编译工具的人应该对<code>make install</code>很熟了，它在PKGBUILD里面大概像这样</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function-name function">package</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token function">make</span> -C <span class="token string">"<span class="token variable">$pkgname</span>-<span class="token variable">$pkgver</span>"</span> <span class="token assign-left variable">DESTDIR</span><span class="token operator">=</span><span class="token string">"<span class="token variable">$pkgdir</span>"</span> <span class="token function">install</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>在PKGBUILD里面，还经常用它把文件安装到制定目录，并指定权限（一般不用<code>cp</code>来干这种事）</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function-name function">package</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token builtin class-name">cd</span> <span class="token string">"<span class="token variable">$srcdir</span>/<span class="token variable">$pkgname</span>"</span>
+  <span class="token function">install</span> -vDm <span class="token number">644</span> <span class="token variable">$&#123;pkgname<span class="token operator">%</span>-git&#125;</span><span class="token punctuation">&#123;</span>,.plugin<span class="token punctuation">&#125;</span>.zsh <span class="token punctuation">\</span>
+    -t <span class="token string">"<span class="token variable">$&#123;pkgdir&#125;</span>/usr/share/zsh/plugins/<span class="token variable">$&#123;pkgname&#125;</span>/"</span>
+  <span class="token function">install</span> -Dm644 LICENSE <span class="token string">"<span class="token variable">$pkgdir</span>"</span>/usr/share/licenses/<span class="token variable">$pkgname</span>/LICENSE
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>将可执行文件和LICENSE分别放到指定目录，像LICENSE或者doc权限644就好了，其他的可执行文件酌情给个755权限。</p>
+<p>如果有需要打印详细安装信息方便调试，可以加<code>-v</code>选项，像这样<code>install -Dvm755</code></p>
+<h3 id="常见写法">常见写法</h3>
+<p>获取Github Release</p>
 <h2 id="练手推荐">练手推荐</h2>
 <p>上手AUR打包基本只需要一点bash脚本的知识就可以了。当然最好还要对打包的项目和所用的语言、框架、依赖比较熟悉。</p>
-<p>（反正比deb和rpm的打包简单太多了，当时还在deb系的时候曾经在无聊的一天对deb打包好奇,在折腾了一天的打包之后，我放弃了 至于rpm打包，我当年看了这个<span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuaWJtLmNvbS96aC9hcnRpY2xlcy9sLWxvLXJwbS1idWlsZC1wYWNrYWdlLw==">Linux 中 RPM 的构建与打包<i class="fa fa-external-link-alt"></i></span>就放弃了,要打出一个好包看起来不会比deb打包简单）</p>
+<p>反正我感觉比deb和rpm的打包简单太多了，而且由于包管理的机制，虽然容易挂，但是依赖一般不会特别麻烦（除了有些要拆包的东西）</p>
+<p>你看看依赖问题<span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzI5MTYwNjEyOC9hbnN3ZXIvMTE5NDU5NjU5MQ==">都把隔壁deb系的老哥逼成什么样了<i class="fa fa-external-link-alt"></i></span>。</p>
+<p>可以看这个<span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuaWJtLmNvbS96aC9hcnRpY2xlcy9sLWxvLXJwbS1idWlsZC1wYWNrYWdlLw==">Linux 中 RPM 的构建与打包<i class="fa fa-external-link-alt"></i></span>感受一下打包流程 （当然rpm包用<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2pvcmRhbnNpc3NlbC9mcG0=">fpm<i class="fa fa-external-link-alt"></i></span>之类的打包工具也没有那么麻烦）</p>
 <p>官方的打包示例是要用到make编译c/c++包的例子，但是一些c/c++的包，运行环境和依赖会比较麻烦，而且在x86和arm等不同架构下面也会有很多问题。拿来熟悉打包流程对萌新不太友好。</p>
 <p>练手打包建议用从自己最熟悉的项目和语言开始。如果你什么语言都不熟悉呢，推荐用一些主题或者可以用debtap之类的工具方便的转成AUR包的东西来熟悉一下打包。</p>
 <p>有的系统主题、grub主题、输入法主题之类的包比较好打包，一般来说依赖也少，不会搞出什么大问题。而且主题的文件存放位置和PKGBUILD里面的其他东西可以找AUR里面打包好的其他主题参考，基本大同小异，上手打包不会有太太高难度和坑，不太熟悉流程的可以先用一些主题练手熟悉一下打包流程。（主要是这个依赖也少，破坏性比较小，萌新打出低质量的AUR包也不至于把装这个包的人一波带走闯下大祸）</p>
+<p>而且他们不需要编译，也没有依赖报错，总之非常的适合熟悉一下PKGBUILD的流程</p>
 <p>当然打包不能包揽所有工作，一些设置需要用户手动启用或者修改的（比如一些配置，又比如systemd之类的daemon），比如我这里打包了一个GRUB的Cyberpunk主题，需要用户手动修改</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">vim</span> /etc/default/grub<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token assign-left variable">GRUB_THEME</span><span class="token operator">=</span><span class="token string">"/usr/share/grub/themes/Cyberpunk/theme.txt"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -918,6 +957,7 @@ debtap -p XXX.deb <span class="token comment"># -p 选项生成PKGBUILD</span>
 <p>暑假的时候打了十几个野包，当时水平也菜，刚洗手变成Arch玩家没多久，打的十几个包都没放到AUR上丢人。虽然现在还是真蒟蒻在群里围观各路大佬卖弱不敢说话，看到中文的打包教程这么少，决定还是写点什么。</p>
 <p>当时搜AUR打包相关的资料，发现相关的文章、博客、资料并不多（尤其是中文的）。中文资料保守估计不到Archlinux安装教程的百分之一，也不到deb、rpm、Flatpak打包教程的百分之一。</p>
 <p>Archlinux安装弄的这么难初衷可能是为了筛掉一部分小白和伸手党，不过网上各路保姆级安装教程（一步一步手把手教的视频演示那种）和各种一键安装脚本和 Arch based 的发行版基本上快让<span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL0FyY2hfTGludXhfKOeugOS9k+S4reaWhyk=">Arch的理念<i class="fa fa-external-link-alt"></i></span>流产了(特别是广为诟病的Manjaro和网上一大堆不负责任的教程，一口一个适合小白，动不动就教人添加ArchlinuxCN源，搞得很多打包者不堪骚扰)</p>
+<p>小白倒没什么，主要是被伸手党搞怕了。</p>
 <p>独立打一个包应该不会比独立装一个Archlinux难（不考虑Nvidia双显卡博通网卡阴间主板诡异驱动等....）。<br />
 如果一个用户能参照ArchWiki独立装好、配置好自己的Arch，那就应该有能力自己打包。<br />
 Arch没有Mac、Windows、ChromeOS那样的财大气粗的公司和掏钱买服务的客户，甚至不能跟RHEL和Ubuntu比，社区纯靠热情。而且由于deb系和rpm系用户众多，基本大部分软件如果支持Linux会给出deb或者rpm的包，有的可能会给个appimage的包，Arch的支持基本没太多上游会管，很多包都是Arch的维护者和用户自行编译打包的（不少还是deb拆包转的）。 伸手党太多而打包者太少，那就离凉凉不远了。<br />
@@ -1698,31 +1738,100 @@ network=<span class="token punctuation">{</span>
       </tags>
   </entry>
   <entry>
-    <title>给服务器重装Ubuntu</title>
+    <title>重装Ubuntu</title>
     <url>/2d5/</url>
-    <content><![CDATA[<p><img width=100 src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/haixing.png" alt="Picture"/> 祖传服务器传到了我的手里 <a id="more"></a></p>
-<p>上回书说到，服务器一不小心卸载了iptables 现在准备重装。还是打算装Ubuntu Server（并不打算装Manjaro，也不适合搞桌面版，今天试过一下Ubuntu Desktop，图形化界面由于服务器没有独显直接卡到爆炸） <del>初步打算安装Ubuntu server 16.04.6LTS, 使用LVM分区</del> 安装Ubuntu18.04LTS，之前VPS用过一阵18，也没注意有什么新特性，据说还是改了一些东西⬇</p>
-<blockquote>
-<p>据说 内核更新到了 Linux kernel 4.15，这就意味着新增了不少特性 bbr什么的 网络管理工具 ifupdown 已经彻底废弃，建议全面拥抱 ip 命令 DNS 由 systemd 全面接管，接口监听在 127.0.0.53:53，配置文件在 /etc/systemd/resolved.conf，修改后重启服务即可 systemctl restart systemd-resolved。不要听网上那些奇怪的教程教你如何修改 /etc/resolv.conf swap 文件来替代 swap 分区</p>
-</blockquote>
-<h2 id="装ubuntu16.04lts">装Ubuntu16.04LTS</h2>
-<h3 id="安装">安装</h3>
-<p>下载iso，制作启动盘，这里用的Rufus <img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/rufus.png" alt="Picture" style="zoom:80%;" /></p>
-<p>然后直接装，网卡直接自动识别了，配置也没什么好说的，可以参考这里<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>或这里<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>,</p>
-<h3 id="后续配置">后续配置</h3>
-<p>进去之后换你电镜像源（终端里vim改/etc/apt/sources.list） apt包update&amp;&amp;upgrade 修改时区和系统时间 安装Docker，照着官方教程装Docker的时候根本下载不动,换了个国内的源 桌面不打算装gnome或者kde了，Mobaxterm用X11一般就够了</p>
-<h2 id="重新安装ubuntu18.04-lts">重新安装Ubuntu18.04 LTS</h2>
-<p>由于某些原因，决定还是换18</p>
-<h2 id="再次安装">再次安装</h2>
-<p>UEFI启动 create bond这里先不配置了（只有一张网卡eno1），bound mode选默认的balance-rr eno1网卡选择automatic自动获取ipv4和ipv6 镜像源这里输入你电的 选use the entire disk and set up LVM <del>是否安装openssh，空格选安装，选择从GitHub获取</del> 然后输入你的用户名(先准备好key，当然这个时候要保证网也是通的) 这里勾选openssh之后一直报错，可能是网的问题，不勾选，等后面再装 分区就分一个/boot，一个/swap，一个/home <!-- 
+    <content><![CDATA[<p>祖传服务器传到了我的手里, 行吧。其实我想把标题改成Ubuntu内部错误的解决办法（不是 <a id="more"></a></p>
+<h2 id="更新和洗手">更新（和洗手）</h2>
+<p>19年写的这个20年不知道怎么在2020年有一段时间被扔到了<code>重装Ubuntu</code>搜索结果的最前面，我这个小破站访问量暴增。然而那个时候20.04LTS都出了，已经有点过时了，而我19年那会写的那个几乎属于个人吐槽，差不多是我博客迁到，完全不适合作为一个教程。可能骗了很多人进来，</p>
+<p>装什么Ubuntu啊，还是Arch香，群里个个都是人才，说话又好听</p>
+<p><img src="/2d5/1611832700.webp" /></p>
+<p>但是祖传的是Ubuntu，但是假期我要回家滚又不敢远程滚, 但是我不想折腾显卡驱动了（Nvidia,fuck you!），但是这是工作站和服务器，上Arch天天滚可不太好。</p>
+<p><del>但是随便装个Ubuntu不仅快，他们跑深度学习的时候抄CSDN配置环境也方便</del></p>
+<p><del>最重要的，又不是我用。</del></p>
+<p><del>GNOME内存泄漏关我什么事</del></p>
+<p><del>Ubuntu内部错误关我什么事</del></p>
+<p>还是去用Ubuntu吧.jpg</p>
+<p><img src="/2d5/1611834396.webp" /></p>
+<p><img src="/2d5/1611834449.webp" /></p>
+<h2 id="认真发言">认真发言</h2>
+<p>其实你可以试试Debian（Canonical强推snap太烦人了）</p>
+<h3 id="关于桌面de">关于桌面（DE）</h3>
+<p>带桌面的版本建议避开Ubuntu的GNOME，那个东西。。。</p>
+<p>可以试试Linux Mint，或者Fedora（这个的GNOME应该比 Ubuntu 16、18 那几个整天内存泄露的GNOME版本稳多了）</p>
+<p>其实我推荐KDE，可以试试Kubuntu（或者KDE Neon？）</p>
+<p>机器配置较差请直接Lubuntu，稳如老狗，除了略简陋没有别的缺点。</p>
+<p>一众WM用户应该不会搜索这么蠢的关键词搜到我这里来，这里不谈WM了。</p>
+<h3 id="关于服务器">关于服务器</h3>
+<p>小作坊没有专职运维和技术支持，其实服务器建议试试Debian或者Ubuntu LTS，Debian stable稳如老狗</p>
+<p><del>众所周知，Debian testing 都比 Ubuntu LTS 稳（注意这个安全更新比较慢，个人用户可以testing，开了公网端口的工作站不要用这个）</del></p>
+<p>不过Ubuntu和CentOS6、7比起来，还是瞬间和蔼可亲了不少</p>
+<p>求求新入坑的别再跟着什么鸟哥私房菜之类的老教程用CentOS了，2020年CentOS8都被扬了，REHL马上就要给小作坊免费了，小作坊真迷信稳定上REHL吧</p>
+<p>没事不要用所谓稳定的老版本然后找不到包只能自己手动编译，就不说c/c++那一堆lib了，我已经见过不少人在编译python的时候没开ssl当场翻车。</p>
+<p>什么你说容器？你试过在CentOS6上面弄Docker和k8s吗，我在教研室的祖传阿里云上试过一次，从此再也不想看到CentOS了</p>
+<p>（整天在CentOS上手动编译凸显运维重要性和工作量的除外）</p>
+<h3 id="太长不看">太长不看</h3>
+<p>我是说，除了Ubuntu（以及其默认捆绑的GNOME、gtk、rime输入法,强推的snap，祖传的内部错误）,还有很多选择</p>
+<p>或者你用WSL之类的东西也行呢（WSL2显卡驱动也差不多能用了，虽然io效率还有些问题）。</p>
+<!-- 上回书说到，服务器一不小心卸载了iptables
+现在准备重装。还是打算装Ubuntu Server（并不打算装Manjaro，也不适合搞桌面版，今天试过一下Ubuntu Desktop，图形化界面由于服务器没有独显直接卡到爆炸）
+~~初步打算安装Ubuntu server 16.04.6LTS, 使用LVM分区~~
+安装Ubuntu18.04LTS，之前VPS用过一阵18，也没注意有什么新特性，据说还是改了一些东西⬇
+
+>据说
+内核更新到了 Linux kernel 4.15，这就意味着新增了不少特性 bbr什么的
+网络管理工具 ifupdown 已经彻底废弃，建议全面拥抱 ip 命令
+DNS 由 systemd 全面接管，接口监听在 127.0.0.53:53，配置文件在 /etc/systemd/resolved.conf，修改后重启服务即可 systemctl restart systemd-resolved。不要听网上那些奇怪的教程教你如何修改 /etc/resolv.conf
+swap 文件来替代 swap 分区
+
+## 装Ubuntu16.04LTS
+
+### 安装
+
+下载iso，制作启动盘，这里用的Rufus
+<img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/rufus.png" alt="Picture" style="zoom:80%;" />
+
+然后直接装，网卡直接自动识别了，配置也没什么好说的，可以参考这里[^1]或这里[^2],
+
+### 后续配置
+
+进去之后换你电镜像源（终端里vim改/etc/apt/sources.list）
+apt包update&&upgrade
+修改时区和系统时间
+安装Docker，照着官方教程装Docker的时候根本下载不动,换了个国内的源
+桌面不打算装gnome或者kde了，Mobaxterm用X11一般就够了
+
+## 重新安装Ubuntu18.04 LTS
+
+由于某些原因，决定还是换18
+
+## 再次安装
+
+UEFI启动
+create bond这里先不配置了（只有一张网卡eno1），bound mode选默认的balance-rr
+eno1网卡选择automatic自动获取ipv4和ipv6
+镜像源这里输入你电的
+选use the entire disk and set up LVM
+~~是否安装openssh，空格选安装，选择从GitHub获取~~
+然后输入你的用户名(先准备好key，当然这个时候要保证网也是通的)
+这里勾选openssh之后一直报错，可能是网的问题，不勾选，等后面再装
+分区就分一个/boot，一个/swap，一个/home
+<!-- 
 （当然你要先准备好key，先用git bash生成key
 `ssh-keygen -t rsa -C 'your_email@example.com'`
 再到Github的SSH设置里面把公钥填进去（id_rsa.pub里面的内容）
 然后测试一下是否成功
 <img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/ssh-github.png" alt="Picture" style="zoom:80%;" />
-） --></p>
-<p>然后是漫长的installing kernal （不知道为什么装server比desktop版慢那么多）</p>
-<p>bbr已经自带了，不用装了 设置root用户和用户组权限 装Docker参考这里<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> 和英文官方教程那个差不多，主要是获取GPG的地址和Docker源换成国内的 换成国内中科大的镜像源（这个换了也时断时续可能连不上） 出现permission denied：</p>
+） -->
+<!-- 然后是漫长的installing kernal
+（不知道为什么装server比desktop版慢那么多）
+
+bbr已经自带了，不用装了
+设置root用户和用户组权限
+装Docker参考这里[^3]
+和英文官方教程那个差不多，主要是获取GPG的地址和Docker源换成国内的
+换成国内中科大的镜像源（这个换了也时断时续可能连不上）
+出现permission denied：
+
 <pre class="line-numbers language-log" data-language="log"><code class="language-log">Got permission denied while trying to connect to the Docker daemon socket at unix:&#x2F;&#x2F;&#x2F;var&#x2F;run&#x2F;docker.sock: Get http:&#x2F;&#x2F;%2Fvar%2Frun%2Fdocker.sock&#x2F;v1.40&#x2F;containers&#x2F;json: dial unix &#x2F;var&#x2F;run&#x2F;docker.sock: connect: permission denied<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>是权限的问题，要加当前用户到用户组里面</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> gpasswd -a <span class="token variable">$&#123;<span class="token environment constant">USER</span>&#125;</span> docker<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -1746,11 +1855,7 @@ network:
       gateway4: 211.83.110.1   #设置网关
       nameservers:
           addresses: [114.114.114.114, 8.8.8.8]   #设置DNS<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>(网关地址用<code>route -n</code>查看，配置参考<span class="exturl" data-url="aHR0cDovL2Jsb2cuc2luYS5jb20uY24vcy9ibG9nXzUzNzNiY2Y0MDEwMnhrNWcuaHRtbA==">ubuntu 18.04 netplan yaml配置固定IP地址<i class="fa fa-external-link-alt"></i></span>)</p>
-<p>然后</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> netplan apply<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>不对啊，又炸了，ipv4的网关到底是啥啊</p>
-<p>看了一下官网<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>，好像nameserver和gateway4都是可选项，可以空着默认 直接改成这样试试</p>
+<p>(网关地址用<code>route -n</code>查看，配置参考<span class="exturl" data-url="aHR0cDovL2Jsb2cuc2luYS5jb20uY24vcy9ibG9nXzUzNzNiY2Y0MDEwMnhrNWcuaHRtbA==">ubuntu 18.04 netplan yaml配置固定IP地址<i class="fa fa-external-link-alt"></i></span>) d-homed//g → /systemd-homed/ INFO Path converted: /(?&lt;=[(&lt;s])(./)?systemd-homed//g → /systemd-homed/ INFO Path converted: /(?&lt;=[(&lt;s])(./)?systemd-home着默认 直接改成这样试试</p>
 <pre class="line-numbers language-yml" data-language="yml"><code class="language-yml">network:
   version: 2
 #  renderer: networkd
@@ -1774,29 +1879,23 @@ Address&#x3D;211.83.111.224&#x2F;23<span aria-hidden="true" class="line-numbers-
 <p>服务器启动的声音真的大啊 一半以上的问题都是网络问题，校内这个网真的.... 靠镜像源救回半条狗命</p>
 <p>Ubuntu18安装时配置网卡时想选静态ip选择Manual进去填写subnet, 结果那个subnet选项是<code>XXX.XXX.XXX.XXX/XX</code> 看了教研室其他设备相同频段的子网掩码是<code>255.255.254.0</code>，但是填了不行，用网上计算子网掩码的工具算了一下，就是<code>255.255.254.0</code></p>
 <p><img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/netmmask.png" alt="Picture" style="zoom:80%;" /></p>
-<p>暂时选了DHCP直接配置网卡，等进去再指定静态ip<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
+<p>暂时选了DHCP直接配置网卡，等进去再指定静态ip[^4]</p>
 <p>哦，netplan好像把子网掩码的格式改了 原来是这样 &gt;address = 192.168.225.50 netmask = 255.255.255.0</p>
 <p>改成了这种格式 &gt;addresses : [192.168.225.50/24]</p>
-<p>滚去补习计网知识了</p>
+<p>滚去补习计网知识了 --&gt; --&gt;</p>
 <h2 id="安装参考">安装参考</h2>
-<p>223.5.5.5 223.6.6.6</p>
-<section class="footnotes" role="doc-endnotes">
-<hr />
-<ol>
-<li id="fn1" role="doc-endnote"><p><span class="exturl" data-url="dHRwczovL3R1dG9yaWFscy51YnVudHUuY29tL3R1dG9yaWFsL3R1dG9yaWFsLWluc3RhbGwtdWJ1bnR1LXNlcnZlcg==">tutorial-install-ubuntu-server<i class="fa fa-external-link-alt"></i></span><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2" role="doc-endnote"><p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLjUxY3RvLmNvbS8zMjQxNzY2LzIzMjM5Mjc=">Ubuntu16.04.5以lvm方式安装全记录<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL0xWTV8o566A5L2T5Lit5paHKQ==">LVM arch-wiki<i class="fa fa-external-link-alt"></i></span><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3" role="doc-endnote"><p><span class="exturl" data-url="aHR0cHM6Ly95ZWFzeS5naXRib29rcy5pby9kb2NrZXJfcHJhY3RpY2UvaW5zdGFsbC91YnVudHUuaHRtbA==">Ubuntu 安装 Docker CE<i class="fa fa-external-link-alt"></i></span>、<span class="exturl" data-url="aHR0cHM6Ly95ZWFzeS5naXRib29rcy5pby9kb2NrZXJfcHJhY3RpY2UvaW5zdGFsbC9taXJyb3IuaHRtbA==">镜像加速器<i class="fa fa-external-link-alt"></i></span><a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4" role="doc-endnote"><p><span class="exturl" data-url="aHR0cHM6Ly9uZXRwbGFuLmlvL2V4YW1wbGVz">netplan官网的配置示例<i class="fa fa-external-link-alt"></i></span><a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5" role="doc-endnote"><p><span class="exturl" data-url="aHR0cHM6Ly93d3cudGVjbWludC5jb20vY29uZmlndXJlLW5ldHdvcmstc3RhdGljLWlwLWFkZHJlc3MtaW4tdWJ1bnR1Lw==">How to Configure Network Static IP Address in Ubuntu 18.04<i class="fa fa-external-link-alt"></i></span><a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section>
+<p><span class="exturl" data-url="dHRwczovL3R1dG9yaWFscy51YnVudHUuY29tL3R1dG9yaWFsL3R1dG9yaWFsLWluc3RhbGwtdWJ1bnR1LXNlcnZlcg==">tutorial-install-ubuntu-server<i class="fa fa-external-link-alt"></i></span><br />
+<span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL0xWTV8o566A5L2T5Lit5paHKQ==">LVM arch-wiki<i class="fa fa-external-link-alt"></i></span><br />
+<span class="exturl" data-url="aHR0cHM6Ly95ZWFzeS5naXRib29rcy5pby9kb2NrZXJfcHJhY3RpY2UvaW5zdGFsbC91YnVudHUuaHRtbA==">Ubuntu 安装 Docker CE<i class="fa fa-external-link-alt"></i></span>、<span class="exturl" data-url="aHR0cHM6Ly95ZWFzeS5naXRib29rcy5pby9kb2NrZXJfcHJhY3RpY2UvaW5zdGFsbC9taXJyb3IuaHRtbA==">镜像加速器<i class="fa fa-external-link-alt"></i></span><br />
+<span class="exturl" data-url="aHR0cHM6Ly93d3cudGVjbWludC5jb20vY29uZmlndXJlLW5ldHdvcmstc3RhdGljLWlwLWFkZHJlc3MtaW4tdWJ1bnR1Lw==">How to Configure Network Static IP Address in Ubuntu 18.04<i class="fa fa-external-link-alt"></i></span><br />
+<span class="exturl" data-url="aHR0cHM6Ly9uZXRwbGFuLmlvL2V4YW1wbGVz">netplan官网的配置示例<i class="fa fa-external-link-alt"></i></span></p>
 ]]></content>
       <categories>
         <category>102网吧日常</category>
       </categories>
       <tags>
         <tag>ubuntu</tag>
-        <tag>装机</tag>
+        <tag>重装</tag>
       </tags>
   </entry>
   <entry>
@@ -5059,12 +5158,13 @@ fpr_xgb<span class="token punctuation">,</span>tpr_xgb<span class="token punctua
       </tags>
   </entry>
   <entry>
-    <title>systemd-homed简介和homectl设置用户、用户组</title>
+    <title>systemd-homed简介(homectl设置用户、用户组)</title>
     <url>/systemd-homed/</url>
-    <content><![CDATA[<p>在2020.3 发布的systemd 245增加了systemd-homed，改变了<code>/home</code>目录的加密和工作方式，采用homectl这个cli工具设置用户组。快来当小白鼠吧。 <a id="more"></a></p>
+    <content><![CDATA[<p>在2020.3 发布的systemd 245增加了systemd-homed，改变了<code>/home</code>目录的加密和工作方式。用homectl设置用户组，直接加密整个<code>/home</code>目录更方便了，快来当小白鼠吧。 <a id="more"></a></p>
 <h2 id="太长不看版">太长不看版</h2>
 <h3 id="使用homectl新建用户用户组">使用homectl新建用户、用户组</h3>
 <p>首先你的systemd要在245以后，版本较低或使用SysV或者OpenRC、Upstart的玩家请跳过。</p>
+<p>更新：systemd-247以后的版本默认采用Btrfs，还加了一个可选的恢复密码（recovery key），你的密钥丢了可以用这个重置</p>
 <p>homectl是systemd-homed.service的一个cli工具，用来配置用户组、用户，包括新建、删除、修改权限和密码等。考虑到systemd近乎一统江湖的的市场占有率，可能你们将不得不面对这种方式。</p>
 <p>没开启的先开启一下<code>systemd-homed.service</code></p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl <span class="token builtin class-name">enable</span> systemd-homed
@@ -5130,7 +5230,7 @@ lines 2-36&#x2F;36 (END)<span aria-hidden="true" class="line-numbers-rows"><span
 <p>然后激活用户</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">homectl activate zhixi<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>退出当前用户并切换用户就可以了(你可能需要更改PAM设置才能正常使用su切换用户)</p>
-<h3 id="从原来的用户组管理方式迁往systemd-home">从原来的用户组管理方式迁往systemd-home</h3>
+<h3 id="从原来的用户组管理方式迁往systemd-homed">从原来的用户组管理方式迁往systemd-homed</h3>
 <blockquote>
 <p>这里直接复读一下systemd官网的警告，需要手动操作、有风险、做好备份、出了事自行承担</p>
 </blockquote>
@@ -5153,8 +5253,8 @@ getent group <span class="token number">1000</span><span aria-hidden="true" clas
 <p>然后rsync把原来备份了的东西放回<code>/home/zhixi</code></p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">homectl with zhixi -- <span class="token function">rsync</span> -aHAXv --remove-source-files /home/zhixi.saved/ <span class="token builtin class-name">.</span> <span class="token operator">&amp;&amp;</span>  <span class="token function">rmdir</span> /home/foobar.saved<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <h3 id="注意">注意</h3>
-<p>systemd-home是一个用户一个私有用户组。如果你一个用户组设置了多个用户的话，可能要调整一下。</p>
-<h2 id="systemd-home简介">systemd-home简介</h2>
+<p>systemd-homed是一个用户一个私有用户组。如果你一个用户组设置了多个用户的话，可能要调整一下。</p>
+<h2 id="systemd-homed简介">systemd-homed简介</h2>
 <p><del>感觉这下子systemd接管的东西更多了</del></p>
 <h3 id="以前的用户和用户组管理">以前的用户和用户组管理</h3>
 <p>好吧，以前要加引号，现在这个在大部分Linux都还没人用呢（甚至连一篇中文介绍都没有）。</p>
@@ -5164,13 +5264,13 @@ getent group <span class="token number">1000</span><span aria-hidden="true" clas
 <p>新建一个temp用户组并给temp用户组中新建一个叫temp1的用户（同时在<code>/home</code>下新建一个<code>temp1</code>目录作为用户目录）。</p>
 <p>然后使用<code>passwd temp1</code>为用户temp1指定密码</p>
 <p>（虽然useradd有<code>-p</code>选项可以直接指定密码，通常不建议这样做，因为这样子恁的密码会明文留在历史命令里，如果有人不怀好意的执行一下<code>history</code>或者<code>more /home/$USER/.bash_history</code>或者<code>ctrl+r</code>搜索useradd，他将轻易获取你的密码），你用了sudo也可能会被找到，比如<span class="exturl" data-url="aHR0cHM6Ly9zdXBlcnVzZXIuY29tL3F1ZXN0aW9ucy8zMDk0MzQvaG93LXRvLXZpZXctY29tbWFuZC1oaXN0b3J5LW9mLWFub3RoZXItdXNlci1pbi1saW51eA==">这个<i class="fa fa-external-link-alt"></i></span></p>
-<p>https://www.freebuf.com/news/135845.html history -c 也不太保险</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuZnJlZWJ1Zi5jb20vbmV3cy8xMzU4NDUuaHRtbA==">https://www.freebuf.com/news/135845.html<i class="fa fa-external-link-alt"></i></span> history -c 也不太保险</p>
 <p>你的用户名、密码、用户组、权限配置基本都放在<code>/etc</code>目录下面，比如<code>/etc/passwd</code>里面存你的密码，<code>etc/group</code>里面放用户组的设置。<code>/etc/sudoers</code>是超级用户的设置。每个用户的配置散落在各个地方，一些个人设置还被放在了<code>/home/user</code>底下。</p>
 <p>这个样子你需要<code>/etc</code>的写权限，一个用户不同系统迁移的时候需要同时迁移其他的目录（而且UID还得一样），想对<code>/home</code>单独加密也不太方便。</p>
 <h3 id="变化">变化</h3>
 <p>主要的变化就是你的个人用户都扔到<code>/home/yourusername</code>下面了。（据说）这样更方便加密和迁移。默认采用LUKS，在用户登陆的时候解密并挂载<code>/home/user</code>，在用户退出登陆的时候加密并取消挂载。休眠挂起（Suspend）的时候也会加密锁住。</p>
-<p>比如你有一个u盘，里面装了你的用户目录，到别的电脑上插上去就能用了，不需要那边给你新建一个用户（现在基本不太行，对面电脑起码得也是systemd 245 版本以上还得启用<code>systemd-home</code>，我乐观估计等这玩意普及至少得两年吧，那些用老CentOS的万年钉子户更别想了）</p>
-<p>这样也方便全盘加密（我不是那种对物理安全都看的很在乎的申必人士，据说全盘加密会有点性能问题，而且休眠睡眠也比较容易起不来，所以我没试过）（不过恁不用这个systemd-home其实也能全盘加密）</p>
+<p>比如你有一个u盘，里面装了你的用户目录，到别的电脑上插上去就能用了，不需要那边给你新建一个用户（现在基本不太行，对面电脑起码得也是systemd 245 版本以上还得启用<code>systemd-homed</code>，我乐观估计等这玩意普及至少得两年吧，那些用老CentOS的万年钉子户更别想了）</p>
+<p>这样也方便全盘加密（我不是那种对物理安全都看的很在乎的申必人士，据说全盘加密会有点性能问题，而且休眠睡眠也比较容易起不来，所以我没试过）（不过恁不用这个systemd-homed其实也能全盘加密）</p>
 <p>现在使用<code>systemd-homed.service</code>和<code>systemd-userdbd.service</code>两个daemon管理用户，登陆的时候是<code>systemd-logind</code> 在管。大概是这么个流程：</p>
 <p><img src="/systemd-homed/image-20201108172857040.png" /></p>
 <p><img src="/systemd-homed/image-20201108172321494.png" /></p>
@@ -5413,7 +5513,7 @@ lines <span class="token number">2</span>-36/36 <span class="token punctuation">
 </table>
 <h2 id="参考">参考</h2>
 <p><span class="exturl" data-url="aHR0cHM6Ly9zeXN0ZW1kLmlvL0hPTUVfRElSRUNUT1JZLw==">https://systemd.io/HOME_DIRECTORY/<i class="fa fa-external-link-alt"></i></span> 官方文档</p>
-<p><span class="exturl" data-url="aHR0cHM6Ly93d3cubWFuNy5vcmcvbGludXgvbWFuLXBhZ2VzL21hbjEvaG9tZWN0bC4xLmh0bWw=">https://www.man7.org/linux/man-pages/man1/homectl.1.html<i class="fa fa-external-link-alt"></i></span> https://www.freedesktop.org/software/systemd/man/homectl.html</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cubWFuNy5vcmcvbGludXgvbWFuLXBhZ2VzL21hbjEvaG9tZWN0bC4xLmh0bWw=">https://www.man7.org/linux/man-pages/man1/homectl.1.html<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly93d3cuZnJlZWRlc2t0b3Aub3JnL3NvZnR3YXJlL3N5c3RlbWQvbWFuL2hvbWVjdGwuaHRtbA==">https://www.freedesktop.org/software/systemd/man/homectl.html<i class="fa fa-external-link-alt"></i></span></p>
 <p><span class="exturl" data-url="aHR0cHM6Ly9sd24ubmV0L0FydGljbGVzLzgxNDA2OC8=">systemd 245 released<i class="fa fa-external-link-alt"></i></span> systemd第245次更新详情</p>
 <p><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL1N5c3RlbWQtaG9tZWQ=">https://wiki.archlinux.org/index.php/Systemd-homed<i class="fa fa-external-link-alt"></i></span></p>
 <p><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL1VzZXJzX2FuZF9ncm91cHNfKOeugOS9k+S4reaWhyk=">https://wiki.archlinux.org/index.php/Users_and_groups_(简体中文)<i class="fa fa-external-link-alt"></i></span></p>
