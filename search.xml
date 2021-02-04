@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>AR模型谱估计的几种算法比较</title>
+    <title>AR模型谱估计</title>
     <url>/fcd4/</url>
-    <content><![CDATA[<p>Burg法,L-D法等 <a id="more"></a></p>
+    <content><![CDATA[<p>跟卡尔曼滤波挺像的 <a id="more"></a></p>
 <h3 id="ar自回归模型">AR（自回归）模型</h3>
 <p>AR模型适用于平稳、宽平稳的随机序列，是一个差分方程模型。 可以认为是一个带微扰的马尔可夫过程。一个最简单的例子是<span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vc3VwZXItemhhbmctODI4L3AvNzEwNjk3MC5odG1s">单摆<i class="fa fa-external-link-alt"></i></span>。一些不满足平稳条件的事件，AR模型的分析效果是很差的（如股票预测）</p>
 <p>从时域讨论稳定参见<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8zNTA5MzgzNQ==">时间序列的自回归模型—从线性代数的角度来看<i class="fa fa-external-link-alt"></i></span>, 当Y-W方程的系数矩阵正定时，传递函数的极点在单位圆内，模型稳定。</p>
@@ -38,8 +38,8 @@
         <category>荒废的老本行</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>DSP</tag>
+        <tag>Signal</tag>
       </tags>
   </entry>
   <entry>
@@ -3082,18 +3082,24 @@ Host Server
       </tags>
   </entry>
   <entry>
-    <title>博客开通</title>
+    <title>重启博客</title>
     <url>/1a9a/</url>
-    <content><![CDATA[<p>我的新博客开通了，不定期更新</p>
+    <content><![CDATA[<p>新博客又开通了(搬家)，不定期更新</p>
 <a id="more"></a>
-<p>域名到期，之前的wordpress网站不太喜欢，索性用hexo搞个静态网站。</p>
-<p>这个博客主要用来闲扯，本人才疏学浅，虚度廿载光阴，一事无成，偶尔生产bug。</p>
-<blockquote>
-<p>当我沉默着的时候，我觉得充实；我将开口，同时感到空虚</p>
-<p>生命的泥委弃在地面上，不生乔木，只生野草，这是我的罪过</p>
+<p>原域名到期，加上之前的Wordpress网站不太喜欢，索性换到Hexo了，主题域名什么的都全换了。没换Hugo是因为没发现和Next一样这么喜欢的主题，这主题让我感到这个页面的却就是一个博客应该有的样子。</p>
+<p>倒不是说这个主题多好看，它是我印象里博客的样子，让我找回了还是个小朋友的时候第一次注册博客的感觉。对呀，博客就长这个样子。左边是导航栏，下面一小栏放头像和放点徽章挂件；中间是文章，文章最下面是评论。再随便加个背景，简直完美。咿，空荡荡的好像还少点什么；是弹窗小广告，这个就算了.....</p>
+<p>最早的时候沉迷三维弹球和扫雷，以及桌面屏保。后来开始上网，已经错过了聊天室的时代，QQ号已经8位了。跟风注册了雅虎伊妹儿和搜狐博客，以及一些论坛帐号，开始了网上冲浪。后来换到Wordpress了，加上一个穷学生手头零花钱也不多，中间关了两次没有续上。</p>
+<p>偶当年还是一只小网虫的时候，并不是特别喜欢发博客，喜欢泡在BBS里，写的东西也都喜欢放在BBS里水帖。论坛里看的人比较多，偶尔斑竹还会出来给加个精。大概从15年开始BBS一个个都亡了。有的因为用户大量出走宣布死亡，有的像贴吧一样开始杀鸡取卵式变现挣钱，还有的因为政策原因关了。有的多次改版丢了好多老帖子，有的格式也乱了，老用户抱怨出走。有的一直停留在远古版本的Discuz，然后有一天站被黑了....</p>
+<p>看多了Flarum的新论坛现在偶尔点进一些没见过的Discuz论坛还是会瞬间恍惚，仿佛又回到了当年</p>
+<p>有的是还没亡却从当年的人声鼎沸变得门可罗雀，不时传来哪个一年到头也没几个人说话的论坛站长支撑不下去又要关站了的消息。认识的好多网友也有逐渐沉寂，失去了联系。</p>
+<p>之前博客里的东西不适合放出来，就默默存在硬盘里了。在论坛里写的东西就放在论坛里和BBS一起消亡吧。</p>
+<blockquote class="blockquote-center">
+<p>山中友，试高吟楚些，重与招魂</p>
+
 </blockquote>
-<p><br><br/></p>
-<p><img src="/1a9a/cyperpunk.png" /></p>
+<figure>
+<img src="/1a9a/cyperpunk.png" alt="Welcome" /><figcaption aria-hidden="true">Welcome</figcaption>
+</figure>
 ]]></content>
       <categories>
         <category>杂七杂八</category>
