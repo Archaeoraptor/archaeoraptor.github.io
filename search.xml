@@ -1,48 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>AR模型谱估计</title>
-    <url>/fcd4/</url>
-    <content><![CDATA[<p>跟卡尔曼滤波挺像的 <a id="more"></a></p>
-<h3 id="ar自回归模型">AR（自回归）模型</h3>
-<p>AR模型适用于平稳、宽平稳的随机序列，是一个差分方程模型。 可以认为是一个带微扰的马尔可夫过程。一个最简单的例子是<span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vc3VwZXItemhhbmctODI4L3AvNzEwNjk3MC5odG1s">单摆<i class="fa fa-external-link-alt"></i></span>。一些不满足平稳条件的事件，AR模型的分析效果是很差的（如股票预测）</p>
-<p>从时域讨论稳定参见<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8zNTA5MzgzNQ==">时间序列的自回归模型—从线性代数的角度来看<i class="fa fa-external-link-alt"></i></span>, 当Y-W方程的系数矩阵正定时，传递函数的极点在单位圆内，模型稳定。</p>
-<h3 id="ar模型及功率谱的估计">AR模型及功率谱的估计</h3>
-<p>主要有前向预测的L-D法，Burg法，Marple法，矩阵分解等算法，此外还有极大似然估计等估计方法。 Burg算法和Marple算法都是求前向预测和后向预测误差之和最小，Burg算法较为常用。Marple算法很容易受噪声影响导致不稳定。</p>
-<p>Burg算法对于高斯随机过程等价于最大熵算法</p>
-<p>AR功率谱估计可以突破较短序列由于序列长度N过短对于频率分辨率的限制。经典谱估计的频率分辨率约为</p>
-<p><span class="math display"><mjx-container class="MathJax" jax="SVG" display="true" width="full" style="min-width: 18.85ex"><svg style="vertical-align: -1.773ex; min-width: 18.85ex" xmlns="http://www.w3.org/2000/svg" width="100%" height="4.676ex" role="img" focusable="false"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0) scale(0.0181) translate(0, -1283.5)"><g data-mml-node="math"><g data-mml-node="mtable" transform="translate(2078, 0) translate(-2078, 0)"><g transform="translate(0 1283.5) matrix(1 0 0 -1 0 0) scale(55.25)"><svg data-table="true" preserveAspectRatio="xMidYMid" viewBox="2087.8 -1283.5 1 2067"><g transform="matrix(1 0 0 -1 0 0)"><g data-mml-node="mlabeledtr" transform="translate(0, -97.5)"><g data-mml-node="mtd"><g data-mml-node="mi"><path data-c="394" d="M51 0Q46 4 46 7Q46 9 215 357T388 709Q391 716 416 716Q439 716 444 709Q447 705 616 357T786 7Q786 4 781 0H51ZM507 344L384 596L137 92L383 91H630Q630 93 507 344Z"></path></g><g data-mml-node="mi" transform="translate(833, 0)"><path data-c="1D453" d="M118 -162Q120 -162 124 -164T135 -167T147 -168Q160 -168 171 -155T187 -126Q197 -99 221 27T267 267T289 382V385H242Q195 385 192 387Q188 390 188 397L195 425Q197 430 203 430T250 431Q298 431 298 432Q298 434 307 482T319 540Q356 705 465 705Q502 703 526 683T550 630Q550 594 529 578T487 561Q443 561 443 603Q443 622 454 636T478 657L487 662Q471 668 457 668Q445 668 434 658T419 630Q412 601 403 552T387 469T380 433Q380 431 435 431Q480 431 487 430T498 424Q499 420 496 407T491 391Q489 386 482 386T428 385H372L349 263Q301 15 282 -47Q255 -132 212 -173Q175 -205 139 -205Q107 -205 81 -186T55 -132Q55 -95 76 -78T118 -61Q162 -61 162 -103Q162 -122 151 -136T127 -157L118 -162Z"></path></g><g data-mml-node="mo" transform="translate(1660.8, 0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(2716.6, 0)"><g data-mml-node="mfrac"><g data-mml-node="mrow" transform="translate(220, 676)"><g data-mml-node="mi"><path data-c="1D453" d="M118 -162Q120 -162 124 -164T135 -167T147 -168Q160 -168 171 -155T187 -126Q197 -99 221 27T267 267T289 382V385H242Q195 385 192 387Q188 390 188 397L195 425Q197 430 203 430T250 431Q298 431 298 432Q298 434 307 482T319 540Q356 705 465 705Q502 703 526 683T550 630Q550 594 529 578T487 561Q443 561 443 603Q443 622 454 636T478 657L487 662Q471 668 457 668Q445 668 434 658T419 630Q412 601 403 552T387 469T380 433Q380 431 435 431Q480 431 487 430T498 424Q499 420 496 407T491 391Q489 386 482 386T428 385H372L349 263Q301 15 282 -47Q255 -132 212 -173Q175 -205 139 -205Q107 -205 81 -186T55 -132Q55 -95 76 -78T118 -61Q162 -61 162 -103Q162 -122 151 -136T127 -157L118 -162Z"></path></g><g data-mml-node="mi" transform="translate(550, 0)"><path data-c="1D460" d="M131 289Q131 321 147 354T203 415T300 442Q362 442 390 415T419 355Q419 323 402 308T364 292Q351 292 340 300T328 326Q328 342 337 354T354 372T367 378Q368 378 368 379Q368 382 361 388T336 399T297 405Q249 405 227 379T204 326Q204 301 223 291T278 274T330 259Q396 230 396 163Q396 135 385 107T352 51T289 7T195 -10Q118 -10 86 19T53 87Q53 126 74 143T118 160Q133 160 146 151T160 120Q160 94 142 76T111 58Q109 57 108 57T107 55Q108 52 115 47T146 34T201 27Q237 27 263 38T301 66T318 97T323 122Q323 150 302 164T254 181T195 196T148 231Q131 256 131 289Z"></path></g></g><g data-mml-node="mi" transform="translate(285.5, -686)"><path data-c="1D441" d="M234 637Q231 637 226 637Q201 637 196 638T191 649Q191 676 202 682Q204 683 299 683Q376 683 387 683T401 677Q612 181 616 168L670 381Q723 592 723 606Q723 633 659 637Q635 637 635 648Q635 650 637 660Q641 676 643 679T653 683Q656 683 684 682T767 680Q817 680 843 681T873 682Q888 682 888 672Q888 650 880 642Q878 637 858 637Q787 633 769 597L620 7Q618 0 599 0Q585 0 582 2Q579 5 453 305L326 604L261 344Q196 88 196 79Q201 46 268 46H278Q284 41 284 38T282 19Q278 6 272 0H259Q228 2 151 2Q123 2 100 2T63 2T46 1Q31 1 31 10Q31 14 34 26T39 40Q41 46 62 46Q130 49 150 85Q154 91 221 362L289 634Q287 635 234 637Z"></path></g><rect width="1219" height="60" x="120" y="220"></rect></g></g></g></g></g></svg><svg data-labels="true" preserveAspectRatio="xMaxYMid" viewBox="1278 -1283.5 1 2067"><g data-labels="true" transform="matrix(1 0 0 -1 0 0)"><g data-mml-node="mtd" id="mjx-eqn-1" transform="translate(0, -97.5)"><g data-mml-node="mtext"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z" transform="translate(389, 0)"></path><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z" transform="translate(889, 0)"></path></g></g></g></svg></g></g></g></g></svg></mjx-container></span></p>
-<p>AR法通过前向和后向预测外推，突破了短序列长度N的限制（N点长序列相当于长序列加窗，频率分辨率受限于主瓣宽度）。但是AR法仍然无法突破奈奎斯特采样定理<span class="math inline"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.781ex" xmlns="http://www.w3.org/2000/svg" width="2.626ex" height="3.006ex" role="img" focusable="false" viewBox="0 -983.5 1160.5 1328.5"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><g data-mml-node="math"><g data-mml-node="mfrac"><g data-mml-node="mrow" transform="translate(220, 485) scale(0.707)"><g data-mml-node="mi"><path data-c="1D453" d="M118 -162Q120 -162 124 -164T135 -167T147 -168Q160 -168 171 -155T187 -126Q197 -99 221 27T267 267T289 382V385H242Q195 385 192 387Q188 390 188 397L195 425Q197 430 203 430T250 431Q298 431 298 432Q298 434 307 482T319 540Q356 705 465 705Q502 703 526 683T550 630Q550 594 529 578T487 561Q443 561 443 603Q443 622 454 636T478 657L487 662Q471 668 457 668Q445 668 434 658T419 630Q412 601 403 552T387 469T380 433Q380 431 435 431Q480 431 487 430T498 424Q499 420 496 407T491 391Q489 386 482 386T428 385H372L349 263Q301 15 282 -47Q255 -132 212 -173Q175 -205 139 -205Q107 -205 81 -186T55 -132Q55 -95 76 -78T118 -61Q162 -61 162 -103Q162 -122 151 -136T127 -157L118 -162Z"></path></g><g data-mml-node="mi" transform="translate(550, 0)"><path data-c="1D460" d="M131 289Q131 321 147 354T203 415T300 442Q362 442 390 415T419 355Q419 323 402 308T364 292Q351 292 340 300T328 326Q328 342 337 354T354 372T367 378Q368 378 368 379Q368 382 361 388T336 399T297 405Q249 405 227 379T204 326Q204 301 223 291T278 274T330 259Q396 230 396 163Q396 135 385 107T352 51T289 7T195 -10Q118 -10 86 19T53 87Q53 126 74 143T118 160Q133 160 146 151T160 120Q160 94 142 76T111 58Q109 57 108 57T107 55Q108 52 115 47T146 34T201 27Q237 27 263 38T301 66T318 97T323 122Q323 150 302 164T254 181T195 196T148 231Q131 256 131 289Z"></path></g></g><g data-mml-node="mn" transform="translate(403.5, -345) scale(0.707)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g><rect width="920.5" height="60" x="120" y="220"></rect></g></g></g></svg></mjx-container></span>的限制。要想突破采样定理，只有在特定的条件下采用<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8yMjQ0NTMwMg==">压缩感知<i class="fa fa-external-link-alt"></i></span>等方法改变采样方式，如磁共振重建。</p>
-<p>几种功率谱估计的比较</p>
-<ol type="1">
-<li>算法复杂度 L-D 算法计算量约为直接解Y-W方程的一半 Marple算法复杂，计算量大</li>
-<li>效果 L-D算法<br>
-1)一定收敛 2误差较大； 3)预测均方随阶数增加而减小 4)可能出现谱线分裂 5)受阶数影响大，阶数过高有伪峰。 Burg算法<br>
-1)在有限长情况下好于前向预测 2)对于高斯随机信号，AR谱估计和最大熵算法效果相同 3)易受初相的影响产生频率偏移 Marple算法<br>
-1)通常性能最好，分辨率最高 2)可能会不稳定 3)基本上克服了谱线分裂、频率偏移和出现伪峰等缺点</li>
-</ol>
-<h3 id="函数包">函数包</h3>
-<p>这些算法基本都有成熟的工具包 比如matlab中：</p>
-<ol type="1">
-<li>pyulear.m 用AR模型的自相关法估计信号的功率谱，其基本调用格式是： [Px, F] = pyulear(x, order, Nfft, Fs)</li>
-<li>pburg.m 用AR模型的Burg算法估计信号的功率谱，调用格式与pyulear类似</li>
-<li>pcov.m 用AR模型方差方法估计信号的功率谱</li>
-<li>pmcov.m 用AR模型的改进的方差方法估计信号的功率谱</li>
-<li>pmem.m 最大熵功率谱估计，其估计性能类似pyulear</li>
-<li>pmusic.m 用自相关矩阵分解的MUSIC算法估计信号的功率谱</li>
-<li>peig.m 用自相关矩阵分解的特征向量 法估计信号的功率谱，其基本调用格式是： [Px, F] = peig(x, order, Nfft, Fs), [Px, F，V, E] = peig(x, order, Nfft, Fs), x :信号向量，order:模型的阶次，Fs:抽样频率，Nfft:对x作FFT时的长度。Px:估计出的功率谱，F是频率轴坐标。对peig, 输出的E 是由自相关矩阵的特征值所组成的向量，V是由特征向量组成的矩阵。V的列向量张成了噪声子空间，V的行数减去列数即是信号子空间的维数。</li>
-<li>直接得到模型有aryulear、arburg等函数，用法： arburg(x,order)</li>
-</ol>
-]]></content>
-      <categories>
-        <category>荒废的老本行</category>
-      </categories>
-      <tags>
-        <tag>DSP</tag>
-        <tag>Signal</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Docker笔记</title>
     <url>/69d4/</url>
     <content><![CDATA[<p>开始折腾Docker，等待填坑 <a id="more"></a></p>
@@ -1738,6 +1696,44 @@ network=<span class="token punctuation">{</span>
       </tags>
   </entry>
   <entry>
+    <title>λ演算&amp;函数式编程</title>
+    <url>/a10f/</url>
+    <content><![CDATA[<p>等待填坑</p>
+<a id="more"></a>
+<h2 id="摸鱼一时爽">摸鱼一时爽</h2>
+<p>函数式编程(Functional Programming)好像比面向对象抽象程度更高。但是之前折腾硬件的时候都没有用到过，可能是不太适合处理IO接口和操作时序吧。 之前在图书馆乱翻，看到一本七周七语言的书，翻到函数式，感觉还挺有意思，教研室的摸鱼生活就搞点这个吧，反正干正事是不可能干正事的 <del>正在进JavaScript的坑，将就着用js来练练手吧。</del> javascript味不对，还是直接上了Lisp</p>
+<h2 id="λ演算λ-calculus">λ演算(λ-calculus)</h2>
+<ul>
+<li>是匿名的</li>
+<li>只有一个输入</li>
+</ul>
+<p>多输入的函数要转成多个只有一个输入的函数的嵌套调用，也就是柯里化（currying）</p>
+<p><span class="math inline">\(\lambda\)</span>项</p>
+<h2 id="附">附</h2>
+<h3 id="环境配置">环境配置</h3>
+<p>Arch下安装mit-sheme包就好了，SICP的练习环境。这个操作基本跟Emacs差不多，是SICP的作业环境。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yay -S mit-scheme<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>不过我用的是这个Chez Scheme，前几年开源了的东西，速度很快</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yay -S chez-scheme<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>运行直接</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">scheme <span class="token operator">&lt;</span> test.scm<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>就好了</p>
+<p>我不习惯Emacs的快捷键，都是在vscode里写的，装一个vscode-scheme插件就好了。可以在code runner插件里配置一下，然后按快捷键运行</p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token property">"code-runner.executorMap"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">".scm"</span><span class="token operator">:</span> <span class="token string">"scheme &lt; "</span><span class="token punctuation">,</span>
+    <span class="token property">"scheme"</span><span class="token operator">:</span> <span class="token string">"scheme &lt; "</span><span class="token punctuation">,</span>
+    <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>详见 https://github.com/cisco/ChezScheme</p>
+]]></content>
+      <categories>
+        <category>不务正业系列</category>
+      </categories>
+      <tags>
+        <tag>λ-calcus</tag>
+        <tag>js</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>重装Ubuntu</title>
     <url>/2d5/</url>
     <content><![CDATA[<p>祖传服务器传到了我的手里, 行吧。其实我想把标题改成Ubuntu内部错误的解决办法（不是 <a id="more"></a></p>
@@ -1896,44 +1892,6 @@ Address&#x3D;211.83.111.224&#x2F;23<span aria-hidden="true" class="line-numbers-
       <tags>
         <tag>ubuntu</tag>
         <tag>重装</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>λ演算&amp;函数式编程</title>
-    <url>/a10f/</url>
-    <content><![CDATA[<p>等待填坑</p>
-<a id="more"></a>
-<h2 id="摸鱼一时爽">摸鱼一时爽</h2>
-<p>函数式编程(Functional Programming)好像比面向对象抽象程度更高。但是之前折腾硬件的时候都没有用到过，可能是不太适合处理IO接口和操作时序吧。 之前在图书馆乱翻，看到一本七周七语言的书，翻到函数式，感觉还挺有意思，教研室的摸鱼生活就搞点这个吧，反正干正事是不可能干正事的 <del>正在进JavaScript的坑，将就着用js来练练手吧。</del> javascript味不对，还是直接上了Lisp</p>
-<h2 id="λ演算λ-calculus">λ演算(λ-calculus)</h2>
-<ul>
-<li>是匿名的</li>
-<li>只有一个输入</li>
-</ul>
-<p>多输入的函数要转成多个只有一个输入的函数的嵌套调用，也就是柯里化（currying）</p>
-<p><span class="math inline">\(\lambda\)</span>项</p>
-<h2 id="附">附</h2>
-<h3 id="环境配置">环境配置</h3>
-<p>Arch下安装mit-sheme包就好了，SICP的练习环境。这个操作基本跟Emacs差不多，是SICP的作业环境。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yay -S mit-scheme<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>不过我用的是这个Chez Scheme，前几年开源了的东西，速度很快</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yay -S chez-scheme<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>运行直接</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">scheme <span class="token operator">&lt;</span> test.scm<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>就好了</p>
-<p>我不习惯Emacs的快捷键，都是在vscode里写的，装一个vscode-scheme插件就好了。可以在code runner插件里配置一下，然后按快捷键运行</p>
-<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token property">"code-runner.executorMap"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
-    <span class="token property">".scm"</span><span class="token operator">:</span> <span class="token string">"scheme &lt; "</span><span class="token punctuation">,</span>
-    <span class="token property">"scheme"</span><span class="token operator">:</span> <span class="token string">"scheme &lt; "</span><span class="token punctuation">,</span>
-    <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p>详见 https://github.com/cisco/ChezScheme</p>
-]]></content>
-      <categories>
-        <category>不务正业系列</category>
-      </categories>
-      <tags>
-        <tag>λ-calcus</tag>
-        <tag>js</tag>
       </tags>
   </entry>
   <entry>
@@ -3573,6 +3531,438 @@ r <span class="token operator">=</span> requests<span class="token punctuation">
       </tags>
   </entry>
   <entry>
+    <title>对于医疗行业的一点看法</title>
+    <url>/about-medical-industry/</url>
+    <content><![CDATA[<p>半个局外人的流言谶语，以及乌鸦嘴。未完待续，不定期更新。 <a id="more"></a></p>
+<p>当然我不是医学生，当年高考报志愿的时候由于色弱被医学几乎所有专业拒之门外。</p>
+<p>虽然本科录取通知书和毕业证上都写的是生物医学工程（是的，这个专业也是色弱与狗不得报考。可我是报了通信电子被调剂过来的），虽然每次出门说出这个专业总被认成是学生物的、学医的，很惭愧，生化相关的就没学过，唯一跟生物沾点边的是大一的必须选的选修课生命科学导论（只有一个学分的选修，上课全程在写微积分线代作业，老师非常善良，开卷考试全程抄书），唯一跟医学沾点边的是大一的解剖（也是选修，两个学分，上课全程在写电分大雾作业，考试划重点精确到第几章第几页第几段的第几个句子）。</p>
+<p>本来是想去搞硬件的，本科还在搞医疗器械那会也确实在焊板子弄单片机搞stm32烧串口调测量信号，不过最后还是逃离了医疗器械，当了硬件逃兵。</p>
+<p>快要过去的一年发生了不少事，每次想写点什么，打了一堆字又删了，原来的知乎大号早就宣布退乎清空回答了，丁香园小木虫之类的地方又不想去，发到博客没多少人看（以及会有另一些人看，近似于发QQ空间的效果）。</p>
+<p>发在这里又不能像某乎那样开个小号再开个匿名，利益相关，匿了.jpg</p>
+<p>所以这篇博客写的不太尽兴，有些话不方便多说，</p>
+<h2 id="现状">现状</h2>
+<h3 id="医疗器械">医疗器械</h3>
+<p>啊，老本行，拿出来单独说一下（很惭愧，从这一行跑路了）</p>
+<p>这里的医疗器械只讲一下电子设备，比如血压血糖体温之类的传感测量设备，还有那些X光机、CT、PETCT、彩超、MRI、NMRI那一堆摆在影像科的昂贵的大设备。用于检测的那些设备没搞过，不懂；医疗耗材之类的完全不懂，听说川大那边有不少搞生物医学材料的，听说强生美敦力罗氏之类的企业在做。</p>
+<p>比较贵的那些大设备以前长期处于国外几家大公司垄断中，主要是GPS三家。通用电气一直在没落，飞利浦这两年也有点不思进取，西门子还行，不过被</p>
+<p>联影 迈瑞 理邦</p>
+<p>联影号称是医疗器械行业的华为，实际加班可能比华为还严重；像当年菊花从思科挖人一样，联影从西门子等挖了好多高管和技术人员，实现了 自主研发 。</p>
+<p>东软之类的国企</p>
+<p>国内学校搞医疗器械的不是很多，基本都挂在生物医学工程下面，有的挂在精密仪器和自动化下面（说起来你电生命学院最早就是从自动化测量那边分出去的，早年一群搞医疗器械的，不过后来逐渐都去灌水了，硬件没多少人搞了）。不算材料那些，高校里面还在搞医疗电子并且还算可以的可能就浙大和重庆大学的一些组了。</p>
+<h3 id="医学信息">医学信息</h3>
+<p>算是正在医学信息的坑里面划水吧，</p>
+<p>入坑，你将看到各路祖传机器和祖传代码，包括Delphi，PowerBuilder，SQL Server 2000，远古版本的Windows Server 和 Windows XP（当然，都是盗版的），Oracle（几乎都是远古版本，不少盗版，比较有钱的大医院可能会有正版）</p>
+<p>jQuery还好，可能还有完美兼容ie的Flash，WebForms；</p>
+<p>各种神奇的导出格式，不规范的XML，各种自定义的数据格式和编码（某些公司自己弄出来的私有格式）</p>
+<!-- 国内知名的医疗软件基本都是再用PB,比如金蝶 创业 众阳。也没有互联网软件公司出来革了她们的命 -->
+<h4 id="his系统">HIS系统</h4>
+<p>略有年头的词。不少HIS系统比我还老，祖传代码没人敢动，去医院转一圈一下你会发现真就是祖传微机祖传服务器祖传软件，不知道多少年前采购的东西用到天荒地老。</p>
+<p>有些话我不方便说太多，就拿选课系统类比一下吧。</p>
+<p>这种单位采购的XX系统，大家心里应该都能想象出来。想像不出来的请回忆一下学校选课系统/教务系统支配的恐惧。除了学校学生自己做的选课系统，采购的选课系统基本都是方正、清元、强智。</p>
+<p>比如<span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzI2NTE2MTgw">隔壁西电曾经的清元<i class="fa fa-external-link-alt"></i></span>，比如<span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzM2MjY2NzcwMQ==">武大这个<i class="fa fa-external-link-alt"></i></span>，当然还有<span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzI2NDcwNTQ5OS9hbnN3ZXIvMjg0MzkxOTMz">你电这个<i class="fa fa-external-link-alt"></i></span>我大一的时候连续崩溃一周搞得大家半夜起来的神仙选课系统（这可不是高并发抢课，这是用权重投分选课，而且还是各年级分开错峰权重选课）</p>
+<p>为什么HIS系统这么难用，和这个问题大致是一样的：</p>
+<blockquote>
+<p>为什么学校的选课系统、教务系统这么垃圾</p>
+</blockquote>
+<p>还没用过选课系统的高中生可以看丁香园的这篇吐槽<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>感受一下，医院的HIS系统操作使用起来非常不舒服，被医护人员吐槽是家常便饭的事。不过HIS系统，怎么说呢，全世界就没一个好用的。</p>
+<p>用教务选课系统来形容可能会让你们低估HIS系统的难用程度，选课系统最多也就世界上最好的语言PHP+WebForms，新一点的前端可能是jQuery，都还能招到人来维护；而且都是Web版的选课系统。不少选课系统还有在校学生维护，运维和改祖传代码的能力已经吊打医院信息科了。</p>
+<p>有的医院倒是想换新的电脑，结果发现以前斥巨资采购的老软件最高只支持Windows XP；换新的HIS系统又拿不出那么多钱，将就着用呗。</p>
+<p>采购价格通常很贵，三甲医院买的软件可能基本都几百万甚至上千万吧（有的是吃回扣，有的是花公家的钱不心疼，有的是）</p>
+<p>国内的医院大部分是是断网的，是只能上医院内部局域网那种，他们说</p>
+<h4 id="电子病历">电子病历</h4>
+<h5 id="到底有啥用">到底有啥用</h5>
+<p>大部分情况下可能对医生是个负担，尤其是当医院采购的电子病历软件极其难用的情况下。</p>
+<h5 id="命名实体识别">命名实体识别</h5>
+<p>命名实体识别（Named Entity Recognition），做过的都懂。</p>
+<p>电子病历/医学文献/其他乱七八糟的医学文本，能用来命名实体识别的都被轮过不知道多少次了。实乃广大学子毕业设计水论文居家编论文必备。</p>
+<p>从隐马尔科夫模型到SVM到CNN到LSTM到BERT，基本上</p>
+<h4 id="临床决策">临床决策</h4>
+<p>正在搞，没太多头绪</p>
+<h4 id="循证医学rct和meta分析">循证医学、RCT和Meta分析</h4>
+<p>循证医学这个东西，非医学人士不要去看它那些概念，就当作重新发明统计学就好了。</p>
+<blockquote>
+<p>可能是统计学没学过的老专家想出来的一种 “科学” 研究方法</p>
+</blockquote>
+<p>RCT就是现在初中生物都要学的随机对照试验。</p>
+<h2 id="关于医疗私有化">关于医疗私有化</h2>
+<p>大部分公立医院都有着国企的通病</p>
+<p>宿迁医改</p>
+<p>莆田系</p>
+<p>爱思眼科</p>
+<p>奥派喜欢自由市场，不过长远看我们都死了。等不及了，信誉和口碑的建立至少需要二十年，人能有几个二十年？</p>
+<h2 id="业界和学界脱节">业界和学界脱节</h2>
+<p>大多数行业的本科教育和业界基本都脱节，</p>
+<p>在一些需要大量砸钱投入产品研发的领域，高校甚至很多研究所和企业的差距特别明显。 航天这种不赚钱的基本</p>
+<h2 id="报考和劝退等">报考和劝退等</h2>
+<p>本来不想写这部分的，奈何今年医学相关专业的录取分数线暴涨，看到几个高中毕业的萌新听着不知道谁给的建议盲目乱报。今天听人说医生待遇低啦，哪又医闹砍人啦；明天又听说社会地位高福利待遇好做手术有红包啦；最后一打听学医背书又苦又累大学活的像高中又不想去了，在家长威逼利诱下只得不情愿的报了。</p>
+<p>真就乱报啊。</p>
+<p>来，我们打开<span class="exturl" data-url="aHR0cHM6Ly96cy51ZXN0Yy5lZHUuY24vc2NvcmUv">你电的招生网<i class="fa fa-external-link-alt"></i></span>，拿19年看一下刚高考完的瓜娃子脑子能有多不清醒</p>
+<p>这别不是被你电招生办给忽悠了吧（外加信软一群天生反骨的反贼从不护短一个个黑你电比我还狠，医学院的几乎全在说好话夸学校<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>）</p>
+<p>（别问我为什么就光逮着你电喷，别的学校我也不熟啊）</p>
+<p><img src="/about-medical-industry/1612777596.png" /></p>
+<p>19年，你电的四川本省主场，没有2020年医学分数暴涨的影响，应该比较典型。</p>
+<p>通信 687 676 673</p>
+<p>临床 667 662 659</p>
+<p>信软 665 659 656</p>
+<p>材料 669 664 661</p>
+<p>护理</p>
+<p>这就很离谱，虽然我整天喷你电，虽然沙河确实有点破，但是电子科技大学信息与软件工程的录取线比电子科技大学临床医学录取线还要低这就很魔幻，这我都不敢信。护理分倒是比较冷静，估计是被网上一片劝退吓了回去。</p>
+<p>你要说川大华西临床比川大软件工程录取线高，这听起来还很正常。你电这些孩子用这个分报临床，你说这是图什么呢？</p>
+<p>你电医学院本科开始招生才两年，虽然学校和省医院、肿瘤医院、人民医院等给学生的资源倾斜还不错，但是和一些老牌的医学院比起来认可度和出路还是差不少。</p>
+<p>你电信软的软件工程出路和待遇说一句不比华西临床差应该还是有底气的。虽然你软很多阴间操作和只会念PPT的老师，去996修福报等出路和薪资已经足以抵消一切。</p>
+<p>而且本科三年上课加一年实习直接跑路找工作比隔壁学医的五+三+规培（有的还再读个博）的煎熬稳太多了。</p>
+<p>围观刚高考完的萌新们报志愿总让想起我四年前无知的我看着网上道听途说的消息乱报的样子，看到有些孩子踩坑还是于心不忍。还是说点什么。</p>
+<p><del>注意身边亲戚朋友劝你学医的时候可能只是想有一个免费医生</del></p>
+<h3 id="待遇问题">待遇问题</h3>
+<p>要恰饭的嘛，人可不可能不恰饭，医生挣不了钱要饿死的嘛</p>
+<blockquote>
+<p>医护人员的待遇不能一概而论</p>
+</blockquote>
+<p>注意乡村卫生院、县市医院、某些三甲的巨大差距。</p>
+<p>注意不同地区的医保政策财政盈余和医院工资福利存在巨大的差异。</p>
+<p>注意考虑省会城市、县城、村镇的房价和消费水平。</p>
+<p>貌似看这几年报志愿的大部分还是冲着待遇去的，真心喜欢学医的不是特别多。</p>
+<h3 id="强基计划">强基计划</h3>
+<p>（这一部分写的比较早，下面的今年都指的是2020）</p>
+<p>今年自招和竞赛生降分几乎无了，新上了综合评价和强基计划</p>
+<p>恩，2020年教育部上了一大批羟基计划，基本上除了天坑专业就是基础研究，适合读书改变命运的不多（啊，如果是指反向改变命运，那很多）。 这次的招生政策和降分等对于高中竞赛党是沉重的打击。竞赛党基本上被坑惨了。对真正想投身科研的一部分竞赛党和有情怀的学生，今年 虽然名字叫羟基，但是实际政策沉重打击了真正有天赋和有热情的一部分竞赛党，很多有天赋的人可能只能多卷三年将时间浪费在挤高考的独木桥上，运气不好的偏科同学无缘科研。教育部这几年的挨骂操作我都数不过来了，不过讲这些就又跑题了，不说了。</p>
+<p>生化环材方向的约等于卖身契，这个劝退的太多了，真喜欢或者家里有钱也不建议去，不说了。 数学物理等方向的看个人天赋、情怀和家境吧。</p>
+<p>今年把基础医学也放到强基计划里面了。</p>
+<p>大致看了一下，基础医学这块还是比生物化学天坑好一点。</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzM5MTA3NjU4Ng==">你如何看待强基计划？<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzM5Mjk1MTEzMA==">如何看待 2020 年最新发布的强基计划简章？<i class="fa fa-external-link-alt"></i></span></p>
+<h3 id="某些理工科最近开始建设的医学院">某些理工科最近开始建设的医学院</h3>
+<p>太长不看：</p>
+<blockquote>
+<p>反正你听到新开的院系所谓交叉学科赶紧跑就是了，尤其是本科（贵清叉院除外）</p>
+</blockquote>
+<p>肥科合并安徽省医院，你电跟四川省医院和肿瘤医院搞的医学院。</p>
+<p>华理、天大、哈工大、中科大、西大、西北工业</p>
+<p>这么多大学基本上在这几年（2014至今）突然想搞医学院，当然不是打算医工结合，为人类健康事业做贡献，主要还是冲着发论文去的。</p>
+<p>生物医学论文影响因子又高，灌水又快，只要舍得砸钱，文章稳定产出，这谁不喜欢。你看看新英格兰和柳叶刀的的影响因子，再看看那些纯数顶刊的影响因子。你看看生物医学的灌水速度和砸钱投入与产出，再看看高能所和肥科粒子物理那帮人，几十个亿不当钱一样，发出来PRL才这么点影响因子。隔壁肥科的领导都看哭了，立马决定<del>废理兴工</del>废理兴医</p>
+<h3 id="生物医学工程">生物医学工程</h3>
+<p>这是个大框，啥都能往里装</p>
+<h3 id="护理">护理</h3>
+<p>这个经常被考生和家长嫌弃，尤其是考的还不错的孩子，在他们看来护理卫校是中专、三本、带专生上的。</p>
+<p>怎么说，现在一些热门的医学分数本来就非常高，今年由于疫情等缘故又被炒高了很多，很有可能复现十年前土木最火的时候高分接盘的惨状。而护理由于网上一片哀嚎，一本以上学校的护理分数非常低，经常比同学校的临床低几十分甚至断档。差不多是情况特殊的人为数不多捡捡漏的途径。</p>
+<p>有缘人：</p>
+<ol type="1">
+<li>真心热爱（这种应该不多）</li>
+<li>家里有关系（混几年能混个护士长护理部主任啥的）</li>
+<li>低分进入某校转专业，考公考选调</li>
+<li>出国</li>
+<li>男的</li>
+<li>长得招人喜欢、身高160+</li>
+</ol>
+<p>第1条，护理网上说的再惨，也惨不过生化环材，如果真的热爱（完全不在乎钱和待遇的那种）去也无妨。当然累和夜班是避免不了的，除非你去CRC（看起来竞争很激烈的样子，感觉人均硕士博士，等今年的高中生至少十年后毕业不知道会内卷成什么样子）</p>
+<p>第5、6条应该不需要多解释，男的在护理的抢手程度可能比壮汉在骨科还抢手，160+可能找工作时大于研究生学历（你不信我也没办法，事实就是这个样子）</p>
+<p>第3条，高考考砸了几十分特别不甘心但又不愿意复读可以试试，不过风险比较大</p>
+<p>第2条，嗯，如果本身学校还不错，凭着文凭和家里关系能走上评职称升值的快车道。本来护理平均学历就远比临床低，但凡有点关系又嫌苦嫌累嫌社会地位和牌面不如医生，评职称阻力远小于医生。</p>
+<p>第4条，<del>去非洲</del>去北美或者土澳还行（不要看）</p>
+<p>另外不知道为什么网上所有跟护理相关的话题都在说学护理出路比学医差多了，在川内的几个医院暗中观察看起来似乎收入和前途并不比医生差。</p>
+<p>也可能是我的观察出了偏差，至少暗中观察看到的（四川省）护士待遇并不比医生差，考虑平均学历差距和早工作几年的情况下</p>
+<p><strong>甚至一些科室，尤其是，心内科、重症，护士待遇比医生好，算上学历差距和早工作几年，护士应该比医生好的多，跟我之前的想像和网上的看到的护士哭惨完全不一样</strong></p>
+<p>护理不存在这个问题，一本以下是性价比最高的报考专业之一。护理在211以上的分数段是这个画风，但凡在网上搜一下很少有人被骗进来。</p>
+<p>另一个需要记住的是<strong>工作要趁早</strong>，中专&gt;大专，本科&gt;研究生。</p>
+<p>虽然中专没有编制，但是跟其他职业学院的其他专业比起来性价比依然爆炸。在离家近的小县城和卫生所， 大专大概率一样没有编制还多上三年高中，亏了三年。 研究生多上这么多年，亏惨了。</p>
+<p><strong>不太建议国内全日制读研读博，先工作，然后读在职的</strong>，全日制研究生没啥性价比可言</p>
+<h4 id="番外">番外</h4>
+<p>不得不说你电招生办真的能忽悠，我都差点被这一堆改来改去的名字给骗了。</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 65%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 15%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">专业</th>
+<th style="text-align: center;">最高分</th>
+<th style="text-align: center;">平均分</th>
+<th style="text-align: center;">最低分</th>
+<th>扒皮</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="exturl" data-url="aHR0cHM6Ly96cy51ZXN0Yy5lZHUuY24vemhhb3Mvc2hvd3Byb2R1Y3QucGhwP2lkPTMz">信息管理与信息系统<i class="fa fa-external-link-alt"></i></span></td>
+<td style="text-align: center;">663.00</td>
+<td style="text-align: center;">662.00</td>
+<td style="text-align: center;">661.00</td>
+<td>公，公管学院？</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="exturl" data-url="aHR0cHM6Ly96cy51ZXN0Yy5lZHUuY24vemhhb3Mvc2hvd3Byb2R1Y3QucGhwP2lkPTI0">自动化(智能制造实验班)<i class="fa fa-external-link-alt"></i></span></td>
+<td style="text-align: center;">672.00</td>
+<td style="text-align: center;">671.00</td>
+<td style="text-align: center;">670.00</td>
+<td>就自动化呗</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="exturl" data-url="aHR0cHM6Ly96cy51ZXN0Yy5lZHUuY24vemhhb3Mvc2hvd3Byb2R1Y3QucGhwP2lkPTIy">智能电网信息工程(“互联网＋”复合培养实验班)<i class="fa fa-external-link-alt"></i></span></td>
+<td style="text-align: center;">680.00</td>
+<td style="text-align: center;">676.00</td>
+<td style="text-align: center;">673.00</td>
+<td>能源学院，还行吧（差点以为是机电的）</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="exturl" data-url="aHR0cHM6Ly96cy51ZXN0Yy5lZHUuY24vemhhb3Mvc2hvd3Byb2R1Y3QucGhwP2lkPTI5">新能源材料与器件(“互联网＋”复合培养实验班)<i class="fa fa-external-link-alt"></i></span></td>
+<td style="text-align: center;">679.00</td>
+<td style="text-align: center;">674.40</td>
+<td style="text-align: center;">672.00</td>
+<td>虽然有器件两字，灌水材料，快跑（想搞芯片去沙河集电）</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="exturl" data-url="aHR0cHM6Ly96cy51ZXN0Yy5lZHUuY24vemhhb3Mvc2hvd3Byb2R1Y3QucGhwP2lkPTM2">物联网工程(“互联网＋”复合培养实验班)<i class="fa fa-external-link-alt"></i></span></td>
+<td style="text-align: center;">683.00</td>
+<td style="text-align: center;">680.40</td>
+<td style="text-align: center;">679.00</td>
+<td>物联网几年前火过</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="exturl" data-url="aHR0cHM6Ly96cy51ZXN0Yy5lZHUuY24vemhhb3Mvc2hvd3Byb2R1Y3QucGhwP2lkPTE5">数学与应用数学(“互联网＋”复合培养实验班)<i class="fa fa-external-link-alt"></i></span></td>
+<td style="text-align: center;">678.00</td>
+<td style="text-align: center;">675.60</td>
+<td style="text-align: center;">675.00</td>
+<td>数学学院</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="exturl" data-url="aHR0cHM6Ly96cy51ZXN0Yy5lZHUuY24vemhhb3Mvc2hvd3Byb2R1Y3QucGhwP2lkPTE5">数学类(数据科学与计算、数学及应用、计算科学)<i class="fa fa-external-link-alt"></i></span></td>
+<td style="text-align: center;">671.00</td>
+<td style="text-align: center;">670.40</td>
+<td style="text-align: center;">670.00</td>
+<td>同上</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="exturl" data-url="aHR0cHM6Ly96cy51ZXN0Yy5lZHUuY24vemhhb3Mvc2hvd3Byb2R1Y3QucGhwP2lkPTIw">生物医学工程类<i class="fa fa-external-link-alt"></i></span></td>
+<td style="text-align: center;">665.00</td>
+<td style="text-align: center;">661.20</td>
+<td style="text-align: center;">660.00</td>
+<td>生命学院今年的大类招生(听我的，赶紧跑)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="exturl" data-url="aHR0cHM6Ly96cy51ZXN0Yy5lZHUuY24vemhhb3Mvc2hvd3Byb2R1Y3QucGhwP2lkPTI2">人工智能<i class="fa fa-external-link-alt"></i></span></td>
+<td style="text-align: center;">683.00</td>
+<td style="text-align: center;">676.40</td>
+<td style="text-align: center;">673.00</td>
+<td>计院的</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="exturl" data-url="aHR0cHM6Ly96cy51ZXN0Yy5lZHUuY24vemhhb3Mvc2hvd3Byb2R1Y3QucGhwP2lkPTM1">经济管理试验班(管理与电子工程复合培养)<i class="fa fa-external-link-alt"></i></span></td>
+<td style="text-align: center;">678.00</td>
+<td style="text-align: center;">672.60</td>
+<td style="text-align: center;">671.00</td>
+<td>所以为啥不去西财</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="exturl" data-url="aHR0cHM6Ly96cy51ZXN0Yy5lZHUuY24vemhhb3Mvc2hvd3Byb2R1Y3QucGhwP2lkPTI2">计算机类<i class="fa fa-external-link-alt"></i></span></td>
+<td style="text-align: center;">683.00</td>
+<td style="text-align: center;">677.70</td>
+<td style="text-align: center;">674.00</td>
+<td>计院</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="exturl" data-url="aHR0cHM6Ly96cy51ZXN0Yy5lZHUuY24vemhhb3Mvc2hvd3Byb2R1Y3QucGhwP2lkPTI2">计算机科学与技术(“互联网＋”复合培养实验班)<i class="fa fa-external-link-alt"></i></span></td>
+<td style="text-align: center;">686.00</td>
+<td style="text-align: center;">683.10</td>
+<td style="text-align: center;">681.00</td>
+<td>计院还互联网+复合就离谱</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="exturl" data-url="aHR0cHM6Ly96cy51ZXN0Yy5lZHUuY24vemhhb3Mvc2hvd3Byb2R1Y3QucGhwP2lkPTM1">互联网金融(“互联网＋”复合培养实验班)<i class="fa fa-external-link-alt"></i></span></td>
+<td style="text-align: center;">680.00</td>
+<td style="text-align: center;">676.30</td>
+<td style="text-align: center;">672.00</td>
+<td>听这名字就像诈骗窝子</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="exturl" data-url="aHR0cHM6Ly96cy51ZXN0Yy5lZHUuY24vemhhb3Mvc2hvd3Byb2R1Y3QucGhwP2lkPTI1">航空航天类(航空电子及控制、无人驾驶航空器技术)<i class="fa fa-external-link-alt"></i></span></td>
+<td style="text-align: center;">671.00</td>
+<td style="text-align: center;">670.30</td>
+<td style="text-align: center;">670.00</td>
+<td>航天学院，原来有国防生的，现在无了。航天研究所待遇略惨，快跑.jpg</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="exturl" data-url="aHR0cHM6Ly96cy51ZXN0Yy5lZHUuY24vemhhb3Mvc2hvd3Byb2R1Y3QucGhwP2lkPTI0">工科试验班(智能仪器、智能控制)<i class="fa fa-external-link-alt"></i></span></td>
+<td style="text-align: center;">672.00</td>
+<td style="text-align: center;">669.80</td>
+<td style="text-align: center;">669.00</td>
+<td>就自动化的控制和仪器呗（看到智能之类的字眼直接忽略）</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="exturl" data-url="aHR0cHM6Ly96cy51ZXN0Yy5lZHUuY24vemhhb3Mvc2hvd3Byb2R1Y3QucGhwP2lkPTI5">工科试验班(新材料、新能源与电子化学)<i class="fa fa-external-link-alt"></i></span></td>
+<td style="text-align: center;">669.00</td>
+<td style="text-align: center;">664.00</td>
+<td style="text-align: center;">661.00</td>
+<td>天坑材料，钙钛矿，快跑.jpg</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="exturl" data-url="aHR0cHM6Ly96cy51ZXN0Yy5lZHUuY24vemhhb3Mvc2hvd3Byb2R1Y3QucGhwP2lkPTIy">工科试验班(机器人、电气信息、智能制造)<i class="fa fa-external-link-alt"></i></span></td>
+<td style="text-align: center;">677.00</td>
+<td style="text-align: center;">671.10</td>
+<td style="text-align: center;">670.00</td>
+<td>机电，不如西南交大机械（快跑.jpg）</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="exturl" data-url="aHR0cHM6Ly96cy51ZXN0Yy5lZHUuY24vemhhb3Mvc2hvd3Byb2R1Y3QucGhwP2lkPTI3">工科试验班(电子信息与地球科学复合培养)<i class="fa fa-external-link-alt"></i></span></td>
+<td style="text-align: center;">670.00</td>
+<td style="text-align: center;">665.50</td>
+<td style="text-align: center;">663.00</td>
+<td>资环，有些搞GIS和遥感的，不如隔壁西南交大测绘，快跑.jpg</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="exturl" data-url="aHR0cHM6Ly96cy51ZXN0Yy5lZHUuY24vemhhb3Mvc2hvd3Byb2R1Y3QucGhwP2lkPTM0">工科试验班(电子工程类)<i class="fa fa-external-link-alt"></i></span></td>
+<td style="text-align: center;">684.00</td>
+<td style="text-align: center;">674.80</td>
+<td style="text-align: center;">671.00</td>
+<td>老电工</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="exturl" data-url="aHR0cHM6Ly96cy51ZXN0Yy5lZHUuY24vemhhb3Mvc2hvd3Byb2R1Y3QucGhwP2lkPTI4">电子信息类(智能感知、光通信与显示、智慧照明)<i class="fa fa-external-link-alt"></i></span></td>
+<td style="text-align: center;">672.00</td>
+<td style="text-align: center;">670.30</td>
+<td style="text-align: center;">669.00</td>
+<td>圣光电（加老通信光纤）</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="exturl" data-url="aHR0cHM6Ly96cy51ZXN0Yy5lZHUuY24vemhhb3Mvc2hvd3Byb2R1Y3QucGhwP2lkPTM2">电子信息类(信息与通信)<i class="fa fa-external-link-alt"></i></span></td>
+<td style="text-align: center;">687.00</td>
+<td style="text-align: center;">676.00</td>
+<td style="text-align: center;">673.00</td>
+<td>老通信（现信通）</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="exturl" data-url="aHR0cHM6Ly96cy51ZXN0Yy5lZHUuY24vemhhb3Mvc2hvd3Byb2R1Y3QucGhwP2lkPTMw">电子信息类(电子信息与物理科学复合培养)<i class="fa fa-external-link-alt"></i></span></td>
+<td style="text-align: center;">680.00</td>
+<td style="text-align: center;">671.80</td>
+<td style="text-align: center;">670.00</td>
+<td>老物电（现物理）</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="exturl" data-url="aHR0cHM6Ly96cy51ZXN0Yy5lZHUuY24vemhhb3Mvc2hvd3Byb2R1Y3QucGhwP2lkPTM3">电子信息类(“成电英才计划”拔尖创新人才实验班)<i class="fa fa-external-link-alt"></i></span></td>
+<td style="text-align: center;">693.00</td>
+<td style="text-align: center;">687.70</td>
+<td style="text-align: center;">686.00</td>
+<td>英才（提前批）</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="exturl" data-url="aHR0cHM6Ly96cy51ZXN0Yy5lZHUuY24vemhhb3Mvc2hvd3Byb2R1Y3QucGhwP2lkPTIz">软件工程(国家示范性软件学院)<i class="fa fa-external-link-alt"></i></span></td>
+<td style="text-align: center;">665.00</td>
+<td style="text-align: center;">659.20</td>
+<td style="text-align: center;">656.00</td>
+<td>孤儿沙河(毕业薪资掉打除计院外所有)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="exturl" data-url="aHR0cHM6Ly96cy51ZXN0Yy5lZHUuY24vemhhb3Mvc2hvd3Byb2R1Y3QucGhwP2lkPTIz">软件工程(“互联网＋”培养实验班)<i class="fa fa-external-link-alt"></i></span></td>
+<td style="text-align: center;">670.00</td>
+<td style="text-align: center;">667.00</td>
+<td style="text-align: center;">66</td>
+<td>孤儿沙河</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="exturl" data-url="aHR0cHM6Ly96cy51ZXN0Yy5lZHUuY24vemhhb3Mvc2hvd3Byb2R1Y3QucGhwP2lkPTE4">临床医学<i class="fa fa-external-link-alt"></i></span></td>
+<td style="text-align: center;">667.00</td>
+<td style="text-align: center;">662.50</td>
+<td style="text-align: center;">659.00</td>
+<td>沙河（实际在清水河上课）</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="exturl" data-url="aHR0cHM6Ly96cy51ZXN0Yy5lZHUuY24vemhhb3Mvc2hvd3Byb2R1Y3QucGhwP2lkPTIz">集成电路设计与集成系统(国家示范性微电子学院)<i class="fa fa-external-link-alt"></i></span></td>
+<td style="text-align: center;">670.00</td>
+<td style="text-align: center;">663.70</td>
+<td style="text-align: center;">662.00</td>
+<td>沙河（已经搬清水河去了）大微固亡了.jpg，想搞芯片报这个</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="exturl" data-url="aHR0cHM6Ly96cy51ZXN0Yy5lZHUuY24vemhhb3Mvc2hvd3Byb2R1Y3QucGhwP2lkPTE4">护理学<i class="fa fa-external-link-alt"></i></span></td>
+<td style="text-align: center;">636.00</td>
+<td style="text-align: center;">623.60</td>
+<td style="text-align: center;">618.00</td>
+<td>沙河（实际在清水河）</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="exturl" data-url="aHR0cHM6Ly96cy51ZXN0Yy5lZHUuY24vemhhb3Mvc2hvd3Byb2R1Y3QucGhwP2lkPTIx">电子信息类(中外合作办学)(通信、微电子)<i class="fa fa-external-link-alt"></i></span></td>
+<td style="text-align: center;">662.00</td>
+<td style="text-align: center;">647.80</td>
+<td style="text-align: center;">643.00</td>
+<td>沙河（一直都在清水河) 土豪格院</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="exturl" data-url="aHR0cHM6Ly96cy51ZXN0Yy5lZHUuY24vemhhb3Mvc2hvd3Byb2R1Y3QucGhwP2lkPTIx">电子信息类(中外合作办学)(电子信息)<i class="fa fa-external-link-alt"></i></span></td>
+<td style="text-align: center;">665.00</td>
+<td style="text-align: center;">651.30</td>
+<td style="text-align: center;">646.00</td>
+<td>沙河（一直都在清水河）土豪格院</td>
+</tr>
+</tbody>
+</table>
+<p>所谓的"互联网+"是和“大众创新，万众创业”、OFO小黄车、区块链一个时期的骗钱概念（大概就15、16、17年吧），直接无视就好了。</p>
+<h2 id="qa">Q&amp;A</h2>
+<p>Q：你们这帮人整天劝退某些行业没人了怎么办？</p>
+<p>A：没人了那不是更好吗。</p>
+<p>Q：这次疫情后医护人员待遇会改善吗？</p>
+<p>A：这次疫情后，医保缺口更大了，那待遇当然会更差了。</p>
+<p>地方财政没钱了，不委屈你们一下怎么行，总不能饿着王公贵胄吧</p>
+<p>Q: 我想报考/入坑医学信息、医疗器械，能不能推荐........</p>
+<p>A：我推荐你快跑</p>
+<p>Q：国外, 怎么样？</p>
+<p>A：国外不了解。去问别人吧。</p>
+<p>Q：听说这些行业很有前途.....</p>
+<p>A：前途是用韭菜和炮灰铺的路</p>
+<!-- 
+科研穷三代，读博毁一生
+
+https://kknews.cc/zh-my/education/x4ngnqo.html
+
+如何看待中国科学技术大学合并安徽省立医院一事？ - 贱贱的回答 - 知乎
+https://www.zhihu.com/question/67131138/answer/249650160 -->
+<h2 id="阅读更多">阅读更多</h2>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzI5NjkxNTM1L2Fuc3dlcnMvdXBkYXRlZA==">如何看待本科护理专业?<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzI4Mjk2MzY3NC9hbnN3ZXJzL3VwZGF0ZWQ=">去 985 学护理，这真的好吗？<i class="fa fa-external-link-alt"></i></span></p>
+<!-- 
+
+
+
+
+
+
+
+
+
+预防口腔麻醉检验公卫影像
+
+从统计学角度，meta 分析的实际意义在哪里，几年前 meta 热于循证医学，这个报道反映了哪些弊端？ - 大名顶顶的回答 - 知乎 https://www.zhihu.com/question/264789460/answer/286666881
+
+13线医生抠着脚表示医学论文什么统计方法都不重要，因为论文本身就没有任何实际作用，除了卖自己的药/操作，以及打压对手。
+
+我根本不关心学术，自己署名的论文不多，但一直没有忘记其实真正的任务是站街卖银，啊不对，当枪手。凭空代写，中翻英丢SCI，从SCI抄下来改一改英翻中投国内，挣点外快玩玩。全是假数据。客户主要两类，药代和不上不下的老医生。药代就是卖药卖器械，医生就是晋升和装X。
+
+
+
+中医能发展成为循证医学吗？ - 「已注销」的回答 - 知乎 https://www.zhihu.com/question/265223414/answer/291460603
+
+以你们中医学生"统计就是求个平均值"的知识水平来说当然做不了随机对照实验。
+[https://clinicaltrials.gov/ct2/show/NCT03313778](https://link.zhihu.com/?target=https%3A//clinicaltrials.gov/ct2/show/NCT03313778)
+这才是真正的个体化治疗，把每个人自己的癌细胞拿出来测序，做出一个只适用于这个人的药打回去调动免疫系统防癌症扩散，每个人用的都是一个新的分子新的序列，比你们拿一堆草草矿矿线性组合不知道个体化到哪里去了。人家做得，你们做不得？
+根本不存在不能做，无非不想做，不敢做，不会做。非蠢即坏而已，不要找借口。 -->
+<section class="footnotes" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p><span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/c3JjPTExJmFtcDt0aW1lc3RhbXA9MTYxMjk0OTc5MiZhbXA7dmVyPTI4ODImYW1wO3NpZ25hdHVyZT15QlU2d1dNaGczdGFTSFNVUVJJaThzNEVhSW54RkxoTk9sTU02a1pXMUxoQXYwN1JvcGNKajRFZVBmSnNTYXB0YipQMjJNTGNDLSpkWVRrSkpnbXE4STFQMyptQmZiTkltMlNpUHlFRy04QVVlQmJkdGFWa0Y3STI0UThXbXhBdQ==">花了上千万买的病历系统，为什么永远这么难用？<i class="fa fa-external-link-alt"></i></span><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzUzOTM0OTUy">电子科技大学医学院具体情况是什么？<i class="fa fa-external-link-alt"></i></span><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+]]></content>
+      <categories>
+        <category>荒废的老本行</category>
+      </categories>
+      <tags>
+        <tag>医疗</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>给Archlinux添加blackarch仓库镜像源</title>
     <url>/add-blackarch-repo-mirrors/</url>
     <content><![CDATA[<p>我可没干坏事啊</p>
@@ -4111,6 +4501,151 @@ xdg-user-dirs-gtk-update<span aria-hidden="true" class="line-numbers-rows"><span
       </tags>
   </entry>
   <entry>
+    <title>HTTPS二三事</title>
+    <url>/https-in-some-specific-scene/</url>
+    <content><![CDATA[<p>未完待续 <a id="more"></a></p>
+<p>诸如<code>git clone</code> 、 <code>apt/yum/pacman</code>下载公开文件，到底有没有必要用HTTPS(或者SSH之类的其他加密方式)？一些不传输帐号密码之类的隐私的不怎么改变网页内容的静态网站有必要吗？</p>
+<p>以前我也觉得没有必要，结果就被险恶的世道教做人了。 差不多可以盖棺定论了，如果处于运营商和防火墙的慈祥关爱中，有必要，那可太有必要了。</p>
+<p>咋说，本来HTTPS是拿来给你们防范FBI、CIA、黑皮、灰产人士、高雅人士针对某个、某些特定目标搞中间人攻击偷你密码、篡改你获取的数据啥的。这种用途下载公开的包、镜像、一些仓库里的代码倒是没必要上HTTPS，普通人下个安装包也没啥东西值得攻击的，而且连到服务器下一个体积不太小的压缩包/二进制文件也不太好掺砂子，而且下完了之后还有GPG校验，传输的时候多套一个HTTPS大部分时候。而且HTTPS两边都有带宽、加解密之类的成本损耗，下载大文件是不太划算的。</p>
+<p>可能他们也妹想到某些运营商和防火墙能这么流氓，直接公然大范围污染。</p>
+<h2 id="目前使用https的一些小牺牲">目前使用HTTPS的一些小牺牲</h2>
+<h3 id="成本">成本</h3>
+<p>一般来说：</p>
+<p>需要证书，证书要给签发机构交钱<br />
+延迟相比HTTP略高，不过TLS1.3之后 加密解密吃资源</p>
+<p>上面那些在今天看来问题都不是特别大，现在有很多 Let's Encrypt 之类的免费的（收费的CA证书也比十年前便宜太多了），现在的CPU性能对于看网页肯定是过剩的，延迟在TLS1.3以后也不是太大问题</p>
+<h3 id="有些工具没有https支持">有些工具没有HTTPS支持</h3>
+<p>比如OpenWRT那个官方固件一开始就没有HTTPS支持，你得自己装一个。</p>
+<h3 id="很多老网站对https的支持也不太好">很多老网站对HTTPS的支持也不太好</h3>
+<p>用了 HTTPS Everywhere 插件之后经常会发现很多网站体验极差，强制HTTPS之后各种资源加载不出来（关键是很多时候你还意识不到）</p>
+<p><img src="/https-in-some-specific-scene/1606701614.png" /> 比如你电的图书馆，如果用的是HTTPS， 那你的图书位置看不到了（我来这找书最重要的就是这个东西，结果你不告诉我几楼）</p>
+<p><img src="/https-in-some-specific-scene/1606702010.png" /></p>
+<p>这个问题自从17年就有了，一直到现在，都还没修，全站HTTPs遥遥无期。 当然这个问题是因为HTTPS和HTTP的混合 会被新版chrome浏览器悄无声息地拦截，在console里才能看到一个</p>
+<pre class="line-numbers language-log" data-language="log"><code class="language-log">Mixed Content: The page at &#39;&lt;URL&gt;&#39; was loaded over HTTPS, but requested an insecure script &#39;&lt;URL&gt;&#39;. This request has been blocked; the content must be served over HTTPS.<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>你用尊贵的 <em>Internet Explorer</em> 或者老版本chrome是没有这种问题的，但是会加载漫长的几秒钟（在图书馆那个渣配的机子上甚至可能等待10秒），然后弹出来一个大大的警告框，问你<code>是否只查看安全传送的内容</code>，如果你点了<code>是</code>，恭喜你，那你看不到图书的位置了。（我这几年已经无数次看到有倒霉孩子点了是然后找不到书在什么地方了）</p>
+<p>当然很多大网站也在换到HTTPS上也各种问题，知乎上个月准备全站HTTPS的时候出了好几天幺蛾子，<code>400 Bad Request The plain HTTP request was sent to HTTPS port</code>。(不过知乎这个只在乎APP，web版改版之后bug越来越多已经常态化了) <img src="/https-in-some-specific-scene/1606731950.png" /></p>
+<h3 id="登陆认证页面没法劫持https">登陆认证页面没法劫持HTTPS</h3>
+<p>某些登陆认证的界面的原理和劫持差不多，用的<span class="exturl" data-url="aHR0cHM6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvQ2FwdGl2ZV9wb3J0YWw=">强制门户<i class="fa fa-external-link-alt"></i></span>（Captive Portal） 强制门户在自己的DNS服务器中将用户的HTTP请求302重定向到登陆页面 HTTPS没法劫持（尤其是用了HSTS的情况下），结果就卡在那里弹不出登陆认证的界面了。（其实我建议你出门在外使用流量，不要用商场的WIFI，不要贪便宜用手机验证码登陆或者微信登陆）</p>
+<p>有个网站叫<span class="exturl" data-url="aHR0cDovL25ldmVyc3NsLmNvbS8=">neverssl<i class="fa fa-external-link-alt"></i></span>，当你弹不出WIFI登录界面的时候可以访问一下。（其实你随便输入一个什么）</p>
+<p>一般浏览器会有相应的机制，比如火狐的 detect portal， 会向 <span class="exturl" data-url="aHR0cDovL2RldGVjdHBvcnRhbC5maXJlZm94LmNvbQ==">http://detectportal.firefox.com<i class="fa fa-external-link-alt"></i></span> 周期性的发包。</p>
+<p>有的时候登陆认证门户不认200状态码,得用204，然后302跳转到登陆界面。 （提供204状态码的网站很多了，比如<span class="exturl" data-url="aHR0cHM6Ly93d3cudjJleC5jb20vdC8zMDM4ODk/cD0x">v站的这个<i class="fa fa-external-link-alt"></i></span>，基本都是给安卓用的，原生安卓会试图访问谷歌提供的204状态码的服务器来判断是否联网成功，）</p>
+<h3 id="ca证书">CA证书</h3>
+<p>CA证书颁发商公然耍流氓你有什么办法 https://www.zhihu.com/question/50298017 https://www.zhihu.com/question/22795329</p>
+<p>CNNIC</p>
+<p>HSTS MITM SSLStrip HTTP+Strict+Transport+Security HTTPSStrip https://blog.cuiyongjian.com/safe/https-attack/ https://www.zhihu.com/question/22779469</p>
+<h2 id="apt下载更新是否使用https的争议">apt下载更新是否使用HTTPS的争议</h2>
+<figure>
+<img src="/https-in-some-specific-scene/image-20201127170614232.png" alt="image-20201127170614232" /><figcaption aria-hidden="true">image-20201127170614232</figcaption>
+</figure>
+<p>之前有一个叫的网站上的一篇文章叫，引起了不少的讨论。大概的观点是HTTPS在下载这种公共资源的时候没有必要啊。</p>
+<p><strong>而现在，这个网站已经变成体育博彩网站了，造化弄人啊。</strong></p>
+<p>理由主要有：</p>
+<ol type="1">
+<li><p>因为你有GPG校验，HTTPS显得没有什么太大必要。你下下来用GPG校验一下就行了，就算你用HTTPS下载，也只能保证传输过程中没有被篡改，。</p></li>
+<li><p>匿名和隐私的问题：你连上镜像站，那明显是在下镜像源的包。即使你用了HTTPS，还是能通过你下载的包的大小知道你下了些啥（就算你用<code>apt-transport-tor</code>也有这个问题）。</p></li>
+<li><p>还有一个重放攻击（Replay Attacks）的问题，可能有人将包替换为没有安全更新的老版本（签名校验能通过）。</p>
+<p>由于apt有自己的时间戳，晚于这个时间的都被认为非法，时间戳在一段时间内自动失效</p></li>
+</ol>
+<h3 id="现在再看">现在再看</h3>
+<p>当时我还是觉得这个写的有点道理，不到一年就被 cqu mirrors 的事情啪啪打脸。</p>
+<p>当然这个作者显然没考虑CQU Mirrors事件之类的情况。</p>
+<h2 id="重庆大学镜像源被搞">重庆大学镜像源被搞</h2>
+<p>这个事件一出基本可以终结大部分争议了（至少国内是这样的）</p>
+<p>几周前他们那边学校网管的防火墙拦截了80端口的部分HTTP请求，比如一些翻墙工具的包。如果你HTTP明文访问80端口，你会被直接RST。后来在与网管的交涉下恢复了。</p>
+<h2 id="github用ssh还是https">github用SSH还是HTTPS</h2>
+<p>按说SSH这种TCP+SSL的协议会比HTTPS这种跑在应用层的快不少。然而在天朝SSH挺容易被运营商Qos的， HTTPS可以薅cloudflare之类的CDN的羊毛搭github反代。给HTTPS挂socks5/HTTP代理也方便。</p>
+<h2 id="dns-over-https">DNS over HTTPS</h2>
+<p>众所周知传统的DNS是裸UDP的，后来由于 有了使用TCP的DNS，后来出于隐私的考虑又有了DoH（DNS over HTTPS）和DoT（DNS over TLS） 那为什么不用DoT呢？DoT那个853端口太显眼了，分分钟被运营商搞。 DoH最大的问题是慢，如果直接使用远程的DoH，查询发过去和发回来都走HTTPS。在国内用cloudflare的DoH体验极差，如果想用最好自己搭一个。 另一个问题是不支持ECS</p>
+<p>其实DoH在国内也不太推荐，主要是对速度影响太大了。有的方案是走分流，国内IP用国内的DNS，国外的走DoH或者在v2ray之类的跳板上用远程DNS 而且保护隐私方面也不太能</p>
+<p>另，前几天360推出了收费浏览器，居然还有什么国密DoH，号称保护隐私。周红衣说是那就是吧。</p>
+<h2 id="苹果的ocsp">苹果的OCSP</h2>
+<h2 id="闲谈">闲谈</h2>
+<p>HTTPS这种保护隐私的东西按说很多大公司推进起来都很不积极的。但是靠着隐私和广告挣钱的谷歌和百度推起HTTPs来相当的积极，还一口一个在意用户隐私。 谷歌当年大力推广HTTPS的时候还立着<em>不作恶</em>的牌坊，2010年的你说它在乎用户隐私，姑且信了。 谷歌为了推HTTPS，直接抬高HTTPS网站相对于HTTP网站的SEO搜索权重。</p>
+<p>百度也是国内最早一批全站HTTPS的，，当然能说出来“你要隐私干什么”百度显然不会这么好心，嗯，<strong>运营商猛于虎也</strong></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzI4Mzc5MDg4">如何看待百度全站搜索进入 HTTPS 时代？<i class="fa fa-external-link-alt"></i></span></p>
+<figure>
+<img src="/https-in-some-specific-scene/image-20201127202536977.png" alt="image-20201127202536977" /><figcaption aria-hidden="true">image-20201127202536977</figcaption>
+</figure>
+<p>百度运维团队当时发布的系列文章还不错，然而</p>
+<p><img src="/https-in-some-specific-scene/1606707060.png" /></p>
+<p>你用百度搜他们的文章，第一条第二条是CSDN和简书的抄袭转载，第三条是他们的，然而500挂掉了。这是怎么回事呢，对于这么好的文章没有被百家号抄袭，小编也很感到惊讶呢。</p>
+<h2 id="参考和链接">参考和链接</h2>
+<p>https://breakthrough.blog/broadcast/31929</p>
+<p>https://v2ex.com/t/725979</p>
+<p>https://www.solidot.org/story?sid=66084</p>
+<p>很早就有了https://www.v2ex.com/t/622672?p=1</p>
+<p>https://sneak.berlin/i18n/2020-11-12-your-computer-isnt-yours.zh/</p>
+<p>https://blog.jacopo.io/en/post/apple-ocsp/</p>
+<p>https://twitter.com/quakewang/status/1327880394801176576</p>
+<p>https://www.reddit.com/r/linux/comments/aidxwa/why_does_apt_not_use_https/ https://blog.cuiyongjian.com/engineering/git-https-ssh/<br />
+https://stackoverflow.com/questions/11041729/why-does-github-recommend-https-over-ssh<br />
+https://news.ycombinator.com/item?id=18958679&amp;p=2 https://askubuntu.com/questions/146108/how-to-use-https-with-apt-get https://unix.stackexchange.com/questions/90227/why-there-is-no-https-transport-for-debian-apt-tool</p>
+<p>https://web.archive.org/web/20180125154639/https://whydoesaptnotusehttps.com/ why does apt not use https的存档</p>
+<p>https://wiki.debian.org/SecureApt</p>
+<p><span class="exturl" data-url="aHR0cDovL3d3dy5tb3NlcndhcmUuY29tLzIwMDkvMDYvZmlyc3QtZmV3LW1pbGxpc2Vjb25kcy1vZi1odHRwcy5odG1s">The First Few Milliseconds of an HTTPS Connection<i class="fa fa-external-link-alt"></i></span></p>
+<p>https://github.com/xirong/my-web/blob/master/readme.md</p>
+<p>https://cloud.tencent.com/developer/article/1399863 APT 为什么不使用 HTTPS 协议？</p>
+<h2 id="附">附</h2>
+<h3 id="cqu-mirrors事件官方的完整说明">CQU Mirrors事件官方的完整说明</h3>
+<p>这里放一下CQU电报新闻的官方声明，地址：https://t.me/cqumirror</p>
+<blockquote>
+<p>2020.11.7</p>
+<p>#warnings 因学校防火墙过滤规则禁止明文访问部分文件，请使用 https 方式访问镜像站</p>
+<p>请暂时更换到其他镜像站。校信息中心进行防火墙维护及站群升级，目前镜像站处于完全不可用状态。恳请谅解。</p>
+<p>2020.11.8</p>
+<p>请务必使用https协议！目前使用http协议获取部分文件将被网络中心防火墙拦截并封禁 IP 约5分钟（初次访问）！目前无任何解决方法，我们仍在积极与校方沟通看是否能够放行。</p>
+<p>2020.11.9</p>
+<p>由于网络中心系统升级和维护，外部流量对于内部服务的访问将被拦截。目前未能知晓何时恢复。如急需使用镜像服务请更换至其他镜像服务器。对所造成的不便恳请谅解。</p>
+<p>2020.11.11</p>
+<p>已确认 IDC 正常开放外网流量访问。镜像服务恢复正常。但仍请不要明文访问数据库文件。目测防火墙策略已经调整但并未有明确证据表明限制放宽。请使用 HTTPS 协议访问镜像。</p>
+<p>2020.11.18</p>
+<p>经沟通目前 IDC 不再拦截明文入站请求。http 协议访问恢复</p>
+</blockquote>
+<p>而且cqu国庆的时候也习惯性闭关锁校，<del>跟你电完全一致</del>（不是，全国高校的网管怎么都一个样啊）</p>
+<blockquote>
+<p>由于不可抗力，国庆期间重庆大学多个对外服务将无法从外部访问。镜像站服务亦受到牵连。恢复对外服务时间未知。对于所造成的不便我们深感遗憾。</p>
+</blockquote>
+<h3 id="为什么apt不使用https的原文">为什么apt不使用HTTPS的原文</h3>
+<p>这个网站已经变成在线发排的体育博彩网站了。这里附上原文</p>
+<blockquote>
+<h1 id="why-does-apt-not-use-https">Why does APT not use HTTPS?</h1>
+<p><em>"Isn't it more secure…?"</em></p>
+<h2 id="tldr">tl;dr</h2>
+<p>HTTPS is used to prevent intruders from being able to listen to communications between you and websites you visit, as well as to avoid data being modified without your knowledge.</p>
+<p>However, files obtained by APT are accompanied by their own signature which allows your system to check they originated from your distribution.</p>
+<p>These signatures are checked against a small set of trusted keys already stored on your computer. Downloaded files are rejected by APT if they are signed by an unknown key<span class="exturl" data-url="aHR0cHM6Ly93ZWIuYXJjaGl2ZS5vcmcvd2ViLzIwMTgwMTI1MTU0NjM5L2h0dHBzOi8vd2h5ZG9lc2FwdG5vdHVzZWh0dHBzLmNvbS8jZm9vdG5vdGUtYXB0LXVua293bi1rZXk=">1<i class="fa fa-external-link-alt"></i></span> or are missing valid signatures. This ensures that the packages you are installing were authorised by your distribution and have not been modified or replaced since.</p>
+<p>HTTPS can not detect if malicious tampering has occurred on the disks of the server you are downloading from. There is little point "securely" transfering a compromised package.</p>
+<h2 id="but-what-about-privacy">But what about privacy?</h2>
+<p>HTTPS does not provide meaningful privacy for obtaining packages. As an eavesdropper can usually see which hosts you are contacting, if you connect to your distribution's mirror network it would be fairly obvious that you are downloading updates.</p>
+<p>Furthermore, even over an encrypted connection it is not difficult to figure out which files you are downloading based on the size of the transfer<span class="exturl" data-url="aHR0cHM6Ly93ZWIuYXJjaGl2ZS5vcmcvd2ViLzIwMTgwMTI1MTU0NjM5L2h0dHBzOi8vd2h5ZG9lc2FwdG5vdHVzZWh0dHBzLmNvbS8jZm9vdG5vdGUtdG9y">2<i class="fa fa-external-link-alt"></i></span>. HTTPS would therefore only be useful for downloading from a server that also offers other packages of similar or identical size.</p>
+<p>What's more important is <em>not</em> that your connection is encrypted but that the files you are installing haven't been modified.</p>
+<h2 id="overly-trusting-cas">Overly trusting CAs</h2>
+<p>There are over 400 "Certificate Authorities" who may issue certificates for any domain. Many have poor security records and some are even explicitly controlled by governments<span class="exturl" data-url="aHR0cHM6Ly93ZWIuYXJjaGl2ZS5vcmcvd2ViLzIwMTgwMTI1MTU0NjM5L2h0dHBzOi8vd2h5ZG9lc2FwdG5vdHVzZWh0dHBzLmNvbS8jZm9vdG5vdGUtY2E=">3<i class="fa fa-external-link-alt"></i></span>.</p>
+<p>This means that HTTPS provides little-to-no protection against a targeted attack on your distribution's mirror network. You could limit the set of valid certificates that APT would accept, but that would be be error-prone and unlikely worth the additional hassle over the existing public-key scheme.</p>
+<h2 id="why-not-provide-https-anyway">Why not provide HTTPS anyway?</h2>
+<p>Your distribution could cryptographically sign the files using the existing scheme and additionally serve the files over HTTPS to provide "defense in depth."</p>
+<p>However, providing a huge worldwide mirror network available over SSL is not only a complicated engineering task (requiring the secure exchange and storage of private keys), it implies a misleading level of security and privacy to end-users as described above.</p>
+<p>A switch to HTTPS would also mean you could not take advantage of local proxy servers for speeding up access and would additionally prohibit many kinds of peer-to-peer mirroring where files are stored on servers not controlled directly by your distribution. This would disproportionately affect users in remote locales.</p>
+<h2 id="ah-what-about-replay-attacks">Ah, what about replay attacks?</h2>
+<p>One issue with a naïve signing mechanism is that it does not guarantee that you are seeing the most up-to-date version of the archive.</p>
+<p>This can lead to a <em>replay attack</em> where an attacker substitutes an archive with an earlier—unmodified—version of the archive. This would prevent APT from noticing new security updates which they could then exploit.</p>
+<p>To mitigate this problem, APT archives includes a timestamp after which all the files are considered stale<span class="exturl" data-url="aHR0cHM6Ly93ZWIuYXJjaGl2ZS5vcmcvd2ViLzIwMTgwMTI1MTU0NjM5L2h0dHBzOi8vd2h5ZG9lc2FwdG5vdHVzZWh0dHBzLmNvbS8jZm9vdG5vdGUtdmFsaWQtdW50aWw=">4<i class="fa fa-external-link-alt"></i></span>.</p>
+<h2 id="where-can-i-find-out-more">Where can I find out more?</h2>
+<p>More technical details may be found on the <em><span class="exturl" data-url="aHR0cHM6Ly93ZWIuYXJjaGl2ZS5vcmcvd2ViLzIwMTgwMTI1MTU0NjM5L2h0dHBzOi8vd2lraS5kZWJpYW4ub3JnL1NlY3VyZUFwdA==">SecureAPT<i class="fa fa-external-link-alt"></i></span></em> wiki page.</p>
+<h3 id="footnotes">Footnotes</h3>
+<ol type="1">
+<li>This appears as <code>Release: The following signatures couldn't be verified because the public key is not available</code>.</li>
+<li>This may even be the case if using Tor via (for example) <span class="exturl" data-url="aHR0cHM6Ly93ZWIuYXJjaGl2ZS5vcmcvd2ViLzIwMTgwMTI1MTU0NjM5L2h0dHBzOi8vcmV0b3V0LmNvLnVrL2Jsb2cvMjAxNC8wNy8yMS9hcHQtdHJhbnNwb3J0LXRvcg==">apt-transport-tor<i class="fa fa-external-link-alt"></i></span>.</li>
+<li>See, for example, <em><span class="exturl" data-url="aHR0cHM6Ly93ZWIuYXJjaGl2ZS5vcmcvd2ViLzIwMTgwMTI1MTU0NjM5L2h0dHBzOi8vc2VjdXJpdHkuc3RhY2tleGNoYW5nZS5jb20vcXVlc3Rpb25zLzUzMTE3L3doYXQtdHJ1c3RlZC1yb290LWNlcnRpZmljYXRpb24tYXV0aG9yaXRpZXMtc2hvdWxkLWktdHJ1c3Q=">What trusted root certification authorities should I trust?<i class="fa fa-external-link-alt"></i></span></em> on StackOverflow.</li>
+<li>See the <em><span class="exturl" data-url="aHR0cHM6Ly93ZWIuYXJjaGl2ZS5vcmcvd2ViLzIwMTgwMTI1MTU0NjM5L2h0dHBzOi8vd2lraS5kZWJpYW4ub3JnL0RlYmlhblJlcG9zaXRvcnkvRm9ybWF0I0RhdGUuMkNfVmFsaWQtVW50aWw=">Date, Valid-Until<i class="fa fa-external-link-alt"></i></span></em> section of the <code>DebianRepository</code> page on the Debian Wiki.</li>
+</ol>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>HTTPS</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hexo博客部署和Next主题设置</title>
     <url>/bd8f/</url>
     <content><![CDATA[<p>这里仅记录个人问题，找教程为什么不看看官方文档呢 <a id="more"></a></p>
@@ -4333,151 +4868,6 @@ INFO  140 files generated in 3.07 s<span aria-hidden="true" class="line-numbers-
       <tags>
         <tag>hexo</tag>
         <tag>Next</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>HTTPS二三事</title>
-    <url>/https-in-some-specific-scene/</url>
-    <content><![CDATA[<p>未完待续 <a id="more"></a></p>
-<p>诸如<code>git clone</code> 、 <code>apt/yum/pacman</code>下载公开文件，到底有没有必要用HTTPS(或者SSH之类的其他加密方式)？一些不传输帐号密码之类的隐私的不怎么改变网页内容的静态网站有必要吗？</p>
-<p>以前我也觉得没有必要，结果就被险恶的世道教做人了。 差不多可以盖棺定论了，如果处于运营商和防火墙的慈祥关爱中，有必要，那可太有必要了。</p>
-<p>咋说，本来HTTPS是拿来给你们防范FBI、CIA、黑皮、灰产人士、高雅人士针对某个、某些特定目标搞中间人攻击偷你密码、篡改你获取的数据啥的。这种用途下载公开的包、镜像、一些仓库里的代码倒是没必要上HTTPS，普通人下个安装包也没啥东西值得攻击的，而且连到服务器下一个体积不太小的压缩包/二进制文件也不太好掺砂子，而且下完了之后还有GPG校验，传输的时候多套一个HTTPS大部分时候。而且HTTPS两边都有带宽、加解密之类的成本损耗，下载大文件是不太划算的。</p>
-<p>可能他们也妹想到某些运营商和防火墙能这么流氓，直接公然大范围污染。</p>
-<h2 id="目前使用https的一些小牺牲">目前使用HTTPS的一些小牺牲</h2>
-<h3 id="成本">成本</h3>
-<p>一般来说：</p>
-<p>需要证书，证书要给签发机构交钱<br />
-延迟相比HTTP略高，不过TLS1.3之后 加密解密吃资源</p>
-<p>上面那些在今天看来问题都不是特别大，现在有很多 Let's Encrypt 之类的免费的（收费的CA证书也比十年前便宜太多了），现在的CPU性能对于看网页肯定是过剩的，延迟在TLS1.3以后也不是太大问题</p>
-<h3 id="有些工具没有https支持">有些工具没有HTTPS支持</h3>
-<p>比如OpenWRT那个官方固件一开始就没有HTTPS支持，你得自己装一个。</p>
-<h3 id="很多老网站对https的支持也不太好">很多老网站对HTTPS的支持也不太好</h3>
-<p>用了 HTTPS Everywhere 插件之后经常会发现很多网站体验极差，强制HTTPS之后各种资源加载不出来（关键是很多时候你还意识不到）</p>
-<p><img src="/https-in-some-specific-scene/1606701614.png" /> 比如你电的图书馆，如果用的是HTTPS， 那你的图书位置看不到了（我来这找书最重要的就是这个东西，结果你不告诉我几楼）</p>
-<p><img src="/https-in-some-specific-scene/1606702010.png" /></p>
-<p>这个问题自从17年就有了，一直到现在，都还没修，全站HTTPs遥遥无期。 当然这个问题是因为HTTPS和HTTP的混合 会被新版chrome浏览器悄无声息地拦截，在console里才能看到一个</p>
-<pre class="line-numbers language-log" data-language="log"><code class="language-log">Mixed Content: The page at &#39;&lt;URL&gt;&#39; was loaded over HTTPS, but requested an insecure script &#39;&lt;URL&gt;&#39;. This request has been blocked; the content must be served over HTTPS.<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>你用尊贵的 <em>Internet Explorer</em> 或者老版本chrome是没有这种问题的，但是会加载漫长的几秒钟（在图书馆那个渣配的机子上甚至可能等待10秒），然后弹出来一个大大的警告框，问你<code>是否只查看安全传送的内容</code>，如果你点了<code>是</code>，恭喜你，那你看不到图书的位置了。（我这几年已经无数次看到有倒霉孩子点了是然后找不到书在什么地方了）</p>
-<p>当然很多大网站也在换到HTTPS上也各种问题，知乎上个月准备全站HTTPS的时候出了好几天幺蛾子，<code>400 Bad Request The plain HTTP request was sent to HTTPS port</code>。(不过知乎这个只在乎APP，web版改版之后bug越来越多已经常态化了) <img src="/https-in-some-specific-scene/1606731950.png" /></p>
-<h3 id="登陆认证页面没法劫持https">登陆认证页面没法劫持HTTPS</h3>
-<p>某些登陆认证的界面的原理和劫持差不多，用的<span class="exturl" data-url="aHR0cHM6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvQ2FwdGl2ZV9wb3J0YWw=">强制门户<i class="fa fa-external-link-alt"></i></span>（Captive Portal） 强制门户在自己的DNS服务器中将用户的HTTP请求302重定向到登陆页面 HTTPS没法劫持（尤其是用了HSTS的情况下），结果就卡在那里弹不出登陆认证的界面了。（其实我建议你出门在外使用流量，不要用商场的WIFI，不要贪便宜用手机验证码登陆或者微信登陆）</p>
-<p>有个网站叫<span class="exturl" data-url="aHR0cDovL25ldmVyc3NsLmNvbS8=">neverssl<i class="fa fa-external-link-alt"></i></span>，当你弹不出WIFI登录界面的时候可以访问一下。（其实你随便输入一个什么）</p>
-<p>一般浏览器会有相应的机制，比如火狐的 detect portal， 会向 <span class="exturl" data-url="aHR0cDovL2RldGVjdHBvcnRhbC5maXJlZm94LmNvbQ==">http://detectportal.firefox.com<i class="fa fa-external-link-alt"></i></span> 周期性的发包。</p>
-<p>有的时候登陆认证门户不认200状态码,得用204，然后302跳转到登陆界面。 （提供204状态码的网站很多了，比如<span class="exturl" data-url="aHR0cHM6Ly93d3cudjJleC5jb20vdC8zMDM4ODk/cD0x">v站的这个<i class="fa fa-external-link-alt"></i></span>，基本都是给安卓用的，原生安卓会试图访问谷歌提供的204状态码的服务器来判断是否联网成功，）</p>
-<h3 id="ca证书">CA证书</h3>
-<p>CA证书颁发商公然耍流氓你有什么办法 https://www.zhihu.com/question/50298017 https://www.zhihu.com/question/22795329</p>
-<p>CNNIC</p>
-<p>HSTS MITM SSLStrip HTTP+Strict+Transport+Security HTTPSStrip https://blog.cuiyongjian.com/safe/https-attack/ https://www.zhihu.com/question/22779469</p>
-<h2 id="apt下载更新是否使用https的争议">apt下载更新是否使用HTTPS的争议</h2>
-<figure>
-<img src="/https-in-some-specific-scene/image-20201127170614232.png" alt="image-20201127170614232" /><figcaption aria-hidden="true">image-20201127170614232</figcaption>
-</figure>
-<p>之前有一个叫的网站上的一篇文章叫，引起了不少的讨论。大概的观点是HTTPS在下载这种公共资源的时候没有必要啊。</p>
-<p><strong>而现在，这个网站已经变成体育博彩网站了，造化弄人啊。</strong></p>
-<p>理由主要有：</p>
-<ol type="1">
-<li><p>因为你有GPG校验，HTTPS显得没有什么太大必要。你下下来用GPG校验一下就行了，就算你用HTTPS下载，也只能保证传输过程中没有被篡改，。</p></li>
-<li><p>匿名和隐私的问题：你连上镜像站，那明显是在下镜像源的包。即使你用了HTTPS，还是能通过你下载的包的大小知道你下了些啥（就算你用<code>apt-transport-tor</code>也有这个问题）。</p></li>
-<li><p>还有一个重放攻击（Replay Attacks）的问题，可能有人将包替换为没有安全更新的老版本（签名校验能通过）。</p>
-<p>由于apt有自己的时间戳，晚于这个时间的都被认为非法，时间戳在一段时间内自动失效</p></li>
-</ol>
-<h3 id="现在再看">现在再看</h3>
-<p>当时我还是觉得这个写的有点道理，不到一年就被 cqu mirrors 的事情啪啪打脸。</p>
-<p>当然这个作者显然没考虑CQU Mirrors事件之类的情况。</p>
-<h2 id="重庆大学镜像源被搞">重庆大学镜像源被搞</h2>
-<p>这个事件一出基本可以终结大部分争议了（至少国内是这样的）</p>
-<p>几周前他们那边学校网管的防火墙拦截了80端口的部分HTTP请求，比如一些翻墙工具的包。如果你HTTP明文访问80端口，你会被直接RST。后来在与网管的交涉下恢复了。</p>
-<h2 id="github用ssh还是https">github用SSH还是HTTPS</h2>
-<p>按说SSH这种TCP+SSL的协议会比HTTPS这种跑在应用层的快不少。然而在天朝SSH挺容易被运营商Qos的， HTTPS可以薅cloudflare之类的CDN的羊毛搭github反代。给HTTPS挂socks5/HTTP代理也方便。</p>
-<h2 id="dns-over-https">DNS over HTTPS</h2>
-<p>众所周知传统的DNS是裸UDP的，后来由于 有了使用TCP的DNS，后来出于隐私的考虑又有了DoH（DNS over HTTPS）和DoT（DNS over TLS） 那为什么不用DoT呢？DoT那个853端口太显眼了，分分钟被运营商搞。 DoH最大的问题是慢，如果直接使用远程的DoH，查询发过去和发回来都走HTTPS。在国内用cloudflare的DoH体验极差，如果想用最好自己搭一个。 另一个问题是不支持ECS</p>
-<p>其实DoH在国内也不太推荐，主要是对速度影响太大了。有的方案是走分流，国内IP用国内的DNS，国外的走DoH或者在v2ray之类的跳板上用远程DNS 而且保护隐私方面也不太能</p>
-<p>另，前几天360推出了收费浏览器，居然还有什么国密DoH，号称保护隐私。周红衣说是那就是吧。</p>
-<h2 id="苹果的ocsp">苹果的OCSP</h2>
-<h2 id="闲谈">闲谈</h2>
-<p>HTTPS这种保护隐私的东西按说很多大公司推进起来都很不积极的。但是靠着隐私和广告挣钱的谷歌和百度推起HTTPs来相当的积极，还一口一个在意用户隐私。 谷歌当年大力推广HTTPS的时候还立着<em>不作恶</em>的牌坊，2010年的你说它在乎用户隐私，姑且信了。 谷歌为了推HTTPS，直接抬高HTTPS网站相对于HTTP网站的SEO搜索权重。</p>
-<p>百度也是国内最早一批全站HTTPS的，，当然能说出来“你要隐私干什么”百度显然不会这么好心，嗯，<strong>运营商猛于虎也</strong></p>
-<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzI4Mzc5MDg4">如何看待百度全站搜索进入 HTTPS 时代？<i class="fa fa-external-link-alt"></i></span></p>
-<figure>
-<img src="/https-in-some-specific-scene/image-20201127202536977.png" alt="image-20201127202536977" /><figcaption aria-hidden="true">image-20201127202536977</figcaption>
-</figure>
-<p>百度运维团队当时发布的系列文章还不错，然而</p>
-<p><img src="/https-in-some-specific-scene/1606707060.png" /></p>
-<p>你用百度搜他们的文章，第一条第二条是CSDN和简书的抄袭转载，第三条是他们的，然而500挂掉了。这是怎么回事呢，对于这么好的文章没有被百家号抄袭，小编也很感到惊讶呢。</p>
-<h2 id="参考和链接">参考和链接</h2>
-<p>https://breakthrough.blog/broadcast/31929</p>
-<p>https://v2ex.com/t/725979</p>
-<p>https://www.solidot.org/story?sid=66084</p>
-<p>很早就有了https://www.v2ex.com/t/622672?p=1</p>
-<p>https://sneak.berlin/i18n/2020-11-12-your-computer-isnt-yours.zh/</p>
-<p>https://blog.jacopo.io/en/post/apple-ocsp/</p>
-<p>https://twitter.com/quakewang/status/1327880394801176576</p>
-<p>https://www.reddit.com/r/linux/comments/aidxwa/why_does_apt_not_use_https/ https://blog.cuiyongjian.com/engineering/git-https-ssh/<br />
-https://stackoverflow.com/questions/11041729/why-does-github-recommend-https-over-ssh<br />
-https://news.ycombinator.com/item?id=18958679&amp;p=2 https://askubuntu.com/questions/146108/how-to-use-https-with-apt-get https://unix.stackexchange.com/questions/90227/why-there-is-no-https-transport-for-debian-apt-tool</p>
-<p>https://web.archive.org/web/20180125154639/https://whydoesaptnotusehttps.com/ why does apt not use https的存档</p>
-<p>https://wiki.debian.org/SecureApt</p>
-<p><span class="exturl" data-url="aHR0cDovL3d3dy5tb3NlcndhcmUuY29tLzIwMDkvMDYvZmlyc3QtZmV3LW1pbGxpc2Vjb25kcy1vZi1odHRwcy5odG1s">The First Few Milliseconds of an HTTPS Connection<i class="fa fa-external-link-alt"></i></span></p>
-<p>https://github.com/xirong/my-web/blob/master/readme.md</p>
-<p>https://cloud.tencent.com/developer/article/1399863 APT 为什么不使用 HTTPS 协议？</p>
-<h2 id="附">附</h2>
-<h3 id="cqu-mirrors事件官方的完整说明">CQU Mirrors事件官方的完整说明</h3>
-<p>这里放一下CQU电报新闻的官方声明，地址：https://t.me/cqumirror</p>
-<blockquote>
-<p>2020.11.7</p>
-<p>#warnings 因学校防火墙过滤规则禁止明文访问部分文件，请使用 https 方式访问镜像站</p>
-<p>请暂时更换到其他镜像站。校信息中心进行防火墙维护及站群升级，目前镜像站处于完全不可用状态。恳请谅解。</p>
-<p>2020.11.8</p>
-<p>请务必使用https协议！目前使用http协议获取部分文件将被网络中心防火墙拦截并封禁 IP 约5分钟（初次访问）！目前无任何解决方法，我们仍在积极与校方沟通看是否能够放行。</p>
-<p>2020.11.9</p>
-<p>由于网络中心系统升级和维护，外部流量对于内部服务的访问将被拦截。目前未能知晓何时恢复。如急需使用镜像服务请更换至其他镜像服务器。对所造成的不便恳请谅解。</p>
-<p>2020.11.11</p>
-<p>已确认 IDC 正常开放外网流量访问。镜像服务恢复正常。但仍请不要明文访问数据库文件。目测防火墙策略已经调整但并未有明确证据表明限制放宽。请使用 HTTPS 协议访问镜像。</p>
-<p>2020.11.18</p>
-<p>经沟通目前 IDC 不再拦截明文入站请求。http 协议访问恢复</p>
-</blockquote>
-<p>而且cqu国庆的时候也习惯性闭关锁校，<del>跟你电完全一致</del>（不是，全国高校的网管怎么都一个样啊）</p>
-<blockquote>
-<p>由于不可抗力，国庆期间重庆大学多个对外服务将无法从外部访问。镜像站服务亦受到牵连。恢复对外服务时间未知。对于所造成的不便我们深感遗憾。</p>
-</blockquote>
-<h3 id="为什么apt不使用https的原文">为什么apt不使用HTTPS的原文</h3>
-<p>这个网站已经变成在线发排的体育博彩网站了。这里附上原文</p>
-<blockquote>
-<h1 id="why-does-apt-not-use-https">Why does APT not use HTTPS?</h1>
-<p><em>"Isn't it more secure…?"</em></p>
-<h2 id="tldr">tl;dr</h2>
-<p>HTTPS is used to prevent intruders from being able to listen to communications between you and websites you visit, as well as to avoid data being modified without your knowledge.</p>
-<p>However, files obtained by APT are accompanied by their own signature which allows your system to check they originated from your distribution.</p>
-<p>These signatures are checked against a small set of trusted keys already stored on your computer. Downloaded files are rejected by APT if they are signed by an unknown key<span class="exturl" data-url="aHR0cHM6Ly93ZWIuYXJjaGl2ZS5vcmcvd2ViLzIwMTgwMTI1MTU0NjM5L2h0dHBzOi8vd2h5ZG9lc2FwdG5vdHVzZWh0dHBzLmNvbS8jZm9vdG5vdGUtYXB0LXVua293bi1rZXk=">1<i class="fa fa-external-link-alt"></i></span> or are missing valid signatures. This ensures that the packages you are installing were authorised by your distribution and have not been modified or replaced since.</p>
-<p>HTTPS can not detect if malicious tampering has occurred on the disks of the server you are downloading from. There is little point "securely" transfering a compromised package.</p>
-<h2 id="but-what-about-privacy">But what about privacy?</h2>
-<p>HTTPS does not provide meaningful privacy for obtaining packages. As an eavesdropper can usually see which hosts you are contacting, if you connect to your distribution's mirror network it would be fairly obvious that you are downloading updates.</p>
-<p>Furthermore, even over an encrypted connection it is not difficult to figure out which files you are downloading based on the size of the transfer<span class="exturl" data-url="aHR0cHM6Ly93ZWIuYXJjaGl2ZS5vcmcvd2ViLzIwMTgwMTI1MTU0NjM5L2h0dHBzOi8vd2h5ZG9lc2FwdG5vdHVzZWh0dHBzLmNvbS8jZm9vdG5vdGUtdG9y">2<i class="fa fa-external-link-alt"></i></span>. HTTPS would therefore only be useful for downloading from a server that also offers other packages of similar or identical size.</p>
-<p>What's more important is <em>not</em> that your connection is encrypted but that the files you are installing haven't been modified.</p>
-<h2 id="overly-trusting-cas">Overly trusting CAs</h2>
-<p>There are over 400 "Certificate Authorities" who may issue certificates for any domain. Many have poor security records and some are even explicitly controlled by governments<span class="exturl" data-url="aHR0cHM6Ly93ZWIuYXJjaGl2ZS5vcmcvd2ViLzIwMTgwMTI1MTU0NjM5L2h0dHBzOi8vd2h5ZG9lc2FwdG5vdHVzZWh0dHBzLmNvbS8jZm9vdG5vdGUtY2E=">3<i class="fa fa-external-link-alt"></i></span>.</p>
-<p>This means that HTTPS provides little-to-no protection against a targeted attack on your distribution's mirror network. You could limit the set of valid certificates that APT would accept, but that would be be error-prone and unlikely worth the additional hassle over the existing public-key scheme.</p>
-<h2 id="why-not-provide-https-anyway">Why not provide HTTPS anyway?</h2>
-<p>Your distribution could cryptographically sign the files using the existing scheme and additionally serve the files over HTTPS to provide "defense in depth."</p>
-<p>However, providing a huge worldwide mirror network available over SSL is not only a complicated engineering task (requiring the secure exchange and storage of private keys), it implies a misleading level of security and privacy to end-users as described above.</p>
-<p>A switch to HTTPS would also mean you could not take advantage of local proxy servers for speeding up access and would additionally prohibit many kinds of peer-to-peer mirroring where files are stored on servers not controlled directly by your distribution. This would disproportionately affect users in remote locales.</p>
-<h2 id="ah-what-about-replay-attacks">Ah, what about replay attacks?</h2>
-<p>One issue with a naïve signing mechanism is that it does not guarantee that you are seeing the most up-to-date version of the archive.</p>
-<p>This can lead to a <em>replay attack</em> where an attacker substitutes an archive with an earlier—unmodified—version of the archive. This would prevent APT from noticing new security updates which they could then exploit.</p>
-<p>To mitigate this problem, APT archives includes a timestamp after which all the files are considered stale<span class="exturl" data-url="aHR0cHM6Ly93ZWIuYXJjaGl2ZS5vcmcvd2ViLzIwMTgwMTI1MTU0NjM5L2h0dHBzOi8vd2h5ZG9lc2FwdG5vdHVzZWh0dHBzLmNvbS8jZm9vdG5vdGUtdmFsaWQtdW50aWw=">4<i class="fa fa-external-link-alt"></i></span>.</p>
-<h2 id="where-can-i-find-out-more">Where can I find out more?</h2>
-<p>More technical details may be found on the <em><span class="exturl" data-url="aHR0cHM6Ly93ZWIuYXJjaGl2ZS5vcmcvd2ViLzIwMTgwMTI1MTU0NjM5L2h0dHBzOi8vd2lraS5kZWJpYW4ub3JnL1NlY3VyZUFwdA==">SecureAPT<i class="fa fa-external-link-alt"></i></span></em> wiki page.</p>
-<h3 id="footnotes">Footnotes</h3>
-<ol type="1">
-<li>This appears as <code>Release: The following signatures couldn't be verified because the public key is not available</code>.</li>
-<li>This may even be the case if using Tor via (for example) <span class="exturl" data-url="aHR0cHM6Ly93ZWIuYXJjaGl2ZS5vcmcvd2ViLzIwMTgwMTI1MTU0NjM5L2h0dHBzOi8vcmV0b3V0LmNvLnVrL2Jsb2cvMjAxNC8wNy8yMS9hcHQtdHJhbnNwb3J0LXRvcg==">apt-transport-tor<i class="fa fa-external-link-alt"></i></span>.</li>
-<li>See, for example, <em><span class="exturl" data-url="aHR0cHM6Ly93ZWIuYXJjaGl2ZS5vcmcvd2ViLzIwMTgwMTI1MTU0NjM5L2h0dHBzOi8vc2VjdXJpdHkuc3RhY2tleGNoYW5nZS5jb20vcXVlc3Rpb25zLzUzMTE3L3doYXQtdHJ1c3RlZC1yb290LWNlcnRpZmljYXRpb24tYXV0aG9yaXRpZXMtc2hvdWxkLWktdHJ1c3Q=">What trusted root certification authorities should I trust?<i class="fa fa-external-link-alt"></i></span></em> on StackOverflow.</li>
-<li>See the <em><span class="exturl" data-url="aHR0cHM6Ly93ZWIuYXJjaGl2ZS5vcmcvd2ViLzIwMTgwMTI1MTU0NjM5L2h0dHBzOi8vd2lraS5kZWJpYW4ub3JnL0RlYmlhblJlcG9zaXRvcnkvRm9ybWF0I0RhdGUuMkNfVmFsaWQtVW50aWw=">Date, Valid-Until<i class="fa fa-external-link-alt"></i></span></em> section of the <code>DebianRepository</code> page on the Debian Wiki.</li>
-</ol>
-</blockquote>
-]]></content>
-      <tags>
-        <tag>HTTPS</tag>
       </tags>
   </entry>
   <entry>
