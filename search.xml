@@ -1696,44 +1696,6 @@ network=<span class="token punctuation">{</span>
       </tags>
   </entry>
   <entry>
-    <title>λ演算&amp;函数式编程</title>
-    <url>/a10f/</url>
-    <content><![CDATA[<p>等待填坑</p>
-<a id="more"></a>
-<h2 id="摸鱼一时爽">摸鱼一时爽</h2>
-<p>函数式编程(Functional Programming)好像比面向对象抽象程度更高。但是之前折腾硬件的时候都没有用到过，可能是不太适合处理IO接口和操作时序吧。 之前在图书馆乱翻，看到一本七周七语言的书，翻到函数式，感觉还挺有意思，教研室的摸鱼生活就搞点这个吧，反正干正事是不可能干正事的 <del>正在进JavaScript的坑，将就着用js来练练手吧。</del> javascript味不对，还是直接上了Lisp</p>
-<h2 id="λ演算λ-calculus">λ演算(λ-calculus)</h2>
-<ul>
-<li>是匿名的</li>
-<li>只有一个输入</li>
-</ul>
-<p>多输入的函数要转成多个只有一个输入的函数的嵌套调用，也就是柯里化（currying）</p>
-<p><span class="math inline">\(\lambda\)</span>项</p>
-<h2 id="附">附</h2>
-<h3 id="环境配置">环境配置</h3>
-<p>Arch下安装mit-sheme包就好了，SICP的练习环境。这个操作基本跟Emacs差不多，是SICP的作业环境。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yay -S mit-scheme<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>不过我用的是这个Chez Scheme，前几年开源了的东西，速度很快</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yay -S chez-scheme<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>运行直接</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">scheme <span class="token operator">&lt;</span> test.scm<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>就好了</p>
-<p>我不习惯Emacs的快捷键，都是在vscode里写的，装一个vscode-scheme插件就好了。可以在code runner插件里配置一下，然后按快捷键运行</p>
-<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token property">"code-runner.executorMap"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
-    <span class="token property">".scm"</span><span class="token operator">:</span> <span class="token string">"scheme &lt; "</span><span class="token punctuation">,</span>
-    <span class="token property">"scheme"</span><span class="token operator">:</span> <span class="token string">"scheme &lt; "</span><span class="token punctuation">,</span>
-    <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p>详见 https://github.com/cisco/ChezScheme</p>
-]]></content>
-      <categories>
-        <category>不务正业系列</category>
-      </categories>
-      <tags>
-        <tag>λ-calcus</tag>
-        <tag>js</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>重装Ubuntu</title>
     <url>/2d5/</url>
     <content><![CDATA[<p>祖传服务器传到了我的手里, 行吧。其实我想把标题改成Ubuntu内部错误的解决办法（不是 <a id="more"></a></p>
@@ -1892,6 +1854,44 @@ Address&#x3D;211.83.111.224&#x2F;23<span aria-hidden="true" class="line-numbers-
       <tags>
         <tag>ubuntu</tag>
         <tag>重装</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>λ演算&amp;函数式编程</title>
+    <url>/a10f/</url>
+    <content><![CDATA[<p>等待填坑</p>
+<a id="more"></a>
+<h2 id="摸鱼一时爽">摸鱼一时爽</h2>
+<p>函数式编程(Functional Programming)好像比面向对象抽象程度更高。但是之前折腾硬件的时候都没有用到过，可能是不太适合处理IO接口和操作时序吧。 之前在图书馆乱翻，看到一本七周七语言的书，翻到函数式，感觉还挺有意思，教研室的摸鱼生活就搞点这个吧，反正干正事是不可能干正事的 <del>正在进JavaScript的坑，将就着用js来练练手吧。</del> javascript味不对，还是直接上了Lisp</p>
+<h2 id="λ演算λ-calculus">λ演算(λ-calculus)</h2>
+<ul>
+<li>是匿名的</li>
+<li>只有一个输入</li>
+</ul>
+<p>多输入的函数要转成多个只有一个输入的函数的嵌套调用，也就是柯里化（currying）</p>
+<p><span class="math inline">\(\lambda\)</span>项</p>
+<h2 id="附">附</h2>
+<h3 id="环境配置">环境配置</h3>
+<p>Arch下安装mit-sheme包就好了，SICP的练习环境。这个操作基本跟Emacs差不多，是SICP的作业环境。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yay -S mit-scheme<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>不过我用的是这个Chez Scheme，前几年开源了的东西，速度很快</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yay -S chez-scheme<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>运行直接</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">scheme <span class="token operator">&lt;</span> test.scm<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>就好了</p>
+<p>我不习惯Emacs的快捷键，都是在vscode里写的，装一个vscode-scheme插件就好了。可以在code runner插件里配置一下，然后按快捷键运行</p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token property">"code-runner.executorMap"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">".scm"</span><span class="token operator">:</span> <span class="token string">"scheme &lt; "</span><span class="token punctuation">,</span>
+    <span class="token property">"scheme"</span><span class="token operator">:</span> <span class="token string">"scheme &lt; "</span><span class="token punctuation">,</span>
+    <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>详见 https://github.com/cisco/ChezScheme</p>
+]]></content>
+      <categories>
+        <category>不务正业系列</category>
+      </categories>
+      <tags>
+        <tag>λ-calcus</tag>
+        <tag>js</tag>
       </tags>
   </entry>
   <entry>
@@ -3534,30 +3534,33 @@ r <span class="token operator">=</span> requests<span class="token punctuation">
     <title>对于医疗行业的一点看法</title>
     <url>/about-medical-industry/</url>
     <content><![CDATA[<p>半个局外人的流言谶语，以及乌鸦嘴。未完待续，不定期更新。 <a id="more"></a></p>
+<p>目前施工进度：20%<br />
+大概列个标题，很多大坑比如医疗私有化的问题有空了慢慢填。</p>
 <p>当然我不是医学生，当年高考报志愿的时候由于色弱被医学几乎所有专业拒之门外。</p>
 <p>虽然本科录取通知书和毕业证上都写的是生物医学工程（是的，这个专业也是色弱与狗不得报考。可我是报了通信电子被调剂过来的），虽然每次出门说出这个专业总被认成是学生物的、学医的，很惭愧，生化相关的就没学过，唯一跟生物沾点边的是大一的必须选的选修课生命科学导论（只有一个学分的选修，上课全程在写微积分线代作业，老师非常善良，开卷考试全程抄书），唯一跟医学沾点边的是大一的解剖（也是选修，两个学分，上课全程在写电分大雾作业，考试划重点精确到第几章第几页第几段的第几个句子）。</p>
 <p>本来是想去搞硬件的，本科还在搞医疗器械那会也确实在焊板子弄单片机搞stm32烧串口调测量信号，不过最后还是逃离了医疗器械，当了硬件逃兵。</p>
 <p>快要过去的一年发生了不少事，每次想写点什么，打了一堆字又删了，原来的知乎大号早就宣布退乎清空回答了，丁香园小木虫之类的地方又不想去，发到博客没多少人看（以及会有另一些人看，近似于发QQ空间的效果）。</p>
 <p>发在这里又不能像某乎那样开个小号再开个匿名，利益相关，匿了.jpg</p>
-<p>所以这篇博客写的不太尽兴，有些话不方便多说，</p>
+<p>由于还在坑中+实名网上冲浪，有些东西不会多讲。</p>
 <h2 id="现状">现状</h2>
 <h3 id="医疗器械">医疗器械</h3>
 <p>啊，老本行，拿出来单独说一下（很惭愧，从这一行跑路了）</p>
 <p>这里的医疗器械只讲一下电子设备，比如血压血糖体温之类的传感测量设备，还有那些X光机、CT、PETCT、彩超、MRI、NMRI那一堆摆在影像科的昂贵的大设备。用于检测的那些设备没搞过，不懂；医疗耗材之类的完全不懂，听说川大那边有不少搞生物医学材料的，听说强生美敦力罗氏之类的企业在做。</p>
-<p>比较贵的那些大设备以前长期处于国外几家大公司垄断中，主要是GPS三家。通用电气一直在没落，飞利浦这两年也有点不思进取，西门子还行，不过被</p>
-<p>联影 迈瑞 理邦</p>
-<p>联影号称是医疗器械行业的华为，实际加班可能比华为还严重；像当年菊花从思科挖人一样，联影从西门子等挖了好多高管和技术人员，实现了 自主研发 。</p>
-<p>东软之类的国企</p>
+<p>比较贵的那些大设备以前长期处于国外几家大公司垄断中，主要是GPS三家。通用电气一直在没落，飞利浦这两年也有点不思进取，西门子还行，不过这两年逐渐被联影迈瑞蚕食掉不少市场。</p>
+<p>国内公司大概就 联影 迈瑞 理邦，这些后面慢慢讲，一时半会讲不完</p>
+<p>联影号称是医疗器械行业的华为，实际加班可能比华为还严重；像当年菊花从思科挖人一样，联影从西门子等挖了好多高管和技术人员，从而实现了自主研发。</p>
+<p>东软之类的国企现在大都没落了。</p>
 <p>国内学校搞医疗器械的不是很多，基本都挂在生物医学工程下面，有的挂在精密仪器和自动化下面（说起来你电生命学院最早就是从自动化测量那边分出去的，早年一群搞医疗器械的，不过后来逐渐都去灌水了，硬件没多少人搞了）。不算材料那些，高校里面还在搞医疗电子并且还算可以的可能就浙大和重庆大学的一些组了。</p>
+<h3 id="医学影像">医学影像</h3>
+<p>这个以后再讲。</p>
 <h3 id="医学信息">医学信息</h3>
 <p>算是正在医学信息的坑里面划水吧，</p>
-<p>入坑，你将看到各路祖传机器和祖传代码，包括Delphi，PowerBuilder，SQL Server 2000，远古版本的Windows Server 和 Windows XP（当然，都是盗版的），Oracle（几乎都是远古版本，不少盗版，比较有钱的大医院可能会有正版）</p>
-<p>jQuery还好，可能还有完美兼容ie的Flash，WebForms；</p>
-<p>各种神奇的导出格式，不规范的XML，各种自定义的数据格式和编码（某些公司自己弄出来的私有格式）</p>
+<p>入坑，你将看到各路祖传机器和祖传代码，包括Delphi，PowerBuilder，SQL Server 2000，远古版本的Windows Server 和 Windows XP（当然，都是盗版的），Oracle（几乎都是远古版本，不少盗版，比较有钱的大医院可能会有正版），偶尔可能还有完美兼容ie的Flash，WebForms； 各种神奇的导出格式，不规范的XML，各种自定义的数据格式和编码（某些公司自己弄出来的私有格式）</p>
+<p>各种打着信息化方便服务医护人员和患者旗号的政策把医护人员和患者都折腾的半死。各种灌水论文，各路骗钱公司。。。。</p>
 <!-- 国内知名的医疗软件基本都是再用PB,比如金蝶 创业 众阳。也没有互联网软件公司出来革了她们的命 -->
 <h4 id="his系统">HIS系统</h4>
 <p>略有年头的词。不少HIS系统比我还老，祖传代码没人敢动，去医院转一圈一下你会发现真就是祖传微机祖传服务器祖传软件，不知道多少年前采购的东西用到天荒地老。</p>
-<p>有些话我不方便说太多，就拿选课系统类比一下吧。</p>
+<p>有些话我不方便说太多。</p>
 <p>这种单位采购的XX系统，大家心里应该都能想象出来。想像不出来的请回忆一下学校选课系统/教务系统支配的恐惧。除了学校学生自己做的选课系统，采购的选课系统基本都是方正、清元、强智。</p>
 <p>比如<span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzI2NTE2MTgw">隔壁西电曾经的清元<i class="fa fa-external-link-alt"></i></span>，比如<span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzM2MjY2NzcwMQ==">武大这个<i class="fa fa-external-link-alt"></i></span>，当然还有<span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzI2NDcwNTQ5OS9hbnN3ZXIvMjg0MzkxOTMz">你电这个<i class="fa fa-external-link-alt"></i></span>我大一的时候连续崩溃一周搞得大家半夜起来的神仙选课系统（这可不是高并发抢课，这是用权重投分选课，而且还是各年级分开错峰权重选课）</p>
 <p>为什么HIS系统这么难用，和这个问题大致是一样的：</p>
@@ -3566,33 +3569,85 @@ r <span class="token operator">=</span> requests<span class="token punctuation">
 </blockquote>
 <p>还没用过选课系统的高中生可以看丁香园的这篇吐槽<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>感受一下，医院的HIS系统操作使用起来非常不舒服，被医护人员吐槽是家常便饭的事。不过HIS系统，怎么说呢，全世界就没一个好用的。</p>
 <p>用教务选课系统来形容可能会让你们低估HIS系统的难用程度，选课系统最多也就世界上最好的语言PHP+WebForms，新一点的前端可能是jQuery，都还能招到人来维护；而且都是Web版的选课系统。不少选课系统还有在校学生维护，运维和改祖传代码的能力已经吊打医院信息科了。</p>
+<p>而且大部分医院都异常执着于采用所谓的C/S架构（狭义的Client/Server，多指能且仅能装在Windos XP上的桌面客户端），非常看不起也不愿意买B/S（Browser/Server,就是Web呗）的东西，认为那都是不安全的东西。 <del>说的好像他们的祖传windows xp多安全一样，不管，反正就是浏览器的东西不安全</del></p>
 <p>有的医院倒是想换新的电脑，结果发现以前斥巨资采购的老软件最高只支持Windows XP；换新的HIS系统又拿不出那么多钱，将就着用呗。</p>
 <p>采购价格通常很贵，三甲医院买的软件可能基本都几百万甚至上千万吧（有的是吃回扣，有的是花公家的钱不心疼，有的是）</p>
-<p>国内的医院大部分是是断网的，是只能上医院内部局域网那种，他们说</p>
+<p>国内的医院大部分是是断网的，是只能上医院内部局域网那种，他们说是为了安全。我悟了，安全全靠断网物理隔离。</p>
 <h4 id="电子病历">电子病历</h4>
 <h5 id="到底有啥用">到底有啥用</h5>
 <p>大部分情况下可能对医生是个负担，尤其是当医院采购的电子病历软件极其难用的情况下。</p>
 <h5 id="命名实体识别">命名实体识别</h5>
-<p>命名实体识别（Named Entity Recognition），做过的都懂。</p>
+<p>命名实体识别（Named Entity Recognition），不少人NLP入门的第一个项目。（确实适合入门，NLP不少领域都很难，而这个很简单，而且可以从爬数据、清洗、自己指定规则和标注（标注几百份就能见效），自己构建数据集，选模型调参（简单的模型可以自己从底层实现一遍））</p>
 <p>电子病历/医学文献/其他乱七八糟的医学文本，能用来命名实体识别的都被轮过不知道多少次了。实乃广大学子毕业设计水论文居家编论文必备。</p>
-<p>从隐马尔科夫模型到SVM到CNN到LSTM到BERT，基本上</p>
+<p>从隐马尔科夫模型到SVM到CNN到LSTM到BERT，基本上但凡NLP取得一点进展，就拿来用电子病历做一个命名实体识别，英文做一遍，中文再做一遍。实乃苦命学子水论文毕业的不二法宝。</p>
+<p>现在已经非常成熟，BERT的准确率在电子病历上能轻易达到95%，只要喂的语料数据足够多足够好，达到98%也不难。</p>
+<p>基本已经没有什么上升空间了。</p>
 <h4 id="临床决策">临床决策</h4>
-<p>正在搞，没太多头绪</p>
+<p>正在搞，以后再讲。</p>
 <h4 id="循证医学rct和meta分析">循证医学、RCT和Meta分析</h4>
-<p>循证医学这个东西，非医学人士不要去看它那些概念，就当作重新发明统计学就好了。</p>
+<p>循证医学这个东西，非医学人士不要去看它那些概念，现在这个东西跟中医一起同步高频出现。</p>
+<p>正经学过数理统计、随机过程、就当作重新发明统计学就好了。</p>
 <blockquote>
 <p>可能是统计学没学过的老专家想出来的一种 “科学” 研究方法</p>
 </blockquote>
-<p>RCT就是现在初中生物都要学的随机对照试验。</p>
+<p><strong>如果你听到一个人/媒体整天把循证医学挂在嘴边，先怀疑一下是不是个骗子。就像把AI、人工智能、区块链挂在嘴边的，直接先当成炒作骗子再说。虽然区块链确实是很不错的技术。</strong></p>
+<p>比如:</p>
+<ol type="1">
+<li>国士无双老骗子</li>
+</ol>
+<blockquote>
+<p>"我从事了50多年的临床工作,对中医做得很少.为什么我现在来学习中医?因为经过SARS防治至今十几 年对中医防治流感的临床体会,认识到需要发挥国家战略优势,以独特的医疗思路,模式,方法和要领,把我国的中医药推广到全世界.克强总理说,中国发展的重 要思路是体制驱动创新.我们有很好的传统和精神,中医药也要在新的体制下推动创新.在不久前召开的首届两岸四地中医药循证高峰论坛上,呼吸疾病国家重点实 验室主任,广州医科大学附属第一医院,广州呼吸疾病研究所荣誉所长钟南山院士深有感慨地表示.</p>
+</blockquote>
+<ol start="2" type="1">
+<li>速效救心丸</li>
+</ol>
+<p><img src="/about-medical-industry/1613013504.png" /></p>
+<ol start="3" type="1">
+<li>老中医</li>
+</ol>
+<p><img src="/about-medical-industry/1613014959.png" /></p>
+<blockquote>
+<p>潘毅老师直播末尾说的：疫情爆发后，全世界只有我们能用中医、西医两种诊疗手段，并且都发挥了很大作用。对比国外只有西医一种诊疗手段，我们能深刻体会到「天佑中华」四字的含义</p>
+</blockquote>
+<p>以上节选自b站最爱的团团（共青团广州中医药大学委员会）</p>
+<p>以上结论是我结合老祖宗千年古籍，经过大样本调查结合人工智能得出的。</p>
+<p>如果有人感到被冒犯，那一定是你慧根不足，受到了食品添加剂和化学污染，百年之内必死无疑，快吃点速效救心丸抢救一下，毕竟心主神明。</p>
+<blockquote>
+<p>被列入中成药临床循证评价证据指数，是对速效救心丸在循证医学层面又一次认可，将为推动速效救心丸高质量研究提供技术支持。</p>
+</blockquote>
+<h5 id="rct">RCT</h5>
+<p>RCT，就是现在初中生物都要学的随机对照试验。</p>
+<p>医学实验和生物实验有点区别，</p>
+<p><img src="/about-medical-industry/1613013813.png" /></p>
+<h5 id="一些来不及做不出来实验的特殊场合">一些来不及/做不出来实验的特殊场合</h5>
+<p>正常流程的新药审批和 有些只是来不及等不了，比如去年疫情刚爆发的时候</p>
+<h5 id="meta分析">Meta分析</h5>
+<p>嗯，Meta分析的名声也快被灌水搞烂了（本来也不怎么好，Meta material之类的带Meta的字眼听着就像灌水）</p>
+<p>大概的原理可以看<span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzI2NDc4OTQ2MC9hbnN3ZXIvMjg2NDY4NDc3">这篇回答<i class="fa fa-external-link-alt"></i></span></p>
+<div class="note warning no-icon"><p>Meta分析的论文作者如果没有该领域相关研究成果或者多年临床经验，不妨直接当这篇Meta分析是垃圾灌水</p>
+</div>
+<p>Meta分析在十几年是灌水的黄金时期，大量灌水文章批量生产。以至于灌到现在，不少单位已经明令不能用Meta分析的文章来评奖和评职称了，灌水都不让灌了。</p>
+<p>有固定格式和套路，不需要投入经费和时间做实验，甚至不需要熟悉该领域，也不要懂Meta分析的统计学原理，就可以灌水。</p>
+<p>随便一个本科生甚至初中生，完全没有相关领域的知识，临时培训三个月都能弄出一篇Meta分析来，这灌水速度和难度在生物医学这些灌水成风的领域都引起了恐慌，甚至评职称评奖考核不允许Meta分析。</p>
+<p>大部分Meta分析的价值可能远不如某领域大牛或有经验医生的采访、回顾总结或综述。</p>
+<p>综述类的东西，就应该请该领域的执牛耳者、多年从业人员、一线临床医生或在前沿领域做出突出贡献的人来写</p>
+<p><strong>大部分Meta分析的价值，可以作为医学本科生或者研究生《医学文献检索和写作》成绩占比40%的期末作业</strong></p>
+<p>如果还要再说点什么，</p>
+<p><strong>Meta分析的灌水文章和Uptodate临床指南之间差了10个维基百科</strong></p>
+<h3 id="远程医疗">远程医疗</h3>
+<p>别让我听到5G+远程医疗了行不行。</p>
+<p>医生做个飞刀被举报了都要罚款，却在吹什么远程医疗。允许病人外地就医，医生可以去外出开飞刀，比什么远程医疗都好。</p>
 <h2 id="关于医疗私有化">关于医疗私有化</h2>
-<p>大部分公立医院都有着国企的通病</p>
+<p>这个问题比较复杂，一时半会讲不完，以后再说。 大部分公立医院都有着国企的通病</p>
+<p>下面是比较有意思的几个：</p>
 <p>宿迁医改</p>
 <p>莆田系</p>
 <p>爱思眼科</p>
-<p>奥派喜欢自由市场，不过长远看我们都死了。等不及了，信誉和口碑的建立至少需要二十年，人能有几个二十年？</p>
+<!-- 奥派喜欢自由市场，不过长远看我们都死了。等不及了，信誉和口碑的建立至少需要二十年，人能有几个二十年？ -->
 <h2 id="业界和学界脱节">业界和学界脱节</h2>
-<p>大多数行业的本科教育和业界基本都脱节，</p>
-<p>在一些需要大量砸钱投入产品研发的领域，高校甚至很多研究所和企业的差距特别明显。 航天这种不赚钱的基本</p>
+<p>大多数工科的本科教育和业界基本都脱节，教材更新慢，实际参与项目的机会也少。</p>
+<p>在一些需要大量砸钱投入产品研发的领域，高校甚至很多研究所和企业的差距特别明显。在大型医疗器械基本被联影和迈瑞甩开好远。</p>
+<p>这个以后再讲。 <!-- 航天这种不赚钱的基本 --></p>
 <h2 id="报考和劝退等">报考和劝退等</h2>
 <p>本来不想写这部分的，奈何今年医学相关专业的录取分数线暴涨，看到几个高中毕业的萌新听着不知道谁给的建议盲目乱报。今天听人说医生待遇低啦，哪又医闹砍人啦；明天又听说社会地位高福利待遇好做手术有红包啦；最后一打听学医背书又苦又累大学活的像高中又不想去了，在家长威逼利诱下只得不情愿的报了。</p>
 <p>真就乱报啊。</p>
@@ -3605,8 +3660,8 @@ r <span class="token operator">=</span> requests<span class="token punctuation">
 <p>临床 667 662 659</p>
 <p>信软 665 659 656</p>
 <p>材料 669 664 661</p>
-<p>护理</p>
-<p>这就很离谱，虽然我整天喷你电，虽然沙河确实有点破，但是电子科技大学信息与软件工程的录取线比电子科技大学临床医学录取线还要低这就很魔幻，这我都不敢信。护理分倒是比较冷静，估计是被网上一片劝退吓了回去。</p>
+<p>护理 636 623 618</p>
+<p>这就很离谱，虽然我整天喷你电，虽然沙河确实有点破，但是电子科技大学信息与软件工程的录取线比电子科技大学临床医学录取线还要低这.....认真的吗？护理分倒是比较冷静，估计是被网上一片劝退吓了回去。</p>
 <p>你要说川大华西临床比川大软件工程录取线高，这听起来还很正常。你电这些孩子用这个分报临床，你说这是图什么呢？</p>
 <p>你电医学院本科开始招生才两年，虽然学校和省医院、肿瘤医院、人民医院等给学生的资源倾斜还不错，但是和一些老牌的医学院比起来认可度和出路还是差不少。</p>
 <p>你电信软的软件工程出路和待遇说一句不比华西临床差应该还是有底气的。虽然你软很多阴间操作和只会念PPT的老师，去996修福报等出路和薪资已经足以抵消一切。</p>
@@ -3900,17 +3955,20 @@ r <span class="token operator">=</span> requests<span class="token punctuation">
 </table>
 <p>所谓的"互联网+"是和“大众创新，万众创业”、OFO小黄车、区块链一个时期的骗钱概念（大概就15、16、17年吧），直接无视就好了。</p>
 <h2 id="qa">Q&amp;A</h2>
-<p>Q：你们这帮人整天劝退某些行业没人了怎么办？</p>
-<p>A：没人了那不是更好吗。</p>
-<p>Q：这次疫情后医护人员待遇会改善吗？</p>
-<p>A：这次疫情后，医保缺口更大了，那待遇当然会更差了。</p>
-<p>地方财政没钱了，不委屈你们一下怎么行，总不能饿着王公贵胄吧</p>
-<p>Q: 我想报考/入坑医学信息、医疗器械，能不能推荐........</p>
-<p>A：我推荐你快跑</p>
-<p>Q：国外, 怎么样？</p>
-<p>A：国外不了解。去问别人吧。</p>
-<p>Q：听说这些行业很有前途.....</p>
-<p>A：前途是用韭菜和炮灰铺的路</p>
+<p>Q：你们这帮人整天劝退某些行业没人了怎么办？<br />
+A：没人了那不是更好吗。</p>
+<p>Q：这次疫情后医护人员待遇会改善吗？<br />
+A：这次疫情后，医保缺口更大了，那待遇当然会更差了。 地方财政没钱了，不委屈你们一下怎么行，总不能饿着王公贵胄吧</p>
+<p>Q: 我想报考/入坑医学信息、医疗器械，能不能推荐........<br />
+A：我推荐你快跑</p>
+<p>Q: 那学医呢........<br />
+A：去问医生和医学生吧</p>
+<p>Q：国外, 怎么样？<br />
+A：国外不了解。去问别人吧。</p>
+<p>Q：听说这些行业很有前<del>钱</del>途.....<br />
+A：前途是用你这样的韭菜和炮灰铺的路，钱是敲骨吸髓压榨患者来的</p>
+<p>Q: 什么时候写完？还会更新吗？<br />
+A: 毕业之前可能会写完吧。不排除当老鸽子的可能。</p>
 <!-- 
 科研穷三代，读博毁一生
 
@@ -3922,14 +3980,6 @@ https://www.zhihu.com/question/67131138/answer/249650160 -->
 <p><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzI5NjkxNTM1L2Fuc3dlcnMvdXBkYXRlZA==">如何看待本科护理专业?<i class="fa fa-external-link-alt"></i></span></p>
 <p><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzI4Mjk2MzY3NC9hbnN3ZXJzL3VwZGF0ZWQ=">去 985 学护理，这真的好吗？<i class="fa fa-external-link-alt"></i></span></p>
 <!-- 
-
-
-
-
-
-
-
-
 
 预防口腔麻醉检验公卫影像
 
@@ -4501,151 +4551,6 @@ xdg-user-dirs-gtk-update<span aria-hidden="true" class="line-numbers-rows"><span
       </tags>
   </entry>
   <entry>
-    <title>HTTPS二三事</title>
-    <url>/https-in-some-specific-scene/</url>
-    <content><![CDATA[<p>未完待续 <a id="more"></a></p>
-<p>诸如<code>git clone</code> 、 <code>apt/yum/pacman</code>下载公开文件，到底有没有必要用HTTPS(或者SSH之类的其他加密方式)？一些不传输帐号密码之类的隐私的不怎么改变网页内容的静态网站有必要吗？</p>
-<p>以前我也觉得没有必要，结果就被险恶的世道教做人了。 差不多可以盖棺定论了，如果处于运营商和防火墙的慈祥关爱中，有必要，那可太有必要了。</p>
-<p>咋说，本来HTTPS是拿来给你们防范FBI、CIA、黑皮、灰产人士、高雅人士针对某个、某些特定目标搞中间人攻击偷你密码、篡改你获取的数据啥的。这种用途下载公开的包、镜像、一些仓库里的代码倒是没必要上HTTPS，普通人下个安装包也没啥东西值得攻击的，而且连到服务器下一个体积不太小的压缩包/二进制文件也不太好掺砂子，而且下完了之后还有GPG校验，传输的时候多套一个HTTPS大部分时候。而且HTTPS两边都有带宽、加解密之类的成本损耗，下载大文件是不太划算的。</p>
-<p>可能他们也妹想到某些运营商和防火墙能这么流氓，直接公然大范围污染。</p>
-<h2 id="目前使用https的一些小牺牲">目前使用HTTPS的一些小牺牲</h2>
-<h3 id="成本">成本</h3>
-<p>一般来说：</p>
-<p>需要证书，证书要给签发机构交钱<br />
-延迟相比HTTP略高，不过TLS1.3之后 加密解密吃资源</p>
-<p>上面那些在今天看来问题都不是特别大，现在有很多 Let's Encrypt 之类的免费的（收费的CA证书也比十年前便宜太多了），现在的CPU性能对于看网页肯定是过剩的，延迟在TLS1.3以后也不是太大问题</p>
-<h3 id="有些工具没有https支持">有些工具没有HTTPS支持</h3>
-<p>比如OpenWRT那个官方固件一开始就没有HTTPS支持，你得自己装一个。</p>
-<h3 id="很多老网站对https的支持也不太好">很多老网站对HTTPS的支持也不太好</h3>
-<p>用了 HTTPS Everywhere 插件之后经常会发现很多网站体验极差，强制HTTPS之后各种资源加载不出来（关键是很多时候你还意识不到）</p>
-<p><img src="/https-in-some-specific-scene/1606701614.png" /> 比如你电的图书馆，如果用的是HTTPS， 那你的图书位置看不到了（我来这找书最重要的就是这个东西，结果你不告诉我几楼）</p>
-<p><img src="/https-in-some-specific-scene/1606702010.png" /></p>
-<p>这个问题自从17年就有了，一直到现在，都还没修，全站HTTPs遥遥无期。 当然这个问题是因为HTTPS和HTTP的混合 会被新版chrome浏览器悄无声息地拦截，在console里才能看到一个</p>
-<pre class="line-numbers language-log" data-language="log"><code class="language-log">Mixed Content: The page at &#39;&lt;URL&gt;&#39; was loaded over HTTPS, but requested an insecure script &#39;&lt;URL&gt;&#39;. This request has been blocked; the content must be served over HTTPS.<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>你用尊贵的 <em>Internet Explorer</em> 或者老版本chrome是没有这种问题的，但是会加载漫长的几秒钟（在图书馆那个渣配的机子上甚至可能等待10秒），然后弹出来一个大大的警告框，问你<code>是否只查看安全传送的内容</code>，如果你点了<code>是</code>，恭喜你，那你看不到图书的位置了。（我这几年已经无数次看到有倒霉孩子点了是然后找不到书在什么地方了）</p>
-<p>当然很多大网站也在换到HTTPS上也各种问题，知乎上个月准备全站HTTPS的时候出了好几天幺蛾子，<code>400 Bad Request The plain HTTP request was sent to HTTPS port</code>。(不过知乎这个只在乎APP，web版改版之后bug越来越多已经常态化了) <img src="/https-in-some-specific-scene/1606731950.png" /></p>
-<h3 id="登陆认证页面没法劫持https">登陆认证页面没法劫持HTTPS</h3>
-<p>某些登陆认证的界面的原理和劫持差不多，用的<span class="exturl" data-url="aHR0cHM6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvQ2FwdGl2ZV9wb3J0YWw=">强制门户<i class="fa fa-external-link-alt"></i></span>（Captive Portal） 强制门户在自己的DNS服务器中将用户的HTTP请求302重定向到登陆页面 HTTPS没法劫持（尤其是用了HSTS的情况下），结果就卡在那里弹不出登陆认证的界面了。（其实我建议你出门在外使用流量，不要用商场的WIFI，不要贪便宜用手机验证码登陆或者微信登陆）</p>
-<p>有个网站叫<span class="exturl" data-url="aHR0cDovL25ldmVyc3NsLmNvbS8=">neverssl<i class="fa fa-external-link-alt"></i></span>，当你弹不出WIFI登录界面的时候可以访问一下。（其实你随便输入一个什么）</p>
-<p>一般浏览器会有相应的机制，比如火狐的 detect portal， 会向 <span class="exturl" data-url="aHR0cDovL2RldGVjdHBvcnRhbC5maXJlZm94LmNvbQ==">http://detectportal.firefox.com<i class="fa fa-external-link-alt"></i></span> 周期性的发包。</p>
-<p>有的时候登陆认证门户不认200状态码,得用204，然后302跳转到登陆界面。 （提供204状态码的网站很多了，比如<span class="exturl" data-url="aHR0cHM6Ly93d3cudjJleC5jb20vdC8zMDM4ODk/cD0x">v站的这个<i class="fa fa-external-link-alt"></i></span>，基本都是给安卓用的，原生安卓会试图访问谷歌提供的204状态码的服务器来判断是否联网成功，）</p>
-<h3 id="ca证书">CA证书</h3>
-<p>CA证书颁发商公然耍流氓你有什么办法 https://www.zhihu.com/question/50298017 https://www.zhihu.com/question/22795329</p>
-<p>CNNIC</p>
-<p>HSTS MITM SSLStrip HTTP+Strict+Transport+Security HTTPSStrip https://blog.cuiyongjian.com/safe/https-attack/ https://www.zhihu.com/question/22779469</p>
-<h2 id="apt下载更新是否使用https的争议">apt下载更新是否使用HTTPS的争议</h2>
-<figure>
-<img src="/https-in-some-specific-scene/image-20201127170614232.png" alt="image-20201127170614232" /><figcaption aria-hidden="true">image-20201127170614232</figcaption>
-</figure>
-<p>之前有一个叫的网站上的一篇文章叫，引起了不少的讨论。大概的观点是HTTPS在下载这种公共资源的时候没有必要啊。</p>
-<p><strong>而现在，这个网站已经变成体育博彩网站了，造化弄人啊。</strong></p>
-<p>理由主要有：</p>
-<ol type="1">
-<li><p>因为你有GPG校验，HTTPS显得没有什么太大必要。你下下来用GPG校验一下就行了，就算你用HTTPS下载，也只能保证传输过程中没有被篡改，。</p></li>
-<li><p>匿名和隐私的问题：你连上镜像站，那明显是在下镜像源的包。即使你用了HTTPS，还是能通过你下载的包的大小知道你下了些啥（就算你用<code>apt-transport-tor</code>也有这个问题）。</p></li>
-<li><p>还有一个重放攻击（Replay Attacks）的问题，可能有人将包替换为没有安全更新的老版本（签名校验能通过）。</p>
-<p>由于apt有自己的时间戳，晚于这个时间的都被认为非法，时间戳在一段时间内自动失效</p></li>
-</ol>
-<h3 id="现在再看">现在再看</h3>
-<p>当时我还是觉得这个写的有点道理，不到一年就被 cqu mirrors 的事情啪啪打脸。</p>
-<p>当然这个作者显然没考虑CQU Mirrors事件之类的情况。</p>
-<h2 id="重庆大学镜像源被搞">重庆大学镜像源被搞</h2>
-<p>这个事件一出基本可以终结大部分争议了（至少国内是这样的）</p>
-<p>几周前他们那边学校网管的防火墙拦截了80端口的部分HTTP请求，比如一些翻墙工具的包。如果你HTTP明文访问80端口，你会被直接RST。后来在与网管的交涉下恢复了。</p>
-<h2 id="github用ssh还是https">github用SSH还是HTTPS</h2>
-<p>按说SSH这种TCP+SSL的协议会比HTTPS这种跑在应用层的快不少。然而在天朝SSH挺容易被运营商Qos的， HTTPS可以薅cloudflare之类的CDN的羊毛搭github反代。给HTTPS挂socks5/HTTP代理也方便。</p>
-<h2 id="dns-over-https">DNS over HTTPS</h2>
-<p>众所周知传统的DNS是裸UDP的，后来由于 有了使用TCP的DNS，后来出于隐私的考虑又有了DoH（DNS over HTTPS）和DoT（DNS over TLS） 那为什么不用DoT呢？DoT那个853端口太显眼了，分分钟被运营商搞。 DoH最大的问题是慢，如果直接使用远程的DoH，查询发过去和发回来都走HTTPS。在国内用cloudflare的DoH体验极差，如果想用最好自己搭一个。 另一个问题是不支持ECS</p>
-<p>其实DoH在国内也不太推荐，主要是对速度影响太大了。有的方案是走分流，国内IP用国内的DNS，国外的走DoH或者在v2ray之类的跳板上用远程DNS 而且保护隐私方面也不太能</p>
-<p>另，前几天360推出了收费浏览器，居然还有什么国密DoH，号称保护隐私。周红衣说是那就是吧。</p>
-<h2 id="苹果的ocsp">苹果的OCSP</h2>
-<h2 id="闲谈">闲谈</h2>
-<p>HTTPS这种保护隐私的东西按说很多大公司推进起来都很不积极的。但是靠着隐私和广告挣钱的谷歌和百度推起HTTPs来相当的积极，还一口一个在意用户隐私。 谷歌当年大力推广HTTPS的时候还立着<em>不作恶</em>的牌坊，2010年的你说它在乎用户隐私，姑且信了。 谷歌为了推HTTPS，直接抬高HTTPS网站相对于HTTP网站的SEO搜索权重。</p>
-<p>百度也是国内最早一批全站HTTPS的，，当然能说出来“你要隐私干什么”百度显然不会这么好心，嗯，<strong>运营商猛于虎也</strong></p>
-<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzI4Mzc5MDg4">如何看待百度全站搜索进入 HTTPS 时代？<i class="fa fa-external-link-alt"></i></span></p>
-<figure>
-<img src="/https-in-some-specific-scene/image-20201127202536977.png" alt="image-20201127202536977" /><figcaption aria-hidden="true">image-20201127202536977</figcaption>
-</figure>
-<p>百度运维团队当时发布的系列文章还不错，然而</p>
-<p><img src="/https-in-some-specific-scene/1606707060.png" /></p>
-<p>你用百度搜他们的文章，第一条第二条是CSDN和简书的抄袭转载，第三条是他们的，然而500挂掉了。这是怎么回事呢，对于这么好的文章没有被百家号抄袭，小编也很感到惊讶呢。</p>
-<h2 id="参考和链接">参考和链接</h2>
-<p>https://breakthrough.blog/broadcast/31929</p>
-<p>https://v2ex.com/t/725979</p>
-<p>https://www.solidot.org/story?sid=66084</p>
-<p>很早就有了https://www.v2ex.com/t/622672?p=1</p>
-<p>https://sneak.berlin/i18n/2020-11-12-your-computer-isnt-yours.zh/</p>
-<p>https://blog.jacopo.io/en/post/apple-ocsp/</p>
-<p>https://twitter.com/quakewang/status/1327880394801176576</p>
-<p>https://www.reddit.com/r/linux/comments/aidxwa/why_does_apt_not_use_https/ https://blog.cuiyongjian.com/engineering/git-https-ssh/<br />
-https://stackoverflow.com/questions/11041729/why-does-github-recommend-https-over-ssh<br />
-https://news.ycombinator.com/item?id=18958679&amp;p=2 https://askubuntu.com/questions/146108/how-to-use-https-with-apt-get https://unix.stackexchange.com/questions/90227/why-there-is-no-https-transport-for-debian-apt-tool</p>
-<p>https://web.archive.org/web/20180125154639/https://whydoesaptnotusehttps.com/ why does apt not use https的存档</p>
-<p>https://wiki.debian.org/SecureApt</p>
-<p><span class="exturl" data-url="aHR0cDovL3d3dy5tb3NlcndhcmUuY29tLzIwMDkvMDYvZmlyc3QtZmV3LW1pbGxpc2Vjb25kcy1vZi1odHRwcy5odG1s">The First Few Milliseconds of an HTTPS Connection<i class="fa fa-external-link-alt"></i></span></p>
-<p>https://github.com/xirong/my-web/blob/master/readme.md</p>
-<p>https://cloud.tencent.com/developer/article/1399863 APT 为什么不使用 HTTPS 协议？</p>
-<h2 id="附">附</h2>
-<h3 id="cqu-mirrors事件官方的完整说明">CQU Mirrors事件官方的完整说明</h3>
-<p>这里放一下CQU电报新闻的官方声明，地址：https://t.me/cqumirror</p>
-<blockquote>
-<p>2020.11.7</p>
-<p>#warnings 因学校防火墙过滤规则禁止明文访问部分文件，请使用 https 方式访问镜像站</p>
-<p>请暂时更换到其他镜像站。校信息中心进行防火墙维护及站群升级，目前镜像站处于完全不可用状态。恳请谅解。</p>
-<p>2020.11.8</p>
-<p>请务必使用https协议！目前使用http协议获取部分文件将被网络中心防火墙拦截并封禁 IP 约5分钟（初次访问）！目前无任何解决方法，我们仍在积极与校方沟通看是否能够放行。</p>
-<p>2020.11.9</p>
-<p>由于网络中心系统升级和维护，外部流量对于内部服务的访问将被拦截。目前未能知晓何时恢复。如急需使用镜像服务请更换至其他镜像服务器。对所造成的不便恳请谅解。</p>
-<p>2020.11.11</p>
-<p>已确认 IDC 正常开放外网流量访问。镜像服务恢复正常。但仍请不要明文访问数据库文件。目测防火墙策略已经调整但并未有明确证据表明限制放宽。请使用 HTTPS 协议访问镜像。</p>
-<p>2020.11.18</p>
-<p>经沟通目前 IDC 不再拦截明文入站请求。http 协议访问恢复</p>
-</blockquote>
-<p>而且cqu国庆的时候也习惯性闭关锁校，<del>跟你电完全一致</del>（不是，全国高校的网管怎么都一个样啊）</p>
-<blockquote>
-<p>由于不可抗力，国庆期间重庆大学多个对外服务将无法从外部访问。镜像站服务亦受到牵连。恢复对外服务时间未知。对于所造成的不便我们深感遗憾。</p>
-</blockquote>
-<h3 id="为什么apt不使用https的原文">为什么apt不使用HTTPS的原文</h3>
-<p>这个网站已经变成在线发排的体育博彩网站了。这里附上原文</p>
-<blockquote>
-<h1 id="why-does-apt-not-use-https">Why does APT not use HTTPS?</h1>
-<p><em>"Isn't it more secure…?"</em></p>
-<h2 id="tldr">tl;dr</h2>
-<p>HTTPS is used to prevent intruders from being able to listen to communications between you and websites you visit, as well as to avoid data being modified without your knowledge.</p>
-<p>However, files obtained by APT are accompanied by their own signature which allows your system to check they originated from your distribution.</p>
-<p>These signatures are checked against a small set of trusted keys already stored on your computer. Downloaded files are rejected by APT if they are signed by an unknown key<span class="exturl" data-url="aHR0cHM6Ly93ZWIuYXJjaGl2ZS5vcmcvd2ViLzIwMTgwMTI1MTU0NjM5L2h0dHBzOi8vd2h5ZG9lc2FwdG5vdHVzZWh0dHBzLmNvbS8jZm9vdG5vdGUtYXB0LXVua293bi1rZXk=">1<i class="fa fa-external-link-alt"></i></span> or are missing valid signatures. This ensures that the packages you are installing were authorised by your distribution and have not been modified or replaced since.</p>
-<p>HTTPS can not detect if malicious tampering has occurred on the disks of the server you are downloading from. There is little point "securely" transfering a compromised package.</p>
-<h2 id="but-what-about-privacy">But what about privacy?</h2>
-<p>HTTPS does not provide meaningful privacy for obtaining packages. As an eavesdropper can usually see which hosts you are contacting, if you connect to your distribution's mirror network it would be fairly obvious that you are downloading updates.</p>
-<p>Furthermore, even over an encrypted connection it is not difficult to figure out which files you are downloading based on the size of the transfer<span class="exturl" data-url="aHR0cHM6Ly93ZWIuYXJjaGl2ZS5vcmcvd2ViLzIwMTgwMTI1MTU0NjM5L2h0dHBzOi8vd2h5ZG9lc2FwdG5vdHVzZWh0dHBzLmNvbS8jZm9vdG5vdGUtdG9y">2<i class="fa fa-external-link-alt"></i></span>. HTTPS would therefore only be useful for downloading from a server that also offers other packages of similar or identical size.</p>
-<p>What's more important is <em>not</em> that your connection is encrypted but that the files you are installing haven't been modified.</p>
-<h2 id="overly-trusting-cas">Overly trusting CAs</h2>
-<p>There are over 400 "Certificate Authorities" who may issue certificates for any domain. Many have poor security records and some are even explicitly controlled by governments<span class="exturl" data-url="aHR0cHM6Ly93ZWIuYXJjaGl2ZS5vcmcvd2ViLzIwMTgwMTI1MTU0NjM5L2h0dHBzOi8vd2h5ZG9lc2FwdG5vdHVzZWh0dHBzLmNvbS8jZm9vdG5vdGUtY2E=">3<i class="fa fa-external-link-alt"></i></span>.</p>
-<p>This means that HTTPS provides little-to-no protection against a targeted attack on your distribution's mirror network. You could limit the set of valid certificates that APT would accept, but that would be be error-prone and unlikely worth the additional hassle over the existing public-key scheme.</p>
-<h2 id="why-not-provide-https-anyway">Why not provide HTTPS anyway?</h2>
-<p>Your distribution could cryptographically sign the files using the existing scheme and additionally serve the files over HTTPS to provide "defense in depth."</p>
-<p>However, providing a huge worldwide mirror network available over SSL is not only a complicated engineering task (requiring the secure exchange and storage of private keys), it implies a misleading level of security and privacy to end-users as described above.</p>
-<p>A switch to HTTPS would also mean you could not take advantage of local proxy servers for speeding up access and would additionally prohibit many kinds of peer-to-peer mirroring where files are stored on servers not controlled directly by your distribution. This would disproportionately affect users in remote locales.</p>
-<h2 id="ah-what-about-replay-attacks">Ah, what about replay attacks?</h2>
-<p>One issue with a naïve signing mechanism is that it does not guarantee that you are seeing the most up-to-date version of the archive.</p>
-<p>This can lead to a <em>replay attack</em> where an attacker substitutes an archive with an earlier—unmodified—version of the archive. This would prevent APT from noticing new security updates which they could then exploit.</p>
-<p>To mitigate this problem, APT archives includes a timestamp after which all the files are considered stale<span class="exturl" data-url="aHR0cHM6Ly93ZWIuYXJjaGl2ZS5vcmcvd2ViLzIwMTgwMTI1MTU0NjM5L2h0dHBzOi8vd2h5ZG9lc2FwdG5vdHVzZWh0dHBzLmNvbS8jZm9vdG5vdGUtdmFsaWQtdW50aWw=">4<i class="fa fa-external-link-alt"></i></span>.</p>
-<h2 id="where-can-i-find-out-more">Where can I find out more?</h2>
-<p>More technical details may be found on the <em><span class="exturl" data-url="aHR0cHM6Ly93ZWIuYXJjaGl2ZS5vcmcvd2ViLzIwMTgwMTI1MTU0NjM5L2h0dHBzOi8vd2lraS5kZWJpYW4ub3JnL1NlY3VyZUFwdA==">SecureAPT<i class="fa fa-external-link-alt"></i></span></em> wiki page.</p>
-<h3 id="footnotes">Footnotes</h3>
-<ol type="1">
-<li>This appears as <code>Release: The following signatures couldn't be verified because the public key is not available</code>.</li>
-<li>This may even be the case if using Tor via (for example) <span class="exturl" data-url="aHR0cHM6Ly93ZWIuYXJjaGl2ZS5vcmcvd2ViLzIwMTgwMTI1MTU0NjM5L2h0dHBzOi8vcmV0b3V0LmNvLnVrL2Jsb2cvMjAxNC8wNy8yMS9hcHQtdHJhbnNwb3J0LXRvcg==">apt-transport-tor<i class="fa fa-external-link-alt"></i></span>.</li>
-<li>See, for example, <em><span class="exturl" data-url="aHR0cHM6Ly93ZWIuYXJjaGl2ZS5vcmcvd2ViLzIwMTgwMTI1MTU0NjM5L2h0dHBzOi8vc2VjdXJpdHkuc3RhY2tleGNoYW5nZS5jb20vcXVlc3Rpb25zLzUzMTE3L3doYXQtdHJ1c3RlZC1yb290LWNlcnRpZmljYXRpb24tYXV0aG9yaXRpZXMtc2hvdWxkLWktdHJ1c3Q=">What trusted root certification authorities should I trust?<i class="fa fa-external-link-alt"></i></span></em> on StackOverflow.</li>
-<li>See the <em><span class="exturl" data-url="aHR0cHM6Ly93ZWIuYXJjaGl2ZS5vcmcvd2ViLzIwMTgwMTI1MTU0NjM5L2h0dHBzOi8vd2lraS5kZWJpYW4ub3JnL0RlYmlhblJlcG9zaXRvcnkvRm9ybWF0I0RhdGUuMkNfVmFsaWQtVW50aWw=">Date, Valid-Until<i class="fa fa-external-link-alt"></i></span></em> section of the <code>DebianRepository</code> page on the Debian Wiki.</li>
-</ol>
-</blockquote>
-]]></content>
-      <tags>
-        <tag>HTTPS</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hexo博客部署和Next主题设置</title>
     <url>/bd8f/</url>
     <content><![CDATA[<p>这里仅记录个人问题，找教程为什么不看看官方文档呢 <a id="more"></a></p>
@@ -4868,6 +4773,151 @@ INFO  140 files generated in 3.07 s<span aria-hidden="true" class="line-numbers-
       <tags>
         <tag>hexo</tag>
         <tag>Next</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>HTTPS二三事</title>
+    <url>/https-in-some-specific-scene/</url>
+    <content><![CDATA[<p>未完待续 <a id="more"></a></p>
+<p>诸如<code>git clone</code> 、 <code>apt/yum/pacman</code>下载公开文件，到底有没有必要用HTTPS(或者SSH之类的其他加密方式)？一些不传输帐号密码之类的隐私的不怎么改变网页内容的静态网站有必要吗？</p>
+<p>以前我也觉得没有必要，结果就被险恶的世道教做人了。 差不多可以盖棺定论了，如果处于运营商和防火墙的慈祥关爱中，有必要，那可太有必要了。</p>
+<p>咋说，本来HTTPS是拿来给你们防范FBI、CIA、黑皮、灰产人士、高雅人士针对某个、某些特定目标搞中间人攻击偷你密码、篡改你获取的数据啥的。这种用途下载公开的包、镜像、一些仓库里的代码倒是没必要上HTTPS，普通人下个安装包也没啥东西值得攻击的，而且连到服务器下一个体积不太小的压缩包/二进制文件也不太好掺砂子，而且下完了之后还有GPG校验，传输的时候多套一个HTTPS大部分时候。而且HTTPS两边都有带宽、加解密之类的成本损耗，下载大文件是不太划算的。</p>
+<p>可能他们也妹想到某些运营商和防火墙能这么流氓，直接公然大范围污染。</p>
+<h2 id="目前使用https的一些小牺牲">目前使用HTTPS的一些小牺牲</h2>
+<h3 id="成本">成本</h3>
+<p>一般来说：</p>
+<p>需要证书，证书要给签发机构交钱<br />
+延迟相比HTTP略高，不过TLS1.3之后 加密解密吃资源</p>
+<p>上面那些在今天看来问题都不是特别大，现在有很多 Let's Encrypt 之类的免费的（收费的CA证书也比十年前便宜太多了），现在的CPU性能对于看网页肯定是过剩的，延迟在TLS1.3以后也不是太大问题</p>
+<h3 id="有些工具没有https支持">有些工具没有HTTPS支持</h3>
+<p>比如OpenWRT那个官方固件一开始就没有HTTPS支持，你得自己装一个。</p>
+<h3 id="很多老网站对https的支持也不太好">很多老网站对HTTPS的支持也不太好</h3>
+<p>用了 HTTPS Everywhere 插件之后经常会发现很多网站体验极差，强制HTTPS之后各种资源加载不出来（关键是很多时候你还意识不到）</p>
+<p><img src="/https-in-some-specific-scene/1606701614.png" /> 比如你电的图书馆，如果用的是HTTPS， 那你的图书位置看不到了（我来这找书最重要的就是这个东西，结果你不告诉我几楼）</p>
+<p><img src="/https-in-some-specific-scene/1606702010.png" /></p>
+<p>这个问题自从17年就有了，一直到现在，都还没修，全站HTTPs遥遥无期。 当然这个问题是因为HTTPS和HTTP的混合 会被新版chrome浏览器悄无声息地拦截，在console里才能看到一个</p>
+<pre class="line-numbers language-log" data-language="log"><code class="language-log">Mixed Content: The page at &#39;&lt;URL&gt;&#39; was loaded over HTTPS, but requested an insecure script &#39;&lt;URL&gt;&#39;. This request has been blocked; the content must be served over HTTPS.<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>你用尊贵的 <em>Internet Explorer</em> 或者老版本chrome是没有这种问题的，但是会加载漫长的几秒钟（在图书馆那个渣配的机子上甚至可能等待10秒），然后弹出来一个大大的警告框，问你<code>是否只查看安全传送的内容</code>，如果你点了<code>是</code>，恭喜你，那你看不到图书的位置了。（我这几年已经无数次看到有倒霉孩子点了是然后找不到书在什么地方了）</p>
+<p>当然很多大网站也在换到HTTPS上也各种问题，知乎上个月准备全站HTTPS的时候出了好几天幺蛾子，<code>400 Bad Request The plain HTTP request was sent to HTTPS port</code>。(不过知乎这个只在乎APP，web版改版之后bug越来越多已经常态化了) <img src="/https-in-some-specific-scene/1606731950.png" /></p>
+<h3 id="登陆认证页面没法劫持https">登陆认证页面没法劫持HTTPS</h3>
+<p>某些登陆认证的界面的原理和劫持差不多，用的<span class="exturl" data-url="aHR0cHM6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvQ2FwdGl2ZV9wb3J0YWw=">强制门户<i class="fa fa-external-link-alt"></i></span>（Captive Portal） 强制门户在自己的DNS服务器中将用户的HTTP请求302重定向到登陆页面 HTTPS没法劫持（尤其是用了HSTS的情况下），结果就卡在那里弹不出登陆认证的界面了。（其实我建议你出门在外使用流量，不要用商场的WIFI，不要贪便宜用手机验证码登陆或者微信登陆）</p>
+<p>有个网站叫<span class="exturl" data-url="aHR0cDovL25ldmVyc3NsLmNvbS8=">neverssl<i class="fa fa-external-link-alt"></i></span>，当你弹不出WIFI登录界面的时候可以访问一下。（其实你随便输入一个什么）</p>
+<p>一般浏览器会有相应的机制，比如火狐的 detect portal， 会向 <span class="exturl" data-url="aHR0cDovL2RldGVjdHBvcnRhbC5maXJlZm94LmNvbQ==">http://detectportal.firefox.com<i class="fa fa-external-link-alt"></i></span> 周期性的发包。</p>
+<p>有的时候登陆认证门户不认200状态码,得用204，然后302跳转到登陆界面。 （提供204状态码的网站很多了，比如<span class="exturl" data-url="aHR0cHM6Ly93d3cudjJleC5jb20vdC8zMDM4ODk/cD0x">v站的这个<i class="fa fa-external-link-alt"></i></span>，基本都是给安卓用的，原生安卓会试图访问谷歌提供的204状态码的服务器来判断是否联网成功，）</p>
+<h3 id="ca证书">CA证书</h3>
+<p>CA证书颁发商公然耍流氓你有什么办法 https://www.zhihu.com/question/50298017 https://www.zhihu.com/question/22795329</p>
+<p>CNNIC</p>
+<p>HSTS MITM SSLStrip HTTP+Strict+Transport+Security HTTPSStrip https://blog.cuiyongjian.com/safe/https-attack/ https://www.zhihu.com/question/22779469</p>
+<h2 id="apt下载更新是否使用https的争议">apt下载更新是否使用HTTPS的争议</h2>
+<figure>
+<img src="/https-in-some-specific-scene/image-20201127170614232.png" alt="image-20201127170614232" /><figcaption aria-hidden="true">image-20201127170614232</figcaption>
+</figure>
+<p>之前有一个叫的网站上的一篇文章叫，引起了不少的讨论。大概的观点是HTTPS在下载这种公共资源的时候没有必要啊。</p>
+<p><strong>而现在，这个网站已经变成体育博彩网站了，造化弄人啊。</strong></p>
+<p>理由主要有：</p>
+<ol type="1">
+<li><p>因为你有GPG校验，HTTPS显得没有什么太大必要。你下下来用GPG校验一下就行了，就算你用HTTPS下载，也只能保证传输过程中没有被篡改，。</p></li>
+<li><p>匿名和隐私的问题：你连上镜像站，那明显是在下镜像源的包。即使你用了HTTPS，还是能通过你下载的包的大小知道你下了些啥（就算你用<code>apt-transport-tor</code>也有这个问题）。</p></li>
+<li><p>还有一个重放攻击（Replay Attacks）的问题，可能有人将包替换为没有安全更新的老版本（签名校验能通过）。</p>
+<p>由于apt有自己的时间戳，晚于这个时间的都被认为非法，时间戳在一段时间内自动失效</p></li>
+</ol>
+<h3 id="现在再看">现在再看</h3>
+<p>当时我还是觉得这个写的有点道理，不到一年就被 cqu mirrors 的事情啪啪打脸。</p>
+<p>当然这个作者显然没考虑CQU Mirrors事件之类的情况。</p>
+<h2 id="重庆大学镜像源被搞">重庆大学镜像源被搞</h2>
+<p>这个事件一出基本可以终结大部分争议了（至少国内是这样的）</p>
+<p>几周前他们那边学校网管的防火墙拦截了80端口的部分HTTP请求，比如一些翻墙工具的包。如果你HTTP明文访问80端口，你会被直接RST。后来在与网管的交涉下恢复了。</p>
+<h2 id="github用ssh还是https">github用SSH还是HTTPS</h2>
+<p>按说SSH这种TCP+SSL的协议会比HTTPS这种跑在应用层的快不少。然而在天朝SSH挺容易被运营商Qos的， HTTPS可以薅cloudflare之类的CDN的羊毛搭github反代。给HTTPS挂socks5/HTTP代理也方便。</p>
+<h2 id="dns-over-https">DNS over HTTPS</h2>
+<p>众所周知传统的DNS是裸UDP的，后来由于 有了使用TCP的DNS，后来出于隐私的考虑又有了DoH（DNS over HTTPS）和DoT（DNS over TLS） 那为什么不用DoT呢？DoT那个853端口太显眼了，分分钟被运营商搞。 DoH最大的问题是慢，如果直接使用远程的DoH，查询发过去和发回来都走HTTPS。在国内用cloudflare的DoH体验极差，如果想用最好自己搭一个。 另一个问题是不支持ECS</p>
+<p>其实DoH在国内也不太推荐，主要是对速度影响太大了。有的方案是走分流，国内IP用国内的DNS，国外的走DoH或者在v2ray之类的跳板上用远程DNS 而且保护隐私方面也不太能</p>
+<p>另，前几天360推出了收费浏览器，居然还有什么国密DoH，号称保护隐私。周红衣说是那就是吧。</p>
+<h2 id="苹果的ocsp">苹果的OCSP</h2>
+<h2 id="闲谈">闲谈</h2>
+<p>HTTPS这种保护隐私的东西按说很多大公司推进起来都很不积极的。但是靠着隐私和广告挣钱的谷歌和百度推起HTTPs来相当的积极，还一口一个在意用户隐私。 谷歌当年大力推广HTTPS的时候还立着<em>不作恶</em>的牌坊，2010年的你说它在乎用户隐私，姑且信了。 谷歌为了推HTTPS，直接抬高HTTPS网站相对于HTTP网站的SEO搜索权重。</p>
+<p>百度也是国内最早一批全站HTTPS的，，当然能说出来“你要隐私干什么”百度显然不会这么好心，嗯，<strong>运营商猛于虎也</strong></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzI4Mzc5MDg4">如何看待百度全站搜索进入 HTTPS 时代？<i class="fa fa-external-link-alt"></i></span></p>
+<figure>
+<img src="/https-in-some-specific-scene/image-20201127202536977.png" alt="image-20201127202536977" /><figcaption aria-hidden="true">image-20201127202536977</figcaption>
+</figure>
+<p>百度运维团队当时发布的系列文章还不错，然而</p>
+<p><img src="/https-in-some-specific-scene/1606707060.png" /></p>
+<p>你用百度搜他们的文章，第一条第二条是CSDN和简书的抄袭转载，第三条是他们的，然而500挂掉了。这是怎么回事呢，对于这么好的文章没有被百家号抄袭，小编也很感到惊讶呢。</p>
+<h2 id="参考和链接">参考和链接</h2>
+<p>https://breakthrough.blog/broadcast/31929</p>
+<p>https://v2ex.com/t/725979</p>
+<p>https://www.solidot.org/story?sid=66084</p>
+<p>很早就有了https://www.v2ex.com/t/622672?p=1</p>
+<p>https://sneak.berlin/i18n/2020-11-12-your-computer-isnt-yours.zh/</p>
+<p>https://blog.jacopo.io/en/post/apple-ocsp/</p>
+<p>https://twitter.com/quakewang/status/1327880394801176576</p>
+<p>https://www.reddit.com/r/linux/comments/aidxwa/why_does_apt_not_use_https/ https://blog.cuiyongjian.com/engineering/git-https-ssh/<br />
+https://stackoverflow.com/questions/11041729/why-does-github-recommend-https-over-ssh<br />
+https://news.ycombinator.com/item?id=18958679&amp;p=2 https://askubuntu.com/questions/146108/how-to-use-https-with-apt-get https://unix.stackexchange.com/questions/90227/why-there-is-no-https-transport-for-debian-apt-tool</p>
+<p>https://web.archive.org/web/20180125154639/https://whydoesaptnotusehttps.com/ why does apt not use https的存档</p>
+<p>https://wiki.debian.org/SecureApt</p>
+<p><span class="exturl" data-url="aHR0cDovL3d3dy5tb3NlcndhcmUuY29tLzIwMDkvMDYvZmlyc3QtZmV3LW1pbGxpc2Vjb25kcy1vZi1odHRwcy5odG1s">The First Few Milliseconds of an HTTPS Connection<i class="fa fa-external-link-alt"></i></span></p>
+<p>https://github.com/xirong/my-web/blob/master/readme.md</p>
+<p>https://cloud.tencent.com/developer/article/1399863 APT 为什么不使用 HTTPS 协议？</p>
+<h2 id="附">附</h2>
+<h3 id="cqu-mirrors事件官方的完整说明">CQU Mirrors事件官方的完整说明</h3>
+<p>这里放一下CQU电报新闻的官方声明，地址：https://t.me/cqumirror</p>
+<blockquote>
+<p>2020.11.7</p>
+<p>#warnings 因学校防火墙过滤规则禁止明文访问部分文件，请使用 https 方式访问镜像站</p>
+<p>请暂时更换到其他镜像站。校信息中心进行防火墙维护及站群升级，目前镜像站处于完全不可用状态。恳请谅解。</p>
+<p>2020.11.8</p>
+<p>请务必使用https协议！目前使用http协议获取部分文件将被网络中心防火墙拦截并封禁 IP 约5分钟（初次访问）！目前无任何解决方法，我们仍在积极与校方沟通看是否能够放行。</p>
+<p>2020.11.9</p>
+<p>由于网络中心系统升级和维护，外部流量对于内部服务的访问将被拦截。目前未能知晓何时恢复。如急需使用镜像服务请更换至其他镜像服务器。对所造成的不便恳请谅解。</p>
+<p>2020.11.11</p>
+<p>已确认 IDC 正常开放外网流量访问。镜像服务恢复正常。但仍请不要明文访问数据库文件。目测防火墙策略已经调整但并未有明确证据表明限制放宽。请使用 HTTPS 协议访问镜像。</p>
+<p>2020.11.18</p>
+<p>经沟通目前 IDC 不再拦截明文入站请求。http 协议访问恢复</p>
+</blockquote>
+<p>而且cqu国庆的时候也习惯性闭关锁校，<del>跟你电完全一致</del>（不是，全国高校的网管怎么都一个样啊）</p>
+<blockquote>
+<p>由于不可抗力，国庆期间重庆大学多个对外服务将无法从外部访问。镜像站服务亦受到牵连。恢复对外服务时间未知。对于所造成的不便我们深感遗憾。</p>
+</blockquote>
+<h3 id="为什么apt不使用https的原文">为什么apt不使用HTTPS的原文</h3>
+<p>这个网站已经变成在线发排的体育博彩网站了。这里附上原文</p>
+<blockquote>
+<h1 id="why-does-apt-not-use-https">Why does APT not use HTTPS?</h1>
+<p><em>"Isn't it more secure…?"</em></p>
+<h2 id="tldr">tl;dr</h2>
+<p>HTTPS is used to prevent intruders from being able to listen to communications between you and websites you visit, as well as to avoid data being modified without your knowledge.</p>
+<p>However, files obtained by APT are accompanied by their own signature which allows your system to check they originated from your distribution.</p>
+<p>These signatures are checked against a small set of trusted keys already stored on your computer. Downloaded files are rejected by APT if they are signed by an unknown key<span class="exturl" data-url="aHR0cHM6Ly93ZWIuYXJjaGl2ZS5vcmcvd2ViLzIwMTgwMTI1MTU0NjM5L2h0dHBzOi8vd2h5ZG9lc2FwdG5vdHVzZWh0dHBzLmNvbS8jZm9vdG5vdGUtYXB0LXVua293bi1rZXk=">1<i class="fa fa-external-link-alt"></i></span> or are missing valid signatures. This ensures that the packages you are installing were authorised by your distribution and have not been modified or replaced since.</p>
+<p>HTTPS can not detect if malicious tampering has occurred on the disks of the server you are downloading from. There is little point "securely" transfering a compromised package.</p>
+<h2 id="but-what-about-privacy">But what about privacy?</h2>
+<p>HTTPS does not provide meaningful privacy for obtaining packages. As an eavesdropper can usually see which hosts you are contacting, if you connect to your distribution's mirror network it would be fairly obvious that you are downloading updates.</p>
+<p>Furthermore, even over an encrypted connection it is not difficult to figure out which files you are downloading based on the size of the transfer<span class="exturl" data-url="aHR0cHM6Ly93ZWIuYXJjaGl2ZS5vcmcvd2ViLzIwMTgwMTI1MTU0NjM5L2h0dHBzOi8vd2h5ZG9lc2FwdG5vdHVzZWh0dHBzLmNvbS8jZm9vdG5vdGUtdG9y">2<i class="fa fa-external-link-alt"></i></span>. HTTPS would therefore only be useful for downloading from a server that also offers other packages of similar or identical size.</p>
+<p>What's more important is <em>not</em> that your connection is encrypted but that the files you are installing haven't been modified.</p>
+<h2 id="overly-trusting-cas">Overly trusting CAs</h2>
+<p>There are over 400 "Certificate Authorities" who may issue certificates for any domain. Many have poor security records and some are even explicitly controlled by governments<span class="exturl" data-url="aHR0cHM6Ly93ZWIuYXJjaGl2ZS5vcmcvd2ViLzIwMTgwMTI1MTU0NjM5L2h0dHBzOi8vd2h5ZG9lc2FwdG5vdHVzZWh0dHBzLmNvbS8jZm9vdG5vdGUtY2E=">3<i class="fa fa-external-link-alt"></i></span>.</p>
+<p>This means that HTTPS provides little-to-no protection against a targeted attack on your distribution's mirror network. You could limit the set of valid certificates that APT would accept, but that would be be error-prone and unlikely worth the additional hassle over the existing public-key scheme.</p>
+<h2 id="why-not-provide-https-anyway">Why not provide HTTPS anyway?</h2>
+<p>Your distribution could cryptographically sign the files using the existing scheme and additionally serve the files over HTTPS to provide "defense in depth."</p>
+<p>However, providing a huge worldwide mirror network available over SSL is not only a complicated engineering task (requiring the secure exchange and storage of private keys), it implies a misleading level of security and privacy to end-users as described above.</p>
+<p>A switch to HTTPS would also mean you could not take advantage of local proxy servers for speeding up access and would additionally prohibit many kinds of peer-to-peer mirroring where files are stored on servers not controlled directly by your distribution. This would disproportionately affect users in remote locales.</p>
+<h2 id="ah-what-about-replay-attacks">Ah, what about replay attacks?</h2>
+<p>One issue with a naïve signing mechanism is that it does not guarantee that you are seeing the most up-to-date version of the archive.</p>
+<p>This can lead to a <em>replay attack</em> where an attacker substitutes an archive with an earlier—unmodified—version of the archive. This would prevent APT from noticing new security updates which they could then exploit.</p>
+<p>To mitigate this problem, APT archives includes a timestamp after which all the files are considered stale<span class="exturl" data-url="aHR0cHM6Ly93ZWIuYXJjaGl2ZS5vcmcvd2ViLzIwMTgwMTI1MTU0NjM5L2h0dHBzOi8vd2h5ZG9lc2FwdG5vdHVzZWh0dHBzLmNvbS8jZm9vdG5vdGUtdmFsaWQtdW50aWw=">4<i class="fa fa-external-link-alt"></i></span>.</p>
+<h2 id="where-can-i-find-out-more">Where can I find out more?</h2>
+<p>More technical details may be found on the <em><span class="exturl" data-url="aHR0cHM6Ly93ZWIuYXJjaGl2ZS5vcmcvd2ViLzIwMTgwMTI1MTU0NjM5L2h0dHBzOi8vd2lraS5kZWJpYW4ub3JnL1NlY3VyZUFwdA==">SecureAPT<i class="fa fa-external-link-alt"></i></span></em> wiki page.</p>
+<h3 id="footnotes">Footnotes</h3>
+<ol type="1">
+<li>This appears as <code>Release: The following signatures couldn't be verified because the public key is not available</code>.</li>
+<li>This may even be the case if using Tor via (for example) <span class="exturl" data-url="aHR0cHM6Ly93ZWIuYXJjaGl2ZS5vcmcvd2ViLzIwMTgwMTI1MTU0NjM5L2h0dHBzOi8vcmV0b3V0LmNvLnVrL2Jsb2cvMjAxNC8wNy8yMS9hcHQtdHJhbnNwb3J0LXRvcg==">apt-transport-tor<i class="fa fa-external-link-alt"></i></span>.</li>
+<li>See, for example, <em><span class="exturl" data-url="aHR0cHM6Ly93ZWIuYXJjaGl2ZS5vcmcvd2ViLzIwMTgwMTI1MTU0NjM5L2h0dHBzOi8vc2VjdXJpdHkuc3RhY2tleGNoYW5nZS5jb20vcXVlc3Rpb25zLzUzMTE3L3doYXQtdHJ1c3RlZC1yb290LWNlcnRpZmljYXRpb24tYXV0aG9yaXRpZXMtc2hvdWxkLWktdHJ1c3Q=">What trusted root certification authorities should I trust?<i class="fa fa-external-link-alt"></i></span></em> on StackOverflow.</li>
+<li>See the <em><span class="exturl" data-url="aHR0cHM6Ly93ZWIuYXJjaGl2ZS5vcmcvd2ViLzIwMTgwMTI1MTU0NjM5L2h0dHBzOi8vd2lraS5kZWJpYW4ub3JnL0RlYmlhblJlcG9zaXRvcnkvRm9ybWF0I0RhdGUuMkNfVmFsaWQtVW50aWw=">Date, Valid-Until<i class="fa fa-external-link-alt"></i></span></em> section of the <code>DebianRepository</code> page on the Debian Wiki.</li>
+</ol>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>HTTPS</tag>
       </tags>
   </entry>
   <entry>
