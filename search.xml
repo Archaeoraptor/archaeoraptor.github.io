@@ -219,123 +219,6 @@ pip install <span class="token operator">-</span>r requirements<span class="toke
       </tags>
   </entry>
   <entry>
-    <title>Keras笔记</title>
-    <url>/d5cc/</url>
-    <content><![CDATA[<p>瞎写的 <a id="more"></a></p>
-<h2 id="keras函数式api">Keras函数式API</h2>
-<p>构造张量</p>
-<pre><code>inputs = Input(shape=(64,))</code></pre>
-<p>创建层</p>
-<pre><code>dense = layers.Dense(32, activation=&#39;relu&#39;)
-
-output_tensor = dense(input_tensor)</code></pre>
-<p>输出也是一个张量</p>
-<h2 id="回调函数等">回调函数等</h2>
-<p>EarlyStopping中断训练, ModelCheckpoint保存模型,如 <pre class="line-numbers language-python" data-language="python"><code class="language-python">callbacks_list <span class="token operator">=</span> <span class="token punctuation">[</span>
-keras<span class="token punctuation">.</span>callbacks<span class="token punctuation">.</span>EarlyStopping<span class="token punctuation">(</span>
-monitor<span class="token operator">=</span><span class="token string">'acc'</span><span class="token punctuation">,</span>
-patience<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span>
-<span class="token punctuation">)</span><span class="token punctuation">,</span>
-keras<span class="token punctuation">.</span>callbacks<span class="token punctuation">.</span>ModelCheckpoint<span class="token punctuation">(</span>
-filepath<span class="token operator">=</span><span class="token string">'my_model.h5'</span><span class="token punctuation">,</span>
-monitor<span class="token operator">=</span><span class="token string">'val_loss'</span><span class="token punctuation">,</span>
-save_best_only<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span>
-<span class="token punctuation">)</span>
-<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre> 改变学习率,ReduceLROnPlateau函数 <pre class="line-numbers language-python" data-language="python"><code class="language-python">callbacks_list <span class="token operator">=</span> <span class="token punctuation">[</span>
-keras<span class="token punctuation">.</span>callbacks<span class="token punctuation">.</span>ReduceLROnPlateau<span class="token punctuation">(</span>
-monitor<span class="token operator">=</span><span class="token string">'val_loss'</span>
-factor<span class="token operator">=</span><span class="token number">0.1</span><span class="token punctuation">,</span>
-patience<span class="token operator">=</span><span class="token number">10</span><span class="token punctuation">,</span>
-<span class="token punctuation">)</span>
-<span class="token punctuation">]</span>
-model<span class="token punctuation">.</span>fit<span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">,</span>
-epochs<span class="token operator">=</span><span class="token number">10</span><span class="token punctuation">,</span>
-batch_size<span class="token operator">=</span><span class="token number">32</span><span class="token punctuation">,</span>
-callbacks<span class="token operator">=</span>callbacks_list<span class="token punctuation">,</span>
-validation_data<span class="token operator">=</span><span class="token punctuation">(</span>x_val<span class="token punctuation">,</span> y_val<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre> ## 参考</p>
-<ol type="1">
-<li><span class="exturl" data-url="aHR0cHM6Ly9rZXJhcy5pbw==">keras官方文档<i class="fa fa-external-link-alt"></i></span></li>
-<li>Python深度学习</li>
-</ol>
-]]></content>
-      <categories>
-        <category>笔记&amp;札记</category>
-      </categories>
-      <tags>
-        <tag>炼丹</tag>
-        <tag>keras</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>喜欢的东东</title>
-    <url>/b27a/</url>
-    <content><![CDATA[<p>My Collection <a id="more"></a></p>
-<p><img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/20190916114948.png"/></p>
-<h2 id="关于入侵物种的题外话">关于入侵物种的题外话</h2>
-<p>这是题外话，可以直接跳过本节看后面的</p>
-<p>首先讲一句题外话，流浪猫、流浪狗是危害相当大的入侵物种，威胁一点不比红耳龟、罗非、克氏原螯虾、食蚊鱼小，可以参见<span class="exturl" data-url="aHR0cHM6Ly93d3cubmF0dXJlLmNvbS9hcnRpY2xlcy9uY29tbXMyMzgw">关于散养猫的nature主页文章<i class="fa fa-external-link-alt"></i></span> 应该<font size="4">直接扑杀或关在室内收养</font><br />
-我反对领养放归绝育等所谓TNR行为，这就是对生态十分不负责任的绥靖和伪善，微博上一些所谓科普圈大v，怕招惹猫奴狗奴掉粉影响做生意，居然支持绝育放归，反对扑杀，根本配不上做科普博主和环保人士。 （流浪猫问题可以看看前百度猫吧吧主<span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vcC8xMDA1MDUyMTMyNTQ4MTcw">火巳<i class="fa fa-external-link-alt"></i></span>的态度。） <br><font size="3">生态 &gt;&gt; 单一物种保护 &gt;&gt; 动物福利</font><br/> 比如，某开水，某博物杂志。 博物12年之前还算不错，后来就掉钱眼里了。连中医药问题都不敢说，连谭医生都敢怼红毛，你一个科普大v啥也不敢说，杂志本身质量也断崖式下跌，原来好歹有点靠谱内容，现在书里网上全程插科打诨卖萌，已经不值得关注了，再见</p>
-<p>开水经常洗地，不过这在微博似乎是一个广为人知的事情，这里不多说了。当然果壳那里有洗地机成吨出没，大家笑一笑就好。还有youtube搬运工刘dark先生，咳咳。<br />
-大家还是要擦亮眼睛，人心不古啊，科普juan的姿势水平真是令人捉急。</p>
-<p>入侵物种等一系列头大的问题，以后有空专门写一篇吧，这里不多讲了。</p>
-<p><font size="3">环境问题可以看看<span class="exturl" data-url="aHR0cHM6Ly9ib29rZG93bi5vcmcveXVmcmVlL2hqaGJiLw==">环境黑板报<i class="fa fa-external-link-alt"></i></span></font> 科普讲堂系列文章不错, 生化环材的就业和现状也可以参考</p>
-<h2 id="花鸟鱼虫">花鸟鱼虫</h2>
-<h3 id="网站">网站</h3>
-<ol type="1">
-<li><span class="exturl" data-url="aHR0cDovL3d3dy5jcWgyby5jb20v">两江中国原生论坛<i class="fa fa-external-link-alt"></i></span> 国内最大的原生鱼网站,饿老大的网站，十多年了，也没啥广告和捐款，全靠个人撑着，算是比较良心的了，十年前感觉非常热闹，现在比较冷清了(现在贴吧和BBS基本都在没落，大势所趋啊，没办法，中昆论坛等大站都关了，可惜)。论坛几经改版，03年至今的老网虫数据都还留着，目前新版还在建，但是今年经常加载很慢。</li>
-<li><span class="exturl" data-url="aHR0cHM6Ly93d3cuam9yaXNkZXJhZWR0LmJlLw==">https://www.jorisderaedt.be/<i class="fa fa-external-link-alt"></i></span> 一位大触画家，<span class="exturl" data-url="aHR0cHM6Ly93d3cuam9obmJhbm92aWNoZmluZWFydC5jb20v">https://www.johnbanovichfineart.com/<i class="fa fa-external-link-alt"></i></span> 另一位<br />
-</li>
-<li><span class="exturl" data-url="aHR0cDovL21pY3Jvc2N1bHB0dXJlLm5ldC9tYXJpb24tZmxpZ2h0bGVzcy1tb3RoLmh0bWw=">http://microsculpture.net/marion-flightless-moth.html<i class="fa fa-external-link-alt"></i></span> 各种高清昆虫照</li>
-<li><span class="exturl" data-url="aHR0cHM6Ly93d3cuaW5hdHVyYWxpc3Qub3JnLw==">iNaturalist<i class="fa fa-external-link-alt"></i></span> 一个物种鉴定社区，大佬云集</li>
-<li><span class="exturl" data-url="aHR0cDovL3d3dy5hbXBoaWJpYWNoaW5hLm9yZy8=">中国两栖类<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly93d3cuZGF2aWRoZXJhc2ltdHNjaHVrLmNvbS8=">David Herasimtschuk<i class="fa fa-external-link-alt"></i></span> 北美水生物，<span class="exturl" data-url="aHR0cDovL3d3dy5pc2FhY3N6YWJvLmNvbS8=">http://www.isaacszabo.com/<i class="fa fa-external-link-alt"></i></span>还有这个</li>
-</ol>
-<h2 id="网站-1">网站</h2>
-<ol type="1">
-<li><span class="exturl" data-url="aHR0cHM6Ly93d3cud29sZnJhbWFscGhhLmNvbS8=">WolframAppha<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9naXQtc2NtLmNvbS9ib29rL2VuL3Yy">git教程<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cDovL3d3dy41Mm5scC5jbi8=">52nlp<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly93d3cucHRhYmxlLmNvbS8=">元素周期表<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9pbmthcm5hdGUuY29tLw==">在线地图绘制<i class="fa fa-external-link-alt"></i></span></li>
-<li>draw.io</li>
-<li><span class="exturl" data-url="aHR0cHM6Ly93d3cuY2hhbmdoYWkub3JnLw==">卢昌海的主页<i class="fa fa-external-link-alt"></i></span> （本人完全不赞成其政治立场）</li>
-<li><span class="exturl" data-url="aHR0cDovL3d3dy5qb3lmdWxwaHlzaWNzLm5ldA==">乱讲区<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9jaGFvbGkuY2x1Yi8=">超理论坛<i class="fa fa-external-link-alt"></i></span></li>
-</ol>
-<h2 id="音游文娱">音游文娱</h2>
-<ol type="1">
-<li>Hollow Knigkt 不再有梦</li>
-<li>kr系列塔防（3&gt;1≥2）（不包括kr4）</li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9nYWxsZXJ5LmRyeWNhY3R1cy5jb20=">Poly Bridge Gallery<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9uY2FzZS5tZS90cnVzdC8=">信任的进化<i class="fa fa-external-link-alt"></i></span></li>
-</ol>
-<h2 id="一些软件">一些软件</h2>
-<p>ios的软件就暂时不推荐了，win10和安卓现在不怎么用了，凭着印象写一点吧，反正也没人看。 Linux下的图形软件还是太少了。很多跨平台的都是electron，要不就是web版，几乎把KDE或者LXDE桌面省下来的内存资源全给吃了，对渣配置机子实在不怎么友好。</p>
-<h3 id="ssh客户端">ssh客户端</h3>
-<p>一般直接ssh命令连上去，但是教研室机子加上自己的VPS多了，一个一个全敲命令写脚本忙不过来，尤其是有的时候又是代理又是跳板的。外加本人非命令行键盘控，总想找个客户端，win上有xshell和Mobaxterm（这个用起来略卡，功能是真的全），我非常喜欢Mobaxterm，可惜Mobaxterm只有windows版本的。试了很多挑出来这两个，都在开发维护更新中。</p>
-<h4 id="terimus">terimus</h4>
-<p>electron应用（相信大家看到electron都知道这意味着什么），漂亮、功能有点少、占内存高，略卡。在</p>
-<h4 id="asbru-cm">asbru-cm</h4>
-<p><a href="https://github.com/asbru-cm/asbru-cm/"><em>Ásbrú Connection Manager</em></a>一个功能足够全的客户端，勉强能达到Mobaxterm七成的水平。</p>
-<h3 id="阅读器">阅读器</h3>
-<h4 id="静读天下">静读天下</h4>
-<p>安卓下最好的阅读器没有之一</p>
-<h4 id="foliate">foliate</h4>
-<p>epub阅读器，足够小巧，功能恰好够用（舒服程度和功能不如安卓版静读天下，单就体验略逊于老edge）</p>
-<h3 id="kde桌面组件">KDE桌面组件</h3>
-<h4 id="event-calendar">event calendar</h4>
-<p>就这个感觉还行，别的花里胡哨的我也没折腾, latte-dock也不错，可惜太吃内存了</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yay -S plasma5-applets-eventcalendar<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-]]></content>
-      <categories>
-        <category>杂七杂八</category>
-      </categories>
-      <tags>
-        <tag>花鸟鱼虫</tag>
-        <tag>Collection</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Pythonic手账</title>
     <url>/a343/</url>
     <content><![CDATA[<p>等待填坑 <a id="more"></a></p>
@@ -387,102 +270,6 @@ poetry <span class="token function">install</span><span aria-hidden="true" class
       </categories>
       <tags>
         <tag>python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>清水寺生存指北</title>
-    <url>/40f3/</url>
-    <content><![CDATA[<p>你说我一个渣渣，硬件不精，软件不熟，边缘学院，劝退专业，没有国奖，没有论文，现在刚大四保完研都还没毕业，怎么就有脸来写生存指北了呢？ <a id="more"></a></p>
-<p>当年看到上交的那个上海交通大学生存手册，还是在大一。三年一晃而过，现在再看，我是笑不出来，我眼泪在肚子里流。</p>
-<p>国内理工科都有不少相似的问题，我感觉至少有七成问题是相似的（上交的那份生存指南也有十年了，只有小部分政策变化，大部分情况几乎没怎么变，放在今天依然是合适的）。但是每个学校都需要一个生存指南，剩下的三成大一新生是不太容易从报喜不报忧的学校官方账号、各怀鬼胎的老师、辅导员、坑蒙拐骗装腔作势狐假虎威的学长学姐那里打听到的。</p>
-<p>看到大一大二的一些同学年复一年在走弯路，于心不忍，还是写点东西，罢了。</p>
-<h2 id="写在前面的话">写在前面的话</h2>
-<ul>
-<li>大佬就不用看了，出门右转去打电赛/ACM/科研</li>
-<li>出国的同学也不用看了，出门左转河畔《成电飞跃手册》（现在的国际形势，想出国的同学不推荐来在实体清单上的你电）</li>
-<li>本文不具有时效性，大新闻实时放送看这里<span class="exturl" data-url="aHR0cHM6Ly91ZXN0Yy5pY3Uv">UESTC.icu<i class="fa fa-external-link-alt"></i></span></li>
-</ul>
-<h2 id="成电笑话">成电笑话</h2>
-<ul>
-<li><p>建校初年，苏联援建，师承苏系（看到那个苏式主楼了吗），笑话当然也一脉相承啦。</p></li>
-<li><p>一个川农的男生，一个西交的男生，一个川大的男生和一个成电的男生一起去请教一一个西财的男生怎么找女朋友。西财的说:“很简单，邀请你喜欢的女生，在周末到市里逛逛，买点礼物，请她吃饭，久而久之她就对你有好感了。”川大的问: "什么是周末?”西交的问:“什么是女生?”川农的问:“什么是市里？” 成电的问：“什么是周末？什么是女生？什么是市里？”</p></li>
-<li><p>“同学，请问您在支持课程改革方面动摇过🐴” “我和课程改革一起动摇”</p></li>
-<li><p>“拉宾诺维奇，你关注成电新闻吗” “当然，不然我怎么知道我们在课程改革”</p></li>
-<li><p>问：教育改革和科学有什么区别？ “如果教育改革是科学的，那他们应该先拿成教学生当小白鼠”</p></li>
-<li><p>校领导：“我们要教育改革，培养条理清晰地写作和连贯的表达能力！” 同学们：“太好了，那要怎么做呢” 教务处：“增加马原毛概思修的课时和考试要求，开卷全部改为闭卷”</p></li>
-<li><p>教务处：我们要进行教育改革，请大家在 指 定 时 间 之内将您的宝贵意见、建议反馈至教务处。 （温馨提醒，文件尚未正式发布，请勿外传） 全校师生：什么时候? 教务处：10 全校师生：10什么？10个月？还是10天? 教务处：9，8，7......</p></li>
-</ul>
-<h2 id="一入ee深似海条条大路转cs">一入EE深似海，条条大路转CS</h2>
-<p>你电的专业设置非常繁杂，吹的天花乱坠，但是我觉得可以全砍了（尤其是什么光电、生医，国内既没有足够的工作岗位，也不像数学那样出来转行也不会太废），就把工科的本科设置并成EE/CS。当然了，现在EE八成也是打算转CS的（10年前并不是这样，通信很火，土木很火，计算机冷淡，搞计算机视觉和自然语言处理就业惨淡） 没办法，16年后成都房价经历了限购等几波上涨，留给大家的选择不多了，要恰饭的嘛 （家里有矿请随意） 我知道很多同学心怀梦想，但是四年后基本都出国/读研/考公、教师</p>
-<h2 id="上课">上课</h2>
-<h3 id="学会水课">学会水课</h3>
-<blockquote>
-<p><strong>天变不足惧，人言不足恤，祖宗之法不足守</strong></p>
-</blockquote>
-<p>你电有很多课，就是在拿着N年以前的课本/PPT浪费学生的生命。<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>要是真傻不拉几地上课跟着老师听，三年时间基本就废了 另外，你电很多老师的水平（这里仅仅指教的课相关领域水平），并不比学完这门课的你高</p>
-<p>当你很喜欢一门选修课/老师但是给分低/考试难，不选，旁听</p>
-<p>当你遇到一门水课，水</p>
-<p>当你遇到一门课不水，但是对你没用/老师不好，水</p>
-<p>当你遇到一门课不水，老师挺好，但是对你以后工作/出国没用，水</p>
-<h3 id="c语言">C语言</h3>
-<p>大一大多数学院都要学C语言，但是基本都用的谭浩强（计院用的自编教材，约等于魔改版谭浩强；格院用的C Primer Plus）。大部分任课老师的水平嘛，你懂的。我大一还在用VC6，不知现在怎样了，貌似已经换成vs2010那些，完 美 对 标 计 算 机 二 级。</p>
-<p>如果搞硬件，C51、stm32、其他的嵌入式板子，C是很重要的，以后就算转软，学好C打底也是很重要的。但是大多数老师只讲些语法和循环以及++++i++++之类的鬼才操作，指针啊内存啊都不好好讲的（也可能是课时太少，来不及讲）</p>
-<p>下面这些是我班主任c老师（<del>什么？班主任？别问我为什么你电一所大学居然还有班主任，你电就是这么没天理，忍了吧</del>）班会的时候说他要教大一C语言了，问我有什么建议，我就写了下面这些给他。额，偶滴班主任是搞生物心理学实验之类的，也做过一点脑电采集电路，可能10年没自己写过C了，水平你懂的。对了，他上学期还被强行指派去教一门Unix操作系统的课，他之前还给我们上过精密仪器和生物心理学实验；水平嘛，嗯，这水平问题好像也不怪他。（<del>什么？他为什么要教这么多课？没办法，他是苦逼的讲师，那些大教授忙于捞钱，又不愿意给我们上课。虽然学校规定教授必须上课，实际上嘛，比如某y院长，挂个名，扔给别的老师</del>）</p>
-<p>扯多了，下面是当时应班主任邀请写给大一新生的建议。 老师很虚心听取建议的，我还是成功劝退了你电SM学院一半新生使用谭浩强和VS2010，改用k&amp;r，善哉，善哉。 (教材质量赶超计院和格院一刚！)</p>
-<h4 id="书籍推荐">书籍推荐</h4>
-<h5 id="c程序设计语言">《C程序设计语言》</h5>
-<p>The C Programming Language, C语言之父写的，豆瓣和亚马逊评分最高的一本。习题也很经典, 有一本配套的习题解答。github上也有很多习题解答，比如<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2NjcGFsZXR0ZXMvdGhlLWMtcHJvZ3JhbW1pbmctbGFuZ3VhZ2Utc2Vjb25kLWVkaXRpb24tc29sdXRpb25z">ccpalettes/the-c-programming-language-second-edition-solutions<i class="fa fa-external-link-alt"></i></span></p>
-<h5 id="c-primer-plus"><span class="exturl" data-url="aHR0cHM6Ly9ib29rLmRvdWJhbi5jb20vc3ViamVjdC8xMjQwMDAyLw==">C Primer Plus<i class="fa fa-external-link-alt"></i></span></h5>
-<p>格拉斯哥学院在用的教材，但是非常详细（啰嗦）</p>
-<h5 id="c语言入门更简单的书籍"><span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8xOTY5NDgyMw==">C语言入门更简单的书籍<i class="fa fa-external-link-alt"></i></span></h5>
-<p>这个文章里有适合入门的几本书,比k&amp;r那本更简单一点</p>
-<h5 id="c专家编程c陷阱与指针等">C专家编程、C陷阱与指针等</h5>
-<p>适合进阶阅读，大一课多</p>
-<h5 id="如果还是要用谭浩强">如果还是要用谭浩强</h5>
-<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21hcnRpbnd1NDIvZmstdGhx">https://github.com/martinwu42/fk-thq<i class="fa fa-external-link-alt"></i></span></p>
-<p>哪本书好这种问题, 我建议去图书馆翻一下看看,不同人适合不同风格,找一本适合自己的</p>
-<h4 id="编程环境">编程环境</h4>
-<p>这种问题见仁见智,一般有IDE（integrated development enviroment）和命令行记事本两种选择。只是上课IDE就够了，真想学好c，建议类unix环境下学习，linux/wsl+命令行+vim/VScode，IDE虽好，不要过于依赖<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC81NDE2OTgyNw==">什么都帮你做了一键运行会让你忽略很多底层的东西<i class="fa fa-external-link-alt"></i></span></p>
-<p>学习c语言的时候参照官方通用的c99/c98/c11标准, 差别也不太大,编译器的选择clang或gcc都行,对于初学者而言初学者较少涉及系统和底层,差别也不大(clang可能对初学者更友好些)</p>
-<h5 id="vs2010vc2010">vs2010、vc2010</h5>
-<p>成电计算机学院上机考试用的vs2010，c语言计算机二级考试用的vc2010。 但是作为ide，现在（2019年）非常古老，功能远不如vs2019。而且正版是收费的。 (虽然有破解版，但这两个老软件在win7和win10上兼容问题非常多。)</p>
-<h5 id="codeblocks">codeblocks</h5>
-<p>vs系列都过于臃肿，初学者只是学个c语言用这个几乎就是杀鸡用牛刀，<strong>codeblocks</strong>是非常好的一款开源IDE。不少ACM选手都用这个,很多人刷leetcode也用这个。配置省心，功能够用，简单粗暴，还免费，支持标准的c/c++语法。（唯一的缺点就是丑）最适合不想在配置和新建工程以及兼容问题上折腾的初学者。<strong>c-free</strong> 也行。</p>
-<h5 id="vscode">VSCode</h5>
-<p>这几年很火的微软家开源编辑器<strong>VSCode</strong>，是<em>宇宙第一IDE的亲儿子</em>，颜值比codoblock和vc6.0高到不知哪里去了，虽然本质还是个atom那样的notepad，但配置也不麻烦，装个插件也能像IDE那样一键运行(不过还是推荐你试试命令行)。这种现代编辑器比vim对新手有好多了</p>
-<h5 id="vs2019vs2017vs2015">vs2019/vs2017/vs2015</h5>
-<p>微软家的<em>宇宙第一IDE</em>，不多解释。而且vs2017 community版免费，功能完全够初学者使用。一个问题是臃肿（也就十几个G吧），另一个问题是<em>vs2017以后不完全支持c99</em>，配置起来很麻烦，不建议c语言初学者使用,适合c++开发！（<em>不写上万行的c++项目就别用宇宙第一IDE了</em>）</p>
-<h5 id="clion">clion</h5>
-<p>Mac和16G以上内存win/linux系统下强烈推荐clang+<strong>clion</strong>，Jetbrains全家桶真香，有教育优惠，学生免费。跟微软的vs不相上下，而且对c的支持非常好! 但是很吃内存，配置不好就别用了</p>
-<h5 id="vim">vim</h5>
-<p>clang/gcc/mingw + 命令行 + VSCode/sublime/notepad++ /vim喜爱折腾的同学可以尝试.跨平台开发请试试cmake</p>
-<h4 id="其他">其他</h4>
-<p>多动手, 多调试, 不会问谷歌, 编程要多练习,不然会变成<span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzMyNjU2MjExMy9hbnN3ZXIvNzE0MDMzNzk4">计算机报告文学<i class="fa fa-external-link-alt"></i></span></p>
-<h3 id="高树大雾">高树大雾</h3>
-<p>你可能从学长那里听说过杨物运动的传说，不过现在杨物运动已经彻底流产了。 现在高数大物的难度几乎越来越水，电分和模电也越来越水（17级貌似都直接合并了）</p>
-<h3 id="思修马原毛概军理形势与政策">思修马原毛概军理形势与政策</h3>
-<p>从17年开始加大力度，改为了闭卷，然而问题不大（你要是遇上侯伦广当我没说），上课不用听，期末会划一点重点，搞到往年的题刷一下，原题很多</p>
-<h3 id="通识课程">通识课程</h3>
-<p>个人认为是L校长的一大败笔，全员水课 核心通识交叉通识是要计入保研和GPA的，这就导致了素质教育和刷分不可调和的矛盾。水课大受欢迎，硬课无人问津甚至因为选课人数过少停课。</p>
-<h3 id="未完待续等待填坑">未完待续，等待填坑</h3>
-<h2 id="注意安全">注意安全</h2>
-<h3 id="流浪猫狗">流浪猫狗</h3>
-<p>你电不负责任的猫奴狗奴小动保还是很多的，流浪猫狗也是很多的。保卫处也是并不怎么负责仁的，大家自求多福。下面引用一段helaso的话： &gt;学姐昨天去银桦在门口被狗追，那疯狗追上去用嘴擦到了一下。虽然没流血还是建议学姐去打狂犬疫苗了，也联系了保卫处。今天好了，4只流浪狗在组团门口耍。 打电话给保卫处，他们说最近爱狗人士多不能打狗？？？ 是不是保卫处领导学辅导员和稀泥上瘾了？ 在此我要推荐一款异烟肼神药给保卫处大爷，对人几乎无毒，肺结核病人的救命药，塞到香肠里一两片就能搞死一只狗。早上趁圣母婊学生还没起床让阿姨扫地时撒，晚上天色一暗就能让阿姨收尸了。铁棍打狗还不带枪那是lowb才用的方法了，俄罗斯之前肃清流浪狗就在街上狂撒这药。 保卫处大爷再护着狗爹迟早会有学生被咬出重伤，到时知乎热门等着瞧。</p>
-<h3 id="食堂">食堂</h3>
-<p>腐败变质的食品很多（早上的包子、饼），还有烟头假牙钢丝球瓷砖大礼包随机放送。如果你去学子一楼，恭喜你，拉肚子几率加倍。</p>
-<h2 id="注">注</h2>
-<section class="footnotes" role="doc-endnotes">
-<hr />
-<ol>
-<li id="fn1" role="doc-endnote"><p>不是说N年前的书不好，奥本海姆的信号与系统、高德纳的计算机程序设计艺术、k&amp;r的C程序设计语言、TCP/IP协议、朗道、铃木雅臣的模电，都是经典的好书。但是你电的EE/CS行业基本都变化很快，N年前的书基本落后工业界至少N+5年了，而很多变化很快的选修课恰恰喜欢用N年不改的教材（很多还是本校老师自编的垃圾教材）。而且你电不少课本的质量就算没落伍也不比谭某人强（尤其是那些什么电子科大出版社、科学出版社的自编教材），你看多了这种书基本就废了。<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section>
-]]></content>
-      <categories>
-        <category>彼黍离离</category>
-      </categories>
-      <tags>
-        <tag>你电</tag>
       </tags>
   </entry>
   <entry>
@@ -939,6 +726,179 @@ Arch没有Mac、Windows、ChromeOS那样的财大气粗的公司和掏钱买服�
       </tags>
   </entry>
   <entry>
+    <title>死灰复燃的传统医学</title>
+    <url>/curse-of-traditional-medicine/</url>
+    <content><![CDATA[<p>舆论的阵地，你不占领，鸿茅药酒就要来占领。施工中，完成度20% <a id="more"></a></p>
+<h2 id="前言">前言</h2>
+<p>其实这些我是不想写的，<strong>奈何舆论的阵地，你不占领，鸿茅药酒就要来占领</strong>。</p>
+<p>当江湖骗子在街头和电视卖假药的时候，可以不必浪费时间跟他们纠缠。当骗子们拥有约谈封号、跨省抓人的、进小学课本、进国药准字、上央视推荐、大幅掏空医保的势力时，随便一个药企能拿出几亿的广告费颠倒黑白的时候，再不反击，就没机会了。</p>
+<h2 id="如何面对传统医学拥趸">如何面对传统医学拥趸</h2>
+<p>网上冲浪几年一点不成熟的小建议：</p>
+<p>不要浪费太多时间在没法被说服的人身上。</p>
+<p>看看是不是真傻还是不慎被骗了能抢救一下，真·信中医 又跟你没多少关系的直接拉黑。</p>
+<p>七大姑八大姨等家人能劝就劝吧，劝不了随他们去吧。</p>
+<p>中医学生、从业人员、利益相关的企业</p>
+<h2 id="称谓问题">称谓问题</h2>
+<blockquote>
+<p>这不是真正的中医</p>
+</blockquote>
+<p>就像每一个温和的穆斯林教徒在恐怖分子boom之后说“这不是真正的穆斯林”，很多中医粉在争辩不过别人的时候也会撒泼打滚，“那是你没见过真正的中医，那是庸医”。</p>
+<p>所以我不打算讨论到底什么是真正的中医。</p>
+<p>按照循证医学的说法是可以分为</p>
+<ul>
+<li>经验医学</li>
+<li>循证医学</li>
+</ul>
+<p>这种分类法没有给宗教巫术和玄学骗子留位置（很多东西患者认为这是医学、国家也声称这是医学、骗子也管这个叫医学），而且循证医学/经验医学的标准争议本来就比较大，这里暂不讨论这些东西。</p>
+<p>这里我主要用下面这种说法，这是我感觉最好的一种说法，就像“传统武术”一样：</p>
+<ul>
+<li>现代医学</li>
+<li>传统医学</li>
+</ul>
+<p>当然传统医学很有可能比现代医学年轻得多，就像街边号称百年老店和传统武术，实际只是商家骗子们自己发明的，实际历史只有三十年，比我大不了多少。不过大家乐于称其为“传统XX”，各方都能接受的说法。 当然平时你是看不到上面那些说法的，国内通用的分类方法是：</p>
+<ul>
+<li>中医</li>
+<li>西医</li>
+</ul>
+<p>这是一百年前把土豆叫做“洋芋”，把水泥叫做“洋灰”那个时候一直遗留下来的叫法，这是最差的一种分类法。硬生生搞出中医/西医的区别，无数人为了到底什么是中医争执不休。当然还附带绑定了政治化和民族色彩，否定中医会被扣上崇洋媚外的帽子，粉红和公知纷纷下场参战。</p>
+<h2 id="区别对待">区别对待</h2>
+<p>首先中医医师资格考试要求低，然后考研分数低，开诊所要求低，中药中成药上市标准低，中医临床研究要求低</p>
+<!-- 
+我亲身经历你电某华西毕业的老师（从本科到博士到工作全都是公卫）在医学统计课上吹捧中医。
+
+
+当然你要说是几千年的经验，
+
+“我信中医，但我自己不用”，那请您赶快坐到主席台上来
+
+>他们黑中医！
+>他们是怎么黑中医的？
+>他们把中医干过的事和典籍上的内容又说了一遍。
+
+举秀才，不知书
+举孝廉，父别居
+寒素清白浊如泥
+高第良将怯如鸡
+ -->
+<h2 id="巫医的次生灾害">巫医的次生灾害</h2>
+<h3 id="危害野生动植物">危害野生动植物</h3>
+<p>由于传统医学没能用阴阳五行</p>
+<h3 id="危害化石和考古">危害化石和考古</h3>
+<p>连化石都不放过。</p>
+<h3 id="危害青少年身体健康">危害青少年身体健康</h3>
+<p>很多人不是脑子不好使信中医，小时候被脑子不好使的父母带着吃中药，结果吃出肾衰竭。 你说巫医只危害</p>
+<h3 id="挑拨医患关系">挑拨医患关系</h3>
+<p>患者不信任现代化工品、医药、医学仪器（核磁共振什么的最有辐射啦！），病人质疑西医跑过来医闹你们中医/藏医/苗医/跳大神的没少过来挑拨矛盾吧</p>
+<h3 id="抢功劳">抢功劳</h3>
+<h3 id="疫情">疫情</h3>
+<p>蝙蝠啊，穿山甲啊。。。</p>
+<h2 id="为什么要写这个">为什么要写这个</h2>
+<p>这几年借着“伟大复兴”，国学乡贤死灰复燃。当然中医也不甘寂寞，不仅国家鼓励医保开中成药，甚至直接进入了中小学教材，还企图立法打击中医黑。</p>
+<p>不仅中医，藏医、苗医都冒出来了，甚至蒙医都能死灰复燃（蒙古大夫都成神医了）。</p>
+<p>有些噶韭菜市场和安慰剂市场是客观存在的，你不去占领，别人也要去占领。打倒了封建迷信，人们考前不去拜孔老二，照样要去朋友圈转发锦鲤；不信生辰八字，照样要去信星座。韭菜不被老中医的神药骗，也要被量子治疗和纳米保健骗。</p>
+<blockquote>
+<p>中医确实能通过缩短寿命来解决老龄化问题，而且缩短寿命这些人都真心相信中医有用，这一点现代医学无论如何做不到</p>
+</blockquote>
+<p>你看，信中医的人就去信，不信的也不浪费时间和生命跟他们吵，井水不犯河水不好吗？。然而世上远没有这种好事，这些东西和宗教一样，得寸进尺，贪婪无厌。见过很多医生都是知道怎么回事，但是以多一事不如少一事的态度在和稀泥看戏，反正事不关己高高挂起。 这是不行的，这样下去，今天说中医两句不来找你 好被中医粉举报封号了，明天你就发现乱说一句就违法跨省了；后天就变成依法抓人了；大后天不用跨省了，你说一句钟南山和中医的不好人民群众当场将你打倒。</p>
+<p>那独善其身不好吗，嗯，对于5G这种态度是可行的。</p>
+<blockquote>
+<p>我也这么认为。</p>
+<p>但有些事情想的太透，反而会让自己觉得无力。</p>
+<p>如果看到下面这些话术，笑笑就好，别尝试反驳，没用的。</p>
+<ul>
+<li>5G在民用感知不到，主要应用在工业。</li>
+<li>新技术出来受到质疑很正常，那些说5G没用的人，到时候又会真香了。</li>
+<li>2G是文字、3G是图片、4G是视频、5G是VR和物联网等等。</li>
+<li>美国抵制华为，是害怕了华为的5G，你比美国总统聪明？</li>
+<li>现在没有需求很正常，等5G铺设好，自然就有需求了。</li>
+<li>古人也觉得枪炮没用、以前的人也觉得马车比汽车好、等等。</li>
+<li>5G的应用在VR、AR、自动驾驶、远程医疗、物联网等等。（最经典）</li>
+<li>5G里面有支持到一些较低的频段，所以以后5G覆盖小的问题能解决的。</li>
+<li>速度只是5G最无聊的应用。</li>
+<li>等iPhone出5G手机，那些说5G没用的人就会真香了。</li>
+<li>未来4K、8K流媒体需要5G。</li>
+<li>AR、VR需要5G。</li>
+<li>云电脑需要5G，等以后5G普及了，只要一个屏幕就能用了，连处理器都不需要。</li>
+<li>5G普及之后，资费就下降了。</li>
+<li>短视频是4G催生的。</li>
+</ul>
+<p>这些应该能够覆盖到八九成吹5G的人的常用话术了。当然<strong>以上话术都能够证伪。</strong></p>
+<p>记住，<strong>不要尝试反驳，他们比你想的要闲，你说再多作证，他们也当作没看到，不要和他们聊关于网速的常识，他们转眼就忘了，当他们吹无可吹就扯未来不可期。除了被他们气的胸闷，啥都捞不着。</strong></p>
+</blockquote>
+<p>菊花再怎么折腾，反正运营商基站电费亏爆了套餐提价每个月流量费大不了多花十几块钱，犯不着为了这点钱在网上跟人吵架。</p>
+<p>但是这种事情怎么说呢？你不去骂中医，中医也要来找你，躲是躲不过的。就危害程度，传统医学的鼓吹者和信徒们大致和爱狗人士相当：</p>
+<ul>
+<li><p>你看深圳这不是立法禁食狗肉了。</p></li>
+<li><p>你看这信徒完全不讲理的态度</p></li>
+<li><p>你看这救助站和爱心捐款疯狂骗小清新的钱</p></li>
+<li><p>你看这危害人身安全</p></li>
+<li><p>你看这动不动上纲上线西方文明封建陋习</p></li>
+</ul>
+<p>当然不排除将来演变成类似八十年代气功之类的东西，邪恶程度和道教佛教相当，略弱于杀灭一切异端的伊斯兰基督犹太等沙漠神教。</p>
+<p>传统医学的利益集团已经成型，</p>
+<p><span class="exturl" data-url="aHR0cDovL3d3dy5nb3YuY24vemhlbmdjZS9jb250ZW50LzIwMjEtMDIvMDkvY29udGVudF81NTg2Mjc4Lmh0bQ==">国务院办公厅印发关于加快中医药特色发展若干政策措施的通知<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9ib29rLmRvdWJhbi5jb20vc3ViamVjdC8zMDMxMTgxNi8=">荒诞医学史(Quackery : A Brief History of the Worst Ways to Cure Everything)<i class="fa fa-external-link-alt"></i></span></p>
+<p>各位中医，抢功劳无妨，但请不要无辜送死</p>
+<h2 id="众生百态">众生百态</h2>
+<h3 id="电视">电视</h3>
+<h3 id="网上冲浪所见">网上冲浪所见</h3>
+<p>这里仅凭个人印象和观察记录一下</p>
+<p>微信朋友圈是养生营销号和各种uc震惊体文章的聚集地，长辈最爱，不说了。</p>
+<p>在中医、一些保健品</p>
+<p>近几年反中医的阵地大概是丁香园等医学论坛</p>
+<p>作为反中医的前沿阵地一到了疫情和钟南山之类的话题下也崩了</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzM4MTg2NzEzMw==">如何看待我国用中药（连花清瘟胶囊）支援意大利？<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzM4NzgxNDkxOA==">如何看待钟南山院士认为中药对新冠肺炎有效？<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzM3OTU5MTE2Nw==">如何看待钟南山向欧洲推荐中药连花清瘟胶囊与六神丸？<i class="fa fa-external-link-alt"></i></span></p>
+<p>只有在这些具体到某些问题开始拿出证据和事例吵的时候知乎才能扳回一城:</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzQyNTg4NTAwMQ==">钟南山团队体外研究发现「白云山复方板蓝根对新冠病毒有效」，体外研究是什么？白云山板蓝根疗效如何？<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzM5NTM1ODk1Ny9hbnN3ZXJzL3VwZGF0ZWQ=">如何看待钟南山否认商业代言传闻?<i class="fa fa-external-link-alt"></i></span></p>
+<h2 id="习惯的形成">习惯的形成</h2>
+<p>观察一下观念、习惯是如何形成和演变的，</p>
+<p>很多观念都是这样的：不知道为什么，但是感觉做了没错，也没什么大危害，别人都在做我也这样吧。</p>
+<h3 id="眼保健操">眼保健操</h3>
+<p>眼保健操是一个挺有意思的现象</p>
+<h2 id="失败的教育">失败的教育</h2>
+<p>当然这里我是指</p>
+<!-- 
+在试行第四版和第五版中，血必净注射液（简称：血必净）在西医治疗方案中被推荐用于治疗重型和危重型病例，在中医治疗方案中被推荐用于中期“疫毒闭肺”和重症期“内闭外脱”两个证候的治疗。同期，由钟南山院士等呼吸及重症医学专家组成的课题组，紧急启动了“血必净治疗新冠肺炎疗效的前瞻性多中心临床研究”。
+
+中国日报3月13日电（记者 吴勇 苏峰）中央指导组专家组成员、东南大学附属中大医院副院长邱海波说，中药血必净注射剂对新冠肺炎患者效果良好。相关研究表明，血必净注射液能够对冠状病毒导致的炎症因子风暴或者炎症反应有抑制作用，对新型冠状病毒也有一定的抑制作用。“在单臂队列研究中，血必净注射剂联合常规治疗，在新冠重型病人的治疗中有效率较高，肺炎严重指数（PSI）有所改善，(但严重程度相同的重症患者对照组结果尚需进一步统计分析)。”邱海波说。
+
+2019年6月，《重症医学》（Critical Care Medicine,CCM）在线发表了由上海市呼吸病研究所、复旦大学附属中山医院白春学教授与北京中医药大学东直门医院商洪才研究员为共同通讯作者，复旦大学附属中山医院呼吸科宋元林教授为第一作者的《血必净注射液治疗重症社区获得性肺炎疗效的随机对照试验》研究论文。
+
+作者：极萨学院冷哲
+链接：https://www.zhihu.com/question/379591167/answer/1112365219
+来源：知乎
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+作者：极萨学院冷哲
+链接：https://www.zhihu.com/question/379591167/answer/1112365219
+来源：知乎
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+
+血必净
+如何看待知乎用户立党质疑钟南山院士的天津红日血必净对新冠肺炎的治疗效果? - 迷幻布鲁琪的回答 - 知乎
+https://www.zhihu.com/question/393021607/answer/1206071820
+
+[新版中医药教材发布，将纳入中小学课本！](https://www.medsci.cn/article/show_article.do?id=fb39109063d9)
+
+
+
+开展*中医**药*文化宣传和知识普及活动，应当遵守国家有关规定，符合*中医**药*文化内涵和发展规律。任何组织或者个人*不得*对*中医**药*作虚假、夸大宣传；*不得*冒用*中医**药*名义牟取不正当利益、损害社会公共利益；*不得*以任何方式或行为*诋毁*、*污蔑**中医**药*
+ -->
+<p>国药准字Z</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuZHh5LmNuL2Jicy9uZXd3ZWIvcGMvcG9zdC8zNDY5NzE2Mg==">反中医被丁香园封号了，丁香园不是说宣传科学吗？<i class="fa fa-external-link-alt"></i></span></p>
+<p>https://zhuanlan.zhihu.com/p/31861831</p>
+]]></content>
+      <tags>
+        <tag>医药</tag>
+        <tag>中医</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>处理电子病历</title>
     <url>/81d4/</url>
     <content><![CDATA[<p>有两种鬼画符，一种是医生的字，一种是正则表达式 <a id="more"></a></p>
@@ -1374,29 +1334,6 @@ autorandr --save test1<span aria-hidden="true" class="line-numbers-rows"><span><
       <tags>
         <tag>KDE</tag>
         <tag>EndeavourOS</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>别了，2020</title>
-    <url>/farewell-2020-hello-2021/</url>
-    <content><![CDATA[<p>民亦劳止 汔可小康 <a id="more"></a></p>
-<p><del>2020，消灭贫困人口</del></p>
-<p>又老了一岁。</p>
-<p>这一年经历了很多，从年初疫情到返校毕业滚蛋，9月又滚回来正式变成一个每天不务正业的研究生，到了年底又赶上了成都一波疫情封校。</p>
-<p>这一年里，Firefox大裁员，AMD收购Xilinx，梁孟松从中芯离职，手机厂商号称环保取消充电线了，5G群魔乱舞，运营商掏不出电费，Telegram可能会倒闭但绝不会变质.....</p>
-<p>这一年看到太多开源社区和一些还不错的公司分崩离析，人走茶凉....</p>
-<p>唯一开心的是就是最讨厌的CentOS稳定版要无了，看戏.webp</p>
-<p>好在Arch社区依然热闹，肥猫在武汉也平安度过了疫情</p>
-<p>本来有很多想说的，但是元旦没什么想写的，等春节在爆竹声中再写吧</p>
-<p>新年计划没有，鬼知道今年会发生什么。宇宙实在疯狂，江湖难以平静。</p>
-<p>晚唐光景，也好，也好</p>
-<blockquote class="blockquote-center">
-<p>夕阳无限好，只是近黄昏</p>
-
-</blockquote>
-]]></content>
-      <tags>
-        <tag>Flag</tag>
       </tags>
   </entry>
   <entry>
@@ -1888,349 +1825,6 @@ Address&#x3D;211.83.111.224&#x2F;23<span aria-hidden="true" class="line-numbers-
       <tags>
         <tag>λ-calcus</tag>
         <tag>js</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Leetcode刷题</title>
-    <url>/6aa3/</url>
-    <content><![CDATA[<p>我就每天当瓜子嗑了，不刷题练练手真的要成一个废人了 <a id="more"></a></p>
-<p>生活所迫，开始刷题练手</p>
-<p>装上了VSCode，开始在教研室摸鱼式刷题，再次感受到了VSCode本质上是一个浏览器。</p>
-<p>现在还有点纠结拿什么语言刷，哎，不行就先把那本算法竞赛入门经典刷一遍吧。大一学的数据结构都快忘光了。(⊙﹏⊙)</p>
-<h2 id="vscode-remotedevelopment插件连接wsl">VSCode RemoteDevelopment插件连接wsl</h2>
-<p>教研室分给我的坑位上那台即将报废回收破主机是个14年的i5，并没有独显，虚拟机和双系统是跑不太动了，而且我想用Docker，打开hyper-v之后VMware也不兼容，就弃坑VM了。 开始想在win10下装clang和gcc，后来发现用VSCode直接上wsl更省事，安装Remote Development插件就行了 在wsl新建目录输入<code>code-insiders .</code>或者<code>code .</code> 或者在VSCode里按F1，选择<code>Remote-WSL: New Window</code>，再打开文件夹就行了，看到左下角有个绿色的wsl标志就可以了 git还会有点小问题，要禁用换行符自动转换，不然win下面和linux下面不一样每次git的repo明明没改动，却显示新的变化，问题看<span class="exturl" data-url="aHR0cHM6Ly9jb2RlLnZpc3VhbHN0dWRpby5jb20vZG9jcy9yZW1vdGUvd3Ns">这里<i class="fa fa-external-link-alt"></i></span></p>
-<pre class="line-numbers language-git" data-language="git"><code class="language-git">git config --global core.autocrlf false<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>wsl的Debian应该是buster版本的，镜像源选buster（Debian10）</p>
-<p>wsl里cd进<code>\mnt</code>目录就能和win10交换文件，win10下的wsl文件目录在<code>C:\Users\Username\AppData\Local\Packages\CanonicalGroupLimited.UbuntuonWindows_79rhkp1fndgsc\LocalState\rootfs</code></p>
-<p>wsl里的shell换成oh my zsh，哎，舒服 配置问题请参考<span class="exturl" data-url="aHR0cHM6Ly9jb2RlLnZpc3VhbHN0dWRpby5jb20vZG9jcy9jcHAvY29uZmlnLXdzbA==">官方文档<i class="fa fa-external-link-alt"></i></span>，可以装code runner插件像IDE一样直接运行 <span class="exturl" data-url="aHR0cHM6Ly9wcmludGVtcHcuZ2l0aHViLmlvL3ZzY29kZS1jLWNwcC1jb25maWd1cmF0aW9uLWZvci1hY20tb2ov">看这里<i class="fa fa-external-link-alt"></i></span> 更新，由于巨硬的VSCode频繁更新，json配置格式乱改，折腾来折腾去非常麻烦，请直接使用别人打包好的便携版或者直接转投Clion（有教育邮箱的我就转投Clion了，JB全家桶真香） 据说wsl2已经在20H1预览版上了，但是win10这个样子我又不敢乱更新，等等看吧，观望一下再决定黑巨硬还是微软真香。</p>
-<h2 id="leetcode">leetcode</h2>
-<p>看了一下leetcode对语言的支持 C++：g++ 8.2，C++14 标准，C：gcc 8.2</p>
-<p>[69] sqrt(x)</p>
-<p>二分法或者牛顿法</p>
-<p>[231] Power of Two</p>
-<p>不断除以二就行了，或者按位与</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python">num <span class="token operator">&amp;</span> <span class="token punctuation">(</span>num<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>[193] Valid Phone Numbers 美国地区电话号码，直接用正则就好了<code>^(\d&#123;3&#125;-|\(\d&#123;3&#125;\) )\d&#123;3&#125;-\d&#123;4&#125;$</code></p>
-<h2 id="其他">其他</h2>
-<p>努力不写不求甚解的谭++ &gt;有一些很简单的鉴别方法 比如创建obj用的Type()而不是Type{}, 到处是类型声明, 各种子类继承叠罗汉 都是谭++的标志</p>
-<h3 id="alloca和malloc函数">alloca和malloc函数</h3>
-<p>C/C++里面的alloca函数动态分配内存, 从栈申请内存，自动释放。alloca是最快的动态内存分配，对应的汇编只有一条指令 sub rsp, size。 C还支持可变长数组（variable-length array， VLA）（C99以后） malloc从堆中申请内存，需要手动释放（free）</p>
-<h3 id="c和stl">C++和STL</h3>
-<p>等待填坑</p>
-]]></content>
-      <categories>
-        <category>杂七杂八</category>
-      </categories>
-      <tags>
-        <tag>leetcode</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux从入门到入土</title>
-    <url>/193/</url>
-    <content><![CDATA[<p>从小心翼翼到灵车漂移</p>
-<a id="more"></a>
-<h2 id="写在前面的话">写在前面的话</h2>
-<p>刚刚入坑Linux的时候我还迷信UINX哲学，看到别人在那<span class="exturl" data-url="aHR0cHM6Ly9zdWNrbGVzcy5vcmcvc3Vja3Mvc3lzdGVtZC8=">骂systemd<i class="fa fa-external-link-alt"></i></span>还有好有道理的样子。后来发现什么Keep it stupid Simple、去中心化在很多场景有很大的缺陷，还是systemd真香啊。linux桌面日用至今只是勉强能用的样子，wayland还是有好多软件和组件不配适，xorg又各种撕裂，不少国产软件能出个win版都烧高香了，软件生态也看不到多少希望。linux发行版本来就分裂，然后DE也五花八门，然后各种控件和面板都可以自行美化魔改，根本不可能稳定。目前比较喜欢的桌面是KDE，长期看好，虽然还是跟瘟斗士和Bug Sir差了很多。linux桌面绑一块都打不过MAC，甚至连Chrome OS都不一定能打过，还各种内斗和搞分裂。软件生态也是个无解的问题，建议大家要用各种办公软件和仿真设计软件的还是去用win和mac，不要来受这个罪。</p>
-<h2 id="常用shell命令">常用Shell命令</h2>
-<h3 id="系统状态">系统状态</h3>
-<table>
-<thead>
-<tr class="header">
-<th>Command</th>
-<th>Function</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>reboot</td>
-<td>重启</td>
-</tr>
-<tr class="even">
-<td>poweroff</td>
-<td>关机</td>
-</tr>
-<tr class="odd">
-<td>wget</td>
-<td>下载文件</td>
-</tr>
-<tr class="even">
-<td>ps</td>
-<td>监视进程</td>
-</tr>
-<tr class="odd">
-<td>top</td>
-<td>动态监视进程</td>
-</tr>
-<tr class="even">
-<td>kill</td>
-<td>终止进程</td>
-</tr>
-<tr class="odd">
-<td>free</td>
-<td>查看内存</td>
-</tr>
-<tr class="even">
-<td>history</td>
-<td>查看历史命令</td>
-</tr>
-</tbody>
-</table>
-<p>这里推荐用glances代替top，<code>pip3 install glances</code></p>
-<h3 id="文件操作">文件操作</h3>
-<p>cd, ls, mkdir, ls, mv， rm这些不说了</p>
-<table>
-<thead>
-<tr class="header">
-<th>Command</th>
-<th>Function</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>pwd</td>
-<td>查看当前目录</td>
-</tr>
-<tr class="even">
-<td>stat</td>
-<td>查看文件信息</td>
-</tr>
-<tr class="odd">
-<td>diff</td>
-<td>比较差异</td>
-</tr>
-<tr class="even">
-<td>touch</td>
-<td>创建空白文件</td>
-</tr>
-<tr class="odd">
-<td>tar</td>
-<td>打包文件</td>
-</tr>
-</tbody>
-</table>
-<p>tar -c 创建压缩， -x 解压缩(-xvzf) 如：</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">tar</span> -czvf filemane.tar.gz<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>查看目录下文件大小（包括文件夹）</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">du</span> -sh *<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>备份同步rsync, -a（archive）递归并同步时间戳和权限，-v显示详细信息，-z压缩</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">rsync</span> -avz <span class="token builtin class-name">source</span> destination<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h3 id="查找">查找</h3>
-<p>grep查找文件内的内容，支持正则表达式（但是需要加<code>-P</code>参数支持perl正则，否则支持程度有限）</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">grep</span> -n include test.c<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>显示行号和查找结果1:#include&lt;stdio.h&gt;</p>
-<p>find查找文件</p>
-<p>（这里建议用fd和ripgrep代替find和grep）</p>
-<h2 id="vim基础操作">Vim基础操作</h2>
-<p><del>不得不用linux命令界面编辑文件又不喜欢vim直接nano就好了</del></p>
-<p>Vim有Normal（普通模式），Insert（插入模式）和 Visual（可视模式）</p>
-<p>打开是Normal模式，按i进入插入模式，按v进入Visual模式，按ESC返回Normal模式</p>
-<p>输入vi test.c创建文件并进入vim，按i进入insert模式，写完保存退出按ESC，:wq保存退出，:q! 不保存退出</p>
-<p>文件写入可能需要sudo，不然会E212错误，退出获取管理员权限再保存即可</p>
-<h3 id="简单的脚本">简单的脚本</h3>
-<p>脚本文件通常是.sh后缀，在执行的时候<code>bash filename.sh</code> 。在第一行声明执行的shell解释器路径，如#!/bin/bash 。 接收参数用$, $1,$2,$3为第1、2、3个参数，$?为上一个参数的返回值。 使用逻辑判断&amp;&amp;和||, 输出用户是否管理员：</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token punctuation">[</span> <span class="token operator">!</span> <span class="token environment constant">$USER</span> <span class="token operator">=</span> root <span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> <span class="token builtin class-name">echo</span> <span class="token string">"user"</span> <span class="token operator">||</span> <span class="token builtin class-name">echo</span> <span class="token string">"root"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>if 语句, 判断是否存在文件路径，不存在就创建：</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token shebang important">#!/bin/bash</span>
-<span class="token assign-left variable">DIR</span><span class="token operator">=</span><span class="token string">"/media/cdrom"</span>
-<span class="token keyword">if</span> <span class="token punctuation">[</span> <span class="token operator">!</span> -e <span class="token variable">$DIR</span> <span class="token punctuation">]</span>
-<span class="token keyword">then</span>
-<span class="token function">mkdir</span> -p <span class="token variable">$DIR</span>
-<span class="token keyword">fi</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>while语句:</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token keyword">while</span>
-<span class="token keyword">do</span>
----
-<span class="token keyword">done</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p>差不多能写点脚本玩了（再复杂的东西用python、perl感觉比bash脚本更方便点）</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
-<span class="token assign-left variable">PRICE</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span><span class="token function">expr</span> <span class="token environment constant">$RANDOM</span> %1000<span class="token variable">)</span></span>
-<span class="token assign-left variable">TIMES</span><span class="token operator">=</span><span class="token number">0</span>
-<span class="token builtin class-name">echo</span> <span class="token string">"Guess a number between 0 and 999"</span>
-<span class="token keyword">while</span> <span class="token boolean">true</span>
-<span class="token keyword">do</span>
-        <span class="token builtin class-name">read</span> -p <span class="token string">"Input your number"</span> INT
-        <span class="token builtin class-name">let</span> TIMES++
-        <span class="token keyword">if</span> <span class="token punctuation">[</span> <span class="token variable">$INT</span> -eq <span class="token variable">$PRICE</span> <span class="token punctuation">]</span> <span class="token punctuation">;</span> <span class="token keyword">then</span>
-                <span class="token builtin class-name">echo</span> <span class="token string">"Congratulations, you are right, the number is <span class="token variable">$PRICE</span>"</span>
-                <span class="token builtin class-name">echo</span><span class="token string">"You have guessed <span class="token variable">$TIMES</span>"</span>
-                <span class="token builtin class-name">exit</span> <span class="token number">0</span>
-        <span class="token keyword">elif</span> <span class="token punctuation">[</span> <span class="token variable">$INT</span> -gt <span class="token variable">$PRICE</span> <span class="token punctuation">]</span> <span class="token punctuation">;</span> <span class="token keyword">then</span>
-                <span class="token builtin class-name">echo</span><span class="token string">"Too High"</span>
-        <span class="token keyword">else</span>
-                <span class="token builtin class-name">echo</span><span class="token string">"Too low"</span>
-        <span class="token keyword">fi</span>
-<span class="token keyword">done</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="不建议轻易尝试的灵车漂移行为">不建议轻易尝试的灵车漂移行为</h2>
-<p>下列行为如果你读到这里试了出了麻烦，<em>本人概不负责</em>, 在虚拟机和非生产环境里也可以试着玩 卸载自带python:<code>sudo apt uninstall python</code> 卸载iptables使用<code>sudo apt remove iptables</code> 执行<code>:()&#123; :|:&amp; &#125;;:</code>之类的fork炸弹 不给/home分区</p>
-<h2 id="文件系统">文件系统</h2>
-<p>“一切皆文件”, 这是UNIX最初的构想，但是Linux里面并不是，比如socket、比如进程，真正实现了一切皆文件是贝尔实验室的Plan9,然而已经凉了<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, <strong>真·入土</strong> 虽然入土了，那个Plan9的风格影响后来很多东西，了也影响了Go，你看LOGO，多像啊 （不得不说贝尔实验室那帮人当年搞出来那一堆东西真的有点意思，形式化验证和Lisp之类的也让人仰望，但是没能商用推广，曲高和寡，<del>其实也不是他们的问题，是大多是人都太菜了，比如我</del>现在一个个都入土了）</p>
-<p>文件的信息存在metadata里的inode中，包括UID、修改创建时间、权限等</p>
-<p>之前我以为类UNIX系统的文件是个文件树的样子，后来发现加上链接（link）后是一个有向无环图（把符号链接当一个文件的话还是树的样子）</p>
-<p>不能对一个目录创建硬链接，貌似是因为会产生回环？（每个目录下的隐藏文件<code>.</code>和<code>..</code>就是本目录和上一级目录的硬链接）</p>
-<h2 id="其他">其他</h2>
-<h3 id="保持ssh连接不自动退出">保持SSH连接不自动退出</h3>
-<p>开启SSH keepalive。 通常的做法是每隔一定时间向服务器发送心跳<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>，应该是防止防火墙把SSH干掉，通常SSH不会自己断的 在<code>/etc/ssh/sshd_config</code>里面设置ClientAliveInterval和ClientAliveInterval 也可以修改<code>.ssh/config</code>文件，设置</p>
-<pre class="line-numbers language-log" data-language="log"><code class="language-log">Host Server
-    ServerAliveInterval 20
-    ServerAliveCountMax 9<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<h3 id="设置用户组和权限">设置用户组和权限</h3>
-<p>root用户UID为0，有生杀大权（我们教研室居然每人都有root用户密码，还日常root权限运行命令，可还行（虽然一共也没几个人用）），也有背锅重任，不想背黑锅是不能乱用的 添加用户（root添加其他用户）</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">useradd</span> -u <span class="token number">1998</span> zjk<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>这样就在/home/zjk创建了一个名为zjk的用户 切换用户的时候使用su命令就行了(Substitute User) 将用户加到root用户组(需要root权限)</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">usermod</span> -G root zjk<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>更新，改了之后发现并不好使，要这样</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">chmod</span> u+w /etc/sudoers
-<span class="token function">vi</span> /etc/sudoers
-<span class="token comment"># 加一行</span>
-zjk <span class="token assign-left variable">ALL</span><span class="token operator">=</span><span class="token punctuation">(</span>ALL<span class="token punctuation">)</span> ALL<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="硬盘扩容和迁移">硬盘扩容和迁移</h3>
-<p>趁打折买了一块西数SN550,之前只有500G还装了个双系统的笔记本可以扩容了</p>
-<p>现在把/home分区（大概60G）从老硬盘移动到新硬盘上，空出来的60G给/目录。我既不是LVM也没有组raid，文件系统用的ext4，500G老硬盘分了400G给win10,剩下100G给了linux，分了一个/，40G,一个/home，60G</p>
-<p>先格式化（这里我用的GPT分区表，ext4），然后挂载到/mnt,然后用rsync迁移/home下的文件到/mnt 然后umount，然后分区合并给/root，再挂载到/home下面</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">fdisk</span> -l
-yay -Sy <span class="token function">rsync</span>
-
-mkfs.ext4 /dev/nvme0n1p1
-<span class="token function">mount</span> /dev/nvme0n1p1 /mnt
-<span class="token function">rsync</span> -avz /home /mnt
-<span class="token function">umount</span> dev//nvme0n1p1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>两边都是nvme,2分钟就同步完成了，速度非常感人，然后修改fstab，将原来/home分区的uuid改为新硬盘的（/dev/nvme0n1p1）uuid</p>
-<p><code>/etc/fstab</code>大概长这个样子，分别是uuid,挂载目录，文件类型，noatime后面0表示不开机自检，/</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token assign-left variable">UUID</span><span class="token operator">=</span><span class="token number">8205</span>-8BC5                            /boot/efi      vfat    <span class="token assign-left variable">umask</span><span class="token operator">=</span>0077 <span class="token number">0</span> <span class="token number">2</span>
-<span class="token assign-left variable">UUID</span><span class="token operator">=</span><span class="token number">36499174</span>-6a4a-4b9d-b5cc-0b1f555a1f46 /              ext4    defaults,noatime <span class="token number">0</span> <span class="token number">1</span>
-<span class="token assign-left variable">UUID</span><span class="token operator">=</span>bf5e768c-a2de-4618-9861-5946459a69b6 /home          ext4    defaults,noatime <span class="token number">0</span> <span class="token number">2</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>然后退出来，用livecd或者双系统的分区工具把原来的/home分区删掉分给原来的/目录。（注意做好备份不要删错了，删错了就没了）</p>
-<p>再次登陆后应该就行了。弄完突然发现KDE自带一个叫KDE Partition Manager的工具，推荐大家用这个。</p>
-<h2 id="写在后面的话">写在后面的话</h2>
-<p>wsl和虚拟机或者Jetbrains家、vscode的远程也挺香，感觉貌似比linux桌面有前途，好多人都放弃linux桌面了。Linux图形化桌面有出头之日大概至少还需要一个强势的<strong>商业</strong>发行版（此处商业二字特别加粗），钦定桌面DE，钦定桌面布局，限制小白用户的美化和魔改。提供一个中心化的软件商店上架商业软件以及<strong>收费软件</strong>（貌似现在snap和flatpack有点那个意思？），然而这样搞一圈跟Mac和Chrome OS又有什么区别呢。国产化也没什么太大希望，行政命令运动式推广Linux只会让企业里充满特供版UOS这种怪胎（不仅魔改还收费，root权限全给你收了，除了软件商店别想自己装别的了，整的跟个收费版安卓似的），跟自由软件没啥关系了。跟开源社区和个人肯定没多大关系（当然Deepin整了wine还是做了点好事的.......他们自己做的那一套DDE感觉真的是败笔，就像Ubuntu非得自己搞个Ubuntu Touch和Android争一样）</p>
-<h2 id="一些花里胡哨的玩意">一些花里胡哨的玩意</h2>
-<table>
-<thead>
-<tr class="header">
-<th>Command&amp;Tools</th>
-<th>description</th>
-<th>备注</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>htop</td>
-<td>比top花里胡哨一点</td>
-<td></td>
-</tr>
-<tr class="even">
-<td><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL25pY29sYXJnby9nbGFuY2Vz">glances<i class="fa fa-external-link-alt"></i></span></td>
-<td>比htop显示的东西多一点</td>
-<td>看起来还比较清爽</td>
-</tr>
-<tr class="odd">
-<td><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FyaXN0b2NyYXRvcy9iYXNodG9w">bashtop/bpytop<i class="fa fa-external-link-alt"></i></span></td>
-<td>极其花里胡哨</td>
-<td>用起来没比htop好用多少</td>
-</tr>
-<tr class="even">
-<td><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL211ZXNsaS9kdWY=">duf<i class="fa fa-external-link-alt"></i></span></td>
-<td>显示磁盘占用</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<p>ohmyzsh 广为人知的花里胡哨的东西，比bash花多了</p>
-<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2tucXlmMjYzL3BldA==">pet<i class="fa fa-external-link-alt"></i></span> 一个terminal里的复制粘贴工具</p>
-<h2 id="一些网站和文章">一些网站和文章</h2>
-<p><span class="exturl" data-url="aHR0cHM6Ly92aW0tY2hpbmEub3JnLw==">Vim中文社区<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9saW51eHRvb2xzLXJzdC5yZWFkdGhlZG9jcy5pby96aF9DTi9sYXRlc3QvaW5kZXguaHRtbA==">Linux工具快速教程<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9leHBsYWluc2hlbGwuY29tLw==">explainshell<i class="fa fa-external-link-alt"></i></span> 一个shell网站 <span class="exturl" data-url="aHR0cHM6Ly9rZXJuZWxuZXdiaWVzLm9yZy9Eb2N1bWVudHM=">kernelnewbies<i class="fa fa-external-link-alt"></i></span> 好吧这其实不怎么newbie <span class="exturl" data-url="aHR0cHM6Ly9pLmxpbnV4dG95Lm9yZy9kb2NzL2d1aWRlL2NoNDkuaHRtbA==">GNOME与KDE的战争<i class="fa fa-external-link-alt"></i></span> 陈年旧事，社区的分裂</p>
-<h2 id="注">注</h2>
-<section class="footnotes" role="doc-endnotes">
-<hr />
-<ol>
-<li id="fn1" role="doc-endnote"><p><span class="exturl" data-url="aHR0cDovL3d3dy5kaS51bmlwaS5pdC9+bmlkcy9kb2NzL3RoZV9wbGFuLTlfZWZmZWN0Lmh0bWw=">Plan9效应<i class="fa fa-external-link-alt"></i></span><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2" role="doc-endnote"><p><span class="exturl" data-url="aHR0cDovL2JsdWViaXUuY29tL2Jsb2cvbGludXgtc3NoLXNlc3Npb24tYWxpdmUuaHRtbA==">Linux使用ssh超时断开连接的真正原因<i class="fa fa-external-link-alt"></i></span><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section>
-]]></content>
-      <categories>
-        <category>笔记&amp;札记</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>数学知识补习</title>
-    <url>/0/</url>
-    <content><![CDATA[<p>数理基础太差，被关了起来 <img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/found.png" alt="Picture" style="zoom:40%;"></p>
-<a id="more"></a>
-<!-- ## 矩阵
-
-### 雅可比矩阵
-
-将梯度记为沿各坐标轴偏导的一组坐标,可以表示成向量形式
-
-$$
-\frac{\partial y}{\partial x}=\left[\begin{array}{cccc}
-    \frac{\partial y_1}{\partial x} \\ \frac{\partial y_2}{\partial x} \\ ...  \\ \frac{\partial y_n}{\partial x}
-\end{array}\right]
-$$
-
-### 奇异值分解（singular value decomposition）
-
-$n \times n$方阵可以分解为$\pmb{A}=\pmb{X}\Lambda\pmb{X}^{-1}$ ， 类似的$n*m$矩阵也能分解$\pmb{A}=\pmb{U}\pmb{D}\pmb{V}^{-1}$
-
-D为$m*n$对角矩阵，对角线元素为矩阵 A 的奇异值。U、V都是正交矩阵，因此可以用SVD可以用于求解矩阵的伪逆：
-
-$$
-A^+=VD^+U^T
-$$
-
-$A^+$为伪逆，伪逆$D^+$通过对矩阵 D 的非零元素求倒数后求转
-置生成
-
-奇异值分解还能用来降维
-
-### 距离计算
-
-### 欧式距离
-
-略
-
-### 余弦距离
-
-计算向量（矩阵）两两之间的相对距离，再除以绝对值
-
-$$
-cos\theta=\frac{|\vec{a}\cdot \vec{b}|}{|\vec{a}|*|\vec{b}|}
-$$
-
-余弦相似度：
-$sim(\theta)=1-cos(\theta)$ -->
-<h2 id="网站和工具">网站和工具</h2>
-<blockquote>
-<p>手算是不可能手算的</p>
-</blockquote>
-<h3 id="软件">软件</h3>
-<p>反正积分的时候扔到mathmatica里面算一下总没错。 数值计算扔到Matlab里面跑一下总没错 Mathpix截图转latex的效果相当好，之前免费的，后来开始收费，不过有信用卡可以提供免费的</p>
-<h3 id="网站">网站</h3>
-<p>矩阵求导的网站，试了一下，看起来还不错。 <span class="exturl" data-url="aHR0cDovL3d3dy5tYXRyaXhjYWxjdWx1cy5vcmcv">http://www.matrixcalculus.org/<i class="fa fa-external-link-alt"></i></span></p>
-<h2 id="一点闲话">一点闲话</h2>
-<p>当年我高中的时候，还挺喜欢看matrix67的网站，喜欢些花里胡哨的东西，所谓“美感”。大一的时候还在寻找公式的数学意义和美感，没事跑到图书馆看数分和抽代（没怎么看懂），感觉matrix67那篇文章还有点<span class="exturl" data-url="aHR0cDovL3d3dy5tYXRyaXg2Ny5jb20vYmxvZy9hcmNoaXZlcy80Mjk0">道理<i class="fa fa-external-link-alt"></i></span>。转折是大二学了模电等几门课，才恍然间发现秋水无涯那篇回应说得真好啊。</p>
-<p>秋水无涯的那一篇一直静静的躺在我的浏览器收藏夹里，他的号后来被封了（秋水无涯的豆瓣号已经没了，豆列和读书主页已经不可见，点进去只能看到一些<span class="exturl" data-url="aHR0cHM6Ly9ib29rLmRvdWJhbi5jb20vcGVvcGxlL3p4MzE0MTUvYW5ub3RhdGlvbi8zNjQ3NDY1Lw==">豆瓣笔记<i class="fa fa-external-link-alt"></i></span>和<span class="exturl" data-url="aHR0cHM6Ly9ib29rLmRvdWJhbi5jb20vcGVvcGxlL3p4MzE0MTUvcmV2aWV3cw==">书评<i class="fa fa-external-link-alt"></i></span>），我把文章附在下面。原地址：<span class="exturl" data-url="aHR0cHM6Ly93d3cuZG91YmFuLmNvbS9ub3RlLzE0ODA5NzY2NC8=">我们需要怎样的数学教育？<i class="fa fa-external-link-alt"></i></span></p>
-<blockquote>
-<p>不同的人，学习数学的目的很不一样。数学的应用价值当然广泛，不过这个世界上也确实有不少韩寒：对他们来说，初二水平的数学就够用了。经常听到的论调是，数学是理性的最高表现形式，因而无论志在何种职业，都应该学一点数学，得到一点思维上的训练。我觉得这个观点似是而非。如果学习数学是为了训练理性思维，那么全民必修的该是一门逻辑课。数学理论当然是逻辑训练的好材料，然而，高深的数学理论并不带来更多逻辑上的挑战——代数几何和平面几何都只用到最基本的三段论而已；另一方面，数学训练的必要性也不等同于充分性。我的朋友中就颇有几个精于数理而迂于世情的——对数学之外的事情，他们比一般人更糊涂。我依然认为他们是芸芸众生中最“聪明”的，但这种“聪明”似乎不是大众学习数学的初衷。事实上，大众对这些“聪明人”采取敬而远之的态度。</p>
-<p>很多人废寝忘食地背下了大量公式来应付数学考试，很快忘得一干二净之后又安慰自己说好歹算是训练了逻辑思维——这是毫无含金量的廉价安慰。对大部分人来说，初二水平的数学真的够用了。如果他们愿意学得更多，或者对数学史抱有考古的兴趣，那是个人自由。剥除有限的实用价值，精巧的理论反而是一种不必要的折磨。数学当然有独立于实用价值之外的美，但是强迫每个人都去欣赏，那是大规模犯罪。</p>
-<p>不少人还是要用到高等数学的。这里需要澄清的是，所谓“高等数学”，实在是很初等的数学。对于工科学生来说，微积分和线性代数当然是必要的课程。物理系学的更多一些：微分方程，特殊函数，群论外加一些泛函分析。在理论物理的前沿，他们会遇到纤维丛，辛几何和共形场论。然而这仍然只是数学的一部分。我想除了数学家之外，不会有人对类域论感兴趣，更不要说Langlands纲领。这种冷漠是可以理解的。他们大可以理直气壮地问数学家，如果散在的有限单群不是26个而是62个，太阳难道会从西边升起来吗？不能排除这样的可能性，不过，必须承认，单群与星体运行之间的关系，即使存在，也远超出我们的想象力。</p>
-<p>工科数学教育最显著的问题似乎是“形式化”。这大概是工具理性的一种表现：为了“短平快”地掌握所需的数学，工科学生学习数学的速度往往是数学系学生的数倍。所以他们几乎从来没有机会弄懂他们所学的究竟是些什么玩意。如果你让他们解释dx是什么，他们给出的回答与其说是数学，不如说是玄学。“以其昏昏使人昭昭”是不可能的，于是这在工科院系成了代代相传的顽疾。唯一的安慰是这不妨碍他们做微积分，做得比数学系的学生还要好。我对这个问题抱宽容的态度：毕竟，Newton也说不清dx是什么。在我看来，真正的症结在于除了公式和计算，工科数学教育所余无几。真正应该强调的是视觉化，讨论大量应用的实例，在实践当中掌握理论。证明是相对次要的事情：如果你对你在做什么有充分的感觉，知道各种事实是如何恰当地组织起来的，写出证明只是一种形式。反之，我不认为“记住”诸如行秩等于列秩的证明有什么用处——即使记住了也很快会忘记，更何况如果你动手解过几个线性方程组，就能“理解”这个显然的结论。</p>
-<p>Matrix67同学力陈美感的重要性。然而在我看来，对以数学为志业的人来说，数学必然是“丑”的。这好比游客登山，只看到大道平坦，景致优美，而开荆辟棘的艰辛只有开山者自己能够体会。数学工作者说数学是“美”的，是流尽血汗后终于登顶看到绝美风景的震撼与欣然，这种美和欣赏数学之美的“美”很不一样。多数人以学习数学理论来求得一点审美的愉悦为苦，和真正的数学工作者相比，这不过是“十指不沾泥，鳞鳞居大厦”。另一些人把“数学之美”作为一种广告词。恕我直言，这些人本身大多只是“观光客”，物以类聚，所招徕到的也只能是一群“观光客”。</p>
-<p>如何培养未来的数学工作者是一个很大的问题，我不够资格来谈。但至少有一点我是有把握的：应该少谈一点形而上的玩意，多锻炼真功夫。这并不是说要放弃整体的观点。恰恰相反，这意味着在“专”的基础上“博”：仅仅知道Riemann猜想是远远不够的，要知道它如何和整个数学相互作用，在整体图景中处在一个什么位置。那些仅仅将Riemann猜想作为谈资的人，我是不太佩服的。</p>
-<p>Matrix67君指责高数课本“荒唐”。宽容一点，我们应该允许工科数学甚至文科“数学”有自己的逻辑和教学方式。严厉地说，则M君只能算是“登堂”，离真正“入室”尚有不小的距离。以他的观点来教育未来的数学工作者，我以为不妥当。</p>
-<p>M君的文章，只适用于像他那样的“数学爱好者”。</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>笔记&amp;札记</category>
-      </categories>
-      <tags>
-        <tag>矩阵</tag>
       </tags>
   </entry>
   <entry>
@@ -2912,76 +2506,6 @@ python manage.py runserver
       </tags>
   </entry>
   <entry>
-    <title>试用Netlify自动部署和CMS</title>
-    <url>/e9d5/</url>
-    <content><![CDATA[<p>又开始了瞎折腾。话说我这种没人看的静态小破网站，真的有必要持续集成、持续部署吗？</p>
-<a id="more"></a>
-<h2 id="使用netlify进行自动化部署">使用Netlify进行自动化部署</h2>
-<p>不知道怎么都在搞CI/CD（Continuous Integration/Continuous Deployment），Github也搞了个Github Action。看了一圈感觉对于我这种半个月git commit一次备份博客的人并没有什么必要，而且不管是travis ci还是github action或netlify自己的在线build都很慢，博客东西多一点几分钟就过去了（没有特殊需求就想安安静静写个博客就不要搞这个了，本地hexo g，hexo d推到github pages或者netlify就完事了，速度还快）</p>
-<p>之前都是在本地生成，hexo g &amp;&amp; hexo d 推到Github pages，然后Netlify关联这个仓库自动拉取(好像是用的钩子吧)。备份的时候再 git commit &amp;&amp; git push 本地项目。 现在每次 git commit 备份并 git push，让Netlify从Hexo的项目直接在线 Hexo g ，按部就班授权，改仓库，改deploy命令为 hexo clean &amp;&amp; hexo generate 结果直接Deploy failed了 报错:</p>
-<pre class="line-numbers language-log" data-language="log"><code class="language-log">failed during stage &#39;preparing repo&#39;: Error checking out submodules: fatal: No url found for submodule path &#39;themes&#x2F;next&#39; in .gitmodules<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>查了一下发现是Netlify会把每一个包含.git的子目录当成是一个submodule，并且每次都要<code>git submodule update</code>一下，但是这个next主题的git仓库又没有在在我的.gitmodules配置里面设置为submodule, 那我们直接把themes/next加到.gitmodules里面就好了<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
-<p>在根目录（执行hexo g &amp;&amp; hexo d的那个目录）新建<code>.gitmodules</code>写入</p>
-<pre class="line-numbers language-log" data-language="log"><code class="language-log">[submodule &quot;themes&#x2F;next&quot;]
-	path &#x3D; themes&#x2F;next
-	url &#x3D; https:&#x2F;&#x2F;github.com&#x2F;theme-next&#x2F;hexo-theme-next<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>再执行就行了(先<code>git commit</code>,再<code>git push</code>,再进Netlify试一下)</p>
-<p>看到Deploy log：</p>
-<pre class="line-numbers language-log" data-language="log"><code class="language-log">4:46:21 PM: Minifying js bundle
-4:46:22 PM: Minifying css bundle
-4:46:23 PM: Minifying css bundle
-4:46:36 PM: Finished processing build request in 56.658478141s
-4:46:37 PM: Post processing done
-4:46:37 PM: Site is live<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>行了，速度还是可以的，build过程56秒（虽然本地只要几秒，Hugo之类的更快） 对比一下本地</p>
-<pre class="line-numbers language-log" data-language="log"><code class="language-log">INFO  Files loaded in 3.96 s
-···
-INFO  180 files generated in 2.01 s<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>这个速度可以接受，据说Netlify最近新增了CI的时间限制（官网说是300 included/month，每个月三百分钟），但是我这种不是重度用户的人根本用不完（实在不行本地hexo s调试好了再提交就完事了，Netlify也要恰饭的嘛，每次CI都要重新安装环境） 带宽也有限制，100GB，我这个没人看的小破博客也根本用不了。</p>
-<p>还有一个小问题，改成这样之后发现每一篇文章的更新时间都变成了今天，暂时还没找到判定更新时间的原理是什么，一个办法是手动指定时间戳 在每个markdown文件开头</p>
-<pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown">updated: '2019-11-30 20:22:52'
-date: '2019-11-30 20:22:52'<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>更新，找到了这个时间戳的问题，看这个issue：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3RoZW1lLW5leHQvaGV4by10aGVtZS1uZXh0L2lzc3Vlcy84OTM=">The update time of the article is incorrect<i class="fa fa-external-link-alt"></i></span></p>
-<p>大概是Git在checkout的时候，没有正确保留时间戳，试了一下，应该就是push上去的时间，而不是修改后add的时间或者commit的时间</p>
-<blockquote>
-<p>It uses the push time of the last modification of the file.</p>
-</blockquote>
-<p>根据issue里的解决办法，只要在<code>hexo clean &amp;&amp; hexo generate</code> 之前加上<code>git ls-files -z | while read -d '' path; do touch -d \"$(git log -1 --format=\"@%ct\" \"$path\")\" \"$path\"; done</code>就行了</p>
-<p>算了，直接关了吧</p>
-<h2 id="netlify-cms-使用">Netlify CMS 使用</h2>
-<p>（多说一句，Netlify官网打开是真的慢啊） 我已经踩过坑了，没有他们吹的那么好，大骗子，这个也就手机/平板写markdown和发布可以将就一下，真的都不如随身带个U盘里面装着博客工程或者markdown体验好 如果不是有多人协作之类的需求就不要乱试了（除非你真的吃饱了撑的没事干</p>
-<p>如果你还是要安装：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">yarn</span> <span class="token function">add</span> hexo-netlify-cms<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>然后在Netlify里面设置一下<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>, 开启git-gateway服务并在Snippet Injection加入一行代码</p>
-<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>https://identity.netlify.com/v1/netlify-identity-widget.js<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>打开yoursite/admin就可以看到了 这个时候Settings-&gt;Identity-&gt;Registration是开放注册的，我们改成Invite only 然后在设置里面Settings-&gt;Identity-&gt;External providers里面进行Github授权或者在在identity页面发邮件邀请（是点进你的team里面identity页面输入邮件地址然后点invite users按钮，不是在设置里的identity） 由于我是白嫖用户，Indetity Level 0，什么Audit log之类的都用不了, 设置到这里基本就结束了。</p>
-<ul>
-<li>这句话是我在Netlify CMS里面打的，试试，貌似这个在线的markdown编辑器并不太好用,感觉跟CodiMD差了好多啊，也没有夜间模式，也不支持Mathjax之类的</li>
-</ul>
-<p>行吧，感觉被坑了啊，一点也不好用啊。<del>等有空我在教研室服务器上部署个CodiMD玩</del></p>
-<p>（或许可以在本地写好了markdown再粘贴上去，这个markdown在线编辑器实在是难用，而且丑）</p>
-<p>唯一能看的就是它会自动同步你的repo，但是你下次在本地编辑的时候还得git pull一下，什么时候仓库不在手边的时候能拿来将就一下。（好像可以拿手机之类的操作啊）</p>
-<p>什么，你说多人协作？也不太好用，免费用户invite只能五个账号，鸡肋；收费用户太贵了，并不划算。还不如直接建一个git repository多人协作结合CI发布。至于使用Netlify CMS多人一起维护发布网站内容, 行吧，个人博客基本用不到。也许是给不愿意折腾又想建站还想搞个静态博客的小白用的，但是这样的小白真的有1%吗？</p>
-<p>当然netilify cms对于静态网站还是有它的意义的，不然也不会在Github有那么多star，但是对于不需要多人协作的个人博客，就别装了吧（已经装了的和不折腾不舒服斯基人士请随意）</p>
-<h2 id="参考">参考</h2>
-<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2ppYW5ndGovaGV4by1uZXRsaWZ5LWNtcy9ibG9iL21hc3Rlci9SRUFETUUtWkgubWQ=">Hexo Netlify CMS<i class="fa fa-external-link-alt"></i></span></p>
-<section class="footnotes" role="doc-endnotes">
-<hr />
-<ol>
-<li id="fn1" role="doc-endnote"><p><span class="exturl" data-url="aHR0cHM6Ly9naXQtc2NtLmNvbS9ib29rL3poL3YyL0dpdC3lt6Xlhbct5a2Q5qih5Z2X">Git 工具 - 子模块<i class="fa fa-external-link-alt"></i></span> 可能会有切换分支等其他问题<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2" role="doc-endnote"><p><span class="exturl" data-url="aHR0cHM6Ly93d3cuZG5vY20uY29tL2FydGljbGVzL2JlZWNobnV0L2hleG8tbmV0bGlmeS1jbXMv">https://www.dnocm.com/articles/beechnut/hexo-netlify-cms/<i class="fa fa-external-link-alt"></i></span><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section>
-]]></content>
-      <categories>
-        <category>杂七杂八</category>
-      </categories>
-      <tags>
-        <tag>netlify</tag>
-        <tag>ci</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>VSCode使用ssh-key远程登录Ubuntu</title>
     <url>/7f63/</url>
     <content><![CDATA[<p>更新：已经把win10格了，跟Mobaxterm说再见了，Arch下vscode总是内存泄漏，感觉比win10下小问题也多不少</p>
@@ -3124,50 +2648,18 @@ Host Server
       </tags>
   </entry>
   <entry>
-    <title>无题</title>
-    <url>/e5e8/</url>
-    <content><![CDATA[<figure>
-<img src="photo_hk1.jpg" alt="null" /><figcaption aria-hidden="true">null</figcaption>
-</figure>
-<blockquote>
-<p>然而我的心很平安；没有爱憎，没有哀乐，也没有颜色和声音</p>
-<p>然而这是许多年前的事了</p>
-<a id="more"></a>
-</blockquote>
-<blockquote>
-<p>然而现在没有星和月光，没有僵坠的蝴蝶以至笑的渺茫，爱的翔舞。然而青年们很平安</p>
-</blockquote>
-<hr />
-<h2 id="君不见月如水">君不见，月如水</h2>
-<p>局域网之外的某些人纪念着三十年，一如一个月前局域网内官方纪念着一百年。昔日书生意气不再，只余残破躯壳，被人拿出来晒干了高高挂起，铸成新的图腾和血色大旗。</p>
-<p>走近一看，这旗帜不见血色，暗淡无光，轻轻一吹，灰尘抖落</p>
-<p>旖旎的生命不见踪影，在大风暴前，不见人哭，不见人笑。韭菜隐约发觉经济不好，电视只道稳中向好；不知大风波又将怎样到来，也不曾拥有灵便的手脚，只能抬头望像乌云聚集的天空。</p>
-<p>怎奈影帝临走前一席话一语成谶，时局至此，正未知几人称帝，几人称王。</p>
-<figure>
-<img src="pic1.jpg" alt="大清" /><figcaption aria-hidden="true">大清</figcaption>
-</figure>
-<blockquote>
-<p>彼黍离离，彼稷之苗。行迈靡靡，中心摇摇。</p>
-</blockquote>
-<p>承平日久十几年了，九十年代入世后的美(xue)好(han)时(gong)光(chang)，也该结束了，新时代，来了。08年四万亿之后，涨价去库存、棚改、15股灾救市、公鸡侧+环保左右出击，带路，那可真是治国鬼才，迪士尼捡到宝了。反正今天这个样子，也没有回头路了。（当然春秋大梦该做还是要做的，梦里啥都有）</p>
-<p>魑魅搏人应见惯，总输他、覆雨翻云手</p>
-<p>皆误在，今日不和，明日不战。鼎之轻重，可问否？</p>
-<blockquote>
-<p>冰与雪，周旋久.</p>
-</blockquote>
-<p>物价闯关，再来一次，不知如何？</p>
-<p>失业和通胀，会是哪个呢？难道.....</p>
-<p>尽道丰年瑞，丰年事若何？</p>
-]]></content>
-      <categories>
-        <category>彼黍离离</category>
-      </categories>
-  </entry>
-  <entry>
     <title>正则表达式笔记</title>
     <url>/96cd/</url>
-    <content><![CDATA[<p>可能用得到</p>
-<a id="more"></a>
+    <content><![CDATA[<p>头大 <a id="more"></a></p>
+<h2 id="让正则表达式的可读性可维护性高一点">让正则表达式的可读性、可维护性高一点</h2>
+<p>正则一般不是给人看的，可读性都比较差，比如下面这个匹配邮箱的正则 <span class="exturl" data-url="aHR0cHM6Ly9yZWdleDEwMS5jb20vbGlicmFyeS9sUDd2TDM=">https://regex101.com/library/lP7vL3<i class="fa fa-external-link-alt"></i></span></p>
+<pre class="line-numbers language-none"><code class="language-none">(?:(?:\r\n)?[\t])*(?:(?:(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[\t]))*"(?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[\t]))*"(?:(?:\r\n)?[\t])*))*@(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*|(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[\t]))*"(?:(?:\r\n)?[\t])*)*\&lt;(?:(?:\r\n)?[\t])*(?:@(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*(?:,@(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*)*:(?:(?:\r\n)?[\t])*)?(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[\t]))*"(?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[\t]))*"(?:(?:\r\n)?[\t])*))*@(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*\&gt;(?:(?:\r\n)?[\t])*)|(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[\t]))*"(?:(?:\r\n)?[\t])*)*:(?:(?:\r\n)?[\t])*(?:(?:(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[\t]))*"(?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[\t]))*"(?:(?:\r\n)?[\t])*))*@(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*|(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[\t]))*"(?:(?:\r\n)?[\t])*)*\&lt;(?:(?:\r\n)?[\t])*(?:@(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*(?:,@(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*)*:(?:(?:\r\n)?[\t])*)?(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[\t]))*"(?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[\t]))*"(?:(?:\r\n)?[\t])*))*@(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*\&gt;(?:(?:\r\n)?[\t])*)(?:,\s*(?:(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[\t]))*"(?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[\t]))*"(?:(?:\r\n)?[\t])*))*@(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*|(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[\t]))*"(?:(?:\r\n)?[\t])*)*\&lt;(?:(?:\r\n)?[\t])*(?:@(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*(?:,@(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*)*:(?:(?:\r\n)?[\t])*)?(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[\t]))*"(?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[\t]))*"(?:(?:\r\n)?[\t])*))*@(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*\&gt;(?:(?:\r\n)?[\t])*))*)?;\s*)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>我反正看不懂，让我再改点什么我也改不动。别说这种，就是我看我自己以前写的正则，时间一长都看不懂了。</p>
+<p>有一些写法，比如Verbose Mode, 写起来会可读性强一点。</p>
+<h2 id="性能问题">性能问题</h2>
+<p>大部分正则库的实现貌似用的都是有限自动机。</p>
+<p>似乎Perl的很快，javascript的要慢很多。</p>
+<p>贪婪匹配之类的东西写多了就会卡死，</p>
 <h2 id="用法">用法</h2>
 <h3 id="防止过度匹配">防止过度匹配</h3>
 <p>使用? 比如</p>
@@ -3202,10 +2694,6 @@ num <span class="token operator">=</span> re<span class="token punctuation">.</s
 <p>使用?=进行前向查找,?&lt;=向后查找</p>
 <p>比如,从<code>https://zhangjk98.xyz/</code>中找出协议https:</p>
 <pre class="line-numbers language-none"><code class="language-none">.+(?=:)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h2 id="实例">实例</h2>
-<p>比如下面这个匹配邮箱的正则 https://regex101.com/library/lP7vL3</p>
-<pre class="line-numbers language-none"><code class="language-none">(?:(?:\r\n)?[\t])*(?:(?:(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[\t]))*"(?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[\t]))*"(?:(?:\r\n)?[\t])*))*@(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*|(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[\t]))*"(?:(?:\r\n)?[\t])*)*\&lt;(?:(?:\r\n)?[\t])*(?:@(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*(?:,@(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*)*:(?:(?:\r\n)?[\t])*)?(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[\t]))*"(?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[\t]))*"(?:(?:\r\n)?[\t])*))*@(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*\&gt;(?:(?:\r\n)?[\t])*)|(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[\t]))*"(?:(?:\r\n)?[\t])*)*:(?:(?:\r\n)?[\t])*(?:(?:(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[\t]))*"(?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[\t]))*"(?:(?:\r\n)?[\t])*))*@(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*|(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[\t]))*"(?:(?:\r\n)?[\t])*)*\&lt;(?:(?:\r\n)?[\t])*(?:@(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*(?:,@(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*)*:(?:(?:\r\n)?[\t])*)?(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[\t]))*"(?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[\t]))*"(?:(?:\r\n)?[\t])*))*@(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*\&gt;(?:(?:\r\n)?[\t])*)(?:,\s*(?:(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[\t]))*"(?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[\t]))*"(?:(?:\r\n)?[\t])*))*@(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*|(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[\t]))*"(?:(?:\r\n)?[\t])*)*\&lt;(?:(?:\r\n)?[\t])*(?:@(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*(?:,@(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*)*:(?:(?:\r\n)?[\t])*)?(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[\t]))*"(?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[\t]))*"(?:(?:\r\n)?[\t])*))*@(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\".\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?=[\["()&lt;&gt;@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*\&gt;(?:(?:\r\n)?[\t])*))*)?;\s*)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>我反正看不懂</p>
 <h2 id="一些坑">一些坑</h2>
 <ol type="1">
 <li>很多支持正则表达式的地方差异很大，有的甚至不支持完整的正则表达式，比如linux命令中grep，只支持Basic RegEx，像<code>? + () |</code>这种元字符全都不支持，需要用<code>-e</code>或<code>-P</code>参数使用扩展的正则或直接用Perl正则。Vim里面的正则也自己搞了一套，跟别的不太一样</li>
@@ -4093,231 +3581,6 @@ xdg-user-dirs-gtk-update<span aria-hidden="true" class="line-numbers-rows"><span
       </categories>
       <tags>
         <tag>manjaro</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo博客部署和Next主题设置</title>
-    <url>/bd8f/</url>
-    <content><![CDATA[<p>这里仅记录个人问题，找教程为什么不看看官方文档呢 <a id="more"></a></p>
-<p>有问题先看这里啦，<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL25leHQtdGhlbWUvaGV4by10aGVtZS1uZXh0L2lzc3Vlcy80">更新说明及常见问题<i class="fa fa-external-link-alt"></i></span> 我自己的博客基本会跟着Next主题每月发布的release更新版本，偶尔直接跳到最新的master版本。 可能有的时候因为忙或者其他原因，并不会追最新版，有些之前写的东西过时了也没有改，请大家尽量以<span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0Lm9yZy8=">官方文档<i class="fa fa-external-link-alt"></i></span>为准。</p>
-<h2 id="更新升级至hexo5.0">更新升级至hexo5.0</h2>
-<p>没有什么太大魔改的话直接</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> <span class="token function">install</span> hexo@5.0.0<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>然后把next.yml的配置（或者主题的_config.yml）配置放到根目录_config.next.yml下面。</p>
-<p>hexo 5 支持用npm安装主题了</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> <span class="token function">install</span> hexo-theme-next<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h2 id="升级7.x的大坑">升级7.X的大坑</h2>
-<p>NexT主题的顺畅更新好像很难，官方不推荐，之前乱改的5.X主题升级7.2分支合并出现问题，一堆warning，索性推倒重来直接新搞一个7.X。</p>
-<p>升级可以直接按照官网方法</p>
-<pre><code> cd themes/next
- git tag -l
- git checkout tags/v7.7.1</code></pre>
-<p>spawn failed 问题，删除.deploy_git文件夹并重新部署。 _config.yml配置请注意对齐问题</p>
-<p>给备份博客的repo添加README.md文档可在这个路径下，这样就会显示在首页 themes%yourtheme%.md</p>
-<p>为文章设置预览:添加 <code>&lt;!-- more --&gt;</code></p>
-<p><del>插入本地图片推荐hexo-asset-image插件,可以看<span class="exturl" data-url="aHR0cDovL2V0cmQub3JnLzIwMTcvMDEvMjMvaGV4b+S4reWujOe+juaPkuWFpeacrOWcsOWbvueJhy8=">这里<i class="fa fa-external-link-alt"></i></span></del></p>
-<p>上面那个图片插件的repo已经时archived了，可以考虑换hexo-asset-link这个插件</p>
-<h2 id="各种小问题">各种小问题</h2>
-<h3 id="公式问题">公式问题</h3>
-<p>原来采用的hexo-math插件，在hexo-inject插件上有坑，看了看官方推荐，换成<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3RoZW1lLW5leHQvaGV4by10aGVtZS1uZXh0L2Jsb2IvbWFzdGVyL2RvY3MvemgtQ04vTUFUSC5tZA==">新的插件<i class="fa fa-external-link-alt"></i></span>。换完记得卸载hexo-inject插件</p>
-<h3 id="配置出错">配置出错</h3>
-<p>设置_config.yml时那个rss如果开启，默认空着就好了，不要填true</p>
-<pre><code>rss: true</code></pre>
-<p>像这样就会报错</p>
-<h3 id="本地搜索">本地搜索</h3>
-<p>本地搜索一直转圈圈，看到issue里面说是插件的问题，卸载后重装，神奇的好了</p>
-<pre><code> npm uninstall hexo-generator-searchdb --save
- npm install hexo-generator-searchdb --save</code></pre>
-<p>在Next版本7.20以后（如7.30），hexo-generator-searchdb换成了hexo-generator-search，卸载并安装hexo-generator-search，本地搜索就可以正常使用了，不然会出现只能搜索标题内容的bug</p>
-<pre><code> npm uninstall hexo-generator-searchdb --save
- npm install hexo-generator-search --save</code></pre>
-<h3 id="canvas效果">canvas效果</h3>
-<p>似乎那几个背景特效和进度条都会拖慢网页加载速度，不填建议用（新版的Next已经把乱晃的那个canvas移除了）</p>
-<h3 id="报错">报错</h3>
-<p>可能出现的一类问题是yaml的配置出现了语法错误报错</p>
-<pre class="line-numbers language-log" data-language="log"><code class="language-log">YAMLException: duplicated mapping key at line ...<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>这说明你的key重复了，比如在yaml里同时两段</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">calendar</span><span class="token punctuation">:</span>
-     <span class="token key atrule">calendar_id</span><span class="token punctuation">:</span> &lt;required<span class="token punctuation">></span> <span class="token comment"># Your Google account E-Mail</span>
-     <span class="token key atrule">api_key</span><span class="token punctuation">:</span> &lt;required<span class="token punctuation">></span>
-<span class="token key atrule">calendar</span><span class="token punctuation">:</span>
-     <span class="token key atrule">calendar_id</span><span class="token punctuation">:</span> &lt;required<span class="token punctuation">></span> <span class="token comment"># Your Google account E-Mail</span>
-     <span class="token key atrule">api_key</span><span class="token punctuation">:</span> &lt;required<span class="token punctuation">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>删掉一个calender或者将二者合并就可以了</p>
-<p>还有一种经常出现的问题</p>
-<pre class="line-numbers language-log" data-language="log"><code class="language-log">ERROR read ECONNRESET
-Error: read ECONNRESET
-    at TLSWrap.onStreamRead (internal&#x2F;stream_base_commons.js:111:27)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>这种可能是配置出错了，比如引用了某个本地资源结果路径不对找不到资源。这种建议在浏览器里打开F12检查一下</p>
-<h3 id="新的自定义配置路径">新的自定义配置路径</h3>
-<p>next v7.3.0 版本的定制路径改了，比如custom.styl改成了source/_data/styles.styl，参见</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">custom_file_path</span><span class="token punctuation">:</span>
-  <span class="token comment">#head: source/_data/head.swig</span>
-  <span class="token comment">#header: source/_data/header.swig</span>
-  <span class="token comment">#sidebar: source/_data/sidebar.swig</span>
-  <span class="token comment">#postMeta: source/_data/post-meta.swig</span>
-  <span class="token comment">#postBodyEnd: source/_data/post-body-end.swig</span>
-  <span class="token comment">#footer: source/_data/footer.swig</span>
-  <span class="token comment">#bodyEnd: source/_data/body-end.swig</span>
-  <span class="token comment">#variable: source/_data/variables.styl</span>
-  <span class="token comment">#mixin: source/_data/mixins.styl</span>
-  <span class="token key atrule">style</span><span class="token punctuation">:</span> source/_data/styles.styl<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>当然也可以修改custom_file_path:来自定义定制内容路径，想放哪就放哪。 改成之后就可以每次顺畅的直接每次更新主题时直接<code>git pull</code>了，不需要再merge自定义修改了 很多老的Next主题自定义教程都是在custom.styl或者直接改主题的css文件，7.3以后的新版要把老教程里的路径改了。 还有一种方法是<span class="exturl" data-url="aHR0cHM6Ly93d3cuZG5vY20uY29tL2FydGljbGVzL2JlZWNobnV0L2hleG8tbmV4dC1pbmplY3RzLw==">用Injects自定义主题<i class="fa fa-external-link-alt"></i></span> 据说Hexo5.x之后就能用npm安装主题了，Hexo一直咕咕咕，我们慢慢等吧</p>
-<h3 id="标签">标签</h3>
-<p>Next v7.3.0 版本的标签不再支持 Full-image tag</p>
-<pre><code> WARN  Full-image tag is no longer supported.</code></pre>
-<p>使用</p>
-<pre><code> &#123;% fi https://image-url, 图片名称, , 35% %&#125;</code></pre>
-<p>这样的标签无法再进行图片缩放,可以改用html方式</p>
-<pre><code> &lt;img src=&quot;图片地址&quot; width=&quot;50%&quot; height=&quot;50%&quot;  style=&quot;margin: 0 auto;&quot;/&gt;
- &lt;img width=400 src=&quot; your-image-link&quot; alt=&quot;上海鲜花港 - 郁金香&quot; /&gt;</code></pre>
-<p>或</p>
-<pre><code>&lt;div style=&quot;width: 200px; margin: auto&quot;&gt;![picture name](example.jpeg)&lt;/div&gt;</code></pre>
-<p>或者hexo标签</p>
-<pre><code> &#123;% img [class names] /path/to/image [width] [height] "title text 'alt text'" %&#125;</code></pre>
-<h3 id="其他插件">其他插件</h3>
-<p>附上我安装的插件</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">npm</span> list --depth<span class="token operator">=</span><span class="token number">0</span>
-hexo-site@0.0.0 /home/zjk/blog
-├── hexo@5.1.1
-├── hexo-asset-link@2.1.0
-├── hexo-deployer-git@2.1.0
-├── hexo-filter-mathjax@0.6.0
-├── hexo-filter-nofollow@2.0.2
-├── hexo-generator-archive@1.0.0
-├── hexo-generator-category@1.0.0
-├── hexo-generator-feed@3.0.0
-├── hexo-generator-index@2.0.0
-├── hexo-generator-searchdb@1.3.2
-├── hexo-generator-tag@1.0.0
-├── hexo-hide-posts@0.1.1
-├── hexo-renderer-ejs@1.0.0
-├── hexo-renderer-pandoc@0.3.0
-├── hexo-renderer-stylus@2.0.0
-└── hexo-server@2.0.0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="fancybox">fancybox</h4>
-<p>fancybox虽然现在还支持，但是据说计划在8.0版移除，所有jQuery有关的东西都在逐步移除，目前已经支持 medium-zoom，可以在设置中开启</p>
-<pre><code> npm install medium-zoom</code></pre>
-<p>"在新版中 quicklink 不建议再使用，最起码不要与 pjax 同时开" 更新,这个在7.4版本以后修复了 无法加载 woff 字体资源 404 问题</p>
-<pre><code> Failed to load resource: the server responded with a status of 404 () fontawesome-webfont.woff2:1</code></pre>
-<p>这个找到提示的文件夹 source/font 路径,找到这三个缺失的文件,补上就可以了(可能没有这个文件夹,新建一下就行了)</p>
-<h3 id="夜间模式">夜间模式</h3>
-<p>现在新版Next已经有了自带的夜间模式，在配置里开启即可，会自动随着系统设置变</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token comment"># Dark Mode</span>
-<span class="token key atrule">darkmode</span><span class="token punctuation">:</span> auto<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<h2 id="更新主题">更新主题</h2>
-<p>这里我使用的Next主题，参考<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3RoZW1lLW5leHQvaGV4by10aGVtZS1uZXh0L2Jsb2IvbWFzdGVyL2RvY3MvemgtQ04vREFUQS1GSUxFUy5tZA==">https://github.com/theme-next/hexo-theme-next/blob/master/docs/zh-CN/DATA-FILES.md<i class="fa fa-external-link-alt"></i></span> 在7.X以后大的更新还是需要手动处理冲突，但是Next主题将两个_config.yml文件合并搞了一个next.yml，在source/_data底下。这样更新的时候git pull后commit和merge就不用每次手动处理主题的_config.yml冲突了 merge之后指定版本</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">git</span> checkout tags/v7.4.1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>(可能会有nothing added to commit but untracked files present的提示，运行git clean -f清理不想要的文件，或者加到.gitignore里面, 还要就使用git add . ) 如果版本指定不对，会有detached HEAD出现，重新指定正确版本。如果还不行，可能git add等出了冲突，看<span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC9hZTQ4NTdkMmY4Njg=">这里<i class="fa fa-external-link-alt"></i></span></p>
-<h2 id="升级hexo4.0">升级Hexo4.0</h2>
-<p>今天检查更新的时候看到这样的提示，发现Hexo出4.0了。 跑到群里一看，说是什么Hexo 4.0.0 会有巨大的性能提升（相比 Hexo 3.2 生成速度提升 10%，内存占用减少 40%）。闲着没事就升级玩玩吧虽然我这也没几篇文章，生成速度本来也不慢。</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">λ npm-upgrade
-Checking <span class="token keyword">for</span> outdated dependencies <span class="token keyword">for</span> <span class="token string">"D:\zjk\myblog2\package.json"</span><span class="token punctuation">..</span>.
-<span class="token punctuation">[</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token punctuation">]</span> <span class="token number">21</span>/21 <span class="token number">100</span>%                                                                                            s can be used.
-
-New versions of active modules available:
-
-  hexo                      ^3.9.0   →   ^4.0.0
-  hexo-deployer-git         ^1.0.0   →   ^2.0.0
-  hexo-generator-archive    ^0.1.5   →   ^1.0.0
-  hexo-generator-category   ^0.1.3   →   ^1.0.0
-  hexo-generator-feed       ^1.2.2   →   ^2.0.0
-  hexo-generator-index      ^0.2.1   →   ^1.0.0
-  hexo-generator-tag        ^0.2.0   →   ^1.0.0
-  hexo-renderer-ejs         ^0.3.1   →   ^1.0.0
-  hexo-renderer-stylus      ^0.3.3   →   ^1.1.0
-  hexo-server               ^0.3.3   →   ^1.0.0
-
-? Update <span class="token string">"hexo"</span> <span class="token keyword">in</span> package.json from ^3.9.0 to ^4.0.0? <span class="token punctuation">(</span>Use arrow keys<span class="token punctuation">)</span>
-<span class="token operator">></span> Yes
-  No
-  Show changelog
-  Ignore
-  Finish update process<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>直接升级</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">npm</span> <span class="token function">install</span> -g hexo@4.0.0<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>更新，现在hexo-cli包也上hexo4.0了，使用官网的那个带cli的命令就行了 升级之后试一下'hexo generate'</p>
-<pre class="line-numbers language-log" data-language="log"><code class="language-log">INFO  Files loaded in 1.94 s
-INFO  140 files generated in 3.07 s<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>好像是快了点 等等，更新了Hexo4.0以后下面的分页突然变成这个样子了，我先报个修 <img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/20191016094709.png" alt="bug" style="zoom:80%;" /></p>
-<p><img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/20191016095007.png" alt="bug" style="zoom:80%;" /></p>
-<p>找到了问题了，已经在<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2hleG9qcy9oZXhvL2lzc3Vlcy8zNzI5">issue#3729<i class="fa fa-external-link-alt"></i></span>里解决了 现在直接升级到master分支就行了</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> themes/next
-<span class="token function">git</span> pull https://github.com/theme-next/hexo-theme-next master
-<span class="token function">git</span> checkout master<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>看到显示这样就行了</p>
-<blockquote>
-<p>Already on 'master' Your branch is up to date with 'origin/master'.</p>
-</blockquote>
-<p><img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/foot.png" alt="Picture" style="zoom:80%;" /> 好了，开心。目前没看到其他bug了，请放心更（cai）新（keng）</p>
-<p>更新，现在最新的master报这样的错：</p>
-<pre><code> ERROR Cannot read property &#39;replace&#39; of null</code></pre>
-<p>还有这样的错</p>
-<pre><code> ERROR Process failed: layout/tag.swig</code></pre>
-<p>换到nunjucks分支，也有这个问题，先切到contrib分支里面，nunjucks那块正在施工，大家先用着旧版，我已经报修了。劳模mimi同学已经在修了（19.10.18） 更新，感谢劳模Mimi同学，已经修了<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3RoZW1lLW5leHQvaGV4by10aGVtZS1uZXh0L3B1bGwvMTIyNg==">Migrate to Nunjucks [3] #1226<i class="fa fa-external-link-alt"></i></span></p>
-<h2 id="绑定域名并托管到netlify">绑定域名并托管到netlify</h2>
-<p>先到namecheap或者namesilo等网站找个中意的域名，不介意在天朝备案腾讯和阿里云买也可以，不愿意花钱也可以申请个免费的。我这里0.99刀一年优惠买了个<a href="https://zhangjk98.xyz/">zhangjk98.xyz</a></p>
-<p>在netlify的domian setting里找到Custom domains按照提示来，可以参考这个<span class="exturl" data-url="aHR0cHM6Ly9tZWRpdW0uY29tL0BQdWRnZTE5OTYvMjAxOC0wMS0wMi03MDEzZWRkYzQxM2M=">使用 Netlify 托管个人网站 详细步骤<i class="fa fa-external-link-alt"></i></span></p>
-<h2 id="google-search-console-验证和配置">Google Search Console 验证和配置</h2>
-<p>这里以netlify为例，namesilo等域名商也可进行验证 <img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/20190830141615.png" alt="dns验证" style="zoom:80%;" /> 有自己的域名可以直接选择domian验证，看<span class="exturl" data-url="aHR0cHM6Ly93d3cud29ndWlkZS5jb20vYXJjaGl2ZXMvNDg2MS5odG1s">这里<i class="fa fa-external-link-alt"></i></span> 打开netlify，找到dns setting，点击下方add new record 按钮 <img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/20190830142257.png" alt="添加验证" /> value就填谷歌给你的那个值，等几分钟就好了</p>
-<h2 id="美化">美化</h2>
-<p>设置footer跳动的红心 在next配置里找到icon 设成下面这个样子</p>
-<pre><code>   icon: 
-      # Icon name in Font Awesome. See: https://fontawesome.com/v4.7.0/icons/
-      # `heart` is recommended with animation in red (#ff0000).
-      name: heartbeat
-      # If you want to animate the icon, set it to true.
-      animated: true
-      # Change the color of icon, using Hex Code.
-      color: &quot;#FF0000&quot;</code></pre>
-<p>自定义字体: _config.yml里找到</p>
-<pre><code> font:
-      enable: true</code></pre>
-<h2 id="使用caniuse测试浏览器兼容性">使用caniuse测试浏览器兼容性</h2>
-<iframe data-feature="fetch" src="https://caniuse.bitsofco.de/embed/index.html?feat=fetch&periods=current&accessible-colours=false" frameborder="0" width="100%" height="400px"></iframe>
-<iframe data-feature="sharedarraybuffer" src="https://caniuse.bitsofco.de/embed/index.html?feat=sharedarraybuffer&periods=current&accessible-colours=false" frameborder="0" width="100%" height="400px"></iframe>
-<iframe data-feature="link-rel-modulepreload" src="https://caniuse.bitsofco.de/embed/index.html?feat=link-rel-modulepreload&periods=past_1,past_2,past_3,past_4,past_5&accessible-colours=false" frameborder="0" width="100%" height="400px"></iframe>
-<h2 id="使用yarn管理npm包和travis-ci自动化部署">使用yarn管理npm包和travis-ci自动化部署</h2>
-<p>可选，本地生成速度够快或者不嫌麻烦也没太有必要上travis-ci 不愿意折腾就直接本地生成部署就好了，ci反而慢，而且就想发个博客的话完全没有必要！</p>
-<p>今天经人提醒，hexo s 是动态编译的，本地预览直接hexo s 就行了，不用先 hexo g 生成</p>
-<h2 id="插件选择">插件选择</h2>
-<h3 id="踩坑">踩坑</h3>
-<p>lazyload插件、fancybox插件(改用mediumzoom)、pjax插件、fliter-optimizer插件（经常跟很多地方冲突）等建议慎用</p>
-<h3 id="给mardown添加论文脚注效果">给Mardown添加论文脚注效果</h3>
-<p>安装插件：</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">npm</span> <span class="token function">install</span> hexo-reference --save<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>注释测试<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
-<h3 id="主页文章置顶">主页文章置顶</h3>
-<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL25leHQtdGhlbWUvaGV4by1nZW5lcmF0b3ItaW5kZXhlZA==">hexo-generator-indexed<i class="fa fa-external-link-alt"></i></span></p>
-<h2 id="使用cloudflare和github-pages">使用Cloudflare和Github Pages</h2>
-<p>由于Netlify访问速度实在太慢（居然比Github Pages还慢），本来以为只是在国内慢，没想到收到一封邮件，说：</p>
-<p>然后我感觉不对劲，拿ping工具和网络测试工具（<span class="exturl" data-url="aHR0cHM6Ly9ndG1ldHJpeC5jb20=">https://gtmetrix.com<i class="fa fa-external-link-alt"></i></span>）看了一下，又查了一下，原来不仅国内慢啊，国外也比Github Pages慢啊 Netlify居然还说“Why You don't need clcoudflare”, 我。。。</p>
-<p><img width=450 src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/net5xx.png" alt="Picture" /></p>
-<p>换回GitHub Pages和cloudlfare，还有CNAME Flatterning, 不需要备案的免费CDN也就cloudflare了。 ping检测结果终于不是一片飘红了。巨硬收购Github后说要建设Github国内的服务器，但是它自家的Azure、bing、onedrive都整天抽风，感觉指望不上了。</p>
-<p><img width=450 src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/ping.png" alt="Picture" /></p>
-<p>现在唯一的问题就是图床用的Github，已经弃疗，国内速度不管了。</p>
-<p>可能的小坑：开启coludflare的 rocket loader 功能后会出错（这是个实验性的功能），Next主题会变成一片空白，一直加载不出来。关掉就好了。</p>
-<h2 id="提高加载速度">提高加载速度</h2>
-<p>在<span class="exturl" data-url="aHR0cHM6Ly9ndG1ldHJpeC5jb20v">GTmetrix<i class="fa fa-external-link-alt"></i></span>上看到我这得分才70多 发现首页两个图片占了很多，把两个图整成webp格式的，然后再调整一下大小(这里我用的这个<span class="exturl" data-url="aHR0cHM6Ly9jbG91ZGNvbnZlcnQuY29tLw==">网站<i class="fa fa-external-link-alt"></i></span>)。这里抛弃safari用户了 (cloudflare的business是有这个功能的，但是我用不起) 然后把velocityjs的那些动画效果关了（这个早就想关了，和其他组件各种冲突）</p>
-<p>虽然拉黑了百度<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>，但是发现我的流量统计还是有一大半是国内访问，为了照顾一下国内速度，还是用了Cloudflare的CDN 大多数时候，国内 cloudflare &gt; github pages &gt; netlify (如果不用个人域名，用netlify的二级域名会比XXX.github.io快一点)。raw.githubusercontent.com 是基本废了，想作为国内图床并不可行 （备案是不可能备案的）</p>
-<h2 id="可能的问题请参考">可能的问题请参考</h2>
-<p><span class="exturl" data-url="aHR0cHM6Ly9zaHV5ZWxpZmUuZ2l0aHViLmlvL3Bvc3QvSGV4byVFNSVCOCVCOCVFOCVBNyU4MSVFOSU5NyVBRSVFOSVBMiU5OCVFOCVBNyVBMyVFNSU4NiVCMyVFNiU5NiVCOSVFNiVBMSU4OC8=">Hexo常见问题解决方案<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9kcDJweC5jb20vMjAxOS8wNC8yNS9oZXhvLW1laWh1YS8=">hexo主题美化<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnlsZWFvLmNvbS8yMDE4LzA5MDEvaGV4by1uZXh05Li76aKY5LiL55qE576O5YyWLmh0bWw=">hexo-next主题下的美化<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvLw==">hexo官网<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0Lm9yZy9kb2NzLw==">next文档(6.0以后)<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLWd1aWRlLnJlYWR0aGVkb2NzLmlv">hexo指南<i class="fa fa-external-link-alt"></i></span> 从node.js操作到next主题，很详细，自己折腾可以参考,也记录了很多坑，但是不全，非官方指南，都是个人博客的坑。他还写了别的<span class="exturl" data-url="aHR0cHM6Ly93d3cuemh1amlhbi50ZWNoL3Bvc3RzL2QyMmFiOTY3Lmh0bWw=">指南<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3RoZW1lLW5leHQvYXdlc29tZS1uZXh0I3BsdWdpbnM=">https://github.com/theme-next/awesome-next#plugins<i class="fa fa-external-link-alt"></i></span>Next主题的插件，7.X版本之后越来越多的功能都剥离出来做成了插件, 使用时要npm install 一下，不能会直接在设置里设为true <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0xlYXJuU2hhcmUvTGVhcm5pbmctTWFya2Rvd24vdHJlZS92Mg==">markdown教程<i class="fa fa-external-link-alt"></i></span></p>
-<h2 id="注释">注释</h2>
-<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>text/javascript<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>https://cdn.jsdelivr.net/gh/lurongkai/anti-baidu/js/anti-baidu-latest.min.js<span class="token punctuation">"</span></span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>UTF-8<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<section class="footnotes" role="doc-endnotes">
-<hr />
-<ol>
-<li id="fn1" role="doc-endnote"><p>这是一个注释测试<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2" role="doc-endnote"><p>加了一个这个<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section>
-]]></content>
-      <categories>
-        <category>杂七杂八</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
-        <tag>Next</tag>
       </tags>
   </entry>
   <entry>
@@ -5526,24 +4789,13 @@ lines <span class="token number">2</span>-36/36 <span class="token punctuation">
   </entry>
   <entry>
     <title>毕竟狂澜挽不回，遽怜遗蜕化飞灰</title>
-    <url>/70c8/</url>
+    <url>/SARS-cov-2/</url>
     <content><![CDATA[<p>So this is how liberty die, with thunderous applause <a id="more"></a></p>
-<p>这次非典，我感觉不对劲的时间挺早，。那八个人被训诫荣登央视的时候我就再不说话了，大路朝天，各走一边。 相信可防可控就信去吧，劝是劝不住的，我倒是会喝茶。 想来我也算半个医学逃兵，颇有些惭愧</p>
-<blockquote>
-<p>凄然不作零丁叹，检点平生未尽心</p>
-</blockquote>
-<p>元旦就看到江宁狗这个反向指标洋洋得意跑出来喷粪，又过了两天看到新加坡和香港有动静了，再一看查处造谣都上央视了，那稳了。你甚至不需要医学知识，除非你第一天生活在人间。</p>
-<p>然而现在恰恰逃兵是正确选择，扁鹊望桓侯而还走，管轶惊惶弃武汉回港</p>
-<p>我什么也不想说，1月20号坐飞机回家之前，周围师兄师姐一会去春熙路逛街买新衣服一会出去玩，老板一会带我们去川大华西商量制造科研垃圾，一会说准备一下到肿瘤医院把之前的科研垃圾中期结题一下，并没有人感觉异常，我也不想自讨没趣。只能把去春熙路和出去玩找个借口推了，找个心理安慰，毕竟教研室巴掌大的地方，真出事一个也躲不掉。</p>
-<p>爱国爱党信中医的景润师兄12号回了黄冈，淡定的一匹，比电视上的群众还淡定，我又何必自讨没趣呢</p>
-<p><img src="/70c8/jingrun.webp" /></p>
-<p>求仁得仁，复何怨哉</p>
-<h2 id="六朝如梦">六朝如梦</h2>
-<p>经此一疫，又有一群不食人间烟火的人黄粱梦醒，纷纷如丧考妣，惊讶愤怒心痛，只觉所住非人间。你们是第一天住在人间吗？或许是承平日久了，想想这十几年真是好日子过多了，真觉得和平发展充满爱是世界主流了，这一片绿油油的韭菜不割都对不住韭菜。就像之前的故宫大G，愤怒可以理解，惊讶就太外宾了。 难道你们不知道权贵一直如此？ 难道你们第一天接触慈善和红会？ 难道你们第一天活在地球？</p>
-<p>天下大乱、礼崩乐坏、风起云涌，这是一个王佐之才如过江之鲫的时代，这是一个两脚羊的时代。 管他春秋繁荣还是六朝纷乱，反正都比虚假繁荣的皇朝有意思多了。</p>
-<p>前一阵奥斯卡奖,一群人居然又开始吹捧寄生虫了。寄生虫刚出来的时候我扫了一眼两极分化的影评我就不想看了，实在没意思。小丑也没意思，至少不如爱尔兰人，我感觉快把蝙蝠侠三部曲的牌子给砸了。建议奥斯卡也加大力度，回头和WHO比比哪个更搞笑。 还有一些人哀叹中国影视文艺百花凋零，那大可不必，你看到这个暗流涌动的世界了吗?实在没有必要看那些电影工作者和文艺工作者的自嗨产物,更没必要理会电影工作者自己给自己颁的奖。更何况近五年来影视界和五年前十年前比实在没意思。你们小时候读过儿歌和故事，甚至被要求背过课本上的文章吧；我反正经常有种被喂屎的感觉，他们就喜欢搞一堆<span class="exturl" data-url="aHR0cHM6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvTGllLXRvLWNoaWxkcmVu">骗小孩<i class="fa fa-external-link-alt"></i></span>的玩意，他们还装小孩语气说话写课本（虽然装得一点也不小孩），然后小孩还要背诵他们装小孩的东西（顺便来个读后感）。 现在的问题是越来越多电影制作者装高深和整天把观众当傻子，观众却不买帐了。 反正我看到一些有脑子的社会活动家和键政人士纷纷表示寄生虫这电影就是个垃圾，有点作为半个动物爱好者的我看<span class="exturl" data-url="aHR0cHM6Ly90cmFuc2xhdGlvbnMuaGVhZHNhbG9uLm9yZy9wb3N0LzIwMTgvMDcv6ZqP5bCP6bm/5paR5q+U6ICM55Sf55qE5paH5YyW5r2u5rWBLw==">小鹿斑比<i class="fa fa-external-link-alt"></i></span>的样子,更恰当地说，学机械的工科狗看到有人吹高达的设计和威力的样子。实在是太假了，简直有违常识，韩国电影当年有很多好的深刻的讽刺现实作品，这几年用力过度甚至失去了常识（虽然韩国的猎奇片子一向就喜欢为了猎奇抛弃常识）。有人说韩国影视界近年来进步很大，我觉得恰恰相反。</p>
-<p>一些吃瓜群众人纷纷表示不服，看到寄生虫获奖：就这？就这？就这？ 大有项羽见始皇帝出游，“彼可取而代也”的感觉 哦，不，是看了湖北政府，“我也能当省长”的感觉</p>
-<h2 id="他们都不说人话">他们都不说人话</h2>
+<p>想来我也算半个医学逃兵，颇有些惭愧（元旦那会听某个学医的群友在电报说武汉不太平，然而我怂，即没敢跟周围任何熟人说也没敢发到国内群里，完美逃过了央视训诫.......</p>
+<h2 id="一管就乱一放就死">一管就乱，一放就死</h2>
+<p>经此一疫，又有一群不食人间烟火的人黄粱梦醒，纷纷如丧考妣，惊讶愤怒心痛，只觉所住非人间。你们是第一天住在人间吗？或许是承平日久了，想想这十几年真是好日子过多了，真觉得和平发展充满爱是世界主流了，这一片绿油油的韭菜不割都对不住韭菜。就像之前的故宫大G，愤怒可以理解，惊讶就太外宾了。 难道你们不知道权贵一直如此？ 难道你们不知道公卫和防疫本来就是个摆设？ 难道你们第一天接触慈善和红会？ 难道你们第一天活在地球？</p>
+<p>然后在恐慌下自相践踏，死伤甚众，隔离这么严疫情没把你们搞死经济先崩了。</p>
+<h2 id="忘记历史就会梅开二度">忘记历史就会梅开二度</h2>
 <blockquote>
 <p>社会主义没有失业,那叫下岗</p>
 </blockquote>
@@ -5554,12 +4806,15 @@ lines <span class="token number">2</span>-36/36 <span class="token punctuation">
 </blockquote>
 <p>这可不就是SARS，这次疾病就叫 SARS2 我看正合适。 WHO（Winne Happy Orgnization）不管这个叫 SARS，当然了，他们还满口可防可控不列疫区，我建议WHO加大力度，力度再大点就可以被总书记<strong>亲自批准</strong>火线入党了，岂不美哉</p>
 <p>你们还是说点人话吧，什么2019-nCov啊，什么NCP啊，特色社会主义都能叫社会主义，这新型冠状病毒都不算SARS？</p>
+<blockquote>
+<p>黑格尔在某个地方说过，一切伟大的世界历史事变和人物，可以说都出现两次。他忘记补充一点：第一次是作为悲剧出现，第二次是作为笑剧出现。 ----左壬最爱的鹿克斯祖师《路易·波拿巴的雾月十八》 太阳底下并无新鲜事 ----某些保守派右壬最喜欢的圣经</p>
+</blockquote>
 <h2 id="国士垂垂老矣">国士垂垂老矣</h2>
 <p>元旦那会我觉得这个可能要闹大,当时也没想到会闹成今天这个样子。</p>
-<p>钟南山那个儒贼出来我就感觉要坏事，却没想到从上到下如此不堪。 03年非典，蒋先生做出了青史留名的举动，涛哥不戴口罩亲临广州街头，臊子面稳住了北京。今天只留下了一个又一个笑话，让大家觉得“彼可取而代也”</p>
+<p>03年非典，蒋先生做出了青史留名的举动，涛哥不戴口罩亲临广州街头，臊子面稳住了北京。今天只留下了一个又一个笑话，让大家觉得“彼可取而代也”</p>
 <p>大家一边吹捧钟南山，一边骂双黄连和可防可控，我看得哭笑不得。 钟南山当年的板蓝根和可防可控大家都忘了吗？莲花清瘟都忘了吗？ 他可不是糊涂，他自己是不信的。他父亲都是反中医的。</p>
 <figure>
-<img src="/70c8/板蓝根.webp" alt="板蓝根" /><figcaption aria-hidden="true">板蓝根</figcaption>
+<img src="/SARS-cov-2/板蓝根.webp" alt="板蓝根" /><figcaption aria-hidden="true">板蓝根</figcaption>
 </figure>
 <p>以下内容直接复制自维基百科 &gt;2月11日上午，广州市政府召开新闻发布会公布广州地区非典型肺炎情况，称所有病人的病情均在控制当中。强调对于广州千万人口300多人染病是个很小的比例，非典型肺炎只是局部发生，河源中山等市已无新发病例报告。还解释了2月前前阶段没有公布情况的原因是：河源中山等地的患者经过治疗大多已康复或好转没有再发病，非典型肺炎并不是法定报告传染病，而发病人数305例并不算多。负责人强调会按传染病法公布疫情。 &gt;同日下午，广东省卫生厅举行情况通报会。中国工程院院士钟南山表示，市民到公众场所进行正常的活动是不会受到感染的，宣布广东大中小学将会如期开学。专家还指出，从临床角度看，可能是由病毒引起的，也有可能是病毒的亚型或变种引起的。对于患者的治疗都是采用“对症下药”的方法。</p>
 <p>当然了，肯定有人让我闭嘴，我算个什么东西，哎，我还真不算个东西。 我一个稀里糊涂读了几年生物医学工程的工科狗，给自己脸上贴金也只能算半个医学相关闲杂人等，跑到知乎<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>去说两句，能引来几千个人追着骂我。（2020年的，2013年前的应该不能）</p>
@@ -5569,7 +4824,7 @@ lines <span class="token number">2</span>-36/36 <span class="token punctuation">
 2019-9-8 09:36 来自 iPhone客户端 你要是以为钟南山在这个“科普”中讲到莲花清瘟胶囊是无意的，或者他只是因为没有了解这个药，那就太幼稚了，人家不蠢，只是没有节操，为了利益，用自己的学术地位给那些没用的药站台背书，就是恶。<span class="exturl" data-url="aHR0cDovL2hiLmNoaW5hZGFpbHkuY29tLmNuL2EvMjAxOTA5LzA3L1dTNWQ3MzhmNjdhMzEwOTlhYjk5NWRlOTNmLmh0bWw=">O“知感冒·防流感——全民科普公益行”活动在汉举... ​​​​<i class="fa fa-external-link-alt"></i></span></p>
 </blockquote>
 <p>这活动还有视频哦（太长了就只贴个图好了）</p>
-<p><img src="/70c8/莲花清瘟.webp" /></p>
+<p><img src="/SARS-cov-2/莲花清瘟.webp" /></p>
 <p>这底下有个评论：</p>
 <blockquote>
 <p>fanbobb：如果有人问我，连我们最该拥有权威的院士，前几天还有正能量新闻的院士，都宣传中成药，你还成天说中药是骗人的吗？我作为一个非医学专业的普通人还真有点哑口无言</p>
@@ -5590,13 +4845,13 @@ lines <span class="token number">2</span>-36/36 <span class="token punctuation">
 <p>昨天在隔壁号我又有一篇文章被删了，算上之前被删的和推送不出去的，整个疫情期我有约1/10的文章没法见人，昨天看到棒棒医生的那篇循证的崩溃的文章也被删了，医学专业人员连专业问题都不能讨论和发言，那可能是这块土地真的不再需要专业和科学了。 ​​​​</p>
 </blockquote>
 <p>19年10月钟南山还在搞：<span class="exturl" data-url="aHR0cHM6Ly93d3cudGhlcGFwZXIuY24vbmV3c0RldGFpbF9mb3J3YXJkXzQ3MzExMDY=">钟南山：正研发新版板蓝根，药效或强五六倍<i class="fa fa-external-link-alt"></i></span>，还给莲花清瘟站台，对了，还有虫草呢（就是内含重金属，改变了平西王历史的进程的那个虫草）</p>
-<p><img src="/70c8/冬虫夏草.webp" /></p>
+<p><img src="/SARS-cov-2/冬虫夏草.webp" /></p>
 <p>什么叫国士无双啊，战术后仰</p>
-<p><img src="/70c8/pilipili.webp" /></p>
+<p><img src="/SARS-cov-2/pilipili.webp" /></p>
 <p>另，友情提示，李兰娟的人品、水平和能力还不如钟南山。</p>
 <p>没多少人提起，蒋先生的往事 据说蒋先生现在身体也不太好，唉</p>
 <figure>
-<img src="/70c8/蒋彦永.webp" alt="蒋彦永先生" /><figcaption aria-hidden="true">蒋彦永先生</figcaption>
+<img src="/SARS-cov-2/蒋彦永.webp" alt="蒋彦永先生" /><figcaption aria-hidden="true">蒋彦永先生</figcaption>
 </figure>
 <p>“我之所以能直面现实，是因为我相信我们的国家。因为国家如果能从我提供的这些情况吸取一定的教训，因此建立好公共防疫制度，从SARS的挑战与困境中站起来，获得全世界人民的信任。”</p>
 <p>这次怕是让老爷子心寒了</p>
@@ -5606,23 +4861,46 @@ lines <span class="token number">2</span>-36/36 <span class="token punctuation">
 <blockquote>
 <p>因笑王谢诸人，登高怀远，也学英雄涕</p>
 </blockquote>
-<h2 id="我还是说点什么吧">我还是说点什么吧</h2>
-<p>建议大家多屯点粮食</p>
-<p>有钱记得做空美股（当然你也可以拿期权做空A股，只要你不怕投机倒把当场击毙）</p>
-<p>对野生动物保护持续悲观（你看见之前环保部门煤改气了吧）</p>
-<p>再多说两句，流浪猫狗应该跟本次非典没有太大关系，不管有没有关系，流浪猫狗本就应该组织扑杀（收容和安乐是宠保人士和猫奴狗奴的事，政府以极大浪费<del>纳税人</del>韭菜的血汗钱进行收容和安乐都是不合适的，TNR属于迁就猫奴狗奴的绥靖行为，同样不可取）。 昆明滇池的红嘴鸥和黔灵山公园的猕猴今年缺少游客喂食，景区组织投喂，这是十分不好的。</p>
-<p>下面贴一些鸟类爱好者的话：</p>
-<p>[中土饲养员]：有研究表明人为投喂淀粉类的面包蛋糕等会降低各种鸥类育雏的成功率，但是还好红嘴鸥只把昆明当成补充体力的中转站 <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vdS82NTUyODkzNjc1">JK协捕队2世<i class="fa fa-external-link-alt"></i></span>： <span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vdS81ODMyOTk3NTA0">漂泊极北鲵<i class="fa fa-external-link-alt"></i></span>：...首先 这是红嘴鸥Chroicocephalus ridibundus 不是海鸥Larus canus 其次这些鸥已经被喂得彻底与自然环境分离了 这是在毒害它们 没事请与野生动物保持距离，不要乱摸、投喂，除了保育和救助等都不要打扰动物 动物园和景区里的也不行，很多动物园和景区做得都不好，禁止投喂的牌子并不管用，工作人员也制止不过来</p>
-<p>我只是半个动物爱好者，这里就不自己扯淡了, 这是一篇土澳学生物的博主写一篇长微博：<span class="exturl" data-url="aHR0cHM6Ly93ZWliby5jb20vMzk2MjEzNTI2Mi9Jc3k3OUJIUEE=">https://weibo.com/3962135262/Isy79BHPA<i class="fa fa-external-link-alt"></i></span> 我抄一点过来: &gt;人类的食物，如面包、薯条、饼干，高油高盐，高热量高糖分，对野生动物的健康极为不利，多表现为肥胖、肾衰竭、毛发脱落等。因为人类的饮食根本不是它们自然食物链的一部分。不天然的饮食及其附属物，例如塑料袋、油污，也会污染野生动物的自然栖息地。 &gt;亲密接触野生动物增加疾病的传播概率，这点在当下这个时候，想必不用再过多说明了吧？某市以投喂红嘴鸥为荣的，鸟类身上携带什么疾病来着，禽流感啊，好自为之！去高原上摸旱獭喂食旱獭，自私且无耻，将自己暴露在甲级传染病鼠疫病原的触碰范围内，你又为你家人想过吗？犰狳是恐怖的麻风病宿主，很多小型食肉动物传播狂犬病，动物身体体表和体内的各种寄生虫，野生动物从来都不好惹。 &gt;使野生动物依赖人类获取食物。这次疫情限制出行，很多问题就暴露出来了，为什么贵州那群猴子和某市的红嘴鸥离不开人的投喂了？这是个恶性循环啊，本来就不该投喂野生动物，养成依赖了，现在甩不了手，离不开人了，出了事动物们自己不会觅食，纷纷饿死，有得去投喂，这个循环刹不住车了，你觉得是好事吗。就说红嘴鸥吧，这种鸟类本来还是候鸟，人家到点了想飞走就飞走，想留下就留下，一投喂全留下了，这基数不断变大，竞争压力也不断变大。红嘴鸥的自然种群数量庞大，适应力很好，年前跑鸟类调查，上万只反正是随随便便看到了，它们也不是什么濒危物种，完全不依靠人类“救援”。所以这事，从一开始做的就不对，不是说你现在不投喂要出问题，是一开始就压根不该投喂，动物不是人，它脑子里只有吃和繁殖，这样强行转变了它们的生存策略，到最后只能是出问题。</p>
-<p>还有这方面的疑问不建议问我，请直接去问他们</p>
-<p>中医早已变成一个庞大的利益集团，随便一个阿胶之类的体量都在鸿茅药酒十倍以上。总规模和能量加起来应该不低于清真食品产业链。 我不想说什么中医了，我也不拦着，谁爱信谁信。以前看到有人想不开，我都觉得应该劝劝，现在抑郁症想自杀的人我都觉得不应该拦着，信中医就我就更不反对了，都是个人选择，尊重个人意愿。非公共场合抽烟也是个人意愿，还能成为光荣的<del>纳税人</del>烟草局韭菜。喝中药对他人危害并不高于香烟，还能解决医保和老龄化的难题，顺便进行智商筛选。</p>
-<p>在现代医学已经发展到这个样子的今天，再想想《赠医者汤伯高序》文末“嗟夫，使世之医皆若虚、伯高，信之者皆吾里之人，巫其能久胜矣乎”，问题的答案是：你别说，还真能！</p>
-<p>楚俗信巫不信医，今天群魔乱舞自称中医的一群人，基本都是跳大神的巫医，谋财害命之徒。可以粗暴的认为是一个宗教性质的东西。</p>
-<p>再有人问中医怎样，我建议你们这样安利他们：试试恒河水，这个纯天然，效果也很好，还免费</p>
-<p>死生有命，富贵在天 善哉，善哉</p>
-<blockquote>
-<p>庚子年春，大雪，惊雷，天有五日,瘟疫封城</p>
-</blockquote>
+<!-- 
+
+建议大家多屯点粮食
+
+有钱记得做空美股（当然你也可以拿期权做空A股，只要你不怕投机倒把当场击毙）
+
+对野生动物保护持续悲观（你看见之前环保部门煤改气了吧）
+
+再多说两句，流浪猫狗应该跟本次非典没有太大关系，不管有没有关系，流浪猫狗本就应该组织扑杀（收容和安乐是宠保人士和猫奴狗奴的事，政府以极大浪费~~纳税人~~韭菜的血汗钱进行收容和安乐都是不合适的，TNR属于迁就猫奴狗奴的绥靖行为，同样不可取）。
+昆明滇池的红嘴鸥和黔灵山公园的猕猴今年缺少游客喂食，景区组织投喂，这是十分不好的。
+
+下面贴一些鸟类爱好者的话：
+
+[中土饲养员]：有研究表明人为投喂淀粉类的面包蛋糕等会降低各种鸥类育雏的成功率，但是还好红嘴鸥只把昆明当成补充体力的中转站
+[JK协捕队2世](https://weibo.com/u/6552893675)：
+[漂泊极北鲵](https://weibo.com/u/5832997504)：...首先 这是红嘴鸥Chroicocephalus ridibundus 不是海鸥Larus canus 其次这些鸥已经被喂得彻底与自然环境分离了 这是在毒害它们
+没事请与野生动物保持距离，不要乱摸、投喂，除了保育和救助等都不要打扰动物
+动物园和景区里的也不行，很多动物园和景区做得都不好，禁止投喂的牌子并不管用，工作人员也制止不过来
+
+我只是半个动物爱好者，这里就不自己扯淡了, 这是一篇土澳学生物的博主写一篇长微博：<https://weibo.com/3962135262/Isy79BHPA>
+我抄一点过来:
+>人类的食物，如面包、薯条、饼干，高油高盐，高热量高糖分，对野生动物的健康极为不利，多表现为肥胖、肾衰竭、毛发脱落等。因为人类的饮食根本不是它们自然食物链的一部分。不天然的饮食及其附属物，例如塑料袋、油污，也会污染野生动物的自然栖息地。
+>亲密接触野生动物增加疾病的传播概率，这点在当下这个时候，想必不用再过多说明了吧？某市以投喂红嘴鸥为荣的，鸟类身上携带什么疾病来着，禽流感啊，好自为之！去高原上摸旱獭喂食旱獭，自私且无耻，将自己暴露在甲级传染病鼠疫病原的触碰范围内，你又为你家人想过吗？犰狳是恐怖的麻风病宿主，很多小型食肉动物传播狂犬病，动物身体体表和体内的各种寄生虫，野生动物从来都不好惹。
+>使野生动物依赖人类获取食物。这次疫情限制出行，很多问题就暴露出来了，为什么贵州那群猴子和某市的红嘴鸥离不开人的投喂了？这是个恶性循环啊，本来就不该投喂野生动物，养成依赖了，现在甩不了手，离不开人了，出了事动物们自己不会觅食，纷纷饿死，有得去投喂，这个循环刹不住车了，你觉得是好事吗。就说红嘴鸥吧，这种鸟类本来还是候鸟，人家到点了想飞走就飞走，想留下就留下，一投喂全留下了，这基数不断变大，竞争压力也不断变大。红嘴鸥的自然种群数量庞大，适应力很好，年前跑鸟类调查，上万只反正是随随便便看到了，它们也不是什么濒危物种，完全不依靠人类“救援”。所以这事，从一开始做的就不对，不是说你现在不投喂要出问题，是一开始就压根不该投喂，动物不是人，它脑子里只有吃和繁殖，这样强行转变了它们的生存策略，到最后只能是出问题。
+
+还有这方面的疑问不建议问我，请直接去问他们
+
+中医早已变成一个庞大的利益集团，随便一个阿胶之类的体量都在鸿茅药酒十倍以上。总规模和能量加起来应该不低于清真食品产业链。
+我不想说什么中医了，我也不拦着，谁爱信谁信。以前看到有人想不开，我都觉得应该劝劝，现在抑郁症想自杀的人我都觉得不应该拦着，信中医就我就更不反对了，都是个人选择，尊重个人意愿。非公共场合抽烟也是个人意愿，还能成为光荣的~~纳税人~~烟草局韭菜。喝中药对他人危害并不高于香烟，还能解决医保和老龄化的难题，顺便进行智商筛选。
+
+在现代医学已经发展到这个样子的今天，再想想《赠医者汤伯高序》文末“嗟夫，使世之医皆若虚、伯高，信之者皆吾里之人，巫其能久胜矣乎”，问题的答案是：你别说，还真能！
+
+楚俗信巫不信医，今天群魔乱舞自称中医的一群人，基本都是跳大神的巫医，谋财害命之徒。可以粗暴的认为是一个宗教性质的东西。
+
+再有人问中医怎样，我建议你们这样安利他们：试试恒河水，这个纯天然，效果也很好，还免费
+
+死生有命，富贵在天
+善哉，善哉
+
+>庚子年春，大雪，惊雷，天有五日,瘟疫封城 -->
 <section class="footnotes" role="doc-endnotes">
 <hr />
 <ol>
@@ -6030,350 +5308,10 @@ a  b  cron.d  dir2.dir<span aria-hidden="true" class="line-numbers-rows"><span><
       </tags>
   </entry>
   <entry>
-    <title>瞎折腾记录</title>
-    <url>/8814/</url>
-    <content><![CDATA[<p>不知道该分到哪一类 <a id="more"></a></p>
-<p><del>遇到问题主要靠IDE智能补全瞎猫碰死耗子撞大运改Bug</del></p>
-<h2 id="latex和katex"><span class="math inline"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.488ex" xmlns="http://www.w3.org/2000/svg" width="6.293ex" height="2.108ex" role="img" focusable="false" viewBox="0 -716.3 2781.3 931.8"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D43F" d="M228 637Q194 637 192 641Q191 643 191 649Q191 673 202 682Q204 683 217 683Q271 680 344 680Q485 680 506 683H518Q524 677 524 674T522 656Q517 641 513 637H475Q406 636 394 628Q387 624 380 600T313 336Q297 271 279 198T252 88L243 52Q243 48 252 48T311 46H328Q360 46 379 47T428 54T478 72T522 106T564 161Q580 191 594 228T611 270Q616 273 628 273H641Q647 264 647 262T627 203T583 83T557 9Q555 4 553 3T537 0T494 -1Q483 -1 418 -1T294 0H116Q32 0 32 10Q32 17 34 24Q39 43 44 45Q48 46 59 46H65Q92 46 125 49Q139 52 144 61Q147 65 216 339T285 628Q285 635 228 637Z"></path></g><g data-mml-node="mspace" transform="translate(681, 0)"></g><g data-mml-node="mpadded" transform="translate(356, 0)"><g transform="translate(0, 210)"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mstyle" transform="scale(0.707)"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D434" d="M208 74Q208 50 254 46Q272 46 272 35Q272 34 270 22Q267 8 264 4T251 0Q249 0 239 0T205 1T141 2Q70 2 50 0H42Q35 7 35 11Q37 38 48 46H62Q132 49 164 96Q170 102 345 401T523 704Q530 716 547 716H555H572Q578 707 578 706L606 383Q634 60 636 57Q641 46 701 46Q726 46 726 36Q726 34 723 22Q720 7 718 4T704 0Q701 0 690 0T651 1T578 2Q484 2 455 0H443Q437 6 437 9T439 27Q443 40 445 43L449 46H469Q523 49 533 63L521 213H283L249 155Q208 86 208 74ZM516 260Q516 271 504 416T490 562L463 519Q447 492 400 412L310 260L413 259Q516 259 516 260Z"></path></g></g></g></g></g></g><g data-mml-node="mspace" transform="translate(886.3, 0)"></g><g data-mml-node="mi" transform="translate(716.3, 0)"><path data-c="1D447" d="M40 437Q21 437 21 445Q21 450 37 501T71 602L88 651Q93 669 101 677H569H659Q691 677 697 676T704 667Q704 661 687 553T668 444Q668 437 649 437Q640 437 637 437T631 442L629 445Q629 451 635 490T641 551Q641 586 628 604T573 629Q568 630 515 631Q469 631 457 630T439 622Q438 621 368 343T298 60Q298 48 386 46Q418 46 427 45T436 36Q436 31 433 22Q429 4 424 1L422 0Q419 0 415 0Q410 0 363 1T228 2Q99 2 64 0H49Q43 6 43 9T45 27Q49 40 55 46H83H94Q174 46 189 55Q190 56 191 56Q196 59 201 76T241 233Q258 301 269 344Q339 619 339 625Q339 630 310 630H279Q212 630 191 624Q146 614 121 583T67 467Q60 445 57 441T43 437H40Z"></path></g><g data-mml-node="mspace" transform="translate(1420.3, 0)"></g><g data-mml-node="mpadded" transform="translate(1280.3, 0)"><g transform="translate(0, -215.5)"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D438" d="M492 213Q472 213 472 226Q472 230 477 250T482 285Q482 316 461 323T364 330H312Q311 328 277 192T243 52Q243 48 254 48T334 46Q428 46 458 48T518 61Q567 77 599 117T670 248Q680 270 683 272Q690 274 698 274Q718 274 718 261Q613 7 608 2Q605 0 322 0H133Q31 0 31 11Q31 13 34 25Q38 41 42 43T65 46Q92 46 125 49Q139 52 144 61Q146 66 215 342T285 622Q285 629 281 629Q273 632 228 634H197Q191 640 191 642T193 659Q197 676 203 680H757Q764 676 764 669Q764 664 751 557T737 447Q735 440 717 440H705Q698 445 698 453L701 476Q704 500 704 528Q704 558 697 578T678 609T643 625T596 632T532 634H485Q397 633 392 631Q388 629 386 622Q385 619 355 499T324 377Q347 376 372 376H398Q464 376 489 391T534 472Q538 488 540 490T557 493Q562 493 565 493T570 492T572 491T574 487T577 483L544 351Q511 218 508 216Q505 213 492 213Z"></path></g></g></g></g><g data-mml-node="mspace" transform="translate(2044.3, 0)"></g><g data-mml-node="mi" transform="translate(1929.3, 0)"><path data-c="1D44B" d="M42 0H40Q26 0 26 11Q26 15 29 27Q33 41 36 43T55 46Q141 49 190 98Q200 108 306 224T411 342Q302 620 297 625Q288 636 234 637H206Q200 643 200 645T202 664Q206 677 212 683H226Q260 681 347 681Q380 681 408 681T453 682T473 682Q490 682 490 671Q490 670 488 658Q484 643 481 640T465 637Q434 634 411 620L488 426L541 485Q646 598 646 610Q646 628 622 635Q617 635 609 637Q594 637 594 648Q594 650 596 664Q600 677 606 683H618Q619 683 643 683T697 681T738 680Q828 680 837 683H845Q852 676 852 672Q850 647 840 637H824Q790 636 763 628T722 611T698 593L687 584Q687 585 592 480L505 384Q505 383 536 304T601 142T638 56Q648 47 699 46Q734 46 734 37Q734 35 732 23Q728 7 725 4T711 1Q708 1 678 1T589 2Q528 2 496 2T461 1Q444 1 444 10Q444 11 446 25Q448 35 450 39T455 44T464 46T480 47T506 54Q523 62 523 64Q522 64 476 181L429 299Q241 95 236 84Q232 76 232 72Q232 53 261 47Q262 47 267 47T273 46Q276 46 277 46T280 45T283 42T284 35Q284 26 282 19Q279 6 276 4T261 1Q258 1 243 1T201 2T142 2Q64 2 42 0Z"></path></g></g></g></svg></mjx-container></span>和Katex</h2>
-<p>打出矢量（加粗斜体）<code>\bmp</code> 打出属于<span class="math inline"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.09ex" xmlns="http://www.w3.org/2000/svg" width="1.509ex" height="1.312ex" role="img" focusable="false" viewBox="0 -540 667 580"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="2208" d="M84 250Q84 372 166 450T360 539Q361 539 377 539T419 540T469 540H568Q583 532 583 520Q583 511 570 501L466 500Q355 499 329 494Q280 482 242 458T183 409T147 354T129 306T124 272V270H568Q583 262 583 250T568 230H124V228Q124 207 134 177T167 112T231 48T328 7Q355 1 466 0H570Q583 -10 583 -20Q583 -32 568 -40H471Q464 -40 446 -40T417 -41Q262 -41 172 45Q84 127 84 250Z"></path></g></g></g></svg></mjx-container></span> : <code>\in</code> 打出包含<span class="math inline"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.312ex" xmlns="http://www.w3.org/2000/svg" width="3.52ex" height="1.751ex" role="img" focusable="false" viewBox="0 -636 1556 774"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="2282" d="M84 250Q84 372 166 450T360 539Q361 539 370 539T395 539T430 540T475 540T524 540H679Q694 532 694 520Q694 511 681 501L522 500H470H441Q366 500 338 496T266 472Q244 461 224 446T179 404T139 337T124 250V245Q124 157 185 89Q244 25 328 7Q348 2 366 2T522 0H681Q694 -10 694 -20Q694 -32 679 -40H526Q510 -40 480 -40T434 -41Q350 -41 289 -25T172 45Q84 127 84 250Z"></path><path data-c="2286" d="M84 346Q84 468 166 546T360 635Q361 635 370 635T395 635T430 636T475 636T524 636H679Q694 628 694 616Q694 607 681 597L522 596H470H441Q366 596 338 592T266 568Q244 557 224 542T179 500T139 433T124 346V341Q124 253 185 185Q244 121 328 103Q348 98 366 98T522 96H681Q694 86 694 76Q694 64 679 56H526Q510 56 480 56T434 55Q350 55 289 71T172 141Q84 223 84 346ZM104 -131T104 -118T118 -98H679Q694 -106 694 -118T679 -138H118Q104 -131 104 -118Z" transform="translate(778, 0)"></path></g></g></g></svg></mjx-container></span> : <code>\subset\subseteq</code> 集合的与和或<span class="math inline"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.05ex" xmlns="http://www.w3.org/2000/svg" width="3.018ex" height="1.403ex" role="img" focusable="false" viewBox="0 -598 1334 620"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="222A" d="M591 598H592Q604 598 611 583V376Q611 345 611 296Q610 162 606 148Q605 146 605 145Q586 68 507 23T333 -22Q268 -22 209 -1T106 66T56 173Q55 180 55 384L56 585Q66 598 75 598Q85 598 95 585V378L96 172L98 162Q112 95 181 57T332 18Q415 18 487 58T570 175Q571 180 571 383V583Q579 598 591 598Z"></path></g><g data-mml-node="mo" transform="translate(667, 0)"><path data-c="2229" d="M88 -21T75 -21T55 -7V200Q55 231 55 280Q56 414 60 428Q61 430 61 431Q77 500 152 549T332 598Q443 598 522 544T610 405Q611 399 611 194V-7Q604 -22 591 -22Q582 -22 572 -9L570 405Q563 433 556 449T529 485Q498 519 445 538T334 558Q251 558 179 518T96 401Q95 396 95 193V-7Q88 -21 75 -21Z"></path></g></g></g></svg></mjx-container></span> : <code>\cup\cap</code></p>
-<h2 id="vscode">VSCode</h2>
-<p>ctrl+鼠标滚轮缩放字体大小 在setting.json里加入<code>"editor.mouseWheelZoom": true</code></p>
-<p>报错<code>Couldn't start client Clang Language Server</code>, 我远程连服务器并装了一个vscode-clangd插件 网上说可能是clang没装或者没有configure</p>
-<p>但是我已经装了LLVM，之前版本切过了<code>sudo update-alternatives --config c++</code></p>
-<p>看<span class="exturl" data-url="aHR0cHM6Ly9jbGFuZy5sbHZtLm9yZw==">官网<i class="fa fa-external-link-alt"></i></span>上的教程说是装一下clang-tools, 不行</p>
-<p>发现apt装上去默认的clang版本只有3.8, 卸了重装</p>
-<p>然后在官网上看到<code>Make sure the Microsoft C/C++ extension is not installed</code></p>
-<p>禁用了之后还是不行</p>
-<p>突然想起来服务器上没装nodejs，赶紧装上node10</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">curl</span> -sL https://deb.nodesource.com/setup_10.x <span class="token operator">|</span> <span class="token function">sudo</span> <span class="token function">bash</span>
-<span class="token function">sudo</span> <span class="token function">apt</span> update
-<span class="token function">sudo</span> <span class="token function">apt</span> -y <span class="token function">install</span> gcc g++ <span class="token function">make</span>
-<span class="token function">sudo</span> <span class="token function">apt</span> -y <span class="token function">install</span> nodejs<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p>好吧，找到问题了</p>
-<h2 id="win10-jupyter-notebook-安装体验">win10 jupyter notebook 安装体验</h2>
-<p>不说了，我不用pip了还不行吗。 安装ananconda，jupyter notebook直接启动 现在可以在VSCode和Pycharm里写原生的juypter notebook了，jupyter-lab并不好用</p>
-<h2 id="让pandas像tfkeras那样显示进度条">让pandas像tf、keras那样显示进度条</h2>
-<p>用tqdm这个库</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> tqdm <span class="token keyword">import</span> tqdm
-tqdm<span class="token punctuation">.</span>pandas<span class="token punctuation">(</span>desc<span class="token operator">=</span><span class="token string">'pandas bar'</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<h2 id="typora显示数学公式单个">typora显示数学公式（单个$）</h2>
-<p>VSCode 的markdown生成pdf插件不好使，现在用Typora生成，但是发现Typora的数学公式只能显示出双$<span class="math inline"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.452ex" xmlns="http://www.w3.org/2000/svg" width="8.145ex" height="2.149ex" role="img" focusable="false" viewBox="0 -750 3600 950"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><g data-mml-node="math"><g data-mml-node="mo"><text data-variant="normal" transform="matrix(1 0 0 -1 0 0)" font-size="884px" font-family="serif">的</text><text data-variant="normal" transform="translate(900, 0) matrix(1 0 0 -1 0 0)" font-size="884px" font-family="serif">，</text><text data-variant="normal" transform="translate(1800, 0) matrix(1 0 0 -1 0 0)" font-size="884px" font-family="serif">单</text><text data-variant="normal" transform="translate(2700, 0) matrix(1 0 0 -1 0 0)" font-size="884px" font-family="serif">个</text></g></g></g></svg></mjx-container></span>不显示 查了一下发现设置 文件——偏好设置——Markdown——Markdown扩展语法-——内联公式 就好了</p>
-<h2 id="复制浏览器里图片中的文字">复制浏览器里图片中的文字</h2>
-<p>装插件Project Napatha（可惜火狐并没有这个插件）</p>
-<h2 id="微信中调试前端网页">微信中调试前端网页</h2>
-<p>我宣布最烦人的浏览器不是ie8，而是微信内置浏览器和小程序。 有个TBS Studio，是QQ浏览器的内核，可以将就着用一下</p>
-<h2 id="vscode里用jupyter-notebook">VSCode里用jupyter-notebook</h2>
-<p>为啥不用pycharm呢，可能是我电脑内存不够固态也不行吧，Pycharm打开太慢 VSCode （10.8日以后新版）装那个Python官方</p>
-<h2 id="你电访问b站慢steam下载只有几十k">你电访问b站慢、steam下载只有几十k</h2>
-<p>更换DNS，路由器的最好也换了，再不行就把ipv6关掉。你电的校园网v6经常抽风，默认的DNS会把b站解析到奠信的路线，然而b站在奠信的路很卡，换个能解析到联通或者移动出口的DNS就好了。（大概就这样，最近也不怎么用这些玩意，没试过近况）</p>
-<h2 id="linux-qq-使用体验">Linux QQ 使用体验</h2>
-<p>？？？扫码登录，再见</p>
-<h2 id="vmware安装manjaro18kde">VMware安装Manjaro18（KDE）</h2>
-<p>到中科大的源或者官网下载镜像，当然你还得把hyper-v关了。分配内存尽量大一点，4G以上 VM配置一下，新建虚拟机后图形化界面应该就出来了，选boot，等一会（没多久，比ubuntu快多了），出来的图形化界面分完区点安装 换成USTC的镜像源。 用pacman安装软件，octopi也很好用</p>
-<h2 id="ubuntu安装软件报错has-install-snap-change-in-progress">ubuntu安装软件报错has "install-snap" change in progress</h2>
-<p>先<code>snap changes</code>，再<code>sudo snap abort ···</code>，将之前占用的安装进程停掉 再安装就行了</p>
-<h2 id="域名邮箱">域名邮箱</h2>
-<p>挂在netlify上了，不打算拿VPS自己搭一个邮件服务器了（VPS要用来做科学上网这种事，反向解析需要伪装rDNS），拿yandex将就一下</p>
-<h2 id="更换vps服务商">更换VPS服务商</h2>
-<p>最近又要开会, 是个测试有多稳的好时机</p>
-<h2 id="git设置代理">git设置代理</h2>
-<pre class="line-numbers language-git" data-language="git"><code class="language-git">git config --global http.proxy <span class="token string">'socks5://127.0.0.1:1080'</span>
-git config --global https.proxy <span class="token string">'socks5://127.0.0.1:1080'</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>取消代理</p>
-<pre class="line-numbers language-git" data-language="git"><code class="language-git">git config --global --unset http.proxy
-
-git config --global --unset https.proxy<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<h2 id="twitter换回旧版">Twitter换回旧版</h2>
-<p>太丑了，新版真的太丑了。 goodtwitter插件（现在对中文支持不是特别好，把系统调成英文将就用吧）</p>
-<h2 id="在word中打latex">在Word中打<span class="math inline"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.488ex" xmlns="http://www.w3.org/2000/svg" width="6.293ex" height="2.108ex" role="img" focusable="false" viewBox="0 -716.3 2781.3 931.8"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D43F" d="M228 637Q194 637 192 641Q191 643 191 649Q191 673 202 682Q204 683 217 683Q271 680 344 680Q485 680 506 683H518Q524 677 524 674T522 656Q517 641 513 637H475Q406 636 394 628Q387 624 380 600T313 336Q297 271 279 198T252 88L243 52Q243 48 252 48T311 46H328Q360 46 379 47T428 54T478 72T522 106T564 161Q580 191 594 228T611 270Q616 273 628 273H641Q647 264 647 262T627 203T583 83T557 9Q555 4 553 3T537 0T494 -1Q483 -1 418 -1T294 0H116Q32 0 32 10Q32 17 34 24Q39 43 44 45Q48 46 59 46H65Q92 46 125 49Q139 52 144 61Q147 65 216 339T285 628Q285 635 228 637Z"></path></g><g data-mml-node="mspace" transform="translate(681, 0)"></g><g data-mml-node="mpadded" transform="translate(356, 0)"><g transform="translate(0, 210)"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mstyle" transform="scale(0.707)"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D434" d="M208 74Q208 50 254 46Q272 46 272 35Q272 34 270 22Q267 8 264 4T251 0Q249 0 239 0T205 1T141 2Q70 2 50 0H42Q35 7 35 11Q37 38 48 46H62Q132 49 164 96Q170 102 345 401T523 704Q530 716 547 716H555H572Q578 707 578 706L606 383Q634 60 636 57Q641 46 701 46Q726 46 726 36Q726 34 723 22Q720 7 718 4T704 0Q701 0 690 0T651 1T578 2Q484 2 455 0H443Q437 6 437 9T439 27Q443 40 445 43L449 46H469Q523 49 533 63L521 213H283L249 155Q208 86 208 74ZM516 260Q516 271 504 416T490 562L463 519Q447 492 400 412L310 260L413 259Q516 259 516 260Z"></path></g></g></g></g></g></g><g data-mml-node="mspace" transform="translate(886.3, 0)"></g><g data-mml-node="mi" transform="translate(716.3, 0)"><path data-c="1D447" d="M40 437Q21 437 21 445Q21 450 37 501T71 602L88 651Q93 669 101 677H569H659Q691 677 697 676T704 667Q704 661 687 553T668 444Q668 437 649 437Q640 437 637 437T631 442L629 445Q629 451 635 490T641 551Q641 586 628 604T573 629Q568 630 515 631Q469 631 457 630T439 622Q438 621 368 343T298 60Q298 48 386 46Q418 46 427 45T436 36Q436 31 433 22Q429 4 424 1L422 0Q419 0 415 0Q410 0 363 1T228 2Q99 2 64 0H49Q43 6 43 9T45 27Q49 40 55 46H83H94Q174 46 189 55Q190 56 191 56Q196 59 201 76T241 233Q258 301 269 344Q339 619 339 625Q339 630 310 630H279Q212 630 191 624Q146 614 121 583T67 467Q60 445 57 441T43 437H40Z"></path></g><g data-mml-node="mspace" transform="translate(1420.3, 0)"></g><g data-mml-node="mpadded" transform="translate(1280.3, 0)"><g transform="translate(0, -215.5)"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D438" d="M492 213Q472 213 472 226Q472 230 477 250T482 285Q482 316 461 323T364 330H312Q311 328 277 192T243 52Q243 48 254 48T334 46Q428 46 458 48T518 61Q567 77 599 117T670 248Q680 270 683 272Q690 274 698 274Q718 274 718 261Q613 7 608 2Q605 0 322 0H133Q31 0 31 11Q31 13 34 25Q38 41 42 43T65 46Q92 46 125 49Q139 52 144 61Q146 66 215 342T285 622Q285 629 281 629Q273 632 228 634H197Q191 640 191 642T193 659Q197 676 203 680H757Q764 676 764 669Q764 664 751 557T737 447Q735 440 717 440H705Q698 445 698 453L701 476Q704 500 704 528Q704 558 697 578T678 609T643 625T596 632T532 634H485Q397 633 392 631Q388 629 386 622Q385 619 355 499T324 377Q347 376 372 376H398Q464 376 489 391T534 472Q538 488 540 490T557 493Q562 493 565 493T570 492T572 491T574 487T577 483L544 351Q511 218 508 216Q505 213 492 213Z"></path></g></g></g></g><g data-mml-node="mspace" transform="translate(2044.3, 0)"></g><g data-mml-node="mi" transform="translate(1929.3, 0)"><path data-c="1D44B" d="M42 0H40Q26 0 26 11Q26 15 29 27Q33 41 36 43T55 46Q141 49 190 98Q200 108 306 224T411 342Q302 620 297 625Q288 636 234 637H206Q200 643 200 645T202 664Q206 677 212 683H226Q260 681 347 681Q380 681 408 681T453 682T473 682Q490 682 490 671Q490 670 488 658Q484 643 481 640T465 637Q434 634 411 620L488 426L541 485Q646 598 646 610Q646 628 622 635Q617 635 609 637Q594 637 594 648Q594 650 596 664Q600 677 606 683H618Q619 683 643 683T697 681T738 680Q828 680 837 683H845Q852 676 852 672Q850 647 840 637H824Q790 636 763 628T722 611T698 593L687 584Q687 585 592 480L505 384Q505 383 536 304T601 142T638 56Q648 47 699 46Q734 46 734 37Q734 35 732 23Q728 7 725 4T711 1Q708 1 678 1T589 2Q528 2 496 2T461 1Q444 1 444 10Q444 11 446 25Q448 35 450 39T455 44T464 46T480 47T506 54Q523 62 523 64Q522 64 476 181L429 299Q241 95 236 84Q232 76 232 72Q232 53 261 47Q262 47 267 47T273 46Q276 46 277 46T280 45T283 42T284 35Q284 26 282 19Q279 6 276 4T261 1Q258 1 243 1T201 2T142 2Q64 2 42 0Z"></path></g></g></g></svg></mjx-container></span></h2>
-<p>在新版的Office中可以直接按<code>Alt+=</code>，在转换选项里把公式设置为<span class="math inline"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.488ex" xmlns="http://www.w3.org/2000/svg" width="6.293ex" height="2.108ex" role="img" focusable="false" viewBox="0 -716.3 2781.3 931.8"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D43F" d="M228 637Q194 637 192 641Q191 643 191 649Q191 673 202 682Q204 683 217 683Q271 680 344 680Q485 680 506 683H518Q524 677 524 674T522 656Q517 641 513 637H475Q406 636 394 628Q387 624 380 600T313 336Q297 271 279 198T252 88L243 52Q243 48 252 48T311 46H328Q360 46 379 47T428 54T478 72T522 106T564 161Q580 191 594 228T611 270Q616 273 628 273H641Q647 264 647 262T627 203T583 83T557 9Q555 4 553 3T537 0T494 -1Q483 -1 418 -1T294 0H116Q32 0 32 10Q32 17 34 24Q39 43 44 45Q48 46 59 46H65Q92 46 125 49Q139 52 144 61Q147 65 216 339T285 628Q285 635 228 637Z"></path></g><g data-mml-node="mspace" transform="translate(681, 0)"></g><g data-mml-node="mpadded" transform="translate(356, 0)"><g transform="translate(0, 210)"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mstyle" transform="scale(0.707)"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D434" d="M208 74Q208 50 254 46Q272 46 272 35Q272 34 270 22Q267 8 264 4T251 0Q249 0 239 0T205 1T141 2Q70 2 50 0H42Q35 7 35 11Q37 38 48 46H62Q132 49 164 96Q170 102 345 401T523 704Q530 716 547 716H555H572Q578 707 578 706L606 383Q634 60 636 57Q641 46 701 46Q726 46 726 36Q726 34 723 22Q720 7 718 4T704 0Q701 0 690 0T651 1T578 2Q484 2 455 0H443Q437 6 437 9T439 27Q443 40 445 43L449 46H469Q523 49 533 63L521 213H283L249 155Q208 86 208 74ZM516 260Q516 271 504 416T490 562L463 519Q447 492 400 412L310 260L413 259Q516 259 516 260Z"></path></g></g></g></g></g></g><g data-mml-node="mspace" transform="translate(886.3, 0)"></g><g data-mml-node="mi" transform="translate(716.3, 0)"><path data-c="1D447" d="M40 437Q21 437 21 445Q21 450 37 501T71 602L88 651Q93 669 101 677H569H659Q691 677 697 676T704 667Q704 661 687 553T668 444Q668 437 649 437Q640 437 637 437T631 442L629 445Q629 451 635 490T641 551Q641 586 628 604T573 629Q568 630 515 631Q469 631 457 630T439 622Q438 621 368 343T298 60Q298 48 386 46Q418 46 427 45T436 36Q436 31 433 22Q429 4 424 1L422 0Q419 0 415 0Q410 0 363 1T228 2Q99 2 64 0H49Q43 6 43 9T45 27Q49 40 55 46H83H94Q174 46 189 55Q190 56 191 56Q196 59 201 76T241 233Q258 301 269 344Q339 619 339 625Q339 630 310 630H279Q212 630 191 624Q146 614 121 583T67 467Q60 445 57 441T43 437H40Z"></path></g><g data-mml-node="mspace" transform="translate(1420.3, 0)"></g><g data-mml-node="mpadded" transform="translate(1280.3, 0)"><g transform="translate(0, -215.5)"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D438" d="M492 213Q472 213 472 226Q472 230 477 250T482 285Q482 316 461 323T364 330H312Q311 328 277 192T243 52Q243 48 254 48T334 46Q428 46 458 48T518 61Q567 77 599 117T670 248Q680 270 683 272Q690 274 698 274Q718 274 718 261Q613 7 608 2Q605 0 322 0H133Q31 0 31 11Q31 13 34 25Q38 41 42 43T65 46Q92 46 125 49Q139 52 144 61Q146 66 215 342T285 622Q285 629 281 629Q273 632 228 634H197Q191 640 191 642T193 659Q197 676 203 680H757Q764 676 764 669Q764 664 751 557T737 447Q735 440 717 440H705Q698 445 698 453L701 476Q704 500 704 528Q704 558 697 578T678 609T643 625T596 632T532 634H485Q397 633 392 631Q388 629 386 622Q385 619 355 499T324 377Q347 376 372 376H398Q464 376 489 391T534 472Q538 488 540 490T557 493Q562 493 565 493T570 492T572 491T574 487T577 483L544 351Q511 218 508 216Q505 213 492 213Z"></path></g></g></g></g><g data-mml-node="mspace" transform="translate(2044.3, 0)"></g><g data-mml-node="mi" transform="translate(1929.3, 0)"><path data-c="1D44B" d="M42 0H40Q26 0 26 11Q26 15 29 27Q33 41 36 43T55 46Q141 49 190 98Q200 108 306 224T411 342Q302 620 297 625Q288 636 234 637H206Q200 643 200 645T202 664Q206 677 212 683H226Q260 681 347 681Q380 681 408 681T453 682T473 682Q490 682 490 671Q490 670 488 658Q484 643 481 640T465 637Q434 634 411 620L488 426L541 485Q646 598 646 610Q646 628 622 635Q617 635 609 637Q594 637 594 648Q594 650 596 664Q600 677 606 683H618Q619 683 643 683T697 681T738 680Q828 680 837 683H845Q852 676 852 672Q850 647 840 637H824Q790 636 763 628T722 611T698 593L687 584Q687 585 592 480L505 384Q505 383 536 304T601 142T638 56Q648 47 699 46Q734 46 734 37Q734 35 732 23Q728 7 725 4T711 1Q708 1 678 1T589 2Q528 2 496 2T461 1Q444 1 444 10Q444 11 446 25Q448 35 450 39T455 44T464 46T480 47T506 54Q523 62 523 64Q522 64 476 181L429 299Q241 95 236 84Q232 76 232 72Q232 53 261 47Q262 47 267 47T273 46Q276 46 277 46T280 45T283 42T284 35Q284 26 282 19Q279 6 276 4T261 1Q258 1 243 1T201 2T142 2Q64 2 42 0Z"></path></g></g></g></svg></mjx-container></span>（默认的是UnicodeMath，word自带的，和LaTeX语法略有不同） 需要注意一个小问题，那个<span class="math inline"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.488ex" xmlns="http://www.w3.org/2000/svg" width="6.293ex" height="2.108ex" role="img" focusable="false" viewBox="0 -716.3 2781.3 931.8"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D43F" d="M228 637Q194 637 192 641Q191 643 191 649Q191 673 202 682Q204 683 217 683Q271 680 344 680Q485 680 506 683H518Q524 677 524 674T522 656Q517 641 513 637H475Q406 636 394 628Q387 624 380 600T313 336Q297 271 279 198T252 88L243 52Q243 48 252 48T311 46H328Q360 46 379 47T428 54T478 72T522 106T564 161Q580 191 594 228T611 270Q616 273 628 273H641Q647 264 647 262T627 203T583 83T557 9Q555 4 553 3T537 0T494 -1Q483 -1 418 -1T294 0H116Q32 0 32 10Q32 17 34 24Q39 43 44 45Q48 46 59 46H65Q92 46 125 49Q139 52 144 61Q147 65 216 339T285 628Q285 635 228 637Z"></path></g><g data-mml-node="mspace" transform="translate(681, 0)"></g><g data-mml-node="mpadded" transform="translate(356, 0)"><g transform="translate(0, 210)"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mstyle" transform="scale(0.707)"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D434" d="M208 74Q208 50 254 46Q272 46 272 35Q272 34 270 22Q267 8 264 4T251 0Q249 0 239 0T205 1T141 2Q70 2 50 0H42Q35 7 35 11Q37 38 48 46H62Q132 49 164 96Q170 102 345 401T523 704Q530 716 547 716H555H572Q578 707 578 706L606 383Q634 60 636 57Q641 46 701 46Q726 46 726 36Q726 34 723 22Q720 7 718 4T704 0Q701 0 690 0T651 1T578 2Q484 2 455 0H443Q437 6 437 9T439 27Q443 40 445 43L449 46H469Q523 49 533 63L521 213H283L249 155Q208 86 208 74ZM516 260Q516 271 504 416T490 562L463 519Q447 492 400 412L310 260L413 259Q516 259 516 260Z"></path></g></g></g></g></g></g><g data-mml-node="mspace" transform="translate(886.3, 0)"></g><g data-mml-node="mi" transform="translate(716.3, 0)"><path data-c="1D447" d="M40 437Q21 437 21 445Q21 450 37 501T71 602L88 651Q93 669 101 677H569H659Q691 677 697 676T704 667Q704 661 687 553T668 444Q668 437 649 437Q640 437 637 437T631 442L629 445Q629 451 635 490T641 551Q641 586 628 604T573 629Q568 630 515 631Q469 631 457 630T439 622Q438 621 368 343T298 60Q298 48 386 46Q418 46 427 45T436 36Q436 31 433 22Q429 4 424 1L422 0Q419 0 415 0Q410 0 363 1T228 2Q99 2 64 0H49Q43 6 43 9T45 27Q49 40 55 46H83H94Q174 46 189 55Q190 56 191 56Q196 59 201 76T241 233Q258 301 269 344Q339 619 339 625Q339 630 310 630H279Q212 630 191 624Q146 614 121 583T67 467Q60 445 57 441T43 437H40Z"></path></g><g data-mml-node="mspace" transform="translate(1420.3, 0)"></g><g data-mml-node="mpadded" transform="translate(1280.3, 0)"><g transform="translate(0, -215.5)"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D438" d="M492 213Q472 213 472 226Q472 230 477 250T482 285Q482 316 461 323T364 330H312Q311 328 277 192T243 52Q243 48 254 48T334 46Q428 46 458 48T518 61Q567 77 599 117T670 248Q680 270 683 272Q690 274 698 274Q718 274 718 261Q613 7 608 2Q605 0 322 0H133Q31 0 31 11Q31 13 34 25Q38 41 42 43T65 46Q92 46 125 49Q139 52 144 61Q146 66 215 342T285 622Q285 629 281 629Q273 632 228 634H197Q191 640 191 642T193 659Q197 676 203 680H757Q764 676 764 669Q764 664 751 557T737 447Q735 440 717 440H705Q698 445 698 453L701 476Q704 500 704 528Q704 558 697 578T678 609T643 625T596 632T532 634H485Q397 633 392 631Q388 629 386 622Q385 619 355 499T324 377Q347 376 372 376H398Q464 376 489 391T534 472Q538 488 540 490T557 493Q562 493 565 493T570 492T572 491T574 487T577 483L544 351Q511 218 508 216Q505 213 492 213Z"></path></g></g></g></g><g data-mml-node="mspace" transform="translate(2044.3, 0)"></g><g data-mml-node="mi" transform="translate(1929.3, 0)"><path data-c="1D44B" d="M42 0H40Q26 0 26 11Q26 15 29 27Q33 41 36 43T55 46Q141 49 190 98Q200 108 306 224T411 342Q302 620 297 625Q288 636 234 637H206Q200 643 200 645T202 664Q206 677 212 683H226Q260 681 347 681Q380 681 408 681T453 682T473 682Q490 682 490 671Q490 670 488 658Q484 643 481 640T465 637Q434 634 411 620L488 426L541 485Q646 598 646 610Q646 628 622 635Q617 635 609 637Q594 637 594 648Q594 650 596 664Q600 677 606 683H618Q619 683 643 683T697 681T738 680Q828 680 837 683H845Q852 676 852 672Q850 647 840 637H824Q790 636 763 628T722 611T698 593L687 584Q687 585 592 480L505 384Q505 383 536 304T601 142T638 56Q648 47 699 46Q734 46 734 37Q734 35 732 23Q728 7 725 4T711 1Q708 1 678 1T589 2Q528 2 496 2T461 1Q444 1 444 10Q444 11 446 25Q448 35 450 39T455 44T464 46T480 47T506 54Q523 62 523 64Q522 64 476 181L429 299Q241 95 236 84Q232 76 232 72Q232 53 261 47Q262 47 267 47T273 46Q276 46 277 46T280 45T283 42T284 35Q284 26 282 19Q279 6 276 4T261 1Q258 1 243 1T201 2T142 2Q64 2 42 0Z"></path></g></g></g></svg></mjx-container></span>的字符不能像UnicodeMath一样打空格实时预览，需要按<code>Ctrl + =</code>预览（切换到专业模式），按<code>Ctrl + Shift + =</code>将公式重置为线性格式。（其实我感觉UnicodeMath的输入方式比LaTeX简单方便多了，建议不是非要用LaTeX的直接用word默认的那个就好了）</p>
-<p>要在公式块之外打字符（比如输入，在选项里面打开“在公式区以外使用‘数学自动更正’规则”就行了） 参考：<span class="exturl" data-url="aHR0cHM6Ly9zdXBwb3J0Lm9mZmljZS5jb20vemgtY24vYXJ0aWNsZS93b3JkLeS4reS9v+eUqC11bmljb2RlbWF0aC3lkowtbGF0ZXgt55qE57q/5oCn5qC85byP5YWs5byPLTJlMDA2MThkLWIxZmQtNDlkOC04Y2I0LThkMTdmMjU3NTRmOA==">Word 中使用 UnicodeMath 和 LaTeX 的线性格式公式<i class="fa fa-external-link-alt"></i></span></p>
-<h2 id="markdown">Markdown</h2>
-<p>图片超链接: 把图片的markdown放到链接的<code>[]</code>里就行了</p>
-<pre><code>[![]()]()</code></pre>
-<p>主副标题</p>
-<pre class="line-numbers language-none"><code class="language-none">主标题
-====
-副标题
----<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="flask报错requests.exceptions.sslerror">Flask报错requests.exceptions.SSLError</h2>
-<p>之前还是好的，今天就报这个错。但我也没用https或者配置SSL证书，临时将verify关了，好了。 但是应该verify也不会有问题，将代理关掉之后正常了，是代理冲突的问题</p>
-<h2 id="flask注册登录有延迟">Flask注册登录有延迟</h2>
-<p>之前师兄写的一个数据标注的Flask小网页，拿到之后注册后数据库里有用户名和密码，但是登录就显示未注册，之前注册的是可以的。等了很久之后，用户账号能用了，延迟了几分钟。有的时候等了几个小时也不行，重启也不行，很迷。</p>
-<p>发现MySQL和Docker的时间不对，差了8个小时，怀疑是时区的问题 使用<code>date -R</code>发现Ubuntu服务器的时间对的，MySQL和Docker时间不对</p>
-<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">mysql&gt; set global time_zone = '+8:00';
-mysql&gt; select now();
-mysql&gt; SELECT @@global.time_zone, @@session.time_zone;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>结果还是MySQL时间不对，但是时区显示是+8:00 重启又试了一下<code>SET GLOBAL time_zone = 'Asia/Shanghai';</code></p>
-<p>给Docker同步时间，先用<code>Docker exec -it &lt;container id&gt;</code>进入容器，再查看时间，发现Docker时间也差了8小时</p>
-<p>修改时间：<code>docker cp /etc/localtime &lt;container id&gt;:/etc/localtime</code></p>
-<p>把时区都调成一致之后还是有问题。</p>
-<p>这个先等一下，有空再看看师兄的源码，好像还是前后端分离的，有点麻烦。师兄们也不知道是哪的问题，之前都是好的。而且放在教研室服务器一段时间之后也会登录不了，需要重启，不知道是哪的问题。这个坑等有空了再看看。</p>
-<h2 id="linux查看本地ip">Linux查看本地IP</h2>
-<p>ip addr show</p>
-<h2 id="退出-git-log">退出 git log</h2>
-<p>按q就好了</p>
-<h2 id="文献管理">文献管理</h2>
-<p>学校不给买Endnote，只好zotero了。（据说本来是要采购，钱都打过去了那边说你电涉军禁运不给卖又给退了） （你别说，开源的zotero用了几天还挺香）</p>
-<h2 id="用css给markdown标题自动编号">用CSS给Markdown标题自动编号</h2>
-<p>今天看师兄们写的Markdown文档，发现他们居然在手动打编号 搜了一下，可以拿CSS搞定自动编号，<span class="exturl" data-url="aHR0cHM6Ly9zdXBwb3J0LnR5cG9yYS5pby9BdXRvLU51bWJlcmluZy8=">https://support.typora.io/Auto-Numbering/<i class="fa fa-external-link-alt"></i></span> 找到一个更好的<span class="exturl" data-url="aHR0cHM6Ly95YW53ZWkuZ2l0aHViLmlvL21pc2MvbWFya2Rvd24tYXV0by1udW1iZXItdGl0bGUuaHRtbA==">https://yanwei.github.io/misc/markdown-auto-number-title.html<i class="fa fa-external-link-alt"></i></span> 加这段代码</p>
-<pre class="line-numbers language-css" data-language="css"><code class="language-css"><span class="token selector">&lt;style type="text/css"&gt;
-    h1</span> <span class="token punctuation">{</span> <span class="token property">counter-reset</span><span class="token punctuation">:</span> h2counter<span class="token punctuation">;</span> <span class="token punctuation">}</span>
-    <span class="token selector">h2</span> <span class="token punctuation">{</span> <span class="token property">counter-reset</span><span class="token punctuation">:</span> h3counter<span class="token punctuation">;</span> <span class="token punctuation">}</span>
-    <span class="token selector">h3</span> <span class="token punctuation">{</span> <span class="token property">counter-reset</span><span class="token punctuation">:</span> h4counter<span class="token punctuation">;</span> <span class="token punctuation">}</span>
-    <span class="token selector">h4</span> <span class="token punctuation">{</span> <span class="token property">counter-reset</span><span class="token punctuation">:</span> h5counter<span class="token punctuation">;</span> <span class="token punctuation">}</span>
-    <span class="token selector">h5</span> <span class="token punctuation">{</span> <span class="token property">counter-reset</span><span class="token punctuation">:</span> h6counter<span class="token punctuation">;</span> <span class="token punctuation">}</span>
-    <span class="token selector">h6</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span>
-    <span class="token selector">h2:before</span> <span class="token punctuation">{</span>
-      <span class="token property">counter-increment</span><span class="token punctuation">:</span> h2counter<span class="token punctuation">;</span>
-      <span class="token property">content</span><span class="token punctuation">:</span> <span class="token function">counter</span><span class="token punctuation">(</span>h2counter<span class="token punctuation">)</span> <span class="token string">".\0000a0\0000a0"</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token selector">h3:before</span> <span class="token punctuation">{</span>
-      <span class="token property">counter-increment</span><span class="token punctuation">:</span> h3counter<span class="token punctuation">;</span>
-      <span class="token property">content</span><span class="token punctuation">:</span> <span class="token function">counter</span><span class="token punctuation">(</span>h2counter<span class="token punctuation">)</span> <span class="token string">"."</span>
-                <span class="token function">counter</span><span class="token punctuation">(</span>h3counter<span class="token punctuation">)</span> <span class="token string">".\0000a0\0000a0"</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token selector">h4:before</span> <span class="token punctuation">{</span>
-      <span class="token property">counter-increment</span><span class="token punctuation">:</span> h4counter<span class="token punctuation">;</span>
-      <span class="token property">content</span><span class="token punctuation">:</span> <span class="token function">counter</span><span class="token punctuation">(</span>h2counter<span class="token punctuation">)</span> <span class="token string">"."</span>
-                <span class="token function">counter</span><span class="token punctuation">(</span>h3counter<span class="token punctuation">)</span> <span class="token string">"."</span>
-                <span class="token function">counter</span><span class="token punctuation">(</span>h4counter<span class="token punctuation">)</span> <span class="token string">".\0000a0\0000a0"</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token selector">h5:before</span> <span class="token punctuation">{</span>
-      <span class="token property">counter-increment</span><span class="token punctuation">:</span> h5counter<span class="token punctuation">;</span>
-      <span class="token property">content</span><span class="token punctuation">:</span> <span class="token function">counter</span><span class="token punctuation">(</span>h2counter<span class="token punctuation">)</span> <span class="token string">"."</span>
-                <span class="token function">counter</span><span class="token punctuation">(</span>h3counter<span class="token punctuation">)</span> <span class="token string">"."</span>
-                <span class="token function">counter</span><span class="token punctuation">(</span>h4counter<span class="token punctuation">)</span> <span class="token string">"."</span>
-                <span class="token function">counter</span><span class="token punctuation">(</span>h5counter<span class="token punctuation">)</span> <span class="token string">".\0000a0\0000a0"</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token selector">h6:before</span> <span class="token punctuation">{</span>
-      <span class="token property">counter-increment</span><span class="token punctuation">:</span> h6counter<span class="token punctuation">;</span>
-      <span class="token property">content</span><span class="token punctuation">:</span> <span class="token function">counter</span><span class="token punctuation">(</span>h2counter<span class="token punctuation">)</span> <span class="token string">"."</span>
-                <span class="token function">counter</span><span class="token punctuation">(</span>h3counter<span class="token punctuation">)</span> <span class="token string">"."</span>
-                <span class="token function">counter</span><span class="token punctuation">(</span>h4counter<span class="token punctuation">)</span> <span class="token string">"."</span>
-                <span class="token function">counter</span><span class="token punctuation">(</span>h5counter<span class="token punctuation">)</span> <span class="token string">"."</span>
-                <span class="token function">counter</span><span class="token punctuation">(</span>h6counter<span class="token punctuation">)</span> <span class="token string">".\0000a0\0000a0"</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-&lt;/style&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>或者用CSS文件外部引用</p>
-<h2 id="linux终端用户名和主机高亮">Linux终端用户名和主机高亮</h2>
-<p>MobaXterm里面的终端经常找丢位置，决定搞点高亮 设置参考这里<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC81MTAwODA4Nw==">https://zhuanlan.zhihu.com/p/51008087<i class="fa fa-external-link-alt"></i></span>，如果只是用户名高亮的话改改.bashrc就行了</p>
-<h2 id="ubuntu16.04lts-强行升级">Ubuntu16.04LTS 强行升级</h2>
-<p>准备作大死来个滚动升级, 对，就是教研室那个服务器。滚过manjaro的我遇到什么背锅也不会怕，奥利给</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">apt</span> update <span class="token operator">&amp;&amp;</span> <span class="token function">sudo</span> <span class="token function">apt</span> upgrade <span class="token operator">&amp;&amp;</span> <span class="token function">sudo</span> <span class="token function">apt</span> autoremove<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>然后换源，把apt的镜像源从16.04LTS换到18.04LTS 直接<code>sudo do-release-upgrade -d</code>报错</p>
-<pre class="line-numbers language-log" data-language="log"><code class="language-log">Upgrades to the development release are only available from the latest supported release<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>看到说要改一下，把那个<code>/etc/update-manager/release-upgrades</code>下的<code>Prompt=never</code>换成LTS或者normal（升完再换LTS）</p>
-<p>然后<code>sudo apt upgrade</code>报这种错</p>
-<pre class="line-numbers language-log" data-language="log"><code class="language-log">The following packages have unmet dependencies:
- perl-modules-5.22 : Conflicts: perl-modules
-                     Conflicts: perl-modules:i386
-E: Broken packages<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p>也不知道谁装的perl，package 还坏了 卸掉，再次试图upgrade，漫长的等待...妈耶，停在99%了<br>
-行了，吓死我了<br>
-成功滚成18.4，能apt装neofetch了 <img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/ununtu-server-update.png" alt="Picture" style="zoom:80%;"></p>
-<pre class="line-numbers language-log" data-language="log"><code class="language-log">root@labserver:~# neofetch
-            .-/+oossssoo+/-.               root@labserver
-        `:+ssssssssssssssssss+:`           --------------
-      -+ssssssssssssssssssyyssss+-         OS: Ubuntu 18.04.3 LTS x86_64
-    .ossssssssssssssssssdMMMNysssso.       Host: PowerEdge R730xd
-   /ssssssssssshdmmNNmmyNMMMMhssssss/      Kernel: 4.12.14-041214-generic
-  +ssssssssshmydMMMMMMMNddddyssssssss+     Uptime: 3 days, 14 hours, 3 mins
- /sssssssshNMMMyhhyyyyhmNMMMNhssssssss/    Packages: 897
-.ssssssssdMMMNhsssssssssshNMMMdssssssss.   Shell: bash 4.4.20
-+sssshhhyNMMNyssssssssssssyNMMMysssssss+   Theme: Ambiance [GTK3]
-ossyNMMMNyMMhsssssssssssssshmmmhssssssso   Icons: Ubuntu-mono-dark [GTK3]
-ossyNMMMNyMMhsssssssssssssshmmmhssssssso   Terminal: /dev/pts/0
-+sssshhhyNMMNyssssssssssssyNMMMysssssss+   CPU: Intel Xeon E5-2630 v4 (20) @ 3.100GHz
-.ssssssssdMMMNhsssssssssshNMMMdssssssss.   GPU: Matrox Electronics Systems Ltd. G200eR2
- /sssssssshNMMMyhhyyyyhdNMMMNhssssssss/    Memory: 529MiB / 32074MiB
-  +sssssssssdmydMMMMMMMMddddyssssssss+
-   /ssssssssssshdmNNNNmyNMMMMhssssss/
-    .ossssssssssssssssssdMMMNysssso.
-      -+sssssssssssssssssyyyssss+-
-        `:+ssssssssssssssssss+:`
-            .-/+oossssoo+/-.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/ubuntu-server.png" alt="Picture" style="zoom:80%;"></p>
-<p>然后是清理遗留包, 用<code>sudo apt autoremove</code>把下面几个没用的包全清了</p>
-<pre class="line-numbers language-log" data-language="log"><code class="language-log">The following packages were automatically installed and are no longer required:
-  g++-5 libbind9-140 libblas-common libboost-filesystem1.58.0 libboost-filesystem1.65.1 libboost-system1.58.0 libboost-system1.65.1 libcapnp-0.5.3 libcapnp-0.6.1 libdbus-glib-1-2 libdns162 libefivar0
-  libegl-mesa0 libegl1 libegl1-mesa libgbm1 libgdbm3 libgl1-mesa-glx libicu55 libisc160 libisccc140 libisccfg140 libllvm6.0 liblwres141 libmirclient9 libmircommon7 libmircore1 libmirprotobuf3
-  libprotobuf-lite10 libprotobuf-lite9v5 libpython3.5-dev librpm3 librpmbuild3 librpmio3 librpmsign3 libstdc++-5-dev libtxc-dxtn-s2tc0 libunistring0 libvpx3 libwayland-egl1-mesa libwayland-server0
-  libxcb-xfixes0 libxfont1 lua-lpeg python3.5-dev<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>然后是略有风险的</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">apt</span> dist-upgrade<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>暂时还没有报错</p>
-<h2 id="powershell查看监听端口">Powershell查看监听端口</h2>
-<p>之前在网上查的查看监听端口命令是</p>
-<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">netstat <span class="token operator">-</span>an <span class="token punctuation">|</span> find <span class="token string">"LISTEN"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>发现只能在cmd下用，powershell 提示<code>FIND: 参数格式不正确</code>, 查了一下是find会转义""的问题, 改成</p>
-<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">netstat <span class="token operator">-</span>an <span class="token punctuation">|</span> find <span class="token operator">--</span><span class="token operator">%</span> <span class="token string">"LISTENING"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h2 id="安装onefetch">安装onefetch</h2>
-<p>这是一个查看git仓库信息的命令行工具，跟neofetch差不多，snap就可以装</p>
-<p>这个使用rust写的，编译安装需要rustc，可以直接安装一下rustc</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">curl</span> --proto <span class="token string">'=https'</span> --tlsv1.2 -sSf https://sh.rustup.rs <span class="token operator">|</span> <span class="token function">sh</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>或者apt安装，只要<code>rustc --version</code>显示不小于1.3.6就行了</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> clone https://github.com/o2sh/onefetch.git
-<span class="token builtin class-name">cd</span> onefetch
-<span class="token function">make</span> <span class="token function">install</span>
-<span class="token function">sudo</span> <span class="token function">cp</span> target/release/onefetch /usr/local/bin<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p>然后切进仓库输入<code>onefetch</code>就行了 <img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/onefetch.png" alt="Picture" style="zoom:80%;"></p>
-<h2 id="git仓库更改权限不用每次sudo">Git仓库更改权限不用每次sudo</h2>
-<p>发现.git的默认权限是root用户的</p>
-<p>只要切进仓库里面把文件夹的权限改了就行了</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">chown</span> -R username:username .git<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h2 id="安全与环保知识网络教育及考试">安全与环保知识网络教育及考试</h2>
-<p>行吧,你电啥有用的也不教,就整这些破玩意, 里面还有什么中医治烫伤。。。还都是13年的, 还要刷够120小时学习时间。这破网站还没有域名没HTTPs，右上角一个大大的不安全，滑稽。 <img width="600" src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/jb.png" alt="Picture"> 并没有任何反爬措施，试了一下，是5分钟断线自动下线，整个自动刷新就好了</p>
-<p>我做题的时候搜答案又看了一下，很多个学校都有这个，而且界面和内容完全一致，应该都能通用</p>
-<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript">timeout <span class="token operator">=</span> <span class="token number">200</span>
-count<span class="token operator">=</span><span class="token number">0</span>
-current<span class="token operator">=</span>location<span class="token punctuation">.</span>href<span class="token punctuation">;</span>
-<span class="token keyword">if</span><span class="token punctuation">(</span>timeout<span class="token operator">&gt;</span><span class="token number">0</span><span class="token punctuation">)</span>
-<span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token string">'reload()'</span><span class="token punctuation">,</span><span class="token number">1000</span><span class="token operator">*</span>timeout<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">else</span>
-location<span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span>current<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">function</span> <span class="token function">reload</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-<span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token string">'reload()'</span><span class="token punctuation">,</span><span class="token number">1000</span><span class="token operator">*</span>timeout<span class="token punctuation">)</span><span class="token punctuation">;</span>
-count<span class="token operator">++</span><span class="token punctuation">;</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'每（'</span><span class="token operator">+</span>timeout<span class="token operator">+</span><span class="token string">'）秒自动新,刷新次数：'</span><span class="token operator">+</span>count<span class="token punctuation">)</span><span class="token punctuation">;</span>
-fr4me<span class="token operator">=</span><span class="token string">'&lt;frameset cols=\'*\'&gt;\n&lt;framesrc=\''</span><span class="token operator">+</span>current<span class="token operator">+</span><span class="token string">'\'/&gt;'</span><span class="token punctuation">;</span>
-fr4me<span class="token operator">+=</span><span class="token string">'&lt;/frameset&gt;'</span><span class="token punctuation">;</span>
-<span class="token keyword">with</span><span class="token punctuation">(</span>document<span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token function">write</span><span class="token punctuation">(</span>fr4me<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token function">voi</span><span class="token punctuation">(</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="win10">Win10</h2>
-<p>禁用快速启动（感觉禁了这玩意能少一般的咖喱味）</p>
-<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">powercfg <span class="token operator">/</span>h off<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>禁用小娜进程，禁了能少三分之一的CPU跑满100%糟心事</p>
-<p>另外不要乱试瘟10全新咖喱味BUG体验计划，加入之后一不小心就退不回去了，只有重装大法了。</p>
-<p>我为了尝试20H1的wsl2，冒死试了一下，结果绿屏了，重启N次之后终于好了，结果发现显示有问题，屏幕经常一堆蓝线蓝点，然后UWP版QQ打不开了。CPU 100% 风扇狂转（这貌似是1909就有的问题）</p>
-<p>瘟10更新可比Arch滚动难受多了.....</p>
-<p>突然发现你电给的正版激活工具还能激活企业版（之前一直以为只能激活学校官网给的那个咖喱味的专业版,唉，之前看到河畔上还有老哥卸了学校的专业版整个盗版LTSB），那就没那么多事了，直接搞个win10 LTSB.</p>
-<h2 id="gitlab占用过高">Gitlab占用过高</h2>
-<p>看了一下发现Gitlab的默认配置，开了很多进程，默认基本跑满了一半内存。 修改配置文件<code>/etc/gitlab/gitlab.rb</code>如下</p>
-<pre class="line-numbers language-log" data-language="log"><code class="language-log">unicorn['worker_processes'] = 2 # 改进程数为最小的2
-unicorn['worker_timeout'] = 60  # 无响应断开
-postgresql['shared_buffers'] = "64MB"  # 数据库缓存，默认是1/4RAM,用不着，改小
-postgresql['max_worker_processes'] = 2 # 数据库并发数，也改成2
-prometheus_monitoring['enable'] = false # 关闭prometheus(一个报警监控，用不着)，这个吃内存也很厉害
-sidekiq['concurrency'] = 2  # 好像是一个异步的钩子，把并发改成2
-unicorn['worker_memory_limit_min'] = "100 * 1 &lt;&lt; 20" # 好像是监测内存泄露的配置，见unicorn-worker-killer
-unicorn['worker_memory_limit_max'] = "250 * 1 &lt;&lt; 20"<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>这里面最高的是哪个prometheus监控程序,CPU占用565.1%多（20核，1核算100%） &gt;veth6901d37 0b 0b 569.4 0.3 1.44G 98.7M 85885 gitlab-pr 0:53 29 0 S 0 0 /opt/gitlab/embedded/bin/prometheus --web.listen-address=localhost:9090 --storage.tsdb.path=/var/opt/gitl</p>
-<p>然后让配置生效，等一分钟</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">gitlab-ctl reconfigure<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>这样CPU占用就不到10%了</p>
-<p>顺便把gitlab-ce的源换了</p>
-<blockquote>
-<p>/etc/apt/sources.list.d/gitlab_gitlab-ce.list # 按照清华镜像源的说明是gitlab-ce.list</p>
-</blockquote>
-<h2 id="ubuntu从18.10降级为18.04">Ubuntu从18.10降级为18.04</h2>
-<p>这两天上vultr小鸡上看了看，突然发现18.10停止维护了，懒得升级19.10了，直接换回18.04LTS版本吧</p>
-<blockquote>
-<p>E: The repository 'http://archive.ubuntu.com/ubuntu cosmic Release' no longer has a Release file.</p>
-</blockquote>
-<p>参考：<span class="exturl" data-url="aHR0cHM6Ly9saW51eGNvbmZpZy5vcmcvaG93LXRvLWRvd25ncmFkZS11YnVudHUtbGludXgtc3lzdGVtLXRvLWl0cy1wcmV2aW91cy12ZXJzaW9u">How to downgrade Ubuntu Linux system to its previous version<i class="fa fa-external-link-alt"></i></span></p>
-<p>先把源换了</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">sudo</span> <span class="token function">sed</span> -i <span class="token string">'s/cosmic/bionic/g'</span> /etc/apt/sources.list<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>然后处理一下已经安装的软件，编辑<code>/etc/apt/preferences</code>，保留原来的版本</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">Package: *
-Pin: release <span class="token assign-left variable">a</span><span class="token operator">=</span>bionic
-Pin-Priority: <span class="token number">1001</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>然后再<code>sudo apt update &amp;&amp; apt upgrade</code>就好了</p>
-<h2 id="乱码">乱码</h2>
-<p>两次看到这个乱码<code>ï»¿</code>有一次json在开头出现乱码 一次是转码的问题（latin1格式拿utf-8打开并保存出了问题），还有一次是头文件的问题</p>
-]]></content>
-      <categories>
-        <category>杂七杂八</category>
-      </categories>
-      <tags>
-        <tag>bug</tag>
-        <tag>LaTeX</tag>
-        <tag>折腾</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>轻关易道，通商宽衣</title>
-    <url>/25d3/</url>
-    <content><![CDATA[<p>to be continued <a id="more"></a></p>
-<h2 id="文化又迈进了一大步">文化又迈进了一大步</h2>
-<p>明天就要考猫（包）概了，祝我挂科</p>
-<p><img width=250 src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/baobao.jpg" alt="picture"/> <!-- 
----
-
-## 始有澄清之志
-
-附上课程小报告（~~我瞎写的~~由于不符合本课~~24小时中国梦的~~要求，这一篇写得非常含蓄）,略有改动，
-
-<center><font face="黑体" size=4>互联网公司加班情况调研报告</font></center>  
-<br>
-
-【摘要】  最近996.icu活动引起了人们对于996加班方式的关注和讨论。本文主要介绍以互联网公司为代表的企业加班情况及对于该现状的讨论。 目前中国许多企业都鼓励加班，不少企业更是出于利益原因公然违反劳动法，压榨剥削员工。这种做法不仅影响员工身体健康，而且不利于企业的长期发展和技术积累，为了追求短期利益造成了社会问题。
-
-关键词： 劳动法；996；互联网；加班
-
-### icu 事件概况
-
-近日，996.icu活动在最大的代码托管网站兴起。这个活动由v2ex论坛用户 @nulun 发起，当时他在996的帖子下回复时表示他所在的公司最近开始996自己感觉顾不上身体和家庭并建立了这个网站。该网站 没想到该活动在几天之内获得巨大反响，两天之内该项目仓库的star突破一万，许多人在该项目的issue里留言讨论。引起了国内外媒体的注意。一周之后超过Github上Linux kernel等知名项目，成为Github上star数目第二的项目。在项目star数目超过10万时，该项目的issue被关闭。
-
-起初该网站只是列举了近日违反劳动法的有赞、京东和58等公司的行为以及劳动法的具体内容。随着github项目受到关注，主要的讨论和声援活动转移到了GitHub的issue和pull request里，其他相关的Github仓库（如提倡不加班和介绍不加班公司和岗位955.WLB项目）也开始建立并活跃起来。各公司员工纷纷曝光所在公司的加班情况，并发起了投票和统计活动。针对996公司的开源许可协议也由提议到宾夕法尼亚大学和伊利诺伊大学的法学人士起草并成型（ [Anti-996-License-1.0](https://github.com/kattgu7/996-License-Draft)），其他周边活动也活跃了起来，QQ和telegram建立起相关的群组，各大论坛和网站也开始讨论这一事件。该项目也被翻译成了英语、法语、德语等十几种语言。投票选出的几千家公司[996 公司黑名单](https://github.com/fengT-T/996_list) 和  [955 公司白名单](https://github.com/formulahendry/955.WLB) 也被整理出来。几乎所有的国内大公司都存在违反劳动法的加班情况，而９５５名单上的公司多为外企，国内公司寥寥无几。
-
-该项目在出人意料地获得大量响应之后引来了国内外的关注和报道，python之父 Guido van Rossom 在社交媒体推特上声称996 工作制是不人道的，并且在GitHub上star了 996.icu 项目。他随后还在python社区发布了问题：&quot;Can we do something for 996 programmers in china? &quot; Guido表示：&quot;一个星期前一些中国程序员创建了996.icu抱怨恶劣的工作条件——现在该网站已经被各种中国浏览器禁止访问了——我针对此事发布了推文，现在我的推特已经充满了关于这个问题的讨论。&quot; Python 社区甚至开始探讨禁止实行996工作制的公司使用python的可能性。
-
-在该项目引发大量关注之后，微博、知乎以及国外的Reddit论坛等网站也开始讨论，随后《中国青年报》、《南方日报》等媒体也开始报道。该项目也成为了硅谷流行科技新闻网站 TechMeme 4 月 4 日首页要闻。BBC等国外媒体。几天后，人民日报和共青团中央等官媒对996和加班做出点评。
-
-该事件发生后，处在舆论的风口浪尖的各大互联网公司几乎都未在第一时间内做出正面回应。微博热搜和知乎热榜被撤。随后，众多国产浏览器开始了屏蔽：QQ 浏览器称这个唯一公开诉求就是让公司遵守劳动法的网站包含欺诈信息。微信显示的理由则是&quot;该网页包含违法或违规内容，为维护绿色上网环境，已停止访问&quot;。阿里的 UC 浏览器和 360 浏览器都将该页面认定为包含违法信息。猎豹浏览器打开这个页面甚至弹出提示&quot;网站含有大量淫秽色情信息&quot;。使用百度搜索 996，中文搜索结果找不到 996.icu 网址和对应 GitHub 仓库。
-
-随后，马云将996 称为修来的福报和刘强东的&quot;兄弟&quot;理论引发众怒，搜狗CEO在微博&quot;有种就快滚&quot;等言论也引起舆论一片哗然。马云当年后悔加班、多陪陪家人的言论也被挖出。在知乎和微博上出现了高达数万赞同的反驳和声讨，其中不乏资本家和阶级斗争等内容。
-
-一批微软和Github员工也在该项目数周之后出于对996.icu项目遭到微软和Github审查压力的担心，在GitHub发起了微软以及GitHub员工支持996项目的请愿书。最初是微软员工在一封内部邮件中呼吁公司抵制潜在的审查压力996.icu项目，因为他担心微软可能会像中国国内的浏览器一样对该项目采取屏蔽、删除或审查。后来该项目在GitHub上得到了众多员工的联名支持。截至目前，该项目已收到数百名员工的实名支持。
-
-### 国内以互联网公司为代表的企业加班情况
-
-根据996.icu相关项目的投票和统计，国内大多数互联网公司存在违反劳动法的严重的加班情况。而据多位老程序员的说法，在十几年前互联网公司和硬件公司加班情况并没有今天这么严重，近年来加班情况愈演愈烈。最早公然违反劳动法鼓吹加班，将这股风气带到整个行业的是华为，从公司成立早期就公然践踏劳动法，让员工签署奋斗者协议，平均加班情况远超９９６，和其他同行业公司进行恶性竞争。而在国内互联网行业，鼓吹加班风气的始作俑者应该是阿里巴巴。 [2014 阿里巴巴怀孕员工加班回家后大出血去世](http://it.sohu.com/20140405/n397797427.shtml)的事件也在当时引起了不少的争议。而在国外，由于完善的法律和相对强势的工会组织，加班情况好于中国。作为互联网发源地的硅谷，大多数巨头公司的员工一天只工作几个小时。而美国的不少公司也在想方设法压榨员工。以工作环境优渥文明的著名公司Google，为员工提供的各种福利，包括免费酒水糕点和休息娱乐设施，其初衷就是为了让员工尽可能长时间留在公司。而有美国富士康之称的亚马逊，加班严重，发生过猝死跳楼等事件，采用高薪和按完成任务情况发工资的方式规避法律，加班时长最高可至８０－１００小时每周，&quot;堪比中国华为&quot;。
-
-而在其他许多传统行业，劳动者的权益相比互联网公司，得到的保障和法律支持以及社会关注更少。相比于互联网的软件开发、测试等岗位，传统制造业工作环境复杂危险，化学药剂、粉尘和爆炸、矿难等安全事故多发，很多劳动者受到伤害难以认定和赔偿，特别是发病时间久的伤害和后遗症（如尘肺病等）难以认定工伤和后续赔偿。最近曝光安全帽问题的工人窦师傅就没有引起比程序员抗议活动更大的关注和报道。再比如建筑行业，大量工地打工的劳动者属于&quot;农民工&quot;，工作和居住条件远不如程序员等行业，而且没有户口也并未缴纳医保等保障金和保险。欠薪和讨薪问题也经常上演。大多数人文化程度和受教育程度低，维权意识差，在信息时代对于网络和媒体的熟悉程度和社会关注度也低于程序员群体。而大部分工程师连夜画图纸是常态，从学生时代起加班加点熬夜画图的风气就成为常态。很多施工单位和设计院的劳动时间远超９９６的加班强度，而相关行业在施工进度和任务上面也有不少企业严重，最典型的当属碧桂园，高周转和赶进度施工不仅对劳动者压榨严重，而且造成多起安全问题，商品房质量堪称业界毒瘤，甚至自己的售楼处都发生了倒塌伤亡事件。
-
-而医生、教师等行业以及不少研究所也都存在着加班的情况，在医疗资源和人力紧缺的部分医院（特别是儿科和航天院所等岗位），值班和加班强度大大超过了劳动法规定的工时，但是却没有应有的待遇，造成了大量的人才流失（甚至一度有&quot;造导弹不如卖茶叶蛋&quot;的谚语流传）。而这些群体和职业，经常将奉献作为典型，宣传无私奉献的精神。但是我们应当意识到，宣扬无私奉献和表彰并不能补偿加班和奉献做出的牺牲，在国家已经度过困难时期的今天，绝不应当将无私奉献的光荣替代实际的报酬和补偿，这对于市场经济按劳分配的原则是极大的破坏。这些在特殊岗位奉献和加班的人们，应当得到实际的物质补偿。
-
-### 加班困局及对策
-
-在西方国家资本原始积累的早期，纺织工人、黑奴、爱尔兰劳工和西部大开发时的铁路劳工都面临着今日程序员同样的压榨困境。一些劳工甚至每天工作16个小时。而现在8小时工作制也不是轻易得来的。1886年5月1日美国芝加哥爆发了历史最大的罢工，也正是以倡导八小时工作制为目标进行的。随着时代的发展，八小时工作制普遍被列为法律条令。当时的工人阶级，实际上在社会上处于相对较高的收入地位，新兴行业的工人也在走在时代的前列，能接触到第一线生产资料和生产力，罢工等运动往往由他们发起。这样的局面和现在的码农颇为类似。
-
-2018年下半年至今，受贸易纠纷禁运制裁和经济形势的影响，国内软硬件公司业绩下滑，开始裁员。很多互联网公司在过去几年的移动互联网风口大肆扩张，在互联网红利结束的今天，开始了裁员和收缩。去年8月，美图、拉勾网各裁员20%。去年12月知乎裁员20%，300人被要求当天离开公司；科大讯飞裁员20%；摩拜裁员30%，称正常调整。今年2月，滴滴裁员15%，2000人离职；京东先裁员20% 员工，2月又裁员10%副总裁级别高管。今年3月腾讯中层裁员10%。但是裁员需要支付较高的离职赔偿金，许多企业通过996、007等高强度的加班方式以及强制外派和出差，逼迫员工主动辞职，试图这个方法省下裁员所需要的补偿费。这样的做法不仅在不规范的小公司盛行，在华为、腾讯等大企业也同样普遍。
-
-在传统制造业，多为流水线作业和重复劳动，因此加班几乎可以带来同加班时间成正比的产出，资本家可以用延长加班时间的方式压榨劳动者的剩余价值。在一些互联网岗位，很多加班并不能带来工作效率和产出的提升，创造性的脑力劳动并不能每天十二个小时稳定产出。
-
-通过各种方式延长加班时间也同样能节省企业雇佣员工的成本，高强度的工作还会逼迫三十至四十岁的老员工离职，企业继续招聘刚毕业的低工资新员工顶替工作。这样不利于公司的技术积累和员工的身体健康，996等加班方式也会造成工作效率低下等严重问题。但是这些对于出于互联网风口的软件公司的重要程度都比不上快速开发带来的利润。而许多年轻员工和刚毕业的实习生都在通过加班的方式试图提高自己的竞争力，甚至形成比拼加班的局面。而在国内整个行业大小公司都开始加班的情况下，不加班的工作越来越少，不愿加班的人也难以找到合适工作。劳动者一盘散沙，没有有效的工会等组织，个人运用法律手段维权时，在面对大公司时很难胜诉。
-
-而许多外包公司会搞高强度的封闭开发，经常一个月无休甚至半年无休。这样的外包项目技术含量更低，工作也近似于流水线和重复劳动，加班相比普通公司更为严重。而员工的福利和待遇也更差，由于工作的技术含量低，可替代能力强，劳动者的议价和反抗能力也更弱。
-
-根据《中华人民共和国劳动法》，超过工作日法定劳动小时的，按照双倍的小时工资支付加班报酬；节假日加班的，按照三倍的小时工资支付加班报酬。以&quot;996&quot;工作制为例，每天早 9 点到岗，一直工作到晚上 9 点，每周工作 6 天&quot;996&quot;工作制的周工作时间为最低 12x6=72 小时，按照劳动法规定，996 工作制下只有拿到当前工资的 2.275 倍，才在经济账上不吃亏。&quot;007&quot;等工作制的每小时收益更低，甚至看起来高收入的互联网行业按照这样的计算方式，每小时平均薪资还会低于其他传统行业。而程序员的岗位多集中在一线二线城市，物价和房价很高，大量员工在距离公司较远的地方租房或者买房，每天上下班通勤时间高达40分钟至1小时。许多人的休息时间不足10小时每天，疲于奔命，不仅难以顾及家庭和身体健康，而且不能学习和技术积累。
-
-由于缺乏有效的抵抗方式，现在对于加班的控诉和反对仅仅集中在网上爆料和讨论，真正敢于抵制和离职的劳动者少之又少。在这次引人注目的事件火热之后，加班仍旧在继续，整个行业并没有发生实质性变化。早年间就曾在阿里巴巴公司带头抵制加班的资深程序员陈皓表示建议通过法律手段、集体抗议、政府信访等手段维权，但是目前鲜有人能做到离职等涉及到实际行动和自身短期利益的抗议，抱怨只停留在口头。
-
-### 可能的解决方案和未来展望
-
-在可见的未来，软硬件行业的利润不会大幅增加，裁员和降薪仍将继续。而前几年并未出现如此大规模的反响和抗议，主要是因为许多新兴公司正处于高速发展期，经过几年的加班甚至有希望实现财务自由。在公司上市发展过程中甚至能获得相当丰厚的股份和分红，从不拥有资本的无产者变成公司的股东。而随着移动互联网红利逐渐到头和大公司的垄断形成，程序员的收入和前景都成了一个问题。当初，阿里公司上市后，员工的股票翻了几倍。而小米 2014 年估值达到450亿美元，等到 2019 年年初员工可以卖股票的时候，小米市值缩水至 315 亿美元，股票价值也比 2014 年缩水 30%。在2018年糟糕的股市中，小米已经是过去一年上市公司里表现很好的。蘑菇街直接以稀释员工股权的手段将员工持股价值缩水为 1/25。这个行业早年有大量的风险投资涌入。互联网公司可以在不盈利的情况下利润可以高薪挖人。但整个 2018 年，中国 VC/PE 募资规模 341.12 亿美元，同比骤降 74.59%。靠烧钱做大规模的互联网公司即便上市也要面对盈利问题。裁员成为一个普遍的做法。
-
-在这种情况下,程序员等劳动群体通过离职、罢工等方式对抗压榨剥削都是不现实的。仅仅通过网上抗议改变不了现状，一部分有能力的技术人员大多选择了外企和出国。这进一步加剧了国内的困境，软硬件行业随着逐渐成熟和垄断的形成，许多岗位变得不再无可替代。随着职位的细分和逐渐稳定的业务，软硬件的各个岗位越来越像富士康的流水线。一方面，互联网给了很多程序员改变命运的机会，另一方面，这样的加班和大城市高昂的房价也直接毁掉了不少人的身体，绝大多数人在40岁后退出。一些发达国家的组织曾谴责一些跨国公司在东南亚和非洲雇佣童工的行为，然而这些童工却在这里获得了比原先更好的生活。类似的问题也发生在中国，富士康历来被称为血汗工厂，但是提供的就业机会和岗位却远好于其他小作坊式的生产车间。在处在转型时期的中国，如何面对这样的选择，是留给每一个劳动者的问题。互联网企业，和整个中国经济一样，已经过了高速发展期，接下来是严格执行法律条约保障劳动者权益共克时艰，抑或是恶性裁员以度过困难， 已经没有调和的余地了。
-
-而小米公司能够给雷军100亿，却以效益不好为由削减员工股份和待遇；京东的刘强东最近所作所为造成公司重大损失，至今安然无恙，底层员工却以&quot;我们不要性价比不高的人&quot;为由被开除，再不是&quot;兄弟&quot;。同样的事情也发生在各行各业，对于劳动者，目前只有&quot;丢掉幻想，准备斗争&quot;。
-
-### 参考文章及网站
-
-1. [ICU/README.md](https://github.com/996icu/996.ICU/blob/5a9758795661b0f38ea4b8f2cb0f015bff91d884/README.md)_. GitHub. 2019-03-30_
-2. [996.icu](https://996.icu)
-3. [955.WLB](https://github.com/955wlb/955.WLB)
-4. [好奇心日报有关报道的备份](https://terminus2049.github.io/archive/2019/04/04/996-ICU.html)
-5. [维基百科：996工作制](https://zh.wikipedia.org/wiki/996%E5%B7%A5%E4%BD%9C%E5%88%B6) 
-6. --></p>
-]]></content>
-  </entry>
-  <entry>
     <title>对于医疗行业的一点看法</title>
     <url>/about-medical-industry/</url>
     <content><![CDATA[<p>半个局外人的流言谶语，以及乌鸦嘴。未完待续，不定期更新。 <a id="more"></a></p>
-<p>目前施工进度：30%<br />
+<p>目前施工进度：35%<br />
 大概列个标题，很多大坑比如医疗私有化的问题有空了慢慢填。</p>
 <p>当然我不是医学生，当年高考报志愿的时候由于色弱被医学几乎所有专业拒之门外。</p>
 <p>虽然本科录取通知书和毕业证上都写的是生物医学工程（是的，这个专业也是色弱与狗不得报考。可我是报了通信电子被调剂过来的），虽然每次出门说出这个专业总被认成是学生物的、学医的，很惭愧，生化相关的就没学过，唯一跟生物沾点边的是大一的必须选的选修课生命科学导论（只有一个学分的选修，上课全程在写微积分线代作业，老师非常善良，开卷考试全程抄书），唯一跟医学沾点边的是大一的解剖（也是选修，两个学分，上课全程在写电分大雾作业，考试划重点精确到第几章第几页第几段的第几个句子）。</p>
@@ -6389,7 +5327,7 @@ Pin-Priority: <span class="token number">1001</span><span aria-hidden="true" cla
 <p>国内公司大概就 联影 迈瑞 理邦，这些后面慢慢讲，一时半会讲不完</p>
 <p>联影号称是医疗器械行业的华为，实际加班可能比华为还严重；像当年菊花从思科挖人一样，联影从西门子等挖了好多高管和技术人员，从而实现了自主研发。</p>
 <p>东软之类的国企现在大都没落了。</p>
-<p>国内学校搞医疗器械的不是很多，基本都挂在生物医学工程下面，有的挂在精密仪器和自动化下面（说起来你电生命学院最早就是从自动化测量那边分出去的，早年一群搞医疗器械的，不过后来逐渐都去灌水了，硬件没多少人搞了）。不算材料那些，高校里面还在搞医疗电子并且还算可以的可能就浙大和重庆大学的一些组了。</p>
+<p>国内学校搞医疗器械的不是很多，基本都挂在生物医学工程下面，有的挂在精密仪器和自动化下面（说起来你电生命学院最早就是从自动化测量那边分出去的，早年一群搞医疗器械的，不过后来逐渐都去灌水了，硬件没多少人搞了）。不算材料那些，高校里面还在搞医疗电子并且还算可以的可能就浙大和重庆大学的一些组了(不仅难搞还要投入很多钱还不好发文章，最终一个个都去生化环材或者人工智能识别影像病灶灌水去了)。</p>
 <h3 id="医学影像">医学影像</h3>
 <p>这个以后再讲。</p>
 <h3 id="医学信息">医学信息</h3>
@@ -6479,7 +5417,6 @@ Pin-Priority: <span class="token number">1001</span><span aria-hidden="true" cla
 <p>医生做个飞刀被举报了都要罚款，却在吹什么远程医疗。允许病人外地就医，医生可以去外出开飞刀，比什么远程医疗都好。</p>
 <h2 id="一些风气">一些风气</h2>
 <p>施工中，尚未写完</p>
-<p>传统医学诞生于巫术</p>
 <h2 id="关于医疗私有化">关于医疗私有化</h2>
 <p>这个问题比较复杂，一时半会讲不完，以后再说。 大部分公立医院都有着国企的通病</p>
 <p>下面是比较有意思的几个：</p>
@@ -6545,8 +5482,10 @@ Pin-Priority: <span class="token number">1001</span><span aria-hidden="true" cla
 每一个研究的影响力应该建立在发表者的理论&#x2F;假设&#x2F;数据在其领域内有多少人使用(注意不是引用)、有多少人利用该理论&#x2F;假设&#x2F;数据发现了新的药靶、开发了新的药物，或者开辟了新的研究领域。研究的评价再也不是根据什么影响因子、什么H因子、什么自然指数(让这些东西都他么的fu*k off！)。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>这些年从开源到互联网（www原本的意思），免费开放共享的风气一直没怎么刮进大部分传统行业。不止传统行业，甚至计算机的很多领域都没这个风气。计算机图形学的封闭和计算机视觉突飞猛进形成了强烈的对比。</p>
 <p>在医学领域（至少我接触到的国内）小圈子和不开放风气尤重，接受新知识和变化的速度也比较慢，山头和派系林立。 有什么好东西基本都当“祖传秘方”一样藏着，从来就不想着造福全人类，除非发论文或者开公众号吸粉。一副教会徒弟饿死师傅的作风。 有价值的资料除非发论文压榨光之后几乎很少放出来给大家共享，哪怕是去年疫情这种危急时刻，依然各怀鬼胎。</p>
-<p>SCI-Hub程度还不够，要有大变革需要像海盗湾那种法外狂徒之类的东西。</p>
-<p>比如这样，医保也没钱了，国家也别花些冤枉钱研究些灌水的东西了。就仿造国外领先的医疗耗材、医疗器械、医药（完全复刻不偷工减料那种），不管他什么专利版权。按打破国外垄断和降价多少的贡献评职称、企业免税，按为国家节省多少进口外汇评奖。 药企等过来告侵犯版权？不管，党国千里长城封锁谷歌的壮举都干了还在乎这个。 声称这是人类共同财产，把原来的垄断技术直接像全世界公开，不怕师出无名。 啥？扰乱市场秩序，逼得投入研发创新造福病人的医药企业血本无归？长期不利于医学进步？ 骂名背就背了，反正也不是第一次扰乱市场秩序了，医保都没钱了管它欧美医药企业死活干什么。 医疗器械和医药一堆垄断寡头企业，名声本来也不是多好，本来也不是什么自由市场，一时半会亏损不了（挣钱都是上市圈钱，也不怎么靠真业绩） 就现在这样子，经济危机动荡和战时状态十年内到来的概率并不低，该干的先干了再说。</p>
+<p>sci-hub程度还不够，要有效果需要像海盗湾那种法外狂徒之类的东西。</p>
+<h4 id="何计身后评">何计身后评</h4>
+<p>比如这样，医保也没钱了，国家也别花些冤枉钱研究些灌水的东西了。就仿造国外领先的医疗耗材、医疗器械、医药（完全复刻不偷工减料那种），不管他什么专利版权。按打破国外垄断和降价多少的贡献评职称、企业免税，按为国家节省多少进口外汇评奖。药企等过来告侵犯版权？不管，党国千里长城封锁谷歌的壮举都干了还在乎这个。声称这是人类共同财产，把原来的垄断技术直接像全世界公开，不怕师出无名。 啥？扰乱市场秩序，逼得投入研发创新造福病人的医药企业血本无归？长期不利于医学进步？骂名背就背了，反正也不是第一次扰乱市场秩序了，医保都没钱了管它欧美医药企业死活干什么。医疗器械和医药一堆垄断寡头企业，名声本来也不是多好，本来也不是什么自由市场，一时半会亏损不了（挣钱都是上市圈钱，也不怎么靠真业绩）<br />
+就现在这样子，经济危机动荡和战时状态十年内到来的概率并不低，该干的先干了再说。党和郭嘉背的黑锅</p>
 <!-- 
 ## 做梦
 
@@ -6577,13 +5516,32 @@ Pin-Priority: <span class="token number">1001</span><span aria-hidden="true" cla
 </ul>
 <p>然后还要再细分一下</p>
 <ul>
-<li><p>公立医院医生</p></li>
-<li><p>私立医院医生</p></li>
-<li><p>对患者认真负责的医生，医术也很好</p></li>
-<li><p>对患者认真负责的医生，医术不行</p></li>
-<li><p>对患者态度很差但是医术很好</p></li>
-<li><p>对患者</p></li>
+<li>公立医院医生</li>
+<li>私立医院医生</li>
 </ul>
+<p>公立医院</p>
+<ul>
+<li>对患者认真负责的医生，医术也很好</li>
+<li>对患者认真负责的医生，医术不行</li>
+<li>对患者态度很差但是医术很好</li>
+<li>对患者表面态度很好实际谋财害命</li>
+<li>对患者表面态度不好，医术也不好</li>
+</ul>
+<p>据我观察，除了知乎相关问题和丁香园论坛，以及微博医学大V的评论区，就没几个说医生好话的。</p>
+<p>打着公益献血的献血车可能是很多人（尤其是某些在校学生）第一次对白衣天使和医护人员美好印象的幻灭。</p>
+<p>也唯有这种问题下，知乎群情激愤，连医护人员都不护短了</p>
+<p>https://www.zhihu.com/question/265527652</p>
+<p>那问题来了，在人民群众眼里，身穿白大衣的血站采血护士等和医院医护人员是不是一伙的？</p>
+<p>你说不是一伙的那在这个社会主义国家他们是不是同属卫生部门？</p>
+<p>截取一段知乎三万赞的回答</p>
+<blockquote>
+<p>这就是典型的违约，我知道血液的储存等都需要费用，但是当卫生部制作发放献血证的时候代表国家确认了上面的那句话。</p>
+<p>这是国家给我的承诺。但是她违约了。</p>
+</blockquote>
+<p>那你说这医患矛盾——————</p>
+<p>我看还远远不够，全国患者和广大人民群众民意汹涌程度再加10倍，才算有点意思</p>
+<p>不过到时候人头太多，血站红十字会和计生就爆满了，轮到某些人的时候监狱不够用，当然领导不用急，领导先走，可以优先进秦城。</p>
+<p>那</p>
 <h3 id="知乎部分回答选摘">知乎部分回答选摘</h3>
 <p>知乎，又名资乎。在医疗相关话题上又称医乎</p>
 <p><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzM4ODUwOTQ4">医患关系一直恶化下去会怎样？<i class="fa fa-external-link-alt"></i></span> 这个回答底下放眼望去，九成回答都是医生和医学生。</p>
@@ -6674,18 +5632,28 @@ Pin-Priority: <span class="token number">1001</span><span aria-hidden="true" cla
 对，就像我去医院拆线，医生居然检查后告诉我没有线（问题是出院时她亲口告诉我需要拆线）。导致我伤口都掉痂愈合了才发现有线，惊恐地去医院拆线，这难道不比该拆的时候疼吗？我把事情发到知乎，有个医生居然觉得是我多事儿，医生没有责任，不该道歉。
 
 只是让医生道个歉而已啊，这么难吗？<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="百度">百度</h3>
+<h3 id="百度为代表的咳咳">百度为代表的，咳咳</h3>
+<p>百度对整个中文互联网环境恶化都负有不可推卸的责任，直接把网上冲浪体验降低了五个档次。</p>
+<p><strong>不像其他东西一样可以上网搜，甚至单凭网上的信息解决问题比问其他人效果还好，医学内容搜出来。。。。 （像计算机的大多数简单问题，直接怼一句“你不会百度吗”，然后扔给他“提问的智慧”）</strong></p>
+<p>没受过完整医学培训的人只会变成这个样子：<span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzI2Nzk2NTI0NA==">百度查病给你带来过阴影吗？<i class="fa fa-external-link-alt"></i></span></p>
+<p>然而总有医生不仅不想给病人解释，还让病人去百度（不想解释就不解释呗，直接跟病人说爱信不信）</p>
 <p><img src="/about-medical-industry/1613363948.png" /></p>
 <p><img src="/about-medical-industry/1613556331.png" /></p>
 <p>ps: 多说一句无关的，作者“一个拉钩的”身为协和医学博士信中医<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>，是一个比较有意思的观察样本。</p>
+<p>这东西就没法让患者自己去了解，但凡真去搜了，一定演变成：之前医生在骗我，这病很重，患了绝症三天之内必死。然后怒骂医生，没病也给吓出病了。最终被莆田系谋财害命。</p>
+<p>真的，医生不要让病人没事乱搜，病人想了解直接扔给他一个靠谱的科普网站、书籍之类的。</p>
+<p><strong>魏则西</strong></p>
 <h3 id="历史变迁">历史变迁</h3>
-<p>在车匪路霸那个年代，收红包啊</p>
+<p>现代医学发展起来以前各路巫医开开草药安慰剂，宗教信仰一般的存在，也很和谐（碰上曹操砍华佗那算倒霉） 赤脚医生那个年代很和谐，不过那个时候农村都是熟人社会，城市乡镇的国企和单位也是熟人社会。 在车匪路霸那个年代，收红包啊，庸医谋财害命啊，给人民群众留下了不好的印象。当然那个时候各行各业都乱。 大概1998-2010，经济发展特别快，房价也不是特别高，各行各业的矛盾都被掩盖了。 再后来经济增速放缓了，房价在14年暴涨，15年股灾，老龄化也来了，医保也恰好没钱了。 当然中央开会几次承诺要解决看病难看病贵的问题，然后医改改来改去...... 当然现任某大领导还特别喜欢中医。</p>
 <h3 id="信息极度不对称">信息极度不对称</h3>
-<p>不管网上描绘的医生多惨，大部分情况下</p>
-<h3 id="投诉和法律没用">投诉和法律没用</h3>
+<p>不管网上描绘的医生多惨，大部分情况下医生对患者拥有绝对的信息差优势。而且人体又不像工厂流水线出产的产品，同样的病情有的能好有的就死了，也不好断案到底是谁的问题，跟家庭内部纠纷、家务事一样扯不清。</p>
+<p>于是断案的时候基本都是偏向患者，就像有了家暴纠纷和骚扰指控通常会偏向妇女儿童，哪怕没有证据。 这种做法好不好呢，</p>
+<h3 id="法律没用">法律没用</h3>
+<p>毕竟这个地方“按闹分配”嘛，谁能闹谁有统战价值</p>
 <h3 id="媒体煽风点火">媒体煽风点火</h3>
-<p>不是骂医生就是骂医闹（大部分媒体，尤其是官媒不，都是在骂患者和医闹）<br />
+<p>不是骂医生就是骂医闹（大部分媒体，尤其是官媒，都是在骂患者和医闹）<br />
 反正就把矛盾往这些上面引，闭口不提医保钱都去哪儿，怎么亏空的，为什么当初承诺的不给报销了。</p>
+<p>不过当年呼风唤雨的报社和纸媒杂志没什么人看了，不管是国内的人日南周还是国外的CNN，都在人人上网的新时代遭到唾骂。</p>
 <h2 id="规培">规培</h2>
 <p>这个，冤有头债有主。华西一开始搞的还是不错的（至少看起来），然而，一推广.... 旗号包括提升基层医院水平，然而有了规培之后华西等三甲医院赚了，没有规培点的小医院亏了。</p>
 <p>至于医学生：</p>
@@ -6700,27 +5668,31 @@ Pin-Priority: <span class="token number">1001</span><span aria-hidden="true" cla
 <p>你看隔壁生化环材，三十多大龄博士穷的叮当响只能向家里要钱啃老；越老越吃香，指既得利益的老人压榨新人；本科毕业没法直接工作。 此时，一个不知规培为何物的工科生打酱油路过强势围观.jpg</p>
 <p>不过我人在成都，而且目前做的一堆项目和华西/川大有牵连，不多说了。</p>
 <h2 id="失灵的公共卫生体系">失灵的公共卫生体系</h2>
-<p>这次疫情之后可能亡羊补牢会有所好转，但愿吧。</p>
-<p><a href="https://www.zhihu.com/question/68241151"></a></p>
-<p>不过人类总是重复相同的悲剧。</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzY4MjQxMTUx">如何看待湖南桃江四中暴发群体性肺结核？<i class="fa fa-external-link-alt"></i></span></p>
+<p>这次疫情之后可能亡羊补牢会有所好转，但愿吧。哈哈，怎么可能，人类总是重复相同的悲剧。</p>
+<p>每次先知作为乌鸦嘴被烧死，战士死在了战场。</p>
 <h2 id="医疗广告和互联网现状">医疗广告和互联网现状</h2>
 <p>占坑，施工中</p>
 <h3 id="医疗广告">医疗广告</h3>
+<p>占坑，施工中</p>
 <h3 id="百度和莆田系">百度和莆田系</h3>
 <h3 id="医美和口腔">医美和口腔</h3>
-<p>这些应该算是私立医院和广告最多的地方。 从早年的百度莆田系、电视广告开始</p>
+<p>这些应该算是私立医院和广告最多的地方。也是最挣钱的。 从早年的百度莆田系、电视广告开始，到后来的小红书、美团、新康</p>
 <h2 id="医保">医保</h2>
-<p>医保早就没钱了<span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzY3NjIxMTQwL2Fuc3dlci8yNTU0NjQwNTI=">停用部分医疗耗材是福是祸？<i class="fa fa-external-link-alt"></i></span></p>
-<blockquote>
-<p>以前国家是喊口号，不动真格的，现在是不声不响却翻天覆地改变医疗现状。不仅仅是医报控费问题，而是去医疗包袱，医保广覆盖，维稳三位一体一次性解决。猜测步骤是：药品零差价（控药）→耗材停用（控医疗费用）→医疗器械零差价（控器械）→三级甲等医院停门诊（医疗分级，医疗下沉基层医院）→以上低水平，广覆盖解决老百姓医疗问题（三明政策终极目的）→五年后到十年间开始放开少量高端私立医院（同时放开医疗保险，法律监管等政策，五年内绝不会放开，最多口头鼓励，稍一深入思考就知道为什么了）→十年后开始大量放开高端私立医院。牺牲二十年的医疗，换得国家医疗长治久安。同时换一批人！留一个预言在这里，十年后看看有没有错。</p>
-</blockquote>
-<blockquote>
-<p>中国医生是不是价廉物美，要看怎么看。价廉是肯定的，同一疾病的花费绝对是全世界最便宜之一。物美不美要分开看，中国医生分布有个特点，就是工资一样，奖金差距不大。正当收入哪里都低的可怜，而职称和位置决定了……。从全国范围来讲，中国50%左右的基层医生，加上20%的民营医院医生，专科医院医生，军队医院医生…水平是及其低下的。其中人员大部分学历也是本科以下，这部分绝对谈不上物美。应该是价廉物不美。但很多规范的或附属的或大型的三乙以上的等等医院，医生来源基本都是正规科班出身硕士以上，常年轮转和经验集攒，主治及以下多是收入低廉。副主任以上虽然收入增高，但压力，科研，技术等要求明显也增高。这一部分绝对是价廉物美，来知乎的网友多是这一部分，所以容易愤愤不平，这一部分是受削剥的，占到30%左右。当然我国医学教育费用同国外比是便宜，主要因为我国教育整体都便宜，医学已经是我国教育里最贵的，也比国外便宜的多，国外家境不好的想学医几乎是做梦。医学教育门槛却是不低的，过去几十年长期霸具高考热门专业前排，分数线也是高高在上，也就这几年开始招不到人了，没落了。国家医保搞霸权定价，我是支持的，国家不是慈善家，要算账的，刚开始搞医保高水平广覆盖，我就觉得居心叵测，果然现在定价了，但是不对老百姓明言，让老百姓找医院去，矛盾转移的手段……哎，几十年来也没改过。</p>
-</blockquote>
-<blockquote>
-<p>70,80年代老百姓在社区和各级医院看病基本都是基本医疗，高干，有关系的可以看到好的医疗，其实，当时很和谐，老百姓不会因为自己的孩子得了痢疾死了而不满，也不会对高干和有关系的人看病像现在这样仇视。以后要看到好医生，也要看个人能力，经济条件，人脉关系等。现在主要是这二十年高效医疗胃口被调高了。一时半会下不来，所以国家先用基础医疗托住，然后崩掉重建，大家都落到基础医疗的地毯上，左望望，右望望，众生皆平等，就不会不满了。然后就像60,70年代一样，有钱的去大医院看病，没钱的在小医院挂挂水。现在我们医疗其实就是全民免费医疗，只有药品，器械，耗材才收了费，医疗基本不要钱（想想挂号费1元的主任），以后，药品，器械，耗材都会和医院脱钩。病人花了钱看过医生了，缺不一定有钱去买药买耗材。那时候，病人也不太好意思砍杀医生了，毕竟，看不起病是因为他没钱买药啊。所以，中医中药，气功大师，理疗等等未来有前途。因为这些不要去买昂贵的药，双手轻悬，一气化三清，暖暖暖洋腹中流过，气功大师的医疗不会太贵。国家现在不正也在鼓励吗？现在还没市场化呢，所有的私立医院和保险都是骗子在搞。</p>
-</blockquote>
-<p>作者：匿名用户 链接：https://www.zhihu.com/question/67621140/answer/256173857</p>
+<p>这有些话说了肯定要查水表，罢了</p>
+<!-- 
+
+医保早就没钱了[停用部分医疗耗材是福是祸？](https://www.zhihu.com/question/67621140/answer/255464052)
+
+
+>以前国家是喊口号，不动真格的，现在是不声不响却翻天覆地改变医疗现状。不仅仅是医报控费问题，而是去医疗包袱，医保广覆盖，维稳三位一体一次性解决。猜测步骤是：药品零差价（控药）→耗材停用（控医疗费用）→医疗器械零差价（控器械）→三级甲等医院停门诊（医疗分级，医疗下沉基层医院）→以上低水平，广覆盖解决老百姓医疗问题（三明政策终极目的）→五年后到十年间开始放开少量高端私立医院（同时放开医疗保险，法律监管等政策，五年内绝不会放开，最多口头鼓励，稍一深入思考就知道为什么了）→十年后开始大量放开高端私立医院。牺牲二十年的医疗，换得国家医疗长治久安。同时换一批人！留一个预言在这里，十年后看看有没有错。
+
+>中国医生是不是价廉物美，要看怎么看。价廉是肯定的，同一疾病的花费绝对是全世界最便宜之一。物美不美要分开看，中国医生分布有个特点，就是工资一样，奖金差距不大。正当收入哪里都低的可怜，而职称和位置决定了……。从全国范围来讲，中国50%左右的基层医生，加上20%的民营医院医生，专科医院医生，军队医院医生…水平是及其低下的。其中人员大部分学历也是本科以下，这部分绝对谈不上物美。应该是价廉物不美。但很多规范的或附属的或大型的三乙以上的等等医院，医生来源基本都是正规科班出身硕士以上，常年轮转和经验集攒，主治及以下多是收入低廉。副主任以上虽然收入增高，但压力，科研，技术等要求明显也增高。这一部分绝对是价廉物美，来知乎的网友多是这一部分，所以容易愤愤不平，这一部分是受削剥的，占到30%左右。当然我国医学教育费用同国外比是便宜，主要因为我国教育整体都便宜，医学已经是我国教育里最贵的，也比国外便宜的多，国外家境不好的想学医几乎是做梦。医学教育门槛却是不低的，过去几十年长期霸具高考热门专业前排，分数线也是高高在上，也就这几年开始招不到人了，没落了。国家医保搞霸权定价，我是支持的，国家不是慈善家，要算账的，刚开始搞医保高水平广覆盖，我就觉得居心叵测，果然现在定价了，但是不对老百姓明言，让老百姓找医院去，矛盾转移的手段……哎，几十年来也没改过。
+
+>70,80年代老百姓在社区和各级医院看病基本都是基本医疗，高干，有关系的可以看到好的医疗，其实，当时很和谐，老百姓不会因为自己的孩子得了痢疾死了而不满，也不会对高干和有关系的人看病像现在这样仇视。以后要看到好医生，也要看个人能力，经济条件，人脉关系等。现在主要是这二十年高效医疗胃口被调高了。一时半会下不来，所以国家先用基础医疗托住，然后崩掉重建，大家都落到基础医疗的地毯上，左望望，右望望，众生皆平等，就不会不满了。然后就像60,70年代一样，有钱的去大医院看病，没钱的在小医院挂挂水。现在我们医疗其实就是全民免费医疗，只有药品，器械，耗材才收了费，医疗基本不要钱（想想挂号费1元的主任），以后，药品，器械，耗材都会和医院脱钩。病人花了钱看过医生了，缺不一定有钱去买药买耗材。那时候，病人也不太好意思砍杀医生了，毕竟，看不起病是因为他没钱买药啊。所以，中医中药，气功大师，理疗等等未来有前途。因为这些不要去买昂贵的药，双手轻悬，一气化三清，暖暖暖洋腹中流过，气功大师的医疗不会太贵。国家现在不正也在鼓励吗？现在还没市场化呢，所有的私立医院和保险都是骗子在搞。
+
+作者：匿名用户
+链接：https://www.zhihu.com/question/67621140/answer/256173857 -->
 <h2 id="报考和劝退等">报考和劝退等</h2>
 <p>本来不想写这部分的，奈何今年医学相关专业的录取分数线暴涨，看到几个高中毕业的萌新听着不知道谁给的建议盲目乱报。今天听人说医生待遇低啦，哪又医闹砍人啦；明天又听说社会地位高福利待遇好做手术有红包啦；最后一打听学医背书又苦又累大学活的像高中又不想去了，在家长威逼利诱下只得不情愿的报了。</p>
 <p>来，我们打开<span class="exturl" data-url="aHR0cHM6Ly96cy51ZXN0Yy5lZHUuY24vc2NvcmUv">你电的招生网<i class="fa fa-external-link-alt"></i></span>，拿19年看一下刚高考完的瓜娃子脑子能有多不清醒</p>
