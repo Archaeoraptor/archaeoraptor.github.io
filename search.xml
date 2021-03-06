@@ -273,38 +273,10 @@ poetry <span class="token function">install</span><span aria-hidden="true" class
       </tags>
   </entry>
   <entry>
-    <title>写在被消灭的路上</title>
-    <url>/aa1c/</url>
-    <content><![CDATA[<p>庚子年，格外的长 <a id="more"></a></p>
-<p>谶言里庚子年破事可不少，现在全世界都看起来不太平，暗流涌动。就不睁眼说瞎话搞些新年大吉之类的玩意了。</p>
-<h2 id="庚子鼠年计划">庚子鼠年计划</h2>
-<p>还记得当年的梦想吗，不仅天涯变了，新浪搜狐变了，谷歌也免不了（也许没变，当年才是装的）。看了一圈，真诚可爱的反而就是花姐王垠之流。</p>
-<figure>
-<img src="/aa1c/google.jpg" alt="当年" /><figcaption aria-hidden="true">当年</figcaption>
-</figure>
-<p>唯见日寒月暖，来煎人寿</p>
-<blockquote>
-<p>十年的经历教会了我很多，但不免也有许多被浪费的时间和精力，值得我反思和总结。总的看来，我并没有比其他人做得更差。很多 IT 人终其一生也没有学会什么新东西，很多人为了保住自己的饭碗，写出面条一样扭曲，别人不敢碰的代码。转岗做管理也是各种瞎指挥，看其他人眼色行事，一切为了“站对了队”，为了混到更高的位置。</p>
-</blockquote>
-<p>我现在在勃八本的劝退专业搬着没什么用的砖，搞着骗钱的垃圾项目划水摸鱼制造垃圾写bug，惭愧</p>
-<p>本来我还是想做一点事情的，现在发现不如划水去搞点有意思的</p>
-<div class="note success"><h3 id="看看范畴论矩阵代数">看看范畴论、矩阵代数</h3>
-<p>大一大二那会不听课，埋头啃高代数分数理方程看朗道，试图啃过近世代数，没啃动 现在一年没怎么推公式，发现已经不如之前了，我怕不是要老了。 有些东西，三四十岁再学就学不动了</p>
-</div>
-<div class="note success"><h3 id="看看csapp等书">看看CSAPP等书</h3>
-<p>补一补你电只讲名词概念浪费生命的微嵌课欠下的债</p>
-</div>
-<div class="note success"><h3 id="学一点数据库和javascript">学一点数据库和javascript</h3>
-<p>之前打算</p>
-</div>
-<div class="note success"><h3 id="把立下的flag和挖的坑填了">把立下的Flag和挖的坑填了</h3>
-<p>填不了就扔到2021年，反正那个时候我就要被消灭了，不用填了</p>
-</div>
-<div class="note danger"><h3 id="扑杀入侵物种">扑杀入侵物种</h3>
-<p>包括不限于流浪猫、流浪狗、红耳龟、福寿螺、克氏原螯虾</p>
-</div>
-<h2 id="近况">近况</h2>
-<p>最近闲了一点，把博客的评论换成了utteranc, 把mathjax换成了katex 试了试Hugo，速度确实快，也没有nodejs这么多依赖问题，但是颜值平均比Hexo低两层楼，Hexo那些插件也没有好的替代和移植。 也没有在Hugo里面找到一个Next这样令我喜欢并且一直维护的主题，只看到一个hugo-book的主题，替代gitbook做文档应该不错，gitbook的生成速度是真的慢。。。 （不过这个快是生成速度啊，整个网站的加载速度跟这个也没有太大关系，也就在写很长很多的内容的时候有，静态博客还是得看效果啊，生成速度再快有什么用呢） ps：终于知道为什么有的人用Jekyll、Hexo、gitbook非要整个CI了，有的内容多了生成速度确实慢啊，动不动几十分钟一小时没了。Hugo的速度让这些都没了必要，我也没看到多少这么搞的（Hugo用户运维和后端开发的比例可比Hexo那些高多了）。（Hugo性能也不错，直接用hugo的server跑在服务器都行，不用Nginx之类的完全没问题。</p>
+    <title>远去的水族生灵</title>
+    <url>/before-vanish/</url>
+    <content><![CDATA[<p>又南水行七百里，曰孟子之山，其木多梓桐，多桃李，其草多菌浦，其兽多麋鹿。是山也，广员百里。其上有水出焉, 名日碧阳，其中多鳣鲔 <a id="more"></a></p>
+<p><img src="/before-vanish/water.jpg" /></p>
 <p>元旦在沙河边转着玩，又看到沙河有一群大妈拿着七八个桶直接倾倒鱼和小龙虾（对，就是那个<del>著名</del>入侵物种克氏原螯虾）。这几天网上冲浪又看到日人民报等辣鸡营销号消费过世白鲟，还纷纷把图配成匙吻鲟，心里不是滋味。长江流域基本也凉的差不多了，当年葛洲坝一建，白鲟中华鲟达氏鲟就凉了一半，挖沙和万安水库和富春江水电站也把最后的鲥鱼搞没了。鄱阳湖要是再乱搞，江豚基本也要凉透了（虽然不乱搞也要凉透了，时间问题，无力回天）。那些数不清名字的小鱼就更惨了，好多两个图片和影像都没留下</p>
 <p>哦，对了，前几年长江养殖逃逸了大量杂交鲟，中华鲟和达氏鲟野生种群基本就废了</p>
 <p>寡鳞鱊重现江湖的奇迹可能再也不会有了。</p>
@@ -333,7 +305,7 @@ poetry <span class="token function">install</span><span aria-hidden="true" class
 <p><span class="exturl" data-url="aHR0cDovL2NxaDJvLmNvbS9mb3J1bS5waHA/bW9kPXZpZXd0aHJlYWQmYW1wO3RpZD0zMzUxMQ==">坚决反对修建小南海水电站<i class="fa fa-external-link-alt"></i></span></p>
 <p>也罢</p>
 <figure>
-<img src="/aa1c/old.jpg" alt="道子搜山" /><figcaption aria-hidden="true">道子搜山</figcaption>
+<img src="/before-vanish/old.jpg" alt="道子搜山，白鲟遗像" /><figcaption aria-hidden="true">道子搜山，白鲟遗像</figcaption>
 </figure>
 <blockquote class="blockquote-center">
 <p>君不见，高堂明镜悲白发，朝如青丝暮成雪</p>
@@ -344,7 +316,7 @@ poetry <span class="token function">install</span><span aria-hidden="true" class
         <category>彼黍离离</category>
       </categories>
       <tags>
-        <tag>2020</tag>
+        <tag>鱼</tag>
       </tags>
   </entry>
   <entry>
@@ -622,7 +594,7 @@ npm ERR!     &#x2F;root&#x2F;.npm&#x2F;_logs&#x2F;2020-11-16T14_13_24_937Z-debug
 <p>如果想分享出来，你可以上传到AUR仓库里面。AUR帐号随便就能注册几乎没有审查的（所以传点恶意代码上去也能传的），但是尽量不要把有版权问题之类的东西传上去（虽然出了事应该是你自己负责）</p>
 <p>新建一个账号，然后上传你的SSH公钥和密钥指纹。</p>
 <p>用<code>git clone</code>拉取一个</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> clone <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> clone ssh://aur@aur.archlinux.org/your-package-name.git <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>AUR软件仓库需要<span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwLy5TUkNJTkZPXyjnroDkvZPkuK3mlocp">SRCINFO<i class="fa fa-external-link-alt"></i></span>,不然会拒绝你的提交</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">makepkg --printsrcinfo <span class="token operator">></span> .SRCINFO<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <h4 id="非官方软件仓库">非官方软件仓库</h4>
@@ -841,6 +813,7 @@ Arch没有Mac、Windows、ChromeOS那样的财大气粗的公司和掏钱买服�
 <p>各位中医，抢功劳无妨，但请不要无辜送死</p>
 <h2 id="众生百态">众生百态</h2>
 <h3 id="电视">电视</h3>
+<p>电视没什么疑问，是各路骗子（倒也不仅仅是打着传统医学旗号的骗子，莎普爱思之类的看起来像西医的骗子也挺多）和中医的主要阵地。 当年</p>
 <h3 id="网上冲浪所见">网上冲浪所见</h3>
 <p>这里仅凭个人印象和观察记录一下</p>
 <p>微信朋友圈是养生营销号和各种uc震惊体文章的聚集地，长辈最爱，不说了。</p>
@@ -1111,21 +1084,6 @@ connection<span class="token punctuation">.</span>commit<span class="token punct
       </tags>
   </entry>
   <entry>
-    <title>数字频率计</title>
-    <url>/9824/</url>
-    <content><![CDATA[<p>补档 <a id="more"></a></p>
-<p>泥电大三下的一门叫现代电子设计综合实验的实验课搞的数字频率计，拿VHDL和C51写的，工程文件扔在<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0FyY2hhZW9yYXB0b3IvbGF0Y2hfdGVzdA==">这里<i class="fa fa-external-link-alt"></i></span>了。这门课可能是你电为数不多不太水的实验课了，反正比手抄上万字的大物实验好多了（不知道现在还抄不抄了）</p>
-<p>先分频，再把门控、数显、锁存和计数都写出来就能用了 精度问题其实要求不高，本来FPGA的板子上那些器件精度就不错，想要提高精度可以折腾一下等精度之类的做法 <div class="pdf-container" data-target="/uploads/频率计.pdf" data-height="500px"></div> 顺便试试博客插入PDF的功能（在火狐上偶尔有问题，好像是CORS跨域的问题）</p>
-]]></content>
-      <categories>
-        <category>荒废的老本行</category>
-      </categories>
-      <tags>
-        <tag>VHDL</tag>
-        <tag>频率计</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>不要尝试sudo apt remove iptables</title>
     <url>/a7d1/</url>
     <content><![CDATA[<p><img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/emmm.jpg" alt="Picture" style="zoom:80%;" /> <a id="more"></a></p>
@@ -1135,7 +1093,7 @@ connection<span class="token punctuation">.</span>commit<span class="token punct
 然后提示是否卸载我选了y，然后突然在卸载的log发现一堆Docker，瞬间感觉不对劲。然后，然后Docker直接不能用了！ 血泪教训啊，防火墙卸了Docker就不能用了！</p>
 <p>随手一搜发现不止我一个人中招啊</p>
 <p><img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/iptables-docker.png" alt="Picture" style="zoom:80%;" /></p>
-<p>我现在心中一万头草泥马飘过</p>
+<p>好家伙</p>
 <p><img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/cnm.png" alt="Picture" style="zoom:80%;" /></p>
 <p>行吧，一堆依赖比python2还多</p>
 <p>不说了，准备重装系统了<img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/mmm.jpg" alt="Picture" style="zoom:80%;" /></p>
@@ -1337,109 +1295,6 @@ autorandr --save test1<span aria-hidden="true" class="line-numbers-rows"><span><
       </tags>
   </entry>
   <entry>
-    <title>糊个网页吧</title>
-    <url>/4a8d/</url>
-    <content><![CDATA[<p>开始补习 <a id="more"></a></p>
-<p>写markdown偶尔要用html的标签，折腾这个博客一堆前端知识，想写个爬虫玩也要在浏览器抡起F12，教研室那个项目也要折腾js，这样下去不行，得整点前端了。 先从html，css，javascript三个补起吧</p>
-<pre class="line-numbers language-text" data-language="text"><code class="language-text">1. HTML to define the content of web pages
-
-2. CSS to specify the layout of web pages
-
-3. JavaScript to program the behavior of web pages<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>如果只要求能用就行，可以直接三天速成上手（如果不考虑性能和美观程度，以及，兼 容 性），可以手撸上世纪画风老版页面。想好看一点可以直接上模板和框架，可以迅速搞出看起来能用的还不是太难看的界面。建议不是太需要和前端打交道的像用matlab和python包一样，需要什么现学就好了（很多框架会迅速更新换代，学了几年不用基本就凉了，不建议投入过多精力）</p>
-<h2 id="html笔记">HTML笔记</h2>
-<p>大致格式</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token operator">&lt;</span>!DOCTYPE html<span class="token operator">></span>
-<span class="token operator">&lt;</span>html<span class="token operator">></span>
-<span class="token operator">&lt;</span>head<span class="token operator">></span>
-<span class="token operator">&lt;</span>meta charset<span class="token operator">=</span><span class="token string">"UTF-8"</span><span class="token operator">></span>
-<span class="token operator">&lt;</span>title<span class="token operator">></span>标题（title）<span class="token operator">&lt;</span><span class="token operator">/</span>title<span class="token operator">></span>
-<span class="token operator">&lt;</span><span class="token operator">/</span>head<span class="token operator">></span>
-<span class="token operator">&lt;</span>body<span class="token operator">></span>
-<span class="token operator">&lt;</span>h1<span class="token operator">></span>标题（headings）<span class="token operator">&lt;</span><span class="token operator">/</span>h1<span class="token operator">></span>
-<span class="token operator">&lt;</span>p<span class="token operator">></span>段落<span class="token punctuation">(</span>paragraph<span class="token punctuation">)</span><span class="token operator">&lt;</span><span class="token operator">/</span>p<span class="token operator">></span>
-<span class="token operator">&lt;</span><span class="token operator">/</span>body<span class="token operator">></span>
-<span class="token operator">&lt;</span><span class="token operator">/</span>html<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>html标签(tag), 通常是一对</p>
-<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>tagname</span><span class="token punctuation">></span></span>content goes here...<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>tagname</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>html属性(Attributes), 比如src，href，width等，style属性可以指定颜色和字体</p>
-<p>中文和特殊字符在head标签中声明</p>
-<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>UTF-8<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>链接</p>
-<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>https://zhangjk98.xyz.com<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>This is a link<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>图片</p>
-<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>image.jpg<span class="token punctuation">"</span></span> <span class="token attr-name">alt</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>图片<span class="token punctuation">"</span></span> <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>104<span class="token punctuation">"</span></span> <span class="token attr-name">height</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>142<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>空元素 br用来换行</p>
-<p>meta标签用来标明一些信息，SEO的时候可能用到</p>
-<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>UTF-8<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>author<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>Zhang.j.k<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token comment">&lt;!-- 这是一个注释（comments） --></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>格式标签（formatting）</p>
-<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>b</span><span class="token punctuation">></span></span> 	Defines bold text
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>em</span><span class="token punctuation">></span></span> 	Defines emphasized text
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>i</span><span class="token punctuation">></span></span> 	Defines italic text
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>small</span><span class="token punctuation">></span></span> 	Defines smaller text
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>strong</span><span class="token punctuation">></span></span> 	Defines important text
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>sub</span><span class="token punctuation">></span></span> 	Defines subscripted text
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>sup</span><span class="token punctuation">></span></span> 	Defines superscripted text
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ins</span><span class="token punctuation">></span></span> 	Defines inserted text
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>del</span><span class="token punctuation">></span></span> 	Defines deleted text
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>mark</span><span class="token punctuation">></span></span> 	Defines marked/highlighted text<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>引用标签（Quotation）</p>
-<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>abbr</span><span class="token punctuation">></span></span> 	Defines an abbreviation or acronym
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>blockquote</span><span class="token punctuation">></span></span> 	Defines a section that is quoted from another source
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>q</span><span class="token punctuation">></span></span> 	Defines a short inline quotation<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>html的字符在markdown中会有渲染的问题，如果像显示为纯文本，可以引用或者使用</p>
-<h3 id="使用css">使用CSS</h3>
-<p>有三种方式，Inline, internal, external Inline就是style那样的加属性 internal用style标签：</p>
-<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>style</span><span class="token punctuation">></span></span><span class="token style"><span class="token language-css">
-<span class="token selector">body</span> <span class="token punctuation">&#123;</span><span class="token property">background-color</span><span class="token punctuation">:</span> powderblue<span class="token punctuation">;</span><span class="token punctuation">&#125;</span>
-<span class="token selector">h1</span>   <span class="token punctuation">&#123;</span><span class="token property">color</span><span class="token punctuation">:</span> blue<span class="token punctuation">;</span><span class="token punctuation">&#125;</span>
-<span class="token selector">p</span>    <span class="token punctuation">&#123;</span><span class="token property">color</span><span class="token punctuation">:</span> red<span class="token punctuation">;</span><span class="token punctuation">&#125;</span>
-</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>style</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>external是独立出来一个css文件，html进行调用。</p>
-<h3 id="使用javascript">使用javascript</h3>
-<p>在html中使用script标签引入js进行交互和产生动态效果。</p>
-<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script"><span class="token language-javascript">
-document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">"demo"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>innerHTML <span class="token operator">=</span> <span class="token string">"Hello JavaScript!"</span><span class="token punctuation">;</span>
-</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>出于安全问题，有些浏览器禁用js脚本，此时用 noscripts 标签展示相应的替代html内容。</p>
-<h2 id="css">CSS</h2>
-<p>CSS（Cascading Style Sheets）用来指定html的格式。有selector和declaration两个部分。 像这样:</p>
-<pre class="line-numbers language-css" data-language="css"><code class="language-css"><span class="token comment">/*注释这样写*/</span>
-<span class="token selector">p</span> <span class="token punctuation">&#123;</span><span class="token property">color</span><span class="token punctuation">:</span>red<span class="token punctuation">;</span><span class="token property">text-align</span><span class="token punctuation">:</span>center<span class="token punctuation">;</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>CSS在html中的定位有选择id（#后加id）选择class属性（ . 号后加class）两种方式</p>
-<h2 id="javascript">Javascript</h2>
-<p>这种格式：</p>
-<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">function</span> <span class="token function">myFunction</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
- document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">"demo"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>innerHTML <span class="token operator">=</span> <span class="token string">"Paragraph changed."</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>用scripts标签放到html的head或者body里面</p>
-<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>myScript.js<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h3 id="console控制台调试">Console控制台调试</h3>
-<p>调试的时候F12打开控制台，可以看到console输出的信息</p>
-<h3 id="json">JSON</h3>
-<p>用JSON.stringify和JSON.parse转成字符串和还原</p>
-<h3 id="线程">线程</h3>
-<p>javascript是用的单线程（在浏览器上）,使用异步</p>
-<p>主要是用回调函数、事件监听来实现异步</p>
-<h3 id="变量和类">变量和类</h3>
-<p>放在函数里加var就是内部变量，否则就是外部变量 类使用new来新建</p>
-<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">var</span> objectSample <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Array</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h3 id="dom">DOM</h3>
-<p>Document Object Model</p>
-<p>HTML树形结构，元素被视为节点（node）</p>
-<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript">document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>这样获取元素。 节点有Document节点（作用于整个HTML）和Element节点</p>
-]]></content>
-      <categories>
-        <category>笔记&amp;札记</category>
-      </categories>
-      <tags>
-        <tag>笔记</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>也谈心率变异性</title>
     <url>/2873/</url>
     <content><![CDATA[<p>等待填坑 <a id="more"></a></p>
@@ -1577,55 +1432,6 @@ document<span class="token punctuation">.</span><span class="token function">get
       <tags>
         <tag>HRV</tag>
         <tag>BCG</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>试图抢救吃灰的树莓派</title>
-    <url>/7042/</url>
-    <content><![CDATA[<p><span class="math display"><mjx-container class="MathJax" jax="SVG" display="true" width="full" style="min-width: 11.529ex"><svg style="vertical-align: -1.753ex; min-width: 11.529ex" xmlns="http://www.w3.org/2000/svg" width="100%" height="4.638ex" role="img" focusable="false"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0) scale(0.0181) translate(0, -1275)"><g data-mml-node="math"><g data-mml-node="mtable" transform="translate(2078, 0) translate(-2078, 0)"><g transform="translate(0 1275) matrix(1 0 0 -1 0 0) scale(55.25)"><svg data-table="true" preserveAspectRatio="xMidYMid" viewBox="470 -1275 1 2050"><g transform="matrix(1 0 0 -1 0 0)"><g data-mml-node="mlabeledtr" transform="translate(0, -67)"><g data-mml-node="mtd"><g data-mml-node="mfrac"><g data-mml-node="mn" transform="translate(220, 676)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g><g data-mml-node="mn" transform="translate(220, -686)"><path data-c="33" d="M127 463Q100 463 85 480T69 524Q69 579 117 622T233 665Q268 665 277 664Q351 652 390 611T430 522Q430 470 396 421T302 350L299 348Q299 347 308 345T337 336T375 315Q457 262 457 175Q457 96 395 37T238 -22Q158 -22 100 21T42 130Q42 158 60 175T105 193Q133 193 151 175T169 130Q169 119 166 110T159 94T148 82T136 74T126 70T118 67L114 66Q165 21 238 21Q293 21 321 74Q338 107 338 175V195Q338 290 274 322Q259 328 213 329L171 330L168 332Q166 335 166 348Q166 366 174 366Q202 366 232 371Q266 376 294 413T322 525V533Q322 590 287 612Q265 626 240 626Q208 626 181 615T143 592T132 580H135Q138 579 143 578T153 573T165 566T175 555T183 540T186 520Q186 498 172 481T127 463Z"></path></g><rect width="700" height="60" x="120" y="220"></rect></g></g></g></g></svg><svg data-labels="true" preserveAspectRatio="xMaxYMid" viewBox="1278 -1275 1 2050"><g data-labels="true" transform="matrix(1 0 0 -1 0 0)"><g data-mml-node="mtd" id="mjx-eqn-1" transform="translate(0, -67)"><g data-mml-node="mtext"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z" transform="translate(389, 0)"></path><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z" transform="translate(889, 0)"></path></g></g></g></svg></g></g></g></g></svg></mjx-container></span></p>
-<p>自从来到沙河102网吧，都是在工作站/服务器/台式机上折腾，树莓派一直仍在清水河宿舍吃灰。今天回了趟清水河，把树莓派拿回来，试试能不能用，打算做备用测试机了。 <a id="more"></a></p>
-<h2 id="装系统">装系统</h2>
-<p>从官网下载<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, 我下的Raspbian Buster（SD卡就只有16G，不打算搞那些recommend software了），解压之后已经是3.56G了</p>
-<p>然后用Rufus烧进SD卡（很多教程全是推荐Win32Diskimager，那个并没有Rufus好用），只选第一行的目标设备和第二行引导镜像，其他默认（卡里之前有东西的话还是用SD Formatter先刷一遍）</p>
-<p>2020.3 更新</p>
-<p>貌似树莓派官方出了一个写入SD卡的<span class="exturl" data-url="aHR0cHM6Ly93d3cucmFzcGJlcnJ5cGkub3JnL2Jsb2cvcmFzcGJlcnJ5LXBpLWltYWdlci1pbWFnaW5nLXV0aWxpdHkv">工具<i class="fa fa-external-link-alt"></i></span>，可以去试试</p>
-<p>然后将SD卡查到卡槽里，再把显示器接上（我工位上的ROC显示器有HDMI接口和电源, 终于不用无显示器安装拿个笔记本上来就SSH折腾了）</p>
-<p>不行，搜了一下看到config.txt文件里有</p>
-<pre class="line-numbers language-none"><code class="language-none"># uncomment to force a specific HDMI mode (this will force VGA)
-#hdmi_group=1
-#hdmi_mode=1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>要把模式改一下啊</p>
-<pre class="line-numbers language-none"><code class="language-none">hdmi_group=2
-hdmi_mode=58<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>这样感觉还是不方便，还要占掉我一个大屏。改回了SSH连接的方式</p>
-<p>在boot目录新建SSH文件夹，然后新建一个wpa_supplicant.conf的文件配置WIFI</p>
-<pre class="line-numbers language-json" data-language="json"><code class="language-json">country=CN
-ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
-update_config=<span class="token number">1</span>
-
-network=<span class="token punctuation">{</span>
-    ssid=<span class="token string">"你的WIFI名"</span>
-    psk=<span class="token string">"你的密码"</span>
-    key_mgmt=WPA-PSK
-    priority=<span class="token number">1</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>然后路由器找到ip，SSH连就行了，默认账号pi password：raspberry</p>
-<p>发现这个树莓派真的鸡肋啊，扔着吃灰又可惜，不折腾硬件和IO不在乎功耗又不如有1080的工作站和20核CPU的服务器好（而且这俩还有公网IP和端口）</p>
-<p>算了，每次折腾完了就后悔。 本逃兵不打算折腾硬件了，从医疗测控电路到stm32到树莓派的IO，都不太想碰了。时代变了，七八十年代的硅谷才是搞硬件的地方，二十一世纪是...反正不是硬件狗的世纪。251牢厂、加班狂魔联影、毁约的迈瑞，只想让人看了跑路。。。</p>
-<p>服务器，启动。树莓派，关机。</p>
-<h2 id="注">注</h2>
-<section class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn1" role="doc-endnote"><p>http://downloads.raspberrypi.org/<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section>
-]]></content>
-      <categories>
-        <category>荒废的老本行</category>
-      </categories>
-      <tags>
-        <tag>树莓派3B+</tag>
       </tags>
   </entry>
   <entry>
@@ -1790,45 +1596,7 @@ Address&#x3D;211.83.111.224&#x2F;23<span aria-hidden="true" class="line-numbers-
       </tags>
   </entry>
   <entry>
-    <title>λ演算&amp;函数式编程</title>
-    <url>/a10f/</url>
-    <content><![CDATA[<p>等待填坑</p>
-<a id="more"></a>
-<h2 id="摸鱼一时爽">摸鱼一时爽</h2>
-<p>函数式编程(Functional Programming)好像比面向对象抽象程度更高。但是之前折腾硬件的时候都没有用到过，可能是不太适合处理IO接口和操作时序吧。 之前在图书馆乱翻，看到一本七周七语言的书，翻到函数式，感觉还挺有意思，教研室的摸鱼生活就搞点这个吧，反正干正事是不可能干正事的 <del>正在进JavaScript的坑，将就着用js来练练手吧。</del> javascript味不对，还是直接上了Lisp</p>
-<h2 id="λ演算λ-calculus">λ演算(λ-calculus)</h2>
-<ul>
-<li>是匿名的</li>
-<li>只有一个输入</li>
-</ul>
-<p>多输入的函数要转成多个只有一个输入的函数的嵌套调用，也就是柯里化（currying）</p>
-<p><span class="math inline">\(\lambda\)</span>项</p>
-<h2 id="附">附</h2>
-<h3 id="环境配置">环境配置</h3>
-<p>Arch下安装mit-sheme包就好了，SICP的练习环境。这个操作基本跟Emacs差不多，是SICP的作业环境。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yay -S mit-scheme<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>不过我用的是这个Chez Scheme，前几年开源了的东西，速度很快</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yay -S chez-scheme<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>运行直接</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">scheme <span class="token operator">&lt;</span> test.scm<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>就好了</p>
-<p>我不习惯Emacs的快捷键，都是在vscode里写的，装一个vscode-scheme插件就好了。可以在code runner插件里配置一下，然后按快捷键运行</p>
-<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token property">"code-runner.executorMap"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
-    <span class="token property">".scm"</span><span class="token operator">:</span> <span class="token string">"scheme &lt; "</span><span class="token punctuation">,</span>
-    <span class="token property">"scheme"</span><span class="token operator">:</span> <span class="token string">"scheme &lt; "</span><span class="token punctuation">,</span>
-    <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p>详见 https://github.com/cisco/ChezScheme</p>
-]]></content>
-      <categories>
-        <category>不务正业系列</category>
-      </categories>
-      <tags>
-        <tag>λ-calcus</tag>
-        <tag>js</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用BERT进行电子病历的命名实体识别</title>
+    <title>基于BERT的电子病历的命名实体识别</title>
     <url>/9112/</url>
     <content><![CDATA[<p>BERT效果确实好，就是有点吃内存</p>
 <a id="more"></a>
@@ -2354,64 +2122,6 @@ X_pred <span class="token operator">=</span> np<span class="token punctuation">.
       </tags>
   </entry>
   <entry>
-    <title>解决标注工具doccano卡顿缓慢问题（以及二次开发）</title>
-    <url>/solve-doccano-slow-and-secondary-development/</url>
-    <content><![CDATA[<p>这是鸽了很久的一篇</p>
-<a id="more"></a>
-<h2 id="老鸽子发言">老鸽子发言</h2>
-<p>去年年底还没爆发疫情的时候，润润实习回来说他们那用的标注工具是二次开发的doccano。大家一看确实好，决定用doccano替换之前教研室卖酱N年前拿Flask+jQuery写的</p>
-<p>疫情在家的时候找不到什么苦力，教研室集体当工具人标注了几千份电子病历。doccano好用是挺好用的，然而这个东西经常卡顿严重。教研室配置不算差的服务器。 之前想着解决一下这个问题的，然而<strong>又不是不能用</strong>，就一直这么用了下去。当时Django已经忘的差不多了，前端Nuxt.js那一堆东西也不怎么熟。</p>
-<p>一年过去了，doccano一直在维护更新，还加了不少新功能、升级了node、Django、python版本。连中文都有了，感动。</p>
-<figure>
-<img src="/solve-doccano-slow-and-secondary-development/image-20201126155932795.png" alt="doccano" /><figcaption aria-hidden="true">doccano</figcaption>
-</figure>
-<p>然而最近试了一下，更卡了，在issue随便一搜slow，能看到一堆，不过貌似都暂时没有解决。</p>
-<p>当时在README的文档里面还有直接运行<code>django server</code>和<code>npm run</code>的方式，后来就变成Docker了。再后来变成Docker compose了，最后开发环境的搭建也变成Docker compose了。今年年初的时候（据某个师兄说，我没试过）在win10上面直接运行Nuxt前端和Django后端跑在本地没什么问题，也不卡。 之前我直接扔了一个在服务器上就卡，当时以为是教研室上传速度只有感天动地的1M/s校园网在疫情期间连到家里的网速瓶颈造成的。 这几天师兄跟我说他又搞了一个Docker的在服务器上，还是卡。</p>
-<p>现在有两种怀疑，一个是Docker Compose的镜像没有精简，另一个是前端加载了太多东西（比如字体资源和一大堆图片还有动画什么的）</p>
-<p>现在本地照着官方文档的方式跑一个看看</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> clone https://github.com/doccano/doccano.git
-<span class="token builtin class-name">cd</span> doccano/app
-pyenv virtualenv <span class="token number">3.8</span>.6 doccano
-pip <span class="token function">install</span> -r requirements.txt
-python manage.py migrate
-python manage.py create_roles
-python manage.py create_admin --noinput --username <span class="token string">"admin"</span> --email <span class="token string">"admin@example.com"</span> --password <span class="token string">"password"</span>
-python manage.py runserver
-<span class="token builtin class-name">cd</span> <span class="token punctuation">..</span>/<span class="token punctuation">..</span>
-<span class="token builtin class-name">cd</span> doccano/frontend
-<span class="token function">npm</span> <span class="token function">install</span>
-<span class="token function">npm</span> run dev<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>安装过程中报错<code>Running setup.py install for pyodbc ... error</code>,是个连 sql server 的库，不需要，删了 （如果你需要，在Arch上要装这个包<code>sudo pacman -S unixodbc</code>） 同理，<code>Running setup.py install for psycopg2-binary ... error</code>postgresql可以直接在arch仓库里面装包<code>yay -Syu python-psycopg2</code></p>
-<p>本地看起来没什么大问题</p>
-<h2 id="字体资源等cdn加载的问题">字体资源等CDN加载的问题</h2>
-<p>感觉应该还是那几个资源加载的问题。在<code>/app/server/templates</code>里面</p>
-<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>link</span> <span class="token attr-name">rel</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>stylesheet<span class="token punctuation">"</span></span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>https://use.fontawesome.com/releases/v5.0.13/css/all.css<span class="token punctuation">"</span></span> <span class="token attr-name">integrity</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp<span class="token punctuation">"</span></span>
-  <span class="token attr-name">crossorigin</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>anonymous<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>link</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>https://fonts.googleapis.com/css?family=Open+Sans:300,400,700<span class="token punctuation">"</span></span> <span class="token attr-name">rel</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>stylesheet<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>link</span> <span class="token attr-name">rel</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>stylesheet<span class="token punctuation">"</span></span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css<span class="token punctuation">"</span></span> <span class="token attr-name">crossorigin</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>anonymous<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>```<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p>前面两个在国内速度可能很慢，可以寻找国内的CDN替代，比如换为</p>
-<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>link</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">'</span>https://fonts.loli.net/css?family=Open+Sans<span class="token punctuation">'</span></span> <span class="token attr-name">rel</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">'</span>stylesheet<span class="token punctuation">'</span></span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>link</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>https://cdn.bootcdn.net/ajax/libs/bulma/0.7.1/css/bulma.min.css<span class="token punctuation">"</span></span> <span class="token attr-name">rel</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>stylesheet<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>或者将字体直接删了用系统默认字体。那个cloudflare的CDN移动用户可能比较慢</p>
-<p>还有一个<code>frontend/nuxt.config.js</code>里面的第25行，Material Icon 的CDN，可以改为<code>'https://fonts.googleapis.com/icon?family=Material+Icons'</code></p>
-<h2 id="docker的问题">Docker的问题？</h2>
-<p>Docker images没做好是容易出这些问题，然后就看了一下它的Dockerfile</p>
-<p>貌似没什么大问题，也没有很多layers之类的会导致很慢的写法。</p>
-<p>貌似这个Docker Compose装了一大堆的东西。我用的podman，貌似和docker-compose不一样的地方还挺多的。本地<code>podman-compose</code>了一下报错了。不太行。</p>
-<p>一上来就装了一个Alpine，正常，然后上来又装了一堆<code>python3-dev libpq postgresql-dev unixodbc-dev musl-dev g++ libffi-dev</code> 那个<code>unixodbc-dev g++</code>是sql server的依赖，<code>libpq</code>是postgresql的依赖</p>
-<h2 id="链接">链接</h2>
-<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2RvY2Nhbm8vZG9jY2Fubw==">https://github.com/doccano/doccano<i class="fa fa-external-link-alt"></i></span> doccano的github repo<br />
-<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC80ODMyMDkwMQ==">https://zhuanlan.zhihu.com/p/48320901<i class="fa fa-external-link-alt"></i></span> 几年前的一个doccano介绍<br />
-<span class="exturl" data-url="aHR0cHM6Ly9kb2NjYW5vLmdpdGh1Yi5pby9kb2NjYW5vLw==">https://doccano.github.io/doccano/<i class="fa fa-external-link-alt"></i></span></p>
-]]></content>
-      <tags>
-        <tag>doccano</tag>
-        <tag>docker</tag>
-        <tag>Nuxt.js</tag>
-        <tag>Django</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>记一次Spring Cloud上线内存优化</title>
     <url>/spring-cloud-performance-optimization/</url>
     <content><![CDATA[<p>没钱买 256G 内存的服务器的人是这样的</p>
@@ -2506,89 +2216,130 @@ python manage.py runserver
       </tags>
   </entry>
   <entry>
-    <title>VSCode使用ssh-key远程登录Ubuntu</title>
-    <url>/7f63/</url>
-    <content><![CDATA[<p>更新：已经把win10格了，跟Mobaxterm说再见了，Arch下vscode总是内存泄漏，感觉比win10下小问题也多不少</p>
-<a id="more"></a>
-<h2 id="更新">更新</h2>
-<h3 id="linux下的一些问题">Linux下的一些问题</h3>
-<h4 id="vscode-remote远程登陆后打开终端报错">VSCode Remote远程登陆后打开终端报错</h4>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">The terminal process failed to launch: Path to shell executable <span class="token string">"/usr/bin/zsh"</span> does not exist.<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>症状是这样的：我本地Arch的terminal是zsh，在VSCode的<code>erminal.integrated.shell</code>配置默认shell为zsh，远程连接的 Ubuntu Server 没装zsh、用的是非root用户登陆，登陆一切正常，然而呼出integrated terminal的时候就报错了。</p>
-<p>然后我在issue评论区扒拉出来好多相同的问题，貌似是本地的VSCode配置会干扰远程</p>
-<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21pY3Jvc29mdC92c2NvZGUtcmVtb3RlLXJlbGVhc2UvaXNzdWVzLzI1Nzk=">https://github.com/microsoft/vscode-remote-release/issues/2579<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21pY3Jvc29mdC92c2NvZGUtcmVtb3RlLXJlbGVhc2UvaXNzdWVzLzIzMTM=">https://github.com/microsoft/vscode-remote-release/issues/2313<i class="fa fa-external-link-alt"></i></span></p>
-<p>issue里面的解决方案有</p>
+    <title>毕竟狂澜挽不回，遽怜遗蜕化飞灰</title>
+    <url>/SARS-cov-2/</url>
+    <content><![CDATA[<p>So this is how liberty die, with thunderous applause <a id="more"></a></p>
+<p>想来我也算半个医学逃兵，颇有些惭愧（元旦那会听某个学医的群友在电报说武汉不太平，然而我怂，即没敢跟周围任何熟人说也没敢发到国内群里，完美逃过了央视训诫.......</p>
+<h2 id="一管就乱一放就死">一管就乱，一放就死</h2>
+<p>经此一疫，又有一群不食人间烟火的人黄粱梦醒，纷纷如丧考妣，惊讶愤怒心痛，只觉所住非人间。你们是第一天住在人间吗？或许是承平日久了，想想这十几年真是好日子过多了，真觉得和平发展充满爱是世界主流了，这一片绿油油的韭菜不割都对不住韭菜。就像之前的故宫大G，愤怒可以理解，惊讶就太外宾了。 难道你们不知道权贵一直如此？ 难道你们不知道公卫和防疫本来就是个摆设？ 难道你们第一天接触慈善和红会？ 难道你们第一天活在地球？</p>
+<p>然后在恐慌下自相践踏，死伤甚众，隔离这么严疫情没把你们搞死经济先崩了。</p>
+<h2 id="忘记历史就会梅开二度">忘记历史就会梅开二度</h2>
 <blockquote>
-<p>I have the same issue.Fixed after ssh as root</p>
+<p>社会主义没有失业,那叫下岗</p>
 </blockquote>
-<p>试了一下确实可行，不过root登陆是不可能root登陆的（这哪天又得被黑了）</p>
-<p>还有：把VSCode里面的设置改为bash（不可能）</p>
-<p>于是我给Ubuntu装了个zsh，好了。</p>
-<h4 id="vscode内存泄漏">VScode内存泄漏</h4>
-<p>我在Arch上不管是insider还是code-oss还是visual-studio-code-bin都有这个问题 （最后加钱把8G内存换成了32G，你随便泄漏去吧）</p>
-<h2 id="原文章">原文章</h2>
-<p>Mobaxterm挺好用的，只是那个文本编辑器不舒服。 试着用一下VSCode的remote-ssh 通过ssh-key登录就不多讲了<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
-<h3 id="mobaxterm设置ssh密钥登录">Mobaxterm设置SSH密钥登录</h3>
-<p>ssh-keygen生成密钥之后在Mobaxterm的SSH设置找到Advanced SSH Setting里勾选import SSH key可以直接导入密钥。 退出再登录显示这样</p>
-<pre class="line-numbers language-log" data-language="log"><code class="language-log">Authenticating with public key &quot;Imported-Openssh-Key: id_rsa&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>就是成功了（失败会提示这样<code>Server refused our key</code>)</p>
-<h3 id="vscode设置ssh密钥登录">VSCode设置SSH密钥登录</h3>
-<p>装Remote-ssh插件，然后左边框会有个小电脑的图标，点那个图标，再点SSH TARGETS的设置（Configure），进行配置 它有个配置文件，一般在<code>C:/Users/&lt;username&gt;/.ssh</code>下面的config 编辑它的配置文件，Host随便填，HostName填ip，User填用户名，IdentityFile填私钥路径，Port填端口（默认22可以不填） （要是认证失败什么的，建议把那些.ssh文件夹底下的文件删了，比如known_hosts）</p>
-<pre class="line-numbers language-config" data-language="config"><code class="language-config">Host workstation
-    HostName hostname
-    User user
-    IdentityFile C:&#x2F;Users&#x2F;XXX&#x2F;.ssh&#x2F;id_rsa
-    Port 22<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>连接的时候可能会让你手动在termial里的信息 这样应该就行了, 不用每次输密码了。看到那个</p>
-<p>什么？想用密码不想用ssh-key密钥登录，不能保存密码🐴？ 您好，官方文档说不能 &gt;Yes, you should be prompted to enter your token or password automatically. However, passwords are not saved, so using key based authentication is typically more convenient</p>
-<p>（当然这里是新出的功能，bug当然少不了，我就遇到过<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21pY3Jvc29mdC92c2NvZGUtcmVtb3RlLXJlbGVhc2UvaXNzdWVzLzEyMTc=">这样的<i class="fa fa-external-link-alt"></i></span>, 一般遇到问题先升一下最新版或者用insider试试，再不行就去GitHub提issue） 其他的问题找官方文档<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>看看，貌似可以SSH端口转发</p>
-<p>远程SSH的VSCode插件是单独的，可以自行安装 如果你要配置多台主机SSH,在配置文件里并列加配置就行了</p>
-<pre class="line-numbers language-config" data-language="config"><code class="language-config">Host workstation
-    HostName hostname
-    User user
-Host Server
-    HostName hostname
-    User user<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="ssh端口转发">SSH端口转发</h3>
-<p>老网民很熟悉的网上冲浪手段之一就是SSH Tunnel<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>。当只开了22端口的时候可以用这种方法绕过防火墙用TCP之类的，当然，这种方法曾经也用来突破那个巨大的 防火墙 。 今天我突发奇想，看到工作站和服务器的专用线路的速度贼快啊，<del>专用线路从来不低于45Mb/s不高于50Mb/s的速度毫不含糊</del>，还有公网IP。 而102网吧由于老板太抠，四个人用一个路由器，辣鸡校园网网速10M/s都跑不到...</p>
-<p>使用Mobaxterm和SwityOmega插件可以满足大部分需求</p>
-<p>MobaXterm里选Tools &gt; MobaSHHtunnel &gt; New SHH tunnel &gt; Dynamic Port forwarding (SOCKS proxy)</p>
-<p>那个Dynamic Port 是动态转发，不是v2ray那种用来防止被封的动态端口，就是你本地的端口会被转到服务器上相同的端口，是sockets5代理 配置你的端口和密钥（最好把那个autostart和Autoconnect也选上），然后到SwityOmega之类的工具里面填上相应的端口，就可以愉快的上网了。从浏览器的IP查询网站看一下IP，已经是服务器的IP了</p>
-<p>更新，看错了，忘了分Mbps和MBps了，实际上快不了多少，只有6MBps/s。但是没人跟我抢，自己走专线还是快一点的。</p>
-<p>终端的命令可以看这篇，不多说了<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
-<h3 id="题外话">题外话</h3>
-<p>新生代VPN, 底层貌似是UDP，红龙LOGO挺拉风的(跑题了 WireGuard据说要加到新的Linux Kernel里面，但是现在教研室的老Ubuntu只能自己装（这个我18年就听说了要加进kernel啦，连Linus都说好要加辣<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>然而鸽到现在，还是没加，据说作者在搞windows的,现在做的差不多了，要回来折腾Linux了） 之前WireGuard由于流量特征太明显就换了v2，现在试试这个 安装比Openvpn简单，Ubuntu直接PPA装就行了（需要root权限）</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> add-apt-repository ppa:wireguard/wireguard
-<span class="token function">sudo</span> <span class="token function">apt-get</span> update
-<span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> wireguard<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>win10的官方客户端已经出了，之前18年那会我还用的Tunsafe，设置参考这里<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> 听八卦说Tunsafe和WireGuard作者还有过撕逼，此处不表</p>
-<h3 id="其他">其他</h3>
-<h4 id="开机自启">开机自启</h4>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl <span class="token builtin class-name">enable</span> wg-quick@wg0<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h4 id="使用vscode愉快的写cc">使用VSCode愉快的写C/C++</h4>
-<p>装C/C++和coderunner插件就行了，现在可以自动配置运行和调试的文件了（就那个以前一堆坑还经常改一更新就配置失效的launch.json和config.json）</p>
-<h4 id="vscode连接docker">VSCode连接Docker</h4>
-<p>安装Docker和Docker compose插件（在远程里面），然后直接用就行了</p>
-<h2 id="注">注</h2>
+<p>有人怕了，就怕跟SARS扯上关系啊</p>
+<p>这病毒终于还是有了个名字叫SARS-cov-2，然而国内官媒一个个都有意回避SARS的说法，甚至绝口不提非典，非得叫新型冠状病毒，却又说不是SARS 我们随便点开一个百科,比如默沙东手册:</p>
+<blockquote>
+<p>严重急性呼吸综合征（SARS）是由SARS冠状病毒（SARS-CoV）引起的严重急性呼吸道疾病。</p>
+</blockquote>
+<p>这可不就是SARS，这次疾病就叫 SARS2 我看正合适。 WHO（Winne Happy Orgnization）不管这个叫 SARS，当然了，他们还满口可防可控不列疫区，我建议WHO加大力度，力度再大点就可以被总书记<strong>亲自批准</strong>火线入党了，岂不美哉</p>
+<p>你们还是说点人话吧，什么2019-nCov啊，什么NCP啊，特色社会主义都能叫社会主义，这新型冠状病毒都不算SARS？</p>
+<blockquote>
+<p>黑格尔在某个地方说过，一切伟大的世界历史事变和人物，可以说都出现两次。他忘记补充一点：第一次是作为悲剧出现，第二次是作为笑剧出现。 ----左壬最爱的鹿克斯祖师《路易·波拿巴的雾月十八》 太阳底下并无新鲜事 ----某些保守派右壬最喜欢的圣经</p>
+</blockquote>
+<h2 id="国士垂垂老矣">国士垂垂老矣</h2>
+<p>元旦那会我觉得这个可能要闹大,当时也没想到会闹成今天这个样子。</p>
+<p>03年非典，蒋先生做出了青史留名的举动，涛哥不戴口罩亲临广州街头，臊子面稳住了北京。今天只留下了一个又一个笑话，让大家觉得“彼可取而代也”</p>
+<p>大家一边吹捧钟南山，一边骂双黄连和可防可控，我看得哭笑不得。 钟南山当年的板蓝根和可防可控大家都忘了吗？莲花清瘟都忘了吗？ 他可不是糊涂，他自己是不信的。他父亲都是反中医的。</p>
+<figure>
+<img src="/SARS-cov-2/板蓝根.webp" alt="板蓝根" /><figcaption aria-hidden="true">板蓝根</figcaption>
+</figure>
+<p>以下内容直接复制自维基百科 &gt;2月11日上午，广州市政府召开新闻发布会公布广州地区非典型肺炎情况，称所有病人的病情均在控制当中。强调对于广州千万人口300多人染病是个很小的比例，非典型肺炎只是局部发生，河源中山等市已无新发病例报告。还解释了2月前前阶段没有公布情况的原因是：河源中山等地的患者经过治疗大多已康复或好转没有再发病，非典型肺炎并不是法定报告传染病，而发病人数305例并不算多。负责人强调会按传染病法公布疫情。 &gt;同日下午，广东省卫生厅举行情况通报会。中国工程院院士钟南山表示，市民到公众场所进行正常的活动是不会受到感染的，宣布广东大中小学将会如期开学。专家还指出，从临床角度看，可能是由病毒引起的，也有可能是病毒的亚型或变种引起的。对于患者的治疗都是采用“对症下药”的方法。</p>
+<p>当然了，肯定有人让我闭嘴，我算个什么东西，哎，我还真不算个东西。 我一个稀里糊涂读了几年生物医学工程的工科狗，给自己脸上贴金也只能算半个医学相关闲杂人等，跑到知乎<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>去说两句，能引来几千个人追着骂我。（2020年的，2013年前的应该不能）</p>
+<p>那我就贴一点<span class="exturl" data-url="aHR0cHM6Ly93d3cud2VpYm8uY29tL3UvMTgyOTg3MDIxMg==">小儿外科裴医生<i class="fa fa-external-link-alt"></i></span>的话 (以下内容大段粘贴，指不定哪天号就没了，留个备份，前几天刚炸了一大批怼中医的)</p>
+<blockquote>
+<p>小儿外科裴医生<br />
+2019-9-8 09:36 来自 iPhone客户端 你要是以为钟南山在这个“科普”中讲到莲花清瘟胶囊是无意的，或者他只是因为没有了解这个药，那就太幼稚了，人家不蠢，只是没有节操，为了利益，用自己的学术地位给那些没用的药站台背书，就是恶。<span class="exturl" data-url="aHR0cDovL2hiLmNoaW5hZGFpbHkuY29tLmNuL2EvMjAxOTA5LzA3L1dTNWQ3MzhmNjdhMzEwOTlhYjk5NWRlOTNmLmh0bWw=">O“知感冒·防流感——全民科普公益行”活动在汉举... ​​​​<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p>这活动还有视频哦（太长了就只贴个图好了）</p>
+<p><img src="/SARS-cov-2/莲花清瘟.webp" /></p>
+<p>这底下有个评论：</p>
+<blockquote>
+<p>fanbobb：如果有人问我，连我们最该拥有权威的院士，前几天还有正能量新闻的院士，都宣传中成药，你还成天说中药是骗人的吗？我作为一个非医学专业的普通人还真有点哑口无言</p>
+</blockquote>
+<p>我也哑口无言。</p>
+<blockquote>
+<p>小儿外科裴医生 2月2日 22:07 来自 iPhone 11 Pro 面对一个大家都不太了解的病毒，被感染了有什么丢脸，为什么要用此这么恶毒的词？我觉得他比钟南山客观、务实、专业、真实多了。//<span class="citation" data-cites="st5873:这样草包还有脸出来到处接受采访">@st5873:这样草包还有脸出来到处接受采访</span> <span class="citation" data-cites="小儿外科裴医生">@小儿外科裴医生</span> 中青报对这篇对@北大呼吸发哥 的访谈很不错，推荐大家看看。O卫健委专家组成员王广发出院了，回答了我们8... ​​​​</p>
+</blockquote>
+<blockquote>
+<p>阿瓦达啃大瓜1633：回复@蓝小诺CC:几年前亲耳听钟老板在欧洲呼吸病年会分会上演讲说他们团队研究治疗H1N1板蓝根有效，莲花清韵胶囊有效，当初差点以为听错了，那时才明白钟老板那一刻的身份是行政官员不是医生。</p>
+</blockquote>
+<p>下面这段已经被删了,戳到某些人的脊梁骨了。这里我手动加粗，以免太长不看的读者在跳读我写的这一堆垃圾时错过重点内容</p>
+<blockquote>
+<p><span class="citation" data-cites="小儿外科裴医生:专业我就说几个词吧">@小儿外科裴医生:专业我就说几个词吧</span>：<strong>连花清瘟、板蓝根、装修致白血病、兰菌净、羧甲司坦、口罩</strong>。//<span class="citation" data-cites="嘛咪嘛咪-hong:所以我想知道钟南山哪儿不客观">@嘛咪嘛咪-hong:所以我想知道钟南山哪儿不客观</span>，不务实，不专业，不真实呢？（非杠，真心请教）</p>
+</blockquote>
+<p>当然很多都删了，还有很多没有说出口（很多话我也没说出口）</p>
+<blockquote>
+<p>昨天在隔壁号我又有一篇文章被删了，算上之前被删的和推送不出去的，整个疫情期我有约1/10的文章没法见人，昨天看到棒棒医生的那篇循证的崩溃的文章也被删了，医学专业人员连专业问题都不能讨论和发言，那可能是这块土地真的不再需要专业和科学了。 ​​​​</p>
+</blockquote>
+<p>19年10月钟南山还在搞：<span class="exturl" data-url="aHR0cHM6Ly93d3cudGhlcGFwZXIuY24vbmV3c0RldGFpbF9mb3J3YXJkXzQ3MzExMDY=">钟南山：正研发新版板蓝根，药效或强五六倍<i class="fa fa-external-link-alt"></i></span>，还给莲花清瘟站台，对了，还有虫草呢（就是内含重金属，改变了平西王历史的进程的那个虫草）</p>
+<p><img src="/SARS-cov-2/冬虫夏草.webp" /></p>
+<p>什么叫国士无双啊，战术后仰</p>
+<p><img src="/SARS-cov-2/pilipili.webp" /></p>
+<p>另，友情提示，李兰娟的人品、水平和能力还不如钟南山。</p>
+<p>没多少人提起，蒋先生的往事 据说蒋先生现在身体也不太好，唉</p>
+<figure>
+<img src="/SARS-cov-2/蒋彦永.webp" alt="蒋彦永先生" /><figcaption aria-hidden="true">蒋彦永先生</figcaption>
+</figure>
+<p>“我之所以能直面现实，是因为我相信我们的国家。因为国家如果能从我提供的这些情况吸取一定的教训，因此建立好公共防疫制度，从SARS的挑战与困境中站起来，获得全世界人民的信任。”</p>
+<p>这次怕是让老爷子心寒了</p>
+<p>当然某人青年时代就亲自读过莎士比亚，并且在15年引经据典告诉过我们：“凡是过去，皆为序章”。<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<p><em>我将无我，亲自指挥</em></p>
+<p>正常表现罢了</p>
+<blockquote>
+<p>因笑王谢诸人，登高怀远，也学英雄涕</p>
+</blockquote>
+<!-- 
+
+建议大家多屯点粮食
+
+有钱记得做空美股（当然你也可以拿期权做空A股，只要你不怕投机倒把当场击毙）
+
+对野生动物保护持续悲观（你看见之前环保部门煤改气了吧）
+
+再多说两句，流浪猫狗应该跟本次非典没有太大关系，不管有没有关系，流浪猫狗本就应该组织扑杀（收容和安乐是宠保人士和猫奴狗奴的事，政府以极大浪费~~纳税人~~韭菜的血汗钱进行收容和安乐都是不合适的，TNR属于迁就猫奴狗奴的绥靖行为，同样不可取）。
+昆明滇池的红嘴鸥和黔灵山公园的猕猴今年缺少游客喂食，景区组织投喂，这是十分不好的。
+
+下面贴一些鸟类爱好者的话：
+
+[中土饲养员]：有研究表明人为投喂淀粉类的面包蛋糕等会降低各种鸥类育雏的成功率，但是还好红嘴鸥只把昆明当成补充体力的中转站
+[JK协捕队2世](https://weibo.com/u/6552893675)：
+[漂泊极北鲵](https://weibo.com/u/5832997504)：...首先 这是红嘴鸥Chroicocephalus ridibundus 不是海鸥Larus canus 其次这些鸥已经被喂得彻底与自然环境分离了 这是在毒害它们
+没事请与野生动物保持距离，不要乱摸、投喂，除了保育和救助等都不要打扰动物
+动物园和景区里的也不行，很多动物园和景区做得都不好，禁止投喂的牌子并不管用，工作人员也制止不过来
+
+我只是半个动物爱好者，这里就不自己扯淡了, 这是一篇土澳学生物的博主写一篇长微博：<https://weibo.com/3962135262/Isy79BHPA>
+我抄一点过来:
+>人类的食物，如面包、薯条、饼干，高油高盐，高热量高糖分，对野生动物的健康极为不利，多表现为肥胖、肾衰竭、毛发脱落等。因为人类的饮食根本不是它们自然食物链的一部分。不天然的饮食及其附属物，例如塑料袋、油污，也会污染野生动物的自然栖息地。
+>亲密接触野生动物增加疾病的传播概率，这点在当下这个时候，想必不用再过多说明了吧？某市以投喂红嘴鸥为荣的，鸟类身上携带什么疾病来着，禽流感啊，好自为之！去高原上摸旱獭喂食旱獭，自私且无耻，将自己暴露在甲级传染病鼠疫病原的触碰范围内，你又为你家人想过吗？犰狳是恐怖的麻风病宿主，很多小型食肉动物传播狂犬病，动物身体体表和体内的各种寄生虫，野生动物从来都不好惹。
+>使野生动物依赖人类获取食物。这次疫情限制出行，很多问题就暴露出来了，为什么贵州那群猴子和某市的红嘴鸥离不开人的投喂了？这是个恶性循环啊，本来就不该投喂野生动物，养成依赖了，现在甩不了手，离不开人了，出了事动物们自己不会觅食，纷纷饿死，有得去投喂，这个循环刹不住车了，你觉得是好事吗。就说红嘴鸥吧，这种鸟类本来还是候鸟，人家到点了想飞走就飞走，想留下就留下，一投喂全留下了，这基数不断变大，竞争压力也不断变大。红嘴鸥的自然种群数量庞大，适应力很好，年前跑鸟类调查，上万只反正是随随便便看到了，它们也不是什么濒危物种，完全不依靠人类“救援”。所以这事，从一开始做的就不对，不是说你现在不投喂要出问题，是一开始就压根不该投喂，动物不是人，它脑子里只有吃和繁殖，这样强行转变了它们的生存策略，到最后只能是出问题。
+
+还有这方面的疑问不建议问我，请直接去问他们
+
+中医早已变成一个庞大的利益集团，随便一个阿胶之类的体量都在鸿茅药酒十倍以上。总规模和能量加起来应该不低于清真食品产业链。
+我不想说什么中医了，我也不拦着，谁爱信谁信。以前看到有人想不开，我都觉得应该劝劝，现在抑郁症想自杀的人我都觉得不应该拦着，信中医就我就更不反对了，都是个人选择，尊重个人意愿。非公共场合抽烟也是个人意愿，还能成为光荣的~~纳税人~~烟草局韭菜。喝中药对他人危害并不高于香烟，还能解决医保和老龄化的难题，顺便进行智商筛选。
+
+在现代医学已经发展到这个样子的今天，再想想《赠医者汤伯高序》文末“嗟夫，使世之医皆若虚、伯高，信之者皆吾里之人，巫其能久胜矣乎”，问题的答案是：你别说，还真能！
+
+楚俗信巫不信医，今天群魔乱舞自称中医的一群人，基本都是跳大神的巫医，谋财害命之徒。可以粗暴的认为是一个宗教性质的东西。
+
+再有人问中医怎样，我建议你们这样安利他们：试试恒河水，这个纯天然，效果也很好，还免费
+
+死生有命，富贵在天
+善哉，善哉
+
+>庚子年春，大雪，惊雷，天有五日,瘟疫封城 -->
 <section class="footnotes" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1" role="doc-endnote"><p><span class="exturl" data-url="aHR0cHM6Ly9oeWprMjAwMC5naXRodWIuaW8vMjAxMi8wMy8xNi9ob3ctdG8tc2V0LXVwLXNzaC1rZXlzLw==">设置 SSH 通过密钥登录<i class="fa fa-external-link-alt"></i></span><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2" role="doc-endnote"><p><span class="exturl" data-url="aHR0cHM6Ly9jb2RlLnZpc3VhbHN0dWRpby5jb20vZG9jcy9yZW1vdGUvc3No">官方文档：Remote Development using SSH<i class="fa fa-external-link-alt"></i></span><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3" role="doc-endnote"><p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnlhbmRlcmUubW9lL21vZS9nZnctdnMtcHJveHkvOTcuaHRtbA==">墙与梯的较量<i class="fa fa-external-link-alt"></i></span><a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4" role="doc-endnote"><p><span class="exturl" data-url="aHR0cHM6Ly93d3cuaWJtLmNvbS9kZXZlbG9wZXJ3b3Jrcy9jbi9saW51eC9sLWNuLXNzaGZvcndhcmQvaW5kZXguaHRtbA==">实战 SSH 端口转发<i class="fa fa-external-link-alt"></i></span><a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5" role="doc-endnote"><p>Linus在邮件中回复说： &gt;Btw, on an unrelated issue: I see that Jason actually made the pull &gt;request to have wireguard included in the kernel. &gt; &gt;Can I just once again state my love for it and hope it gets merged &gt;soon? Maybe the code isn't perfect, but I've skimmed it, and compared to the horrors that are OpenVPN and IPSec, it's a work of art. 见<span class="exturl" data-url="aHR0cHM6Ly9sa21sLm9yZy9sa21sLzIwMTgvOC8yLzY2Mw==">https://lkml.org/lkml/2018/8/2/663<i class="fa fa-external-link-alt"></i></span><a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6" role="doc-endnote"><p><span class="exturl" data-url="aHR0cHM6Ly9nb2xiLmhwbGFyLmNoLzIwMTkvMDcvd2lyZWd1YXJkLXdpbmRvd3MuaHRtbA==">Setting up WireGuard on Windows<i class="fa fa-external-link-alt"></i></span><a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1" role="doc-endnote"><p>https://www.zhihu.com/question/28634829<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>http://politics.people.com.cn/n/2015/1021/c1001-27724579.html<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 ]]></content>
       <categories>
-        <category>102网吧日常</category>
+        <category>彼黍离离</category>
       </categories>
-      <tags>
-        <tag>ssh</tag>
-        <tag>vscode</tag>
-      </tags>
   </entry>
   <entry>
     <title>重启博客</title>
@@ -2721,7 +2472,8 @@ num <span class="token operator">=</span> re<span class="token punctuation">.</s
     <url>/f641/</url>
     <content><![CDATA[<p>这几天走过泥电沙河边上的建设路，早上晨光熹微，夜间车马喧嚣，仿佛回到了高二高三在一中上学的日子。 <a id="more"></a></p>
 <p>晚上路过建设路，卖小吃的沿街店铺生意似乎很火爆。到底还是网红街，比清水河西门外一片濒临倒闭的冷清店铺红火多了，显不出一点稳中向好共克时艰的样子。然而我这几天却没看到多少麻雀在路边找吃的，可能是人实在太多不太敢来吧。沙河校内倒是有些珠颈斑鸠和白颊噪鹛在路边捡樟树果子吃。鸟没看到，不到一周的时间却见了三次老鼠行色匆匆，穿梭在摊位间，可能是要回家养四个龟 不喜欢辣的我路过建设路，没有胃口，每次大晚上的走过去居然一点也不饿。</p>
-<p>今天实习回来的师姐请我们吃螺蛳粉，不习惯嗦粉并不知道哪里好吃。 听说建设路吃的自从炒作过度就不如以前了，我也不晓得，反正没有市井气息，像旅游区。看那个某签签土豆每天都有那么多人在排队，我就好奇一个土豆到底有什么好吃的。反正去了西伯利亚，天天都有土豆吃。 这些跟我一个低端人口又有什么关系呢 浮世繁华，与我无关。 16年涨了房价的成都不像是那首不知道怎么火的《成都》，倒像是《北京北京》。 咖啡馆离广场有三个街区，仿佛霓虹灯到月亮的距离，哦，不对，成都看不到月亮。</p>
+<p>今天实习回来的师姐请我们吃螺蛳粉，不习惯嗦粉并不知道哪里好吃。 听说建设路吃的自从炒作过度就不如以前了，我也不晓得，反正没有市井气息，像旅游区。</p>
+<p>浮世繁华，与我无关。 16年涨了房价的成都不像是那首不知道怎么火的《成都》，倒像是《北京北京》,居长安大不易。 咖啡馆离广场有三个街区，仿佛霓虹灯到月亮的距离，哦，不对，成都看不到月亮。</p>
 <p>晚上回到租的房子，八二信箱家属区，老房子刷了一层屎黄色的漆，那感觉，和当年我长大的物探小区刷了一层红色的漆一样难受。我果然还是喜欢老小区。</p>
 <p>成都夜雨，点点滴滴到天明</p>
 <p><strong><em>对了，泥电的镜像源要上了，不来试试吗</em></strong> <span class="exturl" data-url="aHR0cDovL21pcnJvcnMudWVzdGMuY24=">电子科技大学开源镜像站<i class="fa fa-external-link-alt"></i></span> ~~202.115.22.207 ~~（需要校内IP） 电子科大镜像源自从凝聚的凉了以后终于要续上了</p>
@@ -2743,96 +2495,6 @@ num <span class="token operator">=</span> re<span class="token punctuation">.</s
       <categories>
         <category>杂七杂八</category>
       </categories>
-  </entry>
-  <entry>
-    <title>测试</title>
-    <url>/938d/</url>
-    <content><![CDATA[<p><img width="200" src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/ripper%20shark1s.jpg"> <a id="more"></a></p>
-<p>行内公式 <span class="math inline"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.186ex" xmlns="http://www.w3.org/2000/svg" width="7.924ex" height="1.805ex" role="img" focusable="false" viewBox="0 -716 3502.6 798"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D44E" d="M33 157Q33 258 109 349T280 441Q331 441 370 392Q386 422 416 422Q429 422 439 414T449 394Q449 381 412 234T374 68Q374 43 381 35T402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487Q506 153 506 144Q506 138 501 117T481 63T449 13Q436 0 417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157ZM351 328Q351 334 346 350T323 385T277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q217 26 254 59T298 110Q300 114 325 217T351 328Z"></path></g><g data-mml-node="mo" transform="translate(806.8, 0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mi" transform="translate(1862.6, 0)"><path data-c="1D44F" d="M73 647Q73 657 77 670T89 683Q90 683 161 688T234 694Q246 694 246 685T212 542Q204 508 195 472T180 418L176 399Q176 396 182 402Q231 442 283 442Q345 442 383 396T422 280Q422 169 343 79T173 -11Q123 -11 82 27T40 150V159Q40 180 48 217T97 414Q147 611 147 623T109 637Q104 637 101 637H96Q86 637 83 637T76 640T73 647ZM336 325V331Q336 405 275 405Q258 405 240 397T207 376T181 352T163 330L157 322L136 236Q114 150 114 114Q114 66 138 42Q154 26 178 26Q211 26 245 58Q270 81 285 114T318 219Q336 291 336 325Z"></path></g><g data-mml-node="mi" transform="translate(2291.6, 0)"><path data-c="26" d="M156 540Q156 620 201 668T302 716Q354 716 377 671T401 578Q401 505 287 386L274 373Q309 285 416 148L429 132L437 142Q474 191 543 309L562 341V349Q562 368 541 376T498 385H493V431H502L626 428Q709 428 721 431H727V385H712Q688 384 669 379T639 369T618 354T603 337T591 316T578 295Q537 223 506 176T464 117T454 104Q454 102 471 85T497 62Q543 24 585 24Q618 24 648 48T682 113V121H722V112Q721 94 714 75T692 32T646 -7T574 -22Q491 -19 414 42L402 51L391 42Q312 -22 224 -22Q144 -22 93 25T42 135Q42 153 46 169T55 197T74 225T96 249T125 278T156 308L195 347L190 360Q185 372 182 382T174 411T165 448T159 491T156 540ZM361 576Q361 613 348 646T305 679Q272 679 252 649T232 572Q232 497 255 426L259 411L267 420Q361 519 361 576ZM140 164Q140 103 167 64T240 24Q271 24 304 36T356 61T374 77Q295 156 235 262L220 292L210 310L193 293Q177 277 169 268T151 229T140 164Z"></path></g><g data-mml-node="mi" transform="translate(3069.6, 0)"><path data-c="1D450" d="M34 159Q34 268 120 355T306 442Q362 442 394 418T427 355Q427 326 408 306T360 285Q341 285 330 295T319 325T330 359T352 380T366 386H367Q367 388 361 392T340 400T306 404Q276 404 249 390Q228 381 206 359Q162 315 142 235T121 119Q121 73 147 50Q169 26 205 26H209Q321 26 394 111Q403 121 406 121Q410 121 419 112T429 98T420 83T391 55T346 25T282 0T202 -11Q127 -11 81 37T34 159Z"></path></g></g></g></svg></mjx-container></span>.</p>
-<p><span class="math display"><mjx-container class="MathJax" jax="SVG" display="true" width="full" style="min-width: 40.869ex"><svg style="vertical-align: -2.217ex; min-width: 40.869ex" xmlns="http://www.w3.org/2000/svg" width="100%" height="5.564ex" role="img" focusable="false"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0) scale(0.0181) translate(0, -1479.7)"><g data-mml-node="math"><g data-mml-node="mtable" transform="translate(2078, 0) translate(-2078, 0)"><g transform="translate(0 1479.7) matrix(1 0 0 -1 0 0) scale(55.25)"><svg data-table="true" preserveAspectRatio="xMidYMid" viewBox="6954 -1479.7 1 2459.4"><g transform="matrix(1 0 0 -1 0 0)"><g data-mml-node="mlabeledtr" transform="translate(0, -30.2)"><g data-mml-node="mtd"><g data-mml-node="mfrac"><g data-mml-node="mrow" transform="translate(220, 676)"><g data-mml-node="mi"><path data-c="1D715" d="M202 508Q179 508 169 520T158 547Q158 557 164 577T185 624T230 675T301 710L333 715H345Q378 715 384 714Q447 703 489 661T549 568T566 457Q566 362 519 240T402 53Q321 -22 223 -22Q123 -22 73 56Q42 102 42 148V159Q42 276 129 370T322 465Q383 465 414 434T455 367L458 378Q478 461 478 515Q478 603 437 639T344 676Q266 676 223 612Q264 606 264 572Q264 547 246 528T202 508ZM430 306Q430 372 401 400T333 428Q270 428 222 382Q197 354 183 323T150 221Q132 149 132 116Q132 21 232 21Q244 21 250 22Q327 35 374 112Q389 137 409 196T430 306Z"></path></g><g data-mml-node="mi" transform="translate(566, 0)"><path data-c="1D462" d="M21 287Q21 295 30 318T55 370T99 420T158 442Q204 442 227 417T250 358Q250 340 216 246T182 105Q182 62 196 45T238 27T291 44T328 78L339 95Q341 99 377 247Q407 367 413 387T427 416Q444 431 463 431Q480 431 488 421T496 402L420 84Q419 79 419 68Q419 43 426 35T447 26Q469 29 482 57T512 145Q514 153 532 153Q551 153 551 144Q550 139 549 130T540 98T523 55T498 17T462 -8Q454 -10 438 -10Q372 -10 347 46Q345 45 336 36T318 21T296 6T267 -6T233 -11Q189 -11 155 7Q103 38 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path></g></g><g data-mml-node="mrow" transform="translate(325.5, -686)"><g data-mml-node="mi"><path data-c="1D715" d="M202 508Q179 508 169 520T158 547Q158 557 164 577T185 624T230 675T301 710L333 715H345Q378 715 384 714Q447 703 489 661T549 568T566 457Q566 362 519 240T402 53Q321 -22 223 -22Q123 -22 73 56Q42 102 42 148V159Q42 276 129 370T322 465Q383 465 414 434T455 367L458 378Q478 461 478 515Q478 603 437 639T344 676Q266 676 223 612Q264 606 264 572Q264 547 246 528T202 508ZM430 306Q430 372 401 400T333 428Q270 428 222 382Q197 354 183 323T150 221Q132 149 132 116Q132 21 232 21Q244 21 250 22Q327 35 374 112Q389 137 409 196T430 306Z"></path></g><g data-mml-node="mi" transform="translate(566, 0)"><path data-c="1D461" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path></g></g><rect width="1338" height="60" x="120" y="220"></rect></g><g data-mml-node="mo" transform="translate(1855.8, 0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="msup" transform="translate(2911.6, 0)"><g data-mml-node="mi"><path data-c="210E" d="M137 683Q138 683 209 688T282 694Q294 694 294 685Q294 674 258 534Q220 386 220 383Q220 381 227 388Q288 442 357 442Q411 442 444 415T478 336Q478 285 440 178T402 50Q403 36 407 31T422 26Q450 26 474 56T513 138Q516 149 519 151T535 153Q555 153 555 145Q555 144 551 130Q535 71 500 33Q466 -10 419 -10H414Q367 -10 346 17T325 74Q325 90 361 192T398 345Q398 404 354 404H349Q266 404 205 306L198 293L164 158Q132 28 127 16Q114 -11 83 -11Q69 -11 59 -2T48 16Q48 30 121 320L195 616Q195 629 188 632T149 637H128Q122 643 122 645T124 664Q129 683 137 683Z"></path></g><g data-mml-node="mn" transform="translate(576, 413) scale(0.707)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g><g data-mml-node="mrow" transform="translate(3891.1, 0)"><g data-mml-node="mo"><path data-c="28" d="M701 -940Q701 -943 695 -949H664Q662 -947 636 -922T591 -879T537 -818T475 -737T412 -636T350 -511T295 -362T250 -186T221 17T209 251Q209 962 573 1361Q596 1386 616 1405T649 1437T664 1450H695Q701 1444 701 1441Q701 1436 681 1415T629 1356T557 1261T476 1118T400 927T340 675T308 359Q306 321 306 250Q306 -139 400 -430T690 -924Q701 -936 701 -940Z"></path></g><g data-mml-node="mfrac" transform="translate(736, 0)"><g data-mml-node="mrow" transform="translate(220, 676)"><g data-mml-node="msup"><g data-mml-node="mi"><path data-c="1D715" d="M202 508Q179 508 169 520T158 547Q158 557 164 577T185 624T230 675T301 710L333 715H345Q378 715 384 714Q447 703 489 661T549 568T566 457Q566 362 519 240T402 53Q321 -22 223 -22Q123 -22 73 56Q42 102 42 148V159Q42 276 129 370T322 465Q383 465 414 434T455 367L458 378Q478 461 478 515Q478 603 437 639T344 676Q266 676 223 612Q264 606 264 572Q264 547 246 528T202 508ZM430 306Q430 372 401 400T333 428Q270 428 222 382Q197 354 183 323T150 221Q132 149 132 116Q132 21 232 21Q244 21 250 22Q327 35 374 112Q389 137 409 196T430 306Z"></path></g><g data-mml-node="mn" transform="translate(617.8, 363) scale(0.707)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g><g data-mml-node="mi" transform="translate(1021.3, 0)"><path data-c="1D462" d="M21 287Q21 295 30 318T55 370T99 420T158 442Q204 442 227 417T250 358Q250 340 216 246T182 105Q182 62 196 45T238 27T291 44T328 78L339 95Q341 99 377 247Q407 367 413 387T427 416Q444 431 463 431Q480 431 488 421T496 402L420 84Q419 79 419 68Q419 43 426 35T447 26Q469 29 482 57T512 145Q514 153 532 153Q551 153 551 144Q550 139 549 130T540 98T523 55T498 17T462 -8Q454 -10 438 -10Q372 -10 347 46Q345 45 336 36T318 21T296 6T267 -6T233 -11Q189 -11 155 7Q103 38 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path></g></g><g data-mml-node="mrow" transform="translate(245.9, -719.9)"><g data-mml-node="mi"><path data-c="1D715" d="M202 508Q179 508 169 520T158 547Q158 557 164 577T185 624T230 675T301 710L333 715H345Q378 715 384 714Q447 703 489 661T549 568T566 457Q566 362 519 240T402 53Q321 -22 223 -22Q123 -22 73 56Q42 102 42 148V159Q42 276 129 370T322 465Q383 465 414 434T455 367L458 378Q478 461 478 515Q478 603 437 639T344 676Q266 676 223 612Q264 606 264 572Q264 547 246 528T202 508ZM430 306Q430 372 401 400T333 428Q270 428 222 382Q197 354 183 323T150 221Q132 149 132 116Q132 21 232 21Q244 21 250 22Q327 35 374 112Q389 137 409 196T430 306Z"></path></g><g data-mml-node="msup" transform="translate(566, 0)"><g data-mml-node="mi"><path data-c="1D465" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path></g><g data-mml-node="mn" transform="translate(572, 289) scale(0.707)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g></g><rect width="1793.3" height="60" x="120" y="220"></rect></g><g data-mml-node="mo" transform="translate(2991.5, 0)"><path data-c="2B" d="M56 237T56 250T70 270H369V420L370 570Q380 583 389 583Q402 583 409 568V270H707Q722 262 722 250T707 230H409V-68Q401 -82 391 -82H389H387Q375 -82 369 -68V230H70Q56 237 56 250Z"></path></g><g data-mml-node="mfrac" transform="translate(3991.7, 0)"><g data-mml-node="mrow" transform="translate(220, 676)"><g data-mml-node="msup"><g data-mml-node="mi"><path data-c="1D715" d="M202 508Q179 508 169 520T158 547Q158 557 164 577T185 624T230 675T301 710L333 715H345Q378 715 384 714Q447 703 489 661T549 568T566 457Q566 362 519 240T402 53Q321 -22 223 -22Q123 -22 73 56Q42 102 42 148V159Q42 276 129 370T322 465Q383 465 414 434T455 367L458 378Q478 461 478 515Q478 603 437 639T344 676Q266 676 223 612Q264 606 264 572Q264 547 246 528T202 508ZM430 306Q430 372 401 400T333 428Q270 428 222 382Q197 354 183 323T150 221Q132 149 132 116Q132 21 232 21Q244 21 250 22Q327 35 374 112Q389 137 409 196T430 306Z"></path></g><g data-mml-node="mn" transform="translate(617.8, 363) scale(0.707)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g><g data-mml-node="mi" transform="translate(1021.3, 0)"><path data-c="1D462" d="M21 287Q21 295 30 318T55 370T99 420T158 442Q204 442 227 417T250 358Q250 340 216 246T182 105Q182 62 196 45T238 27T291 44T328 78L339 95Q341 99 377 247Q407 367 413 387T427 416Q444 431 463 431Q480 431 488 421T496 402L420 84Q419 79 419 68Q419 43 426 35T447 26Q469 29 482 57T512 145Q514 153 532 153Q551 153 551 144Q550 139 549 130T540 98T523 55T498 17T462 -8Q454 -10 438 -10Q372 -10 347 46Q345 45 336 36T318 21T296 6T267 -6T233 -11Q189 -11 155 7Q103 38 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path></g></g><g data-mml-node="mrow" transform="translate(286.9, -719.9)"><g data-mml-node="mi"><path data-c="1D715" d="M202 508Q179 508 169 520T158 547Q158 557 164 577T185 624T230 675T301 710L333 715H345Q378 715 384 714Q447 703 489 661T549 568T566 457Q566 362 519 240T402 53Q321 -22 223 -22Q123 -22 73 56Q42 102 42 148V159Q42 276 129 370T322 465Q383 465 414 434T455 367L458 378Q478 461 478 515Q478 603 437 639T344 676Q266 676 223 612Q264 606 264 572Q264 547 246 528T202 508ZM430 306Q430 372 401 400T333 428Q270 428 222 382Q197 354 183 323T150 221Q132 149 132 116Q132 21 232 21Q244 21 250 22Q327 35 374 112Q389 137 409 196T430 306Z"></path></g><g data-mml-node="msup" transform="translate(566, 0)"><g data-mml-node="mi"><path data-c="1D466" d="M21 287Q21 301 36 335T84 406T158 442Q199 442 224 419T250 355Q248 336 247 334Q247 331 231 288T198 191T182 105Q182 62 196 45T238 27Q261 27 281 38T312 61T339 94Q339 95 344 114T358 173T377 247Q415 397 419 404Q432 431 462 431Q475 431 483 424T494 412T496 403Q496 390 447 193T391 -23Q363 -106 294 -155T156 -205Q111 -205 77 -183T43 -117Q43 -95 50 -80T69 -58T89 -48T106 -45Q150 -45 150 -87Q150 -107 138 -122T115 -142T102 -147L99 -148Q101 -153 118 -160T152 -167H160Q177 -167 186 -165Q219 -156 247 -127T290 -65T313 -9T321 21L315 17Q309 13 296 6T270 -6Q250 -11 231 -11Q185 -11 150 11T104 82Q103 89 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mn" transform="translate(490, 289) scale(0.707)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g></g><rect width="1793.3" height="60" x="120" y="220"></rect></g><g data-mml-node="mo" transform="translate(6247.3, 0)"><path data-c="2B" d="M56 237T56 250T70 270H369V420L370 570Q380 583 389 583Q402 583 409 568V270H707Q722 262 722 250T707 230H409V-68Q401 -82 391 -82H389H387Q375 -82 369 -68V230H70Q56 237 56 250Z"></path></g><g data-mml-node="mfrac" transform="translate(7247.5, 0)"><g data-mml-node="mrow" transform="translate(220, 676)"><g data-mml-node="msup"><g data-mml-node="mi"><path data-c="1D715" d="M202 508Q179 508 169 520T158 547Q158 557 164 577T185 624T230 675T301 710L333 715H345Q378 715 384 714Q447 703 489 661T549 568T566 457Q566 362 519 240T402 53Q321 -22 223 -22Q123 -22 73 56Q42 102 42 148V159Q42 276 129 370T322 465Q383 465 414 434T455 367L458 378Q478 461 478 515Q478 603 437 639T344 676Q266 676 223 612Q264 606 264 572Q264 547 246 528T202 508ZM430 306Q430 372 401 400T333 428Q270 428 222 382Q197 354 183 323T150 221Q132 149 132 116Q132 21 232 21Q244 21 250 22Q327 35 374 112Q389 137 409 196T430 306Z"></path></g><g data-mml-node="mn" transform="translate(617.8, 363) scale(0.707)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g><g data-mml-node="mi" transform="translate(1021.3, 0)"><path data-c="1D462" d="M21 287Q21 295 30 318T55 370T99 420T158 442Q204 442 227 417T250 358Q250 340 216 246T182 105Q182 62 196 45T238 27T291 44T328 78L339 95Q341 99 377 247Q407 367 413 387T427 416Q444 431 463 431Q480 431 488 421T496 402L420 84Q419 79 419 68Q419 43 426 35T447 26Q469 29 482 57T512 145Q514 153 532 153Q551 153 551 144Q550 139 549 130T540 98T523 55T498 17T462 -8Q454 -10 438 -10Q372 -10 347 46Q345 45 336 36T318 21T296 6T267 -6T233 -11Q189 -11 155 7Q103 38 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path></g></g><g data-mml-node="mrow" transform="translate(299.4, -719.9)"><g data-mml-node="mi"><path data-c="1D715" d="M202 508Q179 508 169 520T158 547Q158 557 164 577T185 624T230 675T301 710L333 715H345Q378 715 384 714Q447 703 489 661T549 568T566 457Q566 362 519 240T402 53Q321 -22 223 -22Q123 -22 73 56Q42 102 42 148V159Q42 276 129 370T322 465Q383 465 414 434T455 367L458 378Q478 461 478 515Q478 603 437 639T344 676Q266 676 223 612Q264 606 264 572Q264 547 246 528T202 508ZM430 306Q430 372 401 400T333 428Q270 428 222 382Q197 354 183 323T150 221Q132 149 132 116Q132 21 232 21Q244 21 250 22Q327 35 374 112Q389 137 409 196T430 306Z"></path></g><g data-mml-node="msup" transform="translate(566, 0)"><g data-mml-node="mi"><path data-c="1D467" d="M347 338Q337 338 294 349T231 360Q211 360 197 356T174 346T162 335T155 324L153 320Q150 317 138 317Q117 317 117 325Q117 330 120 339Q133 378 163 406T229 440Q241 442 246 442Q271 442 291 425T329 392T367 375Q389 375 411 408T434 441Q435 442 449 442H462Q468 436 468 434Q468 430 463 420T449 399T432 377T418 358L411 349Q368 298 275 214T160 106L148 94L163 93Q185 93 227 82T290 71Q328 71 360 90T402 140Q406 149 409 151T424 153Q443 153 443 143Q443 138 442 134Q425 72 376 31T278 -11Q252 -11 232 6T193 40T155 57Q111 57 76 -3Q70 -11 59 -11H54H41Q35 -5 35 -2Q35 13 93 84Q132 129 225 214T340 322Q352 338 347 338Z"></path></g><g data-mml-node="mn" transform="translate(465, 289) scale(0.707)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g></g><rect width="1793.3" height="60" x="120" y="220"></rect></g><g data-mml-node="mo" transform="translate(9280.8, 0)"><path data-c="29" d="M34 1438Q34 1446 37 1448T50 1450H56H71Q73 1448 99 1423T144 1380T198 1319T260 1238T323 1137T385 1013T440 864T485 688T514 485T526 251Q526 134 519 53Q472 -519 162 -860Q139 -885 119 -904T86 -936T71 -949H56Q43 -949 39 -947T34 -937Q88 -883 140 -813Q428 -430 428 251Q428 453 402 628T338 922T245 1146T145 1309T46 1425Q44 1427 42 1429T39 1433T36 1436L34 1438Z"></path></g></g></g></g></g></svg><svg data-labels="true" preserveAspectRatio="xMaxYMid" viewBox="1278 -1479.7 1 2459.4"><g data-labels="true" transform="matrix(1 0 0 -1 0 0)"><g data-mml-node="mtd" id="mjx-eqn-1" transform="translate(0, -30.2)"><g data-mml-node="mtext"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z" transform="translate(389, 0)"></path><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z" transform="translate(889, 0)"></path></g></g></g></svg></g></g></g></g></svg></mjx-container></span></p>
-<p>油管视频测试 
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/UnnvhiD-HPA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
-
-</p>
-<p>啤梨啤梨视频测试</p>
-
-
-<iframe src="//player.bilibili.com/player.html?aid=1085694&cid=1569276&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
-
-
-<p>插件测试</p>
-<figure>
-<img src="/938d/emmm.jpg" alt="測試"><figcaption aria-hidden="true">測試</figcaption>
-</figure>
-<p>大小调整测试</p>
-<p><img width="200" src="测试/emmm.jpg"></p>
-<p>嘤花散 <img src="/938d/yinghua.jfif" alt="測試"></p>
-<div class="group-picture"><div class="group-picture-row"><div class="group-picture-column"><img src="/938d/emmm.jpg" alt="測試"></div></div><div class="group-picture-row"><div class="group-picture-column"><img src="/938d/emmm.jpg" alt="測試"></div><div class="group-picture-column"><img src="/938d/emmm.jpg" alt="測試"></div><div class="group-picture-column"><img src="/938d/emmm.jpg" alt="測試"></div></div><div class="group-picture-row"><div class="group-picture-column"><img src="/938d/emmm.jpg" alt="測試"></div><div class="group-picture-column"><img src="/938d/emmm.jpg" alt="測試"></div></div></div>
-<p>首先对序列<span class="math inline"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.357ex" xmlns="http://www.w3.org/2000/svg" width="6.809ex" height="1.902ex" role="img" focusable="false" viewBox="0 -683 3009.6 840.8"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D445" d="M230 637Q203 637 198 638T193 649Q193 676 204 682Q206 683 378 683Q550 682 564 680Q620 672 658 652T712 606T733 563T739 529Q739 484 710 445T643 385T576 351T538 338L545 333Q612 295 612 223Q612 212 607 162T602 80V71Q602 53 603 43T614 25T640 16Q668 16 686 38T712 85Q717 99 720 102T735 105Q755 105 755 93Q755 75 731 36Q693 -21 641 -21H632Q571 -21 531 4T487 82Q487 109 502 166T517 239Q517 290 474 313Q459 320 449 321T378 323H309L277 193Q244 61 244 59Q244 55 245 54T252 50T269 48T302 46H333Q339 38 339 37T336 19Q332 6 326 0H311Q275 2 180 2Q146 2 117 2T71 2T50 1Q33 1 33 10Q33 12 36 24Q41 43 46 45Q50 46 61 46H67Q94 46 127 49Q141 52 146 61Q149 65 218 339T287 628Q287 635 230 637ZM630 554Q630 586 609 608T523 636Q521 636 500 636T462 637H440Q393 637 386 627Q385 624 352 494T319 361Q319 360 388 360Q466 361 492 367Q556 377 592 426Q608 449 619 486T630 554Z"></path></g><g data-mml-node="mi" transform="translate(759, -150) scale(0.707)"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g></g><g data-mml-node="msub" transform="translate(1053, 0)"><g data-mml-node="mi"><path data-c="1D445" d="M230 637Q203 637 198 638T193 649Q193 676 204 682Q206 683 378 683Q550 682 564 680Q620 672 658 652T712 606T733 563T739 529Q739 484 710 445T643 385T576 351T538 338L545 333Q612 295 612 223Q612 212 607 162T602 80V71Q602 53 603 43T614 25T640 16Q668 16 686 38T712 85Q717 99 720 102T735 105Q755 105 755 93Q755 75 731 36Q693 -21 641 -21H632Q571 -21 531 4T487 82Q487 109 502 166T517 239Q517 290 474 313Q459 320 449 321T378 323H309L277 193Q244 61 244 59Q244 55 245 54T252 50T269 48T302 46H333Q339 38 339 37T336 19Q332 6 326 0H311Q275 2 180 2Q146 2 117 2T71 2T50 1Q33 1 33 10Q33 12 36 24Q41 43 46 45Q50 46 61 46H67Q94 46 127 49Q141 52 146 61Q149 65 218 339T287 628Q287 635 230 637ZM630 554Q630 586 609 608T523 636Q521 636 500 636T462 637H440Q393 637 386 627Q385 624 352 494T319 361Q319 360 388 360Q466 361 492 367Q556 377 592 426Q608 449 619 486T630 554Z"></path></g><g data-mml-node="TeXAtom" transform="translate(759, -150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mo" transform="translate(345, 0)"><path data-c="D7" d="M630 29Q630 9 609 9Q604 9 587 25T493 118L389 222L284 117Q178 13 175 11Q171 9 168 9Q160 9 154 15T147 29Q147 36 161 51T255 146L359 250L255 354Q174 435 161 449T147 471Q147 480 153 485T168 490Q173 490 175 489Q178 487 284 383L389 278L493 382Q570 459 587 475T609 491Q630 491 630 471Q630 464 620 453T522 355L418 250L522 145Q606 61 618 48T630 29Z"></path></g><g data-mml-node="mn" transform="translate(1123, 0)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g></g></g></g></g></svg></mjx-container></span>做一阶差分, 得到序列 <span class="math inline"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.666ex" xmlns="http://www.w3.org/2000/svg" width="20.113ex" height="2.236ex" role="img" focusable="false" viewBox="0 -694 8890 988.2"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D451" d="M366 683Q367 683 438 688T511 694Q523 694 523 686Q523 679 450 384T375 83T374 68Q374 26 402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487H491Q506 153 506 145Q506 140 503 129Q490 79 473 48T445 8T417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157Q33 205 53 255T101 341Q148 398 195 420T280 442Q336 442 364 400Q369 394 369 396Q370 400 396 505T424 616Q424 629 417 632T378 637H357Q351 643 351 645T353 664Q358 683 366 683ZM352 326Q329 405 277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q233 26 290 98L298 109L352 326Z"></path></g><g data-mml-node="mi" transform="translate(520, -150) scale(0.707)"><path data-c="1D457" d="M297 596Q297 627 318 644T361 661Q378 661 389 651T403 623Q403 595 384 576T340 557Q322 557 310 567T297 596ZM288 376Q288 405 262 405Q240 405 220 393T185 362T161 325T144 293L137 279Q135 278 121 278H107Q101 284 101 286T105 299Q126 348 164 391T252 441Q253 441 260 441T272 442Q296 441 316 432Q341 418 354 401T367 348V332L318 133Q267 -67 264 -75Q246 -125 194 -164T75 -204Q25 -204 7 -183T-12 -137Q-12 -110 7 -91T53 -71Q70 -71 82 -81T95 -112Q95 -148 63 -167Q69 -168 77 -168Q111 -168 139 -140T182 -74L193 -32Q204 11 219 72T251 197T278 308T289 365Q289 372 288 376Z"></path></g></g><g data-mml-node="mo" transform="translate(861.3, 0)"><path data-c="2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path></g><g data-mml-node="mi" transform="translate(1306, 0)"><path data-c="1D457" d="M297 596Q297 627 318 644T361 661Q378 661 389 651T403 623Q403 595 384 576T340 557Q322 557 310 567T297 596ZM288 376Q288 405 262 405Q240 405 220 393T185 362T161 325T144 293L137 279Q135 278 121 278H107Q101 284 101 286T105 299Q126 348 164 391T252 441Q253 441 260 441T272 442Q296 441 316 432Q341 418 354 401T367 348V332L318 133Q267 -67 264 -75Q246 -125 194 -164T75 -204Q25 -204 7 -183T-12 -137Q-12 -110 7 -91T53 -71Q70 -71 82 -81T95 -112Q95 -148 63 -167Q69 -168 77 -168Q111 -168 139 -140T182 -74L193 -32Q204 11 219 72T251 197T278 308T289 365Q289 372 288 376Z"></path></g><g data-mml-node="mo" transform="translate(1995.8, 0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(3051.6, 0)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g><g data-mml-node="mo" transform="translate(3551.6, 0)"><path data-c="2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path></g><g data-mml-node="mn" transform="translate(3996.2, 0)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g><g data-mml-node="mo" transform="translate(4496.2, 0)"><path data-c="2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path></g><g data-mml-node="mo" transform="translate(4940.9, 0)"><path data-c="2026" d="M78 60Q78 84 95 102T138 120Q162 120 180 104T199 61Q199 36 182 18T139 0T96 17T78 60ZM525 60Q525 84 542 102T585 120Q609 120 627 104T646 61Q646 36 629 18T586 0T543 17T525 60ZM972 60Q972 84 989 102T1032 120Q1056 120 1074 104T1093 61Q1093 36 1076 18T1033 0T990 17T972 60Z"></path></g><g data-mml-node="mi" transform="translate(6279.6, 0)"><path data-c="1D441" d="M234 637Q231 637 226 637Q201 637 196 638T191 649Q191 676 202 682Q204 683 299 683Q376 683 387 683T401 677Q612 181 616 168L670 381Q723 592 723 606Q723 633 659 637Q635 637 635 648Q635 650 637 660Q641 676 643 679T653 683Q656 683 684 682T767 680Q817 680 843 681T873 682Q888 682 888 672Q888 650 880 642Q878 637 858 637Q787 633 769 597L620 7Q618 0 599 0Q585 0 582 2Q579 5 453 305L326 604L261 344Q196 88 196 79Q201 46 268 46H278Q284 41 284 38T282 19Q278 6 272 0H259Q228 2 151 2Q123 2 100 2T63 2T46 1Q31 1 31 10Q31 14 34 26T39 40Q41 46 62 46Q130 49 150 85Q154 91 221 362L289 634Q287 635 234 637Z"></path></g><g data-mml-node="mo" transform="translate(7389.8, 0)"><path data-c="2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path></g><g data-mml-node="mn" transform="translate(8390, 0)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g></g></g></svg></mjx-container></span> 然后以 <span class="math inline"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.666ex" xmlns="http://www.w3.org/2000/svg" width="8.708ex" height="2.363ex" role="img" focusable="false" viewBox="0 -750 3849 1044.2"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="msub" transform="translate(389, 0)"><g data-mml-node="mi"><path data-c="1D451" d="M366 683Q367 683 438 688T511 694Q523 694 523 686Q523 679 450 384T375 83T374 68Q374 26 402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487H491Q506 153 506 145Q506 140 503 129Q490 79 473 48T445 8T417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157Q33 205 53 255T101 341Q148 398 195 420T280 442Q336 442 364 400Q369 394 369 396Q370 400 396 505T424 616Q424 629 417 632T378 637H357Q351 643 351 645T353 664Q358 683 366 683ZM352 326Q329 405 277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q233 26 290 98L298 109L352 326Z"></path></g><g data-mml-node="mi" transform="translate(520, -150) scale(0.707)"><path data-c="1D457" d="M297 596Q297 627 318 644T361 661Q378 661 389 651T403 623Q403 595 384 576T340 557Q322 557 310 567T297 596ZM288 376Q288 405 262 405Q240 405 220 393T185 362T161 325T144 293L137 279Q135 278 121 278H107Q101 284 101 286T105 299Q126 348 164 391T252 441Q253 441 260 441T272 442Q296 441 316 432Q341 418 354 401T367 348V332L318 133Q267 -67 264 -75Q246 -125 194 -164T75 -204Q25 -204 7 -183T-12 -137Q-12 -110 7 -91T53 -71Q70 -71 82 -81T95 -112Q95 -148 63 -167Q69 -168 77 -168Q111 -168 139 -140T182 -74L193 -32Q204 11 219 72T251 197T278 308T289 365Q289 372 288 376Z"></path></g></g><g data-mml-node="mo" transform="translate(1250.3, 0)"><path data-c="2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path></g><g data-mml-node="msub" transform="translate(1695, 0)"><g data-mml-node="mi"><path data-c="1D451" d="M366 683Q367 683 438 688T511 694Q523 694 523 686Q523 679 450 384T375 83T374 68Q374 26 402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487H491Q506 153 506 145Q506 140 503 129Q490 79 473 48T445 8T417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157Q33 205 53 255T101 341Q148 398 195 420T280 442Q336 442 364 400Q369 394 369 396Q370 400 396 505T424 616Q424 629 417 632T378 637H357Q351 643 351 645T353 664Q358 683 366 683ZM352 326Q329 405 277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q233 26 290 98L298 109L352 326Z"></path></g><g data-mml-node="TeXAtom" transform="translate(520, -150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D457" d="M297 596Q297 627 318 644T361 661Q378 661 389 651T403 623Q403 595 384 576T340 557Q322 557 310 567T297 596ZM288 376Q288 405 262 405Q240 405 220 393T185 362T161 325T144 293L137 279Q135 278 121 278H107Q101 284 101 286T105 299Q126 348 164 391T252 441Q253 441 260 441T272 442Q296 441 316 432Q341 418 354 401T367 348V332L318 133Q267 -67 264 -75Q246 -125 194 -164T75 -204Q25 -204 7 -183T-12 -137Q-12 -110 7 -91T53 -71Q70 -71 82 -81T95 -112Q95 -148 63 -167Q69 -168 77 -168Q111 -168 139 -140T182 -74L193 -32Q204 11 219 72T251 197T278 308T289 365Q289 372 288 376Z"></path></g><g data-mml-node="mo" transform="translate(412, 0)"><path data-c="2B" d="M56 237T56 250T70 270H369V420L370 570Q380 583 389 583Q402 583 409 568V270H707Q722 262 722 250T707 230H409V-68Q401 -82 391 -82H389H387Q375 -82 369 -68V230H70Q56 237 56 250Z"></path></g><g data-mml-node="mn" transform="translate(1190, 0)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g></g></g><g data-mml-node="mo" transform="translate(3460, 0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g></g></g></svg></mjx-container></span> 为坐标绘制散点图（Poincaré散点图）。差值散点图反映了RR间期差值的离散度 ,对连续RR间期的变化十分敏感。</p>
-]]></content>
-      <tags>
-        <tag>test</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>爬虫笔记</title>
-    <url>/fd19/</url>
-    <content><![CDATA[<p>未完待续 <a id="more"></a></p>
-<h4 id="浏览器f12调试和抓包">浏览器F12调试和抓包</h4>
-<p>略</p>
-<h4 id="urllib库">urllib库</h4>
-<h5 id="打开并读取url">打开并读取url</h5>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python">urllib<span class="token punctuation">.</span>request<span class="token punctuation">.</span>``urlopen`<span class="token punctuation">(</span><span class="token operator">*</span>url<span class="token operator">*</span><span class="token punctuation">,</span> <span class="token operator">*</span>data<span class="token operator">=</span><span class="token boolean">None</span><span class="token operator">*</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token operator">*</span>timeout<span class="token operator">*</span><span class="token punctuation">,</span><span class="token punctuation">]</span><span class="token operator">**</span><span class="token operator">*</span><span class="token punctuation">,</span><span class="token operator">*</span>cafile<span class="token operator">=</span><span class="token boolean">None</span><span class="token operator">*</span><span class="token punctuation">,</span> <span class="token operator">*</span>capath<span class="token operator">=</span><span class="token boolean">None</span><span class="token operator">*</span><span class="token punctuation">,</span> <span class="token operator">*</span>cadefault<span class="token operator">=</span><span class="token boolean">False</span><span class="token operator">*</span><span class="token punctuation">,</span> <span class="token operator">*</span>context<span class="token operator">=</span><span class="token boolean">None</span><span class="token operator">*</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>常用的函数read()读取, info()返回头信息,getcode()返回状态码,geturl()返回url</p>
-<p>一个简单的读写文件:</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python">response <span class="token operator">=</span> urllib<span class="token punctuation">.</span>request<span class="token punctuation">.</span>urlopen<span class="token punctuation">(</span><span class="token string">'https://zhangjk98.xyz'</span><span class="token punctuation">,</span> <span class="token boolean">None</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span>
-<span class="token comment"># 读取返回的内容</span>
-html <span class="token operator">=</span> response<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>decode<span class="token punctuation">(</span><span class="token string">'utf8'</span><span class="token punctuation">)</span>
-<span class="token comment"># 写入txt</span>
-f <span class="token operator">=</span> <span class="token builtin">open</span><span class="token punctuation">(</span><span class="token string">'code1.txt'</span><span class="token punctuation">,</span> <span class="token string">'w'</span><span class="token punctuation">,</span> encoding<span class="token operator">=</span><span class="token string">'utf8'</span><span class="token punctuation">)</span>
-f<span class="token punctuation">.</span>write<span class="token punctuation">(</span>html<span class="token punctuation">)</span>
-f<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h5 id="完整的url请求">完整的url请求</h5>
-<p>使用urllib.request.Request处理完整请求</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python">urllib<span class="token punctuation">.</span>request<span class="token punctuation">.</span>Request<span class="token punctuation">(</span>url<span class="token punctuation">,</span> data<span class="token operator">=</span><span class="token boolean">None</span><span class="token punctuation">,</span> headers<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span> 	origin_req_host<span class="token operator">=</span><span class="token boolean">None</span><span class="token punctuation">,</span> unverifiable<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">,</span> method<span class="token operator">=</span><span class="token boolean">None</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>请求方式method有get和post两种, headers为请求头信息</p>
-<h5 id="使用代理">使用代理</h5>
-<p>使用urllib.request.ProyxHandler()</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># 设置代理IP</span>
-proxy_handler <span class="token operator">=</span> urllib<span class="token punctuation">.</span>request<span class="token punctuation">.</span>ProxyHandler<span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
-    <span class="token string">'http'</span><span class="token punctuation">:</span> <span class="token string">'218.56.132.157:8080'</span><span class="token punctuation">,</span>
-    <span class="token string">'https'</span><span class="token punctuation">:</span> <span class="token string">'183.30.197.29:9797'</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-<span class="token comment"># 必须使用build_opener()函数来创建带有代理IP功能的opener对象</span>
-opener <span class="token operator">=</span> urllib<span class="token punctuation">.</span>request<span class="token punctuation">.</span>build_opener<span class="token punctuation">(</span>proxy_handler<span class="token punctuation">)</span>
-response <span class="token operator">=</span> opener<span class="token punctuation">.</span><span class="token builtin">open</span><span class="token punctuation">(</span>url<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h5 id="cookies">cookies</h5>
-<p>使用HTTPCookiePorcesser()模块处理,使用MozillaCookieJar读写 <pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> http <span class="token keyword">import</span> cookiejar
-filename <span class="token operator">=</span> <span class="token string">'cookie.txt'</span>
-cookie <span class="token operator">=</span> cookiejar<span class="token punctuation">.</span>MozillaCookieJar<span class="token punctuation">(</span>filename<span class="token punctuation">)</span>
-handler <span class="token operator">=</span> urllib<span class="token punctuation">.</span>request<span class="token punctuation">.</span>HTTPCookieProcessor<span class="token punctuation">(</span>cookie<span class="token punctuation">)</span>
-<span class="token comment"># 创建自定义opener</span>
-opener <span class="token operator">=</span> urllib<span class="token punctuation">.</span>request<span class="token punctuation">.</span>build_opener<span class="token punctuation">(</span>handler<span class="token punctuation">)</span>
-<span class="token comment"># open方法打开网页</span>
-response <span class="token operator">=</span> opener<span class="token punctuation">.</span><span class="token builtin">open</span><span class="token punctuation">(</span><span class="token string">'https://movie.douban.com/'</span><span class="token punctuation">)</span>
-<span class="token comment"># 保存cookie文件</span>
-cookie<span class="token punctuation">.</span>save<span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token comment"># 读取cookie</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>cookie<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre> #### requests库</p>
-<p>主要参数url, 请求头信息headers, 是否开启证书验证verify,超时timeout, 代理proxies和cookies, 文件files(字典格式)</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># 格式</span>
-<span class="token keyword">import</span> requests
-url <span class="token operator">=</span> <span class="token string">'https://google.com'</span>
-r <span class="token operator">=</span> requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>'url<span class="token punctuation">,</span>headers<span class="token operator">=</span>headers<span class="token punctuation">,</span> proxies<span class="token operator">=</span>proxies<span class="token punctuation">,</span>verify<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">,</span> cookies<span class="token operator">=</span>cookies<span class="token punctuation">)</span>
-r <span class="token operator">=</span> requests<span class="token punctuation">.</span>post<span class="token punctuation">(</span>'url<span class="token punctuation">,</span> data<span class="token operator">=</span> data<span class="token punctuation">,</span> files<span class="token operator">=</span>files<span class="token punctuation">,</span> headers<span class="token operator">=</span>headers<span class="token punctuation">,</span> proxies<span class="token operator">=</span>proxies<span class="token punctuation">,</span>verify<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">,</span> cookies<span class="token operator">=</span>cookies<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="等待填坑">等待填坑</h4>
-]]></content>
-      <categories>
-        <category>笔记&amp;札记</category>
-      </categories>
-      <tags>
-        <tag>爬虫</tag>
-      </tags>
   </entry>
   <entry>
     <title>电磁流量计</title>
@@ -2923,80 +2585,6 @@ r <span class="token operator">=</span> requests<span class="token punctuation">
       </tags>
   </entry>
   <entry>
-    <title>皇后大道东</title>
-    <url>/93c2/</url>
-    <content><![CDATA[<p>知己一声拜拜远去这都市... 梦醒,却不是2008</p>
-<div style="display: none">
-<h4 id="皇后大道中人民如潮涌">皇后大道中人民如潮涌</h4>
-<p>皇后大道中为何无皇宫？ <a id="more"></a></p>
-<p>七十年前收惶恐是顺手的事，执意攻台却对港澳装聋作哑，不收，故意留个洗钱和走私的通道<br />
-惶恐至今仍是大陆重要的的洗钱出逃通道<br />
-惶恐高房价高地租早就榨干了平民，倒是没见诸位市民群情激愤搞出这么大的抵制。<br />
-这次一群人跑出来，自由民主神圣事，骗了无涯过客，这才过去几年呐，都忘啦<sub>不长记性</sub> 反了反了，走错了，南辕北辙 惶恐金融地位的衰落目前看来早晚的事，金融中心地位不保<br />
-散步卵用没有，雷声大雨点小<br />
-痴人说梦<br />
-都远不如集体抛港币做空港股之类的来得实在<br />
-然而<br />
-真爱故土的，被视为乱臣贼子，而背弃故土，随时准备出逃的，被视为爱国正能量，神州如此，惶恐也是如此。走上街头的，其实坚守惶恐的基本盘，而高调爱国，呼吁稳定的，则是挤兑港币的急先锋<br />
-汇率是个大杀器，现在是，将来也是，软妹币撑不住前都是 调控，又叫操纵市场</p>
-<h4 id="衰兰送客咸阳道天若有情天亦老">衰兰送客咸阳道，天若有情天亦老</h4>
-<p>君子之泽，五世而斩，现在时间过的快，可能只需要十年。 苏联有笑话传世，而此地见白色荒漠，一眼看去，403forbidden</p>
-<p>贡当斯： &gt; &gt;“让我们想像一个靠几代人的勤奋劳动富裕起来、在科学和艺术方面都取得了巨大进步的文明民族。如果权力在思想表达和精神活动方面设置障碍，那个民族在一段时间内，还可以靠它过去的老本生活，也就是说，靠继承下来的文明成果生活。但是将不再有观念的更新；它们的再生能力将会枯竭。用不了几年，虚荣心就会取代对知识的热爱。那些想起了以往文学作品所赢得的荣耀和敬意的诡辩家，将会致力于写作徒有其表的同类作品。他们会以自己的作品反对其他作品表现出的优点；而且只要哪里还有自由主义原则的踪迹，哪里就会出现某种文学运动，出现反对这些作品和原则的斗争。但这种运动本身也是已被摧毁的自由的遗产。一俟这种自由的最后痕迹和最后传统销声匿迹，战斗就会结束，因为作战者将再也看不见任何敌人，而胜利者和被征服者会同样保持沉默。</p>
-<blockquote>
-<p>的确，谁知道权力会不会断定强制沉默是有好处的？实际上，它们不愿意看到逝去的记忆得到复活，放弃的怀疑再被挑起。它们将压制过于热情的追随者，就像曾经压制它们的敌人一样。它们会禁止所有人以人类为主题进行写作，就像某个虔诚的政府禁止任何人谈论上帝，无论坏话好话都不许说一样。它们会宣布人们在哪些问题上可以使用自己的头脑：它会获准自我消遣，但要处在监督之下，并在规定的范围之内；如果它试图偏离对它的限制，如果它拒不与自己的神圣起源断绝关系，继续从事受到禁止的思考，如果它鲁莽地认为，自己的最高贵的目的不是对琐碎题目做精巧的修饰，不是圆滑的阿谈奉承，不是毫无内容的夸夸其谈，而是上天和它的本性要它成为一个永恒的法庭，在这里对一切事物进行分析、检验并做出最终的判断，它就会惹来诅咒。因而，名副其实的思想历程肯定会被终止。文明的一代将逐渐消失；随之而来的一代，由于看到追求知识没有任何好处，甚至从中看到了威胁，将会不可挽回地远离知识的追求。</p>
-</blockquote>
-<blockquote>
-<p>　　你会说，人的头脑仍然可以在消遣文学中发光，可以专注于精密的自然科学，还可以致力于工艺。然而这都是废话。大自然在创造人类的时候并没有向权力请教；它规定我们所有的天赋应当紧密地结合在一起，其中任何一个受到压制都会损害其他。甚至对消遣文学、科学和工艺而言，独立思考就像空气对自然界的生命一样，也是必不可少的。有人大可把人们置于一台气泵下劳动，争辩说他们没有被迫呼吸，只是在运动自己的胳臂和双腿，让头脑只运用于规定的目标，阻止它去思考那些能够唤起自己的尊严，从而给予它活力的许多重要事物。于是，被压抑的作家开始歌功颂德；但是，他们甚至连阿泱奉承的能力都会逐渐衰退，文学最终会丧身于字谜游戏和藏头诗之中。博学之土变成了纯粹的古董收藏家，而即使是这些古董，也会在被镣铐束缚着的手中退化和贬值。艺术家天才的源泉会同哺育自由的惟一手段——对荣耀的向往——一起日渐枯萎；由于他们以为可以孤立存在的事物之间有着某种神秘但却无可争辩的联系，那么人的灵魂一旦受到贬损，他们也就不再具有高尚地描绘人类面貌的天赋了。 　　... 　　...</p>
-</blockquote>
-<blockquote>
-<p>　　思想乃万事之本：工业，兵法，以及所有的科学和艺术，都需要运用思想。它是它们进步的原因，通过对这种进步的分析，它也开阔了自己的眼界。如果专横权力试图束缚它，道德观念就会不再健康，实用知识就会不再精确，科学发展就会不再活跃，兵法就会不再进步，工业也不会再有新的发现而繁荣。</p>
-</blockquote>
-<blockquote>
-<p>　　人类生活最高尚的部分如果受到攻击，很快就会感觉到这种毒害作用逐渐向最遥远的地方蔓延。你以为你只是剥夺了它某些多余的自由，或者删除了某些无用的虚饰，实际上你那有毒的武器正好戳到了它的心脏。 　　......</p>
-</blockquote>
-<blockquote>
-<p>　　各民族历史变迁的真正原因是，人类的思想不可能保持静止不动。如果你不阻挠它，它就会前进；如果你阻挠它，它就会倒退；如果你使它失去信心，它将不再为任何目标进行不知疲倦的操劳。几乎可以说，人类的思想看到自己被排挤出适得其所的地方而感到愤慨，它要通过一次高贵的制裁，为它所蒙受的耻辱复仇。 　　......</p>
-</blockquote>
-<blockquote>
-<p>　　首先，维持一种完全人为的能动性，代价极大。当人人都处于自由状态时，每个人都会兴致勃勃地去做、去说、去写。但是当大多数国民成为被迫保持沉默的旁观者时，为了诱使这些旁观者鼓掌欢呼，或者只是简单地观望，指挥演出的人必须依靠戏剧性情节和场景的转换来刺激他们的好奇心。</p>
-</blockquote>
-<blockquote>
-<p>　　同时，这种人为的煽动比现实更煞有介事。一切都在运动，但只是迫于命令和威胁；一切都不顺畅，因为没有什么是自发的。人们对政府不是追随，而是服从。所有的车轮遇到最微小的阻碍都会停止转动。这就像下棋一样：权力之手伸向棋子，没有一粒棋子会进行反抗；但是如果那条胳臂停止挥舞，所有的棋子都会呆在原地一动不动。</p>
-</blockquote>
-<blockquote>
-<p>　　最后，如果一个民族死气沉沉，那么无论政府有什么作为，都不会得到舆论的响应。它不能使国民保持清醒，只好与国民一起进入梦乡。因而，在一个思想被禁锢的民族中，一切都无声无息，一切都在沉沦，一切都在退化和堕落。这样一个帝国早晚会出现埃及平原上的景象，在那里，人们会看到巨大的金字塔静立于贫瘠的地面，统治着寂静的沙漠。” ......</p>
-</blockquote>
-<blockquote>
-<p>　　因而，在一个思想被禁锢的民族中，一切都无声无息，一切都在沉沦，一切都在退化和堕落。这样一个帝国早晚会出现埃及平原上的景象，在那里，人们会看到巨大的金字塔静立于贫瘠的地面，统治着寂静的沙漠。 <img width=400 src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/20190830184422.jpg" alt="picture"/> 等一个新闻联播大结局</p>
-</blockquote>
-<h4 id="天朝十八怪">天朝十八怪</h4>
-<p><del>来自好友干干</del><br />
-天朝十八怪： 新闻不把评论开， 自由言论皆有害， 文盲最爱掉书袋, 昨天打仗今恋爱， 记者全球跑最快， 斗争对内不对外， 万里火墙永不坏， 全民外援勒腰带， 让生几胎生几胎， 老少边穷吸人才， 国外反华心眼坏， 小孩倒比大人乖， 上梁永远不会歪， 战舰出海去买奶， 未有人祸全天灾， 战狼战友被强拆， 富贵夫妻百事哀， 太平洋上没锅盖， 有关部门随你猜，</p>
-<h4 id="谁活着谁看见">谁活着，谁看见</h4>
-<p>君不见，李一男，备胎不过是弃子。 你我不如等一个新闻联播大结局， 君不见，玁狁孔棘 啊，朋友再见！</p>
-<h4 id="祝衮衮诸公头颅安好">祝衮衮诸公，头颅安好</h4>
-<p>维尼修仙，折煞了，满朝文武。 看京都，风雨飘摇，再无朗月。 二百斤麦子扛得住，莎士比亚看点书。 再连任，做了真皇帝，也彳亍。 大犬刁，要撒币。吃点土，还要住。 看河山，喂饱十四亿饥畜。 亦有大盗如习主，八十三天犹在目。 会以目，大坝崩渝水，心犹怵。</p>
-<hr />
-<p>更新：皇后大道东在局域网喜迎全网下架 更新：好消息好消息，人间道下架，罗大佑东方之歌和黄霑作词的我的中国心入选70周年百大歌曲，到底想怎样嘛 更新：孙小果和怀化事件人心散了啊，打黑打不出当年反腐的舆论效果了啊，压不住可是要出乱子的。当年90年代和二十一世纪初车匪路霸横行的年代，我还小，不记得了，现在怕是又来了。 自古皇权不下乡，深圳孙志刚那时也就跟现在湖南差不多，乡贤回潮，欢迎来到六镇之乱和两脚羊的世界。</p>
-<h4 id="推荐阅读">推荐阅读</h4>
-<p><span class="exturl" data-url="aHR0cHM6Ly90Lm1lL2FudGlleHRyYWRpdGlvbnZlcmlmaWVkbmV3cw==">反送中已核實資訊頻道<i class="fa fa-external-link-alt"></i></span><br />
-<span class="exturl" data-url="aHR0cHM6Ly93d3cuZG91YmFuLmNvbS9ub3RlLzcyMzUwNDU2My8=">请收起你的厌港症<i class="fa fa-external-link-alt"></i></span> 更新：该文章喜提和谐，<span class="exturl" data-url="aHR0cHM6Ly90ZXJtaW51czIwNDkuZ2l0aHViLmlvL2FyY2hpdmUvMjAxOS8wNi8yMy9kaXNncmVlLWFib3V0LWhrLmh0bWw=">备份地址<i class="fa fa-external-link-alt"></i></span><br />
-<span class="exturl" data-url="aHR0cHM6Ly90ZXJtaW51czIwNDkuZ2l0aHViLmlvL2FyY2hpdmUvMjAxOC8xMC8zMC9NaW5nLVBhby5odG1s">1962:进击的明报<i class="fa fa-external-link-alt"></i></span><br />
-<span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU5JTgwJTgzJUU2JUI4JUFG">大逃港<i class="fa fa-external-link-alt"></i></span><br />
-<span class="exturl" data-url="aHR0cHM6Ly9tZWRpdW0uY29tL0BsZXVuZ2thaWNoaWhrLyVFNSU4RiU4RCVFOSU4MCU4MSVFNCVCOCVBRCVFNyVBRCU5NCVFNSU5NSU4RiVFOSU5QiU4Ni05ODQxOTc0ZDg4OWM=">问答集<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9xei5jb20vMjc5MDEzL3RoZS1zZWNyZXQtaGlzdG9yeS1vZi1ob25nLWtvbmdzLXN0aWxsYm9ybi1kZW1vY3JhY3kv">往事<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9tZWRpdW0uY29tL0BsZXVuZ2thaWNoaWhrLyVFOSVBNiU5OSVFNiVCOCVBRiVFNyVBQyVBQyVFNCVCOCU4MCVFOCVBQSVCMi05NDg2YmI0NDM4MWE=">香港第一课<i class="fa fa-external-link-alt"></i></span> 这一系列写得同样很偏激，但你可以从这里看到部分港人内心的想法 <span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3MvTHhwRkxySTItVHFGVGxlbS10M1FoZw==">香港学生会是个什么会<i class="fa fa-external-link-alt"></i></span> <blockquote class="blockquote-center">
-<p>We think what we see. We be what we think. Secrecy makes us blind. Conformism redacts thoughts. Together they limit human grandeur.</p>
-
-</blockquote></p>
-</div>
-]]></content>
-      <categories>
-        <category>彼黍离离</category>
-      </categories>
-      <tags>
-        <tag>杂记</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>网上冲浪指北</title>
     <url>/87d6/</url>
     <content><![CDATA[<p>欢 度 国 庆 <a id="more"></a></p>
@@ -3043,334 +2631,6 @@ r <span class="token operator">=</span> requests<span class="token punctuation">
       </categories>
       <tags>
         <tag>v2ray</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>给Archlinux添加blackarch仓库镜像源</title>
-    <url>/add-blackarch-repo-mirrors/</url>
-    <content><![CDATA[<p>我可没干坏事啊</p>
-<a id="more"></a>
-<p>2020.11 目测有效，不保证该方法以后可能过时，建议自行翻阅官方文档。</p>
-<h2 id="导入仓库和设置国内镜像">导入仓库和设置国内镜像</h2>
-<h3 id="导入仓库">导入仓库</h3>
-<p>按照官方文档来：</p>
-<p>下载官网的脚本</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">curl</span> -O https://blackarch.org/strap.sh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>修改权限：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">chmod</span> +x strap.sh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>运行</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">./strap.sh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>然后应该就好了</p>
-<p>看看是不是装好了：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">pacman -Sg <span class="token operator">|</span> <span class="token function">grep</span> blackarch<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>然后更新一下</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> pacman -Syyu<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>这时候应该会给你安装<code>blackarch-keying</code>这个包，然后就可以用了</p>
-<h3 id="镜像源">镜像源</h3>
-<p>修改<code>/etc/pacman.conf</code>，在最后加上</p>
-<pre class="line-numbers language-conf" data-language="conf"><code class="language-conf">[blackarch]
-Server &#x3D; http:&#x2F;&#x2F;mirrors.uestc.cn&#x2F;blackarch&#x2F;$repo&#x2F;os&#x2F;$arch<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>Server请改成你在那里提供服务而且网速比较快的，比如tuna的</p>
-<pre class="line-numbers language-conf" data-language="conf"><code class="language-conf">[blackarch]
-Server &#x3D; https:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;blackarch&#x2F;$repo&#x2F;os&#x2F;$arch<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<h2 id="为何要写这么水的一篇博客">为何要写这么水的一篇博客</h2>
-<p>我之前谷歌随手搜出了ustc的镜像使用帮助，然后就开始了飘红报错，试了一圈中文的解决方案，并没有用。 （当然中文博客基本都过时了，还是有很多好好写的，不止CSDN,比如这个：<span class="exturl" data-url="aHR0cHM6Ly93ZWVwaW5nZG9nZWwuZ2l0aHViLmlvL3Bvc3RzL+eUqGFyY2hfbGludXjmiZPpgKDlroznvo7muJfpgI/njq/looMv">用 Arch Linux 打造完美渗透环境<i class="fa fa-external-link-alt"></i></span>）</p>
-<p>报错：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">error: blackarch: key <span class="token string">"F9A6E68A711354D84A9B91637533BAFE69A25079"</span> is unknown
-:: Import PGP key F9A6E68A711354D84A9B91637533BAFE69A25079? <span class="token punctuation">[</span>Y/n<span class="token punctuation">]</span> Y
-Y
-error: key <span class="token string">"F9A6E68A711354D84A9B91637533BAFE69A25079"</span> could not be looked up remotely
-:: Synchronizing package databases<span class="token punctuation">..</span>.
-
-
-error: blackarch: key <span class="token string">"F9A6E68A711354D84A9B91637533BAFE69A25079"</span> is unknown
-:: Import PGP key F9A6E68A711354D84A9B91637533BAFE69A25079? <span class="token punctuation">[</span>Y/n<span class="token punctuation">]</span> 
-error: key <span class="token string">"F9A6E68A711354D84A9B91637533BAFE69A25079"</span> could not be looked up remotely
-error: failed to update blackarch <span class="token punctuation">(</span>invalid or corrupted database <span class="token punctuation">(</span>PGP signature<span class="token punctuation">))</span>
-error: failed to synchronize all databases
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>发现中文的几个解决方案全都过时了。安装<code>blackarch-keying</code>导入key会产生先有鸡还是先有蛋的问题。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">sudo</span> pacman -S blackarch-keyring
-error: blackarch: key <span class="token string">"F9A6E68A711354D84A9B91637533BAFE69A25079"</span> is unknown
-:: Import PGP key F9A6E68A711354D84A9B91637533BAFE69A25079? <span class="token punctuation">[</span>Y/n<span class="token punctuation">]</span> Y
-error: key <span class="token string">"F9A6E68A711354D84A9B91637533BAFE69A25079"</span> could not be looked up remotely
-error: database <span class="token string">'blackarch'</span> is not valid <span class="token punctuation">(</span>invalid or corrupted database <span class="token punctuation">(</span>PGP signature<span class="token punctuation">))</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>转了一圈还是翻了官方文档，世界瞬间清净了。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>+<span class="token punctuation">]</span> installing blackarch keyring<span class="token punctuation">..</span>.
-
-loading packages<span class="token punctuation">..</span>.
-resolving dependencies<span class="token punctuation">..</span>.
-looking <span class="token keyword">for</span> conflicting packages<span class="token punctuation">..</span>.
-
-Packages <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> blackarch-keyring-20140118-3
-
-Total Installed Size:  <span class="token number">0.04</span> MiB
-
-:: Proceed with installation? <span class="token punctuation">[</span>Y/n<span class="token punctuation">]</span> 
-<span class="token punctuation">(</span><span class="token number">1</span>/1<span class="token punctuation">)</span> checking keys <span class="token keyword">in</span> keyring                                         <span class="token punctuation">[</span><span class="token comment">#######################################] 100%</span>
-<span class="token punctuation">(</span><span class="token number">1</span>/1<span class="token punctuation">)</span> checking package integrity                                       <span class="token punctuation">[</span><span class="token comment">#######################################] 100%</span>
-<span class="token punctuation">(</span><span class="token number">1</span>/1<span class="token punctuation">)</span> loading package files                                            <span class="token punctuation">[</span><span class="token comment">#######################################] 100%</span>
-<span class="token punctuation">(</span><span class="token number">1</span>/1<span class="token punctuation">)</span> checking <span class="token keyword">for</span> <span class="token function">file</span> conflicts                                      <span class="token punctuation">[</span><span class="token comment">#######################################] 100%</span>
-:: Processing package changes<span class="token punctuation">..</span>.
-<span class="token punctuation">(</span><span class="token number">1</span>/1<span class="token punctuation">)</span> installing blackarch-keyring                                     <span class="token punctuation">[</span><span class="token comment">#######################################] 100%</span>
-<span class="token operator">==</span><span class="token operator">></span> Appending keys from blackarch.gpg<span class="token punctuation">..</span>.
-gpg: public key DB323392796CA067 is <span class="token number">3037</span> days newer than the signature
-gpg: public key CF66D153D884358F is <span class="token number">16</span> seconds newer than the signature
-<span class="token operator">==</span><span class="token operator">></span> Locally signing trusted keys <span class="token keyword">in</span> keyring<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key A0917C4147A37007CB54C1CFD295AA940EFDDF62<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key 4345771566D76038C7FEB43863EC0ADBEA87E4E3<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key CBA3C7D4798912702DCF568E67D8BDF42AD93F4E<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key 8F9A9793CB8591147C2EC70566E0CDBD1E01F333<span class="token punctuation">..</span>.
-<span class="token operator">==</span><span class="token operator">></span> Importing owner trust values<span class="token punctuation">..</span>.
-gpg: inserting ownertrust of <span class="token number">4</span>
-gpg: setting ownertrust to <span class="token number">4</span>
-gpg: setting ownertrust to <span class="token number">4</span>
-gpg: setting ownertrust to <span class="token number">4</span>
-<span class="token operator">==</span><span class="token operator">></span> Updating trust database<span class="token punctuation">..</span>.
-gpg: key 1EB2638FF56C0C53: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 1EB2638FF56C0C53: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: public key DB323392796CA067 is <span class="token number">3037</span> days newer than the signature
-gpg: marginals needed: <span class="token number">3</span>  completes needed: <span class="token number">1</span>  trust model: pgp
-gpg: public key CF66D153D884358F is <span class="token number">16</span> seconds newer than the signature
-gpg: depth: <span class="token number">0</span>  valid:   <span class="token number">1</span>  signed:  <span class="token number">56</span>  trust: <span class="token number">0</span>-, 0q, 0n, 0m, 0f, 1u
-gpg: depth: <span class="token number">1</span>  valid:  <span class="token number">56</span>  signed:  <span class="token number">81</span>  trust: <span class="token number">1</span>-, 0q, 0n, 55m, 0f, 0u
-gpg: depth: <span class="token number">2</span>  valid:  <span class="token number">77</span>  signed:  <span class="token number">26</span>  trust: <span class="token number">77</span>-, 0q, 0n, 0m, 0f, 0u
-gpg: next trustdb check due at <span class="token number">2020</span>-12-03
-:: Running post-transaction hooks<span class="token punctuation">..</span>.
-<span class="token punctuation">(</span><span class="token number">1</span>/1<span class="token punctuation">)</span> Arming ConditionNeedsUpdate<span class="token punctuation">..</span>.
-<span class="token operator">==</span><span class="token operator">></span> Appending keys from archlinuxcn.gpg<span class="token punctuation">..</span>.
-<span class="token operator">==</span><span class="token operator">></span> Appending keys from archlinux.gpg<span class="token punctuation">..</span>.
-<span class="token operator">==</span><span class="token operator">></span> Appending keys from blackarch.gpg<span class="token punctuation">..</span>.
-<span class="token operator">==</span><span class="token operator">></span> Appending keys from endeavouros.gpg<span class="token punctuation">..</span>.
-<span class="token operator">==</span><span class="token operator">></span> Locally signing trusted keys <span class="token keyword">in</span> keyring<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key 57957BAD5D038B07C28EF49A15B26377262268C1<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key 9AF7EED0F7CE3639965C85619BA8AAAAAAAAAAAA<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key 87F2E316E0ABC98B9DE8D4EF042FD810600954EF<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key 99399D88F7B752BF364CD485A85E3925A6211F05<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key 90403E12F4CE5E0E950E4AD2C96492E347202001<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key F905932C85D705FD2A3CC9E47C63370395FF0792<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key 1F255DC97A5431001F9D01F8CDABD988DD8AD93B<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key D8AFDDA07A5B6EDFA7D8CCDAD6D055F927843F1C<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key 4A6D297E6F74638E4D5F8E99152AC7B5F7608B26<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key 4B1DE545A801D4549BFD3FEF90CB3D62C13D4796<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key DC6FB7FC761E848F76E98B4FCCAF35548C65530F<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key 0AABCAF6773D5B6E1F4ECF794E72AF09097DAE2E<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key A0917C4147A37007CB54C1CFD295AA940EFDDF62<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key 43A253584139DC6D923B6EFC34F1E61A0EEB4F51<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key 3167205DC1F2582F226007FAB012733142D79E59<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key 9BE836747F3533EAABA99F1485AEA2926167AD32<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key 708DFB13CBED9AB39449DBFB41C04120C297B594<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key F357BC80BE28C292B40ECEC8997995DF61A0959A<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key DDB867B92AA789C165EEFA799B729B06A680C281<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key 7B314BE77DBCA20E02DDBBC050BF8B712DCAD7EA<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key D88390B2991F8242FABD2A3C07F45E2A1937DD32<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key 53641635F498CDD60227A7ED0832F151DB0FB18E<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key 1C874172781545C15399D4CF7E9BA67AD5E38E78<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key 38009E1FD96C320609BF05870A5BAD445D80C1CC<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key 4CFF42599833CF3AE98A2F098850CBC20940E3F9<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key 1C9084FAFE017CEAE4AF59C91DF6CF104433578C<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key 1D5AB52A241CC492A724FE14E8D79E63E3D142F3<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key 356690A1E7404E30D0E902B2E64D049594A54F54<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key 0285FB6900D102030550F20A34908FFBC0BFAC35<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key 1B53ED6B05A88B45FE02AE6186CC4303D870877E<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key 02E02B85AF209AA00F784A1DD48313B447CD9E46<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key BEA7E7644AE093AB557E521A26D9876AC0719A0B<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key 4345771566D76038C7FEB43863EC0ADBEA87E4E3<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key 48ADDE10F27BAFB47BB0CCAF2D2595A00D08ACE0<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key CBA3C7D4798912702DCF568E67D8BDF42AD93F4E<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key 2AC4CFDB42972D38F105800BC0EB1AA4536A8318<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key B5971F2C5C10A9A08C60030F786C63F330D7CB92<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key 8F9A9793CB8591147C2EC70566E0CDBD1E01F333<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key D87D10B4E132FFA40DEC232B7A3A9FA6E4FD4A8D<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key 21E347C47A6A13CDE64713CBAE62544C55609060<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key 22D8A46B2CDA6605A1C0CFD1E060B3E215CE49BB<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key 83F817213361BF5F02E7E124F9F9FA97A403F63E<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key 243C14E5339E1B88EDCB29C595FC83B3084A5ADD<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key 86EEEC214D245137446F4AB195304B04071CCDB4<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key CF73A9AE20AD483CE51130E0303A369BE11E4BE7<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key A0B55B12351C08FED81DAAF4840A50A14EEF0D58<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key 481C4474AF1572165AE4C6AF3FDDD575826C5C30<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key 91FFE0700E80619CEB73235CA88E23E377514E00<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key 7028E1F320C45EE98473B1C35F1BC1A1BF2B11D0<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key 688E1D093C3638F588890D4450268311C7AD3F62<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key 00e716120987a801cd25070828d10c49a44f261e<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key 0E8B644079F599DFC1DDC3973348882F6AC6A4C2<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key 9AD42FE922425C9D93E60B43BAD2804227A0AF05<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key AB19265E5D7D20687D303246BA1DFB64FFF979E7<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key C41D545A576AC1FE4DBE90C9B6CF41D1879E8002<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key 504357523094066C67E56CF58D99AA5CAD3908B0<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key 1FDBDCE2D26BD8F100EE2E73B1B9AAD8BE7E7326<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key 5984EA8F3C6C92945EB2EE40BE378C0A19C6421B<span class="token punctuation">..</span>.
-<span class="token operator">==</span><span class="token operator">></span> Importing owner trust values<span class="token punctuation">..</span>.
-<span class="token operator">==</span><span class="token operator">></span> Disabling revoked keys <span class="token keyword">in</span> keyring<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Disabling key 8F76BEEA0289F9E1D3E229C05F946DED983D4366<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Disabling key 63F395DE2D6398BBE458F281F2DBB4931985A992<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Disabling key 50F33E2E5B0C3D900424ABE89BDCF497A4BBCC7F<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Disabling key 27FFC4769E19F096D41D9265A04F9397CDFD6BB0<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Disabling key 39F880E50E49A4D11341E8F939E4F17F295AFBF4<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Disabling key 8840BD07FC24CB7CE394A07CCF7037A4F27FB7DA<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Disabling key 5559BC1A32B8F76B3FCCD9555FA5E5544F010D48<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Disabling key 0B20CA1931F5DA3A70D0F8D2EA6836E1AB441196<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Disabling key 07DFD3A0BC213FA12EDC217559B3122E2FA915EC<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Disabling key 4FCF887689C41B09506BE8D5F3E1D5C5D30DB0AD<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Disabling key 2A83ADADD054CB3C4CF7DF9D2D1E72461CCBBA98<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Disabling key 5A2257D19FF7E1E0E415968CE62F853100F0D0F0<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Disabling key 4E43CCE7ADF712FF75C7B4A5EF50AB125C83BB2D<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Disabling key D921CABED130A5690EF1896E81AF739EC0711BF1<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Disabling key 7FA647CD89891DEDC060287BB9113D1ED21E1A55<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Disabling key BC1FBE4D2826A0B51E47ED62E2539214C6C11350<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Disabling key 24F24E986EB2FE628DBDD3CFB9E701221C820178<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Disabling key 4A8B17E20B88ACA61860009B5CED81B7C2E5C0D2<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Disabling key 417A75A94D7DCA0FE37EBA89BF971BB9D4D40A3B<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Disabling key 5696C003B0854206450C8E5BE613C09CB4440678<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Disabling key AA0CBF3859E580B97D9F04638FDE3D8FC99F40AE<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Disabling key 684148BB25B49E986A4944C55184252D824B18E8<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Disabling key 8CF934E339CAD8ABF342E822E711306E3C4F88BC<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Disabling key F5A361A3A13554B85E57DDDAAF7EF7873CFD4BB6<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Disabling key 5E7585ADFF106BFFBBA319DC654B877A0864983E<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Disabling key 65EEFE022108E2B708CBFCF7F9E712E59AF5F22A<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Disabling key 40440DC037C05620984379A6761FAD69BA06C6A9<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Disabling key 34C5D94FE7E7913E86DC427E7FB1A3800C84C0A5<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Disabling key 1A60DC44245D06FEF90623D6EEEEE2EEEE2EEEEE<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Disabling key 81D7F8241DB38BC759C80FCE3A726C6170E80477<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Disabling key 86F797B20DE062D8540D6D243CD72EBFE6DE17D8<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Disabling key A373F9E056E8E4912F842CF596D6420DD2E3A1F0<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Disabling key E7210A59715F6940CF9A4E36A001876699AD6E84<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Disabling key 5357F3B111688D88C1D88119FCF2CB179205AC90<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Disabling key 4D913AECD81726D9A6C74F0ADA6426DD215B37AD<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Disabling key FB871F0131FEA4FB5A9192B4C8880A6406361833<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Disabling key 66BD74A036D522F51DD70A3C7F2A16726521E06D<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Disabling key 487EACC08557AD082088DABA1EB2638FF56C0C53<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Disabling key B1F2C889CB2CCB2ADA36D963097D629E437520BD<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Disabling key 9515D8A8EAB88E49BB65EDBCE6B456CAF15447D5<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Disabling key 76B4192E902C0A52642C63C273B8ED52F1D357C1<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Disabling key 40776A5221EF5AD468A4906D42A1DB15EC133BAD<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Disabling key D4DE5ABDE2A7287644EAC7E36D1A9E70E19DAA50<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Disabling key 44D4A033AC140143927397D47EFD567D4C7EA887<span class="token punctuation">..</span>.
-<span class="token operator">==</span><span class="token operator">></span> Updating trust database<span class="token punctuation">..</span>.
-gpg: next trustdb check due at <span class="token number">2020</span>-12-03
-
-<span class="token punctuation">[</span>+<span class="token punctuation">]</span> keyring installed successfully
-<span class="token punctuation">[</span>+<span class="token punctuation">]</span> updating package databases
-:: Synchronizing package databases<span class="token punctuation">..</span>.
- core                                      <span class="token number">129.9</span> KiB  <span class="token number">6.34</span> MiB/s 00:00 <span class="token punctuation">[</span>---------------------------------------<span class="token punctuation">]</span> <span class="token number">100</span>%
- extra                                    <span class="token number">1634.4</span> KiB  <span class="token number">4.09</span> MiB/s 00:00 <span class="token punctuation">[</span>---------------------------------------<span class="token punctuation">]</span> <span class="token number">100</span>%
- community                                   <span class="token number">5.2</span> MiB  <span class="token number">11.1</span> MiB/s 00:00 <span class="token punctuation">[</span>---------------------------------------<span class="token punctuation">]</span> <span class="token number">100</span>%
- multilib                                  <span class="token number">154.2</span> KiB  <span class="token number">7.53</span> MiB/s 00:00 <span class="token punctuation">[</span>---------------------------------------<span class="token punctuation">]</span> <span class="token number">100</span>%
- endeavouros                                <span class="token number">14.2</span> KiB  <span class="token number">0.00</span>   B/s 00:00 <span class="token punctuation">[</span>---------------------------------------<span class="token punctuation">]</span> <span class="token number">100</span>%
- archlinuxcn                              <span class="token number">1354.5</span> KiB  <span class="token number">11.0</span> MiB/s 00:00 <span class="token punctuation">[</span>---------------------------------------<span class="token punctuation">]</span> <span class="token number">100</span>%
- blackarch                                   <span class="token number">3.3</span> MiB   <span class="token number">500</span> KiB/s 00:07 <span class="token punctuation">[</span>---------------------------------------<span class="token punctuation">]</span> <span class="token number">100</span>%
- blackarch.sig                             <span class="token number">566.0</span>   B  <span class="token number">0.00</span>   B/s 00:00 <span class="token punctuation">[</span>---------------------------------------<span class="token punctuation">]</span> <span class="token number">100</span>%<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">Packages <span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span> blackarch-keyring-20180925-2  perl-expect-1.35-6
-
-Total Download Size:   <span class="token number">0.07</span> MiB
-Total Installed Size:  <span class="token number">0.15</span> MiB
-Net Upgrade Size:      <span class="token number">0.00</span> MiB
-
-:: Proceed with installation? <span class="token punctuation">[</span>Y/n<span class="token punctuation">]</span> Y
-:: Retrieving packages<span class="token punctuation">..</span>.
- blackarch-keyring-20180925-2-any                                                                   <span class="token number">18.1</span> KiB  <span class="token number">0.00</span>   B/s 00:00 <span class="token punctuation">[</span>-----------------------------------------------------------------------------<span class="token punctuation">]</span> <span class="token number">100</span>%
- perl-expect-1.35-6-any                                                                             <span class="token number">50.9</span> KiB  <span class="token number">1698</span> KiB/s 00:00 <span class="token punctuation">[</span>-----------------------------------------------------------------------------<span class="token punctuation">]</span> <span class="token number">100</span>%
-<span class="token punctuation">(</span><span class="token number">2</span>/2<span class="token punctuation">)</span> checking keys <span class="token keyword">in</span> keyring                                                                                                 <span class="token punctuation">[</span>-----------------------------------------------------------------------------<span class="token punctuation">]</span> <span class="token number">100</span>%
-<span class="token punctuation">(</span><span class="token number">2</span>/2<span class="token punctuation">)</span> checking package integrity                                                                                               <span class="token punctuation">[</span>-----------------------------------------------------------------------------<span class="token punctuation">]</span> <span class="token number">100</span>%
-<span class="token punctuation">(</span><span class="token number">2</span>/2<span class="token punctuation">)</span> loading package files                                                                                                    <span class="token punctuation">[</span>-----------------------------------------------------------------------------<span class="token punctuation">]</span> <span class="token number">100</span>%
-<span class="token punctuation">(</span><span class="token number">2</span>/2<span class="token punctuation">)</span> checking <span class="token keyword">for</span> <span class="token function">file</span> conflicts                                                                                              <span class="token punctuation">[</span>-----------------------------------------------------------------------------<span class="token punctuation">]</span> <span class="token number">100</span>%
-:: Processing package changes<span class="token punctuation">..</span>.
-<span class="token punctuation">(</span><span class="token number">1</span>/2<span class="token punctuation">)</span> upgrading blackarch-keyring                                                                                              <span class="token punctuation">[</span>-----------------------------------------------------------------------------<span class="token punctuation">]</span> <span class="token number">100</span>%
-<span class="token operator">==</span><span class="token operator">></span> Appending keys from blackarch.gpg<span class="token punctuation">..</span>.
-<span class="token operator">==</span><span class="token operator">></span> Locally signing trusted keys <span class="token keyword">in</span> keyring<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key A0917C4147A37007CB54C1CFD295AA940EFDDF62<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key 4345771566D76038C7FEB43863EC0ADBEA87E4E3<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key CBA3C7D4798912702DCF568E67D8BDF42AD93F4E<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Locally signing key 8F9A9793CB8591147C2EC70566E0CDBD1E01F333<span class="token punctuation">..</span>.
-<span class="token operator">==</span><span class="token operator">></span> Importing owner trust values<span class="token punctuation">..</span>.
-<span class="token operator">==</span><span class="token operator">></span> Disabling revoked keys <span class="token keyword">in</span> keyring<span class="token punctuation">..</span>.
-  -<span class="token operator">></span> Disabling key 5E210889BBB5C48500E0C4F9C75E985FF8B993B4<span class="token punctuation">..</span>.
-<span class="token operator">==</span><span class="token operator">></span> Updating trust database<span class="token punctuation">..</span>.
-gpg: key 1EB2638FF56C0C53: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 1EB2638FF56C0C53: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: key 786C63F330D7CB92: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
-gpg: public key DB323392796CA067 is <span class="token number">3037</span> days newer than the signature
-gpg: marginals needed: <span class="token number">3</span>  completes needed: <span class="token number">1</span>  trust model: pgp
-gpg: public key CF66D153D884358F is <span class="token number">16</span> seconds newer than the signature
-gpg: depth: <span class="token number">0</span>  valid:   <span class="token number">1</span>  signed:  <span class="token number">56</span>  trust: <span class="token number">0</span>-, 0q, 0n, 0m, 0f, 1u
-gpg: depth: <span class="token number">1</span>  valid:  <span class="token number">56</span>  signed:  <span class="token number">81</span>  trust: <span class="token number">1</span>-, 0q, 0n, 55m, 0f, 0u
-gpg: depth: <span class="token number">2</span>  valid:  <span class="token number">77</span>  signed:  <span class="token number">26</span>  trust: <span class="token number">77</span>-, 0q, 0n, 0m, 0f, 0u
-gpg: next trustdb check due at <span class="token number">2020</span>-12-03
-<span class="token punctuation">(</span><span class="token number">2</span>/2<span class="token punctuation">)</span> upgrading perl-expect                                                                                                    <span class="token punctuation">[</span>-----------------------------------------------------------------------------<span class="token punctuation">]</span> <span class="token number">100</span>%
-:: Running post-transaction hooks<span class="token punctuation">..</span>.
-<span class="token punctuation">(</span><span class="token number">1</span>/2<span class="token punctuation">)</span> Arming ConditionNeedsUpdate<span class="token punctuation">..</span>.
-<span class="token punctuation">(</span><span class="token number">2</span>/2<span class="token punctuation">)</span> Warn about old perl modules
-:: Searching databases <span class="token keyword">for</span> updates<span class="token punctuation">..</span>.
-:: Searching AUR <span class="token keyword">for</span> updates<span class="token punctuation">..</span>.
- -<span class="token operator">></span> python-pgspecial: <span class="token builtin class-name">local</span> <span class="token punctuation">(</span><span class="token number">1.11</span>.10-2<span class="token punctuation">)</span> is newer than blackarch <span class="token punctuation">(</span><span class="token number">1.11</span>.10-1<span class="token punctuation">)</span>
- there is nothing to <span class="token keyword">do</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>事实证明还是得看官方文档解决问题，以后直接看官方文档啊同志们！</p>
-<p>CSDN和一堆过时文档害人啊！</p>
-<h2 id="参考">参考</h2>
-<ol type="1">
-<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0JsYWNrQXJjaC9ibGFja2FyY2g=">https://github.com/BlackArch/blackarch<i class="fa fa-external-link-alt"></i></span><br />
-</li>
-<li><span class="exturl" data-url="aHR0cHM6Ly93d3cuYmxhY2thcmNoLm9yZy9kb3dubG9hZHMuaHRtbCNpbnN0YWxsLXJlcG8=">https://www.blackarch.org/downloads.html#install-repo<i class="fa fa-external-link-alt"></i></span></li>
-</ol>
-]]></content>
-      <tags>
-        <tag>blackarch</tag>
       </tags>
   </entry>
   <entry>
@@ -4788,132 +4048,6 @@ lines <span class="token number">2</span>-36/36 <span class="token punctuation">
       </tags>
   </entry>
   <entry>
-    <title>毕竟狂澜挽不回，遽怜遗蜕化飞灰</title>
-    <url>/SARS-cov-2/</url>
-    <content><![CDATA[<p>So this is how liberty die, with thunderous applause <a id="more"></a></p>
-<p>想来我也算半个医学逃兵，颇有些惭愧（元旦那会听某个学医的群友在电报说武汉不太平，然而我怂，即没敢跟周围任何熟人说也没敢发到国内群里，完美逃过了央视训诫.......</p>
-<h2 id="一管就乱一放就死">一管就乱，一放就死</h2>
-<p>经此一疫，又有一群不食人间烟火的人黄粱梦醒，纷纷如丧考妣，惊讶愤怒心痛，只觉所住非人间。你们是第一天住在人间吗？或许是承平日久了，想想这十几年真是好日子过多了，真觉得和平发展充满爱是世界主流了，这一片绿油油的韭菜不割都对不住韭菜。就像之前的故宫大G，愤怒可以理解，惊讶就太外宾了。 难道你们不知道权贵一直如此？ 难道你们不知道公卫和防疫本来就是个摆设？ 难道你们第一天接触慈善和红会？ 难道你们第一天活在地球？</p>
-<p>然后在恐慌下自相践踏，死伤甚众，隔离这么严疫情没把你们搞死经济先崩了。</p>
-<h2 id="忘记历史就会梅开二度">忘记历史就会梅开二度</h2>
-<blockquote>
-<p>社会主义没有失业,那叫下岗</p>
-</blockquote>
-<p>有人怕了，就怕跟SARS扯上关系啊</p>
-<p>这病毒终于还是有了个名字叫SARS-cov-2，然而国内官媒一个个都有意回避SARS的说法，甚至绝口不提非典，非得叫新型冠状病毒，却又说不是SARS 我们随便点开一个百科,比如默沙东手册:</p>
-<blockquote>
-<p>严重急性呼吸综合征（SARS）是由SARS冠状病毒（SARS-CoV）引起的严重急性呼吸道疾病。</p>
-</blockquote>
-<p>这可不就是SARS，这次疾病就叫 SARS2 我看正合适。 WHO（Winne Happy Orgnization）不管这个叫 SARS，当然了，他们还满口可防可控不列疫区，我建议WHO加大力度，力度再大点就可以被总书记<strong>亲自批准</strong>火线入党了，岂不美哉</p>
-<p>你们还是说点人话吧，什么2019-nCov啊，什么NCP啊，特色社会主义都能叫社会主义，这新型冠状病毒都不算SARS？</p>
-<blockquote>
-<p>黑格尔在某个地方说过，一切伟大的世界历史事变和人物，可以说都出现两次。他忘记补充一点：第一次是作为悲剧出现，第二次是作为笑剧出现。 ----左壬最爱的鹿克斯祖师《路易·波拿巴的雾月十八》 太阳底下并无新鲜事 ----某些保守派右壬最喜欢的圣经</p>
-</blockquote>
-<h2 id="国士垂垂老矣">国士垂垂老矣</h2>
-<p>元旦那会我觉得这个可能要闹大,当时也没想到会闹成今天这个样子。</p>
-<p>03年非典，蒋先生做出了青史留名的举动，涛哥不戴口罩亲临广州街头，臊子面稳住了北京。今天只留下了一个又一个笑话，让大家觉得“彼可取而代也”</p>
-<p>大家一边吹捧钟南山，一边骂双黄连和可防可控，我看得哭笑不得。 钟南山当年的板蓝根和可防可控大家都忘了吗？莲花清瘟都忘了吗？ 他可不是糊涂，他自己是不信的。他父亲都是反中医的。</p>
-<figure>
-<img src="/SARS-cov-2/板蓝根.webp" alt="板蓝根" /><figcaption aria-hidden="true">板蓝根</figcaption>
-</figure>
-<p>以下内容直接复制自维基百科 &gt;2月11日上午，广州市政府召开新闻发布会公布广州地区非典型肺炎情况，称所有病人的病情均在控制当中。强调对于广州千万人口300多人染病是个很小的比例，非典型肺炎只是局部发生，河源中山等市已无新发病例报告。还解释了2月前前阶段没有公布情况的原因是：河源中山等地的患者经过治疗大多已康复或好转没有再发病，非典型肺炎并不是法定报告传染病，而发病人数305例并不算多。负责人强调会按传染病法公布疫情。 &gt;同日下午，广东省卫生厅举行情况通报会。中国工程院院士钟南山表示，市民到公众场所进行正常的活动是不会受到感染的，宣布广东大中小学将会如期开学。专家还指出，从临床角度看，可能是由病毒引起的，也有可能是病毒的亚型或变种引起的。对于患者的治疗都是采用“对症下药”的方法。</p>
-<p>当然了，肯定有人让我闭嘴，我算个什么东西，哎，我还真不算个东西。 我一个稀里糊涂读了几年生物医学工程的工科狗，给自己脸上贴金也只能算半个医学相关闲杂人等，跑到知乎<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>去说两句，能引来几千个人追着骂我。（2020年的，2013年前的应该不能）</p>
-<p>那我就贴一点<span class="exturl" data-url="aHR0cHM6Ly93d3cud2VpYm8uY29tL3UvMTgyOTg3MDIxMg==">小儿外科裴医生<i class="fa fa-external-link-alt"></i></span>的话 (以下内容大段粘贴，指不定哪天号就没了，留个备份，前几天刚炸了一大批怼中医的)</p>
-<blockquote>
-<p>小儿外科裴医生<br />
-2019-9-8 09:36 来自 iPhone客户端 你要是以为钟南山在这个“科普”中讲到莲花清瘟胶囊是无意的，或者他只是因为没有了解这个药，那就太幼稚了，人家不蠢，只是没有节操，为了利益，用自己的学术地位给那些没用的药站台背书，就是恶。<span class="exturl" data-url="aHR0cDovL2hiLmNoaW5hZGFpbHkuY29tLmNuL2EvMjAxOTA5LzA3L1dTNWQ3MzhmNjdhMzEwOTlhYjk5NWRlOTNmLmh0bWw=">O“知感冒·防流感——全民科普公益行”活动在汉举... ​​​​<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-<p>这活动还有视频哦（太长了就只贴个图好了）</p>
-<p><img src="/SARS-cov-2/莲花清瘟.webp" /></p>
-<p>这底下有个评论：</p>
-<blockquote>
-<p>fanbobb：如果有人问我，连我们最该拥有权威的院士，前几天还有正能量新闻的院士，都宣传中成药，你还成天说中药是骗人的吗？我作为一个非医学专业的普通人还真有点哑口无言</p>
-</blockquote>
-<p>我也哑口无言。</p>
-<blockquote>
-<p>小儿外科裴医生 2月2日 22:07 来自 iPhone 11 Pro 面对一个大家都不太了解的病毒，被感染了有什么丢脸，为什么要用此这么恶毒的词？我觉得他比钟南山客观、务实、专业、真实多了。//<span class="citation" data-cites="st5873:这样草包还有脸出来到处接受采访">@st5873:这样草包还有脸出来到处接受采访</span> <span class="citation" data-cites="小儿外科裴医生">@小儿外科裴医生</span> 中青报对这篇对@北大呼吸发哥 的访谈很不错，推荐大家看看。O卫健委专家组成员王广发出院了，回答了我们8... ​​​​</p>
-</blockquote>
-<blockquote>
-<p>阿瓦达啃大瓜1633：回复@蓝小诺CC:几年前亲耳听钟老板在欧洲呼吸病年会分会上演讲说他们团队研究治疗H1N1板蓝根有效，莲花清韵胶囊有效，当初差点以为听错了，那时才明白钟老板那一刻的身份是行政官员不是医生。</p>
-</blockquote>
-<p>下面这段已经被删了,戳到某些人的脊梁骨了。这里我手动加粗，以免太长不看的读者在跳读我写的这一堆垃圾时错过重点内容</p>
-<blockquote>
-<p><span class="citation" data-cites="小儿外科裴医生:专业我就说几个词吧">@小儿外科裴医生:专业我就说几个词吧</span>：<strong>连花清瘟、板蓝根、装修致白血病、兰菌净、羧甲司坦、口罩</strong>。//<span class="citation" data-cites="嘛咪嘛咪-hong:所以我想知道钟南山哪儿不客观">@嘛咪嘛咪-hong:所以我想知道钟南山哪儿不客观</span>，不务实，不专业，不真实呢？（非杠，真心请教）</p>
-</blockquote>
-<p>当然很多都删了，还有很多没有说出口（很多话我也没说出口）</p>
-<blockquote>
-<p>昨天在隔壁号我又有一篇文章被删了，算上之前被删的和推送不出去的，整个疫情期我有约1/10的文章没法见人，昨天看到棒棒医生的那篇循证的崩溃的文章也被删了，医学专业人员连专业问题都不能讨论和发言，那可能是这块土地真的不再需要专业和科学了。 ​​​​</p>
-</blockquote>
-<p>19年10月钟南山还在搞：<span class="exturl" data-url="aHR0cHM6Ly93d3cudGhlcGFwZXIuY24vbmV3c0RldGFpbF9mb3J3YXJkXzQ3MzExMDY=">钟南山：正研发新版板蓝根，药效或强五六倍<i class="fa fa-external-link-alt"></i></span>，还给莲花清瘟站台，对了，还有虫草呢（就是内含重金属，改变了平西王历史的进程的那个虫草）</p>
-<p><img src="/SARS-cov-2/冬虫夏草.webp" /></p>
-<p>什么叫国士无双啊，战术后仰</p>
-<p><img src="/SARS-cov-2/pilipili.webp" /></p>
-<p>另，友情提示，李兰娟的人品、水平和能力还不如钟南山。</p>
-<p>没多少人提起，蒋先生的往事 据说蒋先生现在身体也不太好，唉</p>
-<figure>
-<img src="/SARS-cov-2/蒋彦永.webp" alt="蒋彦永先生" /><figcaption aria-hidden="true">蒋彦永先生</figcaption>
-</figure>
-<p>“我之所以能直面现实，是因为我相信我们的国家。因为国家如果能从我提供的这些情况吸取一定的教训，因此建立好公共防疫制度，从SARS的挑战与困境中站起来，获得全世界人民的信任。”</p>
-<p>这次怕是让老爷子心寒了</p>
-<p>当然某人青年时代就亲自读过莎士比亚，并且在15年引经据典告诉过我们：“凡是过去，皆为序章”。<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
-<p><em>我将无我，亲自指挥</em></p>
-<p>正常表现罢了</p>
-<blockquote>
-<p>因笑王谢诸人，登高怀远，也学英雄涕</p>
-</blockquote>
-<!-- 
-
-建议大家多屯点粮食
-
-有钱记得做空美股（当然你也可以拿期权做空A股，只要你不怕投机倒把当场击毙）
-
-对野生动物保护持续悲观（你看见之前环保部门煤改气了吧）
-
-再多说两句，流浪猫狗应该跟本次非典没有太大关系，不管有没有关系，流浪猫狗本就应该组织扑杀（收容和安乐是宠保人士和猫奴狗奴的事，政府以极大浪费~~纳税人~~韭菜的血汗钱进行收容和安乐都是不合适的，TNR属于迁就猫奴狗奴的绥靖行为，同样不可取）。
-昆明滇池的红嘴鸥和黔灵山公园的猕猴今年缺少游客喂食，景区组织投喂，这是十分不好的。
-
-下面贴一些鸟类爱好者的话：
-
-[中土饲养员]：有研究表明人为投喂淀粉类的面包蛋糕等会降低各种鸥类育雏的成功率，但是还好红嘴鸥只把昆明当成补充体力的中转站
-[JK协捕队2世](https://weibo.com/u/6552893675)：
-[漂泊极北鲵](https://weibo.com/u/5832997504)：...首先 这是红嘴鸥Chroicocephalus ridibundus 不是海鸥Larus canus 其次这些鸥已经被喂得彻底与自然环境分离了 这是在毒害它们
-没事请与野生动物保持距离，不要乱摸、投喂，除了保育和救助等都不要打扰动物
-动物园和景区里的也不行，很多动物园和景区做得都不好，禁止投喂的牌子并不管用，工作人员也制止不过来
-
-我只是半个动物爱好者，这里就不自己扯淡了, 这是一篇土澳学生物的博主写一篇长微博：<https://weibo.com/3962135262/Isy79BHPA>
-我抄一点过来:
->人类的食物，如面包、薯条、饼干，高油高盐，高热量高糖分，对野生动物的健康极为不利，多表现为肥胖、肾衰竭、毛发脱落等。因为人类的饮食根本不是它们自然食物链的一部分。不天然的饮食及其附属物，例如塑料袋、油污，也会污染野生动物的自然栖息地。
->亲密接触野生动物增加疾病的传播概率，这点在当下这个时候，想必不用再过多说明了吧？某市以投喂红嘴鸥为荣的，鸟类身上携带什么疾病来着，禽流感啊，好自为之！去高原上摸旱獭喂食旱獭，自私且无耻，将自己暴露在甲级传染病鼠疫病原的触碰范围内，你又为你家人想过吗？犰狳是恐怖的麻风病宿主，很多小型食肉动物传播狂犬病，动物身体体表和体内的各种寄生虫，野生动物从来都不好惹。
->使野生动物依赖人类获取食物。这次疫情限制出行，很多问题就暴露出来了，为什么贵州那群猴子和某市的红嘴鸥离不开人的投喂了？这是个恶性循环啊，本来就不该投喂野生动物，养成依赖了，现在甩不了手，离不开人了，出了事动物们自己不会觅食，纷纷饿死，有得去投喂，这个循环刹不住车了，你觉得是好事吗。就说红嘴鸥吧，这种鸟类本来还是候鸟，人家到点了想飞走就飞走，想留下就留下，一投喂全留下了，这基数不断变大，竞争压力也不断变大。红嘴鸥的自然种群数量庞大，适应力很好，年前跑鸟类调查，上万只反正是随随便便看到了，它们也不是什么濒危物种，完全不依靠人类“救援”。所以这事，从一开始做的就不对，不是说你现在不投喂要出问题，是一开始就压根不该投喂，动物不是人，它脑子里只有吃和繁殖，这样强行转变了它们的生存策略，到最后只能是出问题。
-
-还有这方面的疑问不建议问我，请直接去问他们
-
-中医早已变成一个庞大的利益集团，随便一个阿胶之类的体量都在鸿茅药酒十倍以上。总规模和能量加起来应该不低于清真食品产业链。
-我不想说什么中医了，我也不拦着，谁爱信谁信。以前看到有人想不开，我都觉得应该劝劝，现在抑郁症想自杀的人我都觉得不应该拦着，信中医就我就更不反对了，都是个人选择，尊重个人意愿。非公共场合抽烟也是个人意愿，还能成为光荣的~~纳税人~~烟草局韭菜。喝中药对他人危害并不高于香烟，还能解决医保和老龄化的难题，顺便进行智商筛选。
-
-在现代医学已经发展到这个样子的今天，再想想《赠医者汤伯高序》文末“嗟夫，使世之医皆若虚、伯高，信之者皆吾里之人，巫其能久胜矣乎”，问题的答案是：你别说，还真能！
-
-楚俗信巫不信医，今天群魔乱舞自称中医的一群人，基本都是跳大神的巫医，谋财害命之徒。可以粗暴的认为是一个宗教性质的东西。
-
-再有人问中医怎样，我建议你们这样安利他们：试试恒河水，这个纯天然，效果也很好，还免费
-
-死生有命，富贵在天
-善哉，善哉
-
->庚子年春，大雪，惊雷，天有五日,瘟疫封城 -->
-<section class="footnotes" role="doc-endnotes">
-<hr />
-<ol>
-<li id="fn1" role="doc-endnote"><p>https://www.zhihu.com/question/28634829<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2" role="doc-endnote"><p>http://politics.people.com.cn/n/2015/1021/c1001-27724579.html<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section>
-]]></content>
-      <categories>
-        <category>彼黍离离</category>
-      </categories>
-  </entry>
-  <entry>
     <title>郑文锋老师的四大发明事件始末</title>
     <url>/16e8/</url>
     <content><![CDATA[<p>今天在<span class="exturl" data-url="aHR0cHM6Ly91ZXN0Yy5pY3U=">uestc.icu<i class="fa fa-external-link-alt"></i></span>和微博上看见好几次，貌似出了个红头文件处理结果，无法确定真假。当时最早那个知乎问题上了知乎热搜第一的时候我也目睹了。在这里随便扯一下吧，夹杂大量个人主观判断。 <a id="more"></a></p>
@@ -5304,6 +4438,7 @@ a  b  cron.d  dir2.dir<span aria-hidden="true" class="line-numbers-rows"><span><
         <category>102网吧日常</category>
       </categories>
       <tags>
+        <tag>ubuntu</tag>
         <tag>Linux</tag>
       </tags>
   </entry>
