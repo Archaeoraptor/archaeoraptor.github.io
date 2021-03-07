@@ -3194,11 +3194,11 @@ body {
   background: url("/uploads/astro1.webp");
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background-size: 100% 100%;
-  background-position: 50% 50%;
+  background-size: cover;
+  background-position: top center;
 }
 .content-wrap {
-  opacity: 0.95;
+  opacity: 0.85;
 }
 .sidebar {
   opacity: 1;
