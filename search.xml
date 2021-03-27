@@ -156,12 +156,19 @@ tcp6       0      0 211.83.111.224:443      211.83.111.221:40294    ESTABLISHED 
     <title>Flask接锅记</title>
     <url>/ff2b/</url>
     <content><![CDATA[<p>动态语言一时爽，维护重构火葬场 <span id="more"></span></p>
-<h2 id="前言">前言</h2>
-<p>国庆假期之后开始了偶滴搬砖生活，教研室有个师兄在拿Flask做微信公众号的文章推送后端。为了读祖传代码，准备折腾Flask。 据说Flask和Django差不了太多，之前Django用的很菜，也不打算拿Django或node之类的重构一边，索性就跳Flask的坑吧</p>
-<h2 id="配置">配置</h2>
-<p>[1] 开启Debug模式。1.0之后直接在Pycharm的Configuration里勾选开启就好了。或者</p>
-<pre><code>export Flask_Debug = 1 # win系统使用set命令</code></pre>
-<p>[2] 使用装饰器，在指定url或修改请求方式时常用，如</p>
+<!-- ## 前言
+
+国庆假期之后开始了偶滴搬砖生活，教研室有个师兄在拿Flask做微信公众号的文章推送后端。为了读祖传代码，准备折腾Flask。
+据说Flask和Django差不了太多，之前Django用的很菜，也不打算拿Django或node之类的重构一边，索性就跳Flask的坑吧
+
+## 配置
+
+[1] 开启Debug模式。1.0之后直接在Pycharm的Configuration里勾选开启就好了。或者
+
+    export Flask_Debug = 1 # win系统使用set命令
+
+[2] 使用装饰器，在指定url或修改请求方式时常用，如
+
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token decorator annotation punctuation">@app<span class="token punctuation">.</span>route</span><span class="token punctuation">(</span><span class="token string">'/hello'</span><span class="token punctuation">)</span>
 <span class="token keyword">def</span> <span class="token function">hello</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
     <span class="token keyword">return</span> <span class="token string">'Hello, World'</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
@@ -191,15 +198,17 @@ app<span class="token punctuation">.</span>register_blueprint<span class="token 
 <p>视图函数一般用来处理入站请求，我们用装饰器把函数注册为事件处理程序，大概这个样子</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token decorator annotation punctuation">@app<span class="token punctuation">.</span>route</span><span class="token punctuation">(</span><span class="token string">'/user/&lt;name>'</span><span class="token punctuation">)</span>
 <span class="token keyword">def</span> <span class="token function">usr</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">return</span> <span class="token string">'Hello World,&#123;&#125;!'</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<h2 id="项目填坑">项目填坑</h2>
-<p>要搞一个微信公众号推送内容，用Flask作为后端，微信接口的大坑等会再填 申请公众号，测试号之类的略过不表。（GRD腾讯真的烦啊，还要身份证号一堆乱七八糟的，开了个人号还一堆权限不给，文档也差，更新慢还经常404打不开，那个什么Telegram Channel，就是比微信高到不知哪里去了。算了，甲方有需求，那就忍了）<br />
-<del>先提前祝愿微信早日倒闭</del></p>
-<h2 id="其他">其他</h2>
-<p>跨域请求：安装flask-cors, 设置一下就行了</p>
-<pre class="line-numbers language-Python" data-language="Python"><code class="language-Python">from flask_cors import CORS
+    <span class="token keyword">return</span> <span class="token string">'Hello World,&#123;&#125;!'</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span>
+``` <span class="token operator">-</span><span class="token operator">-</span><span class="token operator">></span>
+
+<span class="token comment">## 跨域</span>
+
+跨域请求：安装flask<span class="token operator">-</span>cors<span class="token punctuation">,</span> 设置一下就行了
+
+```Python
+<span class="token keyword">from</span> flask_cors <span class="token keyword">import</span> CORS
 ···
-CORS(app, supports_credentials&#x3D;True)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+CORS<span class="token punctuation">(</span>app<span class="token punctuation">,</span> supports_credentials<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>在chrome的新特性中，使用Same-Site Cookies来解决CSRF跨域攻击的问题，没设置会报这种警告, 在未来的版本中，没设置是不允许跨域的</p>
 <pre class="line-numbers language-none"><code class="language-none">A cookie associated with a cross-site resource at http:&#x2F;&#x2F;··· was set without the &#96;SameSite&#96; attribute. A future release of Chrome will only deliver cookies with cross-site requests if they are set with &#96;SameSite&#x3D;None&#96; and &#96;Secure&#96;.<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>设置一下属性就好了</p>
@@ -2426,18 +2435,18 @@ X_pred <span class="token operator">=</span> np<span class="token punctuation">.
       </tags>
   </entry>
   <entry>
-    <title>正则表达式笔记</title>
-    <url>/96cd/</url>
+    <title>正则表达式</title>
+    <url>/regex/</url>
     <content><![CDATA[<p>头大 <span id="more"></span></p>
 <h2 id="让正则表达式的可读性可维护性高一点">让正则表达式的可读性、可维护性高一点</h2>
-<p>正则一般不是给人看的，可读性都比较差，比如下面这个匹配邮箱的正则 <span class="exturl" data-url="aHR0cHM6Ly9yZWdleDEwMS5jb20vbGlicmFyeS9sUDd2TDM=">https://regex101.com/library/lP7vL3<i class="fa fa-external-link-alt"></i></span></p>
-<pre class="line-numbers language-none"><code class="language-none">(?:(?:\r\n)?[\t])*(?:(?:(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|&quot;(?:[^\&quot;\r\\]|\\.|(?:(?:\r\n)?[\t]))*&quot;(?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|&quot;(?:[^\&quot;\r\\]|\\.|(?:(?:\r\n)?[\t]))*&quot;(?:(?:\r\n)?[\t])*))*@(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*|(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|&quot;(?:[^\&quot;\r\\]|\\.|(?:(?:\r\n)?[\t]))*&quot;(?:(?:\r\n)?[\t])*)*\&lt;(?:(?:\r\n)?[\t])*(?:@(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*(?:,@(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*)*:(?:(?:\r\n)?[\t])*)?(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|&quot;(?:[^\&quot;\r\\]|\\.|(?:(?:\r\n)?[\t]))*&quot;(?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|&quot;(?:[^\&quot;\r\\]|\\.|(?:(?:\r\n)?[\t]))*&quot;(?:(?:\r\n)?[\t])*))*@(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*\&gt;(?:(?:\r\n)?[\t])*)|(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|&quot;(?:[^\&quot;\r\\]|\\.|(?:(?:\r\n)?[\t]))*&quot;(?:(?:\r\n)?[\t])*)*:(?:(?:\r\n)?[\t])*(?:(?:(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|&quot;(?:[^\&quot;\r\\]|\\.|(?:(?:\r\n)?[\t]))*&quot;(?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|&quot;(?:[^\&quot;\r\\]|\\.|(?:(?:\r\n)?[\t]))*&quot;(?:(?:\r\n)?[\t])*))*@(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*|(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|&quot;(?:[^\&quot;\r\\]|\\.|(?:(?:\r\n)?[\t]))*&quot;(?:(?:\r\n)?[\t])*)*\&lt;(?:(?:\r\n)?[\t])*(?:@(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*(?:,@(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*)*:(?:(?:\r\n)?[\t])*)?(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|&quot;(?:[^\&quot;\r\\]|\\.|(?:(?:\r\n)?[\t]))*&quot;(?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|&quot;(?:[^\&quot;\r\\]|\\.|(?:(?:\r\n)?[\t]))*&quot;(?:(?:\r\n)?[\t])*))*@(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*\&gt;(?:(?:\r\n)?[\t])*)(?:,\s*(?:(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|&quot;(?:[^\&quot;\r\\]|\\.|(?:(?:\r\n)?[\t]))*&quot;(?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|&quot;(?:[^\&quot;\r\\]|\\.|(?:(?:\r\n)?[\t]))*&quot;(?:(?:\r\n)?[\t])*))*@(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*|(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|&quot;(?:[^\&quot;\r\\]|\\.|(?:(?:\r\n)?[\t]))*&quot;(?:(?:\r\n)?[\t])*)*\&lt;(?:(?:\r\n)?[\t])*(?:@(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*(?:,@(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*)*:(?:(?:\r\n)?[\t])*)?(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|&quot;(?:[^\&quot;\r\\]|\\.|(?:(?:\r\n)?[\t]))*&quot;(?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|&quot;(?:[^\&quot;\r\\]|\\.|(?:(?:\r\n)?[\t]))*&quot;(?:(?:\r\n)?[\t])*))*@(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*\&gt;(?:(?:\r\n)?[\t])*))*)?;\s*)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>我反正看不懂，让我再改点什么我也改不动。别说这种，就是我看我自己以前写的正则，时间一长都看不懂了。</p>
+<p>正则一般不是给人看的，可读性都比较差，比如下面这个匹配邮箱的正则 <span class="exturl" data-url="aHR0cHM6Ly9yZWdleDEwMS5jb20vbGlicmFyeS9sUDd2TDM=">https://regex101.com/library/lP7vL3<i class="fa fa-external-link-alt"></i></span> <!-- 
+<pre class="line-numbers language-none"><code class="language-none">(?:(?:\r\n)?[\t])*(?:(?:(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|&quot;(?:[^\&quot;\r\\]|\\.|(?:(?:\r\n)?[\t]))*&quot;(?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|&quot;(?:[^\&quot;\r\\]|\\.|(?:(?:\r\n)?[\t]))*&quot;(?:(?:\r\n)?[\t])*))*@(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*|(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|&quot;(?:[^\&quot;\r\\]|\\.|(?:(?:\r\n)?[\t]))*&quot;(?:(?:\r\n)?[\t])*)*\&lt;(?:(?:\r\n)?[\t])*(?:@(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*(?:,@(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*)*:(?:(?:\r\n)?[\t])*)?(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|&quot;(?:[^\&quot;\r\\]|\\.|(?:(?:\r\n)?[\t]))*&quot;(?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|&quot;(?:[^\&quot;\r\\]|\\.|(?:(?:\r\n)?[\t]))*&quot;(?:(?:\r\n)?[\t])*))*@(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*\&gt;(?:(?:\r\n)?[\t])*)|(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|&quot;(?:[^\&quot;\r\\]|\\.|(?:(?:\r\n)?[\t]))*&quot;(?:(?:\r\n)?[\t])*)*:(?:(?:\r\n)?[\t])*(?:(?:(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|&quot;(?:[^\&quot;\r\\]|\\.|(?:(?:\r\n)?[\t]))*&quot;(?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|&quot;(?:[^\&quot;\r\\]|\\.|(?:(?:\r\n)?[\t]))*&quot;(?:(?:\r\n)?[\t])*))*@(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*|(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|&quot;(?:[^\&quot;\r\\]|\\.|(?:(?:\r\n)?[\t]))*&quot;(?:(?:\r\n)?[\t])*)*\&lt;(?:(?:\r\n)?[\t])*(?:@(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*(?:,@(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*)*:(?:(?:\r\n)?[\t])*)?(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|&quot;(?:[^\&quot;\r\\]|\\.|(?:(?:\r\n)?[\t]))*&quot;(?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|&quot;(?:[^\&quot;\r\\]|\\.|(?:(?:\r\n)?[\t]))*&quot;(?:(?:\r\n)?[\t])*))*@(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*\&gt;(?:(?:\r\n)?[\t])*)(?:,\s*(?:(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|&quot;(?:[^\&quot;\r\\]|\\.|(?:(?:\r\n)?[\t]))*&quot;(?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|&quot;(?:[^\&quot;\r\\]|\\.|(?:(?:\r\n)?[\t]))*&quot;(?:(?:\r\n)?[\t])*))*@(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*|(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|&quot;(?:[^\&quot;\r\\]|\\.|(?:(?:\r\n)?[\t]))*&quot;(?:(?:\r\n)?[\t])*)*\&lt;(?:(?:\r\n)?[\t])*(?:@(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*(?:,@(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*)*:(?:(?:\r\n)?[\t])*)?(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|&quot;(?:[^\&quot;\r\\]|\\.|(?:(?:\r\n)?[\t]))*&quot;(?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|&quot;(?:[^\&quot;\r\\]|\\.|(?:(?:\r\n)?[\t]))*&quot;(?:(?:\r\n)?[\t])*))*@(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*)(?:\.(?:(?:\r\n)?[\t])*(?:[^()&lt;&gt;@,;:\\&quot;.\[\]\000-\031]+(?:(?:(?:\r\n)?[\t])+|\Z|(?&#x3D;[\[&quot;()&lt;&gt;@,;:\\&quot;.\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[\t])*))*\&gt;(?:(?:\r\n)?[\t])*))*)?;\s*)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre> --&gt; 我反正看不懂，让我再改点什么我也改不动。别说这种，就是我看我自己以前写的正则，时间一长都看不懂了。</p>
 <p>有一些写法，比如Verbose Mode, 写起来会可读性强一点。</p>
 <h2 id="性能问题">性能问题</h2>
 <p>大部分正则库的实现貌似用的都是有限自动机。</p>
 <p>似乎Perl的很快，javascript的要慢很多。</p>
-<p>贪婪匹配之类的东西写多了就会卡死，</p>
+<p>贪婪匹配之类的东西写多了就会卡死。</p>
+<p>特别在乎性能或许可以自己手写Parser</p>
 <h2 id="用法">用法</h2>
 <h3 id="防止过度匹配">防止过度匹配</h3>
 <p>使用? 比如</p>
@@ -2491,7 +2500,7 @@ num <span class="token operator">=</span> re<span class="token punctuation">.</s
         <category>笔记&amp;札记</category>
       </categories>
       <tags>
-        <tag>正则表达式</tag>
+        <tag>regex</tag>
       </tags>
   </entry>
   <entry>
@@ -5247,6 +5256,82 @@ https://www.zhihu.com/question/401708377/answer/1294784929
       </categories>
       <tags>
         <tag>医疗</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>一个好的包管理器应该是什么样子</title>
+    <url>/an-overview-of-package-manager/</url>
+    <content><![CDATA[<p>在很久很久之前，人们把，欢乐滴make编译，后来东西多了，依赖地狱就来了 <span id="more"></span></p>
+<h2 id="包管理器的功能">包管理器的功能</h2>
+<p>方便安装 解决依赖问题 方便版本升级 卸载后比较干净</p>
+<p>像应用商店一样的东西</p>
+<h2 id="一些取舍">一些取舍</h2>
+<h3 id="要不要去中心化">要不要去中心化</h3>
+<p>有一个大一統的网站的，比如npm,比如pypi， 去中心化的像Golang、deno</p>
+<h3 id="版本管理策略">版本管理策略</h3>
+<p>一种是维护多个版本，用户自行选择使用哪个版本</p>
+<p>另一种是直接拉满</p>
+<h3 id="打包粒度应该有多细">打包粒度应该有多细</h3>
+<p>打包粒度粗一点，所花费的不过是</p>
+<p>我倾向于都2021年了，固态硬盘的价格都不到1块钱1个G了（个人用的，企业级的硬盘会贵一些），真没必要省这点存储空间</p>
+<h3 id="section"></h3>
+<h2 id="我与包管理器">我与包管理器</h2>
+<h3 id="不知有之">不知有之</h3>
+<p>很早很早的时候上中学微机课写过basic，然而当时只是那种不超过几十行的玩具代码，根本不知道项目、工程、workspace为何物，更不要谈包管理器这种东西。当时只用过 Windos XP 和 Windos7， 以及诺基亚手机，连“软件商店”、“应用中心”都没有。</p>
+<h3 id="初见">初见</h3>
+<p>当时大二还是大三开始用Ubuntu（在虚拟机里）和51、stm32、树莓派、Xilinx的板子。当时对包管理器的认识仅限于<code>apt install</code>和<code>dpkg -i</code>。那时候主要在写c和VHDL/Verilog, 并不怎么用包，基本都是c/c++用到什么库就直接下载下来放到目录，用到什么芯片驱动、PCB的封装库也都是手动下载的。（说起来封装库什么的Altium Designer和Vivado应该可以直接勾选自动下载的，可惜你电在清单上并没有正版，我用的都是断网的盗版）</p>
+<p>然后发现<code>apt install</code>还挺好用的，至少当时感觉比提心吊胆的点击exe安装包然后弹出</p>
+<p>后来大三的时候发现python真是好用啊，写起小脚本来比c舒服太多了，用Django糊了一个XX管理系统的课程大作业，每天在win10上跟<code>pip</code>作斗争。由于大作业的前端没用上Vue、React之类的脚手架，所以逃过了<code>npm</code>包的毒打。后来又乱入了机器学习的坑，开始整一些掉包调参的垃圾（理解一下，要恰饭水论文的嘛），在win10上被迫接触了anaconda这个东西（当时没直接主力换到Linux,还在做一些硬件相关的东西，好多EDA和仿真软件并不支持Linux）</p>
+<p>不知道为什么我第一次接触anaconda就特别讨厌这个玩意，后来看到anaconda因为版权取消了包括tuna在内第三方镜像源的分发，更讨厌了....</p>
+<h3 id="开始怀疑">开始怀疑</h3>
+<p>后来在Ubuntu、Debian、Raspbian上多次遇到依赖问题，搞得头都大了 然后后来又把wordpress的博客换成了hexo的，第一次见识了几个G的npm包</p>
+<h3 id="见得多了">见得多了</h3>
+<p>后来出于好奇看了看moderm c++ 和 rust，可能c写习惯了， 维护教研室的服务器接触了<code>rpm</code>包和老CentOS的<code>yum</code></p>
+<h3 id="成为一个很菜的打包者">成为一个很菜的打包者</h3>
+<p>当时曾经对deb包好奇，</p>
+<h2 id="参考文章和推荐阅读">参考文章和推荐阅读</h2>
+<p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLndvbGZvZ3JlLmNvbS9wb3N0cy93aHktbm8tZ29wYXRoLw==">$GOPATH 耦合之殇<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLndvbGZvZ3JlLmNvbS9wb3N0cy9nb2xhbmctcGFja2FnZS1oaXN0b3J5Lw==">从 goinstall 到 module —— golang 包管理的前世今生<i class="fa fa-external-link-alt"></i></span> 这两篇是wolfogre写的，写得很用心，推荐 <span class="exturl" data-url="aHR0cHM6Ly9mb3JlbGF4LnNwYWNlL2xldHMtdGFsay1hYm91dC1wYWNrYWdlLW1hbmFnZXIv">包管理器的前世今生<i class="fa fa-external-link-alt"></i></span> 讲homebrew和Ruby的....很不巧我既没有Mac也没用过Ruby</p>
+<p>https://zhuanlan.zhihu.com/p/83698275</p>
+]]></content>
+      <tags>
+        <tag>package</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>how-to-deal-with-small-files 如何存储、读取、写入大量小文件/文本</title>
+    <url>/undefined/</url>
+    <content><![CDATA[<p>这里不是主要在说文件系统，大部分是在讨论庸俗的web应用怎么处理文件/文本 <span id="more"></span></p>
+<h2 id="一些不同的和场景">一些不同的和场景</h2>
+<h3 id="网盘">网盘</h3>
+<p>各种文件，各种文本文件、图片，能搜到个标题名</p>
+<h3 id="wiki百科在线电子书">wiki百科、在线电子书</h3>
+<p>要搜到文本内容，要展示出来</p>
+<h3 id="在线协同编辑">在线协同编辑</h3>
+<h3 id="存储大量细碎小文件">存储大量细碎小文件</h3>
+<h3 id="有gitsvn等版本控制需求">有Git、SVN等版本控制需求</h3>
+<h3 id="普通的博客">普通的博客</h3>
+<p>Hexo或者Hugo这样的静态博客</p>
+<h2 id="几种方案">几种方案</h2>
+<h3 id="直接扔在关系型数据库里面">直接扔在关系型数据库里面</h3>
+<p>不太在乎性能就直接把文本扔到mysql/postgresql/sqlite之类的数据库里面就行了</p>
+<h3 id="一些文档数据库">一些文档数据库</h3>
+<p>leveldb：写性能很强</p>
+<p>terakdb：之前好像听谁说过挺强的</p>
+<h3 id="文件服务器">文件服务器</h3>
+<p>FTP、HTTP的文件服务器听起来像是20年前流行的东西，虽然不能骗钱，但是它好用。</p>
+<p>临时要分享文件可以直接用python开一个HTTP的。</p>
+<pre class="line-numbers language-none"><code class="language-none">python -m http.server 8000<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>或者你想要性能更好的可以用Nginx、Apache之类的东西。</p>
+<h2 id="文件系统">文件系统</h2>
+<h2 id="后记">后记</h2>
+<p>一个谈了挺久的骗钱项目是做一个医学知识库，包括不限于电子病历、论文、书、医学词典、药品说明书。最后老板提的需求大概就是搞一个传统的那种带有XX管理系统，能搜索、能查看、能编辑，<strong>能骗钱</strong>，像个简陋版wiki百科+简陋百度+在线词典，后续可能还要加上临床决策或者对话机器人之类的东西，以及医学科普视频教程（不太觉得我们的垃圾代码和老服务器能撑得住视频服务）。</p>
+<p>由于是骗钱项目，各种乱七八糟的功能看起来很丰富就行，性能不用管，反正能跑就行了。之前想拿<span class="exturl" data-url="aHR0cHM6Ly9naXRlZS5jb20vUmFpbnlHYW8vRG9jU3lz">MxsDoc<i class="fa fa-external-link-alt"></i></span>这个来二次开发，然而我们不想再用java了（上次想打一个java写的东西的AUR包被恶心到了，差点被逼疯），接锅维护师兄的祖传Flask几个月后也不想再碰Flask了（Django我大三写的，也不想再用了，虽然确实挺好用）,正好最近在看网络和并发，顺便在看Go，于是找到了Go写的Mindoc准备拿来魔改交差（结果拿到以后发现Beego一股PHP味，<del>也是，这种XX管理系统骗钱项目就适合PHP快速产出</del>）。（之前有想过用其他开源的网盘或管理系统拿来二次开发，还是这种有一点像wiki的东西跟骗钱目标比较像）</p>
+<p>看到mindoc之前有过版本控制的功能，后来由于性能原因移除了。然后仔细一看Mindoc的搜索部分，几乎全都是SQL。</p>
+<p>于是很好奇到底应该怎么做一个性能还不错的文本查询、阅读、上传下载的web服务，就有了这篇水文。</p>
+<pre class="line-numbers language-none"><code class="language-none"><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+]]></content>
+      <tags>
+        <tag>file</tag>
       </tags>
   </entry>
 </search>

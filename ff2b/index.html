@@ -186,7 +186,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+    <div class="sidebar-inner sidebar-overview-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -199,7 +199,6 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%93%9D%E5%9B%BE"><span class="nav-number">3.</span> <span class="nav-text">蓝图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%86%E5%9B%BE%E5%92%8C%E6%A8%A1%E6%9D%BF"><span class="nav-number">4.</span> <span class="nav-text">视图和模板</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E5%A1%AB%E5%9D%91"><span class="nav-number">5.</span> <span class="nav-text">项目填坑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">6.</span> <span class="nav-text">其他</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#flask%E9%83%A8%E7%BD%B2"><span class="nav-number">7.</span> <span class="nav-text">Flask部署</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -215,7 +214,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -228,7 +227,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">59</span>
+        <span class="site-state-item-count">61</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -333,7 +332,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-07 21:26:09" itemprop="dateModified" datetime="2021-03-07T21:26:09+08:00">2021-03-07</time>
+        <time title="修改时间：2021-03-27 11:50:16" itemprop="dateModified" datetime="2021-03-27T11:50:16+08:00">2021-03-27</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -356,12 +355,19 @@
     
     <div class="post-body" itemprop="articleBody">
         <p>动态语言一时爽，维护重构火葬场 <span id="more"></span></p>
-<h2 id="前言">前言</h2>
-<p>国庆假期之后开始了偶滴搬砖生活，教研室有个师兄在拿Flask做微信公众号的文章推送后端。为了读祖传代码，准备折腾Flask。 据说Flask和Django差不了太多，之前Django用的很菜，也不打算拿Django或node之类的重构一边，索性就跳Flask的坑吧</p>
-<h2 id="配置">配置</h2>
-<p>[1] 开启Debug模式。1.0之后直接在Pycharm的Configuration里勾选开启就好了。或者</p>
-<pre><code>export Flask_Debug = 1 # win系统使用set命令</code></pre>
-<p>[2] 使用装饰器，在指定url或修改请求方式时常用，如</p>
+<!-- ## 前言
+
+国庆假期之后开始了偶滴搬砖生活，教研室有个师兄在拿Flask做微信公众号的文章推送后端。为了读祖传代码，准备折腾Flask。
+据说Flask和Django差不了太多，之前Django用的很菜，也不打算拿Django或node之类的重构一边，索性就跳Flask的坑吧
+
+## 配置
+
+[1] 开启Debug模式。1.0之后直接在Pycharm的Configuration里勾选开启就好了。或者
+
+    export Flask_Debug = 1 # win系统使用set命令
+
+[2] 使用装饰器，在指定url或修改请求方式时常用，如
+
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token decorator annotation punctuation">@app<span class="token punctuation">.</span>route</span><span class="token punctuation">(</span><span class="token string">'/hello'</span><span class="token punctuation">)</span>
 <span class="token keyword">def</span> <span class="token function">hello</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
     <span class="token keyword">return</span> <span class="token string">'Hello, World'</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
@@ -391,15 +397,17 @@ app<span class="token punctuation">.</span>register_blueprint<span class="token 
 <p>视图函数一般用来处理入站请求，我们用装饰器把函数注册为事件处理程序，大概这个样子</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token decorator annotation punctuation">@app<span class="token punctuation">.</span>route</span><span class="token punctuation">(</span><span class="token string">'/user/&lt;name>'</span><span class="token punctuation">)</span>
 <span class="token keyword">def</span> <span class="token function">usr</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">return</span> <span class="token string">'Hello World,&#123;&#125;!'</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<h2 id="项目填坑">项目填坑</h2>
-<p>要搞一个微信公众号推送内容，用Flask作为后端，微信接口的大坑等会再填 申请公众号，测试号之类的略过不表。（GRD腾讯真的烦啊，还要身份证号一堆乱七八糟的，开了个人号还一堆权限不给，文档也差，更新慢还经常404打不开，那个什么Telegram Channel，就是比微信高到不知哪里去了。算了，甲方有需求，那就忍了）<br />
-<del>先提前祝愿微信早日倒闭</del></p>
-<h2 id="其他">其他</h2>
-<p>跨域请求：安装flask-cors, 设置一下就行了</p>
-<pre class="line-numbers language-Python" data-language="Python"><code class="language-Python">from flask_cors import CORS
+    <span class="token keyword">return</span> <span class="token string">'Hello World,&#123;&#125;!'</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span>
+``` <span class="token operator">-</span><span class="token operator">-</span><span class="token operator">></span>
+
+<span class="token comment">## 跨域</span>
+
+跨域请求：安装flask<span class="token operator">-</span>cors<span class="token punctuation">,</span> 设置一下就行了
+
+```Python
+<span class="token keyword">from</span> flask_cors <span class="token keyword">import</span> CORS
 ···
-CORS(app, supports_credentials&#x3D;True)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+CORS<span class="token punctuation">(</span>app<span class="token punctuation">,</span> supports_credentials<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>在chrome的新特性中，使用Same-Site Cookies来解决CSRF跨域攻击的问题，没设置会报这种警告, 在未来的版本中，没设置是不允许跨域的</p>
 <pre class="line-numbers language-none"><code class="language-none">A cookie associated with a cross-site resource at http:&#x2F;&#x2F;··· was set without the &#96;SameSite&#96; attribute. A future release of Chrome will only deliver cookies with cross-site requests if they are set with &#96;SameSite&#x3D;None&#96; and &#96;Secure&#96;.<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>设置一下属性就好了</p>
