@@ -1,158 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Docker笔记</title>
-    <url>/69d4/</url>
-    <content><![CDATA[<p>开始折腾Docker，等待填坑 <span id="more"></span></p>
-<p>好耶，是容器。坏耶，是容器。</p>
-<h2 id="基本设置和操作">基本设置和操作</h2>
-<h3 id="docker设置">Docker设置</h3>
-<p>一定要先启动, 不然有可能<code>Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?</code></p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">service</span> docker start<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>使用<code>docker exec -it XXXXXX bash</code>进入容器的命令界面，输入exit退出</p>
-<p>同步Docker容器和宿主机的时间：<code>docker cp /etc/localtime &lt;container id&gt;:/etc/localtime</code></p>
-<p>加当前用户到用户组里面</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> gpasswd -a <span class="token variable">$&#123;<span class="token environment constant">USER</span>&#125;</span> docker<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h4 id="离线装docker镜像">离线装Docker镜像</h4>
-<p>教研室服务器的网一直出问题，还有一台机子没有外网 决定离线搞Docker镜像 发现Docker有离线的方法，就是直接在别的机子上pull，然后</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">docker save -o mysql.tar mysql<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>把生成的tar文件拷到服务器上</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">docker load -i  mysql.tar<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h3 id="docker-compose-部署">Docker Compose 部署</h3>
-<p>当部署多个Docker容器，它们之间还有关联的时候，就用Compose代替Docker run，比如师兄Flask写的标注工具，就是前后端分别一个Docker容器</p>
-<p>运行：<code>docker-compose up</code>自动创建</p>
-<h3 id="docker镜像">Docker镜像</h3>
-<p>Docker镜像（image）也是一堆文件，可以自己建或者从远程pull别人建好的 有了Docker镜像，再写好Dockerfile就可以跑起来了（跑起来之后就是个容器container）</p>
-<h3 id="dockerfile">Dockerfile</h3>
-<p>语法近似bash脚本，填写好之后启动会根据文件里面的配置逐步执行</p>
-<h2 id="常用命令">常用命令</h2>
-<table>
-<thead>
-<tr class="header">
-<th>Command</th>
-<th>功能</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Docker build</td>
-<td>创建镜像</td>
-</tr>
-<tr class="even">
-<td>Docker create</td>
-<td>创建镜像（并不启动）</td>
-</tr>
-<tr class="odd">
-<td>Docker exec</td>
-<td>在Docker里面执行命令</td>
-</tr>
-<tr class="even">
-<td>Docker images</td>
-<td>查看镜像</td>
-</tr>
-<tr class="odd">
-<td>Docker pull/push</td>
-<td>下载/上传镜像</td>
-</tr>
-<tr class="even">
-<td>Docker rm/rmi</td>
-<td>删除容器/镜像</td>
-</tr>
-<tr class="odd">
-<td>Docker export/import</td>
-<td>导出导入容器</td>
-</tr>
-<tr class="even">
-<td>Docker import/load</td>
-<td>导出导入镜像</td>
-</tr>
-<tr class="odd">
-<td>Docker start/stop/restart/pause/unpause/kill</td>
-<td>略</td>
-</tr>
-</tbody>
-</table>
-<h2 id="踩坑记录">踩坑记录</h2>
-<h3 id="一次弱智的踩坑">一次弱智的踩坑</h3>
-<p>各位看官散了吧，都是一堆弱智操作搞的</p>
-<p><code>Failed to enable unit: Unit file /etc/systemd/system/docker.service is masked.</code></p>
-<p>执行</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl unmask docker.service
-systemctl unmask docker.socket
-systemctl start docker.service<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>出现 <code>Job for docker.service failed because the control process exited with error code. See "systemctl status docker.service" and "journalctl -xe" for details.</code></p>
-<p>出现<code>Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?</code></p>
-<p>出现<code>systemd[1]: Failed to start LSB: Create lightweight, portable, self-sufficie</code></p>
-<p>Docker pull出现<code>Error response from daemon: Get https://registry-1.docker.io/v2/: dial tcp 34.201.196.144:443: connect: connection refused</code></p>
-<p>是镜像源或者DNS的问题，参照<span class="exturl" data-url="aHR0cHM6Ly95ZWFzeS5naXRib29rcy5pby9kb2NrZXJfcHJhY3RpY2UvaW5zdGFsbC9taXJyb3IuaHRtbA==">这里<i class="fa fa-external-link-alt"></i></span>改了。（阿里的和中科大的教研室的鬼畜教育网根本不稳，最后换了华为的（要注册账号））</p>
-<p>出现<code>pkg_resources.DistributionNotFound: The 'docker-compose==1.8.0' distribution was not found and is required by the application</code></p>
-<p>想用Docker-compose结果报了一堆python的错</p>
-<pre class="line-numbers language-log" data-language="log"><code class="language-log">Traceback (most recent call last):
-  File &quot;&#x2F;usr&#x2F;bin&#x2F;docker-compose&quot;, line 5, in &lt;module&gt;
-    from pkg_resources import load_entry_point
-  File &quot;&#x2F;usr&#x2F;lib&#x2F;python3&#x2F;dist-packages&#x2F;pkg_resources&#x2F;__init__.py&quot;, line 2927, in &lt;module&gt;
-    @_call_aside
-  File &quot;&#x2F;usr&#x2F;lib&#x2F;python3&#x2F;dist-packages&#x2F;pkg_resources&#x2F;__init__.py&quot;, line 2913, in _call_aside
-    f(*args, **kwargs)
-  File &quot;&#x2F;usr&#x2F;lib&#x2F;python3&#x2F;dist-packages&#x2F;pkg_resources&#x2F;__init__.py&quot;, line 2940, in _initialize_master_working_set
-    working_set &#x3D; WorkingSet._build_master()
-  File &quot;&#x2F;usr&#x2F;lib&#x2F;python3&#x2F;dist-packages&#x2F;pkg_resources&#x2F;__init__.py&quot;, line 635, in _build_master
-    ws.require(__requires__)
-  File &quot;&#x2F;usr&#x2F;lib&#x2F;python3&#x2F;dist-packages&#x2F;pkg_resources&#x2F;__init__.py&quot;, line 943, in require
-    needed &#x3D; self.resolve(parse_requirements(requirements))
-  File &quot;&#x2F;usr&#x2F;lib&#x2F;python3&#x2F;dist-packages&#x2F;pkg_resources&#x2F;__init__.py&quot;, line 829, in resolve
-    raise DistributionNotFound(req, requirers)
-pkg_resources.DistributionNotFound: The &#39;docker-compose&#x3D;&#x3D;1.8.0&#39; distribution was not found and is required by the application<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>看到网上的解决方案说</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">pip3 <span class="token function">install</span> backports.ssl_match_hostname --upgrade<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>结果pip3居然又报错了了</p>
-<pre class="line-numbers language-log" data-language="log"><code class="language-log">pip is configured with locations that require TLS&#x2F;SSL, however the ssl module in Python is not available.
-Collecting backports.ssl_match_hostname
-  Retrying (Retry(total&#x3D;4, connect&#x3D;None, read&#x3D;None, redirect&#x3D;None, status&#x3D;None)) after connection broken by &#39;SSLError(&quot;Can&#39;t connect to HTTPS URL because the SSL module is not available.&quot;,)&#39;: &#x2F;simple&#x2F;backports-ssl-match-hostname&#x2F;
-  Retrying (Retry(total&#x3D;3, connect&#x3D;None, read&#x3D;None, redirect&#x3D;None, status&#x3D;None)) after connection broken by &#39;SSLError(&quot;Can&#39;t connect to HTTPS URL because the SSL module is not available.&quot;,)&#39;: &#x2F;simple&#x2F;backports-ssl-match-hostname&#x2F;
-  Retrying (Retry(total&#x3D;2, connect&#x3D;None, read&#x3D;None, redirect&#x3D;None, status&#x3D;None)) after connection broken by &#39;SSLError(&quot;Can&#39;t connect to HTTPS URL because the SSL module is not available.&quot;,)&#39;: &#x2F;simple&#x2F;backports-ssl-match-hostname&#x2F;
-  Retrying (Retry(total&#x3D;1, connect&#x3D;None, read&#x3D;None, redirect&#x3D;None, status&#x3D;None)) after connection broken by &#39;SSLError(&quot;Can&#39;t connect to HTTPS URL because the SSL module is not available.&quot;,)&#39;: &#x2F;simple&#x2F;backports-ssl-match-hostname&#x2F;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>哇，又是SSL证书的问题</p>
-<p>参照<span class="exturl" data-url="aHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9xdWVzdGlvbnMvNDU5NTQ1MjgvcGlwLWlzLWNvbmZpZ3VyZWQtd2l0aC1sb2NhdGlvbnMtdGhhdC1yZXF1aXJlLXRscy1zc2wtaG93ZXZlci10aGUtc3NsLW1vZHVsZS1pbg==">stackoverflow的解决方案<i class="fa fa-external-link-alt"></i></span></p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> -s
-
-<span class="token function">apt</span> <span class="token function">install</span> libssl-dev libncurses5-dev libsqlite3-dev libreadline-dev libtk8.5 libgdm-dev libdb4o-cil-dev libpcap-dev<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>切到<code>the folder with the Python 3.X library source code</code>，一般在<code>/usr/local/bin</code>底下的python文件夹 运行</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">./configure
-<span class="token function">make</span>
-<span class="token function">make</span> <span class="token function">install</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>依然不行 怀疑是SSL证书的问题，curl使用ssl也报错 但是openssl、libssl-dev都装了的</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">apt</span> <span class="token function">install</span> ca-certificates<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>证书没过期</p>
-<p>又运行了一下openssh居然报错connect:errno=111</p>
-<p>查了一下 &gt;This has nothing to do with SSL. Connection refused means that either there is no server or the connection is blocked by firewall. In your case (before your edit) the server is also plain wrong, i.e. ":443" is no valid server name (hostname missing).</p>
-<p>难道就是防火墙的问题吗？</p>
-<p>查看了一下网络状态</p>
-<p>没问题的工作站</p>
-<pre class="line-numbers language-none"><code class="language-none">tcp        0      0 211.83.111.221:40294    211.83.111.224:443      ESTABLISHED 1825&#x2F;telnet<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>有问题的服务器</p>
-<pre class="line-numbers language-none"><code class="language-none">tcp6       0      0 :::443                  :::*                    LISTEN      101411&#x2F;apache2
-tcp6       0      0 211.83.111.224:443      211.83.111.221:40294    ESTABLISHED 101415&#x2F;apache2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>难道学校的ipv6又炸了？</p>
-<p>试试<code>nc -l 443</code></p>
-<p>emmm，被占用了</p>
-<p>不对，我傻逼了，这是对外的端口啊。。。。</p>
-<p>等吧</p>
-<p><strong>更新</strong>是网费没了没充钱的问题...... 老蔡师兄不是校内的网连不上也是没充钱学校网管给断外网了...... 前几天那个Ubuntu Desktop的工作站最近也没钱了，但是http在终端可以用，镜像源什么的也能连，但是那个浏览器一打开就提示我登录账号。 突然意识到了不对，怀疑服务器的网也没钱了。 其实之前一直怀疑是被制裁了，但是工作站就是好的，才一直以为是SSL证书之类的问题 充钱之后，神奇的都能用了 看来是http神奇的逃脱了没钱的制裁 行吧，在这里排查了四五天，期间还重装过好几次Ubuntu Server 果然还是得充钱啊</p>
-<p><img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/jiaqian.png" alt="Picture" style="zoom:60%;" /></p>
-<h2 id="参考">参考</h2>
-<h2 id="再看docker">再看Docker</h2>
-<p>被人骗入坑Docker，甚至教研室服务器上基本全是Docker跑的一个个容器，甚至MySQL都是跑在Docker上的。</p>
-<p><span class="exturl" data-url="aHR0cDovL2RvY2tvbmUuaW8vYXJ0aWNsZS82NjA=">http://dockone.io/article/660<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9qaW1teXNvbmcuaW8vZG9ja2VyLWhhbmRib29rLw==">https://jimmysong.io/docker-handbook/<i class="fa fa-external-link-alt"></i></span></p>
-]]></content>
-      <categories>
-        <category>笔记&amp;札记</category>
-      </categories>
-      <tags>
-        <tag>Docker</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Flask接锅记</title>
     <url>/ff2b/</url>
     <content><![CDATA[<p>动态语言一时爽，维护重构火葬场 <span id="more"></span></p>
@@ -1441,6 +1289,43 @@ autorandr --save test1<span aria-hidden="true" class="line-numbers-rows"><span><
       <tags>
         <tag>HRV</tag>
         <tag>BCG</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>how-to-deal-with-small-files 如何存储、读取、写入大量小文件/文本</title>
+    <url>/undefined/</url>
+    <content><![CDATA[<p>这里不是主要在说文件系统，大部分是在讨论庸俗的web应用怎么处理文件/文本 <span id="more"></span></p>
+<h2 id="一些不同的和场景">一些不同的和场景</h2>
+<h3 id="网盘">网盘</h3>
+<p>各种文件，各种文本文件、图片，能搜到个标题名</p>
+<h3 id="wiki百科在线电子书">wiki百科、在线电子书</h3>
+<p>要搜到文本内容，要展示出来</p>
+<h3 id="在线协同编辑">在线协同编辑</h3>
+<h3 id="存储大量细碎小文件">存储大量细碎小文件</h3>
+<h3 id="有gitsvn等版本控制需求">有Git、SVN等版本控制需求</h3>
+<h3 id="普通的博客">普通的博客</h3>
+<p>Hexo或者Hugo这样的静态博客</p>
+<h2 id="几种方案">几种方案</h2>
+<h3 id="直接扔在关系型数据库里面">直接扔在关系型数据库里面</h3>
+<p>不太在乎性能就直接把文本扔到mysql/postgresql/sqlite之类的数据库里面就行了</p>
+<h3 id="一些文档数据库">一些文档数据库</h3>
+<p>leveldb：写性能很强</p>
+<p>terakdb：之前好像听谁说过挺强的</p>
+<h3 id="文件服务器">文件服务器</h3>
+<p>FTP、HTTP的文件服务器听起来像是20年前流行的东西，虽然不能骗钱，但是它好用。</p>
+<p>临时要分享文件可以直接用python开一个HTTP的。</p>
+<pre class="line-numbers language-none"><code class="language-none">python -m http.server 8000<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>或者你想要性能更好的可以用Nginx、Apache之类的东西。</p>
+<h2 id="文件系统">文件系统</h2>
+<h2 id="后记">后记</h2>
+<p>一个谈了挺久的骗钱项目是做一个医学知识库，包括不限于电子病历、论文、书、医学词典、药品说明书。最后老板提的需求大概就是搞一个传统的那种带有XX管理系统，能搜索、能查看、能编辑，<strong>能骗钱</strong>，像个简陋版wiki百科+简陋百度+在线词典，后续可能还要加上临床决策或者对话机器人之类的东西，以及医学科普视频教程（不太觉得我们的垃圾代码和老服务器能撑得住视频服务）。</p>
+<p>由于是骗钱项目，各种乱七八糟的功能看起来很丰富就行，性能不用管，反正能跑就行了。之前想拿<span class="exturl" data-url="aHR0cHM6Ly9naXRlZS5jb20vUmFpbnlHYW8vRG9jU3lz">MxsDoc<i class="fa fa-external-link-alt"></i></span>这个来二次开发，然而我们不想再用java了（上次想打一个java写的东西的AUR包被恶心到了，差点被逼疯），接锅维护师兄的祖传Flask几个月后也不想再碰Flask了（Django我大三写的，也不想再用了，虽然确实挺好用）,正好最近在看网络和并发，顺便在看Go，于是找到了Go写的Mindoc准备拿来魔改交差（结果拿到以后发现Beego一股PHP味，<del>也是，这种XX管理系统骗钱项目就适合PHP快速产出</del>）。（之前有想过用其他开源的网盘或管理系统拿来二次开发，还是这种有一点像wiki的东西跟骗钱目标比较像）</p>
+<p>看到mindoc之前有过版本控制的功能，后来由于性能原因移除了。然后仔细一看Mindoc的搜索部分，几乎全都是SQL。</p>
+<p>于是很好奇到底应该怎么做一个性能还不错的文本查询、阅读、上传下载的web服务，就有了这篇水文。</p>
+<pre class="line-numbers language-none"><code class="language-none"><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+]]></content>
+      <tags>
+        <tag>file</tag>
       </tags>
   </entry>
   <entry>
@@ -5256,82 +5141,6 @@ https://www.zhihu.com/question/401708377/answer/1294784929
       </categories>
       <tags>
         <tag>医疗</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>一个好的包管理器应该是什么样子</title>
-    <url>/an-overview-of-package-manager/</url>
-    <content><![CDATA[<p>在很久很久之前，人们把，欢乐滴make编译，后来东西多了，依赖地狱就来了 <span id="more"></span></p>
-<h2 id="包管理器的功能">包管理器的功能</h2>
-<p>方便安装 解决依赖问题 方便版本升级 卸载后比较干净</p>
-<p>像应用商店一样的东西</p>
-<h2 id="一些取舍">一些取舍</h2>
-<h3 id="要不要去中心化">要不要去中心化</h3>
-<p>有一个大一統的网站的，比如npm,比如pypi， 去中心化的像Golang、deno</p>
-<h3 id="版本管理策略">版本管理策略</h3>
-<p>一种是维护多个版本，用户自行选择使用哪个版本</p>
-<p>另一种是直接拉满</p>
-<h3 id="打包粒度应该有多细">打包粒度应该有多细</h3>
-<p>打包粒度粗一点，所花费的不过是</p>
-<p>我倾向于都2021年了，固态硬盘的价格都不到1块钱1个G了（个人用的，企业级的硬盘会贵一些），真没必要省这点存储空间</p>
-<h3 id="section"></h3>
-<h2 id="我与包管理器">我与包管理器</h2>
-<h3 id="不知有之">不知有之</h3>
-<p>很早很早的时候上中学微机课写过basic，然而当时只是那种不超过几十行的玩具代码，根本不知道项目、工程、workspace为何物，更不要谈包管理器这种东西。当时只用过 Windos XP 和 Windos7， 以及诺基亚手机，连“软件商店”、“应用中心”都没有。</p>
-<h3 id="初见">初见</h3>
-<p>当时大二还是大三开始用Ubuntu（在虚拟机里）和51、stm32、树莓派、Xilinx的板子。当时对包管理器的认识仅限于<code>apt install</code>和<code>dpkg -i</code>。那时候主要在写c和VHDL/Verilog, 并不怎么用包，基本都是c/c++用到什么库就直接下载下来放到目录，用到什么芯片驱动、PCB的封装库也都是手动下载的。（说起来封装库什么的Altium Designer和Vivado应该可以直接勾选自动下载的，可惜你电在清单上并没有正版，我用的都是断网的盗版）</p>
-<p>然后发现<code>apt install</code>还挺好用的，至少当时感觉比提心吊胆的点击exe安装包然后弹出</p>
-<p>后来大三的时候发现python真是好用啊，写起小脚本来比c舒服太多了，用Django糊了一个XX管理系统的课程大作业，每天在win10上跟<code>pip</code>作斗争。由于大作业的前端没用上Vue、React之类的脚手架，所以逃过了<code>npm</code>包的毒打。后来又乱入了机器学习的坑，开始整一些掉包调参的垃圾（理解一下，要恰饭水论文的嘛），在win10上被迫接触了anaconda这个东西（当时没直接主力换到Linux,还在做一些硬件相关的东西，好多EDA和仿真软件并不支持Linux）</p>
-<p>不知道为什么我第一次接触anaconda就特别讨厌这个玩意，后来看到anaconda因为版权取消了包括tuna在内第三方镜像源的分发，更讨厌了....</p>
-<h3 id="开始怀疑">开始怀疑</h3>
-<p>后来在Ubuntu、Debian、Raspbian上多次遇到依赖问题，搞得头都大了 然后后来又把wordpress的博客换成了hexo的，第一次见识了几个G的npm包</p>
-<h3 id="见得多了">见得多了</h3>
-<p>后来出于好奇看了看moderm c++ 和 rust，可能c写习惯了， 维护教研室的服务器接触了<code>rpm</code>包和老CentOS的<code>yum</code></p>
-<h3 id="成为一个很菜的打包者">成为一个很菜的打包者</h3>
-<p>当时曾经对deb包好奇，</p>
-<h2 id="参考文章和推荐阅读">参考文章和推荐阅读</h2>
-<p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLndvbGZvZ3JlLmNvbS9wb3N0cy93aHktbm8tZ29wYXRoLw==">$GOPATH 耦合之殇<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLndvbGZvZ3JlLmNvbS9wb3N0cy9nb2xhbmctcGFja2FnZS1oaXN0b3J5Lw==">从 goinstall 到 module —— golang 包管理的前世今生<i class="fa fa-external-link-alt"></i></span> 这两篇是wolfogre写的，写得很用心，推荐 <span class="exturl" data-url="aHR0cHM6Ly9mb3JlbGF4LnNwYWNlL2xldHMtdGFsay1hYm91dC1wYWNrYWdlLW1hbmFnZXIv">包管理器的前世今生<i class="fa fa-external-link-alt"></i></span> 讲homebrew和Ruby的....很不巧我既没有Mac也没用过Ruby</p>
-<p>https://zhuanlan.zhihu.com/p/83698275</p>
-]]></content>
-      <tags>
-        <tag>package</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>how-to-deal-with-small-files 如何存储、读取、写入大量小文件/文本</title>
-    <url>/undefined/</url>
-    <content><![CDATA[<p>这里不是主要在说文件系统，大部分是在讨论庸俗的web应用怎么处理文件/文本 <span id="more"></span></p>
-<h2 id="一些不同的和场景">一些不同的和场景</h2>
-<h3 id="网盘">网盘</h3>
-<p>各种文件，各种文本文件、图片，能搜到个标题名</p>
-<h3 id="wiki百科在线电子书">wiki百科、在线电子书</h3>
-<p>要搜到文本内容，要展示出来</p>
-<h3 id="在线协同编辑">在线协同编辑</h3>
-<h3 id="存储大量细碎小文件">存储大量细碎小文件</h3>
-<h3 id="有gitsvn等版本控制需求">有Git、SVN等版本控制需求</h3>
-<h3 id="普通的博客">普通的博客</h3>
-<p>Hexo或者Hugo这样的静态博客</p>
-<h2 id="几种方案">几种方案</h2>
-<h3 id="直接扔在关系型数据库里面">直接扔在关系型数据库里面</h3>
-<p>不太在乎性能就直接把文本扔到mysql/postgresql/sqlite之类的数据库里面就行了</p>
-<h3 id="一些文档数据库">一些文档数据库</h3>
-<p>leveldb：写性能很强</p>
-<p>terakdb：之前好像听谁说过挺强的</p>
-<h3 id="文件服务器">文件服务器</h3>
-<p>FTP、HTTP的文件服务器听起来像是20年前流行的东西，虽然不能骗钱，但是它好用。</p>
-<p>临时要分享文件可以直接用python开一个HTTP的。</p>
-<pre class="line-numbers language-none"><code class="language-none">python -m http.server 8000<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>或者你想要性能更好的可以用Nginx、Apache之类的东西。</p>
-<h2 id="文件系统">文件系统</h2>
-<h2 id="后记">后记</h2>
-<p>一个谈了挺久的骗钱项目是做一个医学知识库，包括不限于电子病历、论文、书、医学词典、药品说明书。最后老板提的需求大概就是搞一个传统的那种带有XX管理系统，能搜索、能查看、能编辑，<strong>能骗钱</strong>，像个简陋版wiki百科+简陋百度+在线词典，后续可能还要加上临床决策或者对话机器人之类的东西，以及医学科普视频教程（不太觉得我们的垃圾代码和老服务器能撑得住视频服务）。</p>
-<p>由于是骗钱项目，各种乱七八糟的功能看起来很丰富就行，性能不用管，反正能跑就行了。之前想拿<span class="exturl" data-url="aHR0cHM6Ly9naXRlZS5jb20vUmFpbnlHYW8vRG9jU3lz">MxsDoc<i class="fa fa-external-link-alt"></i></span>这个来二次开发，然而我们不想再用java了（上次想打一个java写的东西的AUR包被恶心到了，差点被逼疯），接锅维护师兄的祖传Flask几个月后也不想再碰Flask了（Django我大三写的，也不想再用了，虽然确实挺好用）,正好最近在看网络和并发，顺便在看Go，于是找到了Go写的Mindoc准备拿来魔改交差（结果拿到以后发现Beego一股PHP味，<del>也是，这种XX管理系统骗钱项目就适合PHP快速产出</del>）。（之前有想过用其他开源的网盘或管理系统拿来二次开发，还是这种有一点像wiki的东西跟骗钱目标比较像）</p>
-<p>看到mindoc之前有过版本控制的功能，后来由于性能原因移除了。然后仔细一看Mindoc的搜索部分，几乎全都是SQL。</p>
-<p>于是很好奇到底应该怎么做一个性能还不错的文本查询、阅读、上传下载的web服务，就有了这篇水文。</p>
-<pre class="line-numbers language-none"><code class="language-none"><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-]]></content>
-      <tags>
-        <tag>file</tag>
       </tags>
   </entry>
 </search>
