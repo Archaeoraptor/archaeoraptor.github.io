@@ -477,7 +477,9 @@ debtap -p XXX.deb <span class="token comment"># -p 选项生成PKGBUILD</span>
 <span class="token comment">## 然后稍等一会，会比较慢</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>然后<code>pacman -U XXX.tar.xz</code>可以装到你的电脑上试一下。</p>
 <h3 id="pip2pkgbuilds">pip2pkgbuilds</h3>
-<p>将pip的包转成aur的包，这个工具很久没更新了（But it works）</p>
+<p>将pip的包转成aur的包，这个工具很久没更新了（But it works）。这个工具有不少情况不会帮你自动处理，python的不少pip包本身也不太遵循pip的打包规范，要做不少手动检查和调整。</p>
+<h3 id="npm-pkgbuild">npm-pkgbuild</h3>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FybGFjNzcvbnBtLXBrZ2J1aWxkI3JlYWRtZQ==">npm-pkgbuild<i class="fa fa-external-link-alt"></i></span> 一个将npm包转成aur的包，和上面那个类似，也是自动生成PKGBUILD。没用过不好评价。</p>
 <h2 id="自动化">自动化</h2>
 <p>人肉测试每个包然后传上去给大家用是最好的，不过有的上游更新太勤测试不过来，或者一些<span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL1ZDU19wYWNrYWdlX2d1aWRlbGluZXNfKOeugOS9k+S4reaWhyk=">用版本控制紧跟上游的包<i class="fa fa-external-link-alt"></i></span> <del>又或者有的时候你想让用户当小白鼠</del></p>
 <p>可以试试Travis CI、Github Action 之类的CI/CD工具，不过最好还是更新之前人肉测试一下</p>
@@ -769,23 +771,24 @@ connection<span class="token punctuation">.</span>commit<span class="token punct
   <entry>
     <title>不要尝试sudo apt remove iptables</title>
     <url>/a7d1/</url>
-    <content><![CDATA[<p><img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/emmm.jpg" alt="Picture" style="zoom:80%;" /> <span id="more"></span></p>
+    <content><![CDATA[<p><img src="do-not-use-sudo-apt-remove-iptables/emmm.png" alt="Picture" style="zoom:80%;" /></p>
+<span id="more"></span>
 <p>在Ubuntu和Debian里卸载iptables会发生严重的后果（大佬请无视） 一开始我们觉得是防火墙把443端口给办了用不了https，结果我用UFW设置不管用，怀疑是iptables的问题，问了花花师兄，也不清楚，我们决定先把iptables禁用了。随手一谷歌，也忘了哪个神仙说的</p>
 <pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">apt</span> remove iptables <span class="token comment"># 不要乱试！</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>感觉对的嘛，卸个防火墙能出什么问题嘛<br />
 然后提示是否卸载我选了y，然后突然在卸载的log发现一堆Docker，瞬间感觉不对劲。然后，然后Docker直接不能用了！ 血泪教训啊，防火墙卸了Docker就不能用了！</p>
 <p>随手一搜发现不止我一个人中招啊</p>
-<p><img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/iptables-docker.png" alt="Picture" style="zoom:80%;" /></p>
+<p><img src="do-not-use-sudo-apt-remove-iptables/iptables-docker.png" alt="Picture" style="zoom:80%;" /></p>
 <p>好家伙</p>
-<p><img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/cnm.png" alt="Picture" style="zoom:80%;" /></p>
+<p><img src="do-not-use-sudo-apt-remove-iptables/cnm.png" alt="Picture" style="zoom:80%;" /></p>
 <p>行吧，一堆依赖比python2还多</p>
-<p>不说了，准备重装系统了<img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/mmm.jpg" alt="Picture" style="zoom:80%;" /></p>
+<p>不说了，准备重装系统了<img src="do-not-use-sudo-apt-remove-iptables/mmm.jpg" alt="Picture" style="zoom:80%;" /></p>
 <hr />
 <p>停用iptables请使用<code>chkconfig iptables off</code>命令</p>
 <hr />
 <p>更新，试图垂死挣扎使用</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">apt</span> <span class="token function">install</span> network-manager<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>既然把网卡配置删了那就再配置一遍 等会，装了NetworkManager选了默认配置之后连22端口也连不上了。。。 行吧，准备重装 <img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/wa.jpg" alt="Picture" style="zoom:80%;" /></p>
+<p>既然把网卡配置删了那就再配置一遍 等会，装了NetworkManager选了默认配置之后连22端口也连不上了。。。 行吧，准备重装 <img src="do-not-use-sudo-apt-remove-iptables/wa.jpg" alt="Picture" style="zoom:80%;" /></p>
 ]]></content>
       <categories>
         <category>102网吧日常</category>
@@ -2346,356 +2349,54 @@ num <span class="token operator">=</span> re<span class="token punctuation">.</s
   <entry>
     <title>你好，Manjaro。再见，Manjaro。</title>
     <url>/ff0e/</url>
-    <content><![CDATA[<p>本来我是想装个双系统的，但是想起教研室还有两个老主机，那就..... <span id="more"></span></p>
-<p><del>装Arch是不可能装Arch的</del></p>
-<h2 id="更新再见manjaro">更新———再见Manjaro</h2>
+    <content><![CDATA[<p>洗手.jpg <span id="more"></span></p>
+<p>虽然有一些办法不重装从Manjaro跑路到Arch， <!-- 
+比如reddit上这篇帖子[Guide for Manjaro to Arch migration (the dirty way)](https://www.reddit.com/r/ManjaroLinux/comments/jx42ar/guide_for_manjaro_to_arch_migration_the_dirty_way/)
+ --> 但是你会遇到各种Manjaro魔改的遗留问题（尤其是加入了相当多魔改的最新版Manjaro,据说很早以前比较容易直接滚成Arch）,<strong>the dirty way</strong>。</p>
+<p>我甚至觉得上面这个方法想得到一个纯净的Arch，难度比你去arch的<span class="exturl" data-url="aHR0cHM6Ly9hcmNoaXZlLmFyY2hsaW51eC5vcmcvaXNvLw==">archive<i class="fa fa-external-link-alt"></i></span>下载一个10年前的iso（真正的有图形界面的arch安装镜像哦，官方的）再借助<span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvdGl0bGUvQXJjaF9MaW51eF9BcmNoaXZl">Arch Linux Archive<i class="fa fa-external-link-alt"></i></span>（Rollback Machine）等一点一点滚到最新都麻烦。（至少去年Arch群友们玩过这个活动，勉强可行）</p>
+<p>直接重装一个原味Arch应该是最快的，也是后遗症最小的。总有人觉得直接不重装换源成Arch比较简单，很遗憾，这其实是最麻烦的一种方法。天上不会掉馅饼。</p>
+<h2 id="更新--再见manjaro">更新--再见Manjaro，</h2>
 <p>前一阵Manjaro社区出的争吵让我跑路了，Manjaro之前用的还比较舒服（当然直到现在都比较舒服），以后就不知道怎么样了。外面Arch社区骂声一片，里面还总在内斗，不断有人出走，前几周连jonathon都气走了（跑去隔壁endeavour os了）</p>
 <p>jonathon的声明在<span class="exturl" data-url="aHR0cHM6Ly9mb3J1bS5tYW5qYXJvLm9yZy90L2NoYW5nZS1vZi10cmVhc3VyZXItZm9yLW1hbmphcm8tY29tbXVuaXR5LWZ1bmRzLzE1NDg4OA==">这篇帖子<i class="fa fa-external-link-alt"></i></span></p>
 <p>过程大概是这样的，philm（Manjaro的CEO，反正Manjaro社区的不少人都觉得此人非常讨厌）挪用社区赞助捐款2000欧元，用于给自己买的电脑。这次购买并没有跟掌钱管家jonathon商量，也没有在社区内征得同意。jonathon觉得按照规定这钱只能用于Manjaro项目的网站建设、项目推广之类的，不是给你们恰烂钱的，然后在论坛发帖子怼philm，然后帖子被删了一次，jonathon的管理员也被撤了。帖子下面众人纷纷表示philm不回应道歉以后再也不捐助Manjaro了，不少人表示以后再也不用Manjaro了，并考虑跑路到KDE Neon、Kubuntu、Arch、Endeavour OS。</p>
-<p>philm的回应闪烁其辞，一直说事情不是大家想的那个样子的，但是大家怼他让他公布他和jonathon的完整聊天记录他又不肯。最后philm屁事没有，jonathon跑路去了Endeavour OS。</p>
-<p>我之前从Ubuntu换到Manjaro，现在跟着jonathon跑到endeavour os（Antergos 的后继项目），因为懒得搞网卡驱动和g双显卡驱动了（这个Arch系的发行版显卡驱动、TLP和s-tui之类的也会附带装上，默认xfce桌面有很多系统自带的定制，我装的KDE，基本上相对于Arch没怎么魔改，附带了驱动个和很多常用的包）目前用着感觉还好，观察一下再评价。</p>
-<h2 id="安装">安装</h2>
-<p>选Manjaro是因为对华硕老主板的硬件和驱动支持比较好，安装也比较方便（我可不想自己折腾Nvida驱动）。</p>
-<p>（喜欢KDE桌面，又不想用openSUSE，Kubuntu之前试过体验不是特别好，转了一圈就Manjaro了）</p>
-<p>去官网下了最新版的 Manjaro18.1.5 KDE桌面版本，还是拿Rufus做好启动盘用UEFI装，这里把空闲的老机子直接擦除原来已毕业师兄的win10（erase disk），选 no Hibernate（我不太喜欢systemd，就没设休眠）</p>
-<p>看到选项里有个选择LibreOffice还是Free Office的选项，这里我选了FreeOffice试用，体验过两个月再回来填坑写体会。 （更新，还是WPS吧。。。）</p>
-<p>可以断网安装。没有遇到问题，直接装好了，超乎想象的顺利。唯一的小插曲是装完系统后U盘只剩4M空间，用win10默认的格式化找不回来了，看了<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8zNzc3MjgyNQ==">这里<i class="fa fa-external-link-alt"></i></span> 网上教程已经很多了，我也不打算再写一篇了，下面仅作个人记录(其实并不怎么需要教程，过时得太快，还不如直接看官方wiki或者iso里打包的安装手册，不想看直接照着提示直接装都没问题，比Ubuntu好装太多了) <img src="/ff0e/neofetch-manjaro.webp" alt="manjaro-neofetch" /> 内置python是3.8.1，我一时竟有些不习惯😂</p>
-<h2 id="配置">配置</h2>
-<h3 id="换镜像源">换镜像源</h3>
-<p>当然还是换成你电的，在<code>/​etc/​pacman.d/​mirrorlist</code>加上你电</p>
-<h3 id="输入法">输入法</h3>
-<p>更新，现在有一个官方打包的AUR： manjaro-asian-input-support，在community里面，有manjaro-asian-input-support-fcitx、manjaro-asian-input-support-ibus、manjaro-asian-input-support-ibus、manjaro-asian-input-support-fcitx5</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> pacman -S manjaro-asian-input-support-fcitx<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>然后重启直接就能用了</p>
-<p>KDE推荐fcitx，Gnome下大概ibus体验会好一点？（好吧其实我之前在Ubuntu Gnome上用的也是fcitx）</p>
-<p><strong>下面这些都不用看了</strong></p>
-<p>我用的<del>sunpinyin</del>libpinyin（一个比sunpinyin更新的输入法），googlepinyin也可以，sougoupinyin不推荐，对于它的流氓行为我实在无法放心（如果非要装，记得装fcitx qt4 或 qt5）</p>
-<p>如果想要联网提示的功能可以装个cloudpinyin(要用archlinuxcn的源)</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> pacman -S fcitx-im fcitx-googlepinyin fcitx-libpinyin fcitx-cloudpinyin<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>有个小问题，那个很多教程都写的/.xproflie, 官方wiki里新版是 ~/.pam_environment里面加上那三行, fcitx官网上说是那个~./xprofile, 这里我放到.pam_enviroment里面了。</p>
-<pre class="line-numbers language-log" data-language="log"><code class="language-log">GTK_IM_MODULE&#x3D;fcitx
-QT_IM_MODULE&#x3D;fcitx
-XMODIFIERS&#x3D;@im&#x3D;fcitx<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>然后点开右下角键盘的configure（配置）看不到输入法了，界面是空的，以为是系统语言非中文的问题，但是换了系统语言重启了以后还是不行。 运行了一下fcitx-diagnose, 报这个错误</p>
-<pre class="line-numbers language-log" data-language="log"><code class="language-log">fcitx: BadWindow (invalid Window parameter)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>感觉是看不知道哪个教程的时候在~/.xinitrc里面乱配置的时候出问题了</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">export</span> <span class="token assign-left variable"><span class="token environment constant">LC_ALL</span></span><span class="token operator">=</span>zh_CN.UTF-8
-<span class="token builtin class-name">export</span> <span class="token assign-left variable">GTK_IM_MODULE</span><span class="token operator">=</span>fcitx
-<span class="token builtin class-name">export</span> <span class="token assign-left variable">QT_IM_MODULE</span><span class="token operator">=</span>fcitx
-<span class="token builtin class-name">export</span> <span class="token assign-left variable"><span class="token environment constant">XMODIFIERS</span></span><span class="token operator">=</span><span class="token string">"@im=fcitx"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p>搜了一下是我弱智了，看<span class="exturl" data-url="aHR0cHM6Ly9iYnMuYXJjaGxpbnV4Y24ub3JnL3ZpZXd0b3BpYy5waHA/aWQ9MTg2Mg==">这里<i class="fa fa-external-link-alt"></i></span>，照着教程乱搞的时候都没注意到。 这里把exec放到后面就行了，或者放到.xprofile里面</p>
-<p>配置看这里 https://fcitx-im.org/wiki/Configure_(Other)/zh-hans</p>
-<p>我看很多教程都是用的fcitx-configtool，这里推荐KDE桌面用kcm-fcitx进行设置，也可以直接编辑config文件</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> pacman -S kcm-fcitx<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h3 id="软件包管理">软件包管理</h3>
-<h4 id="pacman">pacman</h4>
-<p>装包首选pacman，然后是AUR，然后是其他pip、npm、deb之类的包（貌似Manjaro发布的20版pamac软件商店还支持了snap和flatpac......），然后是自己编译（对自己打包技术自信的编译狂魔请无视), 这样可以避免不少包冲突。 yaourt已经停止维护了<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>，2020年了很多教程都还是这个，请自行换成yay<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>等</p>
-<p>另外多说一句，Manjaro很多地方和Arch还是不一样的，随便添加arch源或者archlinuxcn源是要出问题的</p>
-<p>要加包优先从AUR里面加，尽量不要用archlinuxcn里的东西，Manjaro很多魔改和更新依赖版本速度和Arch不一样，非要使用archlinuxcn灵车漂移就把Manjaro设成unstable（并且出了事不要去archlinuxcn那里问，切记）</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> pacman-mirrors --api --set-branch unstable<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>虽然名字叫unstable，但是它和Arch的stable基本上是类似的（它还要比Arch的stable慢三天），这意味着换成unstable再上archlinuxcn源灵车漂移翻车的几率会小一点。</p>
-<p>Manjaro的包会比Arch的更新频率慢一点，Manjaro有三种选项，stable，testing和unstable，unstable比Arch的stable慢三天左右，testing比unstable慢，stable比testing慢。一般只是延后了几周而已，可以放心上unstable</p>
-<h4 id="yay安装aur软件">yay安装AUR软件</h4>
-<p>这里用vscode举个栗子</p>
-<p>不像apt有官方包，VSCode在文档上说可以用这个<span class="exturl" data-url="aHR0cHM6Ly9jb2RlLnZpc3VhbHN0dWRpby5jb20vZG9jcy9zZXR1cC9saW51eCNfYXVyLXBhY2thZ2UtZm9yLWFyY2gtbGludXg=">非官方包<i class="fa fa-external-link-alt"></i></span></p>
-<p>按照正常的AUR安装方式是这样的</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> pacman -S <span class="token function">git</span>
-<span class="token builtin class-name">cd</span> /Downloads
-<span class="token function">git</span> clone https://AUR.archlinux.org/visual-studio-code-bin.git
-<span class="token builtin class-name">cd</span> visual-studio-code-bin/
-<span class="token function">sudo</span> pacman -U visual-studio-code-bin-*.pkg.tar.xz
-<span class="token builtin class-name">cd</span> <span class="token punctuation">..</span>/ <span class="token operator">&amp;&amp;</span> <span class="token function">sudo</span> <span class="token function">rm</span> -rfv visual-studio-code-bin/
-code <span class="token builtin class-name">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>这里我们有<code>yay -S visual-studio-code-bin</code>可以代替上面那一串命令 （pacman现在也有了包，直接pacman就好了<code>pacman -S code</code>）</p>
-<h4 id="pamac">pamac</h4>
-<p>另一种方法是直接从软件商店里点击安装，pamac或者octopi，其实也不算win10 巨硬store或者snap那种软件商店，大概就是一个pacman的GUI客户端吧（很多时候报错和提示并不好用，建议下载和更新还是用命令）</p>
-<p>尤其不要同时开着pamac图形界面并打开pacman，pacman进程加锁出错系统容易崩了</p>
-<h3 id="网上冲浪">网上冲浪</h3>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> pacman -S v2ray<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>把config.json放到/etc/v2ray下面 然后配置开机自启和启动（这里用systemd）</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl <span class="token builtin class-name">enable</span> v2ray  <span class="token comment">#开机启动</span>
-systemctl start v2ray<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>然后配合switchyomega或者<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21lbGxvdy1pby9tZWxsb3c=">mellow<i class="fa fa-external-link-alt"></i></span>或者<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3JvZmwwci9wcm94eWNoYWlucy1uZw==">proxychains-ng<i class="fa fa-external-link-alt"></i></span></p>
-<p>如果还是习惯客户端可以试试v2rayA<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
-<h3 id="其他">其他</h3>
-<p>暂时没什么要说了，过一个月再来说体验吧，美化什么的也不想搞了，老主机带不动，我也老了，哎呀，对花里胡哨的欣赏不来了，一律默认配置</p>
-<p>想起什么再说吧，ArchWiki真棒，看Wiki吧</p>
-<h4 id="一些设置的小问题">一些设置的小问题</h4>
-<p>装完输入法之后输入法调不出来了，发现Yakuake也调不出来了，感觉快捷键设置冲突，改快捷键设置就好了。</p>
-<h2 id="后记">后记</h2>
-<p>总能看到一大批Arch玩家在Linux群里发洗手图疯狂劝退Manjaro用户 但是看到下面这篇，我决定还是用Manjaro吧。各种洗手劝退根本没给出让我换系统的强力理由 <span class="exturl" data-url="aHR0cHM6Ly9yZW50cnkuY28vbWFuamFyby1jb250cm92ZXJzaWVz">Manjaro Controversies<i class="fa fa-external-link-alt"></i></span> 中文版<span class="exturl" data-url="aHR0cHM6Ly9zemNsc3lhLm1lL3poLWNuL3Bvc3RzL2xpbnV4L21hbmphcm9fY29udHJvdmVyc2llcy8=">[译] Manjaro 悖论<i class="fa fa-external-link-alt"></i></span> 我还用windows呢，我还用Ubuntu呢，本弱智儿童欢乐多，你们随便怎么鄙视。自从当了硬件逃兵不折腾板子不玩单片机树莓派我连C都不怎么用，欢乐的拿python乱写脚本呢，节省心智的东西有时候真是好东西</p>
-<p>人生苦短， In the long run, we are all dead（虽然我并不喜欢凯恩斯主义）</p>
-<p>我一直觉得商业化是个好事，尤其是操作系统这种东西。私以为大多数情况下知识产权是个好东西，收费也是个好东西，垄断是个坏东西。开源的一个重要贡献就是打破垄断。（虽然现在很多专利什么的都被玩坏了，特别是国内） 操作系统这种工业级的东西，商业化是正道，<strong>微软的问题在于它的垄断，而不是商业化</strong></p>
-<p>（这Manjaro一股 Windows Vista 味，好看好用，bug多也能接受</p>
-<h2 id="时隔5个月的更新">时隔5个月的更新</h2>
-<p>终于返校了，这疫情闹得，哎呀</p>
-<p>据说长时间不追滚动更新可能滚炸，不管了，硬着头皮试一下</p>
-<p>直接</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">sudo</span> pacman -Syyu<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>更新后重启显示密码不对，不知道是什么问题，试着重置了一下密码</p>
-<p>（并不是我忘记密码了，这里据说前一阵不少人的KDE桌面密码出问题登录认证失败了）</p>
-<p>重启按esc进grub</p>
-<p>按e，在有<code>linux /boot /vmlinuz-linux</code>的那一行添加<code>init=/bin/bash</code></p>
-<p>ctrl+x出去输入<code>mount -n -o remount,rw /</code>给根目录读写权限，然后输<code>passwd</code>改密码，然后<code>reboot</code>重启</p>
-<p>看起来没什么问题了，隔了几个月也没滚炸（至少看起来没有）</p>
-<h2 id="笔记本也换成manjaro了">笔记本也换成Manjaro了</h2>
-<h3 id="安装-1">安装</h3>
-<p>小破本是灵越7591，不太想用win10了，Dell家的大部分系列都完美兼容Ubuntu（国外出售的7590的还有个developer版的装的就是Ubuntu，比预装win10少了一点微软授权费，可惜国内没有）</p>
-<p>看到他们好多用黑苹果，我的本子不是4k，就没上黑果。（黑果Nvida独显也用不了）</p>
-<p>Manjaro看到别人装上去还不错，索性就装Manjaro了（除了麦克风和显卡的驱动有点小麻烦，其他的蓝牙wifi触控板键盘休眠一切正常）Archwiki上也有同系列7590的参考<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
-<p>BIOS里关secureboot，改raid on为AHIC（不装双系统可以忽略，双系统记得改AHIC不然win10会蓝屏卡在启动界面）</p>
-<p>装完发现Manjaro 20居然添加了snap商店，这是要跟Canonical同流合污？（逐渐Ubuntu化</p>
-<p>KDE桌面内存占用在700M左右，还行</p>
-<p>Ubuntu的显卡和外接显示器对Dell的本子都配适的极好，有Dell官方担保，不想折腾可以直接上Ubuntu（这款海外版有的就是预装Ubuntu，双显卡解决方案应该是Prime）</p>
-<h3 id="显卡驱动问题">显卡驱动问题</h3>
-<p>不需要Nvida的卡就直接选free，装intel的核显就好了</p>
-<p>想用Nvida的卡（好歹是一块1650ti不用太浪费了），装的时候Manjaro驱动选项可以直接选nofree，会自带</p>
-<p>切换双显卡的配置可能导致看视频时卡成PPT，禁用硬件加速就好了，7591的丐版CPU硬解码也是带的动视频的（1080p没有任何问题）</p>
-<h3 id="麦克风声卡配置">麦克风声卡配置</h3>
-<p>之前7591的部分高通声卡驱动不行，麦克风用不了，后来有了一个开源的驱动<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3RoZXNvZnByb2plY3Qvc29m">Sound open firmware<i class="fa fa-external-link-alt"></i></span>，总归是能用了。</p>
-<p>在linux kernel在5.6或以上，安装麦克风声卡驱动用的sof-firmware，可以解决声音和麦克风问题</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> pacman -S sof-firmware<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>然后重启，我第二次重启后失效，喇叭和耳机都没有声音。按照wiki里面修改<code>/etc/modprobe.d/audio-fix.conf</code>(新建一个)，然后写一行</p>
-<pre class="line-numbers language-config" data-language="config"><code class="language-config">options snd-intel-dspcfg dsp_driver&#x3D;1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>就行了。</p>
-<p>或者在Grub的配置文件<code>/etc/default/grub</code>里设置</p>
-<pre class="line-numbers language-config" data-language="config"><code class="language-config">snd-intel-dspcfg.dsp_driver&#x3D;1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>实在不行再试试内核参数(Kernel parameters)加上<code>snd_hda_intel.dmic_detect=0</code></p>
-<p>当然，仅仅是能用。声音效果不是太好，虽然灵越inspiron 7591/7590/7501 系列的扬声器声音本来就不太好，但是放点陶笛和埙的曲子还是有种凄婉呜咽感的，linux下用了sof之后感觉像是喇叭声。以后就只适合拿这个听刀郎了。</p>
-<p>还有一个问题就是有的时候休眠挂起后再打开就没声音了，需要重启才行。暂时没找到什么好的办法，这个毛病之前win10就有</p>
-<h3 id="mm耳机没声音">3.5mm耳机没声音</h3>
-<p>耳机孔没声音，wiki上的解决方案是</p>
-<blockquote>
-<p>In <code>pavucontrol</code>, try changing the Pulseaudio output profile from "Analog Stereo Output" to "Analog Stereo Duplex".</p>
-</blockquote>
-<p>系统语言调成中文的用户点开系统设置-》音频音量设置=》音频=》高级=》内置音频，选模拟立体双工。</p>
-<p>是的，这样就能用了（请忽略这个全损音质，耳机传来声音的时候我甚至觉得我的索尼耳机是拼多多10块钱买的）</p>
-<h3 id="耗电问题">耗电问题</h3>
-<p>这个目前我倒是没什么感觉，我的7591是97w的大电池版本，最好的省电办法是不用GNOME，KDE的掉电速度比GNOME大概能慢一半，轻度使用六七个小时没有太大问题。（跟win10上10个小时比还是有差距）。</p>
-<p>极致省电可以上i3wm和禁用独显，不过7591电池够大，不像游戏本一样分分钟没电，倒是没有必要。</p>
-<p>还有就是降压，给CPU降个50-75mV，效果感人。（对性能影响也很小）</p>
-<p>然后安装thermald和tlp并设置开机自启动（tlp有个图形界面可惜是gtk的并且还在beta版，不太KDE用户建议用）</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> pacman -S thermald tlp
-systemctl <span class="token builtin class-name">enable</span> thermald tlp<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>然后自行设置电池模式。</p>
-<h3 id="散热">散热</h3>
-<p>当然7591/7590更要命的显然是捉急的散热，重度使用建议降压、换散热贴硅脂散热条、垫橡皮垫都安排上。有个s-tui可以查看CPU温度。</p>
-<h2 id="其他个人设置">其他个人设置</h2>
-<h3 id="常用软件">常用软件</h3>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># docker</span>
-<span class="token function">sudo</span> pacman -S docker docker-compose
-<span class="token comment"># 设置开机自启</span>
-<span class="token function">sudo</span> systemctl <span class="token builtin class-name">enable</span> docker<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="中英词典翻译和医学词典">中英词典翻译和医学词典</h4>
-<p>这里我用的开源的GoldenDict配合离线和在线词典</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> pacman -S goldendict<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>下载医学词典和英文词典，体验还是不错的，想要翻译功能可以添加有道和谷歌翻译</p>
-<h3 id="博客搬迁">博客搬迁</h3>
-<p>先装node.js（这里我装的12的lts版）</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> pacman -Sy nodejs-lts-erbium<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>然后从github拉取自己的博客备份repo</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> clone https://github.com/archaeoraptor/blog.git blog
-<span class="token builtin class-name">cd</span> blog<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>另外我用的hexo-renderer-pandoc插件，这个插件要先装pandoc（不然会报错）</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> pacman -S pandoc
-<span class="token function">npm</span> <span class="token function">install</span>
-<span class="token function">git</span> clone https://github.com/next-theme/hexo-theme-next.git themes/next
-hexo g <span class="token operator">&amp;&amp;</span> hexo s<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="windows软件解决方案">windows软件解决方案</h3>
-<p>装wine体验还是不太好，虚拟机装个win7上跑qq和word，反正7591能加内存，加到32G就完事了，还不够就加64G（是的，这个系列支持64G内存，虽然说明书上写的只支持到32G）</p>
-<h3 id="网上冲浪-1">网上冲浪</h3>
-<p>qv2ray还不错，electron-ssr装上v2ray插件也不错，但是electron内存占用太高了。喜欢web版的还有一个v2raya可以用。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yay -S qv2ray<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>装wireguard</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> pacman -S wireguard-tools wireguard-dkms<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>如果用机场的话，可以装个clash，然后配置开机自启和规则（那个win版clash的图形界面真的反直觉反人类，相当难受，clashy也没好到哪去），貌似也支持套个tun/tap用来全局代理(似乎并不怎么好用)</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> pacman -S clash<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>可以配置systemd让clash开机自启，<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0RyZWFtYWNyby9jbGFzaC93aWtpL2NsYXNoLWFzLWEtZGFlbW9u">wiki<i class="fa fa-external-link-alt"></i></span>上还提供了docker-compose和pm2的方法(配置文件放在<code>~/.config/clash</code> )。(貌似pm2方便一点？尤其是装了nodejs的话，不过clash是go开发的官方推荐docker，不过docker和pm2要开机自启还是得用systemd)</p>
-<p>上个月发布的clash1.0版本是和老版本不兼容的<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>，AUR里打包的clash是不兼容的，所以要手动修改yml文件或者自己编译老版本的clash</p>
-<blockquote>
-<p><code>Proxy</code>, <code>Proxy Group</code> and <code>Rule</code> is no longer used. They are now respectively <code>proxies</code>, <code>proxy-groups</code> and `rules</p>
-</blockquote>
-<p>(修改的话一般只要修改<code>Proxy</code>, <code>Proxy Group</code> and <code>Rule</code> 这三个参数为<code>proxies</code>, <code>proxy-groups</code> and `rules就行了)</p>
-<p>设置完成后重启网络服务</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl restart systemd-networkd<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h3 id="中英文和字体设置">中英文和字体设置</h3>
-<h4 id="把桌面文件夹改回英文">把桌面文件夹改回英文</h4>
-<p>这里我用的<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0dOT01FL3hkZy11c2VyLWRpcnMtZ3Rr">xdg-user-dirs-gtk<i class="fa fa-external-link-alt"></i></span>，GNOME出品，KDE上也能用</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> pacman -Sy xdg-user-dirs-gtk
-<span class="token builtin class-name">export</span> <span class="token assign-left variable"><span class="token environment constant">LANG</span></span><span class="token operator">=</span>en_US
-xdg-user-dirs-gtk-update<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>然后想把LANG变量调回中文的可以再调回来</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">export</span> <span class="token assign-left variable"><span class="token environment constant">LANG</span></span><span class="token operator">=</span>zh_CN.UTF-8<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>如果你用Dolphin文件夹管理器，你要把那几个桌面、文档、下载的路径在编辑里面手动改成英文</p>
-<h4 id="tty中文不显示">tty中文不显示</h4>
-<p>装点字体就好了，或者直接把全局的LANG=en.US</p>
-<h4 id="复门等字体显示日文">复门等字体显示日文</h4>
-<p>最简单的做法是把系统装的语言包卸载了，只装中文字体包,见<span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL0xvY2FsaXphdGlvbl8oJUU3JUFFJTgwJUU0JUJEJTkzJUU0JUI4JUFEJUU2JTk2JTg3KS9TaW1wbGlmaWVkX0NoaW5lc2VfKCVFNyVBRSU4MCVFNCVCRCU5MyVFNCVCOCVBRCVFNiU5NiU4Nyk=">Localization<i class="fa fa-external-link-alt"></i></span>。</p>
-<p>或者在<code>\etc\locale.conf</code>加上<code>LANG=zh_CN.UTF-8</code></p>
-<p>然后刷新字体缓存。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">fc-cache -fv<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h2 id="注">注</h2>
-<section class="footnotes" role="doc-endnotes">
-<hr />
-<ol>
-<li id="fn1" role="doc-endnote"><p>https://wiki.archlinux.org/index.php/AUR_helpers<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2" role="doc-endnote"><p>https://github.com/Jguer/yay<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3" role="doc-endnote"><p>https://aur.archlinux.org/packages/v2raya<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4" role="doc-endnote"><p>https://wiki.archlinux.org/index.php/Dell_Inspiron_15_(7590)<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5" role="doc-endnote"><p>https://github.com/Dreamacro/clash/wiki/Breaking-Changes-in-1.0.0<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section>
+<p>philm的回应闪烁其辞，一直说事情不是大家想的那个样子的，但是大家怼他让他公布他和jonathon的完整聊天记录他又不肯。最后philm屁事没有继续担任Manjaro的领袖，jonathon跑路去了Endeavour OS。</p>
+<h2 id="再次更新--pamac不慎向aur官网打出了ddos">再次更新--pamac不慎向aur官网打出了DDoS</h2>
+<p>Manjaro的Pamac不小心DDoS了aur.archlinux.org， 每秒40多来自pamac的请求，aur遭到暴击。 很喜欢reddit评论里的一句话：Just when I thought I couldn’t hate manjaro any more.</p>
+<p>https://www.reddit.com/r/archlinux/comments/mz3biz/is_the_aur_down_for_everyone/<br />
+https://gitlab.manjaro.org/applications/pamac/-/issues/1017</p>
+<h2 id="关于社区文化和商业化">关于社区文化和商业化</h2>
+<p>微软的商业化非常成功，苹果和安卓也是。</p>
+<p>即使Linux桌面发行版这种反商业风气比较浓的地方，商业化也不意味着坏事。</p>
+<p>REHL也还算不错，名声也比较好；Canonical争议比较大，虽然不招Debian等开源社区的喜欢，早年间也算对推广Linux桌面有贡献，后面snap等有点evil化了</p>
+<p>当然，或许还要算上国内的Deepin。（奔着Windows的竞品去的，和其他Linux社区的画风和定位不太一样，倒是和安卓的定位挺像，总不是坏事）</p>
+<p>然而Manjaro的商业化我很不看好，就我目前看到的，对上游没有太多贡献，反而给上游带来了更多的麻烦。而且还有一点，Manjaro挪用社区捐款到公司口袋里面，虽然都是Manjaro，但是这在眼里揉不得沙子的很多开源社区人严重这已经是重罪了。当然，也不全是坏事，就不少人的体验来看，至少用起来比Ubuntu舒服不少。</p>
+<p>红帽的商业化就很成功，一开始就是给企业提供服务器支持等商业化内容，挣了钱反哺Linux社区。Deepin有不少情怀，比某些充满国家经费和金钱气息的发行版好不少，打包了很多deepin-wine也好DDE也好争取到国内不少公司配适Linux也好，都还算不错。Deepin虽然也带来了大量的小白，但是没有涌到Debian等社区去造成很多麻烦。</p>
+<p>我们重温一下“b站或许会倒闭但绝不会变质”的典中典（不知不觉蒙古上单发表重要讲话也一年了，笑）。为什么b站就被骂的这么厉害呢？优酷土豆乐视爱奇艺哪个广告不比这个多，开头的广告还无法跳过。论视频质量和推荐无营养的视频、还有强制使用手机app、以及抄袭和营销号，跟抖音快手比现在的b站已经算良心了吧。<br />
+就像早期的b站那样，这是一群小圈子和爱好者，首先这不是一个商品，这是一个社区，没多少营销号也没有广告，很多人是倾注心血去做视频的，感情很深，氛围也很好。（国内其他视频网站可能也就被封的内涵段子“段友”（现 皮皮虾）有早期b站用户那样类似的归属感了，什么？a站？a站还活着啊？） 当然视频网站的运行成本比较高，靠用爱发电一般做不了很大（就算商业化吃香难看都难免亏损，比如爱奇艺），人多了以后商业化是难免的。</p>
+<p>相信大家都能看到Arch社区对Manjaro用户的态度，不管是在archlinuxcn论坛或者irc、电报，还是在国外的reddit社区等，……<em>&amp;（</em>%&amp;&amp;￥人*&amp;……（此处省略500字）</p>
+<p>不少Arch用户和维护者对Manjaro的恶意大概就像b站老用户这样（你看苹果微软不是比Manjaro邪恶多了，但是他们敌视这些的次数可能比Manjaro要少）</p>
+<p>Arch背后没有商业化背景，甚至没有红帽或Canonical这样的公司，然而还是有了比背靠大公司的发行版更多的包（算上野包）和更丰富的wiki(可能没有红帽的wiki好，但是中文翻译多)，这都是Arch的维护者和用户们用爱发电一砖一瓦的心血。它不像Windows和Mac或者红帽的RHEL那样一开始就是一个商品，而且Arch的特点也不太适合做服务器或者商业化。（可能gentoo的商业化用途都比Arch多，还是有一点运维在用gentoo当服务器的）Manjaro的商业化，和原来的社区格格不入。很多地方直接和arch的不少理念和作风背道而驰。 不幸的是Manjaro的社区也有不少伸手党，大量安利Manjaro的视频和帖子都只说好用、好看、好安装，绝口不提社区文化和用户责任。（<strong>而且还在教程里让你添加archlinuxcn的源，同时还说Manjaro更稳定</strong>）</p>
+<p>曾经的Arch的ISO有GUI安装界面的（10年前），后来就没了，而官方Wiki上的安装指南也对新手不那么友好了（越来越不友好了）。这里面一个比较重要的原因是过滤小白用户和伸手党，提高用户门槛。这个策略应该还是比较成功的，然而这挡不住Manjaro等发行版的用户。（许多完全有能力安装、使用Archlinux甚至为Archlinux做贡献的用户一开始都被吓到了Manjaro，走了一些弯路，兜兜转转又被洗手到了Arch） 今年愚人节当天Arch出了一个<span class="exturl" data-url="aHR0cHM6Ly9hcmNobGludXgub3JnL3BhY2thZ2VzL2V4dHJhL2FueS9hcmNoaW5zdGFsbC8=">archinstall<i class="fa fa-external-link-alt"></i></span>的TUI安装方式（还在extra仓库里），当时我一度以为是愚人节玩笑。不过试了一下，还是与其他发行版的GUI安装界面相去甚远。</p>
+<p>短期看来不会，长期看来应该也不会。可能是无奈之举吧，暂时也找不到太多比提高安装门槛更好的过滤伸手党的办法了。</p>
+<p>这种过滤机制类似很多论坛（比如52pojie等）的邀请制、等级制，早期知乎也是这样的邀请制（甚至还要求实名）。前面提到的b站早期也是要答题的（而且题还很难）。 这些做法确实很有效，很多论坛都靠邀请制挡住了伸手党和发广告的。知乎在开放邀请后内容质量的下滑速度经历过的人应该印象很深，b站也是。我还是个真·小学生的时候赶上了许多中文论坛的最后余辉，现在再想起那些倒闭的、变质的、冷冷清清没人说话的论坛曾经高朋满座的热闹的场面还是不胜唏嘘。Manjaro给Arch带来的影响，总让我想起曾经经历过的社区没落过程。。。</p>
+<h2 id="链接">链接</h2>
+<p><span class="exturl" data-url="aHR0cHM6Ly9yZW50cnkuY28vbWFuamFyby1jb250cm92ZXJzaWVz">Manjaro Controversies<i class="fa fa-external-link-alt"></i></span><br />
+<span class="exturl" data-url="aHR0cHM6Ly9vcmlnaW5jby5kZS9NYW5qYXJvLUNvbnRyb3ZlcnNpZXMv">【译】Manjaro 的争议<i class="fa fa-external-link-alt"></i></span> 源码菊巨的中文翻译<br />
+<span class="exturl" data-url="aHR0cHM6Ly93d3cucmVkZGl0LmNvbS9yL2xpbnV4NG5vb2JzL2NvbW1lbnRzL2ZuMmlxOC93aHlfeW91X3Nob3VsZG50X3VzZV9tYW5qYXJvLw==">Why You shouldn't use Manjaro.<i class="fa fa-external-link-alt"></i></span><br />
+<span class="exturl" data-url="aHR0cHM6Ly93d3cucmVkZGl0LmNvbS9yL2xpbnV4cXVlc3Rpb25zL2NvbW1lbnRzL2JycnBxci93aHlfbm90X21hbmphcm8v">Why not Manjaro?<i class="fa fa-external-link-alt"></i></span><br />
+<span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzQ3NTE0MTIyL2Fuc3dlci8xMDc0MTI1NDk=">Ubuntu 推出的Snap应用架构有什么深远意义? - farseerfc的回答<i class="fa fa-external-link-alt"></i></span></p>
+<h3 id="他山之石">他山之石</h3>
+<p>Arch的社区属性要远远大于工具属性和商品属性，我们看看那些耳熟能详的社区。这里扔了很多知乎的链接，是因为，我觉得“btw I use arch”和部分arch粉丝在众人眼中的快要溢出优越感，和早期（13年前）中期（15年前）的知乎特别像。很奇怪openSUSE社区和gentoo社区等都没这种arch这种说不出来风气，如果非要找个相似的，可能是部分vim党（emacs党类比gentoo） 还能再诞生一个像早期知乎氛围和内容质量一样的社区吗？我觉得不能（限定简中，长城之内）。还能再诞生一个像arch这样的社区吗？我觉得也不能。有些东西是90年代和2000年初错过就不再有的，未来是商业公司、手机app、短视频直播，自由软件和社区、理想、小众社区诞生的机会不多了。（AOSC等地方能看到火苗和种子，然而每次我看到十年前整个互联网的氛围和现在的样子，还是有点悲观）</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzMzNDA2Njg1Ng==">哔哩哔哩注册为什么要去做题？<i class="fa fa-external-link-alt"></i></span><br />
+<span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzIwMjY5NzcyL2xvZw==">知乎最近涌入了很多在校大学生，这会对知乎产生什么影响？<i class="fa fa-external-link-alt"></i></span> 这是一个2012年的问题，今天看起来有点苦涩<br />
+<span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzI3MjAyNTA4L2Fuc3dlci8zNTgyNzU2Mw==">怎么找到知乎早期的经典回答？<i class="fa fa-external-link-alt"></i></span> 这是一个14年的问题 <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzIyNjgyNTcz">佐藤謙一等人的离开是知乎的转折点吗？<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzIyNjc1Nzk2">佐藤謙一删掉所有知乎记录离开知乎的原因是什么？<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzIxNTc0NDU1">葛巾为什么离开知乎？<i class="fa fa-external-link-alt"></i></span> 同样是几个14年的问题 <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzQyNjQ5MjU5Ny9hbnN3ZXIvMTU0MjYzMzE5Mw==">什么是「知乎遗风」，现在还有哪些知乎用户拥有这种「遗风」？<i class="fa fa-external-link-alt"></i></span> 这是一个2020年的问题</p>
 ]]></content>
       <categories>
         <category>不务正业系列</category>
       </categories>
       <tags>
+        <tag>Archlinux</tag>
         <tag>manjaro</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>HTTPS二三事</title>
-    <url>/https-in-some-specific-scene/</url>
-    <content><![CDATA[<p>未完待续 <span id="more"></span></p>
-<p>诸如<code>git clone</code> 、 <code>apt/yum/pacman</code>下载公开文件，到底有没有必要用HTTPS(或者SSH之类的其他加密方式)？一些不传输帐号密码之类的隐私的不怎么改变网页内容的静态网站有必要吗？</p>
-<p>以前我也觉得没有必要，结果就被险恶的世道教做人了。 差不多可以盖棺定论了，如果处于运营商和防火墙的慈祥关爱中，有必要，那可太有必要了。</p>
-<p>咋说，本来HTTPS是拿来给你们防范FBI、CIA、黑皮、灰产人士、高雅人士针对某个、某些特定目标搞中间人攻击偷你密码、篡改你获取的数据啥的。这种用途下载公开的包、镜像、一些仓库里的代码倒是没必要上HTTPS，普通人下个安装包也没啥东西值得攻击的，而且连到服务器下一个体积不太小的压缩包/二进制文件也不太好掺砂子，而且下完了之后还有GPG校验，传输的时候多套一个HTTPS大部分时候。而且HTTPS两边都有带宽、加解密之类的成本损耗，下载大文件是不太划算的。</p>
-<p>可能他们也妹想到某些运营商和防火墙能这么流氓，直接公然大范围污染。</p>
-<h2 id="目前使用https的一些小牺牲">目前使用HTTPS的一些小牺牲</h2>
-<h3 id="成本">成本</h3>
-<p>一般来说：</p>
-<p>需要证书，证书要给签发机构交钱<br />
-延迟相比HTTP略高，不过TLS1.3之后 加密解密吃资源</p>
-<p>上面那些在今天看来问题都不是特别大，现在有很多 Let's Encrypt 之类的免费的（收费的CA证书也比十年前便宜太多了），现在的CPU性能对于看网页肯定是过剩的，延迟在TLS1.3以后也不是太大问题</p>
-<h3 id="有些工具没有https支持">有些工具没有HTTPS支持</h3>
-<p>比如OpenWRT那个官方固件一开始就没有HTTPS支持，你得自己装一个。</p>
-<h3 id="很多老网站对https的支持也不太好">很多老网站对HTTPS的支持也不太好</h3>
-<p>用了 HTTPS Everywhere 插件之后经常会发现很多网站体验极差，强制HTTPS之后各种资源加载不出来（关键是很多时候你还意识不到）</p>
-<p><img src="/https-in-some-specific-scene/1606701614.png" /> 比如你电的图书馆，如果用的是HTTPS， 那你的图书位置看不到了（我来这找书最重要的就是这个东西，结果你不告诉我几楼）</p>
-<p><img src="/https-in-some-specific-scene/1606702010.png" /></p>
-<p>这个问题自从17年就有了，一直到现在，都还没修，全站HTTPs遥遥无期。 当然这个问题是因为HTTPS和HTTP的混合 会被新版chrome浏览器悄无声息地拦截，在console里才能看到一个</p>
-<pre class="line-numbers language-log" data-language="log"><code class="language-log">Mixed Content: The page at &#39;&lt;URL&gt;&#39; was loaded over HTTPS, but requested an insecure script &#39;&lt;URL&gt;&#39;. This request has been blocked; the content must be served over HTTPS.<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>你用尊贵的 <em>Internet Explorer</em> 或者老版本chrome是没有这种问题的，但是会加载漫长的几秒钟（在图书馆那个渣配的机子上甚至可能等待10秒），然后弹出来一个大大的警告框，问你<code>是否只查看安全传送的内容</code>，如果你点了<code>是</code>，恭喜你，那你看不到图书的位置了。（我这几年已经无数次看到有倒霉孩子点了是然后找不到书在什么地方了）</p>
-<p>当然很多大网站也在换到HTTPS上也各种问题，知乎上个月准备全站HTTPS的时候出了好几天幺蛾子，<code>400 Bad Request The plain HTTP request was sent to HTTPS port</code>。(不过知乎这个只在乎APP，web版改版之后bug越来越多已经常态化了) <img src="/https-in-some-specific-scene/1606731950.png" /></p>
-<h3 id="登陆认证页面没法劫持https">登陆认证页面没法劫持HTTPS</h3>
-<p>某些登陆认证的界面的原理和劫持差不多，用的<span class="exturl" data-url="aHR0cHM6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvQ2FwdGl2ZV9wb3J0YWw=">强制门户<i class="fa fa-external-link-alt"></i></span>（Captive Portal） 强制门户在自己的DNS服务器中将用户的HTTP请求302重定向到登陆页面 HTTPS没法劫持（尤其是用了HSTS的情况下），结果就卡在那里弹不出登陆认证的界面了。（其实我建议你出门在外使用流量，不要用商场的WIFI，不要贪便宜用手机验证码登陆或者微信登陆）</p>
-<p>有个网站叫<span class="exturl" data-url="aHR0cDovL25ldmVyc3NsLmNvbS8=">neverssl<i class="fa fa-external-link-alt"></i></span>，当你弹不出WIFI登录界面的时候可以访问一下。（其实你随便输入一个什么）</p>
-<p>一般浏览器会有相应的机制，比如火狐的 detect portal， 会向 <span class="exturl" data-url="aHR0cDovL2RldGVjdHBvcnRhbC5maXJlZm94LmNvbQ==">http://detectportal.firefox.com<i class="fa fa-external-link-alt"></i></span> 周期性的发包。</p>
-<p>有的时候登陆认证门户不认200状态码,得用204，然后302跳转到登陆界面。 （提供204状态码的网站很多了，比如<span class="exturl" data-url="aHR0cHM6Ly93d3cudjJleC5jb20vdC8zMDM4ODk/cD0x">v站的这个<i class="fa fa-external-link-alt"></i></span>，基本都是给安卓用的，原生安卓会试图访问谷歌提供的204状态码的服务器来判断是否联网成功，）</p>
-<h3 id="ca证书">CA证书</h3>
-<p>CA证书颁发商公然耍流氓你有什么办法 https://www.zhihu.com/question/50298017 https://www.zhihu.com/question/22795329</p>
-<p>CNNIC</p>
-<p>HSTS MITM SSLStrip HTTP+Strict+Transport+Security HTTPSStrip https://blog.cuiyongjian.com/safe/https-attack/ https://www.zhihu.com/question/22779469</p>
-<h2 id="apt下载更新是否使用https的争议">apt下载更新是否使用HTTPS的争议</h2>
-<figure>
-<img src="/https-in-some-specific-scene/image-20201127170614232.png" alt="image-20201127170614232" /><figcaption aria-hidden="true">image-20201127170614232</figcaption>
-</figure>
-<p>之前有一个叫的网站上的一篇文章叫，引起了不少的讨论。大概的观点是HTTPS在下载这种公共资源的时候没有必要啊。</p>
-<p><strong>而现在，这个网站已经变成体育博彩网站了，造化弄人啊。</strong></p>
-<p>理由主要有：</p>
-<ol type="1">
-<li><p>因为你有GPG校验，HTTPS显得没有什么太大必要。你下下来用GPG校验一下就行了，就算你用HTTPS下载，也只能保证传输过程中没有被篡改，。</p></li>
-<li><p>匿名和隐私的问题：你连上镜像站，那明显是在下镜像源的包。即使你用了HTTPS，还是能通过你下载的包的大小知道你下了些啥（就算你用<code>apt-transport-tor</code>也有这个问题）。</p></li>
-<li><p>还有一个重放攻击（Replay Attacks）的问题，可能有人将包替换为没有安全更新的老版本（签名校验能通过）。</p>
-<p>由于apt有自己的时间戳，晚于这个时间的都被认为非法，时间戳在一段时间内自动失效</p></li>
-</ol>
-<h3 id="现在再看">现在再看</h3>
-<p>当时我还是觉得这个写的有点道理，不到一年就被 cqu mirrors 的事情啪啪打脸。</p>
-<p>当然这个作者显然没考虑CQU Mirrors事件之类的情况。</p>
-<h2 id="重庆大学镜像源被搞">重庆大学镜像源被搞</h2>
-<p>这个事件一出基本可以终结大部分争议了（至少国内是这样的）</p>
-<p>几周前他们那边学校网管的防火墙拦截了80端口的部分HTTP请求，比如一些翻墙工具的包。如果你HTTP明文访问80端口，你会被直接RST。后来在与网管的交涉下恢复了。</p>
-<h2 id="github用ssh还是https">github用SSH还是HTTPS</h2>
-<p>按说SSH这种TCP+SSL的协议会比HTTPS这种跑在应用层的快不少。然而在天朝SSH挺容易被运营商Qos的， HTTPS可以薅cloudflare之类的CDN的羊毛搭github反代。给HTTPS挂socks5/HTTP代理也方便。</p>
-<h2 id="dns-over-https">DNS over HTTPS</h2>
-<p>众所周知传统的DNS是裸UDP的，后来由于 有了使用TCP的DNS，后来出于隐私的考虑又有了DoH（DNS over HTTPS）和DoT（DNS over TLS） 那为什么不用DoT呢？DoT那个853端口太显眼了，分分钟被运营商搞。 DoH最大的问题是慢，如果直接使用远程的DoH，查询发过去和发回来都走HTTPS。在国内用cloudflare的DoH体验极差，如果想用最好自己搭一个。 另一个问题是不支持ECS</p>
-<p>其实DoH在国内也不太推荐，主要是对速度影响太大了。有的方案是走分流，国内IP用国内的DNS，国外的走DoH或者在v2ray之类的跳板上用远程DNS 而且保护隐私方面也不太能</p>
-<p>另，前几天360推出了收费浏览器，居然还有什么国密DoH，号称保护隐私。周红衣说是那就是吧。</p>
-<h2 id="苹果的ocsp">苹果的OCSP</h2>
-<h2 id="闲谈">闲谈</h2>
-<p>HTTPS这种保护隐私的东西按说很多大公司推进起来都很不积极的。但是靠着隐私和广告挣钱的谷歌和百度推起HTTPs来相当的积极，还一口一个在意用户隐私。 谷歌当年大力推广HTTPS的时候还立着<em>不作恶</em>的牌坊，2010年的你说它在乎用户隐私，姑且信了。 谷歌为了推HTTPS，直接抬高HTTPS网站相对于HTTP网站的SEO搜索权重。</p>
-<p>百度也是国内最早一批全站HTTPS的，，当然能说出来“你要隐私干什么”百度显然不会这么好心，嗯，<strong>运营商猛于虎也</strong></p>
-<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzI4Mzc5MDg4">如何看待百度全站搜索进入 HTTPS 时代？<i class="fa fa-external-link-alt"></i></span></p>
-<figure>
-<img src="/https-in-some-specific-scene/image-20201127202536977.png" alt="image-20201127202536977" /><figcaption aria-hidden="true">image-20201127202536977</figcaption>
-</figure>
-<p>百度运维团队当时发布的系列文章还不错，然而</p>
-<p><img src="/https-in-some-specific-scene/1606707060.png" /></p>
-<p>你用百度搜他们的文章，第一条第二条是CSDN和简书的抄袭转载，第三条是他们的，然而500挂掉了。这是怎么回事呢，对于这么好的文章没有被百家号抄袭，小编也很感到惊讶呢。</p>
-<h2 id="参考和链接">参考和链接</h2>
-<p>https://breakthrough.blog/broadcast/31929</p>
-<p>https://v2ex.com/t/725979</p>
-<p>https://www.solidot.org/story?sid=66084</p>
-<p>很早就有了https://www.v2ex.com/t/622672?p=1</p>
-<p>https://sneak.berlin/i18n/2020-11-12-your-computer-isnt-yours.zh/</p>
-<p>https://blog.jacopo.io/en/post/apple-ocsp/</p>
-<p>https://twitter.com/quakewang/status/1327880394801176576</p>
-<p>https://www.reddit.com/r/linux/comments/aidxwa/why_does_apt_not_use_https/ https://blog.cuiyongjian.com/engineering/git-https-ssh/<br />
-https://stackoverflow.com/questions/11041729/why-does-github-recommend-https-over-ssh<br />
-https://news.ycombinator.com/item?id=18958679&amp;p=2 https://askubuntu.com/questions/146108/how-to-use-https-with-apt-get https://unix.stackexchange.com/questions/90227/why-there-is-no-https-transport-for-debian-apt-tool</p>
-<p>https://web.archive.org/web/20180125154639/https://whydoesaptnotusehttps.com/ why does apt not use https的存档</p>
-<p>https://wiki.debian.org/SecureApt</p>
-<p><span class="exturl" data-url="aHR0cDovL3d3dy5tb3NlcndhcmUuY29tLzIwMDkvMDYvZmlyc3QtZmV3LW1pbGxpc2Vjb25kcy1vZi1odHRwcy5odG1s">The First Few Milliseconds of an HTTPS Connection<i class="fa fa-external-link-alt"></i></span></p>
-<p>https://github.com/xirong/my-web/blob/master/readme.md</p>
-<p>https://cloud.tencent.com/developer/article/1399863 APT 为什么不使用 HTTPS 协议？</p>
-<h2 id="附">附</h2>
-<h3 id="cqu-mirrors事件官方的完整说明">CQU Mirrors事件官方的完整说明</h3>
-<p>这里放一下CQU电报新闻的官方声明，地址：https://t.me/cqumirror</p>
-<blockquote>
-<p>2020.11.7</p>
-<p>#warnings 因学校防火墙过滤规则禁止明文访问部分文件，请使用 https 方式访问镜像站</p>
-<p>请暂时更换到其他镜像站。校信息中心进行防火墙维护及站群升级，目前镜像站处于完全不可用状态。恳请谅解。</p>
-<p>2020.11.8</p>
-<p>请务必使用https协议！目前使用http协议获取部分文件将被网络中心防火墙拦截并封禁 IP 约5分钟（初次访问）！目前无任何解决方法，我们仍在积极与校方沟通看是否能够放行。</p>
-<p>2020.11.9</p>
-<p>由于网络中心系统升级和维护，外部流量对于内部服务的访问将被拦截。目前未能知晓何时恢复。如急需使用镜像服务请更换至其他镜像服务器。对所造成的不便恳请谅解。</p>
-<p>2020.11.11</p>
-<p>已确认 IDC 正常开放外网流量访问。镜像服务恢复正常。但仍请不要明文访问数据库文件。目测防火墙策略已经调整但并未有明确证据表明限制放宽。请使用 HTTPS 协议访问镜像。</p>
-<p>2020.11.18</p>
-<p>经沟通目前 IDC 不再拦截明文入站请求。http 协议访问恢复</p>
-</blockquote>
-<p>而且cqu国庆的时候也习惯性闭关锁校，<del>跟你电完全一致</del>（不是，全国高校的网管怎么都一个样啊）</p>
-<blockquote>
-<p>由于不可抗力，国庆期间重庆大学多个对外服务将无法从外部访问。镜像站服务亦受到牵连。恢复对外服务时间未知。对于所造成的不便我们深感遗憾。</p>
-</blockquote>
-<h3 id="为什么apt不使用https的原文">为什么apt不使用HTTPS的原文</h3>
-<p>这个网站已经变成在线发排的体育博彩网站了。这里附上原文</p>
-<blockquote>
-<h1 id="why-does-apt-not-use-https">Why does APT not use HTTPS?</h1>
-<p><em>"Isn't it more secure…?"</em></p>
-<h2 id="tldr">tl;dr</h2>
-<p>HTTPS is used to prevent intruders from being able to listen to communications between you and websites you visit, as well as to avoid data being modified without your knowledge.</p>
-<p>However, files obtained by APT are accompanied by their own signature which allows your system to check they originated from your distribution.</p>
-<p>These signatures are checked against a small set of trusted keys already stored on your computer. Downloaded files are rejected by APT if they are signed by an unknown key<span class="exturl" data-url="aHR0cHM6Ly93ZWIuYXJjaGl2ZS5vcmcvd2ViLzIwMTgwMTI1MTU0NjM5L2h0dHBzOi8vd2h5ZG9lc2FwdG5vdHVzZWh0dHBzLmNvbS8jZm9vdG5vdGUtYXB0LXVua293bi1rZXk=">1<i class="fa fa-external-link-alt"></i></span> or are missing valid signatures. This ensures that the packages you are installing were authorised by your distribution and have not been modified or replaced since.</p>
-<p>HTTPS can not detect if malicious tampering has occurred on the disks of the server you are downloading from. There is little point "securely" transfering a compromised package.</p>
-<h2 id="but-what-about-privacy">But what about privacy?</h2>
-<p>HTTPS does not provide meaningful privacy for obtaining packages. As an eavesdropper can usually see which hosts you are contacting, if you connect to your distribution's mirror network it would be fairly obvious that you are downloading updates.</p>
-<p>Furthermore, even over an encrypted connection it is not difficult to figure out which files you are downloading based on the size of the transfer<span class="exturl" data-url="aHR0cHM6Ly93ZWIuYXJjaGl2ZS5vcmcvd2ViLzIwMTgwMTI1MTU0NjM5L2h0dHBzOi8vd2h5ZG9lc2FwdG5vdHVzZWh0dHBzLmNvbS8jZm9vdG5vdGUtdG9y">2<i class="fa fa-external-link-alt"></i></span>. HTTPS would therefore only be useful for downloading from a server that also offers other packages of similar or identical size.</p>
-<p>What's more important is <em>not</em> that your connection is encrypted but that the files you are installing haven't been modified.</p>
-<h2 id="overly-trusting-cas">Overly trusting CAs</h2>
-<p>There are over 400 "Certificate Authorities" who may issue certificates for any domain. Many have poor security records and some are even explicitly controlled by governments<span class="exturl" data-url="aHR0cHM6Ly93ZWIuYXJjaGl2ZS5vcmcvd2ViLzIwMTgwMTI1MTU0NjM5L2h0dHBzOi8vd2h5ZG9lc2FwdG5vdHVzZWh0dHBzLmNvbS8jZm9vdG5vdGUtY2E=">3<i class="fa fa-external-link-alt"></i></span>.</p>
-<p>This means that HTTPS provides little-to-no protection against a targeted attack on your distribution's mirror network. You could limit the set of valid certificates that APT would accept, but that would be be error-prone and unlikely worth the additional hassle over the existing public-key scheme.</p>
-<h2 id="why-not-provide-https-anyway">Why not provide HTTPS anyway?</h2>
-<p>Your distribution could cryptographically sign the files using the existing scheme and additionally serve the files over HTTPS to provide "defense in depth."</p>
-<p>However, providing a huge worldwide mirror network available over SSL is not only a complicated engineering task (requiring the secure exchange and storage of private keys), it implies a misleading level of security and privacy to end-users as described above.</p>
-<p>A switch to HTTPS would also mean you could not take advantage of local proxy servers for speeding up access and would additionally prohibit many kinds of peer-to-peer mirroring where files are stored on servers not controlled directly by your distribution. This would disproportionately affect users in remote locales.</p>
-<h2 id="ah-what-about-replay-attacks">Ah, what about replay attacks?</h2>
-<p>One issue with a naïve signing mechanism is that it does not guarantee that you are seeing the most up-to-date version of the archive.</p>
-<p>This can lead to a <em>replay attack</em> where an attacker substitutes an archive with an earlier—unmodified—version of the archive. This would prevent APT from noticing new security updates which they could then exploit.</p>
-<p>To mitigate this problem, APT archives includes a timestamp after which all the files are considered stale<span class="exturl" data-url="aHR0cHM6Ly93ZWIuYXJjaGl2ZS5vcmcvd2ViLzIwMTgwMTI1MTU0NjM5L2h0dHBzOi8vd2h5ZG9lc2FwdG5vdHVzZWh0dHBzLmNvbS8jZm9vdG5vdGUtdmFsaWQtdW50aWw=">4<i class="fa fa-external-link-alt"></i></span>.</p>
-<h2 id="where-can-i-find-out-more">Where can I find out more?</h2>
-<p>More technical details may be found on the <em><span class="exturl" data-url="aHR0cHM6Ly93ZWIuYXJjaGl2ZS5vcmcvd2ViLzIwMTgwMTI1MTU0NjM5L2h0dHBzOi8vd2lraS5kZWJpYW4ub3JnL1NlY3VyZUFwdA==">SecureAPT<i class="fa fa-external-link-alt"></i></span></em> wiki page.</p>
-<h3 id="footnotes">Footnotes</h3>
-<ol type="1">
-<li>This appears as <code>Release: The following signatures couldn't be verified because the public key is not available</code>.</li>
-<li>This may even be the case if using Tor via (for example) <span class="exturl" data-url="aHR0cHM6Ly93ZWIuYXJjaGl2ZS5vcmcvd2ViLzIwMTgwMTI1MTU0NjM5L2h0dHBzOi8vcmV0b3V0LmNvLnVrL2Jsb2cvMjAxNC8wNy8yMS9hcHQtdHJhbnNwb3J0LXRvcg==">apt-transport-tor<i class="fa fa-external-link-alt"></i></span>.</li>
-<li>See, for example, <em><span class="exturl" data-url="aHR0cHM6Ly93ZWIuYXJjaGl2ZS5vcmcvd2ViLzIwMTgwMTI1MTU0NjM5L2h0dHBzOi8vc2VjdXJpdHkuc3RhY2tleGNoYW5nZS5jb20vcXVlc3Rpb25zLzUzMTE3L3doYXQtdHJ1c3RlZC1yb290LWNlcnRpZmljYXRpb24tYXV0aG9yaXRpZXMtc2hvdWxkLWktdHJ1c3Q=">What trusted root certification authorities should I trust?<i class="fa fa-external-link-alt"></i></span></em> on StackOverflow.</li>
-<li>See the <em><span class="exturl" data-url="aHR0cHM6Ly93ZWIuYXJjaGl2ZS5vcmcvd2ViLzIwMTgwMTI1MTU0NjM5L2h0dHBzOi8vd2lraS5kZWJpYW4ub3JnL0RlYmlhblJlcG9zaXRvcnkvRm9ybWF0I0RhdGUuMkNfVmFsaWQtVW50aWw=">Date, Valid-Until<i class="fa fa-external-link-alt"></i></span></em> section of the <code>DebianRepository</code> page on the Debian Wiki.</li>
-</ol>
-</blockquote>
-]]></content>
-      <tags>
-        <tag>HTTPS</tag>
       </tags>
   </entry>
   <entry>
@@ -2839,7 +2540,7 @@ i8042.noloop	[HW] Disable the AUX Loopback command while probing
 <p>你可能听过这样的说法，Linux更新后的旧程序仍然跑在内存里，重启后才生效。可是内存不才一共就那么点？（啊，还有swap等交换区，那加起来也而不多）怎么装得下？ 实际上这些安装文件是（通常是）通过mmap建立虚拟地址映射，还在硬盘里。</p>
 <p>在安装脚本和编译命令里面你会看到<code>install</code>这个命令，它跟<code>cp</code>命令最大的区别不是权限管理，而是更改前<code>unlink</code>。 <code>cp</code>会把指定目录原有的文件删掉然后再将新的拷贝到指定目录，而当你有二进制文件在运行的时候，用<code>cp</code>更改这个二进制文件直接删会出错（可能<code>cp</code>命令报错<code>device or resource busy</code>执行失败，或<code>cp</code>执行成功但是导致正在运行的东西出现问题）。 而<code>install</code>会先<code>unlink</code>拷贝一个副本，很像Btrfs的COW（Copy on Write）机制，如果在用，原文件暂时保留（inode），新文件用新的inode，如果有程序在使用这个文件，在mmap映射中依然可以找到原文件（的inode）。虽然这个时候看起来你在安装目录原来的文件已经没了（<code>ls</code>命令查看<code>/usr/bin/XXX</code>、<code>/usr/lib/XXX</code>已经找不到旧文件了，只能看到新安装的），但是实际上在硬盘里还有副本（inode还在）。等到旧文件没有进程在用（refer,引用）之后（inode引用计数为0），旧文件才会被真正删掉；下次再引用的时候，就是新文件了。 （可以用<code>lsof /usr/bin/ssh</code>查看哪个进程在引用或读写<code>/usr/bin/ssh</code>这个文件）</p>
 <p>普通的更新，无需重启整个系统。关闭应用或<code>kill</code>相关进程再打开应该就是新的了。</p>
-<p>ps：不同文件系统的<code>cp</code>行为可能不一样（比如有COW的Btrfs和ZFS）。不同<code>install</code>命令的实现可能也不一样。有些不太靠谱的安装使用<code>cp</code>命令更新二进制文件（比如Archlinux的AUR里某些野包），所以我喜欢刚开机的时候更新。</p>
+<p>ps：不同文件系统的<code>cp</code>行为可能不一样（比如有COW的Btrfs和ZFS, 如果你启用了<code>reflink</code>参数）。不同<code>install</code>命令的实现可能也不一样。有些不太靠谱的安装使用<code>cp</code>命令更新二进制文件（比如Archlinux的AUR里某些野包），所以我喜欢刚开机的时候更新。</p>
 <p>见：</p>
 <p><span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC82Nzg5NDg3OA==">Linux中的mmap映射 [一]<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly93ZWIuYXJjaGl2ZS5vcmcvd2ViLzIwMDkwNjI0MTA0NDQxL2h0dHA6Ly9lbi5jaHlzLmluZm8vMjAwOS8wNS9pbnN0YWxsLXZzLWNwLWFuZC1tbWFwLw==">install vs. cp; and mmap<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvQ29weS1vbi13cml0ZQ==">Copy-on-write<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9tYW43Lm9yZy9saW51eC9tYW4tcGFnZXMvbWFuMi91bmxpbmsuMi5odG1s">unlink(2) — Linux manual page<i class="fa fa-external-link-alt"></i></span> 里的这段话： If the name was the last link to a file but any processes still have the file open, the file will remain in existence until the last file descriptor referring to it is closed.</p>
 <h3 id="不重启整个系统让更新生效">不重启整个系统让更新生效</h3>
@@ -2877,12 +2578,14 @@ https://en.wikipedia.org/wiki/Magic_SysRq_key<br />
 https://wiki.archlinux.org/index.php/General_troubleshooting<br />
 <span class="exturl" data-url="aHR0cHM6Ly93d3cua2VybmVsLm9yZy9kb2MvaHRtbC9sYXRlc3Qv">The Linux Kernel documentation<i class="fa fa-external-link-alt"></i></span> 网上搜不到的解决办法时候再去查文档</p>
 <p>ArchLinux相关：</p>
-<p><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwLy9HZW5lcmFsX3JlY29tbWVuZGF0aW9uc18o566A5L2T5Lit5paHKQ==">ArchWiki: General recommendations (简体中文)<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL0dlbmVyYWxfdHJvdWJsZXNob290aW5n">ArchWiki: General troubleshooting<i class="fa fa-external-link-alt"></i></span><br />
+<p><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwLy9HZW5lcmFsX3JlY29tbWVuZGF0aW9uc18o566A5L2T5Lit5paHKQ==">ArchWiki: General recommendations (简体中文)<i class="fa fa-external-link-alt"></i></span><br />
+<span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL0dlbmVyYWxfdHJvdWJsZXNob290aW5n">ArchWiki: General troubleshooting<i class="fa fa-external-link-alt"></i></span><br />
 <span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL0RlYnVnXy1fR2V0dGluZ19UcmFjZXM=">ArchWiki Debug - Getting Traces<i class="fa fa-external-link-alt"></i></span><br />
 <span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL0J1Z19yZXBvcnRpbmdfZ3VpZGVsaW5lcw==">ArchWiki Bug reporting guidelines<i class="fa fa-external-link-alt"></i></span></p>
 <h3 id="喜欢折腾且有时间可以看看这些">喜欢折腾且有时间可以看看这些</h3>
 <p><span class="exturl" data-url="aHR0cDovL3d3dy5saW51eGZyb21zY3JhdGNoLm9yZy9sZnMvdmlldy9zdGFibGUv">Linux From Scratch<i class="fa fa-external-link-alt"></i></span> 著名的LFS，教你从头编译，照着教程来不难，需要一点耐心和性能足够好的机器用来编译。这有个<span class="exturl" data-url="aHR0cHM6Ly9sY3R0LmdpdGh1Yi5pby9MRlMtQk9PSy9sZnMtc3lzdi9MRlMtQk9PSy5odG1s">中文翻译<i class="fa fa-external-link-alt"></i></span>可以参考。<br />
-<span class="exturl" data-url="aHR0cHM6Ly9ib290bGluLmNvbS9kb2MvbGVnYWN5L2VsZnMvZW1iZWRkZWRfbGZzLnBkZg==">Embedded Linux From Scratch<i class="fa fa-external-link-alt"></i></span> bootlin的嵌入式Linux教程，略老 <span class="exturl" data-url="aHR0cHM6Ly9yaXNjdi5vcmcvbmV3cy8yMDIwLzEyL2VtYmVkZGVkLWxpbnV4LWZyb20tc2NyYXRjaC1pbi00NS1taW51dGVzLW9uLXJpc2Mtdi1ib290bGluLw==">Embedded Linux “from scratch” in 45 minutes…on RISC-V | Bootlin<i class="fa fa-external-link-alt"></i></span> 貌似现在流行risc-v和Rust写嵌入式的东西，老了，没玩过。<br />
+<span class="exturl" data-url="aHR0cHM6Ly9ib290bGluLmNvbS9kb2MvbGVnYWN5L2VsZnMvZW1iZWRkZWRfbGZzLnBkZg==">Embedded Linux From Scratch<i class="fa fa-external-link-alt"></i></span> bootlin的嵌入式Linux教程，略老<br />
+<span class="exturl" data-url="aHR0cHM6Ly9yaXNjdi5vcmcvbmV3cy8yMDIwLzEyL2VtYmVkZGVkLWxpbnV4LWZyb20tc2NyYXRjaC1pbi00NS1taW51dGVzLW9uLXJpc2Mtdi1ib290bGluLw==">Embedded Linux “from scratch” in 45 minutes…on RISC-V | Bootlin<i class="fa fa-external-link-alt"></i></span> 貌似现在流行risc-v和Rust写嵌入式的东西，老了，没玩过。<br />
 <span class="exturl" data-url="aHR0cHM6Ly9lbGl4aXIuYm9vdGxpbi5jb20vbGludXgvbGF0ZXN0L3NvdXJjZQ==">Elixir Cross Referencer<i class="fa fa-external-link-alt"></i></span> 还是bootlin的，能在线查看Linux源码<br />
 <span class="exturl" data-url="aHR0cHM6Ly93d3cuY29kZWR1bXAuaW5mby9wb3N0LzIwMjAwMTI4LXN5c3RlbXRhcC1ieS1leGFtcGxlLw==">通过实例快速入门Systemtap<i class="fa fa-external-link-alt"></i></span><br />
 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2xpY2h1YW5nL2F3ZXNvbWUtc3lzdGVtdGFwLWNu">awesome-systemtap-cn<i class="fa fa-external-link-alt"></i></span><br />
