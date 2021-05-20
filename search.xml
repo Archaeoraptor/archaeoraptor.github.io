@@ -2589,7 +2589,9 @@ https://wiki.archlinux.org/index.php/General_troubleshooting<br />
 <span class="exturl" data-url="aHR0cHM6Ly9lbGl4aXIuYm9vdGxpbi5jb20vbGludXgvbGF0ZXN0L3NvdXJjZQ==">Elixir Cross Referencer<i class="fa fa-external-link-alt"></i></span> 还是bootlin的，能在线查看Linux源码<br />
 <span class="exturl" data-url="aHR0cHM6Ly93d3cuY29kZWR1bXAuaW5mby9wb3N0LzIwMjAwMTI4LXN5c3RlbXRhcC1ieS1leGFtcGxlLw==">通过实例快速入门Systemtap<i class="fa fa-external-link-alt"></i></span><br />
 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2xpY2h1YW5nL2F3ZXNvbWUtc3lzdGVtdGFwLWNu">awesome-systemtap-cn<i class="fa fa-external-link-alt"></i></span><br />
-<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLm9wZW5yZXN0eS5jb20uY24vY24vZHluYW1pYy10cmFjaW5nLw==">动态追踪技术漫谈<i class="fa fa-external-link-alt"></i></span> 强烈推荐</p>
+<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLm9wZW5yZXN0eS5jb20uY24vY24vZHluYW1pYy10cmFjaW5nLw==">动态追踪技术漫谈<i class="fa fa-external-link-alt"></i></span> 强烈推荐<br />
+<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnBhY2thZ2VjbG91ZC5pby9lbmcvMjAxNi8wNi8yMi9tb25pdG9yaW5nLXR1bmluZy1saW51eC1uZXR3b3JraW5nLXN0YWNrLXJlY2VpdmluZy1kYXRhLyM=">Monitoring and Tuning the Linux Networking Stack: Receiving Data<i class="fa fa-external-link-alt"></i></span><br />
+<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnBhY2thZ2VjbG91ZC5pby9lbmcvMjAxNy8wMi8wNi9tb25pdG9yaW5nLXR1bmluZy1saW51eC1uZXR3b3JraW5nLXN0YWNrLXNlbmRpbmctZGF0YS8=">Monitoring and Tuning the Linux Networking Stack: Sending Data<i class="fa fa-external-link-alt"></i></span> 这两篇是讲网络栈监控和调优的，经典文章。流传很广，也有很多中文翻译，不过原文直白简练，推荐直接看原文</p>
 ]]></content>
       <categories>
         <category>不务正业系列</category>
@@ -2600,10 +2602,9 @@ https://wiki.archlinux.org/index.php/General_troubleshooting<br />
       </tags>
   </entry>
   <entry>
-    <title>用疾病记录预测患者死亡风险</title>
+    <title>基于机器学习的ICU急性心肌梗死死亡率预测（MIMIC数据库）</title>
     <url>/morality-prediction/</url>
-    <content><![CDATA[<p>以急性心肌梗死和MIMIC数据库为例</p>
-<span id="more"></span>
+    <content><![CDATA[<p>更新：推荐使用新版的MIMIC数据库自行构建数据集，并尝试整合eICU的病人数据。据说LSTM等方法效果不错，可以试试。 处理过程已经放在github上了：https://github.com/Archaeoraptor/AMI_morality_prediction.git <span id="more"></span></p>
 <p>急性心肌梗死的发病率和死亡率都很高，MIMIC里面大概有5000次记录，用来构造数据集效果会比较好，这次就用MIMIC数据库里面的急性心肌梗死进行死亡风险的预测。</p>
 <p>早期心血管疾病采用TIMI（the Thrombolysis in Myocardial Infarction）风险评分、全球急性心脏事件注册表（GRACE）评分或医生经验判断。后来MIMIC、eICU等开放医学数据库的建立和公布，数据量足够支撑起机器学习，疾病风险预测逐渐开始采用机器学习等方法。 数据清洗和构造数据集</p>
 <p>目前开源的ICU重症数据库主要有MIMIC和eICU；eICU里面的患者数量多一点，但是貌似数据缺失很多，数据质量也不太好（eICU整合了几家不同医院的临床记录拼凑出来的数据库，数据质量参差不齐）</p>
