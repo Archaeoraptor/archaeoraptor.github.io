@@ -1335,6 +1335,68 @@ Address&#x3D;211.83.111.224&#x2F;23<span aria-hidden="true" class="line-numbers-
       </tags>
   </entry>
   <entry>
+    <title>垃圾佬的Openwrt软路由</title>
+    <url>/openwrt/</url>
+    <content><![CDATA[<p>又是捡垃圾的快乐一天 <span id="more"></span></p>
+<h2 id="材料">材料</h2>
+<h3 id="教研室捡来的垃圾">教研室捡来的垃圾</h3>
+<blockquote>
+<p>又不是不能用</p>
+</blockquote>
+<ul>
+<li>2GB 内存条（看起来全新实际上至少八九年前的了，别问为什么只有2G，这是教研室能捡垃圾捡到的最后一块内存条了）</li>
+<li>120G intel固态（包浆成色，上个月刚从一个旧电脑上拆下来的）</li>
+<li>一块 i5 4570 的CPU（战斗成色，貌似也六年了）</li>
+<li>一个风扇（战损成色，全是灰）</li>
+<li>六七年前的华硕主板（伊拉克战损成色）</li>
+<li>一个三星显示器（屏幕漏光，也有五六年了，装系统临时用一下）</li>
+<li>一个2014年的老机箱（战斗成色，全是灰）</li>
+<li>一个主机电源（不是很新，200W）</li>
+<li>VGA线、电源线、排线（普通成色）</li>
+<li>螺丝等（一大把旧主机上拆下来的）</li>
+<li>键盘（N年前的薄膜，伊拉克战损成色，全是灰）</li>
+</ul>
+<p>对，102网吧的主板就是这样子的战损主板</p>
+<figure>
+<img src="/openwrt/image-20201030191635951.webp" alt="对，只有这种主板了" /><figcaption aria-hidden="true">对，只有这种主板了</figcaption>
+</figure>
+<h3 id="全新的和自掏腰包的">全新的和自掏腰包的</h3>
+<p>基本都是室友出的钱</p>
+<ul>
+<li>螺丝刀等（全新，室友的）</li>
+<li>一个插排（昨天室友买的）</li>
+<li>硅脂（全新）</li>
+<li>网卡（室友网购的，刚到）</li>
+<li>网线（教研室网线太老了，就不捡垃圾了）</li>
+<li>clash和v2ray订阅，机场买的</li>
+</ul>
+<h2 id="刷机">刷机</h2>
+<p>自行编译时间太长就用人家编译好的了, 室友刷的。本来以为可能2G的老内存可能会卡，结果室友的win10 pe上去意外的流畅。</p>
+<p>借用了这个<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0xvbW90SG8vVUVTVEMtTmV0d29ya0F1dG9Db25uZWN0">电子科技大学校园网自动登陆脚本<i class="fa fa-external-link-alt"></i></span></p>
+<h2 id="一点小插曲">一点小插曲</h2>
+<p>晚上室友买完插排，第二天我发现教研室的一个旧箱子里满满一箱子插排，好家伙，亏了一个亿。</p>
+<figure>
+<img src="/openwrt/image-20201030191838215.webp" alt="这么多插排...." /><figcaption aria-hidden="true">这么多插排....</figcaption>
+</figure>
+<p>本来Openclash都整好了，结果发现室友的安卓电报没法自行分流。换成了 ssr plus</p>
+<p>装好之后发现风扇声音有点大........直接把风扇线拔了，世界终于清净了。至于散热，问题不大（这么点负载总不可能把CPU给烧了）。</p>
+<p>ps. 正确的做法是SSH上去</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">fanspeedctl stop --all --now<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>固态闲置了100多个G</p>
+<h2 id="突然发现了clash的正确使用方式">突然发现了clash的正确使用方式</h2>
+<p>之前一直很不喜欢clash，clash for win10的图形界面操作在我看起来特别反人类，安卓和平板上clash的app耗电惊人。自动切换线路和分流对我来说又没什么用，一直觉得clash鸡肋，不知道为什么这么多人都在说clash香。</p>
+<p>直到今天室友带入坑上了软路由，好家伙，自动分流和切换真香</p>
+<p>clash这种就适合软路由或者台式机什么的，手机和平板耗电根本顶不住，挂在后台掉电太快了</p>
+]]></content>
+      <categories>
+        <category>102网吧日常</category>
+      </categories>
+      <tags>
+        <tag>openwrt</tag>
+        <tag>捡垃圾</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>基于BERT的电子病历的命名实体识别</title>
     <url>/9112/</url>
     <content><![CDATA[<p>BERT效果确实好，就是有点吃内存</p>
@@ -1434,68 +1496,6 @@ $ psql -h 127.0.0.1 -d doccano -U doccano -p 5432 # 注意你的host，数据库
       <tags>
         <tag>bert</tag>
         <tag>NER</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>垃圾佬的Openwrt软路由</title>
-    <url>/openwrt/</url>
-    <content><![CDATA[<p>又是捡垃圾的快乐一天 <span id="more"></span></p>
-<h2 id="材料">材料</h2>
-<h3 id="教研室捡来的垃圾">教研室捡来的垃圾</h3>
-<blockquote>
-<p>又不是不能用</p>
-</blockquote>
-<ul>
-<li>2GB 内存条（看起来全新实际上至少八九年前的了，别问为什么只有2G，这是教研室能捡垃圾捡到的最后一块内存条了）</li>
-<li>120G intel固态（包浆成色，上个月刚从一个旧电脑上拆下来的）</li>
-<li>一块 i5 4570 的CPU（战斗成色，貌似也六年了）</li>
-<li>一个风扇（战损成色，全是灰）</li>
-<li>六七年前的华硕主板（伊拉克战损成色）</li>
-<li>一个三星显示器（屏幕漏光，也有五六年了，装系统临时用一下）</li>
-<li>一个2014年的老机箱（战斗成色，全是灰）</li>
-<li>一个主机电源（不是很新，200W）</li>
-<li>VGA线、电源线、排线（普通成色）</li>
-<li>螺丝等（一大把旧主机上拆下来的）</li>
-<li>键盘（N年前的薄膜，伊拉克战损成色，全是灰）</li>
-</ul>
-<p>对，102网吧的主板就是这样子的战损主板</p>
-<figure>
-<img src="/openwrt/image-20201030191635951.webp" alt="对，只有这种主板了" /><figcaption aria-hidden="true">对，只有这种主板了</figcaption>
-</figure>
-<h3 id="全新的和自掏腰包的">全新的和自掏腰包的</h3>
-<p>基本都是室友出的钱</p>
-<ul>
-<li>螺丝刀等（全新，室友的）</li>
-<li>一个插排（昨天室友买的）</li>
-<li>硅脂（全新）</li>
-<li>网卡（室友网购的，刚到）</li>
-<li>网线（教研室网线太老了，就不捡垃圾了）</li>
-<li>clash和v2ray订阅，机场买的</li>
-</ul>
-<h2 id="刷机">刷机</h2>
-<p>自行编译时间太长就用人家编译好的了, 室友刷的。本来以为可能2G的老内存可能会卡，结果室友的win10 pe上去意外的流畅。</p>
-<p>借用了这个<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0xvbW90SG8vVUVTVEMtTmV0d29ya0F1dG9Db25uZWN0">电子科技大学校园网自动登陆脚本<i class="fa fa-external-link-alt"></i></span></p>
-<h2 id="一点小插曲">一点小插曲</h2>
-<p>晚上室友买完插排，第二天我发现教研室的一个旧箱子里满满一箱子插排，好家伙，亏了一个亿。</p>
-<figure>
-<img src="/openwrt/image-20201030191838215.webp" alt="这么多插排...." /><figcaption aria-hidden="true">这么多插排....</figcaption>
-</figure>
-<p>本来Openclash都整好了，结果发现室友的安卓电报没法自行分流。换成了 ssr plus</p>
-<p>装好之后发现风扇声音有点大........直接把风扇线拔了，世界终于清净了。至于散热，问题不大（这么点负载总不可能把CPU给烧了）。</p>
-<p>ps. 正确的做法是SSH上去</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">fanspeedctl stop --all --now<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>固态闲置了100多个G</p>
-<h2 id="突然发现了clash的正确使用方式">突然发现了clash的正确使用方式</h2>
-<p>之前一直很不喜欢clash，clash for win10的图形界面操作在我看起来特别反人类，安卓和平板上clash的app耗电惊人。自动切换线路和分流对我来说又没什么用，一直觉得clash鸡肋，不知道为什么这么多人都在说clash香。</p>
-<p>直到今天室友带入坑上了软路由，好家伙，自动分流和切换真香</p>
-<p>clash这种就适合软路由或者台式机什么的，手机和平板耗电根本顶不住，挂在后台掉电太快了</p>
-]]></content>
-      <categories>
-        <category>102网吧日常</category>
-      </categories>
-      <tags>
-        <tag>openwrt</tag>
-        <tag>捡垃圾</tag>
       </tags>
   </entry>
   <entry>
