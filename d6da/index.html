@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222">
 <meta name="generator" content="Hexo 5.4.0">
 
@@ -19,18 +19,15 @@
 
 <link rel="stylesheet" href="https://fonts.loli.net/css?family=Noto+Serif+SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"zhangjk98.xyz","root":"/","images":"/images","scheme":"Pisces","version":"8.2.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqusjs","storage":true,"lazyload":false,"nav":{"disqusjs":{"text":"Load Disqus","order":-1},"utterances":{"order":-2}},"activeClass":"disqusjs"},"motion":{"enable":true,"async":true,"transition":{"post_block":"none","post_header":"none","post_body":"none","coll_header":"none","sidebar":"none"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
-  </script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhangjk98.xyz","root":"/","images":"/images","scheme":"Pisces","version":"8.7.1","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqusjs","storage":true,"lazyload":false,"nav":{"disqusjs":{"text":"Load Disqus","order":-1},"utterances":{"order":-2}},"activeClass":"disqusjs"},"motion":{"enable":true,"async":true,"transition":{"post_block":"none","post_header":"none","post_body":"none","coll_header":"none","sidebar":"none"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 <meta name="description" content="教研室要倒闭啦，师兄毕业跑路啦！">
 <meta property="og:type" content="article">
 <meta property="og:title" content="教研室服务器维护">
 <meta property="og:url" content="https://zhangjk98.xyz/d6da/index.html">
-<meta property="og:site_name" content="止息的小窝">
+<meta property="og:site_name" content="止息的博客">
 <meta property="og:description" content="教研室要倒闭啦，师兄毕业跑路啦！">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/20191115103425.png">
@@ -41,8 +38,8 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/centos.png">
 <meta property="article:published_time" content="2019-11-14T09:37:07.000Z">
 <meta property="article:author" content="Zhang.j.k">
-<meta property="article:tag" content="ubuntu">
 <meta property="article:tag" content="Linux">
+<meta property="article:tag" content="ubuntu">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/20191115103425.png">
 
@@ -50,66 +47,23 @@
 <link rel="canonical" href="https://zhangjk98.xyz/d6da/">
 
 
-<script data-pjax class="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : false,
-    isPost : true,
-    lang   : 'zh-CN'
-  };
-</script>
-<title>教研室服务器维护 | 止息的小窝</title>
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zhangjk98.xyz/d6da/","path":"d6da/","title":"教研室服务器维护"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>教研室服务器维护 | 止息的博客</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143393734-1"></script>
-    <script data-pjax>
-      if (CONFIG.hostname === location.hostname) {
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'UA-143393734-1');
-      }
-    </script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-143393734-1","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
 
 
 
 
   <noscript>
-  <style>
-  body { margin-top: 2rem; }
-
-  .use-motion .menu-item,
-  .use-motion .sidebar,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header {
-    visibility: visible;
-  }
-
-  .use-motion .header,
-  .use-motion .site-brand-container .toggle,
-  .use-motion .footer { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle,
-  .use-motion .custom-logo-image {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line {
-    transform: scaleX(1);
-  }
-
-  .search-pop-overlay, .sidebar-nav { display: none; }
-  .sidebar-panel { display: block; }
-  </style>
-</noscript>
-
-<link rel="alternate" href="/atom.xml" title="止息的小窝" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="止息的博客" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
@@ -130,7 +84,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">止息的小窝</h1>
+      <h1 class="site-title">止息的博客</h1>
       <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">唯见月寒日暖，来煎人寿</p>
@@ -212,7 +166,8 @@
         <!--/noindex-->
 
         <div class="site-overview-wrap sidebar-panel">
-          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="Zhang.j.k"
       src="/uploads/jinmao.webp">
   <p class="site-author-name" itemprop="name">Zhang.j.k</p>
@@ -221,21 +176,18 @@
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
+        <a href="/archives/">
           <span class="site-state-item-count">32</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
+          <a href="/categories/">
         <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
+          <a href="/tags/">
         <span class="site-state-item-count">62</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
@@ -246,14 +198,14 @@
         <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FyY2hhZW9yYXB0b3I=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;archaeoraptor"><i class="fab fa-github fa-fw"></i>GitHub</span>
       </span>
       <span class="links-of-author-item">
-        <span class="exturl" data-url="bWFpbHRvOnpoYW5nams2N0BnbWFpbC5jb20=" title="E-Mail → mailto:zhangjk67@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+        <span class="exturl" data-url="bWFpbHRvOnpoaXhpQHVlc3RjbHVnLm9yZw==" title="E-Mail → mailto:zhixi@uestclug.org"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
       </span>
       <span class="links-of-author-item">
         <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
       </span>
   </div>
   <div class="cc-license site-overview-item animated" itemprop="license">
-    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></span>
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
   </div>
 
 
@@ -277,6 +229,7 @@
     </ul>
   </div>
 
+          </div>
         </div>
       </div>
     </div>
@@ -287,7 +240,7 @@
     </header>
 
     
-  <div class="back-to-top" role="button">
+  <div class="back-to-top" role="button" aria-label="返回顶部">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
@@ -319,7 +272,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="止息的小窝">
+      <meta itemprop="name" content="止息的博客">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -341,7 +294,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-07-30 22:21:32" itemprop="dateModified" datetime="2021-07-30T22:21:32+08:00">2021-07-30</time>
+        <time title="修改时间：2021-09-13 09:24:52" itemprop="dateModified" datetime="2021-09-13T09:24:52+08:00">2021-09-13</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -372,32 +325,32 @@
 <h2 id="安全问题">安全问题</h2>
 <p>教研室的服务器之前就被黑过 老师兄装的Ubuntu，默认端口默认用户名超简单密码直接远程登录，行吧 教研室出现了断层，现在的师兄们（以及并夕夕40万却没用过Linux的师姐）Linux都还没我熟，行吧 服务器以后就扔给我了，行吧</p>
 <p>之前折腾Docker的时候看日志发现一堆乱七八糟的</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">grep</span> <span class="token string">"Accepted password for root"</span> /var/log/auth.log <span class="token operator">|</span> <span class="token function">awk</span> <span class="token string">'&#123;print <span class="token variable">$11</span>&#125;'</span> <span class="token operator">|</span> <span class="token function">sort</span> <span class="token operator">|</span> <span class="token function">uniq</span> -c <span class="token operator">|</span> <span class="token function">sort</span> -nr <span class="token operator">|</span> <span class="token function">more</span>
-<span class="token function">grep</span> <span class="token string">"Failed password for root"</span> /var/log/auth.log <span class="token operator">|</span> <span class="token function">awk</span> <span class="token string">'&#123;print <span class="token variable">$11</span>&#125;'</span> <span class="token operator">|</span> <span class="token function">sort</span> <span class="token operator">|</span> <span class="token function">uniq</span> -c <span class="token operator">|</span> <span class="token function">sort</span> -nr <span class="token operator">|</span> <span class="token function">more</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">grep</span> <span class="token string">"Accepted password for root"</span> /var/log/auth.log <span class="token operator">|</span> <span class="token function">awk</span> <span class="token string">'&#123;print $11&#125;'</span> <span class="token operator">|</span> <span class="token function">sort</span> <span class="token operator">|</span> <span class="token function">uniq</span> -c <span class="token operator">|</span> <span class="token function">sort</span> -nr <span class="token operator">|</span> <span class="token function">more</span>
+<span class="token function">grep</span> <span class="token string">"Failed password for root"</span> /var/log/auth.log <span class="token operator">|</span> <span class="token function">awk</span> <span class="token string">'&#123;print $11&#125;'</span> <span class="token operator">|</span> <span class="token function">sort</span> <span class="token operator">|</span> <span class="token function">uniq</span> -c <span class="token operator">|</span> <span class="token function">sort</span> -nr <span class="token operator">|</span> <span class="token function">more</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <p>发现一堆可疑ip几千次登录尝试,哇,又被当小鸡扫了</p>
-<pre class="line-numbers language-log" data-language="log"><code class="language-log">3073 Failed
-  2593 112.85.42.185
-  2471 218.92.0.168
-   714 112.85.42.187
-   363 218.92.0.188
-   261 112.85.42.188
-   103 222.186.175.220
-   103 222.186.175.148
-    86 222.186.180.41
-    81 222.186.173.180
-    78 222.186.180.8
-    78 222.186.180.223
-    74 222.186.173.154
-    69 222.186.175.161
-    65 49.88.112.55
-    59 222.186.180.9
-    59 222.186.175.182
-    57 222.186.180.17
-    57 222.186.175.167
-    55 222.186.175.202
-    55 185.164.72.251
-    53 222.186.175.215
-    51 222.186.169.194<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-log" data-language="log"><code class="language-log"><span class="token number">3073</span> Failed
+  <span class="token number">2593</span> <span class="token ip-address constant">112.85.42.185</span>
+  <span class="token number">2471</span> <span class="token ip-address constant">218.92.0.168</span>
+   <span class="token number">714</span> <span class="token ip-address constant">112.85.42.187</span>
+   <span class="token number">363</span> <span class="token ip-address constant">218.92.0.188</span>
+   <span class="token number">261</span> <span class="token ip-address constant">112.85.42.188</span>
+   <span class="token number">103</span> <span class="token ip-address constant">222.186.175.220</span>
+   <span class="token number">103</span> <span class="token ip-address constant">222.186.175.148</span>
+    <span class="token number">86</span> <span class="token ip-address constant">222.186.180.41</span>
+    <span class="token number">81</span> <span class="token ip-address constant">222.186.173.180</span>
+    <span class="token number">78</span> <span class="token ip-address constant">222.186.180.8</span>
+    <span class="token number">78</span> <span class="token ip-address constant">222.186.180.223</span>
+    <span class="token number">74</span> <span class="token ip-address constant">222.186.173.154</span>
+    <span class="token number">69</span> <span class="token ip-address constant">222.186.175.161</span>
+    <span class="token number">65</span> <span class="token ip-address constant">49.88.112.55</span>
+    <span class="token number">59</span> <span class="token ip-address constant">222.186.180.9</span>
+    <span class="token number">59</span> <span class="token ip-address constant">222.186.175.182</span>
+    <span class="token number">57</span> <span class="token ip-address constant">222.186.180.17</span>
+    <span class="token number">57</span> <span class="token ip-address constant">222.186.175.167</span>
+    <span class="token number">55</span> <span class="token ip-address constant">222.186.175.202</span>
+    <span class="token number">55</span> <span class="token ip-address constant">185.164.72.251</span>
+    <span class="token number">53</span> <span class="token ip-address constant">222.186.175.215</span>
+    <span class="token number">51</span> <span class="token ip-address constant">222.186.169.194</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>改一下密码和SSH端口</p>
 <pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">sed</span> -i <span class="token string">"s/Port .*/Port 你的端口/g"</span> /etc/ssh/sshd_config<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>安装sshfilter或者flai2ban，这里我用的fail2ban。<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
@@ -439,44 +392,44 @@ fail2ban-client <span class="token builtin class-name">set</span> sshd unbanip <
 <p>然后搞一个自己的域名，因为境内服务器要备案，此计划中道崩殂</p>
 <h2 id="运行sudo-apt-get-update报错">运行<code>sudo apt-get update</code>报错</h2>
 <p>写在前面，我看到有的镜像源示例配置都是走的HTTPS，似乎没有必要 详见<span class="exturl" data-url="aHR0cHM6Ly93aHlkb2VzYXB0bm90dXNlaHR0cHMuY29tLw==">Why does APT not use HTTPS?<i class="fa fa-external-link-alt"></i></span>。 至于某Debian镜像源上说的什么安装apt-transport-https更是没有必要，画蛇添足</p>
-<pre class="line-numbers language-log" data-language="log"><code class="language-log">Get:1 http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu xenial InRelease [454 B]
-Get:2 http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu xenial-updates InRelease [454 B]
-Get:3 http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu xenial-backports InRelease [454 B]
-Get:4 http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu xenial-security InRelease [454 B]
-Err:1 http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu xenial InRelease
-  Clearsigned file isn&#39;t valid, got &#39;NOSPLIT&#39; (does the network require authentication?)
-Err:2 http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu xenial-updates InRelease
-  Clearsigned file isn&#39;t valid, got &#39;NOSPLIT&#39; (does the network require authentication?)
-Err:3 http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu xenial-backports InRelease
-  Clearsigned file isn&#39;t valid, got &#39;NOSPLIT&#39; (does the network require authentication?)
-Err:4 http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu xenial-security InRelease
-  Clearsigned file isn&#39;t valid, got &#39;NOSPLIT&#39; (does the network require authentication?)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-log" data-language="log"><code class="language-log">Get<span class="token operator">:</span><span class="token number">1</span> <span class="token url">http://mirrors.aliyun.com/ubuntu</span> xenial InRelease <span class="token punctuation">[</span><span class="token number">454</span> B<span class="token punctuation">]</span>
+Get<span class="token operator">:</span><span class="token number">2</span> <span class="token url">http://mirrors.aliyun.com/ubuntu</span> xenial<span class="token operator">-</span>updates InRelease <span class="token punctuation">[</span><span class="token number">454</span> B<span class="token punctuation">]</span>
+Get<span class="token operator">:</span><span class="token number">3</span> <span class="token url">http://mirrors.aliyun.com/ubuntu</span> xenial<span class="token operator">-</span>backports InRelease <span class="token punctuation">[</span><span class="token number">454</span> B<span class="token punctuation">]</span>
+Get<span class="token operator">:</span><span class="token number">4</span> <span class="token url">http://mirrors.aliyun.com/ubuntu</span> xenial<span class="token operator">-</span>security InRelease <span class="token punctuation">[</span><span class="token number">454</span> B<span class="token punctuation">]</span>
+Err<span class="token operator">:</span><span class="token number">1</span> <span class="token url">http://mirrors.aliyun.com/ubuntu</span> xenial InRelease
+  Clearsigned file isn't valid<span class="token punctuation">,</span> got <span class="token string">'NOSPLIT'</span> <span class="token operator">(</span>does the network require authentication<span class="token operator">?</span><span class="token operator">)</span>
+Err<span class="token operator">:</span><span class="token number">2</span> <span class="token url">http://mirrors.aliyun.com/ubuntu</span> xenial<span class="token operator">-</span>updates InRelease
+  Clearsigned file isn't valid<span class="token punctuation">,</span> got <span class="token string">'NOSPLIT'</span> <span class="token operator">(</span>does the network require authentication<span class="token operator">?</span><span class="token operator">)</span>
+Err<span class="token operator">:</span><span class="token number">3</span> <span class="token url">http://mirrors.aliyun.com/ubuntu</span> xenial<span class="token operator">-</span>backports InRelease
+  Clearsigned file isn't valid<span class="token punctuation">,</span> got <span class="token string">'NOSPLIT'</span> <span class="token operator">(</span>does the network require authentication<span class="token operator">?</span><span class="token operator">)</span>
+Err<span class="token operator">:</span><span class="token number">4</span> <span class="token url">http://mirrors.aliyun.com/ubuntu</span> xenial<span class="token operator">-</span>security InRelease
+  Clearsigned file isn't valid<span class="token punctuation">,</span> got <span class="token string">'NOSPLIT'</span> <span class="token operator">(</span>does the network require authentication<span class="token operator">?</span><span class="token operator">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>查了一下说是代理的问题，看了一下教研室的工作站竟然还有酸酸乳和bbr，一问师兄说是老板外出的时候想上学校网用这个，行吧</p>
 <p>设置一下apt的代理</p>
-<pre class="line-numbers language-log" data-language="log"><code class="language-log">&#x2F;etc&#x2F;apt$ cat apt.conf
+<pre class="line-numbers language-log" data-language="log"><code class="language-log"><span class="token file-path string">/etc/apt$</span> cat <span class="token domain constant">apt.conf</span>
 
-Acquire::http::proxy &quot;http:&#x2F;&#x2F;&lt;proxy&gt;&quot;;
-Acquire::https::proxy &quot;https:&#x2F;&#x2F;&lt;proxy&gt;&quot;;
-Acquire::ftp::proxy &quot;ftp:&#x2F;&#x2F;&lt;proxy&gt;&quot;;
-Acquire::socks::proxy &quot;socks:&lt;proxy&gt;&quot;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+Acquire<span class="token operator">:</span><span class="token operator">:</span>http<span class="token operator">:</span><span class="token operator">:</span>proxy <span class="token string">"http://&lt;proxy>"</span><span class="token operator">;</span>
+Acquire<span class="token operator">:</span><span class="token operator">:</span>https<span class="token operator">:</span><span class="token operator">:</span>proxy <span class="token string">"https://&lt;proxy>"</span><span class="token operator">;</span>
+Acquire<span class="token operator">:</span><span class="token operator">:</span>ftp<span class="token operator">:</span><span class="token operator">:</span>proxy <span class="token string">"ftp://&lt;proxy>"</span><span class="token operator">;</span>
+Acquire<span class="token operator">:</span><span class="token operator">:</span>socks<span class="token operator">:</span><span class="token operator">:</span>proxy <span class="token string">"socks:&lt;proxy>"</span><span class="token operator">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>这里我切进目录没找到，发现有个apt.conf.d文件夹，是表示缺省的配置文件，删掉换成apt.conf 比如代理是1.2.3.4，端口1234 就改成<code>Acquire::http::proxy "http://1.2.3.4:1234</code></p>
 <p>改了一下发现不对，这边是服务端应该没开代理啊</p>
 <p>把代理都删了</p>
 <p>感觉可能DNS有问题,切到<code>etc/resolv.conf</code>看了一下</p>
-<pre class="line-numbers language-log" data-language="log"><code class="language-log">nameserver 202.112.14.21
-nameserver 202.112.14.11<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-log" data-language="log"><code class="language-log">nameserver <span class="token ip-address constant">202.112.14.21</span>
+nameserver <span class="token ip-address constant">202.112.14.11</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <p>这个学校的DNS服务不行啊，别的都直通互联网，这个上不了谷歌不说，还经常不对外网提供解析服务 (能ping通,但是nslookup发现不对外网提供服务) 又看了一下工作站的DNS, 果然换过了 校园网暂时也没什么好的DNS，就先换了清华的 (那个DNS不是<code>/etc/resolv.conf</code>下的，要改<code>/etc/resolvconf/resolv.conf.d</code>下的<code>base</code>文件,第一个只是临时的DNS)</p>
 <p>还要刷新一下DNS：<code>sudo service networking restart</code></p>
 <p>运行<code>sudo apt-get upgrade</code>又报了这个错<code>Hash Sum mismatch</code></p>
 <p>查了一下发现就是阿里云镜像源在教育网下的问题</p>
 <p>算了,改镜像源吧,换了清华的</p>
-<pre class="line-numbers language-log" data-language="log"><code class="language-log">Err:1 https:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;ubuntu xenial InRelease
-  Failed to connect to mirrors.tuna.tsinghua.edu.cn port 443: Connection timed out<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-log" data-language="log"><code class="language-log">Err<span class="token operator">:</span><span class="token number">1</span> <span class="token url">https://mirrors.tuna.tsinghua.edu.cn/ubuntu</span> xenial InRelease
+  <span class="token property">Failed to connect to mirrors.tuna.tsinghua.edu.cn port 443:</span> Connection timed out<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <p>依然不行, 决定明天重装</p>
-<pre class="line-numbers language-log" data-language="log"><code class="language-log">E: Some index files failed to download. They have been ignored, or old ones used instead.<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-log" data-language="log"><code class="language-log"><span class="token property">E:</span> Some index files failed to download<span class="token punctuation">.</span> They have been ignored<span class="token punctuation">,</span> or old ones used instead<span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>看了一下，工作站那台DNS是<code>cat /etc/resolv.conf</code>是127.0.0.1，是DNSmasq托管的，而服务器上的还是你电的DNS，决定改了。 工作站上应该是这样的</p>
-<pre class="line-numbers language-log" data-language="log"><code class="language-log"># &#x2F;etc&#x2F;network&#x2F;interfaces
-dns-nameservers 8.8.8.8<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-log" data-language="log"><code class="language-log"><span class="token operator">#</span> <span class="token file-path string">/etc/network/interfaces</span>
+dns<span class="token operator">-</span>nameservers <span class="token ip-address constant">8.8.8.8</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <p>改了之后服务器的<code>resolv.conf</code>也是<code>127.0.0.1</code>了 又上大清的网站看了一下，发现居然在维护</p>
 <p><img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/20191115103425.png" alt="Picture" style="zoom:80%;" /></p>
 <p>换成你电的，好了，收工</p>
@@ -486,24 +439,24 @@ dns-nameservers 8.8.8.8<span aria-hidden="true" class="line-numbers-rows"><span>
 <p>本来想用neofetch查看一下服务器的配置，结果apt装不了。 看了一下官方文档发现16.10要这样</p>
 <p>Add PPA <code>sudo add-apt-repository ppa:dawidd0811/neofetch</code> Update repositories <code>sudo apt update</code> Install the package <code>sudo apt install neofetch</code> （安装neofetch还能下载编译，可能还快一点）</p>
 <p>算了，好慢啊，直接用<code>sudo dmidecode</code>看吧，screenfetch也行 英特尔的e5 2630 v4，20核CPU，没显卡。这CPU平时居然没人用，空跑,居然还有公网ip，我仿佛发现了宝藏。不出意外就留给我挥（bei）霍（guo）了</p>
-<pre class="line-numbers language-log" data-language="log"><code class="language-log">                         .&#x2F;+o+-       root@labserver
-                 yyyyy- -yyyyyy+      OS: Ubuntu 16.04 xenial
-              :&#x2F;&#x2F;+&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;-yyyyyyo      Kernel: x86_64 Linux 4.12.14-041214-generic
-          .++ .:&#x2F;++++++&#x2F;-.+sss&#x2F;&#96;      Uptime: 21h 36m
-        .:++o:  &#x2F;++++++++&#x2F;:--:&#x2F;-      Packages: 718
-       o:+o+:++.&#96;..&#96;&#96;&#96;.-&#x2F;oo+++++&#x2F;     Shell: bash 4.3.48
-      .:+o:+o&#x2F;.          &#96;+sssoo+&#x2F;    WM: Not Found
- .++&#x2F;+:+oo+o:&#96;             &#x2F;sssooo.   CPU: Intel Xeon CPU E5-2630 v4 @ 3.1GHz
-&#x2F;+++&#x2F;&#x2F;+:&#96;oo+o               &#x2F;::--:.   RAM: 1348MiB &#x2F; 32074MiB
-\+&#x2F;+o+++&#96;o++o               ++&#x2F;&#x2F;&#x2F;&#x2F;.
- .++.o+++oo+:&#96;             &#x2F;dddhhh.
-      .+.o+oo:.          &#96;oddhhhh+
-       \+.++o+o&#96;&#96;-&#96;&#96;&#96;&#96;.:ohdhhhhh+
-        &#96;:o+++ &#96;ohhhhhhhhyo++os:
-          .o:&#96;.syhhhhhhh&#x2F;.oo++o&#96;
-              &#x2F;osyyyyyyo++ooo+++&#x2F;
-                  &#96;&#96;&#96;&#96;&#96; +oo+++o\:
-                         &#96;oo++.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-log" data-language="log"><code class="language-log">                         <span class="token punctuation">.</span><span class="token operator">/</span><span class="token operator">+</span>o<span class="token operator">+</span><span class="token operator">-</span>       root<span class="token operator">@</span>labserver
+                 yyyyy<span class="token operator">-</span> <span class="token operator">-</span>yyyyyy<span class="token operator">+</span>      OS<span class="token operator">:</span> Ubuntu <span class="token number">16.04</span> xenial
+              <span class="token operator">:</span><span class="token operator">/</span><span class="token operator">/</span><span class="token operator">+</span><span class="token operator">/</span><span class="token operator">/</span><span class="token operator">/</span><span class="token operator">/</span><span class="token operator">/</span><span class="token operator">/</span><span class="token operator">-</span>yyyyyyo      Kernel<span class="token operator">:</span> x86_64 Linux <span class="token number">4.12.14</span><span class="token operator">-</span><span class="token number">041214</span><span class="token operator">-</span>generic
+          <span class="token punctuation">.</span><span class="token operator">+</span><span class="token operator">+</span> <span class="token punctuation">.</span><span class="token operator">:</span><span class="token operator">/</span><span class="token operator">+</span><span class="token operator">+</span><span class="token operator">+</span><span class="token operator">+</span><span class="token operator">+</span><span class="token operator">+</span><span class="token operator">/</span><span class="token operator">-</span><span class="token punctuation">.</span><span class="token operator">+</span>sss<span class="token operator">/</span>`      Uptime<span class="token operator">:</span> <span class="token number">21h</span> <span class="token number">36m</span>
+        <span class="token punctuation">.</span><span class="token operator">:</span><span class="token operator">+</span><span class="token operator">+</span>o<span class="token operator">:</span>  <span class="token operator">/</span><span class="token operator">+</span><span class="token operator">+</span><span class="token operator">+</span><span class="token operator">+</span><span class="token operator">+</span><span class="token operator">+</span><span class="token operator">+</span><span class="token operator">+</span><span class="token operator">/</span><span class="token operator">:</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">:</span><span class="token operator">/</span><span class="token operator">-</span>      Packages<span class="token operator">:</span> <span class="token number">718</span>
+       o<span class="token operator">:</span><span class="token operator">+</span>o<span class="token operator">+</span><span class="token operator">:</span><span class="token operator">+</span><span class="token operator">+</span><span class="token punctuation">.</span>`<span class="token punctuation">.</span><span class="token punctuation">.</span>```<span class="token punctuation">.</span><span class="token operator">-</span><span class="token operator">/</span>oo<span class="token operator">+</span><span class="token operator">+</span><span class="token operator">+</span><span class="token operator">+</span><span class="token operator">+</span><span class="token operator">/</span>     Shell<span class="token operator">:</span> bash <span class="token number">4.3.48</span>
+      <span class="token punctuation">.</span><span class="token operator">:</span><span class="token operator">+</span>o<span class="token operator">:</span><span class="token operator">+</span>o<span class="token operator">/</span><span class="token punctuation">.</span>          `<span class="token operator">+</span>sssoo<span class="token operator">+</span><span class="token operator">/</span>    WM<span class="token operator">:</span> Not Found
+ <span class="token punctuation">.</span><span class="token operator">+</span><span class="token operator">+</span><span class="token operator">/</span><span class="token operator">+</span><span class="token operator">:</span><span class="token operator">+</span>oo<span class="token operator">+</span>o<span class="token operator">:</span>`             <span class="token file-path string">/sssooo.</span>   CPU<span class="token operator">:</span> Intel Xeon CPU E5<span class="token operator">-</span><span class="token number">2630</span> <span class="token number">v4</span> <span class="token operator">@</span> <span class="token number">3.1GHz</span>
+<span class="token operator">/</span><span class="token operator">+</span><span class="token operator">+</span><span class="token operator">+</span><span class="token operator">/</span><span class="token operator">/</span><span class="token operator">+</span><span class="token operator">:</span>`oo<span class="token operator">+</span>o               <span class="token operator">/</span><span class="token operator">:</span><span class="token operator">:</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">:</span><span class="token punctuation">.</span>   RAM<span class="token operator">:</span> <span class="token number">1348MiB</span> <span class="token operator">/</span> <span class="token number">32074MiB</span>
+\<span class="token operator">+</span><span class="token operator">/</span><span class="token operator">+</span>o<span class="token operator">+</span><span class="token operator">+</span><span class="token operator">+</span>`o<span class="token operator">+</span><span class="token operator">+</span>o               <span class="token operator">+</span><span class="token operator">+</span><span class="token operator">/</span><span class="token operator">/</span><span class="token operator">/</span><span class="token operator">/</span><span class="token punctuation">.</span>
+ <span class="token punctuation">.</span><span class="token operator">+</span><span class="token operator">+</span><span class="token punctuation">.</span>o<span class="token operator">+</span><span class="token operator">+</span><span class="token operator">+</span>oo<span class="token operator">+</span><span class="token operator">:</span>`             <span class="token file-path string">/dddhhh.</span>
+      <span class="token punctuation">.</span><span class="token operator">+</span><span class="token punctuation">.</span>o<span class="token operator">+</span>oo<span class="token operator">:</span><span class="token punctuation">.</span>          `oddhhhh<span class="token operator">+</span>
+       \<span class="token operator">+</span><span class="token punctuation">.</span><span class="token operator">+</span><span class="token operator">+</span>o<span class="token operator">+</span>o``<span class="token operator">-</span>````<span class="token punctuation">.</span><span class="token operator">:</span>ohdhhhhh<span class="token operator">+</span>
+        `<span class="token operator">:</span>o<span class="token operator">+</span><span class="token operator">+</span><span class="token operator">+</span> `ohhhhhhhhyo<span class="token operator">+</span><span class="token operator">+</span>os<span class="token operator">:</span>
+          <span class="token punctuation">.</span>o<span class="token operator">:</span>`<span class="token punctuation">.</span>syhhhhhhh<span class="token operator">/</span><span class="token punctuation">.</span>oo<span class="token operator">+</span><span class="token operator">+</span>o`
+              <span class="token file-path string">/osyyyyyyo++ooo+++/</span>
+                  ````` <span class="token operator">+</span>oo<span class="token operator">+</span><span class="token operator">+</span><span class="token operator">+</span>o\<span class="token operator">:</span>
+                         `oo<span class="token operator">+</span><span class="token operator">+</span><span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="更新">更新</h2>
 <p>发现不是镜像源的问题，是你电的镜像源没安排上https，这个服务器好像是证书的问题，https全都用不了，wget也不行。</p>
 <h2 id="滚动升级">滚动升级</h2>
@@ -541,7 +494,7 @@ Upload: 2.45 Mbyte&#x2F;s<span aria-hidden="true" class="line-numbers-rows"><spa
 <p>MobaXterm内嵌有Xserver，可以调出图形化窗口。 比如nedit,Emacs之类的 <img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/xserver.png" alt="Picture" style="zoom:80%;" /> 已经足够应付简单的图形化界面需求了 完整的桌面需求请直接VNC或teamviewer到工作站操作。</p>
 <h2 id="卸载遗留的docker并重装">卸载遗留的Docker并重装</h2>
 <p>目前还报这样的错</p>
-<pre class="line-numbers language-log" data-language="log"><code class="language-log">Cannot connect to the Docker daemon at unix:&#x2F;&#x2F;&#x2F;var&#x2F;run&#x2F;docker.sock. Is the docker daemon running?<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-log" data-language="log"><code class="language-log">Cannot connect to the Docker daemon at unix<span class="token operator">:</span><span class="token operator">/</span><span class="token operator">/</span><span class="token operator">/</span>var<span class="token operator">/</span>run<span class="token operator">/</span>docker<span class="token punctuation">.</span>sock<span class="token punctuation">.</span> Is the docker daemon running<span class="token operator">?</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>似乎重装iptables的时候会直接把那个Docker的一部分依赖卸掉 （Docker好像还会直接修改默认的防火墙规则，emmmm)</p>
 <p>更新，解决了，是网络问题，离线装就好了</p>
 <h2 id="教研室的阿里云">教研室的阿里云</h2>
@@ -557,8 +510,8 @@ Upload: 2.45 Mbyte&#x2F;s<span aria-hidden="true" class="line-numbers-rows"><spa
 <p>安装ClamAV：</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> clamav<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>直接扫描报错了，要升级病毒库<code>sudo freshclam</code></p>
-<pre class="line-numbers language-log" data-language="log"><code class="language-log">LibClamAV Error: cli_loaddbdir(): No supported database files found in &#x2F;var&#x2F;lib&#x2F;clamav
-ERROR: Can&#39;t open file or directory<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-log" data-language="log"><code class="language-log"><span class="token property">LibClamAV Error:</span> cli_loaddbdir<span class="token operator">(</span><span class="token operator">)</span><span class="token operator">:</span> No supported database files found in <span class="token file-path string">/var/lib/clamav</span>
+<span class="token level error important">ERROR</span><span class="token operator">:</span> Can't open file or directory<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <p>然后扫一下</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">nohup</span> clamscan -r -i /  <span class="token operator">&amp;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>系统安装日志，不知道要交什么，索性把apt和dpkg的日志交了,在<code>/var/log/</code>和<code>/var/log/apt/</code>目录下面</p>
@@ -584,11 +537,11 @@ $ <span class="token builtin class-name">cd</span> doccano
 $ docker-compose -f docker-compose.prod.yml up<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <p>docker打包通常会很大，动不动就上G了，一些轻量且不至于弄坏系统环境的东西建议还是裸跑</p>
 <h2 id="一次被黑记录">一次被黑记录</h2>
-<pre class="line-numbers language-log" data-language="log"><code class="language-log">CPU  [||||||||||||||||                 51.8%]   CPU -    51.8%  nice:     0.0%  ctx_sw:    8K   MEM -   21.7%  active:    5.31G   SWAP -    0.0%   LOAD    20-core
-MEM  [|||||||                          21.7%]   user:    51.3%  irq:      0.0%  inter:   5508   total:  31.3G  inactive:  4.27G   total:    976M  
+<pre class="line-numbers language-log" data-language="log"><code class="language-log">CPU  <span class="token punctuation">[</span><span class="token operator">|</span><span class="token operator">|</span><span class="token operator">|</span><span class="token operator">|</span><span class="token operator">|</span><span class="token operator">|</span><span class="token operator">|</span><span class="token operator">|</span><span class="token operator">|</span><span class="token operator">|</span><span class="token operator">|</span><span class="token operator">|</span><span class="token operator">|</span><span class="token operator">|</span><span class="token operator">|</span><span class="token operator">|</span>                 <span class="token number">51.8</span><span class="token operator">%</span><span class="token punctuation">]</span>   CPU <span class="token operator">-</span>    <span class="token number">51.8</span><span class="token operator">%</span>  nice<span class="token operator">:</span>     <span class="token number">0.0</span><span class="token operator">%</span>  ctx_sw<span class="token operator">:</span>    <span class="token number">8K</span>   MEM <span class="token operator">-</span>   <span class="token number">21.7</span><span class="token operator">%</span>  active<span class="token operator">:</span>    <span class="token number">5.31G</span>   SWAP <span class="token operator">-</span>    <span class="token number">0.0</span><span class="token operator">%</span>   LOAD    <span class="token number">20</span><span class="token operator">-</span>core
+MEM  <span class="token punctuation">[</span><span class="token operator">|</span><span class="token operator">|</span><span class="token operator">|</span><span class="token operator">|</span><span class="token operator">|</span><span class="token operator">|</span><span class="token operator">|</span>                          <span class="token number">21.7</span><span class="token operator">%</span><span class="token punctuation">]</span>   <span class="token property">user:</span>    <span class="token number">51.3</span><span class="token operator">%</span>  irq<span class="token operator">:</span>      <span class="token number">0.0</span><span class="token operator">%</span>  inter<span class="token operator">:</span>   <span class="token number">5508</span>   total<span class="token operator">:</span>  <span class="token number">31.3G</span>  inactive<span class="token operator">:</span>  <span class="token number">4.27G</span>   total<span class="token operator">:</span>    <span class="token number">976M</span>  
 ····
-lo                         0b     0b   999.5  0.0   2.34G 2.44M   2654 root        67h8:58 16    0 S    ? ?    .&#x2F;cron
-2020-01-15 16:17:54 CST<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+lo                         <span class="token number">0b</span>     <span class="token number">0b</span>   <span class="token number">999.5</span>  <span class="token number">0.0</span>   <span class="token number">2.34G</span> <span class="token number">2.44M</span>   <span class="token number">2654</span> root        67h8<span class="token operator">:</span><span class="token number">58</span> <span class="token number">16</span>    <span class="token number">0</span> S    <span class="token operator">?</span> <span class="token operator">?</span>    <span class="token file-path string">./cron</span>
+<span class="token date number">2020-01-15</span> <span class="token time number">16:17:54</span> CST<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>症状：昨天（2020.1.14）root上不去了，rsa密钥也挂了，以为是网的问题，今天一试还不行。用自己的另一个账号登了一下，发现<code>su root</code>居然permission denied了。怀疑是被黑了，一看系统占用，有挖矿程序在跑，而且网络带宽占用也很高，怀疑是被当成肉鸡对外攻击了。看了一下系统日志，是一月13号被黑的，照着网上清了一遍。从此禁用密码登录（之前就想禁，师兄嫌麻烦）。MySQL也禁用密码改ssl</p>
 <p>clamav再扫一遍</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">nohup</span> clamscan -r /root <span class="token number">2</span> <span class="token operator">>></span> err.out <span class="token operator">&amp;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -655,8 +608,8 @@ a  b  cron.d  dir2.dir<span aria-hidden="true" class="line-numbers-rows"><span><
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/ubuntu/" rel="tag"><i class="fa fa-tag"></i> ubuntu</a>
               <a href="/tags/Linux/" rel="tag"><i class="fa fa-tag"></i> Linux</a>
+              <a href="/tags/ubuntu/" rel="tag"><i class="fa fa-tag"></i> ubuntu</a>
           </div>
 
         
@@ -700,28 +653,6 @@ a  b  cron.d  dir2.dir<span aria-hidden="true" class="line-numbers-rows"><span><
             </div>
         </div>
       </div>
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      const commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
 </div>
   </main>
 
@@ -737,75 +668,23 @@ a  b  cron.d  dir2.dir<span aria-hidden="true" class="line-numbers-rows"><span><
   </span>
   <span class="author" itemprop="copyrightHolder">止息</span>
 </div>
-  <div class="powered-by">由 <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span> 强力驱动
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span> 强力驱动
   </div>
 
     </div>
   </footer>
 
   
-  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '.page-configurations',
-    '.main-inner',
-    '.post-toc-wrap',
-    '.languages',
-    '.pjax'
-  ],
-  analytics: false,
-  cacheBust: false,
-  scrollRestoration: false,
-  scrollTo: !CONFIG.bookmark.enable
-});
-
-document.addEventListener('pjax:success', () => {
-  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.subMenu)
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  const hasTOC = document.querySelector('.post-toc');
-  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
-  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
 
   
-<script src="/js/local-search.js"></script>
+<script src="/js/third-party/search/local-search.js"></script>
 
-
-
-<script data-pjax>
-if (document.querySelectorAll('.pdf-container').length) {
-  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/pdfobject@2.2.4/pdfobject.min.js', () => {
-    document.querySelectorAll('.pdf-container').forEach(element => {
-      PDFObject.embed(element.dataset.target, element, {
-        pdfOpenParams: {
-          navpanes : 0,
-          toolbar  : 0,
-          statusbar: 0,
-          pagemode : 'thumbs',
-          view     : 'FitH'
-        },
-        PDFJS_URL: '/lib/pdf/web/viewer.html',
-        height   : element.dataset.height
-      });
-    });
-  }, window.PDFObject);
-}
-</script>
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdn.jsdelivr.net/npm/pdfobject@2.2.6/pdfobject.min.js","integrity":"sha256-77geM50MfxCD17eqyJR+Dag1svjJOLN+BJ2F/DMqMEY="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="/js/third-party/tags/pdf.js"></script>
 
 
 
@@ -813,41 +692,19 @@ if (document.querySelectorAll('.pdf-container').length) {
 
 
 
-    <div class="pjax">
 
   
 
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/disqusjs@1.3.0/dist/disqusjs.css">
 
-<script>
-NexT.utils.loadComments('#disqus_thread', () => {
-  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/disqusjs@1.3.0/dist/disqus.js', () => {
-    window.dsqjs = new DisqusJS({
-      api       : 'https://disqus.skk.moe/disqus/' || 'https://disqus.com/api/',
-      apikey    : '3qJ515uApWlP58gXhzPCCk3L0NlOvrMLwt5dDITBndS8fp8She7PT1gvBdDcgwrt',
-      shortname : 'arcaheoraptor',
-      url       : "https://zhangjk98.xyz/d6da/",
-      identifier: "d6da/",
-      title     : "教研室服务器维护",
-    });
-  }, window.DisqusJS);
-});
-</script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/disqusjs@1.3.0/dist/disqusjs.css" integrity="sha256-GxdCIOyfxQ1OBfS99qAIJDoGK1ADuBsxhMTqXG82fAY=" crossorigin="anonymous">
 
-<script>
-NexT.utils.loadComments('.utterances-container', () => {
-  const script = document.createElement('script');
-  script.src = 'https://utteranc.es/client.js';
-  script.setAttribute('repo', "Archaeoraptor/archaeoraptor.github.io");
-  script.setAttribute('issue-term', "pathname");
-  script.setAttribute('theme', "github-light");
-  script.crossOrigin = 'anonymous';
-  script.async = true;
-  document.querySelector('.utterances-container').appendChild(script);
-});
-</script>
+<script class="next-config" data-name="disqusjs" type="application/json">{"enable":true,"api":"https://disqus.skk.moe/disqus/","apikey":"3qJ515uApWlP58gXhzPCCk3L0NlOvrMLwt5dDITBndS8fp8She7PT1gvBdDcgwrt","shortname":"arcaheoraptor","js":{"url":"https://cdn.jsdelivr.net/npm/disqusjs@1.3.0/dist/disqus.js","integrity":"sha256-LVaMHPQ2zLqOc5rXSAfr4d1PIkEGNLyyUTDNPZmTtUw="}}</script>
+<script src="/js/third-party/comments/disqusjs.js"></script>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"Archaeoraptor/archaeoraptor.github.io","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
 
-    </div>
 </body>
 </html>
