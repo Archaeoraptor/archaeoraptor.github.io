@@ -33,8 +33,8 @@
 <meta property="article:published_time" content="2021-07-04T09:10:09.000Z">
 <meta property="article:author" content="Zhang.j.k">
 <meta property="article:tag" content="Linux">
-<meta property="article:tag" content="debug">
 <meta property="article:tag" content="6.S081">
+<meta property="article:tag" content="debug">
 <meta property="article:tag" content="kernel">
 <meta name="twitter:card" content="summary">
 
@@ -156,7 +156,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#printk"><span class="nav-number">1.</span> <span class="nav-text">printk()</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#kernel-panic-%E5%90%8E%E6%9D%A5%E4%B8%8D%E5%8F%8Aprintk"><span class="nav-number">1.1.</span> <span class="nav-text">Kernel Panic 后来不及printk</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#procsys%E7%AD%89%E7%9B%AE%E5%BD%95"><span class="nav-number">2.</span> <span class="nav-text">&#x2F;proc&#x2F;sys等目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E5%B7%A5%E5%85%B7"><span class="nav-number">3.</span> <span class="nav-text">其他工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#qemu%E7%AD%89%E6%A8%A1%E6%8B%9F%E5%99%A8%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="nav-number">4.</span> <span class="nav-text">qemu等模拟器&#x2F;虚拟机</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#gdbqemu"><span class="nav-number">4.1.</span> <span class="nav-text">gdb+qemu</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E7%8E%AF%E5%A2%83"><span class="nav-number">5.</span> <span class="nav-text">其他环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E6%9C%BA%E6%AF%94%E5%A6%82linux%E6%A1%8C%E9%9D%A2%E5%8F%91%E8%A1%8C%E7%89%88"><span class="nav-number">5.1.</span> <span class="nav-text">物理机（比如Linux桌面发行版）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E6%9D%BF%E6%88%96%E8%A3%B8%E6%9C%BA"><span class="nav-number">5.2.</span> <span class="nav-text">开发板或裸机</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%83%E8%AF%95%E7%9A%84%E5%8E%9F%E7%90%86"><span class="nav-number">6.</span> <span class="nav-text">调试的原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#gdb"><span class="nav-number">6.1.</span> <span class="nav-text">gdb</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#printk-1"><span class="nav-number">6.2.</span> <span class="nav-text">printk</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#systemtap"><span class="nav-number">6.3.</span> <span class="nav-text">systemtap</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%A0%E7%9C%9F%E7%9A%84%E9%9C%80%E8%A6%81debugger%E5%90%97"><span class="nav-number">7.</span> <span class="nav-text">你真的需要Debugger吗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%93%BE%E6%8E%A5"><span class="nav-number">8.</span> <span class="nav-text">链接</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#printk"><span class="nav-number">1.</span> <span class="nav-text">printk()</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Kernel-Panic-%E5%90%8E%E6%9D%A5%E4%B8%8D%E5%8F%8Aprintk"><span class="nav-number">1.1.</span> <span class="nav-text">Kernel Panic 后来不及printk</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#proc-sys%E7%AD%89%E7%9B%AE%E5%BD%95"><span class="nav-number">2.</span> <span class="nav-text">&#x2F;proc&#x2F;sys等目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E5%B7%A5%E5%85%B7"><span class="nav-number">3.</span> <span class="nav-text">其他工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#qemu%E7%AD%89%E6%A8%A1%E6%8B%9F%E5%99%A8-%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="nav-number">4.</span> <span class="nav-text">qemu等模拟器&#x2F;虚拟机</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#gdb-qemu"><span class="nav-number">4.1.</span> <span class="nav-text">gdb+qemu</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E7%8E%AF%E5%A2%83"><span class="nav-number">5.</span> <span class="nav-text">其他环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E6%9C%BA%EF%BC%88%E6%AF%94%E5%A6%82Linux%E6%A1%8C%E9%9D%A2%E5%8F%91%E8%A1%8C%E7%89%88%EF%BC%89"><span class="nav-number">5.1.</span> <span class="nav-text">物理机（比如Linux桌面发行版）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E6%9D%BF%E6%88%96%E8%A3%B8%E6%9C%BA"><span class="nav-number">5.2.</span> <span class="nav-text">开发板或裸机</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%83%E8%AF%95%E7%9A%84%E5%8E%9F%E7%90%86"><span class="nav-number">6.</span> <span class="nav-text">调试的原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#gdb"><span class="nav-number">6.1.</span> <span class="nav-text">gdb</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#printk-1"><span class="nav-number">6.2.</span> <span class="nav-text">printk</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#systemtap"><span class="nav-number">6.3.</span> <span class="nav-text">systemtap</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%A0%E7%9C%9F%E7%9A%84%E9%9C%80%E8%A6%81Debugger%E5%90%97"><span class="nav-number">7.</span> <span class="nav-text">你真的需要Debugger吗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%93%BE%E6%8E%A5"><span class="nav-number">8.</span> <span class="nav-text">链接</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -172,7 +172,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-count">36</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -183,7 +183,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">62</span>
+        <span class="site-state-item-count">69</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -289,7 +289,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-09-13 09:24:52" itemprop="dateModified" datetime="2021-09-13T09:24:52+08:00">2021-09-13</time>
+        <time title="修改时间：2021-09-26 09:57:50" itemprop="dateModified" datetime="2021-09-26T09:57:50+08:00">2021-09-26</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -311,71 +311,55 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>之前写那个Linux抢救和维护的时候提过一下，现在做6.S081的Lab又碰到的这个问题，单独开一篇记录一下（水平不够，调试来凑） <span id="more"></span></p>
-<h2 id="printk">printk()</h2>
-<p>如果内核的错误还没有严重到来不及输出错误信息，还是可以靠print大法调试的。</p>
+        <p>之前写那个Linux抢救和维护的时候提过一下，现在做6.S081的Lab又碰到的这个问题，单独开一篇记录一下（水平不够，调试来凑）</p>
+<span id="more"></span>
+
+<h2 id="printk"><a href="#printk" class="headerlink" title="printk()"></a>printk()</h2><p>如果内核的错误还没有严重到来不及输出错误信息，还是可以靠print大法调试的。</p>
 <p>printk输出到日志的内容可以用<code>dmesg</code>，普通的驱动问题靠输出的log定位问题就可以了。比如我要找HDMI的log：<code>dmesg | grep HDMI</code>。如果信息还不够多就加一个参数<code>CONFIG_DEBUG_DRIVER</code>到<span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvdGl0bGUvS2VybmVsX3BhcmFtZXRlcnM=">kernel parameter<i class="fa fa-external-link-alt"></i></span>里面，这会把来自Linux Kernel Driver Database的原始数据全都打印出来（非常非常多，除非写驱动的或者Debug找不到足够信息否则不要开）</p>
 <p>printk有7个级别，见<span class="exturl" data-url="aHR0cHM6Ly93d3cua2VybmVsLm9yZy9kb2MvaHRtbC92NS4xMi1yYzMvY29yZS1hcGkvcHJpbnRrLWJhc2ljcy5odG1s">Message logging with printk<i class="fa fa-external-link-alt"></i></span>。从0-7打印信息逐渐增加，调试的时候选一个合适的就行了</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token function">printk</span><span class="token punctuation">(</span>KERN_WARNING <span class="token string">"这里好像有问题，打印一下"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h3 id="kernel-panic-后来不及printk">Kernel Panic 后来不及printk</h3>
-<p>printk是异步的 <code>printk.synchronous=1</code></p>
+
+<h3 id="Kernel-Panic-后来不及printk"><a href="#Kernel-Panic-后来不及printk" class="headerlink" title="Kernel Panic 后来不及printk"></a>Kernel Panic 后来不及printk</h3><p>printk是异步的<br><code>printk.synchronous=1</code></p>
 <p>printk()有一个问题，每次想添加printk()的时候都要重新编译（6.S081/6.828用的教学xv6那种几千行代码的玩具操作系统还好办，Linux内核这样庞大的东西CPU不太好的时候要编译很久的）</p>
-<h2 id="procsys等目录">/proc/sys等目录</h2>
-<p>这几个目录比较重要，临时修改参数可以用</p>
-<h2 id="其他工具">其他工具</h2>
-<p>systemtap，相当于一个kprobe的封装</p>
-<h2 id="qemu等模拟器虚拟机">qemu等模拟器/虚拟机</h2>
-<p>虚拟机里面比较简单，有很多方便的方案可以将日志、页表、堆栈调用给你打印出来。</p>
-<h3 id="gdbqemu">gdb+qemu</h3>
-<p>下面以6.S081/6.828为例：</p>
+<h2 id="proc-sys等目录"><a href="#proc-sys等目录" class="headerlink" title="/proc/sys等目录"></a>/proc/sys等目录</h2><p>这几个目录比较重要，临时修改参数可以用</p>
+<h2 id="其他工具"><a href="#其他工具" class="headerlink" title="其他工具"></a>其他工具</h2><p>systemtap，相当于一个kprobe的封装</p>
+<h2 id="qemu等模拟器-虚拟机"><a href="#qemu等模拟器-虚拟机" class="headerlink" title="qemu等模拟器/虚拟机"></a>qemu等模拟器/虚拟机</h2><p>虚拟机里面比较简单，有很多方便的方案可以将日志、页表、堆栈调用给你打印出来。</p>
+<h3 id="gdb-qemu"><a href="#gdb-qemu" class="headerlink" title="gdb+qemu"></a>gdb+qemu</h3><p>下面以6.S081/6.828为例：</p>
 <p>按照课程的推荐装一个合适的gdb（gdb要支持相应的架构，），比如我要调试的内核是RISC-Ⅴ的，在Archlinux下应该是<code>riscv64-linux-gnu-gdb</code>, 在Ubuntu20.04下可以用<code>gdb-multiarch</code>。</p>
 <p>然后打开两个terminal，第一个执行<code>make qemu-gdb</code>启动qemu模拟器， 第二个执行gdb<code>gdb-multiarch</code>。</p>
 <p>这样就可以愉快的用gdb调试了，具体操作见另一篇。（太长不看版，就是普通程序gdb怎么调试这里就怎么调呗）</p>
-<h2 id="其他环境">其他环境</h2>
-<h3 id="物理机比如linux桌面发行版">物理机（比如Linux桌面发行版）</h3>
-<p>这种比qemu模拟器里面的要麻烦很多，你可能来不及看到错误log就崩溃了，得借助kdump、crash等工具把崩溃信息记下来。</p>
+<h2 id="其他环境"><a href="#其他环境" class="headerlink" title="其他环境"></a>其他环境</h2><h3 id="物理机（比如Linux桌面发行版）"><a href="#物理机（比如Linux桌面发行版）" class="headerlink" title="物理机（比如Linux桌面发行版）"></a>物理机（比如Linux桌面发行版）</h3><p>这种比qemu模拟器里面的要麻烦很多，你可能来不及看到错误log就崩溃了，得借助kdump、crash等工具把崩溃信息记下来。</p>
 <p>如果能进grub，</p>
-<h3 id="开发板或裸机">开发板或裸机</h3>
-<p>ARM的板子就直接用Jlink呗。以前写的烧到板子上的东西都是不超过两千行的小玩意，没啥调试经验，不讲了。（当时全靠dmesg）</p>
-<h2 id="调试的原理">调试的原理</h2>
-<p>这些内容由于我实在太菜，写不动了。写的不好，将就着看吧。稍微了解一下原理对使用这些调试工具有一些帮助</p>
-<h3 id="gdb">gdb</h3>
-<p>gdb的实现利用了ptrace的systemcall</p>
-<h3 id="printk-1">printk</h3>
-<p>直接看这两篇文章吧： <span class="exturl" data-url="aHR0cHM6Ly93d3cubGludXhwbHVtYmVyc2NvbmYub3JnL2V2ZW50LzQvY29udHJpYnV0aW9ucy8yOTAvYXR0YWNobWVudHMvMjc2LzQ2My9scGMyMDE5X2pvZ25lc3NfcHJpbnRrLnBkZg==">printk: Why is it so complicated?<i class="fa fa-external-link-alt"></i></span> Linux Plumbers Conf 的ppt<br />
-<span class="exturl" data-url="aHR0cHM6Ly9sd24ubmV0L0FydGljbGVzLzgwMDk0Ni8=">Why printk() is so complicated (and how to fix it)<i class="fa fa-external-link-alt"></i></span></p>
-<h3 id="systemtap">systemtap</h3>
-<h2 id="你真的需要debugger吗">你真的需要Debugger吗</h2>
-<p>Linus在邮件<span class="exturl" data-url="aHR0cHM6Ly9sd24ubmV0LzIwMDAvMDkxNC9hL2x0LWRlYnVnZ2VyLnBocDM=">Re: Availability of kdb<i class="fa fa-external-link-alt"></i></span>里是这样说的：<code>I don't like debuggers. Never have, probably never will. I use gdb all the time, but I tend to use it not as a debugger, but as a disassembler on steroids that you can program.</code></p>
+<h3 id="开发板或裸机"><a href="#开发板或裸机" class="headerlink" title="开发板或裸机"></a>开发板或裸机</h3><p>ARM的板子就直接用Jlink呗。以前写的烧到板子上的东西都是不超过两千行的小玩意，没啥调试经验，不讲了。（当时全靠dmesg）</p>
+<h2 id="调试的原理"><a href="#调试的原理" class="headerlink" title="调试的原理"></a>调试的原理</h2><p>这些内容由于我实在太菜，写不动了。写的不好，将就着看吧。稍微了解一下原理对使用这些调试工具有一些帮助</p>
+<h3 id="gdb"><a href="#gdb" class="headerlink" title="gdb"></a>gdb</h3><p>gdb的实现利用了ptrace的systemcall</p>
+<h3 id="printk-1"><a href="#printk-1" class="headerlink" title="printk"></a>printk</h3><p>直接看这两篇文章吧：<br><span class="exturl" data-url="aHR0cHM6Ly93d3cubGludXhwbHVtYmVyc2NvbmYub3JnL2V2ZW50LzQvY29udHJpYnV0aW9ucy8yOTAvYXR0YWNobWVudHMvMjc2LzQ2My9scGMyMDE5X2pvZ25lc3NfcHJpbnRrLnBkZg==">printk: Why is it so complicated?<i class="fa fa-external-link-alt"></i></span> Linux Plumbers Conf 的ppt<br><span class="exturl" data-url="aHR0cHM6Ly9sd24ubmV0L0FydGljbGVzLzgwMDk0Ni8=">Why printk() is so complicated (and how to fix it)<i class="fa fa-external-link-alt"></i></span>  </p>
+<h3 id="systemtap"><a href="#systemtap" class="headerlink" title="systemtap"></a>systemtap</h3><h2 id="你真的需要Debugger吗"><a href="#你真的需要Debugger吗" class="headerlink" title="你真的需要Debugger吗"></a>你真的需要Debugger吗</h2><p>Linus在邮件<span class="exturl" data-url="aHR0cHM6Ly9sd24ubmV0LzIwMDAvMDkxNC9hL2x0LWRlYnVnZ2VyLnBocDM=">Re: Availability of kdb<i class="fa fa-external-link-alt"></i></span>里是这样说的：<code> I don&#39;t like debuggers. Never have, probably never will. I use gdb all the time, but I tend to use it not as a debugger, but as a disassembler on steroids that you can program.</code></p>
 <p>这封邮件比较长，截取一段代表性观点</p>
 <blockquote>
-<p>I happen to believe that not having a kernel debugger forces people to think about their problem on a different level than with a debugger. I think that without a debugger, you don't get into that mindset where you know how it behaves, and then you fix it from there. Without a debugger,you tend to think about problems another way. You want to understand things on a different <em>level</em>.</p>
+<p>I happen to believe that not having a kernel debugger forces people to think about their problem on a different level than with a debugger. I think that without a debugger, you don’t get into that mindset where you know how it behaves, and then you fix it from there. Without a debugger,you tend to think about problems another way. You want to understand things on a different <em>level</em>.</p>
 </blockquote>
 <p>系统编程不像平时糊个网站搓个脚本那样，不能过于依赖Debug，应该一开始就设计好，出bug说明设计有问题、写的人不仔细。把事情都想清楚写好了编译一次通过，这才是Linus认为的合格的(水平要达到不依赖debugger)</p>
 <blockquote>
 <p>you start being careful, or you start whining about a kernel debugger.</p>
 </blockquote>
 <blockquote>
-<p>Quite frankly, I'd rather weed out the people who don't start being careful early rather than late.</p>
+<p>Quite frankly, I’d rather weed out the people who don’t start being<br>careful early rather than late. </p>
 </blockquote>
 <p>老派程序员里面很多经验丰富的大牛都不用debugger, 一种是习惯了print，另外很多典型的观点是Robe Pike这样的</p>
 <blockquote>
 <p>If you dive into the bug, you tend to fix the local issue in the code, but if you think about the bug first, how the bug came to be, you often find and correct a higher-level problem in the code that will improve the design and prevent further bugs.</p>
 </blockquote>
 <p>我试着不用gdb调试、语法高亮和代码补全做了6.S081的Lab1，结果相当惨烈。这几天回去翻出了藏在柜子里面的k&amp;r，从图书馆拿来了《c陷阱和指针》和《debug hacks》，并给VSCode启用了clangd自动补全并配置了断点调试。（我甚至想掏出clion了）</p>
-<p>如果你像我一样菜，去找/买个大屏幕（最好能竖过来），然后打开你的debugger （强烈推荐4k显示器，画质飞跃，头也不疼眼也不花了）</p>
+<p>如果你像我一样菜，去找/买个大屏幕（最好能竖过来），然后打开你的debugger<br>（强烈推荐4k显示器，画质飞跃，头也不疼眼也不花了）</p>
 <p>（据说一个大的显示屏有buff加成，据说，据说再在旁边摆一个小显示器开个终端也不错）</p>
 <p>当然，有的时候你也只是想找一下驱动的bug并汇报给厂家，或者你只是个普通用户，想检查一下内核更新后开不了机的问题；掏出调试工具吧！</p>
-<h2 id="链接">链接</h2>
-<p>《Debug Hacks 深入调试的技术和工具》 （吉冈弘隆） 这本书讲的很好，这还是之前我在图书馆乱逛无意间翻到的，结果发现是讲内核的，当时根本看不懂。今天又从图书馆翻出来了，发现讲的还挺好。</p>
-<p>https://lwn.net/2000/0914/a/lt-debugger.php3<br />
-https://www.kernel.org/doc/html/v5.12-rc3/core-api/printk-basics.html</p>
-<p><span class="exturl" data-url="aHR0cHM6Ly93d3cubGludXhwbHVtYmVyc2NvbmYub3JnL2V2ZW50LzQvY29udHJpYnV0aW9ucy8yOTAvYXR0YWNobWVudHMvMjc2LzQ2My9scGMyMDE5X2pvZ25lc3NfcHJpbnRrLnBkZg==">printk: Why is it so complicated?<i class="fa fa-external-link-alt"></i></span> Linux Plumbers Conf 的ppt<br />
-<span class="exturl" data-url="aHR0cHM6Ly9sd24ubmV0L0FydGljbGVzLzgwMDk0Ni8=">Why printk() is so complicated (and how to fix it)<i class="fa fa-external-link-alt"></i></span><br />
-<span class="exturl" data-url="aHR0cHM6Ly93ZWIuYXJjaGl2ZS5vcmcvd2ViLzIwMTIwMzI1MjIyNTA0L2h0dHA6Ly93d3cuaWJtLmNvbS9kZXZlbG9wZXJ3b3Jrcy9jbi9saW51eC9sLWtlcm5lbC1sb2dnaW5nLWFwaXMvaW5kZXguaHRtbA==">内核日志：API及其实现<i class="fa fa-external-link-alt"></i></span></p>
-<p>https://elinux.org/Debugging_by_printing</p>
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p>《Debug Hacks 深入调试的技术和工具》 （吉冈弘隆） 这本书讲的很好，这还是之前我在图书馆乱逛无意间翻到的，结果发现是讲内核的，当时根本看不懂。今天又从图书馆翻出来了，发现讲的还挺好。</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9sd24ubmV0LzIwMDAvMDkxNC9hL2x0LWRlYnVnZ2VyLnBocDM=">https://lwn.net/2000/0914/a/lt-debugger.php3<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cua2VybmVsLm9yZy9kb2MvaHRtbC92NS4xMi1yYzMvY29yZS1hcGkvcHJpbnRrLWJhc2ljcy5odG1s">https://www.kernel.org/doc/html/v5.12-rc3/core-api/printk-basics.html<i class="fa fa-external-link-alt"></i></span>  </p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cubGludXhwbHVtYmVyc2NvbmYub3JnL2V2ZW50LzQvY29udHJpYnV0aW9ucy8yOTAvYXR0YWNobWVudHMvMjc2LzQ2My9scGMyMDE5X2pvZ25lc3NfcHJpbnRrLnBkZg==">printk: Why is it so complicated?<i class="fa fa-external-link-alt"></i></span> Linux Plumbers Conf 的ppt<br><span class="exturl" data-url="aHR0cHM6Ly9sd24ubmV0L0FydGljbGVzLzgwMDk0Ni8=">Why printk() is so complicated (and how to fix it)<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93ZWIuYXJjaGl2ZS5vcmcvd2ViLzIwMTIwMzI1MjIyNTA0L2h0dHA6Ly93d3cuaWJtLmNvbS9kZXZlbG9wZXJ3b3Jrcy9jbi9saW51eC9sLWtlcm5lbC1sb2dnaW5nLWFwaXMvaW5kZXguaHRtbA==">内核日志：API及其实现<i class="fa fa-external-link-alt"></i></span>  </p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9lbGludXgub3JnL0RlYnVnZ2luZ19ieV9wcmludGluZw==">https://elinux.org/Debugging_by_printing<i class="fa fa-external-link-alt"></i></span>  </p>
 <p>另外<span class="exturl" data-url="aHR0cHM6Ly9lbGludXgub3JnL01haW5fUGFnZQ==">Embedded Linux Wiki<i class="fa fa-external-link-alt"></i></span>里面挺多东西都挺好的（你不搞嵌入式那当我没说）</p>
-<p>https://blog.csdn.net/tangkegagalikaiwu/article/details/8572365</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3RhbmdrZWdhZ2FsaWthaXd1L2FydGljbGUvZGV0YWlscy84NTcyMzY1">https://blog.csdn.net/tangkegagalikaiwu/article/details/8572365<i class="fa fa-external-link-alt"></i></span></p>
 <!-- flag of hidden posts -->
     </div>
 
@@ -386,8 +370,8 @@ https://www.kernel.org/doc/html/v5.12-rc3/core-api/printk-basics.html</p>
     <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/Linux/" rel="tag"><i class="fa fa-tag"></i> Linux</a>
-              <a href="/tags/debug/" rel="tag"><i class="fa fa-tag"></i> debug</a>
               <a href="/tags/6-S081/" rel="tag"><i class="fa fa-tag"></i> 6.S081</a>
+              <a href="/tags/debug/" rel="tag"><i class="fa fa-tag"></i> debug</a>
               <a href="/tags/kernel/" rel="tag"><i class="fa fa-tag"></i> kernel</a>
           </div>
 

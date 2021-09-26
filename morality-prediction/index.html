@@ -23,12 +23,12 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"zhangjk98.xyz","root":"/","images":"/images","scheme":"Pisces","version":"8.7.1","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqusjs","storage":true,"lazyload":false,"nav":{"disqusjs":{"text":"Load Disqus","order":-1},"utterances":{"order":-2}},"activeClass":"disqusjs"},"motion":{"enable":true,"async":true,"transition":{"post_block":"none","post_header":"none","post_body":"none","coll_header":"none","sidebar":"none"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
-<meta name="description" content="更新：推荐使用新版的MIMIC数据库自行构建数据集，并尝试整合eICU的病人数据。据说LSTM等方法效果不错，可以试试。 处理过程已经放在github上了：https:&#x2F;&#x2F;github.com&#x2F;Archaeoraptor&#x2F;AMI_morality_prediction.git">
+<meta name="description" content="更新：推荐使用新版的MIMIC数据库自行构建数据集，并尝试整合eICU的病人数据。据说LSTM等方法效果不错，可以试试。处理过程已经放在github上了：https:&#x2F;&#x2F;github.com&#x2F;Archaeoraptor&#x2F;AMI_morality_prediction.git">
 <meta property="og:type" content="article">
 <meta property="og:title" content="基于机器学习的ICU急性心肌梗死死亡率预测（MIMIC数据库）">
 <meta property="og:url" content="https://zhangjk98.xyz/morality-prediction/index.html">
 <meta property="og:site_name" content="止息的博客">
-<meta property="og:description" content="更新：推荐使用新版的MIMIC数据库自行构建数据集，并尝试整合eICU的病人数据。据说LSTM等方法效果不错，可以试试。 处理过程已经放在github上了：https:&#x2F;&#x2F;github.com&#x2F;Archaeoraptor&#x2F;AMI_morality_prediction.git">
+<meta property="og:description" content="更新：推荐使用新版的MIMIC数据库自行构建数据集，并尝试整合eICU的病人数据。据说LSTM等方法效果不错，可以试试。处理过程已经放在github上了：https:&#x2F;&#x2F;github.com&#x2F;Archaeoraptor&#x2F;AMI_morality_prediction.git">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://zhangjk98.xyz/morality-prediction/%E6%95%B0%E6%8D%AE%E6%8F%90%E5%8F%96%E6%B5%81%E7%A8%8B.svg">
 <meta property="og:image" content="https://zhangjk98.xyz/morality-prediction/image-20200603192151696.png">
@@ -158,7 +158,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0"><span class="nav-number">1.</span> <span class="nav-text">更新</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%82%A3%E8%80%85%E7%AD%9B%E9%80%89"><span class="nav-number">2.</span> <span class="nav-text">患者筛选</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BD%92%E4%B8%80%E5%8C%96%E5%92%8C%E6%A0%87%E5%87%86%E5%8C%96"><span class="nav-number">2.1.</span> <span class="nav-text">归一化和标准化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%BA%E5%A4%B1%E5%80%BC%E5%A1%AB%E8%A1%A5"><span class="nav-number">2.2.</span> <span class="nav-text">缺失值填补</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%9B%86%E4%B8%8D%E5%B9%B3%E8%A1%A1%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">2.3.</span> <span class="nav-text">数据集不平衡的问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83"><span class="nav-number">3.</span> <span class="nav-text">模型训练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%BB%E4%BA%A1%E7%8E%87%E9%A2%84%E6%B5%8B"><span class="nav-number">4.</span> <span class="nav-text">死亡率预测</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E6%9E%9C"><span class="nav-number">4.1.</span> <span class="nav-text">结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#roc%E6%9B%B2%E7%BA%BF"><span class="nav-number">4.2.</span> <span class="nav-text">ROC曲线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E5%BE%81%E6%9D%83%E9%87%8D"><span class="nav-number">4.3.</span> <span class="nav-text">特征权重</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E9%97%AE%E9%A2%98"><span class="nav-number">5.</span> <span class="nav-text">其他问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A5%E5%85%85%E8%AF%B4%E6%98%8E"><span class="nav-number">6.</span> <span class="nav-text">补充说明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mimic%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A1%A8%E6%A0%BC%E5%90%8D%E7%A7%B0%E5%8F%8A%E7%94%A8%E9%80%94"><span class="nav-number">6.1.</span> <span class="nav-text">MIMIC数据库表格名称及用途</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mimic%E6%95%B0%E6%8D%AE%E8%A1%A8%E4%B8%AD%E4%B8%BB%E8%A6%81%E5%AD%97%E6%AE%B5"><span class="nav-number">6.2.</span> <span class="nav-text">MIMIC数据表中主要字段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%A5%E6%80%A7%E5%BF%83%E8%82%8C%E6%A2%97%E6%AD%BB%E6%82%A3%E8%80%85%E4%B8%BB%E8%A6%81%E7%89%B9%E5%BE%81"><span class="nav-number">6.3.</span> <span class="nav-text">急性心肌梗死患者主要特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">6.4.</span> <span class="nav-text">注意事项</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0"><span class="nav-number">1.</span> <span class="nav-text">更新</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%82%A3%E8%80%85%E7%AD%9B%E9%80%89"><span class="nav-number">2.</span> <span class="nav-text">患者筛选</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BD%92%E4%B8%80%E5%8C%96%E5%92%8C%E6%A0%87%E5%87%86%E5%8C%96"><span class="nav-number">2.1.</span> <span class="nav-text">归一化和标准化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%BA%E5%A4%B1%E5%80%BC%E5%A1%AB%E8%A1%A5"><span class="nav-number">2.2.</span> <span class="nav-text">缺失值填补</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%9B%86%E4%B8%8D%E5%B9%B3%E8%A1%A1%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">2.3.</span> <span class="nav-text">数据集不平衡的问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83"><span class="nav-number">3.</span> <span class="nav-text">模型训练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%BB%E4%BA%A1%E7%8E%87%E9%A2%84%E6%B5%8B"><span class="nav-number">4.</span> <span class="nav-text">死亡率预测</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E6%9E%9C"><span class="nav-number">4.1.</span> <span class="nav-text">结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ROC%E6%9B%B2%E7%BA%BF"><span class="nav-number">4.2.</span> <span class="nav-text">ROC曲线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E5%BE%81%E6%9D%83%E9%87%8D"><span class="nav-number">4.3.</span> <span class="nav-text">特征权重</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E9%97%AE%E9%A2%98"><span class="nav-number">5.</span> <span class="nav-text">其他问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A5%E5%85%85%E8%AF%B4%E6%98%8E"><span class="nav-number">6.</span> <span class="nav-text">补充说明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MIMIC%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A1%A8%E6%A0%BC%E5%90%8D%E7%A7%B0%E5%8F%8A%E7%94%A8%E9%80%94"><span class="nav-number">6.1.</span> <span class="nav-text">MIMIC数据库表格名称及用途</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MIMIC%E6%95%B0%E6%8D%AE%E8%A1%A8%E4%B8%AD%E4%B8%BB%E8%A6%81%E5%AD%97%E6%AE%B5"><span class="nav-number">6.2.</span> <span class="nav-text">MIMIC数据表中主要字段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%A5%E6%80%A7%E5%BF%83%E8%82%8C%E6%A2%97%E6%AD%BB%E6%82%A3%E8%80%85%E4%B8%BB%E8%A6%81%E7%89%B9%E5%BE%81"><span class="nav-number">6.3.</span> <span class="nav-text">急性心肌梗死患者主要特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">6.4.</span> <span class="nav-text">注意事项</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -174,7 +174,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-count">36</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -185,7 +185,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">62</span>
+        <span class="site-state-item-count">69</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -291,7 +291,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-09-13 09:24:51" itemprop="dateModified" datetime="2021-09-13T09:24:51+08:00">2021-09-13</time>
+        <time title="修改时间：2021-09-26 09:57:49" itemprop="dateModified" datetime="2021-09-26T09:57:49+08:00">2021-09-26</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -313,22 +313,24 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>更新：推荐使用新版的MIMIC数据库自行构建数据集，并尝试整合eICU的病人数据。据说LSTM等方法效果不错，可以试试。 处理过程已经放在github上了：https://github.com/Archaeoraptor/AMI_morality_prediction.git <span id="more"></span></p>
+        <p>更新：推荐使用新版的MIMIC数据库自行构建数据集，并尝试整合eICU的病人数据。据说LSTM等方法效果不错，可以试试。<br>处理过程已经放在github上了：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0FyY2hhZW9yYXB0b3IvQU1JX21vcmFsaXR5X3ByZWRpY3Rpb24uZ2l0">https://github.com/Archaeoraptor/AMI_morality_prediction.git<i class="fa fa-external-link-alt"></i></span></p>
+<span id="more"></span>
+
 <p>急性心肌梗死的发病率和死亡率都很高，MIMIC里面大概有5000次记录，用来构造数据集效果会比较好，这次就用MIMIC数据库里面的急性心肌梗死进行死亡风险的预测。</p>
-<p>早期心血管疾病采用TIMI（the Thrombolysis in Myocardial Infarction）风险评分、全球急性心脏事件注册表（GRACE）评分或医生经验判断。后来MIMIC、eICU等开放医学数据库的建立和公布，数据量足够支撑起机器学习，疾病风险预测逐渐开始采用机器学习等方法。 数据清洗和构造数据集</p>
+<p>早期心血管疾病采用TIMI（the Thrombolysis in Myocardial Infarction）风险评分、全球急性心脏事件注册表（GRACE）评分或医生经验判断。后来MIMIC、eICU等开放医学数据库的建立和公布，数据量足够支撑起机器学习，疾病风险预测逐渐开始采用机器学习等方法。<br>数据清洗和构造数据集</p>
 <p>目前开源的ICU重症数据库主要有MIMIC和eICU；eICU里面的患者数量多一点，但是貌似数据缺失很多，数据质量也不太好（eICU整合了几家不同医院的临床记录拼凑出来的数据库，数据质量参差不齐）</p>
 <p>这里我用的MIMIC-Ⅲ数据库，内有近四万名成年人以及七千多名新生儿的五万余次住院资料，其中急性心肌梗死入院记录大概5000多次。</p>
-<h2 id="更新">更新</h2>
-<p>前一阵MIT发布了 MIMIC IV 数据库（第四版），MIMIC-IV目前是0.4版本，以后要放出1.0正式版。希望大家下载最新版本进行训练<del>炼丹</del></p>
-<p>0.4版的压缩包有6.7G,要获取需要在网站注册帐号并进行考试答题，然后同意他们关于医学伦理的条款 下载地址： <span class="exturl" data-url="aHR0cHM6Ly9waHlzaW9uZXQub3JnL2NvbnRlbnQvbWltaWNpdi8wLjQv">https://physionet.org/content/mimiciv/0.4/<i class="fa fa-external-link-alt"></i></span> 并没有BT种子之类下载方式，下载需要帐号验证，由于版权和隐私等原因，应该也不能进行二次分发 所以大家自己去下吧。</p>
-<p>通过考试答题后就直接点下载链接就好了。 官网还提供了wget的下载方式，安装包有点大，我们打开bbr下载会快一点（有美国代理记得挂）</p>
+<h2 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h2><p>前一阵MIT发布了 MIMIC IV 数据库（第四版），MIMIC-IV目前是0.4版本，以后要放出1.0正式版。希望大家下载最新版本进行训练<del>炼丹</del></p>
+<p>0.4版的压缩包有6.7G,要获取需要在网站注册帐号并进行考试答题，然后同意他们关于医学伦理的条款<br>下载地址： <span class="exturl" data-url="aHR0cHM6Ly9waHlzaW9uZXQub3JnL2NvbnRlbnQvbWltaWNpdi8wLjQv">https://physionet.org/content/mimiciv/0.4/<i class="fa fa-external-link-alt"></i></span><br>并没有BT种子之类下载方式，下载需要帐号验证，由于版权和隐私等原因，应该也不能进行二次分发<br>所以大家自己去下吧。</p>
+<p>通过考试答题后就直接点下载链接就好了。<br>官网还提供了wget的下载方式，安装包有点大，我们打开bbr下载会快一点（有美国代理记得挂）</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> sysctl net.ipv4.tcp_congestion_control<span class="token operator">=</span>bbr<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>然后填你的用户名和密码就好了</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">wget</span> -r -N -c -np --user username --ask-password https://physionet.org/files/mimiciv/0.4/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>下载好建库的时候记得建索引，不然后续操作会很慢</p>
-<h2 id="患者筛选">患者筛选</h2>
-<p>在MIMIC数据库中提取ICD-9疾病编号为410大类、疾病名称为 acute myocardial infarction的相关病人全部住院记录。数据表DIAGNOSE_ICD中的ICD9_CODE字段记录了患者的ICD-9编码，其中410大类编码根据发病部位被分为10个小类，例如第1个小类代表发病部位为前外侧壁、第2个小类代表发病部位为下外侧壁；这10 个小类又根据发病时期分为3个小类，0代表未细分，1代表初次入院，2代表再入院；例如，MIMIC数据库中ICD9_CODE字段为41031，对应的ICD-9编码为410.3.1，其中410代表急性心肌梗死，3代表下后壁，1代表初次入院。 <img src="%E6%95%B0%E6%8D%AE%E6%8F%90%E5%8F%96%E6%B5%81%E7%A8%8B.svg" alt="数据提取示意图" /></p>
-<p>提取到的除后续照顾类别以外的410大类患者数据中，共有5087次入院记录，去除同一患者重复的入院记录，共有4788名病人患有急性心肌梗死（包括同时患有急性心肌梗死的并发症），其中有727人死亡，总死亡率15.18%。男性患者共2924名，平均年龄为67.2岁，死亡391人，男性死亡率13.37%；女性患者共1864名，平均年龄为73.4岁，死亡337人,女性死亡率18.10%。统计急性心肌梗死患者人群种族信息，可以发现亚裔只有74次入院记录。 特征选取</p>
+<h2 id="患者筛选"><a href="#患者筛选" class="headerlink" title="患者筛选"></a>患者筛选</h2><p>在MIMIC数据库中提取ICD-9疾病编号为410大类、疾病名称为 acute myocardial infarction的相关病人全部住院记录。数据表DIAGNOSE_ICD中的ICD9_CODE字段记录了患者的ICD-9编码，其中410大类编码根据发病部位被分为10个小类，例如第1个小类代表发病部位为前外侧壁、第2个小类代表发病部位为下外侧壁；这10 个小类又根据发病时期分为3个小类，0代表未细分，1代表初次入院，2代表再入院；例如，MIMIC数据库中ICD9_CODE字段为41031，对应的ICD-9编码为410.3.1，其中410代表急性心肌梗死，3代表下后壁，1代表初次入院。<br><img src="%E6%95%B0%E6%8D%AE%E6%8F%90%E5%8F%96%E6%B5%81%E7%A8%8B.svg" alt="数据提取示意图"></p>
+<p>提取到的除后续照顾类别以外的410大类患者数据中，共有5087次入院记录，去除同一患者重复的入院记录，共有4788名病人患有急性心肌梗死（包括同时患有急性心肌梗死的并发症），其中有727人死亡，总死亡率15.18%。男性患者共2924名，平均年龄为67.2岁，死亡391人，男性死亡率13.37%；女性患者共1864名，平均年龄为73.4岁，死亡337人,女性死亡率18.10%。统计急性心肌梗死患者人群种族信息，可以发现亚裔只有74次入院记录。<br>特征选取</p>
 <p>MIIMC里面能用的特征大概有性别年龄这些个人信息、心率血压这些生理指标、还有些用药记录之类的，为了预测患者初次发病的死亡率，只采用患者初次入院24小时内的记录检查项目作为预测指标</p>
 <p>先把24小时ICUSTAY_ID选出来</p>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> k_AMI2 <span class="token keyword">AS</span>
@@ -384,6 +386,7 @@
 <span class="token keyword">WHERE</span>
 	ADMISSIONS<span class="token punctuation">.</span>ADMITTIME <span class="token operator">=</span> T<span class="token punctuation">.</span>ADMITTIME
 <span class="token operator">AND</span> ADMISSIONS<span class="token punctuation">.</span>SUBJECT_ID <span class="token operator">=</span> T<span class="token punctuation">.</span>SUBJECT_ID<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>然后用找患者检查项目、生理指标的ITEM_ID。写一个简单的SQL联接查询就可以了：</p>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SELECT</span> <span class="token keyword">DISTINCT</span>
 	SUBJECT_ID<span class="token punctuation">,</span>
@@ -412,100 +415,93 @@
 	STAYHOUR <span class="token operator">&lt;=</span> <span class="token number">24</span> 
 <span class="token keyword">GROUP</span> <span class="token keyword">BY</span>
 	SUBJECT_ID<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>本次选取的急性心肌梗死患者主要特征见下表：</p>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th>特征</th>
 <th>字段或ITEMID</th>
 </tr>
 </thead>
-<tbody>
-<tr class="odd">
+<tbody><tr>
 <td>年龄</td>
 <td>PTENETS.DOD和DOB</td>
 </tr>
-<tr class="even">
+<tr>
 <td>性别</td>
 <td>PATIENTS.GENDER</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>心率</td>
 <td>CHARTEVENTS.ITEMID</td>
 </tr>
-<tr class="even">
+<tr>
 <td>入院类型</td>
 <td>ADMISSION_TYPE</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>ICD细分编码</td>
 <td>ADMISSION.ICD9_CODE</td>
 </tr>
-<tr class="even">
+<tr>
 <td>最小GCS评分</td>
 <td>220739、223901、223900、198</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>排尿量</td>
 <td>40055、226559</td>
 </tr>
-<tr class="even">
+<tr>
 <td>PaO2</td>
 <td>779、220224</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>白细胞计数WBC</td>
 <td>220546、15424、200、1127、861</td>
 </tr>
-<tr class="even">
+<tr>
 <td>体温</td>
 <td>676、223762、678、223761</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>血钾浓度</td>
 <td>50971</td>
 </tr>
-<tr class="even">
+<tr>
 <td>血钠浓度</td>
 <td>50983</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>血胆红素浓度</td>
 <td>50885</td>
 </tr>
-<tr class="even">
+<tr>
 <td>是否有血液恶性肿瘤</td>
 <td>ICD9_CODE =200XX-208XX</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>收缩压</td>
 <td>51、220050</td>
 </tr>
-<tr class="even">
+<tr>
 <td>动脉收缩压</td>
 <td>455、220179</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>血清尿素水平</td>
 <td>51006</td>
 </tr>
-</tbody>
-</table>
-<h3 id="归一化和标准化">归一化和标准化</h3>
-<p>为了将患者特征转换成便于机器学习模型输入训练的特征变量的形式，对于MIMIC数据库中患者初次入院24小时中多次测量并记录的化验指标，选取最小值、最大值和平均值作为三个不同的特征。</p>
+</tbody></table>
+<h3 id="归一化和标准化"><a href="#归一化和标准化" class="headerlink" title="归一化和标准化"></a>归一化和标准化</h3><p>为了将患者特征转换成便于机器学习模型输入训练的特征变量的形式，对于MIMIC数据库中患者初次入院24小时中多次测量并记录的化验指标，选取最小值、最大值和平均值作为三个不同的特征。</p>
 <p>然后对数字变量进行归一化，把标准差置为1，均值置为零（ICD细分编码之类的虽然是数字，但实际上是一个类别特征，应作为类别特征处理）</p>
 <p>对于性别种族等类别特征，进行Onehot编码转换为梯度提升树模型能够接受的类型；以性别为例，将性别为女编码为01，性别为男编码为10。（LightGBM等可以用直方图算法之类的方式直接处理类别特征，不需要该操作）经过上述处理，共筛选并构建出42个急性心肌梗死患者的特征维度。</p>
-<h3 id="缺失值填补">缺失值填补</h3>
-<p>由于MIMIC数据库中的数据是由两家不同的医院在10年间的ICU重症监护记录整合而成，急性心肌梗死患者的数据存在缺失和不统一的问题。以化验项目血清碳酸氢水平为例，在提取得到的4788份急性心肌梗死患者样本数据中，有4730份血清碳酸氢数据记录是完整的，有58份是缺失的，缺失率1.2%；但是部分检查指标，如收缩压，4788个样本中只有2665份完整数据，缺失率44.3%。</p>
+<h3 id="缺失值填补"><a href="#缺失值填补" class="headerlink" title="缺失值填补"></a>缺失值填补</h3><p>由于MIMIC数据库中的数据是由两家不同的医院在10年间的ICU重症监护记录整合而成，急性心肌梗死患者的数据存在缺失和不统一的问题。以化验项目血清碳酸氢水平为例，在提取得到的4788份急性心肌梗死患者样本数据中，有4730份血清碳酸氢数据记录是完整的，有58份是缺失的，缺失率1.2%；但是部分检查指标，如收缩压，4788个样本中只有2665份完整数据，缺失率44.3%。</p>
 <p>对于SVM等对于缺失值敏感的算法，用均值填补空缺数据的方法；对于缺失值不敏感的决策树类算法（如GBDT）和自带缺失值处理的算法（如XGBoost），将缺失值置为-1。</p>
 <p>（缺失率在40%左右的会影响模型的效果，但是收缩压之类的又很重要，不能轻易舍弃）</p>
-<figure>
-<img src="/morality-prediction/image-20200603192151696.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<h3 id="数据集不平衡的问题">数据集不平衡的问题</h3>
-<p>有的疾病可能会有，急性心肌梗死由于死亡率很高，正负样本比例已经超过了1：9，并不是那种极端不平衡的问题。有的疾病死亡率1%左右需要采样等方式构造平衡数据集。</p>
-<h2 id="模型训练">模型训练</h2>
-<p>直接用的scikit-learn工具包，随便调了调参。决策树类的bsoosting算法表现都还不错，像GBDT啊，XGBoost啊，LightGBM啊。数据量还是有点小了，就没上深度学习那些网络。直接调sklearn的包调一下参：</p>
+<p><img src="/morality-prediction/image-20200603192151696.png" alt="img"></p>
+<h3 id="数据集不平衡的问题"><a href="#数据集不平衡的问题" class="headerlink" title="数据集不平衡的问题"></a>数据集不平衡的问题</h3><p>有的疾病可能会有，急性心肌梗死由于死亡率很高，正负样本比例已经超过了1：9，并不是那种极端不平衡的问题。有的疾病死亡率1%左右需要采样等方式构造平衡数据集。</p>
+<h2 id="模型训练"><a href="#模型训练" class="headerlink" title="模型训练"></a>模型训练</h2><p>直接用的scikit-learn工具包，随便调了调参。决策树类的bsoosting算法表现都还不错，像GBDT啊，XGBoost啊，LightGBM啊。数据量还是有点小了，就没上深度学习那些网络。直接调sklearn的包调一下参：</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> pandas <span class="token keyword">as</span> pd
 <span class="token comment"># pd.options.mode.chained_assignment = None</span>
 <span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
@@ -571,12 +567,11 @@ fpr_xgb<span class="token punctuation">,</span>tpr_xgb<span class="token punctua
 <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"召回率:"</span><span class="token punctuation">,</span>recall_score<span class="token punctuation">(</span>y_test<span class="token punctuation">,</span> y_pred_xgb<span class="token punctuation">)</span><span class="token punctuation">)</span>
 <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"正确率:"</span><span class="token punctuation">,</span>accuracy_score<span class="token punctuation">(</span>y_test<span class="token punctuation">,</span> y_pred_xgb<span class="token punctuation">)</span><span class="token punctuation">)</span>
 <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"F1值:"</span><span class="token punctuation">,</span>f1_score<span class="token punctuation">(</span>y_test<span class="token punctuation">,</span> y_pred_xgb<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="死亡率预测">死亡率预测</h2>
-<h3 id="结果">结果</h3>
-<p>表3-3 几种机器学习方法的死亡率预测结果如下表：</p>
+
+<h2 id="死亡率预测"><a href="#死亡率预测" class="headerlink" title="死亡率预测"></a>死亡率预测</h2><h3 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h3><p>表3-3 几种机器学习方法的死亡率预测结果如下表：</p>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th></th>
 <th>GBDT</th>
 <th>LR</th>
@@ -587,8 +582,7 @@ fpr_xgb<span class="token punctuation">,</span>tpr_xgb<span class="token punctua
 <th>NB</th>
 </tr>
 </thead>
-<tbody>
-<tr class="odd">
+<tbody><tr>
 <td>AUC</td>
 <td>0.834</td>
 <td>0.780</td>
@@ -598,7 +592,7 @@ fpr_xgb<span class="token punctuation">,</span>tpr_xgb<span class="token punctua
 <td>0.844</td>
 <td>0.777</td>
 </tr>
-<tr class="even">
+<tr>
 <td>精确率</td>
 <td>0.676</td>
 <td>0.618</td>
@@ -608,7 +602,7 @@ fpr_xgb<span class="token punctuation">,</span>tpr_xgb<span class="token punctua
 <td>0.663</td>
 <td>0.378</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>召回率</td>
 <td>0.320</td>
 <td>0.239</td>
@@ -618,7 +612,7 @@ fpr_xgb<span class="token punctuation">,</span>tpr_xgb<span class="token punctua
 <td>0.330</td>
 <td>0.479</td>
 </tr>
-<tr class="even">
+<tr>
 <td>准确率</td>
 <td>0.879</td>
 <td>0.865</td>
@@ -628,7 +622,7 @@ fpr_xgb<span class="token punctuation">,</span>tpr_xgb<span class="token punctua
 <td>0.872</td>
 <td>0.806</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>F1 值</td>
 <td>0.451</td>
 <td>0.345</td>
@@ -638,351 +632,325 @@ fpr_xgb<span class="token punctuation">,</span>tpr_xgb<span class="token punctua
 <td>0.439</td>
 <td>0.422</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <p>看上去准确率挺高，实际结果不太好，召回率太低了。召回率的意义是真阳性率（True Positive Rate），也就是预测到的死亡患者占所有患者的比例，大概真正死亡的患者只有一半被预测了出来。</p>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th></th>
 <th>实际死亡</th>
 <th>实际存活</th>
 </tr>
 </thead>
-<tbody>
-<tr class="odd">
+<tbody><tr>
 <td>预测死亡</td>
 <td>真阳性（TP）</td>
 <td>假阳性（FP）</td>
 </tr>
-<tr class="even">
+<tr>
 <td>预测存活</td>
 <td>假阴性（FN）</td>
 <td>真阴性（TN）</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <p>由于数据集还是太小，就没有细分搞成多分类的问题预测一下短期（30天）和长期（90天以上）死亡率，数据集大了可以做一下。数据集再大可以做细分，比如STEMI和NSTEMI的细分或者</p>
-<h3 id="roc曲线">ROC曲线</h3>
-<figure>
-<img src="/morality-prediction/image-20200531203632378.png" alt="几种机器学习方法的ROC曲线" /><figcaption aria-hidden="true">几种机器学习方法的ROC曲线</figcaption>
-</figure>
-<h3 id="特征权重">特征权重</h3>
-<p>以GBDT为例，提取训练模型的决策树权重，结果如图3-3所示。由图可知，梯度提升树模型认为最重要的10个指标为当日最小血清碳酸氢水平、平均动脉血二氧化碳分压、平均排尿量、心率范围、最小心率、肌酐、体温范围、当日最大收缩压、当日心率标准差、年龄。</p>
-<figure>
-<img src="/morality-prediction/image-20200531210528257.png" alt="GBDT的特征权重" /><figcaption aria-hidden="true">GBDT的特征权重</figcaption>
-</figure>
-<h2 id="其他问题">其他问题</h2>
-<p>这个，急性心肌梗死这个直接看心电图或者彩超啥的更好一些，准确率一般不会低于90%。心血管疾病这种做这个预测基本没有太大意义。急性肾衰竭啥的可能更有意义一点</p>
+<h3 id="ROC曲线"><a href="#ROC曲线" class="headerlink" title="ROC曲线"></a>ROC曲线</h3><p><img src="/morality-prediction/image-20200531203632378.png" alt="几种机器学习方法的ROC曲线"></p>
+<h3 id="特征权重"><a href="#特征权重" class="headerlink" title="特征权重"></a>特征权重</h3><p>以GBDT为例，提取训练模型的决策树权重，结果如图3-3所示。由图可知，梯度提升树模型认为最重要的10个指标为当日最小血清碳酸氢水平、平均动脉血二氧化碳分压、平均排尿量、心率范围、最小心率、肌酐、体温范围、当日最大收缩压、当日心率标准差、年龄。</p>
+<p><img src="/morality-prediction/image-20200531210528257.png" alt="GBDT的特征权重"></p>
+<h2 id="其他问题"><a href="#其他问题" class="headerlink" title="其他问题"></a>其他问题</h2><p>这个，急性心肌梗死这个直接看心电图或者彩超啥的更好一些，准确率一般不会低于90%。心血管疾病这种做这个预测基本没有太大意义。急性肾衰竭啥的可能更有意义一点</p>
 <p>MIMIC数据库里面的数据亚裔很少，放到国内可能不太合适。护理和临床记录方式也差别不小。</p>
 <p>这是2001-2012年的数据，近十年来医学水平提高了不少，包括再灌注等手段，死亡率已经下降了，用这批数据预测现在的可能会偏高</p>
-<h2 id="补充说明">补充说明</h2>
-<h3 id="mimic数据库表格名称及用途">MIMIC数据库表格名称及用途</h3>
-<table>
-<colgroup>
-<col style="width: 20%" />
-<col style="width: 53%" />
-<col style="width: 26%" />
-</colgroup>
+<h2 id="补充说明"><a href="#补充说明" class="headerlink" title="补充说明"></a>补充说明</h2><h3 id="MIMIC数据库表格名称及用途"><a href="#MIMIC数据库表格名称及用途" class="headerlink" title="MIMIC数据库表格名称及用途"></a>MIMIC数据库表格名称及用途</h3><table>
 <thead>
-<tr class="header">
+<tr>
 <th>表格名称</th>
 <th>表格内容</th>
 <th>备注</th>
 </tr>
 </thead>
-<tbody>
-<tr class="odd">
+<tbody><tr>
 <td>ADMISSIONS（入院表）</td>
 <td>提供有关患者的入院信息，由于为病人进行的每次唯一的医院访问都分配了一个唯一的信息<code>HADM_ID</code>，因此ADMISSIONS表可以被认为是<code>HADM_ID</code></td>
 <td></td>
 </tr>
-<tr class="even">
+<tr>
 <td>CALLOUT(标注表)</td>
 <td>提供患者何时准备好从ICU出院以及患者何时实际从ICU出院的信息</td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr>
 <td>caregivers</td>
 <td>记录医护人员信息（ID、类型、附加信息）</td>
 <td></td>
 </tr>
-<tr class="even">
+<tr>
 <td>chartevents</td>
 <td>记录所有病人的图表数据，住院期间的所有症状、体征、精神状态、实验室检查等</td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr>
 <td>cptevents</td>
 <td>包含当前的程序术语（CPT）代码，这些代码便于为在患者身上执行的操作计费。</td>
 <td></td>
 </tr>
-<tr class="even">
+<tr>
 <td>d_cpt</td>
 <td>当前程序术语（CPT）代码的高级定义</td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr>
 <td>prescriptions（处方）</td>
 <td>包含药物相关的订单条目，即处方</td>
 <td></td>
 </tr>
-<tr class="even">
+<tr>
 <td>inputevents_cv</td>
 <td>患者输入数据（流入患者体内液体信息）</td>
 <td>表格来源CareVue ICU数据库。</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>inputeevents_mv</td>
 <td>患者输入数据（流入患者体内液体信息）</td>
 <td>表格来源Metavision ICU数据库。</td>
 </tr>
-<tr class="even">
+<tr>
 <td>outputevent</td>
 <td>患者的输出数据。</td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr>
 <td>labevents</td>
 <td>包含给定患者的所有实验室测量值，包括患者数据（ITEMID、VALUE）</td>
 <td></td>
 </tr>
-<tr class="even">
+<tr>
 <td>d_icd_diagnoses</td>
 <td>ICD-9疾病诊断的定义表,对 疾病编码的解释</td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr>
 <td>d_icd_procedures</td>
 <td>ICD-9治疗程序代码的解释</td>
 <td></td>
 </tr>
-<tr class="even">
+<tr>
 <td>d_items</td>
 <td>ICU数据库中所有项目的定义表</td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr>
 <td>d_labitems</td>
 <td>所有实验室测量的定义表（对ITEMID的解释，对应数据类型，关联的LOINC代码）</td>
 <td></td>
 </tr>
-<tr class="even">
+<tr>
 <td>datetimeevents</td>
 <td>包含所有日期格式的数据</td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr>
 <td>diagnoses_icd（诊断表）</td>
 <td>包含患者住院期间所有ICD-9诊断</td>
 <td></td>
 </tr>
-<tr class="even">
+<tr>
 <td>drgcodes</td>
 <td>包含患者的诊断相关组（DRG）代码</td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr>
 <td>icustays</td>
 <td>患者在ICU内的住院概要（入住或者转出ICU的时间等）</td>
 <td></td>
 </tr>
-<tr class="even">
+<tr>
 <td>microbiologyevents</td>
 <td>包含微生物学信息，包括进行的测试和敏感性</td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr>
 <td>noteevents</td>
 <td>包含所有患者注意事项。，主要是不便于数字化的报告</td>
 <td></td>
 </tr>
-<tr class="even">
+<tr>
 <td>patients</td>
 <td>包含患者的基本信息（性别、出生日期、死亡日期、死亡标志位）</td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr>
 <td>procedureevents_mv</td>
 <td>包含患者的（治疗）程序</td>
 <td></td>
 </tr>
-<tr class="even">
+<tr>
 <td>procedures_icd</td>
 <td>包含患者的ICD程序，最值得注意的是ICD-9程序，即诊断程序</td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr>
 <td>services</td>
 <td>患者被接纳/转移的服务</td>
 <td></td>
 </tr>
-<tr class="even">
+<tr>
 <td>transfers</td>
 <td>患者整个住院期间的物理位置</td>
 <td></td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <p>注意： 表格主要分为两种，一种是以D开头的，表示该表格为字典，比如d_labitems，表示实验室检查字典，内含每个实验室检查结果的说明；没有以D打头的表格则是记录患者信息的表格，比如labevents则表示患者住院期间的所有实验室检查结果。</p>
-<h3 id="mimic数据表中主要字段">MIMIC数据表中主要字段</h3>
-<table>
+<h3 id="MIMIC数据表中主要字段"><a href="#MIMIC数据表中主要字段" class="headerlink" title="MIMIC数据表中主要字段"></a>MIMIC数据表中主要字段</h3><table>
 <thead>
-<tr class="header">
+<tr>
 <th>数据表</th>
 <th>字段</th>
 <th>说明</th>
 </tr>
 </thead>
-<tbody>
-<tr class="odd">
+<tbody><tr>
 <td>ADMISSION</td>
 <td>SUBJECT_ID</td>
 <td>每个患者的唯一标识</td>
 </tr>
-<tr class="even">
+<tr>
 <td>ADMISSION</td>
 <td>HADM_ID</td>
 <td>患者每次入院的唯一标识</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>ADMISSION</td>
 <td>ADMITTIME</td>
 <td>入院时间</td>
 </tr>
-<tr class="even">
+<tr>
 <td>ADMISSION</td>
 <td>DEATHTIME</td>
 <td>死亡时间</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>DIAGNOSES_ICD</td>
 <td>ICD9_CODES</td>
 <td>患者的ICD-9编码</td>
 </tr>
-<tr class="even">
+<tr>
 <td>ADMISSION</td>
 <td>HOSPITAL_EXPIRE_FLAG</td>
 <td>是否死亡</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>D_ITEMS</td>
 <td>ITEMID</td>
 <td>项目编号</td>
 </tr>
-<tr class="even">
+<tr>
 <td>D_ITEMS</td>
 <td>LEABEL</td>
 <td>项目名称</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>ICUSTAYS</td>
 <td>ICUSTAY_ID</td>
 <td>每次ICU病房接受病人唯一标识</td>
 </tr>
-<tr class="even">
+<tr>
 <td>LABEVENTS</td>
 <td>VALUE</td>
 <td>检查项目</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>LABEVENTS</td>
 <td>VALUEUOM</td>
 <td>ITEM的值 检查项目的单位（如K/uL）</td>
 </tr>
-<tr class="even">
+<tr>
 <td>LABEVENT</td>
 <td>FLAG</td>
 <td>检查项目是否异常（正常为Null）</td>
 </tr>
-</tbody>
-</table>
-<h3 id="急性心肌梗死患者主要特征">急性心肌梗死患者主要特征</h3>
-<table>
+</tbody></table>
+<h3 id="急性心肌梗死患者主要特征"><a href="#急性心肌梗死患者主要特征" class="headerlink" title="急性心肌梗死患者主要特征"></a>急性心肌梗死患者主要特征</h3><table>
 <thead>
-<tr class="header">
+<tr>
 <th>特征</th>
 <th>字段或ITEMID</th>
 </tr>
 </thead>
-<tbody>
-<tr class="odd">
+<tbody><tr>
 <td>年龄</td>
 <td>PTENETS.DOD和DOB</td>
 </tr>
-<tr class="even">
+<tr>
 <td>性别</td>
 <td>PATIENTS.GENDER</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>心率</td>
 <td>CHARTEVENTS.ITEMID</td>
 </tr>
-<tr class="even">
+<tr>
 <td>入院类型</td>
 <td>ADMISSION_TYPE</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>ICD细分编码</td>
 <td>ADMISSION.ICD9_CODE</td>
 </tr>
-<tr class="even">
+<tr>
 <td>最小GCS评分</td>
 <td>220739、223901、223900、198</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>排尿量</td>
 <td>40055、226559</td>
 </tr>
-<tr class="even">
+<tr>
 <td>PaO2</td>
 <td>779、220224</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>白细胞计数WBC</td>
 <td>220546、15424、200、1127、861</td>
 </tr>
-<tr class="even">
+<tr>
 <td>体温</td>
 <td>676、223762、678、223761</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>血钾浓度</td>
 <td>50971</td>
 </tr>
-<tr class="even">
+<tr>
 <td>血钠浓度</td>
 <td>50983</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>血胆红素浓度</td>
 <td>50885</td>
 </tr>
-<tr class="even">
+<tr>
 <td>是否有血液恶性肿瘤</td>
 <td>ICD9_CODE =200XX-208XX</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>收缩压</td>
 <td>51、220050</td>
 </tr>
-<tr class="even">
+<tr>
 <td>动脉收缩压</td>
 <td>455、220179</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>血清尿素水平</td>
 <td>51006</td>
 </tr>
-</tbody>
-</table>
-<h3 id="注意事项">注意事项</h3>
-<ul>
-<li>MIMIC IIII 数据库中用于识别患者身份的字段共有3个：subjects_id，hadm_id和icustay_id。其中subjects_id是患者身份的唯一标识，即一个subject_id只对应一名患者，一名患者也只有一个subject_id。hadm_id是患者每次住院的身份识别号，一个患者可能多次住院，因此一个subjects_id会对应多个hadm_id，但一个hadm_id只能对应一个subject_id。icustay_id表示患者在进入ICU的编号，因为患者一次住院可以多次进入不同的ICU，因此一个icustay_id只能对应一个hadm_id，当然也只能对应一个subject_id，但一个hadm_id可以对应多个icustay_id。在利用 MIMIC III 数据库进行研究时，往往需要运用sql语言对多个数据库进行连接，连接的基础一般就是这三个字段。</li>
+</tbody></table>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ul>
+<li>MIMIC IIII  数据库中用于识别患者身份的字段共有3个：subjects_id，hadm_id和icustay_id。其中subjects_id是患者身份的唯一标识，即一个subject_id只对应一名患者，一名患者也只有一个subject_id。hadm_id是患者每次住院的身份识别号，一个患者可能多次住院，因此一个subjects_id会对应多个hadm_id，但一个hadm_id只能对应一个subject_id。icustay_id表示患者在进入ICU的编号，因为患者一次住院可以多次进入不同的ICU，因此一个icustay_id只能对应一个hadm_id，当然也只能对应一个subject_id，但一个hadm_id可以对应多个icustay_id。在利用 MIMIC III 数据库进行研究时，往往需要运用sql语言对多个数据库进行连接，连接的基础一般就是这三个字段。</li>
 <li>患者的临床资料不一定是住ICU期间的临床资料，也可能是住普通病房时的资料。记录患者入院时间的表格为admission，内含三个时间点：admittime，表示患者入院时间；dischartime，表示患者出院时间；deathtime，表示患者院内死亡的时间。如果deathtime为空(null)，则表示患者住院期间未死亡。记录患者进入和离开ICU的表格为icustays，这个表格中有两个时间较为重要，分别是intime和outtime，前者表示进入ICU的时间，后者表示离开ICU的时间。当然，如果患者在ICU死亡，那么dischartime、outtime和deathtime理论上就是同一个时间，但实际上会稍微有些出入，估计是由于录入不及时造成的；</li>
-<li>MIMIC III 中的数据来自于两套数据采集系统：carevue和metavision。在icustays表格中，有一个字段叫dbsource，用于标识数据是来源于carevue还是metavision。CareVue记录的是2001至2008年入院的患者资料，Metavision则是2008至2012年期间入院的患者资料。在Metavision中，病人的随访时间最少为90天，在CareVue中，病人的随访时间则至少为4年。换而言之，在进行预后研究时，如果将数据来源限定为CareVue，则可以将随访时间假定为4年，对于4年以后死亡的患者，可以将其在出院后第4年生存状况定义为“存活”。当然，如果患者的死亡状况(DOD_SSN)为空格(null)，也同样可以表明患者在出院后4年仍然存活。</li>
+<li>MIMIC III  中的数据来自于两套数据采集系统：carevue和metavision。在icustays表格中，有一个字段叫dbsource，用于标识数据是来源于carevue还是metavision。CareVue记录的是2001至2008年入院的患者资料，Metavision则是2008至2012年期间入院的患者资料。在Metavision中，病人的随访时间最少为90天，在CareVue中，病人的随访时间则至少为4年。换而言之，在进行预后研究时，如果将数据来源限定为CareVue，则可以将随访时间假定为4年，对于4年以后死亡的患者，可以将其在出院后第4年生存状况定义为“存活”。当然，如果患者的死亡状况(DOD_SSN)为空格(null)，也同样可以表明患者在出院后4年仍然存活。</li>
 <li>MIMIC数据库中的ICD编码统计方式和国内不太一样，基本都包含并发症，比如一个病人流感入院并死亡，同时患有急性心肌梗死的并发症，那么该病人也算作急性心肌梗死患者。（主要诊断是其他的疾病，但同时患有某疾病并发症，也认为是该疾病患者，统计死亡时也算在里面）</li>
-<li>在MIMIC中有一个'ADMISSION_TYPE，其中有3个类别，分别是URGENT，EMERGENCY和ELECTIVE，ELECTIVE是不紧急的，URGENT和EMERGENCY的区别大概是URGENT的紧急程度更高（一般是需要立即采取措施的那种）</li>
+<li>在MIMIC中有一个’ADMISSION_TYPE，其中有3个类别，分别是URGENT，EMERGENCY和ELECTIVE，ELECTIVE是不紧急的，URGENT和EMERGENCY的区别大概是URGENT的紧急程度更高（一般是需要立即采取措施的那种）</li>
 </ul>
 
     </div>

@@ -30,7 +30,7 @@
 <meta property="og:site_name" content="止息的博客">
 <meta property="og:description" content="6.S081是原6.828 lab的简单重置版（萌新青春版），以RISC-V和xv6为例讲OS，Lab还挺有意思的。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://zhangjk98.xyz/6.s081-lab-util/6.S081-lab-util/image-20210702153759549.png">
+<meta property="og:image" content="https://zhangjk98.xyz/6.s081-lab-util/image-20210702153759549.png">
 <meta property="og:image" content="https://zhangjk98.xyz/6.s081-lab-util/1625234931.png">
 <meta property="og:image" content="https://zhangjk98.xyz/6.s081-lab-util/image-20210703170414708.png">
 <meta property="article:published_time" content="2021-06-30T14:43:08.000Z">
@@ -38,7 +38,7 @@
 <meta property="article:tag" content="6.S081">
 <meta property="article:tag" content="xv6">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://zhangjk98.xyz/6.s081-lab-util/6.S081-lab-util/image-20210702153759549.png">
+<meta name="twitter:image" content="https://zhangjk98.xyz/6.s081-lab-util/image-20210702153759549.png">
 
 
 <link rel="canonical" href="https://zhangjk98.xyz/6.s081-lab-util/">
@@ -158,7 +158,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#lab1"><span class="nav-number">1.</span> <span class="nav-text">Lab1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#boot-xv6"><span class="nav-number">1.1.</span> <span class="nav-text">Boot xv6</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sleepeasy"><span class="nav-number">1.2.</span> <span class="nav-text">sleep(easy)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pingpongeasy"><span class="nav-number">1.3.</span> <span class="nav-text">pingpong(easy)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#primes"><span class="nav-number">1.4.</span> <span class="nav-text">primes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#find"><span class="nav-number">1.5.</span> <span class="nav-text">find</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xargs"><span class="nav-number">1.6.</span> <span class="nav-text">xargs</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E5%A4%96%E8%AF%9D"><span class="nav-number">2.</span> <span class="nav-text">题外话</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E5%92%8C%E6%8E%A8%E8%8D%90"><span class="nav-number">3.</span> <span class="nav-text">参考和推荐</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%93%BE%E6%8E%A5"><span class="nav-number">3.1.</span> <span class="nav-text">链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8E%A8%E8%8D%90"><span class="nav-number">3.2.</span> <span class="nav-text">其他的一些推荐</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E7%BD%AE%E5%B7%A5%E4%BD%9C"><span class="nav-number">3.3.</span> <span class="nav-text">前置工作</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Lab1"><span class="nav-number">1.</span> <span class="nav-text">Lab1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Boot-xv6"><span class="nav-number">1.1.</span> <span class="nav-text">Boot xv6</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sleep-easy"><span class="nav-number">1.2.</span> <span class="nav-text">sleep(easy)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pingpong-easy"><span class="nav-number">1.3.</span> <span class="nav-text">pingpong(easy)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#primes"><span class="nav-number">1.4.</span> <span class="nav-text">primes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#find"><span class="nav-number">1.5.</span> <span class="nav-text">find</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xargs"><span class="nav-number">1.6.</span> <span class="nav-text">xargs</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E5%A4%96%E8%AF%9D"><span class="nav-number">2.</span> <span class="nav-text">题外话</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E5%92%8C%E6%8E%A8%E8%8D%90"><span class="nav-number">3.</span> <span class="nav-text">参考和推荐</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%93%BE%E6%8E%A5"><span class="nav-number">3.1.</span> <span class="nav-text">链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8E%A8%E8%8D%90"><span class="nav-number">3.2.</span> <span class="nav-text">其他的一些推荐</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E7%BD%AE%E5%B7%A5%E4%BD%9C"><span class="nav-number">3.3.</span> <span class="nav-text">前置工作</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -174,7 +174,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-count">36</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -185,7 +185,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">62</span>
+        <span class="site-state-item-count">69</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -291,7 +291,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-09-13 09:24:51" itemprop="dateModified" datetime="2021-09-13T09:24:51+08:00">2021-09-13</time>
+        <time title="修改时间：2021-09-26 09:57:49" itemprop="dateModified" datetime="2021-09-26T09:57:49+08:00">2021-09-26</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -313,22 +313,22 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>6.S081是原6.828 lab的简单重置版（萌新青春版），以RISC-V和xv6为例讲OS，Lab还挺有意思的。 <span id="more"></span></p>
+        <p>6.S081是原6.828 lab的简单重置版（萌新青春版），以RISC-V和xv6为例讲OS，Lab还挺有意思的。 </p>
+<span id="more"></span>
+
 <p>之前都是学的ARM，之前自己看csapp的时候x86汇编那几章全跳过去了。正好最近刚考完最后一门课，老板留我们7月在学校里打黑工（其实完全没啥事干），可以闲下来做点一直想做但没空的Lab了。</p>
-<h2 id="lab1">Lab1</h2>
-<p>第一个Lab,都很简单，帮你熟悉一下xv6和系统调用。</p>
+<h2 id="Lab1"><a href="#Lab1" class="headerlink" title="Lab1"></a>Lab1</h2><p>第一个Lab,都很简单，帮你熟悉一下xv6和系统调用。</p>
 <p>直接照着提示做就好了。</p>
 <p>测试可以用<code>make grade</code>测试全部成绩。测试单个成绩可以用<code>./grade-lab-util xxx</code> 或者<code>make GRADEFLAGS=xxx grade</code></p>
 <p>有的时候需要测试打印</p>
-<h3 id="boot-xv6">Boot xv6</h3>
-<p>先下载</p>
+<h3 id="Boot-xv6"><a href="#Boot-xv6" class="headerlink" title="Boot xv6"></a>Boot xv6</h3><p>先下载</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> clone git://g.csail.mit.edu/xv6-labs-2020
 <span class="token builtin class-name">cd</span> xv6-labs-2020
 <span class="token function">git</span> switch util<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
 <p>然后编译运行xv6。</p>
-<h3 id="sleepeasy">sleep(easy)</h3>
-<blockquote>
-<p>Implement the UNIX program <code>sleep</code> for xv6; your <code>sleep</code> should pause for a user-specified number of ticks. A tick is a notion of time defined by the xv6 kernel, namely the time between two interrupts from the timer chip. Your solution should be in the file <code>user/sleep.c</code>.</p>
+<h3 id="sleep-easy"><a href="#sleep-easy" class="headerlink" title="sleep(easy)"></a>sleep(easy)</h3><blockquote>
+<p>Implement the UNIX program <code>sleep</code> for xv6; your <code>sleep</code> should pause  for a user-specified number of ticks.  A tick is a notion of time  defined by the xv6 kernel, namely the time between two interrupts  from the timer chip.  Your solution should be in the file  <code>user/sleep.c</code>.</p>
 </blockquote>
 <p>这个也没有什么好说的，让你熟悉一下系统调用。</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"kernel/types.h"</span></span>
@@ -347,11 +347,11 @@
   <span class="token function">sleep</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>然后看一下测试（grade），一次通过，简单。</p>
-<p><img src="6.S081-lab-util/image-20210702153759549.png" alt="image-20210702153759549" style="zoom: 67%;" /></p>
-<h3 id="pingpongeasy">pingpong(easy)</h3>
-<blockquote>
-<p>Write a program that uses UNIX system calls to ''ping-pong'' a byte between two processes over a pair of pipes, one for each direction. The parent should send a byte to the child; the child should print "<pid>: received ping", where <pid> is its process ID, write the byte on the pipe to the parent, and exit; the parent should read the byte from the child, print "<pid>: received pong", and exit. Your solution should be in the file <code>user/pingpong.c</code>.</p>
+<p><img src="/6.s081-lab-util/image-20210702153759549.png" alt="image-20210702153759549"></p>
+<h3 id="pingpong-easy"><a href="#pingpong-easy" class="headerlink" title="pingpong(easy)"></a>pingpong(easy)</h3><blockquote>
+<p>Write a program that uses UNIX system calls to ‘’ping-pong’’ a  byte between two processes over a pair of pipes, one for each  direction.  The parent should send a byte to the child;  the child should print “<pid>: received ping”,  where <pid> is its process ID,  write the byte on the pipe to the parent,  and exit;  the parent should read the byte from the child,  print “<pid>: received pong”,  and exit.  Your  solution should be in the file <code>user/pingpong.c</code>.</p>
 </blockquote>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"kernel/types.h"</span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"kernel/stat.h"</span></span>
@@ -395,15 +395,15 @@
   <span class="token punctuation">&#125;</span>
   <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>熟悉一下fork和管道呗。</p>
-<p>一开始传的是"ping", "pong"，各占四个byte，又读了一遍题发现这里只让用1个byte，注意到ping和pong只差一个字母，那就传i和o好了。</p>
+<p>一开始传的是”ping”, “pong”，各占四个byte，又读了一遍题发现这里只让用1个byte，注意到ping和pong只差一个字母，那就传i和o好了。</p>
 <p>这个小玩意本身没什么难的，已经对c完全手生的我愣是做了一个多小时。pipe的0是读，1是写，一开始我搞反了，下午上一个水课的时候又困又饿，调了半个小时百思不得其解。这个Lab几个作业里面做的最失败的一个（没想到竟然栽在一个easy上了），写了一点注释整理了好几次思路才pass。</p>
-<p><img src="/6.s081-lab-util/1625234931.png" /></p>
-<h3 id="primes">primes</h3>
-<blockquote>
+<p><img src="/6.s081-lab-util/1625234931.png"></p>
+<h3 id="primes"><a href="#primes" class="headerlink" title="primes"></a>primes</h3><blockquote>
 <p>Write a concurrent version of prime sieve using pipes. This idea is due to Doug McIlroy, inventor of Unix pipes. The picture halfway down <span class="exturl" data-url="aHR0cDovL3N3dGNoLmNvbS9+cnNjL3RocmVhZC8=">this page<i class="fa fa-external-link-alt"></i></span> and the surrounding text explain how to do it. Your solution should be in the file <code>user/primes.c</code>.</p>
 </blockquote>
-<p>素数筛，这个之前看go语言圣经的经典例子。 扔给你的这篇论文<span class="exturl" data-url="aHR0cHM6Ly9zd3RjaC5jb20vfnJzYy90aHJlYWQv">Bell Labs and CSP Threads<i class="fa fa-external-link-alt"></i></span> 扯了一下CSP模型的，你看这作者Russ Cox，霍，这不是go的.....再一看素数筛、共享内存、CSP模型介绍、 后面还提了一嘴go，引用里一堆Robe Pike等熟悉的名字。写过go的孩子是不是有一股我们在哪里见过的感觉......</p>
+<p>素数筛，这个之前看go语言圣经的经典例子。 扔给你的这篇论文<span class="exturl" data-url="aHR0cHM6Ly9zd3RjaC5jb20vfnJzYy90aHJlYWQv">Bell Labs and CSP Threads<i class="fa fa-external-link-alt"></i></span> 扯了一下CSP模型的，你看这作者Russ Cox，霍，这不是go的…..再一看素数筛、共享内存、CSP模型介绍、  后面还提了一嘴go，引用里一堆Robe Pike等熟悉的名字。写过go的孩子是不是有一股我们在哪里见过的感觉……</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span>
 <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
 <span class="token punctuation">&#123;</span>
@@ -463,60 +463,54 @@
     <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>一开始觉得这有什么难的，仿照go版本写一个不就完事了。也没看提示，在我本机上明明是好的扔到qemu的xv6上就开始乱了，调了半天。然后又读了一遍看到提示<code>Be careful to close file descriptors that a process doesn't need, because otherwise your program will run xv6 out of resources before the first process reaches 35.</code></p>
+
+<p>一开始觉得这有什么难的，仿照go版本写一个不就完事了。也没看提示，在我本机上明明是好的扔到qemu的xv6上就开始乱了，调了半天。然后又读了一遍看到提示<code>Be careful to close file descriptors that a process doesn&#39;t need, because otherwise your program will run xv6 out of resources before the first process reaches 35.</code></p>
 <p>然后发现打印出来有时是正确的，有时是乱序的。</p>
-<figure>
-<img src="/6.s081-lab-util/image-20210703170414708.png" alt="image-20210703170414708" /><figcaption aria-hidden="true">image-20210703170414708</figcaption>
-</figure>
-<p>最后又搜了一下， <span class="exturl" data-url="aHR0cHM6Ly93d3cuY3MuZGFydG1vdXRoLmVkdS9+ZG91Zy9zaWV2ZS9zaWV2ZS5wZGY=">Coroutine prime number sieve<i class="fa fa-external-link-alt"></i></span>, Douglas McIlroy在这里面给了一个c的例子，用dup来复制文件描述符，然后关闭管道。对照着这个我检查了一下，是少了一个<code>close(p[0]);</code></p>
-<p>比go麻烦好多........</p>
-<h3 id="find">find</h3>
-<blockquote>
+<p><img src="/6.s081-lab-util/image-20210703170414708.png" alt="image-20210703170414708"></p>
+<p>最后又搜了一下， <span class="exturl" data-url="aHR0cHM6Ly93d3cuY3MuZGFydG1vdXRoLmVkdS9+ZG91Zy9zaWV2ZS9zaWV2ZS5wZGY=">Coroutine prime number sieve<i class="fa fa-external-link-alt"></i></span>, Douglas McIlroy在这里面给了一个c的例子，用dup来复制文件描述符，然后关闭管道。对照着这个我检查了一下，是少了一个<code>    close(p[0]);</code></p>
+<p>比go麻烦好多……..</p>
+<h3 id="find"><a href="#find" class="headerlink" title="find"></a>find</h3><blockquote>
 <p>Write a simple version of the UNIX find program: find all the files in a directory tree with a specific name. Your solution should be in the file <code>user/find.c</code>.</p>
 </blockquote>
 <p>这个不难，处理细节有点繁琐，注意递归的时候不要把<code>.</code>和<code>..</code>算进去就好了。可以参考<code>ls.c</code>和<code>grep.c</code>（选做正则匹配）。照抄ls的代码然后写一个简单的DFS或者BFS就可以了（目录是个树，如果不考虑软链接）。</p>
-<h3 id="xargs">xargs</h3>
-<p>实现xarg命令，就用fork和exec实现就好了。这些碰到问题可以直接参考（抄 袭）一下xv6的源码或者gnu coreutils的实现。代码略长，不贴了。<strong>注意</strong>这里每次调试的时候要<code>make clean</code>清除编译缓存。</p>
+<h3 id="xargs"><a href="#xargs" class="headerlink" title="xargs"></a>xargs</h3><p>实现xarg命令，就用fork和exec实现就好了。这些碰到问题可以直接参考（抄 袭）一下xv6的源码或者gnu coreutils的实现。代码略长，不贴了。<strong>注意</strong>这里每次调试的时候要<code>make clean</code>清除编译缓存。</p>
 <p>贴一个xargs用法的比较好的文章：<span class="exturl" data-url="aHR0cHM6Ly93d3cuanVubWFqaW5sb25nLmNvbS9zaGVsbC94YXJncy8=">Linux xargs命令详解<i class="fa fa-external-link-alt"></i></span> 为数不多的对这个命令的用心介绍。</p>
-<h2 id="题外话">题外话</h2>
-<p>大三的时候学的微嵌（ARM的），当时讲的也水，大作业和实验也水（什么跑马灯驱动啊、ARM汇编啊，c内联汇编啊，还有一点FPGA），考试全都是抄书抄PPT写概念。深感当时学的太水了，走马观花看了一堆概念，实际上根本不会。</p>
+<h2 id="题外话"><a href="#题外话" class="headerlink" title="题外话"></a>题外话</h2><p>大三的时候学的微嵌（ARM的），当时讲的也水，大作业和实验也水（什么跑马灯驱动啊、ARM汇编啊，c内联汇编啊，还有一点FPGA），考试全都是抄书抄PPT写概念。深感当时学的太水了，走马观花看了一堆概念，实际上根本不会。</p>
 <p>现在在实验室基本除了划水就是做一些CRUD的垃圾项目，什么XX管理系统，什么XX网站，什么基于机器学习的论文灌水；偶尔维护一下师兄师姐乱七八糟的祖传代码，感觉再这样虚度时光就要变成一个废人了，现在连c都生疏了。暂时打算从6.828和6.824开始，后面可能会做一点数据库的。</p>
 <p>Verilog和VHDL这些暂时不打算再碰了，现在只想用c写。现在实验室有没有FPGA的板子，现在对RTL那些几乎也忘得差不多了，逻辑综合那些更别提了，本科那基本verilog的书当时疫情毕业也都送人了。</p>
-<p>实验室已经两三年没人搞硬件了，堆在角落里的示波器和焊台也已经蒙了一层灰尘，罪过罪过。估计以后也没什么焊板子调运放的机会了.......</p>
+<p>实验室已经两三年没人搞硬件了，堆在角落里的示波器和焊台也已经蒙了一层灰尘，罪过罪过。估计以后也没什么焊板子调运放的机会了…….</p>
 <p>突然发现用go已经用习惯了，甚至感觉写go还挺舒服。。。用习惯了go的管道defer写close，写这个的时候老忘了close。<strong>而且我至少不下十次忘记末尾加分号<code>；</code>了</strong>，完了，写go写出肌肉记忆了。</p>
 <p>（说起来Go写多了真是有点被惯坏了，现在再回去写c，手动管理内存和指针都觉得好麻烦，管道和进程也觉得不顺手。另一个非常非常难受的地方是，习惯了go很快的编译速度，现在每次等编译都好难受啊）</p>
-<h2 id="参考和推荐">参考和推荐</h2>
-<h3 id="链接">链接</h3>
-<p>https://pdos.csail.mit.edu/6.828/2020/schedule.html <!-- 
+<h2 id="参考和推荐"><a href="#参考和推荐" class="headerlink" title="参考和推荐"></a>参考和推荐</h2><h3 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h3><p><span class="exturl" data-url="aHR0cHM6Ly9wZG9zLmNzYWlsLm1pdC5lZHUvNi44MjgvMjAyMC9zY2hlZHVsZS5odG1s">https://pdos.csail.mit.edu/6.828/2020/schedule.html<i class="fa fa-external-link-alt"></i></span></p>
+<!-- 
 https://www.cnblogs.com/fatsheep9146/p/5216681.html
 
 https://www.cnblogs.com/fatsheep9146/category/769143.html
 
-https://clownote.github.io/about/ --></p>
+https://clownote.github.io/about/ -->
+
 <p>xv6的资料</p>
-<p>https://pdos.csail.mit.edu/6.828/2020/xv6/book-riscv-rev1.pdf</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9wZG9zLmNzYWlsLm1pdC5lZHUvNi44MjgvMjAyMC94djYvYm9vay1yaXNjdi1yZXYxLnBkZg==">https://pdos.csail.mit.edu/6.828/2020/xv6/book-riscv-rev1.pdf<i class="fa fa-external-link-alt"></i></span></p>
 <p>哈工大的课，跟6.S081前面几个lab差不多。</p>
-<p>https://hitsz-lab.gitee.io/os_lab/</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9oaXRzei1sYWIuZ2l0ZWUuaW8vb3NfbGFiLw==">https://hitsz-lab.gitee.io/os_lab/<i class="fa fa-external-link-alt"></i></span></p>
 <p>risc-v 资料</p>
-<p>http://crva.ict.ac.cn/documents/RISC-V-Reader-Chinese-v2p1.pdf</p>
+<p><span class="exturl" data-url="aHR0cDovL2NydmEuaWN0LmFjLmNuL2RvY3VtZW50cy9SSVNDLVYtUmVhZGVyLUNoaW5lc2UtdjJwMS5wZGY=">http://crva.ict.ac.cn/documents/RISC-V-Reader-Chinese-v2p1.pdf<i class="fa fa-external-link-alt"></i></span></p>
 <p>调试：</p>
-<p>https://twdlll.github.io/2020/11/10/6.S081-2/</p>
-<p>https://zhuanlan.zhihu.com/p/166413604 clion调试</p>
-<p>https://www.cnblogs.com/KatyuMarisaBlog/p/13727565.html vscode调试</p>
-<h3 id="其他的一些推荐">其他的一些推荐</h3>
-<p><em>The Linux Programming Interface: A Linux and UNIX System Programming Handbook</em>（中文版：《Linux/Unix系统编程手册》上下两册，下册翻译的很烂），相当不错的工具书，可以放在手边当参考书和工具书用。</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly90d2RsbGwuZ2l0aHViLmlvLzIwMjAvMTEvMTAvNi5TMDgxLTIv">https://twdlll.github.io/2020/11/10/6.S081-2/<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8xNjY0MTM2MDQ=">https://zhuanlan.zhihu.com/p/166413604<i class="fa fa-external-link-alt"></i></span> clion调试</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vS2F0eXVNYXJpc2FCbG9nL3AvMTM3Mjc1NjUuaHRtbA==">https://www.cnblogs.com/KatyuMarisaBlog/p/13727565.html<i class="fa fa-external-link-alt"></i></span> vscode调试</p>
+<h3 id="其他的一些推荐"><a href="#其他的一些推荐" class="headerlink" title="其他的一些推荐"></a>其他的一些推荐</h3><p><em>The Linux Programming Interface: A Linux and UNIX System Programming Handbook</em>（中文版：《Linux/Unix系统编程手册》上下两册，下册翻译的很烂），相当不错的工具书，可以放在手边当参考书和工具书用。</p>
 <p><span class="exturl" data-url="aHR0cHM6Ly9tYW43Lm9yZy9saW51eC9tYW4tcGFnZXMvaW5kZXguaHRtbA==">Linux man pages online<i class="fa fa-external-link-alt"></i></span> 在线参考手册，必备</p>
-<p>https://github.com/SI-RISCV/e200_opensource 没看过，据说还行。</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1NJLVJJU0NWL2UyMDBfb3BlbnNvdXJjZQ==">https://github.com/SI-RISCV/e200_opensource<i class="fa fa-external-link-alt"></i></span> 没看过，据说还行。</p>
 <p>现代操作系统</p>
 <p><span class="exturl" data-url="aHR0cHM6Ly9pcGFkcy5zZS5zanR1LmVkdS5jbi9tb3NwaS8=">《现代操作系统：原理与实现》<i class="fa fa-external-link-alt"></i></span> 上交IPADS的，我还没买。据说相当不错。（这本我自己一点也没看过，）</p>
-<h3 id="前置工作">前置工作</h3>
-<p>c语言， 大概弄懂k&amp;r那本<em>The C Programming Language</em>就可以开工了。当然，懂得越多越好，多多益善。</p>
+<h3 id="前置工作"><a href="#前置工作" class="headerlink" title="前置工作"></a>前置工作</h3><p>c语言， 大概弄懂k&amp;r那本<em>The C Programming Language</em>就可以开工了。当然，懂得越多越好，多多益善。</p>
 <p><strong>菊巨可以用Rust哦，贵清<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3Jjb3JlLW9zL3JDb3Jl">rCore<i class="fa fa-external-link-alt"></i></span>那边的课据说挺好的</strong>（群友们人均Rust, 就只本菜不会Rust了）</p>
 <p>gdb等调试手段要熟， 没法调试等着两眼抓瞎吧。</p>
 <p>熟悉链接库和编译那一套，Makefile什么的会用就行了。不熟悉编译的去编译个LFS（Linux from Scratch）就差不多了。</p>
 <p>一些基础的书和知识，比如csapp等书可以先看看。</p>
 <p>参考手册和工具书先备着，RISC-V的资料也备着。xv6有很多可以参考的地方。</p>
-<p>xv6的资料在这里：https://pdos.csail.mit.edu/6.828/2020/xv6.html 这有一个中文的翻译：（版本略老，是x86的） https://github.com/ranxian/xv6-chinese</p>
+<p>xv6的资料在这里：<span class="exturl" data-url="aHR0cHM6Ly9wZG9zLmNzYWlsLm1pdC5lZHUvNi44MjgvMjAyMC94djYuaHRtbA==">https://pdos.csail.mit.edu/6.828/2020/xv6.html<i class="fa fa-external-link-alt"></i></span><br>这有一个中文的翻译：（版本略老，是x86的）<br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3JhbnhpYW4veHY2LWNoaW5lc2U=">https://github.com/ranxian/xv6-chinese<i class="fa fa-external-link-alt"></i></span></p>
 
     </div>
 
@@ -539,6 +533,9 @@ https://clownote.github.io/about/ --></p>
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/linux-processing-scheduling/" rel="next" title="Linux进程调度，从服务器到桌面">
+                  Linux进程调度，从服务器到桌面 <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>

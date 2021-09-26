@@ -154,7 +154,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#ar%E8%87%AA%E5%9B%9E%E5%BD%92%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">AR（自回归）模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ar%E6%A8%A1%E5%9E%8B%E5%8F%8A%E5%8A%9F%E7%8E%87%E8%B0%B1%E7%9A%84%E4%BC%B0%E8%AE%A1"><span class="nav-number">2.</span> <span class="nav-text">AR模型及功率谱的估计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E5%8C%85"><span class="nav-number">3.</span> <span class="nav-text">函数包</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#AR%EF%BC%88%E8%87%AA%E5%9B%9E%E5%BD%92%EF%BC%89%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">AR（自回归）模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AR%E6%A8%A1%E5%9E%8B%E5%8F%8A%E5%8A%9F%E7%8E%87%E8%B0%B1%E7%9A%84%E4%BC%B0%E8%AE%A1"><span class="nav-number">2.</span> <span class="nav-text">AR模型及功率谱的估计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E5%8C%85"><span class="nav-number">3.</span> <span class="nav-text">函数包</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -170,7 +170,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-count">36</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -181,7 +181,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">62</span>
+        <span class="site-state-item-count">69</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -287,7 +287,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-09-13 09:24:53" itemprop="dateModified" datetime="2021-09-13T09:24:53+08:00">2021-09-13</time>
+        <time title="修改时间：2021-09-26 09:57:50" itemprop="dateModified" datetime="2021-09-26T09:57:50+08:00">2021-09-26</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -309,35 +309,31 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>跟卡尔曼滤波挺像的，实际用的比卡尔曼滤波少 <span id="more"></span></p>
-<h3 id="ar自回归模型">AR（自回归）模型</h3>
-<p>AR模型适用于平稳、宽平稳的随机序列，是一个差分方程模型。 可以认为是一个带微扰的马尔可夫过程。一个最简单的例子是<span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vc3VwZXItemhhbmctODI4L3AvNzEwNjk3MC5odG1s">单摆<i class="fa fa-external-link-alt"></i></span>。一些不满足平稳条件的事件，AR模型的分析效果是很差的（如股票预测）</p>
+        <p>跟卡尔曼滤波挺像的，实际用的比卡尔曼滤波少</p>
+<span id="more"></span>
+
+<h3 id="AR（自回归）模型"><a href="#AR（自回归）模型" class="headerlink" title="AR（自回归）模型"></a>AR（自回归）模型</h3><p>AR模型适用于平稳、宽平稳的随机序列，是一个差分方程模型。<br>可以认为是一个带微扰的马尔可夫过程。一个最简单的例子是<span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vc3VwZXItemhhbmctODI4L3AvNzEwNjk3MC5odG1s">单摆<i class="fa fa-external-link-alt"></i></span>。一些不满足平稳条件的事件，AR模型的分析效果是很差的（如股票预测）</p>
 <p>从时域讨论稳定参见<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8zNTA5MzgzNQ==">时间序列的自回归模型—从线性代数的角度来看<i class="fa fa-external-link-alt"></i></span>, 当Y-W方程的系数矩阵正定时，传递函数的极点在单位圆内，模型稳定。</p>
-<h3 id="ar模型及功率谱的估计">AR模型及功率谱的估计</h3>
-<p>主要有前向预测的L-D法，Burg法，Marple法，矩阵分解等算法，此外还有极大似然估计等估计方法。 Burg算法和Marple算法都是求前向预测和后向预测误差之和最小，Burg算法较为常用。Marple算法很容易受噪声影响导致不稳定。</p>
+<h3 id="AR模型及功率谱的估计"><a href="#AR模型及功率谱的估计" class="headerlink" title="AR模型及功率谱的估计"></a>AR模型及功率谱的估计</h3><p>主要有前向预测的L-D法，Burg法，Marple法，矩阵分解等算法，此外还有极大似然估计等估计方法。<br>Burg算法和Marple算法都是求前向预测和后向预测误差之和最小，Burg算法较为常用。Marple算法很容易受噪声影响导致不稳定。</p>
 <p>Burg算法对于高斯随机过程等价于最大熵算法</p>
 <p>AR功率谱估计可以突破较短序列由于序列长度N过短对于频率分辨率的限制。经典谱估计的频率分辨率约为</p>
-<p><span class="math display">\[\Delta f={fs \over N}\]</span></p>
-<p>AR法通过前向和后向预测外推，突破了短序列长度N的限制（N点长序列相当于长序列加窗，频率分辨率受限于主瓣宽度）。但是AR法仍然无法突破奈奎斯特采样定理<span class="math inline">\(\frac{fs}{2}\)</span>的限制。要想突破采样定理，只有在特定的条件下采用<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8yMjQ0NTMwMg==">压缩感知<i class="fa fa-external-link-alt"></i></span>等方法改变采样方式，如磁共振重建。</p>
+<p>$$\Delta f={fs \over N}$$</p>
+<p>AR法通过前向和后向预测外推，突破了短序列长度N的限制（N点长序列相当于长序列加窗，频率分辨率受限于主瓣宽度）。但是AR法仍然无法突破奈奎斯特采样定理$\frac{fs}{2}$的限制。要想突破采样定理，只有在特定的条件下采用<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8yMjQ0NTMwMg==">压缩感知<i class="fa fa-external-link-alt"></i></span>等方法改变采样方式，如磁共振重建。</p>
 <p>几种功率谱估计的比较</p>
-<ol type="1">
-<li>算法复杂度 L-D 算法计算量约为直接解Y-W方程的一半 Marple算法复杂，计算量大</li>
-<li>效果 L-D算法<br />
-1)一定收敛 2误差较大； 3)预测均方随阶数增加而减小 4)可能出现谱线分裂 5)受阶数影响大，阶数过高有伪峰。 Burg算法<br />
-1)在有限长情况下好于前向预测 2)对于高斯随机信号，AR谱估计和最大熵算法效果相同 3)易受初相的影响产生频率偏移 Marple算法<br />
-1)通常性能最好，分辨率最高 2)可能会不稳定 3)基本上克服了谱线分裂、频率偏移和出现伪峰等缺点</li>
+<ol>
+<li>算法复杂度<br> L-D 算法计算量约为直接解Y-W方程的一半<br> Marple算法复杂，计算量大</li>
+<li>效果<br> L-D算法<br> 1)一定收敛<br> 2误差较大；<br> 3)预测均方随阶数增加而减小<br> 4)可能出现谱线分裂<br> 5)受阶数影响大，阶数过高有伪峰。<br> Burg算法<br> 1)在有限长情况下好于前向预测<br> 2)对于高斯随机信号，AR谱估计和最大熵算法效果相同<br> 3)易受初相的影响产生频率偏移<br> Marple算法<br> 1)通常性能最好，分辨率最高<br> 2)可能会不稳定<br> 3)基本上克服了谱线分裂、频率偏移和出现伪峰等缺点</li>
 </ol>
-<h3 id="函数包">函数包</h3>
-<p>这些算法基本都有成熟的工具包 比如matlab中：</p>
-<ol type="1">
-<li>pyulear.m 用AR模型的自相关法估计信号的功率谱，其基本调用格式是： [Px, F] = pyulear(x, order, Nfft, Fs)</li>
-<li>pburg.m 用AR模型的Burg算法估计信号的功率谱，调用格式与pyulear类似</li>
-<li>pcov.m 用AR模型方差方法估计信号的功率谱</li>
-<li>pmcov.m 用AR模型的改进的方差方法估计信号的功率谱</li>
-<li>pmem.m 最大熵功率谱估计，其估计性能类似pyulear</li>
-<li>pmusic.m 用自相关矩阵分解的MUSIC算法估计信号的功率谱</li>
-<li>peig.m 用自相关矩阵分解的特征向量 法估计信号的功率谱，其基本调用格式是： [Px, F] = peig(x, order, Nfft, Fs), [Px, F，V, E] = peig(x, order, Nfft, Fs), x :信号向量，order:模型的阶次，Fs:抽样频率，Nfft:对x作FFT时的长度。Px:估计出的功率谱，F是频率轴坐标。对peig, 输出的E 是由自相关矩阵的特征值所组成的向量，V是由特征向量组成的矩阵。V的列向量张成了噪声子空间，V的行数减去列数即是信号子空间的维数。</li>
-<li>直接得到模型有aryulear、arburg等函数，用法： arburg(x,order)</li>
+<h3 id="函数包"><a href="#函数包" class="headerlink" title="函数包"></a>函数包</h3><p>这些算法基本都有成熟的工具包<br>比如matlab中：</p>
+<ol>
+<li>pyulear.m  用AR模型的自相关法估计信号的功率谱，其基本调用格式是：<br>[Px,  F] = pyulear(x, order, Nfft, Fs)</li>
+<li>pburg.m  用AR模型的Burg算法估计信号的功率谱，调用格式与pyulear类似</li>
+<li>pcov.m  用AR模型方差方法估计信号的功率谱</li>
+<li>pmcov.m  用AR模型的改进的方差方法估计信号的功率谱</li>
+<li>pmem.m  最大熵功率谱估计，其估计性能类似pyulear</li>
+<li>pmusic.m  用自相关矩阵分解的MUSIC算法估计信号的功率谱</li>
+<li>peig.m  用自相关矩阵分解的特征向量<br>法估计信号的功率谱，其基本调用格式是：<br>[Px,  F] = peig(x, order, Nfft, Fs),<br>[Px, F，V, E] = peig(x, order, Nfft, Fs),<br>x :信号向量，order:模型的阶次，Fs:抽样频率，Nfft:对x作FFT时的长度。Px:估计出的功率谱，F是频率轴坐标。对peig, 输出的E 是由自相关矩阵的特征值所组成的向量，V是由特征向量组成的矩阵。V的列向量张成了噪声子空间，V的行数减去列数即是信号子空间的维数。</li>
+<li>直接得到模型有aryulear、arburg等函数，用法：<br>arburg(x,order)</li>
 </ol>
 <!-- flag of hidden posts -->
     </div>
