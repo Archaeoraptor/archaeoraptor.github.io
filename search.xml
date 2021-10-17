@@ -1015,105 +1015,6 @@ debtap -p XXX.deb <span class="token comment"># -p 选项生成PKGBUILD</span>
       </tags>
   </entry>
   <entry>
-    <title>MySQL从入门到跑路</title>
-    <url>/45b9/</url>
-    <content><![CDATA[<p>用了这么久数据库，现在还只会增删查改，开个坑学学优化。</p>
-<span id="more"></span>
-<p>等待填坑</p>
-<p>这个图比较清晰</p>
-<p><img src="/45b9/db.webp"></p>
-<p>看到clickhouse的速度很快，有空看一下</p>
-<h2 id="轻如鸿毛的SQLite"><a href="#轻如鸿毛的SQLite" class="headerlink" title="轻如鸿毛的SQLite"></a>轻如鸿毛的SQLite</h2><p>好东西，在性能严重受限的开发板上跑着非常舒服，反正以前我试着感觉比另一个嵌入式数据库BerkeleyDB感觉好用多了。</p>
-<p>其实我感觉很多小网站什么的，根本没必要上MySQL之类的东西，SQLite完全够了。什么存储过程啊，什么访问控制用户权限管理啊，基本上不怎么能用得到。数据量也小，那就索性连索引都不要了。<br>没有那一堆臃肿的东西，也没有那一堆乱七八糟的依赖。</p>
-<p>而且这个东西快啊，数据量不怎么大的情况下比MySQL快，配置也简单</p>
-<h2 id="你们这个是什么教材啊，你们真的是害人不浅啊你们这个教材"><a href="#你们这个是什么教材啊，你们真的是害人不浅啊你们这个教材" class="headerlink" title="你们这个是什么教材啊，你们真的是害人不浅啊你们这个教材"></a>你们这个是什么教材啊，你们真的是害人不浅啊你们这个教材</h2><h3 id="一张大表不好吗"><a href="#一张大表不好吗" class="headerlink" title="一张大表不好吗"></a>一张大表不好吗</h3><blockquote>
-<p>范式，什么范式？</p>
-</blockquote>
-<p>课本上这个要新建一张表，那一张表，好多个表</p>
-<h3 id="隔离性"><a href="#隔离性" class="headerlink" title="隔离性"></a>隔离性</h3><p>clickhouse那么快的原因就是一定程度上破坏了隔离性</p>
-<h3 id="原子性"><a href="#原子性" class="headerlink" title="原子性"></a>原子性</h3><p>MySQL在5.7以后支持了json，或许是感受到了Postgres的压力。</p>
-<h2 id="好用的干活工具"><a href="#好用的干活工具" class="headerlink" title="好用的干活工具"></a>好用的干活工具</h2><p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2RiY2xpL215Y2xp">mycli<i class="fa fa-external-link-alt"></i></span> MySQL的cli工具，能高亮和自动补全</p>
-]]></content>
-      <categories>
-        <category>笔记&amp;札记</category>
-      </categories>
-      <tags>
-        <tag>MySQL</tag>
-        <tag>Database</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>不要尝试sudo apt remove iptables</title>
-    <url>/a7d1/</url>
-    <content><![CDATA[<p><img src="/a7d1/emmm.png" alt="Picture"></p>
-<span id="more"></span>
-
-<p>在Ubuntu和Debian里卸载iptables会发生严重的后果（大佬请无视）<br>一开始我们觉得是防火墙把443端口给办了用不了https，结果我用UFW设置不管用，怀疑是iptables的问题，问了花花师兄，也不清楚，我们决定先把iptables禁用了。随手一谷歌，也忘了哪个神仙说的</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">apt</span> remove iptables <span class="token comment"># 不要乱试！</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>感觉对的嘛，卸个防火墙能出什么问题嘛<br>然后提示是否卸载我选了y，然后突然在卸载的log发现一堆Docker，瞬间感觉不对劲。然后，然后Docker直接不能用了！<br>血泪教训啊，防火墙卸了Docker就不能用了！</p>
-<p>随手一搜发现不止我一个人中招啊</p>
-<p><img src="/a7d1/iptables-docker.png" alt="Picture"></p>
-<p>好家伙</p>
-<p><img src="/a7d1/cnm.png" alt="Picture"></p>
-<p>行吧，一堆依赖比python2还多</p>
-<p>不说了，准备重装系统了<img src="/a7d1/mmm.jpg" alt="Picture"></p>
-<hr>
-<p>停用iptables请使用<code>chkconfig iptables off</code>命令</p>
-<hr>
-<p>更新，试图垂死挣扎使用</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">apt</span> <span class="token function">install</span> network-manager<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>既然把网卡配置删了那就再配置一遍<br>等会，装了NetworkManager选了默认配置之后连22端口也连不上了。。。<br>行吧，准备重装<br><img src="/a7d1/wa.jpg" alt="Picture"></p>
-]]></content>
-      <categories>
-        <category>102网吧日常</category>
-      </categories>
-      <tags>
-        <tag>iptables</tag>
-        <tag>删库跑路</tag>
-        <tag>服务器</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Earlyoom和oomd使用，解决Linux内存耗尽的一点尝试</title>
-    <url>/early-oom-and-oomd-for-out-of-memory/</url>
-    <content><![CDATA[<p>太长不看：就是把原来内核的OOM killer挪到用户空间（userspace）去，这样就可以在系统卡住之前（通常桌面卡住的时候OOM killer认为还不用kill）提前kill掉占内存最大的一个，让桌面和鼠标可以正常工作。</p>
-<span id="more"></span>
-
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>先来看phoronix的一个报道：<span class="exturl" data-url="aHR0cHM6Ly93d3cucGhvcm9uaXguY29tL3NjYW4ucGhwP3BhZ2U9bmV3c19pdGVtJnB4PUxpbnV4LURvZXMtQmFkLUxvdy1SQU0=">Yes, Linux Does Bad In Low RAM / Memory Pressure Situations On The Desktop<i class="fa fa-external-link-alt"></i></span>  </p>
-<p>Linux桌面在小内存、内存紧张的情况下表现很差。（用过Linux现在桌面的相信都有这种感受）</p>
-<p>解决内存不足、内存耗尽的<strong>最好办法还是加钱多装几根内存条</strong>，什么swap、zram还有本文的earlyoom和oomd都是权宜之计。 </p>
-<h2 id="OOM简介"><a href="#OOM简介" class="headerlink" title="OOM简介"></a>OOM简介</h2><p>OOM很多人应该都很熟悉了，服务器上跑的任务申请内存超过了可用内存就会发生OOM（其实是可以Overcommit的，这个以后再说）</p>
-<p>为了避免内存耗尽（Out of Memory，OOM），OOM-killer在内存将要耗尽的时候杀掉<code>oom_score</code>最大的进程。（如果连OOM-killer都没能及时kill掉，那就会触发kernel panic）</p>
-<p>但是内核默认的OOM策略比较保守，如果你是桌面用户，那么还没等到OOM killer工作，图形界面就已经卡死（handling， 有的时候也被称为freeze）了。Earlyoom和oomd等工具运行在用户空间，让一些任务提前崩溃，让图形界面还能正常工作。</p>
-<p>OOM killer和Overcommit等更详细的介绍我写到<a href="https://zhangjk98.xyz/linux-out-of-memory">这里</a>, 这里不多说了。</p>
-<h2 id="Earlyoom"><a href="#Earlyoom" class="headerlink" title="Earlyoom"></a>Earlyoom</h2><p>EarlyOOM</p>
-<p>Earlyoom在桌面系统的表现比较成功，Fedora 32 已经默认启用了EarlyOOM。</p>
-<h2 id="oomds"><a href="#oomds" class="headerlink" title="oomds"></a>oomds</h2><p>oomd是Facebook做的，后来和systemd一起做了一个sysytemd-oomd守护进程，现已加入systemd全家桶。</p>
-<h2 id="在Archlinux上安装和使用"><a href="#在Archlinux上安装和使用" class="headerlink" title="在Archlinux上安装和使用"></a>在Archlinux上安装和使用</h2><p>Earlyoom已经在community源里了。oomd这个包目前是orphand，我们用Earlyoom就好了。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">pacman -S earlyoom<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>直接terminal里执行<code>earlyoom</code>就可以了。（可能需要root权限，不然会报<code>Could not lock memory - continuing anyway: Cannot allocate memory</code>）</p>
-<p>或者使用systemd守护进程</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl <span class="token builtin class-name">enable</span> earlyoom --now<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>然后又到了调参环节，编辑<code>/etc/default/earlyoom</code>，根据你的机器配置和使用习惯改改参数。</p>
-<p>默认10秒检查一次，当可用内存小于10%和swap小于10的时候执行<code>SIGTERM</code>，当可用内存小于5%和swap小于5%的时候执行<code>SIGKILL</code>。</p>
-<h2 id="经历"><a href="#经历" class="headerlink" title="经历"></a>经历</h2><p>一开始我笔记本和台式机都8G内存，当时那个版本的VSCode有严重的内存泄漏，经常泄漏到我桌面连鼠标都动不了了。只能切到tty杀掉VSCode的进程或者魔术键重启，烦的我一度想投奔vim。<br>后来买了两根16G的笔记本内存条，又把教研室的台式内存（拆了4根8G ddr3的杂牌内存条下来）加到了32G，开着一个虚拟机好多Docker一个Goland还有Chrome，再也没遇到过内存不够用的问题。<br>最近要在另一个8G内存的电脑上和只有2g内存的VPS上面干点活，又回到了当初只有8G内存的时候vscode频繁内存泄漏导致整个桌面直接卡死的拮据状态。Ubuntu 16.04 那个版本的GNOME内存泄漏和内部错误也相当讨厌。换了lxde好了一点。然后试了试swap，效果不好。然后用了zram, 效果比swap好不少。  </p>
-<p>最后用了Earlyoom，好多了，不用频繁手动处理桌面卡死了。（注意4G以下这种小内存不推荐用这些，会浪费不少可用内存）</p>
-<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3JmamFrb2IvZWFybHlvb20=">https://github.com/rfjakob/earlyoom<i class="fa fa-external-link-alt"></i></span>  </p>
-<p>Fedora默认启用Earlyoom的一些讨论：</p>
-<p><span class="exturl" data-url="aHR0cHM6Ly9mZWRvcmFwcm9qZWN0Lm9yZy93aWtpL0NoYW5nZXMvRW5hYmxlRWFybHlvb20jRW5hYmxlX0Vhcmx5T09N">https://fedoraproject.org/wiki/Changes/EnableEarlyoom#Enable_EarlyOOM<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9wYWd1cmUuaW8vZmVkb3JhLXdvcmtzdGF0aW9uL2lzc3VlLzExOQ==">https://pagure.io/fedora-workstation/issue/119<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cucGhvcm9uaXguY29tL3NjYW4ucGhwP3BhZ2U9bmV3c19pdGVtJnB4PUZlZG9yYS0zMi1EZWZhdWx0LUVhcmx5T09N">https://www.phoronix.com/scan.php?page=news_item&amp;px=Fedora-32-Default-EarlyOOM<i class="fa fa-external-link-alt"></i></span>  </p>
-<p><span class="exturl" data-url="aHR0cDovL3d3dy53b3dvdGVjaC5uZXQvbWVtb3J5X21hbmFnZW1lbnQvb29tLmh0bWw=">Linux vm运行参数之（二）：OOM相关的参数<i class="fa fa-external-link-alt"></i></span></p>
-]]></content>
-      <tags>
-        <tag>OOM</tag>
-        <tag>earlyoom</tag>
-        <tag>oomd</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>处理电子病历</title>
     <url>/81d4/</url>
     <content><![CDATA[<p>有两种鬼画符，一种是医生的字，一种是正则表达式</p>
@@ -1298,6 +1199,105 @@ connection<span class="token punctuation">.</span>commit<span class="token punct
       <tags>
         <tag>xml</tag>
         <tag>电子病历</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MySQL从入门到跑路</title>
+    <url>/45b9/</url>
+    <content><![CDATA[<p>用了这么久数据库，现在还只会增删查改，开个坑学学优化。</p>
+<span id="more"></span>
+<p>等待填坑</p>
+<p>这个图比较清晰</p>
+<p><img src="/45b9/db.webp"></p>
+<p>看到clickhouse的速度很快，有空看一下</p>
+<h2 id="轻如鸿毛的SQLite"><a href="#轻如鸿毛的SQLite" class="headerlink" title="轻如鸿毛的SQLite"></a>轻如鸿毛的SQLite</h2><p>好东西，在性能严重受限的开发板上跑着非常舒服，反正以前我试着感觉比另一个嵌入式数据库BerkeleyDB感觉好用多了。</p>
+<p>其实我感觉很多小网站什么的，根本没必要上MySQL之类的东西，SQLite完全够了。什么存储过程啊，什么访问控制用户权限管理啊，基本上不怎么能用得到。数据量也小，那就索性连索引都不要了。<br>没有那一堆臃肿的东西，也没有那一堆乱七八糟的依赖。</p>
+<p>而且这个东西快啊，数据量不怎么大的情况下比MySQL快，配置也简单</p>
+<h2 id="你们这个是什么教材啊，你们真的是害人不浅啊你们这个教材"><a href="#你们这个是什么教材啊，你们真的是害人不浅啊你们这个教材" class="headerlink" title="你们这个是什么教材啊，你们真的是害人不浅啊你们这个教材"></a>你们这个是什么教材啊，你们真的是害人不浅啊你们这个教材</h2><h3 id="一张大表不好吗"><a href="#一张大表不好吗" class="headerlink" title="一张大表不好吗"></a>一张大表不好吗</h3><blockquote>
+<p>范式，什么范式？</p>
+</blockquote>
+<p>课本上这个要新建一张表，那一张表，好多个表</p>
+<h3 id="隔离性"><a href="#隔离性" class="headerlink" title="隔离性"></a>隔离性</h3><p>clickhouse那么快的原因就是一定程度上破坏了隔离性</p>
+<h3 id="原子性"><a href="#原子性" class="headerlink" title="原子性"></a>原子性</h3><p>MySQL在5.7以后支持了json，或许是感受到了Postgres的压力。</p>
+<h2 id="好用的干活工具"><a href="#好用的干活工具" class="headerlink" title="好用的干活工具"></a>好用的干活工具</h2><p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2RiY2xpL215Y2xp">mycli<i class="fa fa-external-link-alt"></i></span> MySQL的cli工具，能高亮和自动补全</p>
+]]></content>
+      <categories>
+        <category>笔记&amp;札记</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+        <tag>Database</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>不要尝试sudo apt remove iptables</title>
+    <url>/a7d1/</url>
+    <content><![CDATA[<p><img src="/a7d1/emmm.png" alt="Picture"></p>
+<span id="more"></span>
+
+<p>在Ubuntu和Debian里卸载iptables会发生严重的后果（大佬请无视）<br>一开始我们觉得是防火墙把443端口给办了用不了https，结果我用UFW设置不管用，怀疑是iptables的问题，问了花花师兄，也不清楚，我们决定先把iptables禁用了。随手一谷歌，也忘了哪个神仙说的</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">apt</span> remove iptables <span class="token comment"># 不要乱试！</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>感觉对的嘛，卸个防火墙能出什么问题嘛<br>然后提示是否卸载我选了y，然后突然在卸载的log发现一堆Docker，瞬间感觉不对劲。然后，然后Docker直接不能用了！<br>血泪教训啊，防火墙卸了Docker就不能用了！</p>
+<p>随手一搜发现不止我一个人中招啊</p>
+<p><img src="/a7d1/iptables-docker.png" alt="Picture"></p>
+<p>好家伙</p>
+<p><img src="/a7d1/cnm.png" alt="Picture"></p>
+<p>行吧，一堆依赖比python2还多</p>
+<p>不说了，准备重装系统了<img src="/a7d1/mmm.jpg" alt="Picture"></p>
+<hr>
+<p>停用iptables请使用<code>chkconfig iptables off</code>命令</p>
+<hr>
+<p>更新，试图垂死挣扎使用</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">apt</span> <span class="token function">install</span> network-manager<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>既然把网卡配置删了那就再配置一遍<br>等会，装了NetworkManager选了默认配置之后连22端口也连不上了。。。<br>行吧，准备重装<br><img src="/a7d1/wa.jpg" alt="Picture"></p>
+]]></content>
+      <categories>
+        <category>102网吧日常</category>
+      </categories>
+      <tags>
+        <tag>iptables</tag>
+        <tag>删库跑路</tag>
+        <tag>服务器</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Earlyoom和oomd使用，解决Linux内存耗尽的一点尝试</title>
+    <url>/early-oom-and-oomd-for-out-of-memory/</url>
+    <content><![CDATA[<p>太长不看：就是把原来内核的OOM killer挪到用户空间（userspace）去，这样就可以在系统卡住之前（通常桌面卡住的时候OOM killer认为还不用kill）提前kill掉占内存最大的一个，让桌面和鼠标可以正常工作。</p>
+<span id="more"></span>
+
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>先来看phoronix的一个报道：<span class="exturl" data-url="aHR0cHM6Ly93d3cucGhvcm9uaXguY29tL3NjYW4ucGhwP3BhZ2U9bmV3c19pdGVtJnB4PUxpbnV4LURvZXMtQmFkLUxvdy1SQU0=">Yes, Linux Does Bad In Low RAM / Memory Pressure Situations On The Desktop<i class="fa fa-external-link-alt"></i></span>  </p>
+<p>Linux桌面在小内存、内存紧张的情况下表现很差。（用过Linux现在桌面的相信都有这种感受）</p>
+<p>解决内存不足、内存耗尽的<strong>最好办法还是加钱多装几根内存条</strong>，什么swap、zram还有本文的earlyoom和oomd都是权宜之计。 </p>
+<h2 id="OOM简介"><a href="#OOM简介" class="headerlink" title="OOM简介"></a>OOM简介</h2><p>OOM很多人应该都很熟悉了，服务器上跑的任务申请内存超过了可用内存就会发生OOM（其实是可以Overcommit的，这个以后再说）</p>
+<p>为了避免内存耗尽（Out of Memory，OOM），OOM-killer在内存将要耗尽的时候杀掉<code>oom_score</code>最大的进程。（如果连OOM-killer都没能及时kill掉，那就会触发kernel panic）</p>
+<p>但是内核默认的OOM策略比较保守，如果你是桌面用户，那么还没等到OOM killer工作，图形界面就已经卡死（handling， 有的时候也被称为freeze）了。Earlyoom和oomd等工具运行在用户空间，让一些任务提前崩溃，让图形界面还能正常工作。</p>
+<p>OOM killer和Overcommit等更详细的介绍我写到<a href="https://zhangjk98.xyz/linux-out-of-memory">这里</a>, 这里不多说了。</p>
+<h2 id="Earlyoom"><a href="#Earlyoom" class="headerlink" title="Earlyoom"></a>Earlyoom</h2><p>EarlyOOM</p>
+<p>Earlyoom在桌面系统的表现比较成功，Fedora 32 已经默认启用了EarlyOOM。</p>
+<h2 id="oomds"><a href="#oomds" class="headerlink" title="oomds"></a>oomds</h2><p>oomd是Facebook做的，后来和systemd一起做了一个sysytemd-oomd守护进程，现已加入systemd全家桶。</p>
+<h2 id="在Archlinux上安装和使用"><a href="#在Archlinux上安装和使用" class="headerlink" title="在Archlinux上安装和使用"></a>在Archlinux上安装和使用</h2><p>Earlyoom已经在community源里了。oomd这个包目前是orphand，我们用Earlyoom就好了。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">pacman -S earlyoom<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>直接terminal里执行<code>earlyoom</code>就可以了。（可能需要root权限，不然会报<code>Could not lock memory - continuing anyway: Cannot allocate memory</code>）</p>
+<p>或者使用systemd守护进程</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl <span class="token builtin class-name">enable</span> earlyoom --now<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>然后又到了调参环节，编辑<code>/etc/default/earlyoom</code>，根据你的机器配置和使用习惯改改参数。</p>
+<p>默认10秒检查一次，当可用内存小于10%和swap小于10的时候执行<code>SIGTERM</code>，当可用内存小于5%和swap小于5%的时候执行<code>SIGKILL</code>。</p>
+<h2 id="经历"><a href="#经历" class="headerlink" title="经历"></a>经历</h2><p>一开始我笔记本和台式机都8G内存，当时那个版本的VSCode有严重的内存泄漏，经常泄漏到我桌面连鼠标都动不了了。只能切到tty杀掉VSCode的进程或者魔术键重启，烦的我一度想投奔vim。<br>后来买了两根16G的笔记本内存条，又把教研室的台式内存（拆了4根8G ddr3的杂牌内存条下来）加到了32G，开着一个虚拟机好多Docker一个Goland还有Chrome，再也没遇到过内存不够用的问题。<br>最近要在另一个8G内存的电脑上和只有2g内存的VPS上面干点活，又回到了当初只有8G内存的时候vscode频繁内存泄漏导致整个桌面直接卡死的拮据状态。Ubuntu 16.04 那个版本的GNOME内存泄漏和内部错误也相当讨厌。换了lxde好了一点。然后试了试swap，效果不好。然后用了zram, 效果比swap好不少。  </p>
+<p>最后用了Earlyoom，好多了，不用频繁手动处理桌面卡死了。（注意4G以下这种小内存不推荐用这些，会浪费不少可用内存）</p>
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3JmamFrb2IvZWFybHlvb20=">https://github.com/rfjakob/earlyoom<i class="fa fa-external-link-alt"></i></span>  </p>
+<p>Fedora默认启用Earlyoom的一些讨论：</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9mZWRvcmFwcm9qZWN0Lm9yZy93aWtpL0NoYW5nZXMvRW5hYmxlRWFybHlvb20jRW5hYmxlX0Vhcmx5T09N">https://fedoraproject.org/wiki/Changes/EnableEarlyoom#Enable_EarlyOOM<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9wYWd1cmUuaW8vZmVkb3JhLXdvcmtzdGF0aW9uL2lzc3VlLzExOQ==">https://pagure.io/fedora-workstation/issue/119<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cucGhvcm9uaXguY29tL3NjYW4ucGhwP3BhZ2U9bmV3c19pdGVtJnB4PUZlZG9yYS0zMi1EZWZhdWx0LUVhcmx5T09N">https://www.phoronix.com/scan.php?page=news_item&amp;px=Fedora-32-Default-EarlyOOM<i class="fa fa-external-link-alt"></i></span>  </p>
+<p><span class="exturl" data-url="aHR0cDovL3d3dy53b3dvdGVjaC5uZXQvbWVtb3J5X21hbmFnZW1lbnQvb29tLmh0bWw=">Linux vm运行参数之（二）：OOM相关的参数<i class="fa fa-external-link-alt"></i></span></p>
+]]></content>
+      <tags>
+        <tag>OOM</tag>
+        <tag>earlyoom</tag>
+        <tag>oomd</tag>
       </tags>
   </entry>
   <entry>
