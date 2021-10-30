@@ -1481,13 +1481,14 @@ autorandr --save test1<span aria-hidden="true" class="line-numbers-rows"><span><
   <entry>
     <title>Hackergame 2021 (中科大信安赛) Write Up</title>
     <url>/hackergame-2021-write-up/</url>
-    <content><![CDATA[<p>对，今年这个就是UTF-8比赛（确信<br>周二还在想今年中科大信安赛是不是要开始了，结果一看已经进行一半了，来划个水吧。由于太菜加上懒，math零蛋，只能流下数理基础不扎实的泪水。  </p>
-<p>作为一个纯萌新和老废物，第一次参加Hackergame，以前看到他们中科大LUG办的，就想着下次举办去参加一下玩。以前看到好多Web题和有意思的小题目，虽然我js也特别菜，好歹还能挣扎一下。结果几年一打开就是一堆binary糊脸，二进制和逆向pwm之类的完全不懂，罢了，就做点General吧</p>
+    <content><![CDATA[<p>吃瓜群众第一次参赛，从LUG过来的，打酱油路过，没学过信安和密码学，然而很遗憾，跟Linux有关的那几个题全都没做出来。。。。<br>很意外自己能挤进200名的，事前完全没有准备，也没接触过CTF之类的东西，甚至比赛开始3天，进行到一半了我才突然发现这比赛它已经开始了，如果早知道 p😭q<br>对，今年这个Hackergame就是UTF-8比赛，对萌新可友好了（确信  </p>
 <span id="more"></span>
 
-<p>很意外自己能挤进200名的，事前完全没有准备，也没接触过CTF之类的东西，甚至比赛开始3天，进行到一半了我才突然发现这比赛ta开始liao， p😭q</p>
-<p>看来Hackergame真的是萌新友好，明年一定再来玩。</p>
+<p>周二还在想今年中科大信安赛是不是要开始了，结果一看已经进行一半了，来划个水吧。由于太菜加上懒，math零蛋，只能流下数理基础不扎实的泪水p😭q 。 </p>
+<p>作为一个纯萌新和老废物，第一次参加Hackergame，以前看到他们中科大LUG办的，就想着下次举办去参加一下玩。以前看到好多Web题和有意思的小题目，虽然我js也特别菜，好歹还能挣扎一下。结果几年一打开就是一堆binary糊脸，二进制和逆向pwm之类的完全不懂，罢了，就做点General吧。</p>
+<p>结果？？？？进前200了？</p>
 <p><img src="/hackergame-2021-write-up/image-20211030121230343.png" alt="image-20211030121230343"></p>
+<p>看来Hackergame真的是萌新友好，明年一定再来玩。</p>
 <h2 id="做出了来的的小题目"><a href="#做出了来的的小题目" class="headerlink" title="做出了来的的小题目"></a>做出了来的的小题目</h2><p>还是有不少对我很友好的题目的</p>
 <h3 id="签到题"><a href="#签到题" class="headerlink" title="签到题"></a>签到题</h3><blockquote>
 <p>为了能让大家顺利签到，命题组把每一秒的 flag 都记录下来制成了日记本的一页。你只需要打开日记，翻到 Hackergame 2021 比赛进行期间的任何一页就能得到 flag！</p>
@@ -1541,10 +1542,11 @@ autorandr --save test1<span aria-hidden="true" class="line-numbers-rows"><span><
 <p><span class="exturl" data-url="aHR0cDovL3d3dy5kaWFucGluZy5jb20vc2hvcC8yNDQzNDA4Nw==">http://www.dianping.com/shop/24434087<i class="fa fa-external-link-alt"></i></span></p>
 <p>从地图上看可能是东南方向，从阳光照射方向看可能是傍晚。</p>
 <p>然后就剩下了楼层数，大概有15、16层左右的样子，随便试几个。结果是16，好的，得到flag</p>
-<h3 id="去吧！追寻自由的电波"><a href="#去吧！追寻自由的电波" class="headerlink" title="去吧！追寻自由的电波"></a>去吧！追寻自由的电波</h3><p>这个是我精通八门乐器的室友秒掉的。mp3用foobar2000这个软件保存成wav文件然后修改采样率（大概从48000调到了18000的样子），然后保存回mp3，就可以听到声音了。</p>
-<p>是一串北约音标字母。</p>
-<h3 id="喵咪问答-Pro-Max"><a href="#喵咪问答-Pro-Max" class="headerlink" title="喵咪问答 Pro Max"></a>喵咪问答 Pro Max</h3><p>这个没啥好说的，Google搜就完事了</p>
-<h3 id="图之上的信息"><a href="#图之上的信息" class="headerlink" title="图之上的信息"></a>图之上的信息</h3><p>graphql查询</p>
+<h3 id="去吧！追寻自由的电波"><a href="#去吧！追寻自由的电波" class="headerlink" title="去吧！追寻自由的电波"></a>去吧！追寻自由的电波</h3><p>这个是我精通八门乐器的校艺术团室友秒掉的，听了一遍就说修改采样率（大概从48000调到了18000的样子），就可以听到正常的声音了。<br>是一串北约音标字母。</p>
+<p>真好，虽然找不到中科大少年班的神通口算口算RSA，但是我有精通乐理的室友。</p>
+<h3 id="喵咪问答-Pro-Max"><a href="#喵咪问答-Pro-Max" class="headerlink" title="喵咪问答 Pro Max"></a>喵咪问答 Pro Max</h3><p>这个没啥好说的，Google搜就完事了（已经关闭的网站看Web Archive的快照就好了）</p>
+<p>report地址是<code>/dev/null</code>可还行</p>
+<h3 id="图之上的信息"><a href="#图之上的信息" class="headerlink" title="图之上的信息"></a>图之上的信息</h3><p>graphql查询，这个也比较简单，没做什么严格的限制去卡你，直接查就完事了</p>
 <pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
     user(id<span class="token operator">:</span><span class="token number">1</span>)<span class="token punctuation">&#123;</span>
         username
@@ -1659,7 +1661,7 @@ sf<span class="token punctuation">.</span>write<span class="token punctuation">(
 <p>调一下参数，让他多迭代几轮<code>n_iter=8192,</code>，行了，现在清晰度有个高中大喇叭放英语早读听力的样子。</p>
 <p><strong>衬衫的价格是九磅十五便士，现在你有十秒钟时间，将Flag填到输入框上</strong>…….</p>
 <h2 id="看起来有点头绪但是没做的题目"><a href="#看起来有点头绪但是没做的题目" class="headerlink" title="看起来有点头绪但是没做的题目"></a>看起来有点头绪但是没做的题目</h2><p>懒癌又犯了，周六休息一会，周五天气太好了，还有其他事情要做，算了</p>
-<h3 id="ESA-rsa"><a href="#ESA-rsa" class="headerlink" title="ESA rsa"></a>ESA rsa</h3><p>由于我找不到中科大少年班的神通，而我自己的数论还停留在高中水平（当年数竞还过了校队选拔，然后上来就听了好几节数论和组合，直接退出了（后悔，现在就是非常后悔））</p>
+<h3 id="Easy-RSA"><a href="#Easy-RSA" class="headerlink" title="Easy RSA"></a>Easy RSA</h3><p>由于我找不到中科大少年班的神通，而我自己的数论还停留在高中水平（当年数竞还过了校队选拔，然后上来就听了好几节数论和组合，直接退出了（后悔，现在就是非常后悔））</p>
 <p>只能找山大网安的大二学弟来帮帮我看看这个密码学的问题，问问这种形式该怎么解(已知n, p, q, c)</p>
 <p>$$<br>a^n mod(p*q) = c<br>$$</p>
 <p>他当场就给我秒了，还随手写了3页。</p>
@@ -1760,10 +1762,11 @@ p <span class="token operator">=</span> x
 <p>听完学弟的话，接下来的内容我不太想做了。<br>我这样数理基础不扎实的菜狗（尤其是数论，一窍不通），做出来也<strong>改变不了我是个数论白痴的事实</strong>。都是些trival的东西了，<strong>有这个时间折腾这些应该去系统的补习一下数论</strong>。</p>
 <h3 id="拼多多砍一刀"><a href="#拼多多砍一刀" class="headerlink" title="拼多多砍一刀"></a>拼多多砍一刀</h3><p>FLAG 助力大红包，这个东西应该挂一个爬虫代理池能做。但是这个方法好像太暴力了点，而且我不想再爬东西了，免费的那几个IP池都不太好用，要钱的又不想掏钱。</p>
 <h3 id="minecraft"><a href="#minecraft" class="headerlink" title="minecraft"></a>minecraft</h3><p>随便乱走亮了两盏灯，还有一盏。看起来应该F12找找线索，有一个flag.js的东西，但是它一堆16进制的变量和函数名，看起来挺费劲，算了，不看了。</p>
-<h3 id="二维码"><a href="#二维码" class="headerlink" title="二维码"></a>二维码</h3><p>应该就是根据奇偶校验和他给的打码过程的那个python文件。上一次做二维码和奇偶校验的东西还是大二上数字电路的时候。算了，numpy二维数组转置心累了了，不想弄了，懒得处理array。</p>
+<h3 id="二维码"><a href="#二维码" class="headerlink" title="二维码"></a>二维码</h3><p>应该就是根据奇偶校验和他给的打码过程的那个python文件。上一次做二维码和奇偶校验的东西还是大二上数字电路的时候。</p>
 <p>看起来像是第十版二维码，结果打开qrazybox想手动修复一下最高只有ver.9</p>
-<p>周五周六天气真好，不做了。</p>
-<h2 id="完全没头绪被乱杀到怀疑人生的题"><a href="#完全没头绪被乱杀到怀疑人生的题" class="headerlink" title="完全没头绪被乱杀到怀疑人生的题"></a>完全没头绪被乱杀到怀疑人生的题</h2><h3 id="Amnsia记忆清除"><a href="#Amnsia记忆清除" class="headerlink" title="Amnsia记忆清除"></a>Amnsia记忆清除</h3><p>抹除掉ELF文件的<code>.text</code>段，完全不会</p>
+<p>然后写了十几行发现好像这个东西要枚举遍历？？可能的二维码团还不止一种。（不知道是不是我漏了什么条件，但看起来还原出来确实不止一种）</p>
+<p>周五周六天气真好，成都难得出太阳，不做了，出去玩。</p>
+<h2 id="以为会做然而被乱杀到怀疑人生的题"><a href="#以为会做然而被乱杀到怀疑人生的题" class="headerlink" title="以为会做然而被乱杀到怀疑人生的题"></a>以为会做然而被乱杀到怀疑人生的题</h2><h3 id="Amnsia记忆清除"><a href="#Amnsia记忆清除" class="headerlink" title="Amnsia记忆清除"></a>Amnsia记忆清除</h3><p>抹除掉ELF文件的<code>.text</code>段，完全不会</p>
 <h3 id="LUKS"><a href="#LUKS" class="headerlink" title="LUKS"></a>LUKS</h3><p>就觉得我这么长时间的Linux白用了，整不出来。我只会hashcat爆破，Hashcat爆破又没啥意思，算了，放弃。</p>
 <h3 id="RAID修复"><a href="#RAID修复" class="headerlink" title="RAID修复"></a>RAID修复</h3><p>文件系统白学了，直接不会，白给。RAID-0做不出来，RAID-5也做不出来。</p>
 <h3 id="赛博厨房后两问"><a href="#赛博厨房后两问" class="headerlink" title="赛博厨房后两问"></a>赛博厨房后两问</h3><p>直接人都傻了，找不到规律，根本找不到。</p>
@@ -1772,8 +1775,8 @@ p <span class="token operator">=</span> x
 <p>当前分数：1600， 总排名：187 / 2679<br>binary：150 ， general：1050 ， math：0 ， web：400</p>
 </blockquote>
 <p>今年是第一次参见Hackergame，玩的很开心。binary的题比往年多了很多，不过我一个都不会，好在有个打印<code>Hello, world!</code>的题，很幸运没有爆零。  </p>
-<p>当然，general和web题还是给了我一点信心，让我又找回了“世上英雄本无主”的感觉，不过打开排行榜看到mcfx乱秒的样子，嗯，我是傻逼。</p>
-<p>主要感想就是数理基础太差，分析还能吃点老本，代数是真的太菜了，这几个月正好有空，准备去恶补一下数学。    </p>
+<p>当然，general和web题还是给了我一点信心，让我有种我上我也行的感觉，不过打开排行榜看到mcfx乱秒的样子，嗯，我是傻逼。</p>
+<p>主要感想就是数理基础太差，数论是真的是一窍不通，这几个月正好有空，准备去恶补一下数学。    </p>
 <p>当然进前100名和CTF师傅们以及天神下凡的mcfx合影留念是无望了，明年再来玩耍吧。欢度周末去了，再见。   </p>
 ]]></content>
       <categories>
@@ -1950,7 +1953,6 @@ p <span class="token operator">=</span> x
 <h2 id="更新（和洗手）"><a href="#更新（和洗手）" class="headerlink" title="更新（和洗手）"></a>更新（和洗手）</h2><p>19年写的这个20年不知道怎么在2020年有一段时间被扔到了<code>重装Ubuntu</code>搜索结果的最前面，我这个小破站访问量暴增。然而那个时候20.04LTS都出了，已经有点过时了，而我19年那会写的那个几乎属于个人吐槽，差不多是我博客迁到，完全不适合作为一个教程。可能骗了很多人进来，</p>
 <p>装什么Ubuntu啊，还是Arch香，群里个个都是人才，说话又好听</p>
 <p><img src="/2d5/1611832700.webp"></p>
-<p>但是祖传的是Ubuntu，但是假期我要回家滚又不敢远程滚, 但是我不想折腾显卡驱动了（Nvidia,fuck you!），但是这是工作站和服务器，上Arch天天滚可不太好。</p>
 <p><del>但是随便装个Ubuntu不仅快，他们跑深度学习的时候抄CSDN配置环境也方便</del></p>
 <p><del>最重要的，又不是我用。</del></p>
 <p><del>GNOME内存泄漏关我什么事</del></p>
@@ -1967,135 +1969,10 @@ p <span class="token operator">=</span> x
 <h3 id="关于服务器"><a href="#关于服务器" class="headerlink" title="关于服务器"></a>关于服务器</h3><p>小作坊没有专职运维和技术支持，其实服务器建议试试Debian或者Ubuntu LTS，Debian stable稳如老狗</p>
 <p><del>众所周知，Debian testing 都比 Ubuntu LTS 稳（注意这个安全更新比较慢，个人用户可以testing，开了公网端口的工作站不要用这个）</del></p>
 <p>不过Ubuntu和CentOS6、7比起来，还是瞬间和蔼可亲了不少</p>
-<p>求求新入坑的别再跟着什么鸟哥私房菜之类的老教程用CentOS了，2020年CentOS8都被扬了，REHL马上就要给小作坊免费了，小作坊真迷信稳定上REHL吧</p>
+<p>求求新入坑的别再跟着什么鸟哥私房菜之类的老教程用CentOS了，2020年 CentOS 8 都被扬了，REHL马上就要给小作坊免费了，小作坊真迷信稳定上REHL吧。</p>
 <p>没事不要用所谓稳定的老版本然后找不到包只能自己手动编译，就不说c/c++那一堆lib了，我已经见过不少人在编译python的时候没开ssl当场翻车。</p>
 <p>什么你说容器？你试过在CentOS6上面弄Docker和k8s吗，我在教研室的祖传阿里云上试过一次，从此再也不想看到CentOS了</p>
 <p>（整天在CentOS上手动编译凸显运维重要性和工作量的除外）</p>
-<h3 id="太长不看"><a href="#太长不看" class="headerlink" title="太长不看"></a>太长不看</h3><p>我是说，除了Ubuntu（以及其默认捆绑的GNOME、gtk、rime输入法,强推的snap，祖传的内部错误）,还有很多选择</p>
-<p>或者你用WSL之类的东西也行呢（WSL2显卡驱动也差不多能用了，虽然io效率还有些问题）。</p>
-<!-- 上回书说到，服务器一不小心卸载了iptables
-现在准备重装。还是打算装Ubuntu Server（并不打算装Manjaro，也不适合搞桌面版，今天试过一下Ubuntu Desktop，图形化界面由于服务器没有独显直接卡到爆炸）
-~~初步打算安装Ubuntu server 16.04.6LTS, 使用LVM分区~~
-安装Ubuntu18.04LTS，之前VPS用过一阵18，也没注意有什么新特性，据说还是改了一些东西⬇
-
->据说
-内核更新到了 Linux kernel 4.15，这就意味着新增了不少特性 bbr什么的
-网络管理工具 ifupdown 已经彻底废弃，建议全面拥抱 ip 命令
-DNS 由 systemd 全面接管，接口监听在 127.0.0.53:53，配置文件在 /etc/systemd/resolved.conf，修改后重启服务即可 systemctl restart systemd-resolved。不要听网上那些奇怪的教程教你如何修改 /etc/resolv.conf
-swap 文件来替代 swap 分区
-
-## 装Ubuntu16.04LTS
-
-### 安装
-
-下载iso，制作启动盘，这里用的Rufus
-![Picture](https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/rufus.png)
-
-然后直接装，网卡直接自动识别了，配置也没什么好说的，可以参考这里[^1]或这里[^2],
-
-### 后续配置
-
-进去之后换你电镜像源（终端里vim改/etc/apt/sources.list）
-apt包update&&upgrade
-修改时区和系统时间
-安装Docker，照着官方教程装Docker的时候根本下载不动,换了个国内的源
-桌面不打算装gnome或者kde了，Mobaxterm用X11一般就够了
-
-## 重新安装Ubuntu18.04 LTS
-
-由于某些原因，决定还是换18
-
-## 再次安装
-
-UEFI启动
-create bond这里先不配置了（只有一张网卡eno1），bound mode选默认的balance-rr
-eno1网卡选择automatic自动获取ipv4和ipv6
-镜像源这里输入你电的
-选use the entire disk and set up LVM
-~~是否安装openssh，空格选安装，选择从GitHub获取~~
-然后输入你的用户名(先准备好key，当然这个时候要保证网也是通的)
-这里勾选openssh之后一直报错，可能是网的问题，不勾选，等后面再装
-分区就分一个/boot，一个/swap，一个/home
-<!-- 
-（当然你要先准备好key，先用git bash生成key
-`ssh-keygen -t rsa -C 'your_email@example.com'`
-再到Github的SSH设置里面把公钥填进去（id_rsa.pub里面的内容）
-然后测试一下是否成功
-![Picture](https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/ssh-github.png)
-） -->
-
-<!-- 然后是漫长的installing kernal
-（不知道为什么装server比desktop版慢那么多）
-
-bbr已经自带了，不用装了
-设置root用户和用户组权限
-装Docker参考这里[^3]
-和英文官方教程那个差不多，主要是获取GPG的地址和Docker源换成国内的
-换成国内中科大的镜像源（这个换了也时断时续可能连不上）
-出现permission denied：
-
-<pre class="line-numbers language-log" data-language="log"><code class="language-log">Got permission denied while trying to connect to the Docker daemon socket at unix<span class="token operator">:</span><span class="token operator">/</span><span class="token operator">/</span><span class="token operator">/</span>var<span class="token operator">/</span>run<span class="token operator">/</span>docker<span class="token punctuation">.</span>sock<span class="token operator">:</span> Get <span class="token url">http://%2Fvar%2Frun%2Fdocker.sock/v1.40/containers/json:</span> dial unix <span class="token file-path string">/var/run/docker.sock</span><span class="token operator">:</span> connect<span class="token operator">:</span> permission denied<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>是权限的问题，要加当前用户到用户组里面</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> gpasswd -a <span class="token variable">$&#123;<span class="token environment constant">USER</span>&#125;</span> docker<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h3 id="更改静态为ip"><a href="#更改静态为ip" class="headerlink" title="更改静态为ip"></a>更改静态为ip</h3><p>网卡是eno1（服务器就一个网卡）<br>Ubuntu18的配置改了，在<code>/etc/netplan/50-cloud-init.yaml</code>, 现在18使用netplan管理网络<br>配置文件是yaml格式，跟hexo和next主题的配置文件格式一样</p>
-<pre class="line-numbers language-yml" data-language="yml"><code class="language-yml"><span class="token comment"># network: &#123;config: disabled&#125;</span>
-<span class="token key atrule">network</span><span class="token punctuation">:</span>
-    <span class="token key atrule">ethernets</span><span class="token punctuation">:</span>
-        <span class="token key atrule">eno1</span><span class="token punctuation">:</span>
-            <span class="token key atrule">dhcp4</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
-    <span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token number">2</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>改成</p>
-<pre class="line-numbers language-yml" data-language="yml"><code class="language-yml"><span class="token key atrule">network</span><span class="token punctuation">:</span>
-  <span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token number">2</span>
-  <span class="token key atrule">renderer</span><span class="token punctuation">:</span> networkd
-  <span class="token key atrule">ethernets</span><span class="token punctuation">:</span>
-    <span class="token key atrule">eno1</span><span class="token punctuation">:</span>   <span class="token comment">#配置的网卡名称</span>
-<span class="token comment">#      dhcp4: true    #dhcp4关闭</span>
-<span class="token comment">#      dhcp6: true    #dhcp6关闭</span>
-      <span class="token key atrule">addresses</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>211.83.111.224/23<span class="token punctuation">]</span>   <span class="token comment">#设置本机IP及掩码</span>
-      <span class="token key atrule">gateway4</span><span class="token punctuation">:</span> 211.83.110.1   <span class="token comment">#设置网关</span>
-      <span class="token key atrule">nameservers</span><span class="token punctuation">:</span>
-          <span class="token key atrule">addresses</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>114.114.114.114<span class="token punctuation">,</span> 8.8.8.8<span class="token punctuation">]</span>   <span class="token comment">#设置DNS</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>(网关地址用<code>route -n</code>查看，配置参考<span class="exturl" data-url="aHR0cDovL2Jsb2cuc2luYS5jb20uY24vcy9ibG9nXzUzNzNiY2Y0MDEwMnhrNWcuaHRtbA==">ubuntu 18.04 netplan yaml配置固定IP地址<i class="fa fa-external-link-alt"></i></span>)<br>d-homed//g → /systemd-homed/<br>INFO  Path converted: /(?&lt;=[(&lt;s])(./)?systemd-homed//g → /systemd-homed/<br>INFO  Path converted: /(?&lt;=[(&lt;s])(./)?systemd-home着默认<br>直接改成这样试试</p>
-<pre class="line-numbers language-yml" data-language="yml"><code class="language-yml"><span class="token key atrule">network</span><span class="token punctuation">:</span>
-  <span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token number">2</span>
-<span class="token comment">#  renderer: networkd</span>
-  <span class="token key atrule">ethernets</span><span class="token punctuation">:</span>
-    <span class="token key atrule">eno1</span><span class="token punctuation">:</span>
-      <span class="token key atrule">addresses</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>211.83.111.224/23<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>然后进/run/systemd/network看一下系统的网络配置文件</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> /run/systemd/network`
-<span class="token function">ls</span>
-<span class="token function">cat</span> *<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<p>下面这样应该就可以了，吧…..？</p>
-<pre class="line-numbers language-log" data-language="log"><code class="language-log">root<span class="token operator">@</span>xi102server<span class="token operator">:</span><span class="token file-path string">/run/systemd/network#</span> cat <span class="token number">10</span><span class="token operator">-</span>netplan<span class="token operator">-</span>eno1<span class="token punctuation">.</span>network
-<span class="token punctuation">[</span>Match<span class="token punctuation">]</span>
-Name<span class="token operator">=</span>eno1
-
-<span class="token punctuation">[</span>Network<span class="token punctuation">]</span>
-LinkLocalAddressing<span class="token operator">=</span>ipv6
-Address<span class="token operator">=</span><span class="token ip-address constant">211.83.111.224</span><span class="token operator">/</span><span class="token number">23</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>行吧，搜出一堆东西都不靠谱，还是得看官网</p>
-<h3 id="感想"><a href="#感想" class="headerlink" title="感想"></a>感想</h3><p>服务器启动的声音真的大啊<br>一半以上的问题都是网络问题，校内这个网真的….<br>靠镜像源救回半条狗命</p>
-<p>Ubuntu18安装时配置网卡时想选静态ip选择Manual进去填写subnet, 结果那个subnet选项是<code>XXX.XXX.XXX.XXX/XX</code><br>看了教研室其他设备相同频段的子网掩码是<code>255.255.254.0</code>，但是填了不行，用网上计算子网掩码的工具算了一下，就是<code>255.255.254.0</code></p>
-<p><img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/netmmask.png" alt="Picture"></p>
-<p>暂时选了DHCP直接配置网卡，等进去再指定静态ip[^4]</p>
-<p>哦，netplan好像把子网掩码的格式改了<br>原来是这样</p>
-<blockquote>
-<p>address = 192.168.225.50<br>netmask = 255.255.255.0</p>
-</blockquote>
-<p>改成了这种格式</p>
-<blockquote>
-<p>addresses : [192.168.225.50/24]</p>
-</blockquote>
-<p>滚去补习计网知识了 –&gt; –&gt;</p>
 <h2 id="安装参考"><a href="#安装参考" class="headerlink" title="安装参考"></a>安装参考</h2><p><span class="exturl" data-url="dHRwczovL3R1dG9yaWFscy51YnVudHUuY29tL3R1dG9yaWFsL3R1dG9yaWFsLWluc3RhbGwtdWJ1bnR1LXNlcnZlcg==">tutorial-install-ubuntu-server<i class="fa fa-external-link-alt"></i></span><br> <span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL0xWTV8oJUU3JUFFJTgwJUU0JUJEJTkzJUU0JUI4JUFEJUU2JTk2JTg3KQ==">LVM arch-wiki<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly95ZWFzeS5naXRib29rcy5pby9kb2NrZXJfcHJhY3RpY2UvaW5zdGFsbC91YnVudHUuaHRtbA==">Ubuntu 安装 Docker CE<i class="fa fa-external-link-alt"></i></span>、<span class="exturl" data-url="aHR0cHM6Ly95ZWFzeS5naXRib29rcy5pby9kb2NrZXJfcHJhY3RpY2UvaW5zdGFsbC9taXJyb3IuaHRtbA==">镜像加速器<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cudGVjbWludC5jb20vY29uZmlndXJlLW5ldHdvcmstc3RhdGljLWlwLWFkZHJlc3MtaW4tdWJ1bnR1Lw==">How to Configure Network Static IP Address in Ubuntu 18.04<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9uZXRwbGFuLmlvL2V4YW1wbGVz">netplan官网的配置示例<i class="fa fa-external-link-alt"></i></span></p>
 ]]></content>
       <categories>
@@ -4700,33 +4577,6 @@ Plug <span class="token string">'https://github.com/h-hg/fcitx.nvim.git'</span>
       </tags>
   </entry>
   <entry>
-    <title>重启博客</title>
-    <url>/1a9a/</url>
-    <content><![CDATA[<p>新博客又开通了(搬家)，不定期更新</p>
-<span id="more"></span>
-
-<p>原域名到期，加上之前的Wordpress网站不太喜欢，索性换到Hexo了，主题域名什么的都全换了。没换Hugo是因为没发现和Next一样这么喜欢的主题，这主题让我感到这个页面的却就是一个博客应该有的样子。</p>
-<p>倒不是说这个主题多好看，它是我印象里博客的样子，让我找回了还是个小朋友的时候第一次注册博客的感觉。对呀，博客就长这个样子。左边是导航栏，下面一小栏放头像和放点徽章挂件；中间是文章，文章最下面是评论。再随便加个背景，简直完美。咿，空荡荡的好像还少点什么；是弹窗小广告，这个就算了…..</p>
-<p>最早的时候沉迷三维弹球和扫雷，以及桌面屏保。后来开始上网，已经错过了聊天室的时代，也错过了拨号上网和Telnet论坛的时代，论坛已经流行用Discuz了，QQ号已经8位了。跟风注册了雅虎伊妹儿和搜狐博客，以及一些论坛帐号，开始了网上冲浪。后来换到Wordpress了，加上一个穷学生手头零花钱也不多，中间关了两次没有续上。</p>
-<p>偶当年还是一只小网虫的时候，并不是特别喜欢发博客，喜欢泡在BBS里，写的东西也都喜欢放在BBS里水帖。论坛里看的人比较多，偶尔斑竹还会出来给加个精。大概从15年开始BBS一个个都亡了。有的因为用户大量出走宣布死亡，有的像贴吧一样开始杀鸡取卵式变现挣钱，还有的因为政策原因关了。有的多次改版丢了好多老帖子，有的格式也乱了，老用户抱怨出走。有的一直停留在远古版本的Discuz，然后有一天站被黑了….</p>
-<p>看多了Flarum的新论坛现在偶尔点进一些没见过的Discuz论坛还是会瞬间恍惚，仿佛又回到了当年</p>
-<p>有的是还没亡却从当年的人声鼎沸变得门可罗雀，不时传来哪个一年到头也没几个人说话的论坛站长支撑不下去又要关站了的消息。认识的好多网友也有逐渐沉寂，失去了联系。</p>
-<p>之前博客里的东西不适合放出来，就默默存在硬盘里了。在论坛里写的东西就放在论坛里和BBS一起消亡吧。</p>
-<blockquote class="blockquote-center">
-<p>山中友，试高吟楚些，重与招魂</p>
-
-</blockquote>
-
-<p><img src="/1a9a/cyperpunk.png" alt="Welcome"></p>
-]]></content>
-      <categories>
-        <category>杂七杂八</category>
-      </categories>
-      <tags>
-        <tag>杂记</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>郑文锋老师的四大发明事件始末</title>
     <url>/16e8/</url>
     <content><![CDATA[<p>今天在<span class="exturl" data-url="aHR0cHM6Ly91ZXN0Yy5pY3Uv">uestc.icu<i class="fa fa-external-link-alt"></i></span>和微博上看见好几次，貌似出了个红头文件处理结果，无法确定真假。当时最早那个知乎问题上了知乎热搜第一的时候我也目睹了。在这里随便扯一下吧，夹杂大量个人主观判断。</p>
@@ -4824,6 +4674,33 @@ Plug <span class="token string">'https://github.com/h-hg/fcitx.nvim.git'</span>
       <categories>
         <category>杂七杂八</category>
       </categories>
+  </entry>
+  <entry>
+    <title>重启博客</title>
+    <url>/1a9a/</url>
+    <content><![CDATA[<p>新博客又开通了(搬家)，不定期更新</p>
+<span id="more"></span>
+
+<p>原域名到期，加上之前的Wordpress网站不太喜欢，索性换到Hexo了，主题域名什么的都全换了。没换Hugo是因为没发现和Next一样这么喜欢的主题，这主题让我感到这个页面的却就是一个博客应该有的样子。</p>
+<p>倒不是说这个主题多好看，它是我印象里博客的样子，让我找回了还是个小朋友的时候第一次注册博客的感觉。对呀，博客就长这个样子。左边是导航栏，下面一小栏放头像和放点徽章挂件；中间是文章，文章最下面是评论。再随便加个背景，简直完美。咿，空荡荡的好像还少点什么；是弹窗小广告，这个就算了…..</p>
+<p>最早的时候沉迷三维弹球和扫雷，以及桌面屏保。后来开始上网，已经错过了聊天室的时代，也错过了拨号上网和Telnet论坛的时代，论坛已经流行用Discuz了，QQ号已经8位了。跟风注册了雅虎伊妹儿和搜狐博客，以及一些论坛帐号，开始了网上冲浪。后来换到Wordpress了，加上一个穷学生手头零花钱也不多，中间关了两次没有续上。</p>
+<p>偶当年还是一只小网虫的时候，并不是特别喜欢发博客，喜欢泡在BBS里，写的东西也都喜欢放在BBS里水帖。论坛里看的人比较多，偶尔斑竹还会出来给加个精。大概从15年开始BBS一个个都亡了。有的因为用户大量出走宣布死亡，有的像贴吧一样开始杀鸡取卵式变现挣钱，还有的因为政策原因关了。有的多次改版丢了好多老帖子，有的格式也乱了，老用户抱怨出走。有的一直停留在远古版本的Discuz，然后有一天站被黑了….</p>
+<p>看多了Flarum的新论坛现在偶尔点进一些没见过的Discuz论坛还是会瞬间恍惚，仿佛又回到了当年</p>
+<p>有的是还没亡却从当年的人声鼎沸变得门可罗雀，不时传来哪个一年到头也没几个人说话的论坛站长支撑不下去又要关站了的消息。认识的好多网友也有逐渐沉寂，失去了联系。</p>
+<p>之前博客里的东西不适合放出来，就默默存在硬盘里了。在论坛里写的东西就放在论坛里和BBS一起消亡吧。</p>
+<blockquote class="blockquote-center">
+<p>山中友，试高吟楚些，重与招魂</p>
+
+</blockquote>
+
+<p><img src="/1a9a/cyperpunk.png" alt="Welcome"></p>
+]]></content>
+      <categories>
+        <category>杂七杂八</category>
+      </categories>
+      <tags>
+        <tag>杂记</tag>
+      </tags>
   </entry>
   <entry>
     <title>教研室服务器维护</title>
