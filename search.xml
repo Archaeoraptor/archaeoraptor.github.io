@@ -1479,6 +1479,312 @@ autorandr --save test1<span aria-hidden="true" class="line-numbers-rows"><span><
       </tags>
   </entry>
   <entry>
+    <title>Hackergame 2021 (中科大信安赛) Write Up</title>
+    <url>/hackergame-2021-write-up/</url>
+    <content><![CDATA[<p>对，今年这个就是UTF-8比赛（确信<br>周二还在想今年中科大信安赛是不是要开始了，结果一看已经进行一半了，来划个水吧。由于太菜加上懒，math零蛋，只能流下数理基础不扎实的泪水。  </p>
+<p>作为一个纯萌新和老废物，第一次参加Hackergame，以前看到他们中科大LUG办的，就想着下次举办去参加一下玩。以前看到好多Web题和有意思的小题目，虽然我js也特别菜，好歹还能挣扎一下。结果几年一打开就是一堆binary糊脸，二进制和逆向pwm之类的完全不懂，罢了，就做点General吧</p>
+<span id="more"></span>
+
+<p>很意外自己能挤进200名的，事前完全没有准备，也没接触过CTF之类的东西，甚至比赛开始3天，进行到一半了我才突然发现这比赛ta开始liao， p😭q</p>
+<p>看来Hackergame真的是萌新友好，明年一定再来玩。</p>
+<p><img src="/hackergame-2021-write-up/image-20211030121230343.png" alt="image-20211030121230343"></p>
+<h2 id="做出了来的的小题目"><a href="#做出了来的的小题目" class="headerlink" title="做出了来的的小题目"></a>做出了来的的小题目</h2><p>还是有不少对我很友好的题目的</p>
+<h3 id="签到题"><a href="#签到题" class="headerlink" title="签到题"></a>签到题</h3><blockquote>
+<p>为了能让大家顺利签到，命题组把每一秒的 flag 都记录下来制成了日记本的一页。你只需要打开日记，翻到 Hackergame 2021 比赛进行期间的任何一页就能得到 flag！</p>
+</blockquote>
+<p>打开题目，秒是从1970年开始计算的，这就是UNIX时间戳呗。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">date</span> +%s<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>得到<code>1635213339</code>，修改URL后缀，得到<code>flag&#123;HappyHacking2021-b0e5f6c9af&#125;</code>签到成功</p>
+<h3 id="进制十六——参上"><a href="#进制十六——参上" class="headerlink" title="进制十六——参上"></a>进制十六——参上</h3><p>首先我们OCR识别一下</p>
+<pre class="line-numbers language-none"><code class="language-none">456163682068657861646563696D616C
+20646967697420726570726573656E74
+7320666F75722062697473202862696E
+61727920646967697473292C20616C73
+6F206B6E6F776E2061732061206E6962
+626C6520286F72206E7962626C65292C
+20776869636820697320312F32206F66
+206120627974652E20666C61677B5930
+555F5348305531445F6B6E30775F4830
+575F74305F43306E763372745F484558
+5F746F5F546578547D20466F72206578
+616D706C652C20612073696E676C6520
+627974652063616E2068617665207661
+6C7565732072616E67696E672066726F
+6D20303030303030303020746F203131
+31313131313120696E2062696E617279
+20666F726D2C2077686963682063616E
+20626520636F6E76656E69656E746C79
+20726570726573656E74656420617320
+303020746F20464620696E2068657861
+646563696D616C2E0000000000000000
+00000000000000000000000000000000<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这个好办，打开Bless Hex Editor之类的Hex编辑器, flag的16进制是<code>66 6C 61 67</code>, 找到相应位置，得到flag为<code>flag&#123;Y0U_SH0U1D_kn0w_H0W_t0_C0nv3rt_HEX_to_TexT&#125;</code></p>
+<h3 id="卖瓜"><a href="#卖瓜" class="headerlink" title="卖瓜"></a>卖瓜</h3><p>F12想直接修改放瓜数量为负是不可以的，我们没有办法放上一个负数或者小数的瓜</p>
+<pre class="line-numbers language-none"><code class="language-none">&lt;p&gt;放上 6 斤的瓜 &lt;input type&#x3D;&quot;number&quot; class&#x3D;&quot;number&quot; name&#x3D;&quot;b6&quot; value&#x3D;&quot;0&quot; min&#x3D;&quot;0&quot;&gt; 个&lt;&#x2F;p&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>然后开始填一个很大的数尝试溢出，果然。</p>
+<p><img src="/hackergame-2021-write-up/image-20211026131723641-16352255218271.png" alt="image-20211026131723641"></p>
+<p>然后就是打开WolframAlpha, 一边算一边试，试出了一个正好二十。</p>
+<h3 id="旅行照片"><a href="#旅行照片" class="headerlink" title="旅行照片"></a>旅行照片</h3><p>一开始没什么头绪，但是看到左下角那个彩色方块的小房子实在是太显眼了，可能是什么地标建筑。我们以图搜图找一下呗。</p>
+<p>Google搜图没有结果，TineEye也没有。算了算了，打开我最讨厌的百度（毕竟这可能是一个国内的位置）</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9ncmFwaC5iYWlkdS5jb20vcGNwYWdlL3NpbWlsYXI/b3JpZ2luU2lnbj0xMjZjMGQ1YjgyZjIzMmYzMDY5YjkwMTYzNTMxMTc1OSZzcmNwPWNyc19wY19zaW1pbGFyJnRuPXBjJmlkY3RhZz1neiZzaWRzPTEwMDA3XzEwNTEyXzEwNTIxXzEwOTE0XzEwOTEzXzExMDA2XzEwOTI0XzEwOTA1XzEwMDE4XzEwOTAxXzEwOTQyXzEwOTA3XzExMDEyXzEwOTcwXzEwOTY4XzEwOTc0XzExMDMyXzE3ODUxXzE3MDcwXzE4MDEzXzE4MTAxXzE3MjAwXzE3MjAyXzE4MzAxXzE4MzExXzE4MzMwXzE5MzAwXzE5MTkxXzE5MTYyXzE5MjIwXzE5MjEwXzE5MjEyXzE5MjE0XzE5MjE3XzE5MjE5XzE5MjU2XzE5MjMwXzE5MjY4XzE5MjgwXzE5NTUwXzE5NjcwXzEwMDAwJmxvZ2lkPTI0Mzg0MjcwMDgmZW50cmFuY2U9Z2VuZXJhbCZ0cGxfZnJvbT1wYyZwYWdlRnJvbT1ncmFwaF91cGxvYWRfcGNzaGl0dSZpbWFnZT1odHRwOi8vaW1nMS5iYWlkdS5jb20vaXQvdT0zODI1MzQwMjIwLDkyNzYwNTA0NiZmbT0yNTMmYXBwPTEzOCZmPUpQRUc/dz02NDAmaD00ODAmY2Fyb3VzZWw9NTAzJmluZGV4PTEmcGFnZT0xJnNoaXR1VG9rZW49YzkyM2Qz">百度搜图的结果<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9ncmFwaC5iYWlkdS5jb20vcGNwYWdlL3NpbWlsYXI/b3JpZ2luU2lnbj0xMjZjMGQ1YjgyZjIzMmYzMDY5YjkwMTYzNTMxMTc1OSZzcmNwPWNyc19wY19zaW1pbGFyJnRuPXBjJmlkY3RhZz1neiZzaWRzPTEwMDA3XzEwNTEyXzEwNTIxXzEwOTE0XzEwOTEzXzExMDA2XzEwOTI0XzEwOTA1XzEwMDE4XzEwOTAxXzEwOTQyXzEwOTA3XzExMDEyXzEwOTcwXzEwOTY4XzEwOTc0XzExMDMyXzE3ODUxXzE3MDcwXzE4MDEzXzE4MTAxXzE3MjAwXzE3MjAyXzE4MzAxXzE4MzExXzE4MzMwXzE5MzAwXzE5MTkxXzE5MTYyXzE5MjIwXzE5MjEwXzE5MjEyXzE5MjE0XzE5MjE3XzE5MjE5XzE5MjU2XzE5MjMwXzE5MjY4XzE5MjgwXzE5NTUwXzE5NjcwXzEwMDAwJmxvZ2lkPTI0Mzg0MjcwMDgmZW50cmFuY2U9Z2VuZXJhbCZ0cGxfZnJvbT1wYyZwYWdlRnJvbT1ncmFwaF91cGxvYWRfcGNzaGl0dSZpbWFnZT1odHRwOi8vaW1nMi5iYWlkdS5jb20vaXQvdT0zMjUxMjkwNzY1LDE0NjUyMzc0ODkmZm09MjUzJmFwcD0xMzgmZj1KUEVHP3c9MjQ5Jmg9MjQ5JmNhcm91c2VsPTUwMyZpbmRleD01JnBhZ2U9MSZzaGl0dVRva2VuPTlkMDk3OA==">百度搜图的结果<i class="fa fa-external-link-alt"></i></span></p>
+<p>搜到了，是秦皇岛西浴场。这个彩色方块的小房子是海边的救助亭。</p>
+<p>秦皇岛西沙滩，附近有酒店和KFC，而且旁边就是海，应该就是这里了。</p>
+<p>旁边甚至还有一个停车场。和一个秦皇岛国际大酒店（最后根据位置发现酒店应该不是这个）</p>
+<p>然后查找一下周围的KFC（这种事情应该让馒狗来），果不其然有一个网红Tiffany KFC,一群人在小红书打卡。</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cueGlhb2hvbmdzaHUuY29tL2Rpc2NvdmVyeS9pdGVtLzVlOTZjOTE5MDAwMDAwMDAwMTAwNTdjMQ==">https://www.xiaohongshu.com/discovery/item/5e96c91900000000010057c1<i class="fa fa-external-link-alt"></i></span></p>
+<p>高德地图上可以找到电话：0335-7168800</p>
+<p>大众点评的照片上可以看到左侧建筑的三个字为：<strong>海豚馆</strong></p>
+<p><span class="exturl" data-url="aHR0cDovL3d3dy5kaWFucGluZy5jb20vc2hvcC8yNDQzNDA4Nw==">http://www.dianping.com/shop/24434087<i class="fa fa-external-link-alt"></i></span></p>
+<p>从地图上看可能是东南方向，从阳光照射方向看可能是傍晚。</p>
+<p>然后就剩下了楼层数，大概有15、16层左右的样子，随便试几个。结果是16，好的，得到flag</p>
+<h3 id="去吧！追寻自由的电波"><a href="#去吧！追寻自由的电波" class="headerlink" title="去吧！追寻自由的电波"></a>去吧！追寻自由的电波</h3><p>这个是我精通八门乐器的室友秒掉的。mp3用foobar2000这个软件保存成wav文件然后修改采样率（大概从48000调到了18000的样子），然后保存回mp3，就可以听到声音了。</p>
+<p>是一串北约音标字母。</p>
+<h3 id="喵咪问答-Pro-Max"><a href="#喵咪问答-Pro-Max" class="headerlink" title="喵咪问答 Pro Max"></a>喵咪问答 Pro Max</h3><p>这个没啥好说的，Google搜就完事了</p>
+<h3 id="图之上的信息"><a href="#图之上的信息" class="headerlink" title="图之上的信息"></a>图之上的信息</h3><p>graphql查询</p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+    user(id<span class="token operator">:</span><span class="token number">1</span>)<span class="token punctuation">&#123;</span>
+        username
+        privateEmail
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>url接口是<code>/graphql?query=&#123;.....&#125;</code>, 会得到一个：</p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span><span class="token property">"data"</span><span class="token operator">:</span><span class="token punctuation">&#123;</span><span class="token property">"user"</span><span class="token operator">:</span><span class="token punctuation">&#123;</span><span class="token property">"username"</span><span class="token operator">:</span><span class="token string">"admin"</span><span class="token punctuation">,</span><span class="token property">"privateEmail"</span><span class="token operator">:</span><span class="token string">"flag&#123;dont_let_graphql_l3ak_data_dad4053dd4@hackergame.ustc&#125;"</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>收工。。。</p>
+<h3 id="Amnesia-轻度失忆（第一个flag）"><a href="#Amnesia-轻度失忆（第一个flag）" class="headerlink" title="Amnesia 轻度失忆（第一个flag）"></a>Amnesia 轻度失忆（第一个flag）</h3><blockquote>
+<p>编译后 ELF 文件的 .data 和 .rodata 段会被清零。</p>
+</blockquote>
+<p>唯一整出来的binary题目（避免了binary和math双双爆零的惨状），虽然这个好像也不算binary，更像是在考我编译原理。使劲浑身解数。。。。</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;malloc.h></span></span>
+<span class="token keyword">char</span> <span class="token operator">*</span> hello<span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    hello <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">char</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">13</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    hello<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">'H'</span><span class="token punctuation">;</span>
+    hello<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">'e'</span><span class="token punctuation">;</span>
+    hello<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">'l'</span><span class="token punctuation">;</span>
+    hello<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">'l'</span><span class="token punctuation">;</span>
+    hello<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">'o'</span><span class="token punctuation">;</span>
+    hello<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">','</span><span class="token punctuation">;</span>
+    hello<span class="token punctuation">[</span><span class="token number">6</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">' '</span><span class="token punctuation">;</span>
+    hello<span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">'w'</span><span class="token punctuation">;</span>
+    hello<span class="token punctuation">[</span><span class="token number">8</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">'o'</span><span class="token punctuation">;</span>
+    hello<span class="token punctuation">[</span><span class="token number">9</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">'r'</span><span class="token punctuation">;</span>
+    hello<span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">'l'</span><span class="token punctuation">;</span>
+    hello<span class="token punctuation">[</span><span class="token number">11</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">'d'</span><span class="token punctuation">;</span>
+    hello<span class="token punctuation">[</span><span class="token number">12</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">'!'</span><span class="token punctuation">;</span>
+    <span class="token keyword">asm</span> <span class="token keyword">volatile</span> <span class="token punctuation">(</span>
+    <span class="token string">"mov $4,%eax;"</span>
+    <span class="token string">"mov $1,%ebx;"</span>
+    <span class="token string">"mov hello ,%ecx;"</span>
+    <span class="token string">"mov $13,%edx;"</span>
+    <span class="token string">"int $0x80"</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">//free(hello);</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>有个小问题是它会内存泄漏，但是想不出什么更好的解答了。</p>
+<h3 id="赛博厨房"><a href="#赛博厨房" class="headerlink" title="赛博厨房"></a>赛博厨房</h3><p>level0 简单，level1 也简单，就是实现一个循环呗。</p>
+<p>剩下两个给我整不会了，人都傻了。</p>
+<h3 id="p😭q"><a href="#p😭q" class="headerlink" title="p😭q"></a>p😭q</h3><p>我也不知道这道题何德何能排在倒数第三个，甚至还有400分的分值。在学了信号与系统、数字信号处理、数字图像处理、生物医学信号处理的我看来，这应该属于送分题。（不过之前都是用matlab做的，python的库都没用过）</p>
+<p>先将gif每一帧转成图像再转成numpy的array再转成一维数组得到功率谱，傅立叶反变换回去得到音频信号……</p>
+<p>等等。。。。它只有功率谱的幅度没有相位信息我可怎么恢复。难道要我猜一个相位吗？</p>
+<p>搜了一下librosa，有一个自带的恢复库，用的是一个迭代估计的算法</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> PIL <span class="token keyword">import</span> Image<span class="token punctuation">,</span> ImageSequence
+<span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
+<span class="token keyword">import</span> librosa
+<span class="token keyword">import</span> soundfile <span class="token keyword">as</span> sf
+
+sample_rate <span class="token operator">=</span> <span class="token number">22050</span>
+num_freqs <span class="token operator">=</span> <span class="token number">32</span>
+quantize <span class="token operator">=</span> <span class="token number">2</span>
+min_db <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">60</span>
+max_db <span class="token operator">=</span> <span class="token number">30</span>
+fft_window_size <span class="token operator">=</span> <span class="token number">2048</span>
+frame_step_size <span class="token operator">=</span> <span class="token number">512</span>
+window_function_type <span class="token operator">=</span> <span class="token string">'hann'</span>
+
+im <span class="token operator">=</span> Image<span class="token punctuation">.</span><span class="token builtin">open</span><span class="token punctuation">(</span><span class="token string">'flag.gif'</span><span class="token punctuation">)</span>
+<span class="token builtin">iter</span> <span class="token operator">=</span> ImageSequence<span class="token punctuation">.</span>Iterator<span class="token punctuation">(</span>im<span class="token punctuation">)</span>
+
+
+index <span class="token operator">=</span> <span class="token number">1</span>
+spec <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">,</span> dtype<span class="token operator">=</span><span class="token builtin">int</span><span class="token punctuation">)</span>
+
+<span class="token keyword">for</span> frame <span class="token keyword">in</span> <span class="token builtin">iter</span><span class="token punctuation">:</span>
+    <span class="token comment"># print("image %d: mode %s, size %s" % (index, frame.mode, frame.size))</span>
+    frame<span class="token punctuation">.</span>save<span class="token punctuation">(</span><span class="token string">"./imgs/frame%d.png"</span> <span class="token operator">%</span> index<span class="token punctuation">)</span>
+    index <span class="token operator">+=</span> <span class="token number">1</span>
+
+    image_arr <span class="token operator">=</span> np<span class="token punctuation">.</span>array<span class="token punctuation">(</span>frame<span class="token punctuation">,</span> dtype<span class="token operator">=</span><span class="token builtin">int</span><span class="token punctuation">)</span>
+
+    image_list <span class="token operator">=</span> np<span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span>image_arr<span class="token punctuation">,</span> axis<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span>
+    <span class="token comment"># print(image_list)</span>
+
+    image_list <span class="token operator">=</span> image_list<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token number">4</span><span class="token punctuation">]</span>
+    <span class="token comment"># print(image_list)</span>
+
+    <span class="token comment"># print(image_list.shape)</span>
+    spec <span class="token operator">=</span> np<span class="token punctuation">.</span>vstack<span class="token punctuation">(</span><span class="token punctuation">(</span>spec<span class="token punctuation">,</span> image_list<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token keyword">print</span><span class="token punctuation">(</span>spec<span class="token punctuation">)</span>
+
+np<span class="token punctuation">.</span>savetxt<span class="token punctuation">(</span><span class="token string">'output1.txt'</span><span class="token punctuation">,</span> spec<span class="token punctuation">,</span> fmt<span class="token operator">=</span><span class="token string">"%d"</span><span class="token punctuation">)</span>
+
+spec <span class="token operator">=</span> np<span class="token punctuation">.</span>delete<span class="token punctuation">(</span>spec<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span>
+
+melspectrogram <span class="token operator">=</span> librosa<span class="token punctuation">.</span>db_to_power<span class="token punctuation">(</span>spec<span class="token punctuation">.</span>T<span class="token operator">/</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">2</span>
+
+<span class="token comment"># print(melspectrogram.shape)</span>
+
+audio_signal <span class="token operator">=</span> librosa<span class="token punctuation">.</span>feature<span class="token punctuation">.</span>inverse<span class="token punctuation">.</span>mel_to_audio<span class="token punctuation">(</span>
+    melspectrogram<span class="token punctuation">,</span>
+    n_iter<span class="token operator">=</span><span class="token number">32</span><span class="token punctuation">,</span>
+    sr<span class="token operator">=</span>sample_rate<span class="token punctuation">,</span>
+    n_fft<span class="token operator">=</span>fft_window_size<span class="token punctuation">,</span>
+    hop_length<span class="token operator">=</span>frame_step_size<span class="token punctuation">,</span>
+    window<span class="token operator">=</span>window_function_type
+<span class="token punctuation">)</span>
+
+<span class="token comment"># print(audio_signal, audio_signal.shape)</span>
+sf<span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token string">'test.wav'</span><span class="token punctuation">,</span> audio_signal<span class="token punctuation">,</span> sample_rate<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>好的，秒了。（怎么有种回到本科写课堂作业的感觉）</p>
+<p>声音是有了，但是这个相位好像还是不太对的样子。我超，回声不绝于耳。。。</p>
+<p>调一下参数，让他多迭代几轮<code>n_iter=8192,</code>，行了，现在清晰度有个高中大喇叭放英语早读听力的样子。</p>
+<p><strong>衬衫的价格是九磅十五便士，现在你有十秒钟时间，将Flag填到输入框上</strong>…….</p>
+<h2 id="看起来有点头绪但是没做的题目"><a href="#看起来有点头绪但是没做的题目" class="headerlink" title="看起来有点头绪但是没做的题目"></a>看起来有点头绪但是没做的题目</h2><p>懒癌又犯了，周六休息一会，周五天气太好了，还有其他事情要做，算了</p>
+<h3 id="ESA-rsa"><a href="#ESA-rsa" class="headerlink" title="ESA rsa"></a>ESA rsa</h3><p>由于我找不到中科大少年班的神通，而我自己的数论还停留在高中水平（当年数竞还过了校队选拔，然后上来就听了好几节数论和组合，直接退出了（后悔，现在就是非常后悔））</p>
+<p>只能找山大网安的大二学弟来帮帮我看看这个密码学的问题，问问这种形式该怎么解(已知n, p, q, c)</p>
+<p>$$<br>a^n mod(p*q) = c<br>$$</p>
+<p>他当场就给我秒了，还随手写了3页。</p>
+<p>然后问题是怎么跑出这个p来，这次学弟也没什么好办法了</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">get_p</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    x <span class="token operator">=</span> <span class="token number">11124440021748127159092076861405454814981575144744508857178576572929321435002942998531420985771090167262256877805902135304112271641074498386662361391760451</span>
+    y <span class="token operator">=</span> <span class="token number">11124440021748127159092076861405454814981575144744508857178576572929321435002942998531420985771090167262256877805902135304112271641074498386662361391661439</span>
+    value_p <span class="token operator">=</span> sympy<span class="token punctuation">.</span>nextprime<span class="token punctuation">(</span><span class="token punctuation">(</span>math<span class="token punctuation">.</span>factorial<span class="token punctuation">(</span>y<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">%</span>
+                              x<span class="token punctuation">)</span>  <span class="token comment"># Hint：这里直接计算会溢出，请你仔细观察 x 和 y 的特征</span>
+    <span class="token keyword">return</span> value_p<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>一开始我是这样跑的：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">x <span class="token operator">=</span> <span class="token number">11124440021748127159092076861405454814981575144744508857178576572929321435002942998531420985771090167262256877805902135304112271641074498386662361391760451</span>
+y <span class="token operator">=</span> <span class="token number">11124440021748127159092076861405454814981575144744508857178576572929321435002942998531420985771090167262256877805902135304112271641074498386662361391661439</span>
+
+<span class="token builtin">sum</span> <span class="token operator">=</span> <span class="token number">1</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> y<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token builtin">sum</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token builtin">sum</span><span class="token operator">*</span>i<span class="token punctuation">)</span> <span class="token operator">%</span> x
+    <span class="token comment"># print(sum)</span>
+    <span class="token keyword">if</span> <span class="token builtin">sum</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"sum的值是"</span><span class="token punctuation">,</span> <span class="token builtin">sum</span><span class="token punctuation">)</span>
+        <span class="token keyword">break</span>
+
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"sum的值是"</span><span class="token punctuation">,</span> <span class="token builtin">sum</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>结果一跑就是一天，看到我的5600g只有1个CPU在跑，我决定整个multiprocessing（本来想用Golang整一个，但是Golang的数值计算库不太行，还得去用那个难用的<code>math/big</code>包）</p>
+<p>结果再次发现，甚至上了multiprocessing，反而更慢了。</p>
+<p>于是我决定搜一下，结果就找到了这个网站的两种算法：<span class="exturl" data-url="aHR0cHM6Ly93d3cuZ2Vla3Nmb3JnZWVrcy5vcmcvY29tcHV0ZS1uLXVuZGVyLW1vZHVsby1wLw==">Compute n! under modulo p<i class="fa fa-external-link-alt"></i></span></p>
+<p>哦，有个复杂度$O((p-n)*Logn)$的算法</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># Python3 program to comput</span>
+<span class="token comment"># n! % p using Wilson's Theorem</span>
+
+<span class="token comment"># Utility function to do modular</span>
+<span class="token comment"># exponentiation. It returns (x^y) % p</span>
+<span class="token keyword">def</span> <span class="token function">power</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> p<span class="token punctuation">)</span><span class="token punctuation">:</span>
+
+    res <span class="token operator">=</span> <span class="token number">1</span>  <span class="token comment"># Initialize result</span>
+    x <span class="token operator">=</span> x <span class="token operator">%</span> p  <span class="token comment"># Update x if it is more</span>
+    <span class="token comment"># than or equal to p</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>y <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+
+        <span class="token comment"># If y is odd, multiply</span>
+        <span class="token comment"># x with result</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>y <span class="token operator">&amp;</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            res <span class="token operator">=</span> <span class="token punctuation">(</span>res <span class="token operator">*</span> x<span class="token punctuation">)</span> <span class="token operator">%</span> p
+
+        <span class="token comment"># y must be even now</span>
+        y <span class="token operator">=</span> y <span class="token operator">>></span> <span class="token number">1</span>  <span class="token comment"># y = y/2</span>
+        x <span class="token operator">=</span> <span class="token punctuation">(</span>x <span class="token operator">*</span> x<span class="token punctuation">)</span> <span class="token operator">%</span> p
+
+    <span class="token keyword">return</span> res
+
+<span class="token comment"># Function to find modular inverse</span>
+<span class="token comment"># of a under modulo p using Fermat's</span>
+<span class="token comment"># method. Assumption: p is prime</span>
+
+
+<span class="token keyword">def</span> <span class="token function">modInverse</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> p<span class="token punctuation">)</span><span class="token punctuation">:</span>
+
+    <span class="token keyword">return</span> power<span class="token punctuation">(</span>a<span class="token punctuation">,</span> p <span class="token operator">-</span> <span class="token number">2</span><span class="token punctuation">,</span> p<span class="token punctuation">)</span>
+
+<span class="token comment"># Returns n! % p using</span>
+<span class="token comment"># Wilson's Theorem</span>
+
+
+<span class="token keyword">def</span> <span class="token function">modFact</span><span class="token punctuation">(</span>n<span class="token punctuation">,</span> p<span class="token punctuation">)</span><span class="token punctuation">:</span>
+
+    <span class="token comment"># n! % p is 0 if n >= p</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>p <span class="token operator">&lt;=</span> n<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token number">0</span>
+
+    <span class="token comment"># Initialize result as (p-1)!</span>
+    <span class="token comment"># which is -1 or (p-1)</span>
+    res <span class="token operator">=</span> <span class="token punctuation">(</span>p <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span>
+
+    <span class="token comment"># Multiply modulo inverse of</span>
+    <span class="token comment"># all numbers from (n+1) to p</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>n <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> p<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        res <span class="token operator">=</span> <span class="token punctuation">(</span>res <span class="token operator">*</span> modInverse<span class="token punctuation">(</span>i<span class="token punctuation">,</span> p<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">%</span> p
+    <span class="token keyword">return</span> res
+
+
+<span class="token comment"># Driver code</span>
+
+x <span class="token operator">=</span> <span class="token number">11124440021748127159092076861405454814981575144744508857178576572929321435002942998531420985771090167262256877805902135304112271641074498386662361391760451</span>
+y <span class="token operator">=</span> <span class="token number">11124440021748127159092076861405454814981575144744508857178576572929321435002942998531420985771090167262256877805902135304112271641074498386662361391661439</span>
+<span class="token comment"># y = 10</span>
+
+n <span class="token operator">=</span> y
+p <span class="token operator">=</span> x
+<span class="token keyword">print</span><span class="token punctuation">(</span>modFact<span class="token punctuation">(</span>n<span class="token punctuation">,</span> p<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment"># This code is contributed by ihritik</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>只用了1分钟</strong>就跑了出来。这算法好强！</p>
+<p>我把这个做法发给学弟，学弟表示：</p>
+<p>“可以，回头我看看”<br>“<strong>我比较关心这个是怎么构造出来和怎么证明的</strong>”<br>“<strong>初等数论比较巧妙</strong>”<br>“<strong>可以看一下</strong>”  </p>
+<p>听完学弟的话，接下来的内容我不太想做了。<br>我这样数理基础不扎实的菜狗（尤其是数论，一窍不通），做出来也<strong>改变不了我是个数论白痴的事实</strong>。都是些trival的东西了，<strong>有这个时间折腾这些应该去系统的补习一下数论</strong>。</p>
+<h3 id="拼多多砍一刀"><a href="#拼多多砍一刀" class="headerlink" title="拼多多砍一刀"></a>拼多多砍一刀</h3><p>FLAG 助力大红包，这个东西应该挂一个爬虫代理池能做。但是这个方法好像太暴力了点，而且我不想再爬东西了，免费的那几个IP池都不太好用，要钱的又不想掏钱。</p>
+<h3 id="minecraft"><a href="#minecraft" class="headerlink" title="minecraft"></a>minecraft</h3><p>随便乱走亮了两盏灯，还有一盏。看起来应该F12找找线索，有一个flag.js的东西，但是它一堆16进制的变量和函数名，看起来挺费劲，算了，不看了。</p>
+<h3 id="二维码"><a href="#二维码" class="headerlink" title="二维码"></a>二维码</h3><p>应该就是根据奇偶校验和他给的打码过程的那个python文件。上一次做二维码和奇偶校验的东西还是大二上数字电路的时候。算了，numpy二维数组转置心累了了，不想弄了，懒得处理array。</p>
+<p>看起来像是第十版二维码，结果打开qrazybox想手动修复一下最高只有ver.9</p>
+<p>周五周六天气真好，不做了。</p>
+<h2 id="完全没头绪被乱杀到怀疑人生的题"><a href="#完全没头绪被乱杀到怀疑人生的题" class="headerlink" title="完全没头绪被乱杀到怀疑人生的题"></a>完全没头绪被乱杀到怀疑人生的题</h2><h3 id="Amnsia记忆清除"><a href="#Amnsia记忆清除" class="headerlink" title="Amnsia记忆清除"></a>Amnsia记忆清除</h3><p>抹除掉ELF文件的<code>.text</code>段，完全不会</p>
+<h3 id="LUKS"><a href="#LUKS" class="headerlink" title="LUKS"></a>LUKS</h3><p>就觉得我这么长时间的Linux白用了，整不出来。我只会hashcat爆破，Hashcat爆破又没啥意思，算了，放弃。</p>
+<h3 id="RAID修复"><a href="#RAID修复" class="headerlink" title="RAID修复"></a>RAID修复</h3><p>文件系统白学了，直接不会，白给。RAID-0做不出来，RAID-5也做不出来。</p>
+<h3 id="赛博厨房后两问"><a href="#赛博厨房后两问" class="headerlink" title="赛博厨房后两问"></a>赛博厨房后两问</h3><p>直接人都傻了，找不到规律，根本找不到。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>现在是周六中午12点，总排名187/2679，很幸运没有掉出200名。</p>
+<blockquote>
+<p>当前分数：1600， 总排名：187 / 2679<br>binary：150 ， general：1050 ， math：0 ， web：400</p>
+</blockquote>
+<p>今年是第一次参见Hackergame，玩的很开心。binary的题比往年多了很多，不过我一个都不会，好在有个打印<code>Hello, world!</code>的题，很幸运没有爆零。  </p>
+<p>当然，general和web题还是给了我一点信心，让我又找回了“世上英雄本无主”的感觉，不过打开排行榜看到mcfx乱秒的样子，嗯，我是傻逼。</p>
+<p>主要感想就是数理基础太差，分析还能吃点老本，代数是真的太菜了，这几个月正好有空，准备去恶补一下数学。    </p>
+<p>当然进前100名和CTF师傅们以及天神下凡的mcfx合影留念是无望了，明年再来玩耍吧。欢度周末去了，再见。   </p>
+]]></content>
+      <categories>
+        <category>不务正业系列</category>
+      </categories>
+      <tags>
+        <tag>hackergame</tag>
+        <tag>UTF-8</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>也谈心率变异性</title>
     <url>/2873/</url>
     <content><![CDATA[<p>等待填坑</p>
@@ -4394,6 +4700,33 @@ Plug <span class="token string">'https://github.com/h-hg/fcitx.nvim.git'</span>
       </tags>
   </entry>
   <entry>
+    <title>重启博客</title>
+    <url>/1a9a/</url>
+    <content><![CDATA[<p>新博客又开通了(搬家)，不定期更新</p>
+<span id="more"></span>
+
+<p>原域名到期，加上之前的Wordpress网站不太喜欢，索性换到Hexo了，主题域名什么的都全换了。没换Hugo是因为没发现和Next一样这么喜欢的主题，这主题让我感到这个页面的却就是一个博客应该有的样子。</p>
+<p>倒不是说这个主题多好看，它是我印象里博客的样子，让我找回了还是个小朋友的时候第一次注册博客的感觉。对呀，博客就长这个样子。左边是导航栏，下面一小栏放头像和放点徽章挂件；中间是文章，文章最下面是评论。再随便加个背景，简直完美。咿，空荡荡的好像还少点什么；是弹窗小广告，这个就算了…..</p>
+<p>最早的时候沉迷三维弹球和扫雷，以及桌面屏保。后来开始上网，已经错过了聊天室的时代，也错过了拨号上网和Telnet论坛的时代，论坛已经流行用Discuz了，QQ号已经8位了。跟风注册了雅虎伊妹儿和搜狐博客，以及一些论坛帐号，开始了网上冲浪。后来换到Wordpress了，加上一个穷学生手头零花钱也不多，中间关了两次没有续上。</p>
+<p>偶当年还是一只小网虫的时候，并不是特别喜欢发博客，喜欢泡在BBS里，写的东西也都喜欢放在BBS里水帖。论坛里看的人比较多，偶尔斑竹还会出来给加个精。大概从15年开始BBS一个个都亡了。有的因为用户大量出走宣布死亡，有的像贴吧一样开始杀鸡取卵式变现挣钱，还有的因为政策原因关了。有的多次改版丢了好多老帖子，有的格式也乱了，老用户抱怨出走。有的一直停留在远古版本的Discuz，然后有一天站被黑了….</p>
+<p>看多了Flarum的新论坛现在偶尔点进一些没见过的Discuz论坛还是会瞬间恍惚，仿佛又回到了当年</p>
+<p>有的是还没亡却从当年的人声鼎沸变得门可罗雀，不时传来哪个一年到头也没几个人说话的论坛站长支撑不下去又要关站了的消息。认识的好多网友也有逐渐沉寂，失去了联系。</p>
+<p>之前博客里的东西不适合放出来，就默默存在硬盘里了。在论坛里写的东西就放在论坛里和BBS一起消亡吧。</p>
+<blockquote class="blockquote-center">
+<p>山中友，试高吟楚些，重与招魂</p>
+
+</blockquote>
+
+<p><img src="/1a9a/cyperpunk.png" alt="Welcome"></p>
+]]></content>
+      <categories>
+        <category>杂七杂八</category>
+      </categories>
+      <tags>
+        <tag>杂记</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>郑文锋老师的四大发明事件始末</title>
     <url>/16e8/</url>
     <content><![CDATA[<p>今天在<span class="exturl" data-url="aHR0cHM6Ly91ZXN0Yy5pY3Uv">uestc.icu<i class="fa fa-external-link-alt"></i></span>和微博上看见好几次，貌似出了个红头文件处理结果，无法确定真假。当时最早那个知乎问题上了知乎热搜第一的时候我也目睹了。在这里随便扯一下吧，夹杂大量个人主观判断。</p>
@@ -4491,33 +4824,6 @@ Plug <span class="token string">'https://github.com/h-hg/fcitx.nvim.git'</span>
       <categories>
         <category>杂七杂八</category>
       </categories>
-  </entry>
-  <entry>
-    <title>重启博客</title>
-    <url>/1a9a/</url>
-    <content><![CDATA[<p>新博客又开通了(搬家)，不定期更新</p>
-<span id="more"></span>
-
-<p>原域名到期，加上之前的Wordpress网站不太喜欢，索性换到Hexo了，主题域名什么的都全换了。没换Hugo是因为没发现和Next一样这么喜欢的主题，这主题让我感到这个页面的却就是一个博客应该有的样子。</p>
-<p>倒不是说这个主题多好看，它是我印象里博客的样子，让我找回了还是个小朋友的时候第一次注册博客的感觉。对呀，博客就长这个样子。左边是导航栏，下面一小栏放头像和放点徽章挂件；中间是文章，文章最下面是评论。再随便加个背景，简直完美。咿，空荡荡的好像还少点什么；是弹窗小广告，这个就算了…..</p>
-<p>最早的时候沉迷三维弹球和扫雷，以及桌面屏保。后来开始上网，已经错过了聊天室的时代，也错过了拨号上网和Telnet论坛的时代，论坛已经流行用Discuz了，QQ号已经8位了。跟风注册了雅虎伊妹儿和搜狐博客，以及一些论坛帐号，开始了网上冲浪。后来换到Wordpress了，加上一个穷学生手头零花钱也不多，中间关了两次没有续上。</p>
-<p>偶当年还是一只小网虫的时候，并不是特别喜欢发博客，喜欢泡在BBS里，写的东西也都喜欢放在BBS里水帖。论坛里看的人比较多，偶尔斑竹还会出来给加个精。大概从15年开始BBS一个个都亡了。有的因为用户大量出走宣布死亡，有的像贴吧一样开始杀鸡取卵式变现挣钱，还有的因为政策原因关了。有的多次改版丢了好多老帖子，有的格式也乱了，老用户抱怨出走。有的一直停留在远古版本的Discuz，然后有一天站被黑了….</p>
-<p>看多了Flarum的新论坛现在偶尔点进一些没见过的Discuz论坛还是会瞬间恍惚，仿佛又回到了当年</p>
-<p>有的是还没亡却从当年的人声鼎沸变得门可罗雀，不时传来哪个一年到头也没几个人说话的论坛站长支撑不下去又要关站了的消息。认识的好多网友也有逐渐沉寂，失去了联系。</p>
-<p>之前博客里的东西不适合放出来，就默默存在硬盘里了。在论坛里写的东西就放在论坛里和BBS一起消亡吧。</p>
-<blockquote class="blockquote-center">
-<p>山中友，试高吟楚些，重与招魂</p>
-
-</blockquote>
-
-<p><img src="/1a9a/cyperpunk.png" alt="Welcome"></p>
-]]></content>
-      <categories>
-        <category>杂七杂八</category>
-      </categories>
-      <tags>
-        <tag>杂记</tag>
-      </tags>
   </entry>
   <entry>
     <title>教研室服务器维护</title>
