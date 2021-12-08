@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/uploads/wizard-hat-16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/uploads/wizard-hat-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/uploads/wizard-hat-16.png">
+  <link rel="mask-icon" href="/uploads/wizard-hat-32.png" color="#222">
+  <meta name="google-site-verification" content="4Rj54anORAwcoMXLe3miFnoH78ZtUZfdamS--ffoxVE">
+  <meta name="msvalidate.01" content="872DC4637276109A6B54FF149DCABA8A">
+  <meta name="yandex-verification" content="0d554b4a05a80f0d">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Noto+Serif+SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhangjk98.xyz","root":"/","images":"/images","scheme":"Pisces","darkmode":"auto","version":"8.8.1","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqusjs","storage":true,"lazyload":false,"nav":{"disqusjs":{"text":"Load Disqus","order":-1},"utterances":{"order":-2}},"activeClass":"disqusjs"},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"none","post_header":"none","post_body":"none","coll_header":"none","sidebar":"none"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="久闻大名，然而真的编译了几圈下来，和想象中的不太一样。照着手册一步一步来并不难，但是特别繁琐。其实我更建议去看一看Alpine等更精简的Linux的构建过程。哦，对了，我等编译的时候通关了蔚蓝a面">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux from Scratch 编译笔记">
+<meta property="og:url" content="https://zhangjk98.xyz/build-linux-from-scratch/index.html">
+<meta property="og:site_name" content="止息的博客">
+<meta property="og:description" content="久闻大名，然而真的编译了几圈下来，和想象中的不太一样。照着手册一步一步来并不难，但是特别繁琐。其实我更建议去看一看Alpine等更精简的Linux的构建过程。哦，对了，我等编译的时候通关了蔚蓝a面">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://zhangjk98.xyz/build-linux-from-scratch/image-20211204142505342.png">
+<meta property="article:published_time" content="2021-11-29T11:55:37.000Z">
+<meta property="article:author" content="Zhang.j.k">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="LFS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zhangjk98.xyz/build-linux-from-scratch/image-20211204142505342.png">
+
+
+<link rel="canonical" href="https://zhangjk98.xyz/build-linux-from-scratch/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zhangjk98.xyz/build-linux-from-scratch/","path":"build-linux-from-scratch/","title":"Linux from Scratch 编译笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Linux from Scratch 编译笔记 | 止息的博客</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143393734-1"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-143393734-1","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="止息的博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">止息的博客</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">唯见月寒日暖，来煎人寿</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E6%B5%81%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">编译流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AA%E4%BA%BA%E7%9A%84%E6%94%B9%E5%8A%A8"><span class="nav-number">3.</span> <span class="nav-text">个人的改动</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%88%91%E5%92%8C%E6%89%8B%E5%86%8C%E6%9C%89%E4%BA%9B%E5%87%BA%E5%85%A5%E7%9A%84%E5%9C%B0%E6%96%B9"><span class="nav-number">3.1.</span> <span class="nav-text">我和手册有些出入的地方</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E6%89%8B%E5%86%8C%E4%B8%8A%E6%9C%89%E4%BD%86%E6%88%91%E6%B2%A1%E7%BC%96%E8%AF%91%E5%92%8C%E5%AE%89%E8%A3%85%E7%9A%84%E4%B8%9C%E8%A5%BF"><span class="nav-number">3.2.</span> <span class="nav-text">一些手册上有但我没编译和安装的东西</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0%E5%BF%AB%E9%80%9F%E5%BA%A6"><span class="nav-number">4.</span> <span class="nav-text">加快速度</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E6%A0%B8%E7%BC%96%E8%AF%91"><span class="nav-number">4.1.</span> <span class="nav-text">多核编译</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E6%A0%B8%E5%8E%8B%E7%BC%A9%E8%A7%A3%E5%8E%8B"><span class="nav-number">4.2.</span> <span class="nav-text">多核压缩解压</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%87%E4%BB%BD"><span class="nav-number">4.3.</span> <span class="nav-text">备份</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%8F%E9%97%AE%E9%A2%98"><span class="nav-number">5.</span> <span class="nav-text">其他的一些小问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#i%E5%92%8Cl"><span class="nav-number">5.1.</span> <span class="nav-text">i和l</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#chroot%E7%9A%84%E6%97%B6%E5%80%99PTY-allocation-request-failed"><span class="nav-number">5.2.</span> <span class="nav-text">chroot的时候PTY allocation request failed</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E7%BC%96%E8%AF%91%E6%8A%A5%E9%94%99"><span class="nav-number">5.3.</span> <span class="nav-text">一些编译报错</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E5%86%85%E6%A0%B8"><span class="nav-number">6.</span> <span class="nav-text">编译内核</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E6%97%B6make-clean%E5%92%8Cmake-mrproper%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">6.1.</span> <span class="nav-text">编译时make clean和make mrproper的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E5%BC%95%E5%AF%BC%E8%AE%BE%E7%BD%AE"><span class="nav-number">6.2.</span> <span class="nav-text">启动引导设置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fly-Bitch%EF%BC%81"><span class="nav-number">7.</span> <span class="nav-text">Fly Bitch！</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">8.</span> <span class="nav-text">小结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E6%97%B6%E6%97%A0%E8%81%8A%E5%8F%91%E7%8E%B0%E7%9A%84%E5%85%B6%E4%BB%96%E4%B8%9C%E8%A5%BF"><span class="nav-number">9.</span> <span class="nav-text">编译时无聊发现的其他东西</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E8%AF%91"><span class="nav-number">9.1.</span> <span class="nav-text">编译</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bash%E5%92%8Czsh%E7%9A%84%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E6%98%AF%E6%80%8E%E4%B9%88%E4%BC%A0%E9%80%92%E5%92%8C%E7%BB%A7%E6%89%BF%E7%9A%84"><span class="nav-number">9.2.</span> <span class="nav-text">bash和zsh的环境变量是怎么传递和继承的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#zsh%E9%87%8C%E9%9D%A2%E7%9A%84%E2%80%98-%E2%80%99%E5%91%BD%E4%BB%A4%E6%98%AF%E5%B9%B2%E4%BB%80%E4%B9%88%E7%9A%84"><span class="nav-number">9.3.</span> <span class="nav-text">zsh里面的‘-’命令是干什么的</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%93%BE%E6%8E%A5"><span class="nav-number">10.</span> <span class="nav-text">链接</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Zhang.j.k"
+      src="/uploads/jinmao.webp">
+  <p class="site-author-name" itemprop="name">Zhang.j.k</p>
+  <div class="site-description" itemprop="description">in darkest night</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">78</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FyY2hhZW9yYXB0b3I=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;archaeoraptor"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOnpoaXhpQHVlc3RjbHVnLm9yZw==" title="E-Mail → mailto:zhixi@uestclug.org"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      友链
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly96aGFuZ3NodXFpYW8ub3Jn" title="https:&#x2F;&#x2F;zhangshuqiao.org">米米的博客</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly95YW5xaXl1LmluZm8=" title="https:&#x2F;&#x2F;yanqiyu.info">Karuboniru's Blog</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnNhbWNodS5jbg==" title="https:&#x2F;&#x2F;blog.samchu.cn">Sam's Blog</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly8yMzNoc3lzd2ViLm1s" title="https:&#x2F;&#x2F;233hsysweb.ml">花花</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly91ZXN0Yy5pY3U=" title="https:&#x2F;&#x2F;uestc.icu">uestc.icu</span>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FyY2hhZW9yYXB0b3I=" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zhangjk98.xyz/build-linux-from-scratch/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/jinmao.webp">
+      <meta itemprop="name" content="Zhang.j.k">
+      <meta itemprop="description" content="in darkest night">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="止息的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux from Scratch 编译笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-11-29 19:55:37" itemprop="dateCreated datePublished" datetime="2021-11-29T19:55:37+08:00">2021-11-29</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-12-08 11:42:37" itemprop="dateModified" datetime="2021-12-08T11:42:37+08:00">2021-12-08</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>久闻大名，然而真的编译了几圈下来，和想象中的不太一样。照着手册一步一步来并不难，但是特别繁琐。其实我更建议去看一看Alpine等更精简的Linux的构建过程。哦，对了，我等编译的时候通关了蔚蓝a面</p>
+<span id="more"></span>
+
+<p>LFS的主要目的是教你打造一个你自己的发行版，所以它特别繁琐。如果你想自己做一个优麒麟去骗钱那不妨看看。如果想了解一下Linux的依赖和编译过程，想看看一个特别精简版的Linux长什么样子，<strong>请试试Alpine而不是LFS</strong></p>
+<p><strong>感觉Alpine更适合作为一个 玩具来学习，而LFS更适合作为正经用途。</strong> 大家不知为何都反着来。</p>
+<p>推荐阅读：<span class="exturl" data-url="aHR0cHM6Ly90dHlzMy5kZXYvcG9zdC9kby1ub3QtdXNlLWFscGluZS1pbi1wcm9kdWN0aW9uLWVudmlyb25tZW50Lw==">不要在生产环境中使用alpine基础镜像 – 容器基础镜像的选择<i class="fa fa-external-link-alt"></i></span></p>
+<p>之前觉得就是一个安装超麻烦版的Arch/Gentoo，就没试过。最近终于试了一下，学到的东西倒不是很多，没有当时第一次完整安装Arch时的收获大。</p>
+<p>这个东西告诉你linux里面glibc之类的依赖关系是什么样的。这个东西就像单片机最小系统一样，告诉你。你可以从头开始看一看系统是怎么从源码构建的，glibc那一堆依赖又是怎么鸡生蛋、蛋生鸡的。推荐想了解系统构建依赖的Linux用户看一看这个东西。</p>
+<p>闲着没事的人最适合玩一玩这个了，不过不太推荐日常使用。虽然还是是有一些人真的把这个当日用主力的，比如fcitx输入法初代目鱼王（Yuking）就是在LFS上面写了早期的fcitx输入法。<br>LFS is free if your time is free.     </p>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>首先去找一个好一点的机器用来编译。你要有一个宿主机，一般用Ubuntu 20的比较多一点，我用的Arch, 暂时没遇到什么大问题。</p>
+<p>然后下载LFS的手册和源码，我用的是最新的r11.0-92这个版本：<span class="exturl" data-url="aHR0cHM6Ly93d3cubGludXhmcm9tc2NyYXRjaC5vcmcvbGZzL2Rvd25sb2Fkcy9kZXZlbG9wbWVudC8=">https://www.linuxfromscratch.org/lfs/downloads/development/<i class="fa fa-external-link-alt"></i></span></p>
+<p>手册说的wget-list没有说在哪，wget-list 可以用香港的镜像： <span class="exturl" data-url="aHR0cHM6Ly9sZnMtaGsua29kZG9zLm5ldC9sZnMvdmlldy9yMTEuMC05Mi93Z2V0LWxpc3Q=">https://lfs-hk.koddos.net/lfs/view/r11.0-92/wget-list<i class="fa fa-external-link-alt"></i></span></p>
+<p>如果想稳一点可以用stable版本，喜欢systemd可以用systemd版本（最近对systemd全家桶有点怨念，就不上systemd了）。</p>
+<h2 id="编译流程"><a href="#编译流程" class="headerlink" title="编译流程"></a>编译流程</h2><p>这里面绝大部分编译都是make那一套流程。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">./configure
+<span class="token function">make</span>
+<span class="token function">make</span> <span class="token function">install</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="个人的改动"><a href="#个人的改动" class="headerlink" title="个人的改动"></a>个人的改动</h2><p>其实不太建议第一次就用dev版本还加上一大堆自己的改动。我自己乱改，前面几次都没有开机成功，反复编译了四五次才成功开机。</p>
+<h3 id="我和手册有些出入的地方"><a href="#我和手册有些出入的地方" class="headerlink" title="我和手册有些出入的地方"></a>我和手册有些出入的地方</h3><p>手册里面要求使用bash，我在宿主机一直都用的zsh，好在没出什么大问题（主要是想接着用我习惯的那几个插件和语法，反正这个东西兼容sh，问题不大）（<strong>不要学我，坑特别多</strong>）</p>
+<p>chroot之后用的是bash，然而看到那个没有自动补全和色彩高亮的bash, 我不能接受，于是配了半天的</p>
+<p>分区我只分了一个100G的<code>/</code>分区，swap和boot都是和Arch共用的。（我懒）</p>
+<h3 id="一些手册上有但我没编译和安装的东西"><a href="#一些手册上有但我没编译和安装的东西" class="headerlink" title="一些手册上有但我没编译和安装的东西"></a>一些手册上有但我没编译和安装的东西</h3><p>现在看文档基本都在浏览器上面搜了，很少看本地目录的文档，那些doc之类的东西我基本上都没装。没用默认的vim，参考BLFS的手册装了一个我习惯的neovim</p>
+<p>Meson这个包编译报错了，这个是systemd和BLFS需要的，我就没管</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">(</span>lfs <span class="token function">chroot</span><span class="token punctuation">)</span> root:/sources/meson-0.60.2<span class="token comment"># python3 setup.py build</span>
+Traceback <span class="token punctuation">(</span>most recent call last<span class="token punctuation">)</span>:
+  File <span class="token string">"/sources/meson-0.60.2/setup.py"</span>, line <span class="token number">23</span>, <span class="token keyword">in</span> <span class="token operator">&lt;</span>module<span class="token operator">></span>
+    from setuptools <span class="token function">import</span> setup
+  File <span class="token string">"/usr/lib/python3.10/site-packages/setuptools/__init__.py"</span>, line <span class="token number">18</span>, <span class="token keyword">in</span> <span class="token operator">&lt;</span>module<span class="token operator">></span>
+    from setuptools.dist <span class="token function">import</span> Distribution
+  File <span class="token string">"/usr/lib/python3.10/site-packages/setuptools/dist.py"</span>, line <span class="token number">38</span>, <span class="token keyword">in</span> <span class="token operator">&lt;</span>module<span class="token operator">></span>
+    from setuptools <span class="token function">import</span> windows_support
+  File <span class="token string">"/usr/lib/python3.10/site-packages/setuptools/windows_support.py"</span>, line <span class="token number">2</span>, <span class="token keyword">in</span> <span class="token operator">&lt;</span>module<span class="token operator">></span>
+    <span class="token function">import</span> ctypes
+  File <span class="token string">"/usr/lib/python3.10/ctypes/__init__.py"</span>, line <span class="token number">8</span>, <span class="token keyword">in</span> <span class="token operator">&lt;</span>module<span class="token operator">></span>
+    from _ctypes <span class="token function">import</span> Union, Structure, Array
+ModuleNotFoundError: No module named '_ctypes<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="加快速度"><a href="#加快速度" class="headerlink" title="加快速度"></a>加快速度</h2><h3 id="多核编译"><a href="#多核编译" class="headerlink" title="多核编译"></a>多核编译</h3><p>通常可以直接拉满，比如我的宿主机最多能<code>-j20</code> 那就<code>export MAKEFLAGS=&#39;-j20&#39; </code>。<br>需要注意的是有的时候必须用<code>-j1</code>参数，比如编译<code>binutils</code></p>
+<h3 id="多核压缩解压"><a href="#多核压缩解压" class="headerlink" title="多核压缩解压"></a>多核压缩解压</h3><p>xz压缩格式，使用最新版的tar看起来默认就是多核的。加上参数之后<code>XZ_OPT=&#39;-T0&#39; tar -xf linux-5.15.2.tar.xz</code>和直接<code>tar -xf linux-5.15.2.tar.xz</code>没有区别。<br>有几个gz后缀的使用<code>pizg</code>应该会快一点，但是这几个文件太小了，几乎没区别。</p>
+<h3 id="备份"><a href="#备份" class="headerlink" title="备份"></a>备份</h3><p>第七章结尾会教你<code>tar -cJpf $HOME/lfs-temp-tools-r11.0.92.tar.xz .</code>进行备份，这个备份速度很慢，比上面那些解压慢不少。</p>
+<p>我推荐使用Btrfs snapshot，在每次重要的make都建立一个snapshot，这样不用从头开始，而且备份和恢复的速度也很快。</p>
+<h2 id="其他的一些小问题"><a href="#其他的一些小问题" class="headerlink" title="其他的一些小问题"></a>其他的一些小问题</h2><h3 id="i和l"><a href="#i和l" class="headerlink" title="i和l"></a>i和l</h3><p><code>Iana-etc</code>这里是大写的<code>i</code>，不是小写的<code>L</code>，另一个叫<code>Inetutils</code>的也是。</p>
+<h3 id="chroot的时候PTY-allocation-request-failed"><a href="#chroot的时候PTY-allocation-request-failed" class="headerlink" title="chroot的时候PTY allocation request failed"></a>chroot的时候PTY allocation request failed</h3><p>我是ssh连的另一台电脑编译的（本地和远程都是Arch），结果有一天突然<code>PTY allocation request failed</code></p>
+<p>我以为是chroot或者ssh的问题，穷尽毕生所学调试了半个小时，<strong>结果发现是那台服务器的校园网账户欠费了</strong>。</p>
+<h3 id="一些编译报错"><a href="#一些编译报错" class="headerlink" title="一些编译报错"></a>一些编译报错</h3><p>编译findutils报错，但是装上去能用。</p>
+<pre class="line-numbers language-log" data-language="log"><code class="language-log"><span class="token file-path string">/sources/findutils-4.8.0/find/pred.c</span><span class="token operator">:</span><span class="token number">751</span><span class="token operator">:</span> undefined reference to `rpl_fnmatch'
+<span class="token file-path string">/usr/bin/ld</span><span class="token operator">:</span> libfindtools<span class="token punctuation">.</span>a<span class="token operator">(</span>pred<span class="token punctuation">.</span>o<span class="token operator">)</span><span class="token operator">:</span><span class="token file-path string">/sources/findutils-4.8.0/find/pred.c</span><span class="token operator">:</span><span class="token number">1180</span><span class="token operator">:</span> more undefined references to `rpl_fnmatch' follow
+<span class="token property">collect2:</span> <span class="token property">error:</span> ld returned <span class="token number">1</span> exit status<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>编译gzip时报错：</p>
+<pre class="line-numbers language-log" data-language="log"><code class="language-log">In file included from <span class="token file-path string">./lib/getopt.h</span><span class="token operator">:</span><span class="token number">84</span><span class="token punctuation">,</span>
+                 from gzip<span class="token punctuation">.</span>c<span class="token operator">:</span><span class="token number">77</span><span class="token operator">:</span>
+<span class="token file-path string">./lib/getopt-cdefs.h</span><span class="token operator">:</span><span class="token number">31</span><span class="token operator">:</span><span class="token number">5</span><span class="token operator">:</span> error<span class="token operator">:</span> <span class="token operator">#</span>if with no expression
+   <span class="token number">31</span> <span class="token operator">|</span> <span class="token operator">#</span>if
+      <span class="token operator">|</span>     <span class="token operator">^</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>执行<code>make clean</code>后错误消失。</p>
+<p><code>make check</code>失败一项：<code>FAIL: help-version</code>，这个影响不大，忽略。</p>
+<p>在编译Patch的时候发生了同样的报错，重新编译后成功。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">In <span class="token function">file</span> included from <span class="token punctuation">..</span>/lib/getopt.h:84,
+                 from patch.c:27:
+<span class="token punctuation">..</span>/lib/getopt-cdefs.h:32:5: error: <span class="token comment">#if with no expression</span>
+   <span class="token number">32</span> <span class="token operator">|</span> <span class="token comment">#if</span>
+      <span class="token operator">|</span>     ^<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>怀疑是多线程编译的问题，采用<code>make -j1</code>和<code>make -j20</code>分别编译了10次，发现这个问题确实是在<code>-j20</code>多线程编译时才会发生。</p>
+<h2 id="编译内核"><a href="#编译内核" class="headerlink" title="编译内核"></a>编译内核</h2><p>接下来就是重头戏编译内核了。编译内核这个gentoo用户应该很熟悉了。可以自己选择编译参数，没有什么特殊喜好就默认吧。</p>
+<p><img src="/build-linux-from-scratch/image-20211204142505342.png" alt="image-20211204142505342"></p>
+<p>编译速度比想象中的快，我从下午2:49编译到3:17，大概半个小时左右。</p>
+<p>魔改编译参数请量力而行。我前面几次都自己改了很多参数，编译虽然没报错，但是启动的时候CapsLock和ScrollLock同时闪烁，只能重新编译。</p>
+<h3 id="编译时make-clean和make-mrproper的区别"><a href="#编译时make-clean和make-mrproper的区别" class="headerlink" title="编译时make clean和make mrproper的区别"></a>编译时make clean和make mrproper的区别</h3><p><code>make mrproper</code>相比<code>make clean</code>多删除了config文件。</p>
+<h3 id="启动引导设置"><a href="#启动引导设置" class="headerlink" title="启动引导设置"></a>启动引导设置</h3><p><strong>设置Grub的时候记得备份你宿主机的grub！</strong></p>
+<p>本来我是想用Arch的<code>os-prober</code>自动识别<code>grub-mkconfig -o /boot/grub/grub.cfg</code>，但是不行。这样会识别成<code>Arch Linux， with Linux 5.15.2.-lfs-r11.0.92</code></p>
+<p>在Archlinux宿主机中编辑Grub，加上：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">menuentry <span class="token string">"GNU/Linux, Linux 5.15.2-lfs-r11.0-92"</span> <span class="token punctuation">&#123;</span>
+linux
+ /boot/vmlinuz-5.15.2-lfs-r11.0-92 <span class="token assign-left variable">root</span><span class="token operator">=</span>/dev/sda2 ro
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="Fly-Bitch！"><a href="#Fly-Bitch！" class="headerlink" title="Fly Bitch！"></a>Fly Bitch！</h2><p>到这里我已经累了，BLFS已经不打算再弄了，没啥意思。Nvidia驱动，折腾了好几次，想用dkms装驱动结果都失败了。最后我把Nvidia独显拆了，整个世界都美好了。<br>试图整个KDE桌面上去，结果一堆依赖没成功，结果发现最容易的反而是dwm。。。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>终于记住了tar命令解压时候哪个参数是压缩哪个是解压。<br>不过sed还是不太会用，已经被sd惯坏了。<br>发现了starship这个不错的prompt，bash上很舒服，体验接近powerlevel10k。<br>LFS的企鹅LOGO真的好丑啊，见过的最丑的企鹅。<br>bash里<code>+h</code>关闭hash查找。这个参数的意思是不使用当前hash表里面存放的路径，精确的使用现在给出的路径。使用<code>set +h</code>关闭hash，使用<code>set -h</code>启用hash。（我总觉得<code>+h</code>才是开启hash, 真是令人迷惑）  </p>
+<p>断断续续折腾了四五天，等编译期的间隙里蔚蓝从3a跳到了到7a登顶。</p>
+<h2 id="编译时无聊发现的其他东西"><a href="#编译时无聊发现的其他东西" class="headerlink" title="编译时无聊发现的其他东西"></a>编译时无聊发现的其他东西</h2><p>这几天在等编译的时候闲着没事发现了其他一些有意思的东西。</p>
+<h3 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h3><p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Rjam9uZXMvbWs=">https://github.com/dcjones/mk<i class="fa fa-external-link-alt"></i></span> plan9的mk</p>
+<h3 id="bash和zsh的环境变量是怎么传递和继承的"><a href="#bash和zsh的环境变量是怎么传递和继承的" class="headerlink" title="bash和zsh的环境变量是怎么传递和继承的"></a>bash和zsh的环境变量是怎么传递和继承的</h3><p>login shell 和 nonlongin shell的读取环境变量方式不太一样</p>
+<h3 id="zsh里面的‘-’命令是干什么的"><a href="#zsh里面的‘-’命令是干什么的" class="headerlink" title="zsh里面的‘-’命令是干什么的"></a>zsh里面的‘-’命令是干什么的</h3><p><span class="exturl" data-url="aHR0cHM6Ly96c2guc291cmNlZm9yZ2UuaW8vRG9jL1JlbGVhc2UvU2hlbGwtR3JhbW1hci5odG1sI1ByZWNvbW1hbmQtTW9kaWZpZXJz">zsh的文档<i class="fa fa-external-link-alt"></i></span>是这样说的：</p>
+<pre class="line-numbers language-txt" data-language="txt"><code class="language-txt">- 
+The command is executed with a ‘-’ prepended to its argv[0] string.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>看起来似乎它会在<code>argv[0]</code>前面加上一个<code>-</code>，可是这有什么用？</p>
+<p>argv[0]你可以当作<span class="exturl" data-url="aHR0cHM6Ly9tYW43Lm9yZy9saW51eC9tYW4tcGFnZXMvbWFuMi9leGVjdmUuMi5odG1s">execve<i class="fa fa-external-link-alt"></i></span>的第一个变量，通常是<code>\bin\bash</code>这样的可执行路径。</p>
+<p>再看一下exec这个命令，参数<code>-l</code>的效果和zsh里面的<code>-</code>是一致的</p>
+<pre class="line-numbers language-txt" data-language="txt"><code class="language-txt">exec [ -cl ] [ -a argv0 ]
+
+    The following command together with any arguments is run in place of the current process, rather than as a sub-process. The shell does not fork and is replaced. The shell does not invoke TRAPEXIT, nor does it source zlogout files. The options are provided for compatibility with other shells.
+
+    The -c option clears the environment.
+
+    The -l option is equivalent to the - precommand modifier, to treat the replacement command as a login shell; the command is executed with a - prepended to its argv[0] string. This flag has no effect if used together with the -a option.
+
+    The -a option is used to specify explicitly the argv[0] string (the name of the command as seen by the process itself) to be used by the replacement command and is directly equivalent to setting a value for the ARGV0 environment variable. <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>哦，就是把当前shell视为login shell，试了一下看起来的确是这样</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">❯ <span class="token builtin class-name">echo</span> <span class="token variable">$0</span>
+/bin/zsh
+❯ - <span class="token builtin class-name">echo</span> <span class="token variable">$0</span>
+/bin/zsh
+❯ - <span class="token function">zsh</span>
+❯ <span class="token builtin class-name">echo</span> <span class="token variable">$0</span>
+-zsh
+❯ <span class="token builtin class-name">exit</span>
+❯ <span class="token function">zsh</span>
+❯ <span class="token builtin class-name">echo</span> <span class="token variable">$0</span>
+<span class="token function">zsh</span>  <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><span class="exturl" data-url="aHR0cHM6Ly9uZXdzLnljb21iaW5hdG9yLmNvbS9pdGVtP2lkPTI4ODIwNjAy">Linux from Scratch with Training Wheels<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9hbHBpbmVsaW51eC5vcmcv">Alpine<i class="fa fa-external-link-alt"></i></span>  </p>
+<p><span class="exturl" data-url="aHR0cHM6Ly91bml4LnN0YWNrZXhjaGFuZ2UuY29tL3F1ZXN0aW9ucy84NjAxMi93aGF0LWlzLXRoZS1wdXJwb3NlLW9mLXRoZS1oYXNoLWNvbW1hbmQ=">What is the purpose of the hash command?<i class="fa fa-external-link-alt"></i></span>  </p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"><i class="fa fa-tag"></i> Linux</a>
+              <a href="/tags/LFS/" rel="tag"><i class="fa fa-tag"></i> LFS</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/migrating-from-kde-to-i3/" rel="prev" title="从KDE迁移到i3，顺便说说Linux桌面(DE)和窗口管理器（WM）">
+                  <i class="fa fa-chevron-left"></i> 从KDE迁移到i3，顺便说说Linux桌面(DE)和窗口管理器（WM）
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+      <div class="tabs tabs-comment">
+        <ul class="nav-tabs">
+            <li class="tab"><a href="#comment-utterances">utterances</a></li>
+            <li class="tab"><a href="#comment-disqusjs">Load Disqus</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane utterances" id="comment-utterances">
+              <div class="comments utterances-container"></div>
+            </div>
+            <div class="tab-pane disqusjs" id="comment-disqusjs">
+              
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+            </div>
+        </div>
+      </div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">止息</span>
+</div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdn.jsdelivr.net/npm/pdfobject@2.2.7/pdfobject.min.js","integrity":"sha256-ph3Dk89VmuTVXG6x/RDzk53SU9LPdAh1tpv0UvnDZ2I="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="/js/third-party/tags/pdf.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/disqusjs@1.3.0/dist/disqusjs.css" integrity="sha256-GxdCIOyfxQ1OBfS99qAIJDoGK1ADuBsxhMTqXG82fAY=" crossorigin="anonymous">
+
+<script class="next-config" data-name="disqusjs" type="application/json">{"enable":true,"api":"https://disqus.skk.moe/disqus/","apikey":"3qJ515uApWlP58gXhzPCCk3L0NlOvrMLwt5dDITBndS8fp8She7PT1gvBdDcgwrt","shortname":"arcaheoraptor","js":{"url":"https://cdn.jsdelivr.net/npm/disqusjs@1.3.0/dist/disqus.js","integrity":"sha256-LVaMHPQ2zLqOc5rXSAfr4d1PIkEGNLyyUTDNPZmTtUw="}}</script>
+<script src="/js/third-party/comments/disqusjs.js"></script>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"Archaeoraptor/archaeoraptor.github.io","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>
