@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/uploads/wizard-hat-16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/uploads/wizard-hat-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/uploads/wizard-hat-16.png">
+  <link rel="mask-icon" href="/uploads/wizard-hat-32.png" color="#222">
+  <meta name="google-site-verification" content="4Rj54anORAwcoMXLe3miFnoH78ZtUZfdamS--ffoxVE">
+  <meta name="msvalidate.01" content="872DC4637276109A6B54FF149DCABA8A">
+  <meta name="yandex-verification" content="0d554b4a05a80f0d">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhangjk98.xyz","root":"/","images":"/images","scheme":"Pisces","darkmode":"auto","version":"8.9.0","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqusjs","storage":true,"lazyload":false,"nav":{"disqusjs":{"text":"Load Disqus","order":-1},"utterances":{"order":-2}},"activeClass":"disqusjs"},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"none","post_header":"none","post_body":"none","coll_header":"none","sidebar":"none"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="sudo pacman -Rs win10">
+<meta property="og:type" content="article">
+<meta property="og:title" content="为什么不试试EndeavourOS呢">
+<meta property="og:url" content="https://zhangjk98.xyz/why-not-try-endeavouros/index.html">
+<meta property="og:site_name" content="止息的博客">
+<meta property="og:description" content="sudo pacman -Rs win10">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://zhangjk98.xyz/why-not-try-endeavouros/image-20201031190318540.png">
+<meta property="og:image" content="https://zhangjk98.xyz/why-not-try-endeavouros/image-20200923222725926.png">
+<meta property="og:image" content="https://zhangjk98.xyz/why-not-try-endeavouros/miao.png">
+<meta property="og:image" content="https://zhangjk98.xyz/why-not-try-endeavouros/miaomiao.png">
+<meta property="og:image" content="https://zhangjk98.xyz/why-not-try-endeavouros/akm.png">
+<meta property="article:published_time" content="2020-09-13T15:52:18.000Z">
+<meta property="article:author" content="Zhang.j.k">
+<meta property="article:tag" content="KDE">
+<meta property="article:tag" content="EndeavourOS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zhangjk98.xyz/why-not-try-endeavouros/image-20201031190318540.png">
+
+
+<link rel="canonical" href="https://zhangjk98.xyz/why-not-try-endeavouros/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zhangjk98.xyz/why-not-try-endeavouros/","path":"why-not-try-endeavouros/","title":"为什么不试试EndeavourOS呢"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>为什么不试试EndeavourOS呢 | 止息的博客</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143393734-1"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-143393734-1","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="止息的博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">止息的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">唯见月寒日暖，来煎人寿</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%95%9C%E5%83%8F%E6%BA%90"><span class="nav-number">1.</span> <span class="nav-text">镜像源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85virtualbox%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="nav-number">2.</span> <span class="nav-text">安装virtualbox虚拟机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%88%E7%AB%AF%E9%85%8D%E7%BD%AE"><span class="nav-number">3.</span> <span class="nav-text">终端配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%86bash-zsh%E7%9A%84%E7%BB%88%E7%AB%AF%E8%BE%93%E5%87%BA%E4%BF%A1%E6%81%AF%E5%92%8C%E6%97%A5%E5%BF%97%E6%94%B9%E5%9B%9E%E8%8B%B1%E6%96%87"><span class="nav-number">3.1.</span> <span class="nav-text">将bash&#x2F;zsh的终端输出信息和日志改回英文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%BB%98%E8%AE%A4%E7%BB%88%E7%AB%AF%E6%94%B9%E4%B8%BAzsh"><span class="nav-number">3.2.</span> <span class="nav-text">默认终端改为zsh</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%8D%A2lts%E5%86%85%E6%A0%B8"><span class="nav-number">4.</span> <span class="nav-text">更换lts内核</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%98%BE%E5%8D%A1%E9%A9%B1%E5%8A%A8"><span class="nav-number">5.</span> <span class="nav-text">显卡驱动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A1%8C%E9%9D%A2%E7%8E%AF%E5%A2%83"><span class="nav-number">6.</span> <span class="nav-text">桌面环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A1%AC%E7%9B%98%E6%89%A9%E5%AE%B9%E5%92%8C%E8%BF%81%E7%A7%BB"><span class="nav-number">7.</span> <span class="nav-text">硬盘扩容和迁移</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AEgrub"><span class="nav-number">8.</span> <span class="nav-text">修grub</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BB%9A%E5%8A%A8%E5%8D%87%E7%BA%A7"><span class="nav-number">9.</span> <span class="nav-text">滚动升级</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%87%E7%BA%A7%E5%86%85%E6%A0%B8%E4%B8%8D%E9%87%8D%E5%90%AF"><span class="nav-number">9.1.</span> <span class="nav-text">升级内核不重启</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#KDE%E4%BD%BF%E7%94%A8%E4%BA%8B%E9%A1%B9"><span class="nav-number">10.</span> <span class="nav-text">KDE使用事项</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#KDE%E5%8D%A1%E6%AD%BB%E7%9A%84%E6%8A%A2%E6%95%91%E6%96%B9%E6%A1%88"><span class="nav-number">10.1.</span> <span class="nav-text">KDE卡死的抢救方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%B7%E6%88%90%E5%99%A8"><span class="nav-number">10.2.</span> <span class="nav-text">混成器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#baloo"><span class="nav-number">10.3.</span> <span class="nav-text">baloo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#KDE%E6%A1%8C%E9%9D%A2%E9%83%A8%E4%BB%B6"><span class="nav-number">10.4.</span> <span class="nav-text">KDE桌面部件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8C%E6%98%BE%E7%A4%BA%E5%99%A8%E5%BC%80%E6%9C%BA%E5%8F%B3%E4%BE%A7%E5%87%BA%E7%8E%B0%E9%BB%91%E8%BE%B9"><span class="nav-number">10.5.</span> <span class="nav-text">双显示器开机右侧出现黑边</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mac-win10%E4%B8%8A%E7%9A%84%E4%B8%80%E4%BA%9B%E8%BD%AF%E4%BB%B6"><span class="nav-number">11.</span> <span class="nav-text">Mac&#x2F;win10上的一些软件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E7%82%B9%E9%97%B2%E8%AF%9D"><span class="nav-number">12.</span> <span class="nav-text">一点闲话</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E5%90%8E"><span class="nav-number">13.</span> <span class="nav-text">最后</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Zhang.j.k"
+      src="/uploads/jinmao.webp">
+  <p class="site-author-name" itemprop="name">Zhang.j.k</p>
+  <div class="site-description" itemprop="description">in darkest night</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">78</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FyY2hhZW9yYXB0b3I=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;archaeoraptor"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOnpoaXhpQHVlc3RjbHVnLm9yZw==" title="E-Mail → mailto:zhixi@uestclug.org"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      友链
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly96aGFuZ3NodXFpYW8ub3Jn" title="https:&#x2F;&#x2F;zhangshuqiao.org">米米的博客</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly95YW5xaXl1LmluZm8=" title="https:&#x2F;&#x2F;yanqiyu.info">Karuboniru's Blog</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnNhbWNodS5jbg==" title="https:&#x2F;&#x2F;blog.samchu.cn">Sam's Blog</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly8yMzNoc3lzd2ViLm1s" title="https:&#x2F;&#x2F;233hsysweb.ml">花花</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly91ZXN0Yy5pY3U=" title="https:&#x2F;&#x2F;uestc.icu">uestc.icu</span>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FyY2hhZW9yYXB0b3I=" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zhangjk98.xyz/why-not-try-endeavouros/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/jinmao.webp">
+      <meta itemprop="name" content="Zhang.j.k">
+      <meta itemprop="description" content="in darkest night">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="止息的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          为什么不试试EndeavourOS呢
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-09-13 23:52:18" itemprop="dateCreated datePublished" datetime="2020-09-13T23:52:18+08:00">2020-09-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-01-04 10:06:30" itemprop="dateModified" datetime="2022-01-04T10:06:30+08:00">2022-01-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E4%B8%8D%E5%8A%A1%E6%AD%A3%E4%B8%9A%E7%B3%BB%E5%88%97/" itemprop="url" rel="index"><span itemprop="name">不务正业系列</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>sudo pacman -Rs win10</p>
+<span id="more"></span>
+
+<p>其实还是建议能折腾的玩家直接上原味Arch。不想装Arch的偷懒用户可以试试这个（不过推荐想用KDE等其他桌面的玩家先选择离线安装，然后卸载xfce的包，再装其他DE。这个在线安装的时候每装一个包都会 -Syu 一下，非常慢）</p>
+<h2 id="镜像源"><a href="#镜像源" class="headerlink" title="镜像源"></a>镜像源</h2><p>再次更新，你电镜像源有EndeavourOS了： <span class="exturl" data-url="aHR0cDovL21pcnJvcnMudWVzdGMuY24vZW5kZWF2b3Vyb3Mv">http://mirrors.uestc.cn/endeavouros/<i class="fa fa-external-link-alt"></i></span></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">echo</span> <span class="token string">"Server = http://mirrors.tuna.tsinghua.edu.cn/endeavouros/repo/<span class="token variable">$repo</span>/<span class="token variable">$arch</span>"</span> <span class="token operator">></span> /etc/pacman.d/endeavouros-mirrorlist<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>iso镜像在<span class="exturl" data-url="aHR0cDovL21pcnJvcnMudWVzdGMuY24vZW5kZWF2b3Vyb3MvaXNvLw==">这里<i class="fa fa-external-link-alt"></i></span></p>
+<p>清华已经安排上了EndeavourOS的镜像和<span class="exturl" data-url="aHR0cHM6Ly9taXJyb3JzLnR1bmEudHNpbmdodWEuZWR1LmNuL2VuZGVhdm91cm9zL2lzby8=">iso<i class="fa fa-external-link-alt"></i></span>，可以方便的下载iso和更新EndeavourOS的包了。（或者用PT种子下载，实测速度均&gt;10Mb/s）</p>
+<p>更改<code>/etc/pacman.d/endeavouros-mirrorlist</code>中的内容，改为</p>
+<pre class="line-numbers language-config" data-language="config"><code class="language-config">## China
+Server &#x3D; https:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;endeavouros&#x2F;repo&#x2F;$repo&#x2F;$arch<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>然后<code>sudo pacman -Syy</code>刷新一下</p>
+<h2 id="安装virtualbox虚拟机"><a href="#安装virtualbox虚拟机" class="headerlink" title="安装virtualbox虚拟机"></a>安装virtualbox虚拟机</h2><p> 我用的kernel是lts版本（偶滴本本是Nvidia独显，不敢上kernel一直滚，怕炸）</p>
+<p>装头文件、virtualbox组件、网络和vnc扩展（可选）</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> pacman -S linux-lts-headers virtualbox virtualbox-guest-iso virtualbox-host-dkms net-tools virtualbox-ext-vnc<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>推荐安装oracle的增强扩展（一些自适应分辨率缩放、USB驱动什么的都在这里面）</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yay -S virtualbox-ext-oracle<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>然后下载镜像（微软貌似出了用于虚拟机的免费90天win10，然而win10还是耗资源，没有什么特殊需求就只是用用office用用QQ什么的开个win7甚至XP虚拟机就好了，在虚拟机里会流畅一点）</p>
+<p>增强功能要在win虚拟机中手动安装扩展才能用</p>
+<h2 id="终端配置"><a href="#终端配置" class="headerlink" title="终端配置"></a>终端配置</h2><h3 id="将bash-zsh的终端输出信息和日志改回英文"><a href="#将bash-zsh的终端输出信息和日志改回英文" class="headerlink" title="将bash/zsh的终端输出信息和日志改回英文"></a>将bash/zsh的终端输出信息和日志改回英文</h3><p>终端有些报错和输出还是要靠英文去谷歌，中文资料太少了，查不到，但是又不想把全局设置成英文的。直接<code>export LANG=en_US.UTF-8</code>不起作用，改成<code>export LANG=en_US</code>变成了英文但是中文乱码了，差了一下LANGUAGE参数的优先级比LANG要高、LC_X参数优先级比LANGUAGE高，修改LANGUAGE变量即可。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">export</span> <span class="token assign-left variable"><span class="token environment constant">LANGUAGE</span></span><span class="token operator">=</span><span class="token string">"en_US:UTF-8"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>只修改终端那就在.bashrc加上</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token keyword">if</span> <span class="token punctuation">[</span> <span class="token string">"<span class="token environment constant">$TERM</span>"</span><span class="token operator">=</span><span class="token string">"linux"</span> <span class="token punctuation">]</span> <span class="token punctuation">;</span><span class="token keyword">then</span> 
+<span class="token builtin class-name">export</span> <span class="token assign-left variable"><span class="token environment constant">LANGUAGE</span></span><span class="token operator">=</span>en_US 
+<span class="token builtin class-name">export</span> <span class="token assign-left variable"><span class="token environment constant">LANG</span></span><span class="token operator">=</span>en_US.UTF-8 
+<span class="token keyword">fi</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="默认终端改为zsh"><a href="#默认终端改为zsh" class="headerlink" title="默认终端改为zsh"></a>默认终端改为zsh</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">chsh -s /usr/bin/zsh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>装oh-my-zsh（因为我懒得自己配置zsh了）和插件，并设置默认终端为oh-my-zsh</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yay -S <span class="token function">zsh</span> oh-my-zsh-git autojump zsh-autosuggestions zsh-syntax-highlighting
+chsh -s /usr/bin/zsh
+<span class="token function">cp</span> /usr/share/oh-my-zsh/zshrc ~/.zshrc <span class="token comment"># 我比较懒，就直接把默认配置拿过来改改</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="更换lts内核"><a href="#更换lts内核" class="headerlink" title="更换lts内核"></a>更换lts内核</h2><p>更新到5.8以后我的virtualbox又出问题了，换回linux-lts</p>
+<p>EndeavourOS有一个叫akm的图形界面，但是你要手动重装virtualbox之类的会受到内核影响的东西。</p>
+<h2 id="显卡驱动"><a href="#显卡驱动" class="headerlink" title="显卡驱动"></a>显卡驱动</h2><blockquote>
+<p>so, nvidia f…..</p>
+</blockquote>
+<p>算了，3080那么强，不黑英伟达了(更新，AMD新卡出了，好家伙</p>
+<p>他们从以前Antergos那fork了一个驱动安装脚本，有个包叫nvidia-installer（lts等用户请用nvidia-installer-dkms），看<span class="exturl" data-url="aHR0cHM6Ly9lbmRlYXZvdXJvcy5jb20vZG9jcy9oYXJkd2FyZS1hbmQtbmV0d29yay9ncmFwaGljLWNhcmRzLWdwdS1kcml2ZXItYW5kLXNldHVwLw==">这里<i class="fa fa-external-link-alt"></i></span>。</p>
+<h2 id="桌面环境"><a href="#桌面环境" class="headerlink" title="桌面环境"></a>桌面环境</h2><p>EndeavourOS官方魔改定制了xfce的主题和图标，离线安装镜像也只有xfce，其他的几乎没怎么魔改。</p>
+<p>如果要装其他DE的话</p>
+<p>紫红配色看个人喜好吧，其实我不太能欣赏的来（这个配色，Gitlab同款）</p>
+<p>更新，KDE 的 5.20.2 配色和EndeavourOS完全一致，建议他们火速从XFCE迁往KDE（不是</p>
+<p><img src="/why-not-try-endeavouros/image-20201031190318540.png" alt="KDE新官网样子"></p>
+<p>多桌面环境可能出问题，非要这样做的话建议每个不同的桌面环境分配一个单独的用户名。<br>（貌似xfce4和KDE一起用几乎问题（用ssdm），先装ssdm和KDE,然后装xfce4）<br>尝试了一下i3wm, 简洁是真的简洁，不太习惯又删了换回KDE了。</p>
+<p>KDE有一种 Windows Vista 的感觉，感觉是 linux 所有 Desktop Enviroment 里面最舒服的。xfce虽然是EndeavourOS默认的DE，但是xfce开发人手不够，用户和社区贡献者也比KDE少，而且内存占用最新的KDE已经比xfce低了…..现在xfce也不怎么轻量了，渣配置机器上表现没有LXDE好，感觉不少用户都转去用i3wm和KDE了…逐渐没落的夕阳DE，适合养老</p>
+<h2 id="硬盘扩容和迁移"><a href="#硬盘扩容和迁移" class="headerlink" title="硬盘扩容和迁移"></a>硬盘扩容和迁移</h2><p>趁打折买了一块西数SN550,之前只有500G还装了个双系统的笔记本可以扩容了</p>
+<p>现在把/home分区（大概60G）从老硬盘移动到新硬盘上，空出来的60G给/目录。我既不是LVM也没有组raid，文件系统用的ext4，500G老硬盘分了400G给win10,剩下100G给了linux，分了一个/，40G,一个/home，60G</p>
+<p>先格式化（这里我用的GPT分区表，ext4），然后挂载到/mnt,然后用rsync迁移/home下的文件到/mnt<br>然后umount，然后分区合并给/root，再挂载到/home下面</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">fdisk</span> -l
+yay -Sy <span class="token function">rsync</span>
+
+mkfs.ext4 /dev/nvme0n1p1
+<span class="token function">mount</span> /dev/nvme0n1p1 /mnt
+<span class="token function">rsync</span> -avz /home /mnt
+<span class="token function">umount</span> dev//nvme0n1p1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>两边都是nvme,2分钟就同步完成了，速度非常感人，然后修改fstab，将原来/home分区的uuid改为新硬盘的（/dev/nvme0n1p1）uuid</p>
+<p><code>/etc/fstab</code>大概长这个样子，分别是uuid,挂载目录，文件类型，noatime后面0表示不开机自检，/</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token assign-left variable">UUID</span><span class="token operator">=</span><span class="token number">8205</span>-8BC5                            /boot/efi      vfat    <span class="token assign-left variable">umask</span><span class="token operator">=</span>0077 <span class="token number">0</span> <span class="token number">2</span>
+<span class="token assign-left variable">UUID</span><span class="token operator">=</span><span class="token number">36499174</span>-6a4a-4b9d-b5cc-0b1f555a1f46 /              ext4    defaults,noatime <span class="token number">0</span> <span class="token number">1</span>
+<span class="token assign-left variable">UUID</span><span class="token operator">=</span>bf5e768c-a2de-4618-9861-5946459a69b6 /home          ext4    defaults,noatime <span class="token number">0</span> <span class="token number">2</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>然后退出来，用livecd或者双系统的分区工具把原来的/home分区删掉分给原来的/目录。（注意做好备份不要删错了，删错了就没了）</p>
+<p>再次登陆后应该就行了。弄完突然发现KDE自带一个叫KDE Partition Manager的工具，看起来貌似还行。</p>
+<h2 id="修grub"><a href="#修grub" class="headerlink" title="修grub"></a>修grub</h2><p>双系统grub又出问题了，好在用liveusb重装了一下grub问题救了回来。</p>
+<p>我是UEFI，操作除了最后 grub install 用EndeavourOS的，其他的和Arch一样</p>
+<p>先挂载，然后chroot进去，然后重装grub</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">mount</span> /dev/nvme0n1p3 /mnt
+<span class="token function">mount</span> /dev/nvme1n1p2 /mnt/boot/efi
+<span class="token function">grub-mkconfig</span> -o /boot/grub/grub.cfg
+grub-install --target<span class="token operator">=</span>x86_64-efi --efi-directory<span class="token operator">=</span>/boot/efi --bootloader-id<span class="token operator">=</span>EndeavourOS-grub<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="滚动升级"><a href="#滚动升级" class="headerlink" title="滚动升级"></a>滚动升级</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> pacman -Syu <span class="token comment"># 装了AUR就yay -Syu</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>如果要自动降级新软件包就<code>-Syuu</code>(不推荐)</p>
+<p>升级的包里面有内核和显卡驱动的时候要注意小心</p>
+<p>升级内核之后最好重启一下，有的时候不重启会遇到开bbr失败了啊，u盘读不出来了啊，就比如<span class="exturl" data-url="aHR0cHM6Ly9qbGljZS50b3AvcC83bDltby8=">记因内核版本错误导致U盘不能识别的问题解决<i class="fa fa-external-link-alt"></i></span>、<span class="exturl" data-url="aHR0cHM6Ly92MmV4LmNvbS90LzMyMzU1OQ==">这个v站帖子<i class="fa fa-external-link-alt"></i></span>还有重启后<span class="exturl" data-url="aHR0cHM6Ly9tYW5hdGVlbGF6eWNhdC5naXRodWIuaW8vbGludXgvMjAyMC8wMi8xNC9maXgtYXJjaC1ib290LWZhaWxlZC5odG1s">Grub内核版本号不升级<i class="fa fa-external-link-alt"></i></span>，大部分情况下<code>modprobe</code>找不到模块八成就是了</p>
+<h3 id="升级内核不重启"><a href="#升级内核不重启" class="headerlink" title="升级内核不重启"></a>升级内核不重启</h3><p>参考reddit这个<span class="exturl" data-url="aHR0cHM6Ly93d3cucmVkZGl0LmNvbS9yL2FyY2hsaW51eC9jb21tZW50cy80enJzYzMva2VlcF95b3VyX3N5c3RlbV9mdWxseV9mdW5jdGlvbmFsX2FmdGVyX2Ffa2VybmVsLw==">帖子<i class="fa fa-external-link-alt"></i></span></p>
+<p>一个软链过去，感觉不太优雅，还是乖乖重启比较好</p>
+<blockquote>
+<p>看来包管理器们应该学习其他两个系统，统一在关机开机的时候更新软件。</p>
+</blockquote>
+<h2 id="KDE使用事项"><a href="#KDE使用事项" class="headerlink" title="KDE使用事项"></a>KDE使用事项</h2><h3 id="KDE卡死的抢救方案"><a href="#KDE卡死的抢救方案" class="headerlink" title="KDE卡死的抢救方案"></a>KDE卡死的抢救方案</h3><p>KDE现在已经比较稳定了，但是Linux桌面程序还是偶尔把桌面搞到卡死，比如vscode内存泄漏。</p>
+<p>首先尝试<code>ctl+alt+t</code>呼出终端，如果不能就<code>ctl+alt+F2</code>调出tty，htop看一下那个进程占用高，kill掉，如果不行就重启tty</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">kquitapp5 plasmashell <span class="token operator">&amp;&amp;</span> kstart5 plasmashell<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>正常退出不行就直接killall</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">killall</span> plasmashell <span class="token operator">&amp;&amp;</span> kstart5 plasmashell<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>或者重启一下SDDM</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl restart sddm<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>还不行就杀掉tty1，然后重启xorg</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">ps</span> aux <span class="token operator">|</span> <span class="token function">grep</span> tty1 <span class="token comment"># 或者pgrep tty1</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>然后kill掉（或者直接<code>pkill -9 -t tty1</code>），重启<br>或者直接</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">pkill</span> x
+startx<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>再不行直接<code>reboot</code>就好了</p>
+<p>或许你开了SysRq，先用SysRq抢救一下，见<span class="exturl" data-url="aHR0cHM6Ly93d3cua2VybmVsLm9yZy9kb2MvaHRtbC9sYXRlc3QvYWRtaW4tZ3VpZGUvc3lzcnEuaHRtbA==">Linux Magic System Request Key Hacks<i class="fa fa-external-link-alt"></i></span>，或者直接看<span class="exturl" data-url="aHR0cDovL2Jsb2cubHVqdW45OTcyLndpbi9ibG9nLzIwMTgvMDgvMjIvbGludXglRTQlQjglOEIlRTclOUElODRzeXNycSVFOSU5NCVBRS9pbmRleC5odG1s">linux下的SysRq键<i class="fa fa-external-link-alt"></i></span></p>
+<p>再不行就直接尝试长按电源关机了</p>
+<h3 id="混成器"><a href="#混成器" class="headerlink" title="混成器"></a>混成器</h3><p>有Nvidia显卡怕驱动更新出问题可以在设置中将渲染器（混成器）从OpenGL改为XRender，XRender出问题的情况会少一点，虽然很多特效都不支持，性能也略差。没有问题建议还是用OpenGL或者直接关闭特效，XRender没有硬件加速用起来感觉跟OpenGL有明显的体验差距。</p>
+<p>另外貌似非整数比缩放的时候透明特效之类的经常不支持，建议直接关了。</p>
+<h3 id="baloo"><a href="#baloo" class="headerlink" title="baloo"></a>baloo</h3><p>禁用baloo：<code>balooctl disable</code> 这个文件索引服务也是个吃性能大户，不管是在GNOME下还是KDE下。可以考虑禁用。要查找文件可以用find命令之类的东西嘛。</p>
+<h3 id="KDE桌面部件"><a href="#KDE桌面部件" class="headerlink" title="KDE桌面部件"></a>KDE桌面部件</h3><p>美化要稍微谨慎一点，魔改太多了不太稳定</p>
+<p>latte-dock：虽然KDE官方维护支持这个，动画效果很漂亮，用起来也很舒服，但是这个实在是吃内存大户。KDE桌面不开多余特效和装各种桌面部件待机内存在300M，装个latte-dock后内存占用比其他所有的加起来还多。把dock的鼠标悬停放大之类的特效关一关。貌似这个的背景透明只有XRender支持。</p>
+<p>一个很喜欢的任务栏部件event calendar</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yay -S plasma5-applets-eventcalendar<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="双显示器开机右侧出现黑边"><a href="#双显示器开机右侧出现黑边" class="headerlink" title="双显示器开机右侧出现黑边"></a>双显示器开机右侧出现黑边</h3><p>发现是每次开机分辨率变成1680*1050了</p>
+<p>先看一下你的显示器编号</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">xrandr<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>比如我的就是DVI-I-1和DVI-D-0，把这两个分辨率改回1080p</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">xrandr --output DVI-I-1 --mode 1920x1080 --rate <span class="token number">60</span>
+xrandr --output DVI-D-0 --mode 1920x1080 --rate <span class="token number">60</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>这里有一个自动配置的包<span class="exturl" data-url="aHR0cHM6Ly93d3cuYXJjaGxpbnV4Lm9yZy9wYWNrYWdlcy8/bmFtZT1hdXRvcmFuZHI=">autorandr<i class="fa fa-external-link-alt"></i></span></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> pacman -S autorandr
+autorandr horizontal <span class="token operator">&amp;&amp;</span> autorandr vertical <span class="token comment"># 这里我直接把显示长宽分辨率都直接拉满了</span>
+autorandr --save test1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>或者你可以手动编辑<code>/etc/X11/xorg.conf.d</code>下的配置</p>
+<p>见<span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL1hyYW5kcg==">Arch Wiki xrandr<i class="fa fa-external-link-alt"></i></span></p>
+<p>其实每次开机运行一下xrandr可能更好一点（如果你不是wayland的话），不少人都是这么搞得（顺便刷新调整一下字体啥的</p>
+<p><img src="/why-not-try-endeavouros/image-20200923222725926.png" alt="xrandr"></p>
+<h2 id="Mac-win10上的一些软件"><a href="#Mac-win10上的一些软件" class="headerlink" title="Mac/win10上的一些软件"></a>Mac/win10上的一些软件</h2><p><del>请阅读王垠经典博文完全用linux工作</del><br>不少时候用wine还是能搞定的（如果你不在乎wine的稳定性的话），包括一些大型软件，比如PS<br>当然有的东西用wine体验远没有虚拟机好，拿Virtualbox或者KVM开个虚拟机是个不错的选择。或者身边有闲置安卓机用scrcpy投屏，或者KDE Connect传文件。</p>
+<p>部分国产软件开个黑果虚拟机感觉体验比windows虚拟机略好一点<br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2ZveGxldC9tYWNPUy1TaW1wbGUtS1ZN">https://github.com/foxlet/macOS-Simple-KVM<i class="fa fa-external-link-alt"></i></span></p>
+<h2 id="一点闲话"><a href="#一点闲话" class="headerlink" title="一点闲话"></a>一点闲话</h2><p>其实我一直很期待Arch系诞生一批用户友好的桌面发行版，就像Debian那样衍生出Ubuntu、Linux Mint那样。（虽然这很不Arch）</p>
+<ol>
+<li>之前被apt的地狱依赖搞得心态崩了，想用pacman系的（反正打包粒度粗一点好，硬盘现在这么便宜又不在乎占多大地方）</li>
+<li>喜欢KDE</li>
+<li>想要稳定一点的系统做日常主力搬砖用</li>
+<li>安装方便一点。这个倒是无所谓，不过出了事LiveCD抢救也想有个图形界面方便抢修</li>
+</ol>
+<p>Arch把wifi-menu去掉之后就不太想用原味Arch了，我这笔记本没网口高通网卡Nividia独显实在八字不合，只想佛系地找个好装的iso</p>
+<p>KaOS基本符合，然而包太少（加上KCP社区包也还是很少），可惜….<br>另一个<span class="exturl" data-url="aHR0cHM6Ly93d3cuY2hha3JhbGludXgub3JnLw==">chakra<i class="fa fa-external-link-alt"></i></span>也是包太少（这个有自己的CCR社区包，包也不多），KDE和Qt骨灰爱好者的宝藏，软件基本全套KDE和Qt（不过据说他们人手不够维护不过来了打算换到）</p>
+<p>此外还有各种层出不穷的真*Arch安装器<br><span class="exturl" data-url="aHR0cHM6Ly9maXJlcmFpbi5tZS8=">https://firerain.me/<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9nYXJ1ZGFsaW51eC5vcmcvaW5kZXguaHRtbA==">https://garudalinux.org/index.html<i class="fa fa-external-link-alt"></i></span></p>
+<p>Antergos的继承者，EndeavourOS满足了前两点，貌似xfce主题魔改了点主题，KDE基本原封不动。当时Manjaro闹分裂，jonathon出走了，我也跟着跑路到了这个发行版;用了一段时间感觉还不错，接近原味Arch, 不像Manjaro一样整了很多超出自己驾驭能力的魔改。推荐各位Manjaro用户和想用pacman又嫌麻烦的用户尝试一下。<br>现在看win10反而不习惯，索性把教研室搬砖那台win10全格了只装这个（要用到windows的时候上win7虚拟机 ps. win7 和KDE好像啊）</p>
+<p>那天还看到肥猫跑到Manjaro群里推这个</p>
+<p><img src="/why-not-try-endeavouros/miao.png"></p>
+<p>第二天welcome就有了中文，感动</p>
+<p><img src="/why-not-try-endeavouros/miaomiao.png"></p>
+<p>能制止Manjaro的不是Arch佬的疯狂洗手，是另一个比Manjaro更好的Arch简易安装器，EndeavourOS合格了。</p>
+<p>最后，不要对EndeavourOS抱有过高的期待，感觉他们人手还是不太足。</p>
+<p>不过大方向是走对了，基本上就做做开箱即用和一些代替命令操作的图形界面，没有像Manjaro那样各种魔改搞出很多Arch上反而没有的问题。就比如linux内核切换的图形界面akm，基本上就是代替了archwiki上的手动操作，选项也只有linux,linux-lts,linux-zen几个。不像Manjaro那个内核切换，从linux 5.3 到linux 5.8最新版全都有，非常奔放，你要是真随便选一个linux和linux-lts之外的，哪天滚着滚着就出问题了。</p>
+<p><img src="/why-not-try-endeavouros/akm.png"></p>
+<p>Arch的安装脚本和只是换了个皮的安装器层出不穷，目前看来EndeavourOS是最令人满意的一个（好吧，默认是xfce，这个离线装了然后改DE就好了）</p>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>AUR包数量很庞大，但也有一些包目前还没有，有精力和意愿打包的可以去给AUR提交打包<br>可以参看</p>
+<ol>
+<li><span class="exturl" data-url="aHR0cHM6Ly9hdXIuYXJjaGxpbnV4Lm9yZy8=">Archlinux User Repository<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL0NyZWF0aW5nX3BhY2thZ2Vz">Creating packages<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL0FyY2hfVXNlcl9SZXBvc2l0b3J5XyglRTclQUUlODAlRTQlQkQlOTMlRTQlQjglQUQlRTYlOTYlODcp">Arch用户仓库<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnlvaXRzdS5tb2UvYXJjaC1saW51eC9hdXJfcGFja2FnaW5nX2d1aWRlYm9vay5odG1s">AUR 纯萌新向入门教学(2)-创建一个软件包<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnlvaXRzdS5tb2UvYXJjaC1saW51eC9hdXJfc3VtYml0aW5nX2d1aWRlYm9vay5odG1s">AUR 纯萌新向入门教学(3)-提交软件包到AUR<i class="fa fa-external-link-alt"></i></span></li>
+</ol>
+<p>KDE的中文翻译也缺人，有精力的玩家可以去当翻译，中文翻译组在<span class="exturl" data-url="aHR0cHM6Ly9jcm93ZGluLmNvbS9wcm9qZWN0L2tkZW9yZw==">这里<i class="fa fa-external-link-alt"></i></span><br>KDE那边貌似挺缺打杂苦力的，熟悉Qt的同学可以去给社区做点贡献.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/KDE/" rel="tag"><i class="fa fa-tag"></i> KDE</a>
+              <a href="/tags/EndeavourOS/" rel="tag"><i class="fa fa-tag"></i> EndeavourOS</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/morality-prediction/" rel="prev" title="基于机器学习的ICU急性心肌梗死死亡率预测（MIMIC数据库）">
+                  <i class="fa fa-chevron-left"></i> 基于机器学习的ICU急性心肌梗死死亡率预测（MIMIC数据库）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/qv2ray-transparent-proxy/" rel="next" title="『转载』使用Qv2ray+cgproxy配置透明代理（仅限Linux）">
+                  『转载』使用Qv2ray+cgproxy配置透明代理（仅限Linux） <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+      <div class="tabs tabs-comment">
+        <ul class="nav-tabs">
+            <li class="tab"><a href="#comment-utterances">utterances</a></li>
+            <li class="tab"><a href="#comment-disqusjs">Load Disqus</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane utterances" id="comment-utterances">
+              <div class="comments utterances-container"></div>
+            </div>
+            <div class="tab-pane disqusjs" id="comment-disqusjs">
+              
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+            </div>
+        </div>
+      </div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">止息</span>
+</div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdn.jsdelivr.net/npm/pdfobject@2.2.7/pdfobject.min.js","integrity":"sha256-ph3Dk89VmuTVXG6x/RDzk53SU9LPdAh1tpv0UvnDZ2I="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="/js/third-party/tags/pdf.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/disqusjs@1.3.0/dist/disqusjs.css" integrity="sha256-GxdCIOyfxQ1OBfS99qAIJDoGK1ADuBsxhMTqXG82fAY=" crossorigin="anonymous">
+
+<script class="next-config" data-name="disqusjs" type="application/json">{"enable":true,"api":"https://disqus.skk.moe/disqus/","apikey":"3qJ515uApWlP58gXhzPCCk3L0NlOvrMLwt5dDITBndS8fp8She7PT1gvBdDcgwrt","shortname":"arcaheoraptor","js":{"url":"https://cdn.jsdelivr.net/npm/disqusjs@1.3.0/dist/disqus.js","integrity":"sha256-LVaMHPQ2zLqOc5rXSAfr4d1PIkEGNLyyUTDNPZmTtUw="}}</script>
+<script src="/js/third-party/comments/disqusjs.js"></script>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"Archaeoraptor/archaeoraptor.github.io","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>
