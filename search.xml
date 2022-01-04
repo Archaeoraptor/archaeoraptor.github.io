@@ -5001,7 +5001,7 @@ lines <span class="token number">2</span>-36/36 <span class="token punctuation">
       </categories>
   </entry>
   <entry>
-    <title>将VSCode作为Neovim的GUI客户端——VSCode Neovim插件配置</title>
+    <title>VSCode Neovim插件配置——将VSCode作为Neovim的GUI客户端</title>
     <url>/vscode-neovim-setting/</url>
     <content><![CDATA[<p>本来不报希望的试了试这套不伦不类的缝合怪配置，结果缝合出了很好的效果，可以拿这套配置在VSCode下养老了。</p>
 <span id="more"></span>
