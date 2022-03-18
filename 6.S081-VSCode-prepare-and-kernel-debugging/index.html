@@ -4,8 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 5.4.0">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/uploads/wizard-hat-16.png">
@@ -20,20 +19,20 @@
 
 
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css" integrity="sha256-jTIdiMuX/e3DGJUGwl3pKSxuc6YOuqtJYkM0bGQESA4=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"zhangjk98.xyz","root":"/","images":"/images","scheme":"Pisces","darkmode":"auto","version":"8.9.0","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqusjs","storage":true,"lazyload":false,"nav":{"disqusjs":{"text":"Load Disqus","order":-1},"utterances":{"order":-2}},"activeClass":"disqusjs"},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"none","post_header":"none","post_body":"none","coll_header":"none","sidebar":"none"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
-<meta name="description" content="6.S081的调试和VSCode环境配置，还有一些踩坑和小技巧，杂七杂八的都放在这一篇里面了。（遇到什么情况就更新，准备一直更到做完Lab）">
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhangjk98.xyz","root":"/","images":"/images","scheme":"Pisces","darkmode":"auto","version":"8.10.1","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqusjs","storage":true,"lazyload":false,"nav":{"disqusjs":{"text":"Load Disqus","order":-1},"utterances":{"order":-2}},"activeClass":"disqusjs"},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"none","post_header":"none","post_body":"none","coll_header":"none","sidebar":"none"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="6.S081的调试和VSCode环境配置，还有一些踩坑和小技巧，杂七杂八的都放在这一篇里面了。（遇到什么情况就更新，准备一直更到做完Lab）">
 <meta property="og:type" content="article">
 <meta property="og:title" content="6.S081的调试和VSCode环境配置">
 <meta property="og:url" content="https://zhangjk98.xyz/6.S081-VSCode-prepare-and-kernel-debugging/index.html">
 <meta property="og:site_name" content="止息的博客">
 <meta property="og:description" content="6.S081的调试和VSCode环境配置，还有一些踩坑和小技巧，杂七杂八的都放在这一篇里面了。（遇到什么情况就更新，准备一直更到做完Lab）">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://zhangjk98.xyz/6.S081-VSCode-prepare-and-kernel-debugging/6.S081-lab-util/1625406448.png">
-<meta property="og:image" content="https://zhangjk98.xyz/6.S081-VSCode-prepare-and-kernel-debugging/6.S081-lab-util/image-20210702145048984.png">
-<meta property="og:image" content="https://zhangjk98.xyz/6.S081-VSCode-prepare-and-kernel-debugging/6.S081-lab-util/image-20210702150654556.png">
+<meta property="og:image" content="https://zhangjk98.xyz/6.S081-VSCode-prepare-and-kernel-debugging/1625406448.png">
+<meta property="og:image" content="https://zhangjk98.xyz/6.S081-VSCode-prepare-and-kernel-debugging/6.S081-kernel-debugging/image-20210702150654556.png">
 <meta property="og:image" content="https://zhangjk98.xyz/6.S081-VSCode-prepare-and-kernel-debugging/1626525086.png">
 <meta property="og:image" content="https://zhangjk98.xyz/6.S081-VSCode-prepare-and-kernel-debugging/1626525345.png">
 <meta property="og:image" content="https://zhangjk98.xyz/6.S081-VSCode-prepare-and-kernel-debugging/1626526305.png">
@@ -44,7 +43,7 @@
 <meta property="article:tag" content="6.S081">
 <meta property="article:tag" content="VSCode">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://zhangjk98.xyz/6.S081-VSCode-prepare-and-kernel-debugging/6.S081-lab-util/1625406448.png">
+<meta name="twitter:image" content="https://zhangjk98.xyz/6.S081-VSCode-prepare-and-kernel-debugging/1625406448.png">
 
 
 <link rel="canonical" href="https://zhangjk98.xyz/6.S081-VSCode-prepare-and-kernel-debugging/">
@@ -59,6 +58,7 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143393734-1"></script>
   <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-143393734-1","only_pageview":false}</script>
   <script src="/js/third-party/analytics/google-analytics.js"></script>
+
 
 
 
@@ -179,18 +179,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-count">53</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">78</span>
+        <span class="site-state-item-count">89</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -272,11 +272,16 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/jinmao.webp">
       <meta itemprop="name" content="Zhang.j.k">
-      <meta itemprop="description" content="in darkest night">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="止息的博客">
+      <meta itemprop="description" content="in darkest night">
+    </span>
+    
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="6.S081的调试和VSCode环境配置 | 止息的博客">
+      <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -292,13 +297,6 @@
       <span class="post-meta-item-text">发表于</span>
 
       <time title="创建时间：2021-07-08 22:11:18" itemprop="dateCreated datePublished" datetime="2021-07-08T22:11:18+08:00">2021-07-08</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-01-04 10:45:33" itemprop="dateModified" datetime="2022-01-04T10:45:33+08:00">2022-01-04</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -352,14 +350,12 @@ make: *** <span class="token punctuation">[</span>Makefile:165: qemu<span class=
 <p>找不到io_uring的动态链接库，没关系，我们而再降级一下liburing或者自己下一个动态链接库趁系统不注意偷偷塞到<code>/usr/lib</code>之类的地方就好了。io_uring虽然很重要，但是查了依赖，我目前只有qemu直接依赖<code>liburing</code>(还有一个virtualbox的vde2是optionally requires)，那就直接降级吧。</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> downgrade liburing<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="6.S081-lab-util/1625406448.png"></p>
+<p><img src="/6.S081-VSCode-prepare-and-kernel-debugging/1625406448.png"></p>
 <p>然后一个sh就出现了，按Ctrl-a x退出。</p>
 <p>到这里准备环境就好了，耗时10分钟。（用了降级系统包版本的脏办法，<code>io_uring</code>这么重要的东西自己乱换版本不太好，不过目前直接依赖系统<code>liburing</code>的包不多）</p>
 <h3 id="更新Ubuntu20-04配置"><a href="#更新Ubuntu20-04配置" class="headerlink" title="更新Ubuntu20.04配置"></a>更新Ubuntu20.04配置</h3><p>受不了坑位上7年前采购的老电脑的编译速度了，换教研室的20核服务器远程编译了。为了方便先将Ubuntu Server强行</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> <span class="token function">git</span> build-essential gdb-multiarch qemu-system-misc gcc-riscv64-linux-gnu binutils-riscv64-linux-gnu<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p>直接<code>make qemu</code>试试，耗时5s，舒服了</p>
-<p><img src="6.S081-lab-util/image-20210702145048984.png" alt="image-20210702145048984"></p>
 <h3 id="Hello-World"><a href="#Hello-World" class="headerlink" title="Hello, World"></a>Hello, World</h3><p>写一个helloworld看看是不是真的好了。</p>
 <p>在user目录里面直接新建一个hello.c</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"kernel/types.h"</span></span>
@@ -391,7 +387,7 @@ make: *** <span class="token punctuation">[</span>Makefile:165: qemu<span class=
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hello
 Hello, nerd<span class="token operator">!</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<p><img src="6.S081-lab-util/image-20210702150654556.png" alt="image-20210702150654556"></p>
+<p><img src="6.S081-kernel-debugging/image-20210702150654556.png" alt="image-20210702150654556"></p>
 <h2 id="gdb-qemu调试"><a href="#gdb-qemu调试" class="headerlink" title="gdb+qemu调试"></a>gdb+qemu调试</h2><h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>现在6.S081推荐用<code>gdb-multiarch</code>这个包。<br>然后开两个终端（严格来讲应该叫终端模拟器，以下简称终端）, 第一个</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">make</span> qemu-gdb<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 

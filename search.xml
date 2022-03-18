@@ -35,14 +35,12 @@ make: *** <span class="token punctuation">[</span>Makefile:165: qemu<span class=
 <p>找不到io_uring的动态链接库，没关系，我们而再降级一下liburing或者自己下一个动态链接库趁系统不注意偷偷塞到<code>/usr/lib</code>之类的地方就好了。io_uring虽然很重要，但是查了依赖，我目前只有qemu直接依赖<code>liburing</code>(还有一个virtualbox的vde2是optionally requires)，那就直接降级吧。</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> downgrade liburing<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="6.S081-lab-util/1625406448.png"></p>
+<p><img src="/6.S081-VSCode-prepare-and-kernel-debugging/1625406448.png"></p>
 <p>然后一个sh就出现了，按Ctrl-a x退出。</p>
 <p>到这里准备环境就好了，耗时10分钟。（用了降级系统包版本的脏办法，<code>io_uring</code>这么重要的东西自己乱换版本不太好，不过目前直接依赖系统<code>liburing</code>的包不多）</p>
 <h3 id="更新Ubuntu20-04配置"><a href="#更新Ubuntu20-04配置" class="headerlink" title="更新Ubuntu20.04配置"></a>更新Ubuntu20.04配置</h3><p>受不了坑位上7年前采购的老电脑的编译速度了，换教研室的20核服务器远程编译了。为了方便先将Ubuntu Server强行</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> <span class="token function">git</span> build-essential gdb-multiarch qemu-system-misc gcc-riscv64-linux-gnu binutils-riscv64-linux-gnu<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p>直接<code>make qemu</code>试试，耗时5s，舒服了</p>
-<p><img src="6.S081-lab-util/image-20210702145048984.png" alt="image-20210702145048984"></p>
 <h3 id="Hello-World"><a href="#Hello-World" class="headerlink" title="Hello, World"></a>Hello, World</h3><p>写一个helloworld看看是不是真的好了。</p>
 <p>在user目录里面直接新建一个hello.c</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"kernel/types.h"</span></span>
@@ -74,7 +72,7 @@ make: *** <span class="token punctuation">[</span>Makefile:165: qemu<span class=
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hello
 Hello, nerd<span class="token operator">!</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<p><img src="6.S081-lab-util/image-20210702150654556.png" alt="image-20210702150654556"></p>
+<p><img src="6.S081-kernel-debugging/image-20210702150654556.png" alt="image-20210702150654556"></p>
 <h2 id="gdb-qemu调试"><a href="#gdb-qemu调试" class="headerlink" title="gdb+qemu调试"></a>gdb+qemu调试</h2><h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>现在6.S081推荐用<code>gdb-multiarch</code>这个包。<br>然后开两个终端（严格来讲应该叫终端模拟器，以下简称终端）, 第一个</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">make</span> qemu-gdb<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
@@ -266,6 +264,76 @@ mucounteren    Could not fetch register &quot;mucounteren&quot;; remote failure 
       </tags>
   </entry>
   <entry>
+    <title>6.S081 Lab Page table 笔记：虚拟内存、页表和MMU</title>
+    <url>/6.S081-lab-page-table/</url>
+    <content><![CDATA[<p>这个Lab前几个月写的，最近比较闲整理一下之前做的Lab。内存管理这块比较复杂，当时做Lab的时候对内存这块理解也浅，实现有些挺蠢的地方，重新整理了一下。接下来的笔记会多一点和Lab作业关系不是特别大的东西，闲着没事看OS相关的东西觉得有意思就一起记到笔记里了。</p>
+<span id="more"></span>
+
+<h2 id="从单片机的内存和MMU说起"><a href="#从单片机的内存和MMU说起" class="headerlink" title="从单片机的内存和MMU说起"></a>从单片机的内存和MMU说起</h2><p>早期的操作系统是就像现在的一些单片机一样没有虚拟内存、页表这些东西的。以前我一开始用ARM的STM32的单片机的时候，用的是cortex-m系列，没有MMU（Memory Management Unit，内存管理单元）的，直接访问物理地址。当时我上嵌入式的课上也不讲这些东西，上课、做实验讲到内存的时候都直接访问物理地址的（Keil里面直接看物理地址的值确实比较简单）。</p>
+<p>这个时候内存的管理方式挺简单的，<strong>可能为数不多的坑就是大小端</strong>，有一次被坑了挺久</p>
+<p>下面这张图很熟悉了，堆、栈，数据段、代码段</p>
+<p>访问栈就直接用sp去寻址就可以了，简单直接。</p>
+<p>没有MMU也有好处，这样便宜、功耗低、而且比较简单。有的对实时性要求比较高的东西，也没有MMU（比如Cortex-R系列）</p>
+<p>注：嵌入式的soc芯片，如果能跑操作系统的大概率有MMU，但是两者之前没有必然关系。比如uCLinux，就是为了在没有MMU上的设备跑。有MMU，当然也可以不用操作系统，直接跑裸机（MMU其实可以关掉，但是我们一般不关，手动指定映射，因为MMU的cache对性能提升很大）。（uClinux要小心内存碎片，而且由于MMU没了，内存保护、内存置换、COW基本都没了，大部分时候还是用mmap和内存直接打交道）</p>
+<p>单片机可以不要MMU，但是一个运行着很多任务的操作系统需要对内存进行抽象和封装，提供给应用。于是后来诞生了虚拟内存/虚拟存储器（Virtual Memory），虚拟内存可以比物理内存大，可以让每个程序都认为自己拥有一段连续独立的内存，还可以权限控制（内存保护），虚拟内存在硬件上是MMU实现的。操作系统的虚拟内存几乎都依赖MMU。（当然，操作系统有自己的页表，这个一会再说）<br>像Cortex-A系列的soc芯片，是有mmu的，上面能跑一些完整的操作系统，有页表等一系列完整的内存管理机制。下图来自xv6 book，每个进程都有自己独立的虚拟内存，这样主要的好处一个是安全隔离，一个是让进程操作一段连续的内存，即使映射到物理内存上是不连续的（你可以<strong>试试在Cortex-A系列soc的板子上跑个uClinux这种没有虚拟内存的，很容易搞出内存碎片然后OOM了</strong>）。</p>
+<p><img src="/6.S081-lab-page-table/1642081823.png"></p>
+<p>下面这是ARM的图，RISC-V和x86我不熟，就没找RISC的图。下面这些图来自：<span class="exturl" data-url="aHR0cHM6Ly9jczE0MGUuc2VyZ2lvLmJ6L2RvY3MvQVJNdjgtQS1Qcm9ncmFtbWVyLUd1aWRlLnBkZg==">ARMv8-A-Programmer-Guide<i class="fa fa-external-link-alt"></i></span></p>
+<p><img src="/6.S081-lab-page-table/1642057127.png"></p>
+<p>MMU以页为最小单位将内存从物理地址映射到虚拟地址，页表大小一般是4k。除了地址映射MMU还实现了内存保护。每个页有读、写、执行三种权限。</p>
+<p>MMU里有TLB（Translation Lookaside Buffer），专门用来缓存页表，CPU要访问内存的时候会先去TLB里面找，没有命中再去遍历找物理地址（Translation Table Walk）。</p>
+<p>图中的Caches就是我们熟悉的L1、L2、L3缓存，l1一般有ICache和DCache，分别用来缓存指令和数据。</p>
+<p><img src="/6.S081-lab-page-table/1642057382.png"></p>
+<p>一部分ARM的芯片是将L1的ICache做成逻辑地址的（不经过MMU），有的芯片是逻辑地址（Cache缓存的是经过MMU转换后的虚拟地址），这个和芯片的实现有关，不是这里的重点。我们就简单的认为，Cache一般速度远比主存快，用于缓存最常用的内存数据（页）。</p>
+<p><img src="/6.S081-lab-page-table/1642057536.png"></p>
+<p>当L1、L2、L3都没有命中（Write Miss）的时候，会走总线去内存里面找。至于L1、L2、L3缓存的置换、一致性这些问题，我们也简单的认为芯片已经帮我们做好了，这里我们不去管它。</p>
+<h2 id="页表"><a href="#页表" class="headerlink" title="页表"></a>页表</h2><p>以页为单位完成了物理内存到虚拟内存的映射，要访问这些页我们需要查表，于是就有了页表（Page Table）。但是如果把每个页都映射成一张页表，这一个页表是很大的，于是就有了多级页表。多级页表中每一级都有index和offset用于定位页和页中的偏移量。</p>
+<p><img src="/6.S081-lab-page-table/1642065542.png"></p>
+<p>上图中的PPN是物理page号（PPN，Physical Page Number）。</p>
+<h3 id="进程页表和内核页表"><a href="#进程页表和内核页表" class="headerlink" title="进程页表和内核页表"></a>进程页表和内核页表</h3><p>xv6里面有，内核页表和用户页表（进程页表），每个进程都有自己独立的页表。内核页表只有一个。一般进程页表都有一份内核页表的直接copy，但是一些开了内核页表隔离（KPTI, Kernel Page Table Isolation）的，情况会比较复杂。</p>
+<p><img src="/6.S081-lab-page-table/1642124957.png"></p>
+<p>我们这里先不考虑这些复杂情况，做Lab的时候只需要知道进程地址空间是<code>exec</code>创建的，进程页表是<code>proc_pagetable</code>创建的</p>
+<h2 id="页表放在哪"><a href="#页表放在哪" class="headerlink" title="页表放在哪"></a>页表放在哪</h2><p>放在内存里面（是虚拟内存）。准确的说，是在内存的内核空间（kernel address space）里。在RISC-V中，SATP寄存器保存当前进程的页表地址，通过切换SATP的值来切换进程页表，MMU通过这个地址去找页表（先去TLB找，那里放的是页表的缓存）。<br>x86的寄存器是CR3，作用类似。</p>
+<h2 id="这么多年过去了页大小怎么还是4K"><a href="#这么多年过去了页大小怎么还是4K" class="headerlink" title="这么多年过去了页大小怎么还是4K"></a>这么多年过去了页大小怎么还是4K</h2><p>如果你执行<code>getconf PAGE_SIZE</code>看一下，大概率还是<code>4096</code>。<br>页表的级数一直在增加，ARM的嵌入式soc（比如Cortex-A系列）一般是二级页表，Linux一开始也是二级，后来有了3级和4级页表。然而这么多年过去了，页表大小基本还是4k。</p>
+<p>透明大页</p>
+<h2 id="Lab作业笔记"><a href="#Lab作业笔记" class="headerlink" title="Lab作业笔记"></a>Lab作业笔记</h2><p>这个Lab是第四章内存管理的配套Lab，做之前推荐还是看一下第四章的讲义。涉及到的几个函数在<code>vm.c</code>中</p>
+<h3 id="Speed-up-system-calls"><a href="#Speed-up-system-calls" class="headerlink" title="Speed up system calls"></a>Speed up system calls</h3><blockquote>
+<p>Some operating systems (e.g., Linux) speed up certain system calls by sharing data in a read-only region between userspace and the kernel. This eliminates the need for kernel crossings when performing these system calls.</p>
+</blockquote>
+<p>仿照Linux通过共享内存来加快syscall。一开始看lwm这篇：<span class="exturl" data-url="aHR0cHM6Ly9sd24ubmV0L0FydGljbGVzLzE4NDExLw==">How to speed up system calls<i class="fa fa-external-link-alt"></i></span> 02年的文章和<span class="exturl" data-url="aHR0cHM6Ly9sd24ubmV0L0FydGljbGVzLzE4NDE0Lw==">Patch<i class="fa fa-external-link-alt"></i></span>没看懂是要干嘛，后来搜了一下vsyscall才明白这个Lab想让我们做什么。  </p>
+<blockquote>
+<p>vsyscall 或 virtual system call 是第一种也是最古老的一种用于加快系统调用的机制。 vsyscall 的工作原则其实十分简单。Linux 内核在用户空间映射一个包含一些变量及一些系统调用的实现的内存页。<br>不过后来vsyscall几乎都换成vDSO和vvar了（安全原因），现在不少发行版默认禁用这个的。  </p>
+</blockquote>
+<p>知道干什么就好办了，我们照着课程提示先看<code>user/ulib.c</code>中的<code>ugetpid()</code>，这里已经将共享地址<code>USYSCALL</code>转成usyscall结构体，然后返回pid</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span>
+<span class="token function">ugetpid</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+  <span class="token keyword">struct</span> <span class="token class-name">usyscall</span> <span class="token operator">*</span>u <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">usyscall</span> <span class="token operator">*</span><span class="token punctuation">)</span>USYSCALL<span class="token punctuation">;</span>
+  <span class="token keyword">return</span> u<span class="token operator">-></span>pid<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>我们只要在<code>kernel/proc.h</code>中补全USYSCALL的映射（mapping），这个仿照trapframe就好了，在<code>proc.h</code>中</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">struct</span> <span class="token class-name">usyscall</span> <span class="token operator">*</span>usyscall    <span class="token comment">// data page for getpid syscall</span>
+<span class="token keyword">struct</span> <span class="token class-name">trapframe</span> <span class="token operator">*</span>trapframe<span class="token punctuation">;</span> <span class="token comment">// data page for trampoline.S</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>然后在<code>proc.c</code>设置映射和读权限（PTE_U、PTE_R，详见xv6文档）。我们继续照着trapframe的写法加上：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">// map the getpid (for systemcall return)</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">mappages</span><span class="token punctuation">(</span>pagetable<span class="token punctuation">,</span> USYSCALL<span class="token punctuation">,</span> PGSIZE<span class="token punctuation">,</span>
+            <span class="token punctuation">(</span>uint64<span class="token punctuation">)</span><span class="token punctuation">(</span>p<span class="token operator">-></span>usyscall<span class="token punctuation">)</span><span class="token punctuation">,</span> PTE_R <span class="token operator">|</span> PTE_U<span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">uvmfree</span><span class="token punctuation">(</span>pagetable<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后在<code>allocproc()</code>中分配，在<code>freeproc()</code>中释放内存（这个直接照抄trapframe的分配和释放就可以了）。注意还要在<code>proc.c</code>中的<code>proc_freepagetable</code>释放一下<code>uvmunmap(pagetable, USYSCALL, 1, 0);</code></p>
+<h3 id="Print-a-page-table"><a href="#Print-a-page-table" class="headerlink" title="Print a page table"></a>Print a page table</h3><p>这个也简单，实现一个打印页表方便下面调试。</p>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><span class="exturl" data-url="aHR0cHM6Ly9uaWV5b25nLmdpdGh1Yi5pby93aWtpX2NwdS9DUFUlRTQlQkQlOTMlRTclQjMlQkIlRTYlOUUlQjYlRTYlOUUlODQtTU1VLmh0bWw=">CPU体系架构-MMU<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vTG95ZW5XYW5nL3AvMTE0MDY2OTMuaHRtbA==">（一）ARMv8 MMU及Linux页表映射<i class="fa fa-external-link-alt"></i></span>  </p>
+<p>阅读更多</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9sd24ubmV0L0FydGljbGVzLzE4NDExLw==">How to speed up system calls<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly92dmwubWUvMjAxOS8wNi9saW51eC1zeXNjYWxsLWFuZC12c3lzY2FsbC12ZHNvLWluLXg4Ni8=">x86 架构下 Linux 的系统调用与 vsyscall, vDSO<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cua2VybmVsLm9yZy9kb2MvaHRtbC9sYXRlc3QveDg2L3B0aS5odG1s">17. Page Table Isolation (PTI)<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9jdGYtd2lraS5vcmcvcHduL2xpbnV4L2tlcm5lbC1tb2RlL2RlZmVuc2UvaXNvbGF0aW9uL3VzZXIta2VybmVsL2twdGk=">KPTI - Kernel Page Table Isolation CTF-Wiki<i class="fa fa-external-link-alt"></i></span>  </p>
+]]></content>
+      <tags>
+        <tag>6.S081</tag>
+        <tag>page table</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>6.S081 Lab Syscall 笔记</title>
     <url>/6.s081-lab-syscall/</url>
     <content><![CDATA[<p>暑假摸了一个月的鱼，回来接着做Lab。2021 spring 的6.S081已经开始了，直接做2021的吧（看了一下好像没有太大变化）。而且xv6-labs-2021这个repo貌似修复了Archlinux上新版gdb不兼容的问题，不用再降级包或者去用Ubuntu 20了。</p>
@@ -287,6 +355,18 @@ mucounteren    Could not fetch register &quot;mucounteren&quot;; remote failure 
       <tags>
         <tag>6.S081</tag>
         <tag>syscalls</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>6.S081 Lab Trap 笔记</title>
+    <url>/6.S081-lab-trap/</url>
+    <content><![CDATA[<p>这个Lab跟其他的比起来挺简单的，简单说一下吧。顺便讲一下中断之类的东西。</p>
+<span id="more"></span>
+
+<h2 id="RISC-V-assembly-easy"><a href="#RISC-V-assembly-easy" class="headerlink" title="RISC-V assembly (easy)"></a>RISC-V assembly (easy)</h2><h2 id="Backtrace-moderate"><a href="#Backtrace-moderate" class="headerlink" title="Backtrace (moderate)"></a>Backtrace (moderate)</h2><h2 id="Alarm-hard"><a href="#Alarm-hard" class="headerlink" title="Alarm (hard)"></a>Alarm (hard)</h2>]]></content>
+      <tags>
+        <tag>6.S081</tag>
+        <tag>trap</tag>
       </tags>
   </entry>
   <entry>
@@ -584,49 +664,17 @@ pip install <span class="token operator">-</span>r requirements<span class="toke
       </tags>
   </entry>
   <entry>
-    <title>Pythonic手账</title>
-    <url>/a343/</url>
-    <content><![CDATA[<p>等待填坑</p>
+    <title>Pythonic，我劝你别学</title>
+    <url>/pythonic/</url>
+    <content><![CDATA[<p>Pythonic, 我劝你别学。回字的八种写法，不如隔壁Lisp，感觉</p>
 <span id="more"></span>
 
-<h2 id="碎碎念"><a href="#碎碎念" class="headerlink" title="碎碎念"></a>碎碎念</h2><p>2020年了，python2该退休了（真是不太想再看到python2了，祖传依赖令人头大）</p>
-<p>安利包管理工具poetry，试了都说好</p>
-<p>python3.8怕是串了Go和C++的味，算了，真香</p>
-<h2 id="python多版本管理"><a href="#python多版本管理" class="headerlink" title="python多版本管理"></a>python多版本管理</h2><p>python的包管理是个很混乱的事，<br>一般单版本基本上没事，但是装了N个版本，甚至还有python2，麻烦就来了，一不小心就被坑，尤其是在大家都用的服务器上。（这上面有2.7，3.5，3.6和师兄炼丹装的conda3.7、3.6，不要问我为什么linux装conda，师兄干的）</p>
-<p>我用自己的linux用户可以避开root用户底下一些混乱环境（比如conda）<br>主要的问题是切换python版本和python包管理，切换python版本一般用pyenv；包管理选择很多，一直没发现特别完美的工具。直到，发现了Poetry</p>
-<h3 id="pyenv"><a href="#pyenv" class="headerlink" title="pyenv"></a>pyenv</h3><p>pyenv用来切换python版本，配合其他工具管理包</p>
-<h3 id="venv和virtualvenv"><a href="#venv和virtualvenv" class="headerlink" title="venv和virtualvenv"></a>venv和virtualvenv</h3><p>venv是<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnB5dGhvbi5vcmcvemgtY24vMy90dXRvcmlhbC92ZW52Lmh0bWw=">python3官方的包管理工具<i class="fa fa-external-link-alt"></i></span>，virtualvenv兼容py2、3，这两个感觉用的最多了，看到别人的很多项目都用的这个，pycharm默认也是这玩意<br>没什么特殊需求就用这个吧</p>
-<h3 id="pipenv"><a href="#pipenv" class="headerlink" title="pipenv"></a>pipenv</h3><p>一个类似Ruby的Bundler的东西<br>纯指定依赖，使用体验比上面那个好，有一点慢<br>（不推荐在win上用）</p>
-<p>就跟npm差不多，和node_modules差不多的Pipfile（存放本地包），和npm的package-lock.json差不多的Pipfile.lock（版本锁）</p>
-<p>但是，这家伙会趁你不注意偷偷更新你的依赖。注意不要被它的自动更新坑了，你以为它能给你锁定版本，其实不能。</p>
-<h3 id="Poetry"><a href="#Poetry" class="headerlink" title="Poetry"></a>Poetry</h3><p>用了一阵发现这个挺好，喜欢</p>
-<p>能管理python版本和python的包，还能用来打包（这个打包感觉比setuptools舒服不少）<br>配置文件是单个toml，很舒服，依赖在poetry.lock里面</p>
-<p>一个小问题是初次加载依赖有点慢，原因见<span class="exturl" data-url="aHR0cHM6Ly9weXRob24tcG9ldHJ5Lm9yZy9kb2NzL2ZhcS8jd2h5LWlzLXRoZS1kZXBlbmRlbmN5LXJlc29sdXRpb24tcHJvY2Vzcy1zbG93">这里<i class="fa fa-external-link-alt"></i></span>。这也不能怪poetry，PyPI上那么多库，还有不少野库，很多库并没有规范声明Metadata，poetry没法通过调PyPI的API判断该下哪种版本的包，就只能把所有的都拉下来然后判断该用哪个</p>
-<p>我们打开poetry.lock文件,可以看到，一个版本所有的发行包（packages）都被拉了下来</p>
-<p><img src="/a343/image-20200427232343931.png" alt="poetry.lock"></p>
-<p>这个目前无解</p>
-<blockquote>
-<p>At the moment there is no way around it.</p>
-</blockquote>
-<p>如果再次用到某个库，poetry之前缓存了发行信息，不会出现那种全下一遍的事了</p>
-<blockquote>
-<p>Once Poetry has cached the releases’ information, the dependency resolution process will be much faster.</p>
-</blockquote>
-<p>目前还没有太好的办法，在<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3B5dGhvbi1wb2V0cnkvcG9ldHJ5L2lzc3Vlcy8yMDk0I2lzc3VlY29tbWVudC02MDk2NDgxOTQ=">issue评论区<i class="fa fa-external-link-alt"></i></span>看到一个扭曲的方法</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">poetry <span class="token builtin class-name">export</span> -f requirements.txt <span class="token operator">></span> requirements.txt
-python -m pip <span class="token function">install</span> -r requirements.txt
-poetry <span class="token function">install</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="Docker-amp-虚拟机"><a href="#Docker-amp-虚拟机" class="headerlink" title="Docker&amp;虚拟机"></a>Docker&amp;虚拟机</h3><p>Django之类的项目部署的时候推荐Docker<br>一般开发环境没有必要上Docker，真机就挺好，Docker不熟悉的反而可能造成不少麻烦(比如网络部分那堆坑)，怕搞乱环境不如直接上虚拟机。<br>Docker的镜像有官方的python，但是非常大，上G。如果自己写Dockerfile构建一个，缩减镜像，调度每个容器的内存，都是远比前面那几个东西麻烦的事情。<br>Docker我感觉并不适合个人开发环境，感觉部署和运行的时候方便点，用来当开发环境体验不是太好。<br>Docker在调试的时候并不太舒服，而且对Docker初学者来说，网络那里很多坑，为了方便或节省时间用Docker配python的开发环境<br>但是这么一配置，怎么比原来麻烦多了，Docker狂热爱好者吹嘘的部署方便这里在需要调试的时候并没有什么优势。<br>虽然Docker本身并不吃你太多内存，但是Docker容器跑起来，如果不调度和限制，经常占了好多内存，虽然写python一般也不在乎在这个。</p>
-<h3 id="anaconda"><a href="#anaconda" class="headerlink" title="anaconda"></a>anaconda</h3><p>我反正不喜欢，没怎么用过，看到这种全家桶我就害怕（早年360和金山留下的阴影，请谅解）。<br>把python当matlab用的、习惯matlab那种又大又卡但是科学计算功能齐全的全家桶的人可以装个这个。<br>win10有些包很难装，倒是可以把ananconda当jupyter notebook的win10安装工具人；平时就写写python玩就不要装这玩意了，打开win10的应用商店，搜python，点安装，好了，用吧<br>炼丹CUDA之类的建议出门左转用Linux，win10跟torch之类的东西八字不合，这是conda也挽救不了的</p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
-<li><span class="exturl" data-url="aHR0cHM6Ly93d3cucHl0aG9uLm9yZy9kZXYvcGVwcy9wZXAtMDAwOC8=">PEP8<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9ndW9ydWliaWFvLmdpdGJvb2tzLmlvL2VmZmVjdGl2ZS1weXRob24vY29udGVudC8=">Effective Python 翻译版<i class="fa fa-external-link-alt"></i></span></li>
-<li>Fluent Python</li>
-<li><span class="exturl" data-url="aHR0cHM6Ly93d3cucHlsaW50Lm9yZy8=">pylint<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9weXRob24tcG9ldHJ5Lm9yZy8=">poetry官网<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2RlcGhlbGwvZGVwaGVsbA==">dephell打包工具<i class="fa fa-external-link-alt"></i></span></li>
-</ol>
+<p>这篇博客随着我在这几年内的观点变化有多次改动。</p>
+<p>最早接触Python大概是大二的暑假？记不太清了。反正大三的时候我用Django写了一个大作业，后来写脚本什么的，还有偶尔炼丹，都是用Python。当时一度挺喜欢python的，当时比较喜欢“pythonic”的写法</p>
+<p>后来？后来我接手了别人的python项目，从此再也不喜欢pythonic了。</p>
+<p>当时看the little schemer也感觉写lisp真好玩。哦，那主要是因为我没看别人写的一大堆lisp</p>
+<p>你看隔壁Go，连个泛型都没有，也没有类，死板的语法，大括号只能按规定写，之前我不是很喜欢，后来才明白这才是正道。</p>
+<p>更新：以前觉得python的历史包袱不是很要紧嘛，python2会被替换掉了。python3小版本也就是一些向前兼容的问题。<br>结果发现后来3.9、3.10的更新有大量库break了，向前兼容？</p>
 ]]></content>
       <categories>
         <category>不务正业系列</category>
@@ -636,9 +684,234 @@ poetry <span class="token function">install</span><span aria-hidden="true" class
       </tags>
   </entry>
   <entry>
+    <title>给Archlinux添加blackarch仓库镜像源</title>
+    <url>/add-blackarch-repo-mirrors/</url>
+    <content><![CDATA[<p>更新：BlackArch镜像源的很多包质量很差，请谨慎添加，必要时请修改PKGBUILD或自行打包。</p>
+<span id="more"></span>
+
+<h2 id="更新和劝退（只是想添加blackarch源的请直接看第二节）"><a href="#更新和劝退（只是想添加blackarch源的请直接看第二节）" class="headerlink" title="更新和劝退（只是想添加blackarch源的请直接看第二节）"></a>更新和劝退（只是想添加blackarch源的请直接看第二节）</h2><p>虽然BlackArch的包很多，但是…….</p>
+<p>BlackArch的打包质量很差（甚至有些包可能比AUR更差），不少包都是用工具直接转的，而且更要命的是很多包缺乏维护（这对于Arch系这些更新频繁的包可不太妙）</p>
+<p>会发生一些离谱的事情，比如这种：<span class="exturl" data-url="aHR0cHM6Ly9mcmVlbm9kZS5sb2dib3QuaW5mby9hcmNobGludXgtY24vMjAyMTA1MTgjYzgwNDcwMjk=">https://freenode.logbot.info/archlinux-cn/20210518#c8047029<i class="fa fa-external-link-alt"></i></span></p>
+<p>一些活跃的第三方源，比如archlinuxcn，arch4edu，处理问题比较及时，质量也比AUR的包更放心。一般的AUR helper，比如yay, pikaur都喜欢把添加的源里的包优先级放到AUR前面。<code>sudo pacman -Syyu</code>也会把本地新的包降级。BlackArch里面很多万年不更新也没人维护的老包，会很麻烦。</p>
+<p>比如neo4j-community，AUR比blackarch源里的新，直接用pacman或者yay等AUR Helper安装就会装一个远古的老版本<br>（不是3.X版本稳定的原因，单纯就是没人维护，<span class="exturl" data-url="aHR0cHM6Ly9uZW80ai5jb20vZG93bmxvYWQtY2VudGVyLz9yZWY9c3Vic2NyaXB0aW9uI2NvbW11bml0eQ==">官网的版本<i class="fa fa-external-link-alt"></i></span>现在3.5.28是20 April 2021发布的，BlackArch的官方源更新是在一<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0JsYWNrQXJjaC9ibGFja2FyY2gvY29tbWl0L2FiNDk4MGEzNmNkNDcxY2E0ZjRmNGNhMWMxN2Q2YjdlNWU2ZGFhZTk=">2020年3月<i class="fa fa-external-link-alt"></i></span>）</p>
+<pre class="line-numbers language-log" data-language="log"><code class="language-log">aur<span class="token operator">/</span>neo4j<span class="token operator">-</span>community <span class="token number">4.2.2</span><span class="token operator">-</span><span class="token number">1</span> <span class="token operator">(</span><span class="token operator">+</span><span class="token number">63</span> <span class="token number">0.40</span><span class="token operator">)</span> <span class="token operator">(</span>Out<span class="token operator">-</span>of<span class="token operator">-</span>date<span class="token operator">:</span> <span class="token date number">2021-06-06</span><span class="token operator">)</span> <span class="token operator">(</span>Installed<span class="token operator">)</span>
+    A fully transactional graph database implemented in Java
+<span class="token property">blackarch/neo4j-community 3.5.14-1 (144.4 MiB 165.9 MiB) (Installed:</span> <span class="token number">4.2.2</span><span class="token operator">-</span><span class="token number">1</span><span class="token operator">)</span>
+    A fully transactional graph database implemented in Java<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>主动安装AUR里的可以这样：<code>yay neo4j-community</code>然后<code>Packages to install</code>选项手动选AUR里的。或者你手动下载AUR里的PKGBUILD然后<code>makepkg</code>自己build。<strong>再或者直接不要blackarch这个第三方源了（推荐）</strong>，<code>/etc/pacman.d</code>里注释掉。</p>
+<p>不然每次更新还要忽略一堆<code>warning: neo4j-community: local (4.2.2-1) is newer than blackarch (3.5.14-1)</code>。</p>
+<p>neo4j这种单个没啥影响的包更新迟缓倒也没啥大问题，问题是BlackArch的包经常会影响community/extra的基础包，比如plasma这个包（某一天某个群友亲历，我由于装的是plasma-meta逃过一劫）</p>
+<p>KDE用户注意：如果你添加了BlackArch源，按照<span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvdGl0bGUvS0RFI1BsYXNtYQ==">ArchWiki上的KDE页面<i class="fa fa-external-link-alt"></i></span>添加plasma元组</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> pacman -Syu plasma<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>不仔细看plasma是安装成功了，也没报错。然后就掉到Blackarch的plasma这个包的坑里的,<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0JsYWNrQXJjaC9ibGFja2FyY2gvYmxvYi9tYXN0ZXIvcGFja2FnZXMvcGxhc21hL1BLR0JVSUxE">plamsa<i class="fa fa-external-link-alt"></i></span>是BlackArch里面一个python写的一个工具的包，跟KDE Plasma一点关系都没有。</p>
+<p>没想到吧，我也没想到。因为<strong>按照ArchLinux的VSC打包规范</strong>，<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3BsYXNtYS1kaXNhc3NlbWJsZXIvcGxhc21h">plasma<i class="fa fa-external-link-alt"></i></span>这个东西的包名<strong>应该叫做 plasma-git</strong></p>
+<p>你得这样安装：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yay -Syu extra/plasma.<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>BlackArch仓库人手不够打包质量差、更新不及时我都能理解，能跟extra仓库冲突了就离谱。</p>
+<p>下面传肥猫领袖重要讲话：</p>
+<pre class="line-numbers language-none"><code class="language-none">Felix Yan, [05.02.21 01:08]
+想起来我当年研究过 blackarch 的仓库
+
+Felix Yan, [05.02.21 01:09]
+想把里面的工具往主仓库搬
+
+Felix Yan, [05.02.21 01:09]
+结果真找不到几个能搬的
+
+Felix Yan, [05.02.21 01:09]
+大部分都是坑工具……
+
+（里面有很多质量堪忧或者版权不明白的工具，不适合放到一个正常发行版
+
+质量好的工具我当年整过一波，该打的大部分都打了<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>或许单独装个kali是个不错的选择。平时日用好像Parrot os也不错。我反正Arch够用了（我又不干坏事）。</p>
+<p>以下为原内容，写于 2020.11 目测有效，不保证该方法以后可能过时，建议自行翻阅官方文档。</p>
+<h2 id="导入仓库和设置国内镜像"><a href="#导入仓库和设置国内镜像" class="headerlink" title="导入仓库和设置国内镜像"></a>导入仓库和设置国内镜像</h2><h3 id="导入仓库"><a href="#导入仓库" class="headerlink" title="导入仓库"></a>导入仓库</h3><p>按照官方文档来：</p>
+<p>下载官网的脚本</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">curl</span> -O https://blackarch.org/strap.sh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>修改权限：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">chmod</span> +x strap.sh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>运行</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">./strap.sh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>然后应该就好了</p>
+<p>看看是不是装好了：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">pacman -Sg <span class="token operator">|</span> <span class="token function">grep</span> blackarch<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>然后更新一下</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> pacman -Syyu<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>这时候应该会给你安装<code>blackarch-keying</code>这个包，然后就可以用了</p>
+<h3 id="镜像源"><a href="#镜像源" class="headerlink" title="镜像源"></a>镜像源</h3><p>修改<code>/etc/pacman.conf</code>，在最后加上</p>
+<pre class="line-numbers language-conf" data-language="conf"><code class="language-conf">[blackarch]
+Server &#x3D; http:&#x2F;&#x2F;mirrors.uestc.cn&#x2F;blackarch&#x2F;$repo&#x2F;os&#x2F;$arch<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>Server请改成你在那里提供服务而且网速比较快的，比如tuna的</p>
+<pre class="line-numbers language-conf" data-language="conf"><code class="language-conf">[blackarch]
+Server &#x3D; https:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;blackarch&#x2F;$repo&#x2F;os&#x2F;$arch<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h2 id="为何要写这么水的一篇博客"><a href="#为何要写这么水的一篇博客" class="headerlink" title="为何要写这么水的一篇博客"></a>为何要写这么水的一篇博客</h2><p>我之前谷歌随手搜出了ustc的镜像使用帮助，然后就开始了飘红报错，试了一圈中文的解决方案，并没有用。<br>（当然中文博客基本都过时了，还是有很多好好写的，不止CSDN,比如这个：<span class="exturl" data-url="aHR0cHM6Ly93ZWVwaW5nZG9nZWwuZ2l0aHViLmlvL3Bvc3RzLyVFNyU5NCVBOGFyY2hfbGludXglRTYlODklOTMlRTklODAlQTAlRTUlQUUlOEMlRTclQkUlOEUlRTYlQjglOTclRTklODAlOEYlRTclOEUlQUYlRTUlQTIlODMv">用 Arch Linux 打造完美渗透环境<i class="fa fa-external-link-alt"></i></span>）</p>
+<p>报错：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">error: blackarch: key <span class="token string">"F9A6E68A711354D84A9B91637533BAFE69A25079"</span> is unknown
+:: Import PGP key F9A6E68A711354D84A9B91637533BAFE69A25079? <span class="token punctuation">[</span>Y/n<span class="token punctuation">]</span> Y
+Y
+error: key <span class="token string">"F9A6E68A711354D84A9B91637533BAFE69A25079"</span> could not be looked up remotely
+:: Synchronizing package databases<span class="token punctuation">..</span>.
+
+
+error: blackarch: key <span class="token string">"F9A6E68A711354D84A9B91637533BAFE69A25079"</span> is unknown
+:: Import PGP key F9A6E68A711354D84A9B91637533BAFE69A25079? <span class="token punctuation">[</span>Y/n<span class="token punctuation">]</span> 
+error: key <span class="token string">"F9A6E68A711354D84A9B91637533BAFE69A25079"</span> could not be looked up remotely
+error: failed to update blackarch <span class="token punctuation">(</span>invalid or corrupted database <span class="token punctuation">(</span>PGP signature<span class="token punctuation">))</span>
+error: failed to synchronize all databases
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>发现中文的几个解决方案全都过时了。安装<code>blackarch-keying</code>导入key会产生先有鸡还是先有蛋的问题。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">sudo</span> pacman -S blackarch-keyring
+error: blackarch: key <span class="token string">"F9A6E68A711354D84A9B91637533BAFE69A25079"</span> is unknown
+:: Import PGP key F9A6E68A711354D84A9B91637533BAFE69A25079? <span class="token punctuation">[</span>Y/n<span class="token punctuation">]</span> Y
+error: key <span class="token string">"F9A6E68A711354D84A9B91637533BAFE69A25079"</span> could not be looked up remotely
+error: database <span class="token string">'blackarch'</span> is not valid <span class="token punctuation">(</span>invalid or corrupted database <span class="token punctuation">(</span>PGP signature<span class="token punctuation">))</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>转了一圈还是翻了官方文档，世界瞬间清净了。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>+<span class="token punctuation">]</span> installing blackarch keyring<span class="token punctuation">..</span>.
+
+loading packages<span class="token punctuation">..</span>.
+resolving dependencies<span class="token punctuation">..</span>.
+looking <span class="token keyword">for</span> conflicting packages<span class="token punctuation">..</span>.
+
+Packages <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> blackarch-keyring-20140118-3
+
+Total Installed Size:  <span class="token number">0.04</span> MiB
+
+:: Proceed with installation? <span class="token punctuation">[</span>Y/n<span class="token punctuation">]</span> 
+<span class="token punctuation">(</span><span class="token number">1</span>/1<span class="token punctuation">)</span> checking keys <span class="token keyword">in</span> keyring                                         <span class="token punctuation">[</span><span class="token comment">#######################################] 100%</span>
+<span class="token punctuation">(</span><span class="token number">1</span>/1<span class="token punctuation">)</span> checking package integrity                                       <span class="token punctuation">[</span><span class="token comment">#######################################] 100%</span>
+<span class="token punctuation">(</span><span class="token number">1</span>/1<span class="token punctuation">)</span> loading package files                                            <span class="token punctuation">[</span><span class="token comment">#######################################] 100%</span>
+<span class="token punctuation">(</span><span class="token number">1</span>/1<span class="token punctuation">)</span> checking <span class="token keyword">for</span> <span class="token function">file</span> conflicts                                      <span class="token punctuation">[</span><span class="token comment">#######################################] 100%</span>
+:: Processing package changes<span class="token punctuation">..</span>.
+<span class="token punctuation">(</span><span class="token number">1</span>/1<span class="token punctuation">)</span> installing blackarch-keyring                                     <span class="token punctuation">[</span><span class="token comment">#######################################] 100%</span>
+<span class="token operator">==</span><span class="token operator">></span> Appending keys from blackarch.gpg<span class="token punctuation">..</span>.
+gpg: public key DB323392796CA067 is <span class="token number">3037</span> days newer than the signature
+gpg: public key CF66D153D884358F is <span class="token number">16</span> seconds newer than the signature
+<span class="token operator">==</span><span class="token operator">></span> Locally signing trusted keys <span class="token keyword">in</span> keyring<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key A0917C4147A37007CB54C1CFD295AA940EFDDF62<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 4345771566D76038C7FEB43863EC0ADBEA87E4E3<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key CBA3C7D4798912702DCF568E67D8BDF42AD93F4E<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 8F9A9793CB8591147C2EC70566E0CDBD1E01F333<span class="token punctuation">..</span>.
+<span class="token operator">==</span><span class="token operator">></span> Importing owner trust values<span class="token punctuation">..</span>.
+gpg: inserting ownertrust of <span class="token number">4</span>
+gpg: setting ownertrust to <span class="token number">4</span>
+gpg: setting ownertrust to <span class="token number">4</span>
+gpg: setting ownertrust to <span class="token number">4</span>
+<span class="token operator">==</span><span class="token operator">></span> Updating trust database<span class="token punctuation">..</span>.
+gpg: key 1EB2638FF56C0C53: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 1EB2638FF56C0C53: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+
+gpg: public key DB323392796CA067 is <span class="token number">3037</span> days newer than the signature
+gpg: marginals needed: <span class="token number">3</span>  completes needed: <span class="token number">1</span>  trust model: pgp
+gpg: public key CF66D153D884358F is <span class="token number">16</span> seconds newer than the signature
+gpg: depth: <span class="token number">0</span>  valid:   <span class="token number">1</span>  signed:  <span class="token number">56</span>  trust: <span class="token number">0</span>-, 0q, 0n, 0m, 0f, 1u
+gpg: depth: <span class="token number">1</span>  valid:  <span class="token number">56</span>  signed:  <span class="token number">81</span>  trust: <span class="token number">1</span>-, 0q, 0n, 55m, 0f, 0u
+gpg: depth: <span class="token number">2</span>  valid:  <span class="token number">77</span>  signed:  <span class="token number">26</span>  trust: <span class="token number">77</span>-, 0q, 0n, 0m, 0f, 0u
+gpg: next trustdb check due at <span class="token number">2020</span>-12-03
+:: Running post-transaction hooks<span class="token punctuation">..</span>.
+<span class="token punctuation">(</span><span class="token number">1</span>/1<span class="token punctuation">)</span> Arming ConditionNeedsUpdate<span class="token punctuation">..</span>.
+<span class="token operator">==</span><span class="token operator">></span> Appending keys from archlinuxcn.gpg<span class="token punctuation">..</span>.
+<span class="token operator">==</span><span class="token operator">></span> Appending keys from archlinux.gpg<span class="token punctuation">..</span>.
+<span class="token operator">==</span><span class="token operator">></span> Appending keys from blackarch.gpg<span class="token punctuation">..</span>.
+<span class="token operator">==</span><span class="token operator">></span> Appending keys from endeavouros.gpg<span class="token punctuation">..</span>.
+<span class="token operator">==</span><span class="token operator">></span> Locally signing trusted keys <span class="token keyword">in</span> keyring<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 57957BAD5D038B07C28EF49A15B26377262268C1<span class="token punctuation">..</span>.
+<span class="token operator">==</span><span class="token operator">></span> Importing owner trust values<span class="token punctuation">..</span>.
+<span class="token operator">==</span><span class="token operator">></span> Disabling revoked keys <span class="token keyword">in</span> keyring<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Disabling key 8F76BEEA0289F9E1D3E229C05F946DED983D4366<span class="token punctuation">..</span>.
+<span class="token operator">==</span><span class="token operator">></span> Updating trust database<span class="token punctuation">..</span>.
+gpg: next trustdb check due at <span class="token number">2020</span>-12-03
+
+<span class="token punctuation">[</span>+<span class="token punctuation">]</span> keyring installed successfully
+<span class="token punctuation">[</span>+<span class="token punctuation">]</span> updating package databases
+:: Synchronizing package databases<span class="token punctuation">..</span>.
+ core                                      <span class="token number">129.9</span> KiB  <span class="token number">6.34</span> MiB/s 00:00 <span class="token punctuation">[</span>---------------------------------------<span class="token punctuation">]</span> <span class="token number">100</span>%
+ extra                                    <span class="token number">1634.4</span> KiB  <span class="token number">4.09</span> MiB/s 00:00 <span class="token punctuation">[</span>---------------------------------------<span class="token punctuation">]</span> <span class="token number">100</span>%
+ community                                   <span class="token number">5.2</span> MiB  <span class="token number">11.1</span> MiB/s 00:00 <span class="token punctuation">[</span>---------------------------------------<span class="token punctuation">]</span> <span class="token number">100</span>%
+ multilib                                  <span class="token number">154.2</span> KiB  <span class="token number">7.53</span> MiB/s 00:00 <span class="token punctuation">[</span>---------------------------------------<span class="token punctuation">]</span> <span class="token number">100</span>%
+ endeavouros                                <span class="token number">14.2</span> KiB  <span class="token number">0.00</span>   B/s 00:00 <span class="token punctuation">[</span>---------------------------------------<span class="token punctuation">]</span> <span class="token number">100</span>%
+ archlinuxcn                              <span class="token number">1354.5</span> KiB  <span class="token number">11.0</span> MiB/s 00:00 <span class="token punctuation">[</span>---------------------------------------<span class="token punctuation">]</span> <span class="token number">100</span>%
+ blackarch                                   <span class="token number">3.3</span> MiB   <span class="token number">500</span> KiB/s 00:07 <span class="token punctuation">[</span>---------------------------------------<span class="token punctuation">]</span> <span class="token number">100</span>%
+ blackarch.sig                             <span class="token number">566.0</span>   B  <span class="token number">0.00</span>   B/s 00:00 <span class="token punctuation">[</span>---------------------------------------<span class="token punctuation">]</span> <span class="token number">100</span>%<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">Packages <span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span> blackarch-keyring-20180925-2  perl-expect-1.35-6
+
+Total Download Size:   <span class="token number">0.07</span> MiB
+Total Installed Size:  <span class="token number">0.15</span> MiB
+Net Upgrade Size:      <span class="token number">0.00</span> MiB
+
+:: Proceed with installation? <span class="token punctuation">[</span>Y/n<span class="token punctuation">]</span> Y
+:: Retrieving packages<span class="token punctuation">..</span>.
+ blackarch-keyring-20180925-2-any                                                                   <span class="token number">18.1</span> KiB  <span class="token number">0.00</span>   B/s 00:00 <span class="token punctuation">[</span>-----------------------------------------------------------------------------<span class="token punctuation">]</span> <span class="token number">100</span>%
+ perl-expect-1.35-6-any                                                                             <span class="token number">50.9</span> KiB  <span class="token number">1698</span> KiB/s 00:00 <span class="token punctuation">[</span>-----------------------------------------------------------------------------<span class="token punctuation">]</span> <span class="token number">100</span>%
+<span class="token punctuation">(</span><span class="token number">2</span>/2<span class="token punctuation">)</span> checking keys <span class="token keyword">in</span> keyring                                                                                                 <span class="token punctuation">[</span>-----------------------------------------------------------------------------<span class="token punctuation">]</span> <span class="token number">100</span>%
+<span class="token punctuation">(</span><span class="token number">2</span>/2<span class="token punctuation">)</span> checking package integrity                                                                                               <span class="token punctuation">[</span>-----------------------------------------------------------------------------<span class="token punctuation">]</span> <span class="token number">100</span>%
+<span class="token punctuation">(</span><span class="token number">2</span>/2<span class="token punctuation">)</span> loading package files                                                                                                    <span class="token punctuation">[</span>-----------------------------------------------------------------------------<span class="token punctuation">]</span> <span class="token number">100</span>%
+<span class="token punctuation">(</span><span class="token number">2</span>/2<span class="token punctuation">)</span> checking <span class="token keyword">for</span> <span class="token function">file</span> conflicts                                                                                              <span class="token punctuation">[</span>-----------------------------------------------------------------------------<span class="token punctuation">]</span> <span class="token number">100</span>%
+:: Processing package changes<span class="token punctuation">..</span>.
+<span class="token punctuation">(</span><span class="token number">1</span>/2<span class="token punctuation">)</span> upgrading blackarch-keyring                                                                                              <span class="token punctuation">[</span>-----------------------------------------------------------------------------<span class="token punctuation">]</span> <span class="token number">100</span>%
+<span class="token operator">==</span><span class="token operator">></span> Appending keys from blackarch.gpg<span class="token punctuation">..</span>.
+<span class="token operator">==</span><span class="token operator">></span> Locally signing trusted keys <span class="token keyword">in</span> keyring<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key A0917C4147A37007CB54C1CFD295AA940EFDDF62<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 4345771566D76038C7FEB43863EC0ADBEA87E4E3<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key CBA3C7D4798912702DCF568E67D8BDF42AD93F4E<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Locally signing key 8F9A9793CB8591147C2EC70566E0CDBD1E01F333<span class="token punctuation">..</span>.
+<span class="token operator">==</span><span class="token operator">></span> Importing owner trust values<span class="token punctuation">..</span>.
+<span class="token operator">==</span><span class="token operator">></span> Disabling revoked keys <span class="token keyword">in</span> keyring<span class="token punctuation">..</span>.
+  -<span class="token operator">></span> Disabling key 5E210889BBB5C48500E0C4F9C75E985FF8B993B4<span class="token punctuation">..</span>.
+<span class="token operator">==</span><span class="token operator">></span> Updating trust database<span class="token punctuation">..</span>.
+gpg: key 1EB2638FF56C0C53: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+gpg: key 1EB2638FF56C0C53: no user ID <span class="token keyword">for</span> key signature packet of class <span class="token number">10</span>
+
+gpg: public key DB323392796CA067 is <span class="token number">3037</span> days newer than the signature
+gpg: marginals needed: <span class="token number">3</span>  completes needed: <span class="token number">1</span>  trust model: pgp
+gpg: public key CF66D153D884358F is <span class="token number">16</span> seconds newer than the signature
+gpg: depth: <span class="token number">0</span>  valid:   <span class="token number">1</span>  signed:  <span class="token number">56</span>  trust: <span class="token number">0</span>-, 0q, 0n, 0m, 0f, 1u
+gpg: depth: <span class="token number">1</span>  valid:  <span class="token number">56</span>  signed:  <span class="token number">81</span>  trust: <span class="token number">1</span>-, 0q, 0n, 55m, 0f, 0u
+gpg: depth: <span class="token number">2</span>  valid:  <span class="token number">77</span>  signed:  <span class="token number">26</span>  trust: <span class="token number">77</span>-, 0q, 0n, 0m, 0f, 0u
+gpg: next trustdb check due at <span class="token number">2020</span>-12-03
+<span class="token punctuation">(</span><span class="token number">2</span>/2<span class="token punctuation">)</span> upgrading perl-expect                                                                                                    <span class="token punctuation">[</span>-----------------------------------------------------------------------------<span class="token punctuation">]</span> <span class="token number">100</span>%
+:: Running post-transaction hooks<span class="token punctuation">..</span>.
+<span class="token punctuation">(</span><span class="token number">1</span>/2<span class="token punctuation">)</span> Arming ConditionNeedsUpdate<span class="token punctuation">..</span>.
+<span class="token punctuation">(</span><span class="token number">2</span>/2<span class="token punctuation">)</span> Warn about old perl modules
+:: Searching databases <span class="token keyword">for</span> updates<span class="token punctuation">..</span>.
+:: Searching AUR <span class="token keyword">for</span> updates<span class="token punctuation">..</span>.
+ -<span class="token operator">></span> python-pgspecial: <span class="token builtin class-name">local</span> <span class="token punctuation">(</span><span class="token number">1.11</span>.10-2<span class="token punctuation">)</span> is newer than blackarch <span class="token punctuation">(</span><span class="token number">1.11</span>.10-1<span class="token punctuation">)</span>
+ there is nothing to <span class="token keyword">do</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>事实证明还是得看官方文档解决问题，以后直接看官方文档啊同志们！</p>
+<p>一堆过时文档害人啊！</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0JsYWNrQXJjaC9ibGFja2FyY2g=">https://github.com/BlackArch/blackarch<i class="fa fa-external-link-alt"></i></span>  </li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cuYmxhY2thcmNoLm9yZy9kb3dubG9hZHMuaHRtbCNpbnN0YWxsLXJlcG8=">https://www.blackarch.org/downloads.html#install-repo<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9ibGFja2FyY2gub3JnL2JsYWNrYXJjaC1ndWlkZS16aC5wZGY=">BlackArch Linux指南（中文翻译）<i class="fa fa-external-link-alt"></i></span></li>
+</ol>
+]]></content>
+      <categories>
+        <category>不务正业系列</category>
+      </categories>
+      <tags>
+        <tag>blackarch</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>又被Docker坑了（其实是被Yaml坑了</title>
     <url>/aware-docker-yaml/</url>
     <content><![CDATA[<p>大聪明yaml将60以下的数字识别成60进制，所以需要用引号括起来。自作聪明程度直追Excel将身份证号识别成科学计数法然后直接末尾四位变零。<br>珍爱生命，远离yaml  </p>
+<p>更新：发现了一个网站：<span class="exturl" data-url="aHR0cHM6Ly9ub3lhbWwuY29tLw==">https://noyaml.com/<i class="fa fa-external-link-alt"></i></span></p>
 ]]></content>
       <tags>
         <tag>Docker</tag>
@@ -826,7 +1099,7 @@ The command is executed with a ‘-’ prepended to its argv[0] string.<span ari
       </tags>
   </entry>
   <entry>
-    <title>新年开箱一个Canokey Pigeon</title>
+    <title>新年开箱一个 Canokey Pigeon</title>
     <url>/canokey-pigeon-unboxing/</url>
     <content><![CDATA[<p>迟来的开箱，本来以为快递1号当天能到的，结果晚了一点。不管怎么说，元旦快落！</p>
 <span id="more"></span>
@@ -841,7 +1114,8 @@ The command is executed with a ‘-’ prepended to its argv[0] string.<span ari
 <p>国内大多数网站不支持，不过Google帐号之类的还是可以的。Webauthn有FIDO2会用FIDO2,没有会去用U2F。</p>
 <p>2.NFC</p>
 <p>打开了一直关闭的iphone NFC功能试了一下，然而没有成功。据说这一批的确不太行，可能还不如之前的透明探索版。见<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nhbm9rZXlzL2Nhbm9rZXktcGlnZW9uL2Rpc2N1c3Npb25zLzQ=">对 NFC 的一些说明和建议<i class="fa fa-external-link-alt"></i></span>。</p>
-<p>更新：读取成功了！弹出提示 网站NFC标签 “在Safari浏览器中打开”canokeys.org””（当然，没有webUSB，console用不了），NFC Tools成功读到标签类型和序列号。试了一下Google的两步验证，登陆成功。<br>iphone读NFC的位置非常靠上，大概在刘海屏的背面那里，其他位置读不到。  </p>
+<p>更新：读取成功了！弹出提示 网站NFC标签 “在Safari浏览器中打开”canokeys.org””（当然，没有webUSB，console用不了），NFC Tools成功读到标签类型和序列号。试了一下Google的两步验证，登陆成功。<br>iphone读NFC的位置非常靠上，大概在刘海屏的背面那里，其他位置读不到。 </p>
+<p>更新：如果NFC不好使请试试：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nhbm9rZXlzL2Nhbm9rZXktcGlnZW9uL2Rpc2N1c3Npb25zLzY=">NFC修复指南<i class="fa fa-external-link-alt"></i></span></p>
 <p>3.sudo免密码</p>
 <p>可以装<code>pam_u2f</code>实现，配置方式见<span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvdGl0bGUvVW5pdmVyc2FsXzJuZF9GYWN0b3I=">Universal_2nd_Factor ArchWiki<i class="fa fa-external-link-alt"></i></span>。不过还是建议不要sudo免密，在恍惚走神的状态下使用sudo容易酿成大祸。有的时候确认处在清醒状态直接<code>sudo su -</code>临时操作一下就好了。</p>
 <p>4.放密钥</p>
@@ -1242,6 +1516,138 @@ debtap -p XXX.deb <span class="token comment"># -p 选项生成PKGBUILD</span>
       <tags>
         <tag>AUR</tag>
         <tag>Archlinux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>死灰复燃的传统医学</title>
+    <url>/curse-of-traditional-medicine/</url>
+    <content><![CDATA[<p>舆论的阵地，你不占领，鸿茅药酒就要来占领。</p>
+<span id="more"></span>
+
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>其实这些我是不想写的，<strong>奈何舆论的阵地，你不占领，鸿茅药酒就要来占领</strong>。</p>
+<p>当江湖骗子在街头和电视卖假药的时候，可以不必浪费时间跟他们纠缠。当骗子们拥有约谈封号、跨省抓人的、进小学课本、进国药准字、上央视推荐、大幅掏空医保的势力时，随便一个药企能拿出几亿的广告费颠倒黑白的时候，再不反击，就没机会了。</p>
+<h2 id="如何面对传统医学拥趸"><a href="#如何面对传统医学拥趸" class="headerlink" title="如何面对传统医学拥趸"></a>如何面对传统医学拥趸</h2><p>网上冲浪几年一点不成熟的小建议：</p>
+<p>不要浪费太多时间在没法被说服的人身上。<br>看看是不是真傻还是不慎被骗了能抢救一下，真·信中医 又跟你没多少关系的直接拉黑。<br>七大姑八大姨等家人能劝就劝吧，劝不了随他们去吧。<br>中医学生、从业人员、利益相关的企业，别跟他们吵，他们心里门清，直接拉黑！</p>
+<h2 id="称谓问题"><a href="#称谓问题" class="headerlink" title="称谓问题"></a>称谓问题</h2><blockquote>
+<p>这不是真正的中医</p>
+</blockquote>
+<p>就像每一个温和的穆斯林教徒在恐怖分子boom之后说“这不是真正的穆斯林”，很多中医粉在争辩不过别人的时候也会撒泼打滚，“那是你没见过真正的中医，那是庸医”。</p>
+<p>所以我不打算讨论到底什么是真正的中医。</p>
+<p>按照循证医学的说法是可以分为</p>
+<ul>
+<li>经验医学</li>
+<li>循证医学</li>
+</ul>
+<p>这种分类法没有给宗教巫术和玄学骗子留位置（很多东西患者认为这是医学、国家也声称这是医学、骗子也管这个叫医学），而且循证医学/经验医学的标准争议本来就比较大，这里暂不讨论这些东西。</p>
+<p>这里我主要用下面这种说法，这是我感觉最好的一种说法，就像“传统武术”一样：</p>
+<ul>
+<li>现代医学</li>
+<li>传统医学</li>
+</ul>
+<p>当然传统医学很有可能比现代医学年轻得多，就像街边号称百年老店和传统武术，实际只是商家骗子们自己发明的，实际历史只有三十年，比我大不了多少。不过大家乐于称其为“传统XX”，各方都能接受的说法。<br>当然平时你是看不到上面那些说法的，国内通用的分类方法是：</p>
+<ul>
+<li>中医</li>
+<li>西医</li>
+</ul>
+<p>这是一百年前把土豆叫做“洋芋”，把水泥叫做“洋灰”那个时候一直遗留下来的叫法，这是最差的一种分类法。硬生生搞出中医/西医的区别，无数人为了到底什么是中医争执不休。当然还附带绑定了政治化和民族色彩，否定中医会被扣上崇洋媚外的帽子，粉红和公知纷纷下场参战。</p>
+<h2 id="止步不前的中医"><a href="#止步不前的中医" class="headerlink" title="止步不前的中医"></a>止步不前的中医</h2><p>首先中医医师资格考试要求低，然后考研分数低，开诊所要求低，中药中成药上市标准低，中医临床研究要求低。</p>
+<p>当然国内西医的现代化进程也没好到哪去，作为实验性极强的学科，统计和数理逻辑稀烂。就我所见，医学生的数理水平不仅不如生化环材四大天坑，可能连文科都不如。背书背傻了已经。我亲身经历你电医学院某华西毕业的老师（从本科到博士到工作全都是公卫）在医学统计课上吹捧中医（以及吹捧钟南山）。上课只会念PPT，所有的公式全都不推导，记住就行了。背就完事了。</p>
+<p>真的，医学就应该必修高等数学，免得<span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzIwMzM3MTMyL2Fuc3dlci8yNjM0NTUxNjI=">重新发明微积分<i class="fa fa-external-link-alt"></i></span>，让人看笑话。<br>美帝那种，医学硕士必须要理学学位，至少不会背书背傻。</p>
+<p>当然，最要命的还是私藏本事和不容批评。一代不如一代。</p>
+<blockquote>
+<p>他们黑中医！<br>他们是怎么黑中医的？<br>他们把中医干过的事和典籍上的内容又说了一遍。</p>
+</blockquote>
+<p>举秀才，不知书<br>举孝廉，父别居<br>寒素清白浊如泥<br>高第良将怯如鸡</p>
+<h2 id="巫医的次生灾害"><a href="#巫医的次生灾害" class="headerlink" title="巫医的次生灾害"></a>巫医的次生灾害</h2><h3 id="危害野生动植物"><a href="#危害野生动植物" class="headerlink" title="危害野生动植物"></a>危害野生动植物</h3><p>由于传统医学没能用阴阳五行</p>
+<h3 id="危害化石和考古"><a href="#危害化石和考古" class="headerlink" title="危害化石和考古"></a>危害化石和考古</h3><p>连化石都不放过。</p>
+<h3 id="危害青少年身体健康"><a href="#危害青少年身体健康" class="headerlink" title="危害青少年身体健康"></a>危害青少年身体健康</h3><p>很多人不是脑子不好使信中医，小时候被脑子不好使的父母带着吃中药，结果吃出肾衰竭。<br>你说巫医只危害</p>
+<h3 id="挑拨医患关系"><a href="#挑拨医患关系" class="headerlink" title="挑拨医患关系"></a>挑拨医患关系</h3><p>患者不信任现代化工品、医药、医学仪器（核磁共振什么的最有辐射啦！），病人质疑西医跑过来医闹你们中医/藏医/苗医/跳大神的没少过来挑拨矛盾吧</p>
+<h3 id="抢功劳"><a href="#抢功劳" class="headerlink" title="抢功劳"></a>抢功劳</h3><p>“你看，我就说医生没用吧”，信神去了，上帝保佑、我佛慈悲、菩萨显灵。毕竟楚俗信巫不信医。</p>
+<h3 id="疫情"><a href="#疫情" class="headerlink" title="疫情"></a>疫情</h3><p>来来来，请连花清瘟和板蓝根开始你的表演。</p>
+<h2 id="为什么要写这个"><a href="#为什么要写这个" class="headerlink" title="为什么要写这个"></a>为什么要写这个</h2><p>这几年借着“伟大复兴”，国学乡贤死灰复燃。当然中医也不甘寂寞，不仅国家鼓励医保开中成药，甚至直接进入了中小学教材，还企图立法打击中医黑。</p>
+<p>不仅中医，藏医、苗医都冒出来了，甚至蒙医都能死灰复燃（蒙古大夫都成神医了）。</p>
+<p>有些噶韭菜市场和安慰剂市场是客观存在的，你不去占领，别人也要去占领。打倒了封建迷信，人们考前不去拜孔老二，照样要去朋友圈转发锦鲤；不信生辰八字，照样要去信星座。韭菜不被老中医的神药骗，也要被量子治疗和纳米保健骗。</p>
+<blockquote>
+<p>中医确实能通过缩短寿命来解决老龄化问题，而且缩短寿命这些人都真心相信中医有用，这一点现代医学无论如何做不到</p>
+</blockquote>
+<p>你看，信中医的人就去信，不信的也不浪费时间和生命跟他们吵，井水不犯河水不好吗？。然而世上远没有这种好事，这些东西和宗教一样，得寸进尺，贪婪无厌。见过很多医生都是知道怎么回事，但是以多一事不如少一事的态度在和稀泥看戏，反正事不关己高高挂起。<br>这是不行的，这样下去，今天说中医两句不来找你 好被中医粉举报封号了，明天你就发现乱说一句就违法跨省了；后天就变成依法抓人了；大后天不用跨省了，你说一句钟南山和中医的不好人民群众当场将你打倒。</p>
+<p>那独善其身不好吗，嗯，对于5G这种态度是可行的。</p>
+<blockquote>
+<p>我也这么认为。</p>
+<p>但有些事情想的太透，反而会让自己觉得无力。</p>
+<p>如果看到下面这些话术，笑笑就好，别尝试反驳，没用的。</p>
+<ul>
+<li>5G在民用感知不到，主要应用在工业。</li>
+<li>新技术出来受到质疑很正常，那些说5G没用的人，到时候又会真香了。</li>
+<li>2G是文字、3G是图片、4G是视频、5G是VR和物联网等等。</li>
+<li>美国抵制华为，是害怕了华为的5G，你比美国总统聪明？</li>
+<li>现在没有需求很正常，等5G铺设好，自然就有需求了。</li>
+<li>古人也觉得枪炮没用、以前的人也觉得马车比汽车好、等等。</li>
+<li>5G的应用在VR、AR、自动驾驶、远程医疗、物联网等等。（最经典）</li>
+<li>5G里面有支持到一些较低的频段，所以以后5G覆盖小的问题能解决的。</li>
+<li>速度只是5G最无聊的应用。</li>
+<li>等iPhone出5G手机，那些说5G没用的人就会真香了。</li>
+<li>未来4K、8K流媒体需要5G。</li>
+<li>AR、VR需要5G。</li>
+<li>云电脑需要5G，等以后5G普及了，只要一个屏幕就能用了，连处理器都不需要。</li>
+<li>5G普及之后，资费就下降了。</li>
+<li>短视频是4G催生的。</li>
+</ul>
+<p>这些应该能够覆盖到八九成吹5G的人的常用话术了。当然<strong>以上话术都能够证伪。</strong></p>
+<p>记住，<strong>不要尝试反驳，他们比你想的要闲，你说再多作证，他们也当作没看到，不要和他们聊关于网速的常识，他们转眼就忘了，当他们吹无可吹就扯未来不可期。除了被他们气的胸闷，啥都捞不着。</strong></p>
+</blockquote>
+<p>菊花再怎么折腾，反正运营商基站电费亏爆了套餐提价每个月流量费大不了多花十几块钱，犯不着为了这点钱在网上跟人吵架。</p>
+<p>但是这种事情怎么说呢？你不去骂中医，中医也要来找你，躲是躲不过的。就危害程度，传统医学的鼓吹者和信徒们大致和爱狗人士相当：</p>
+<ul>
+<li><p>你看深圳这不是立法禁食狗肉了。</p>
+</li>
+<li><p>你看这信徒完全不讲理的态度</p>
+</li>
+<li><p>你看这救助站和爱心捐款疯狂骗小清新的钱</p>
+</li>
+<li><p>你看这危害人身安全</p>
+</li>
+<li><p>你看这动不动上纲上线西方文明封建陋习</p>
+</li>
+</ul>
+<p>当然不排除将来演变成类似八十年代气功之类的东西，邪恶程度和道教佛教相当，略弱于杀灭一切异端的伊斯兰基督犹太等沙漠神教。</p>
+<p>传统医学的利益集团已经成型，</p>
+<p><span class="exturl" data-url="aHR0cDovL3d3dy5nb3YuY24vemhlbmdjZS9jb250ZW50LzIwMjEtMDIvMDkvY29udGVudF81NTg2Mjc4Lmh0bQ==">国务院办公厅印发关于加快中医药特色发展若干政策措施的通知<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9ib29rLmRvdWJhbi5jb20vc3ViamVjdC8zMDMxMTgxNi8=">荒诞医学史(Quackery : A Brief History of the Worst Ways to Cure Everything)<i class="fa fa-external-link-alt"></i></span></p>
+<p>各位中医，抢功劳无妨，但请不要无辜送死</p>
+<h2 id="众生百态"><a href="#众生百态" class="headerlink" title="众生百态"></a>众生百态</h2><h3 id="电视"><a href="#电视" class="headerlink" title="电视"></a>电视</h3><p>电视没什么疑问，是各路骗子（倒也不仅仅是打着传统医学旗号的骗子，莎普爱思之类的看起来像西医的骗子也挺多）和中医的主要阵地。</p>
+<h3 id="网上冲浪所见"><a href="#网上冲浪所见" class="headerlink" title="网上冲浪所见"></a>网上冲浪所见</h3><p>这里仅凭个人印象和观察记录一下</p>
+<p>微信朋友圈是养生营销号和各种uc震惊体文章的聚集地，长辈最爱，不说了。</p>
+<p>在中医、一些保健品</p>
+<p>近几年反中医的阵地大概是丁香园等医学论坛</p>
+<p>作为反中医的前沿阵地一到了疫情和钟南山之类的话题下也崩了</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzM4MTg2NzEzMw==">如何看待我国用中药（连花清瘟胶囊）支援意大利？<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzM4NzgxNDkxOA==">如何看待钟南山院士认为中药对新冠肺炎有效？<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzM3OTU5MTE2Nw==">如何看待钟南山向欧洲推荐中药连花清瘟胶囊与六神丸？<i class="fa fa-external-link-alt"></i></span></p>
+<p>只有在这些具体到某些问题开始拿出证据和事例吵的时候知乎才能扳回一城: </p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzQyNTg4NTAwMQ==">钟南山团队体外研究发现「白云山复方板蓝根对新冠病毒有效」，体外研究是什么？白云山板蓝根疗效如何？<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzM5NTM1ODk1Ny9hbnN3ZXJzL3VwZGF0ZWQ=">如何看待钟南山否认商业代言传闻?<i class="fa fa-external-link-alt"></i></span></p>
+<h2 id="习惯的形成"><a href="#习惯的形成" class="headerlink" title="习惯的形成"></a>习惯的形成</h2><p>观察一下观念、习惯是如何形成和演变的。很多观念都是这样的：不知道为什么，但是感觉做了没错，也没什么大危害，别人都在做我也这样吧。</p>
+<h3 id="口罩"><a href="#口罩" class="headerlink" title="口罩"></a>口罩</h3><p>现在有一个很近的例子，口罩。清零了为什么还要带口罩，不带口罩不能坐公交、进商场？下地干活怎么还逼人家带口罩。<br>我不管，反正你就得戴口罩。</p>
+<h3 id="眼保健操"><a href="#眼保健操" class="headerlink" title="眼保健操"></a>眼保健操</h3><p>眼保健操是一个挺有意思的现象。眼保健操找不到任何科学根据，然而就是在全国中小学推广了，谁不做就是不爱护视力。</p>
+<p>眼保健操不仅没用，甚至还可能因为因为脏手离眼睛太近感染结膜炎。（别问我怎么知道的，我初中滴了一个月眼药水才好）</p>
+<p>你以为教育部不知道？</p>
+<p><span class="exturl" data-url="aHR0cDovL25ld3MuY250di5jbi8yMDEyMDcxOS8xMDg1NjMuc2h0bWw=">央视网：教育部:眼保健操有科学依据 新版动作能避免感染<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL2VkdS5wZW9wbGUuY29tLmNuL24vMjAxMi8wNzE4L2MxMDA2LTE4NTQxNDYxLmh0bWw=">人民网 教育部回应“残害”说：眼保健操有科学依据<i class="fa fa-external-link-alt"></i></span>  </p>
+<p>教育部，你__什么时候死啊？</p>
+<p>ps：如果青少年想保护视力，每天出去多晒点太阳</p>
+<h2 id="好日子还在后头呢"><a href="#好日子还在后头呢" class="headerlink" title="好日子还在后头呢"></a>好日子还在后头呢</h2><p>当然这里我是指<strong>国药准字Z</strong></p>
+<p>在试行第四版和第五版中，血必净注射液（简称：血必净）在西医治疗方案中被推荐用于治疗重型和危重型病例，在中医治疗方案中被推荐用于中期“疫毒闭肺”和重症期“内闭外脱”两个证候的治疗。同期，由钟南山院士等呼吸及重症医学专家组成的课题组，紧急启动了“血必净治疗新冠肺炎疗效的前瞻性多中心临床研究”。</p>
+<p>中国日报3月13日电（记者 吴勇 苏峰）中央指导组专家组成员、东南大学附属中大医院副院长邱海波说，中药血必净注射剂对新冠肺炎患者效果良好。相关研究表明，血必净注射液能够对冠状病毒导致的炎症因子风暴或者炎症反应有抑制作用，对新型冠状病毒也有一定的抑制作用。“在单臂队列研究中，血必净注射剂联合常规治疗，在新冠重型病人的治疗中有效率较高，肺炎严重指数（PSI）有所改善，(但严重程度相同的重症患者对照组结果尚需进一步统计分析)。”邱海波说。</p>
+<p>2019年6月，《重症医学》（Critical Care Medicine,CCM）在线发表了由上海市呼吸病研究所、复旦大学附属中山医院白春学教授与北京中医药大学东直门医院商洪才研究员为共同通讯作者，复旦大学附属中山医院呼吸科宋元林教授为第一作者的《血必净注射液治疗重症社区获得性肺炎疗效的随机对照试验》研究论文。</p>
+<p>作者：极萨学院冷哲<br>链接：<span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzM3OTU5MTE2Ny9hbnN3ZXIvMTExMjM2NTIxOQ==">https://www.zhihu.com/question/379591167/answer/1112365219<i class="fa fa-external-link-alt"></i></span></p>
+<p>血必净<br>如何看待知乎用户立党质疑钟南山院士的天津红日血必净对新冠肺炎的治疗效果? - 迷幻布鲁琪的回答 - 知乎<br><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzM5MzAyMTYwNy9hbnN3ZXIvMTIwNjA3MTgyMA==">https://www.zhihu.com/question/393021607/answer/1206071820<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cubWVkc2NpLmNuL2FydGljbGUvc2hvd19hcnRpY2xlLmRvP2lkPWZiMzkxMDkwNjNkOQ==">新版中医药教材发布，将纳入中小学课本！<i class="fa fa-external-link-alt"></i></span></p>
+<p>开展<em>中医**药</em>文化宣传和知识普及活动，应当遵守国家有关规定，符合<em>中医**药</em>文化内涵和发展规律。任何组织或者个人<em>不得</em>对<em>中医**药</em>作虚假、夸大宣传；<em>不得</em>冒用<em>中医**药</em>名义牟取不正当利益、损害社会公共利益；<em>不得</em>以任何方式或行为<em>诋毁</em>、<em>污蔑<strong>中医</strong>药</em></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuZHh5LmNuL2Jicy9uZXd3ZWIvcGMvcG9zdC8zNDY5NzE2Mg==">反中医被丁香园封号了，丁香园不是说宣传科学吗？<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8zMTg2MTgzMQ==">冷眼：中药批准将不需临床试验，医保撑不住了，廉价中药全面替代西药！<i class="fa fa-external-link-alt"></i></span>  </p>
+]]></content>
+      <tags>
+        <tag>医药</tag>
+        <tag>中医</tag>
       </tags>
   </entry>
   <entry>
@@ -1755,9 +2161,112 @@ autorandr --save test1<span aria-hidden="true" class="line-numbers-rows"><span><
       </tags>
   </entry>
   <entry>
+    <title>使用 Go Multi-Module Workspace：本地可以愉快的replace了</title>
+    <url>/go-multi-module-workspace/</url>
+    <content><![CDATA[<p>昨天go2:1.18终于发布了，万众期待的泛型终于来了。不过我一直期待的是 go mod 的改动，新增了workspace和go vendor那几个命令不再默认更新<code>go.mod</code>和<code>go.sum</code>，不用再苦哈哈的replace和固定版本了。<br><del>然而这并不能改变go包管理器依旧鸡肋的现状</del></p>
+<span id="more"></span>
+
+<h2 id="终于等到workspace"><a href="#终于等到workspace" class="headerlink" title="终于等到workspace"></a>终于等到workspace</h2><p>之前用 go module 我们有各种奇奇怪怪的理由要用replace：</p>
+<ol>
+<li>我在本地新建了一个项目，然后我<code>go mod init github/archaeoraptor/XXX</code>， 但是我暂时不想push上去</li>
+<li>写的比较乱我暂时不想commit</li>
+<li>用到了别人的依赖但是我魔改了点内容</li>
+<li>哎哎哎，go mod tidy 怎么自动把我modules版本升上去了，我不想升啊</li>
+<li>我想把github上面的私有项目迁移到gitea，想把url换成这个</li>
+</ol>
+<p>我自己写就在<code>go.mod</code>里面replace就好了，手写几行 replace 又不是太麻烦的事情。<br>然而我和我室友一起写点项目的时候麻烦就来了，replace 的本地路径不一样，我是<code>/home/xxx/xxx</code>，他是<code>C:\XXX\XXX</code>，这样在 commit 的时候就有问题。但是把<code>go.mod</code>放到<code>.gitignore</code>里面忽略掉又不好。</p>
+<p>如果有一个像vscode那样的workspace，workspace中的本地json设置可以覆盖全局的json设置就好了。</p>
+<h2 id="go-work-使用"><a href="#go-work-使用" class="headerlink" title="go work 使用"></a>go work 使用</h2><p>举例说明一下, 新建一个叫hello的repo, hello.go和main.go内容:</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">//hello.go</span>
+<span class="token keyword">package</span> hello
+
+<span class="token keyword">import</span> <span class="token punctuation">(</span>
+    <span class="token string">"fmt"</span>
+<span class="token punctuation">)</span>
+
+<span class="token keyword">func</span> <span class="token function">Hello</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"Hello, World!"</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">// main.go</span>
+<span class="token keyword">package</span> main
+
+<span class="token keyword">import</span> <span class="token string">"github.com/archaeoraptor/hello"</span>
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    hello<span class="token punctuation">.</span><span class="token function">Hello</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>如果你想不commit和push, 也不想修改go.mod文件加入replace，在本地能跑，那么需要将这两个文件放到同一个 go module 里面：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ go mod init github.com/archaeoraptor/hello_repo
+$ tree
+<span class="token builtin class-name">.</span>
+├── go.mod
+├── hello
+│   ├── go.mod
+│   └── hello.go
+└── main.go<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>repo根目录的<code>go.mod</code>:</p>
+<pre class="line-numbers language-none"><code class="language-none">module github.com&#x2F;archaeoraptor&#x2F;hello_repo
+
+go 1.18<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>这个时候不commit并push到远程，直接执行<code>go run main.go</code>是可以正常运行出<code>Hello, World!</code>的。</p>
+<p>不过有的时候我们想要设置嵌套模块(nested modules)或者一个repo里面多个module（<strong>比如万恶的grpc，一个项目里面可能要依赖不同版本的grpc</strong>, 这时候就需要一个项目中多个<code>go.mod</code>来兼容不同的版本）</p>
+<p>如果你想给hello单独设为嵌套模块<br>目录结构变成这样:</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">module github.com/archaeoraptor/hello
+
+go <span class="token number">1.18</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>此时：hello目录的<code>go.mod</code>长这样：</p>
+<pre class="line-numbers language-none"><code class="language-none">module github.com&#x2F;archaeoraptor&#x2F;hello&#x2F;hello
+
+go 1.18<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>此时我们还没有上传，就会报错<code>go: finding module for package github.com/archaeoraptor/hello/hello  ... fatal: repository &#39;https://github.com/archaeoraptor/hello/&#39; not found</code>或者<code>can&#39;t request version &quot;latest&quot; of the main module (github.com/archaeoraptor/hello)</code></p>
+<p>这个时候我们以前会改<code>go.mod</code>用replace替换成本地的：</p>
+<pre class="line-numbers language-config" data-language="config"><code class="language-config">module github.com&#x2F;archaeoraptor&#x2F;hello
+
+go 1.18
+
+require github.com&#x2F;archaeoraptor&#x2F;hello&#x2F;hello v0.0.0-20220318143722-96fbd621879d
+
+replace github.com&#x2F;archaeoraptor&#x2F;hello&#x2F;hello &#x3D;&gt; ..&#x2F;hello&#x2F;hello<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>有了workspace，可以将replace写在<code>go.work</code>中，然后将<code>go.work</code>添加到<code>.gitignore</code>。这样不同人对replace的更改就不会影响repo中的<code>go.mod</code>了</p>
+<p>新建workspace(在module的外层目录)</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go">cd <span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token keyword">go</span> work init <span class="token punctuation">.</span><span class="token operator">/</span>hello<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>会产生一个<code>go.work</code>文件夹，加入replace</p>
+<pre class="line-numbers language-none"><code class="language-none">go 1.18
+
+use .&#x2F;hello
+
+replace github.com&#x2F;archaeoraptor&#x2F;hello&#x2F;hello &#x3D;&gt; .&#x2F;hello&#x2F;hello<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="终于不再默认更新依赖"><a href="#终于不再默认更新依赖" class="headerlink" title="终于不再默认更新依赖"></a>终于不再默认更新依赖</h2><p>1.18终于更改了之前<code>go mod vendor</code>等命令默认更新<code>go.mod</code>和<code>go.sum</code>的迷惑行为。</p>
+<p>什么？这难道不好吗？理论上来说这很好，如果这些包都按照语义化版来。但是有的包它不讲武德，小版本升级有breaking changes，最爱干这种事的还不是那些野鸡包，<strong>就是是谷歌自家的grpc</strong></p>
+<p>按照语义化版本号一般的习惯，只有大版本更新（v1更新到v2, v2更新到v3）才有 breaking changes， 小版本的更新是向下兼容的（v1.1更新到v1.2），grpc基本每次小版本更新总有 breaking changes。我好几次arch滚出问题都是因为grpc。</p>
+<p>每次想执行<code>go mod vendor</code>等命令的时候，之前为了不让它自动更新<code>go.mod</code>的依赖版本，只能用各种扭曲的办法，比如加<code>-mod=readonly</code>参数。</p>
+<h2 id="闲话包管理器"><a href="#闲话包管理器" class="headerlink" title="闲话包管理器"></a>闲话包管理器</h2><p>相比广为诟病的错误处理啊，没有泛型啊，我一直觉得go的包管理器是个更麻烦的问题。包管理器的问题很容易成为历史包袱的。包管理器一开始留下的问题，再想改就很麻烦，有兴趣可以看看npm之类的历史包袱。</p>
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><span class="exturl" data-url="aHR0cHM6Ly9nby5kZXYvZG9jL3R1dG9yaWFsL3dvcmtzcGFjZXM=">Tutorial: Getting started with multi-module workspaces<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2dvbGFuZy9nby9pc3N1ZXMvNDU3MTM=">https://github.com/golang/go/issues/45713<i class="fa fa-external-link-alt"></i></span>  </p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3RoZXB1ZGRzL2dvLW1vZHVsZS1rbm9icy9ibG9iL21hc3Rlci9SRUFETUUubWQ=">go-module-knobs<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9lbmNvcmUuZGV2L2d1aWRlL2dvLm1vZA==">Go modules cheat sheet<i class="fa fa-external-link-alt"></i></span>  </p>
+<h3 id="包管理器相关"><a href="#包管理器相关" class="headerlink" title="包管理器相关"></a>包管理器相关</h3><p><span class="exturl" data-url="aHR0cHM6Ly93eHNtLnNwYWNlLzIwMjEvbnBtLWhpc3Rvcnkv">Node.js 包管理器发展史<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9nby5nb29nbGVzb3VyY2UuY29tL3Byb3Bvc2FsLysvbWFzdGVyL2Rlc2lnbi80NTcxMy13b3Jrc3BhY2UubWQ=">Proposal: Multi-Module Workspaces in cmd/go<i class="fa fa-external-link-alt"></i></span>   </p>
+]]></content>
+      <categories>
+        <category>Concurrency&amp;Go</category>
+      </categories>
+      <tags>
+        <tag>go</tag>
+        <tag>workspace</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>从KDE迁移到i3，顺便说说Linux桌面(DE)和窗口管理器（WM）</title>
     <url>/migrating-from-kde-to-i3/</url>
-    <content><![CDATA[<p>逐渐开始认同Keep it Simple, Stupid</p>
+    <content><![CDATA[<p>这样又将一部分鼠标干的活还给了键盘。</p>
 <span id="more"></span>
 
 <p>前一阵不是KDE 25周年吗，然后KDE推出了25周年纪念版，从这开始的几个版本，小问题不断。迫害GNOME是KDE群友的传统艺能，然而，最近似乎KDE用户受到的迫害比GNOME还多。KDE怎么会变成了这个样子？ 于是决定从KDE先迁移到i3之类的wm去。（当然，最主要的原因是我逐渐不需要一个完整DE的那么功能了）</p>
@@ -2165,6 +2674,89 @@ p <span class="token operator">=</span> x
       </tags>
   </entry>
   <entry>
+    <title>重装Ubuntu</title>
+    <url>/2d5/</url>
+    <content><![CDATA[<p>祖传服务器传到了我的手里, 行吧。其实我想把标题改成Ubuntu内部错误的解决办法（不是</p>
+<span id="more"></span>
+
+<h2 id="更新（和洗手）"><a href="#更新（和洗手）" class="headerlink" title="更新（和洗手）"></a>更新（和洗手）</h2><p>19年写的这个20年不知道怎么在2020年有一段时间被扔到了<code>重装Ubuntu</code>搜索结果的最前面，我这个小破站访问量暴增。然而那个时候20.04LTS都出了，已经有点过时了，而我19年那会写的那个几乎属于个人吐槽，差不多是我博客迁到，完全不适合作为一个教程。可能骗了很多人进来，</p>
+<p>装什么Ubuntu啊，还是Arch香，群里个个都是人才，说话又好听</p>
+<p><img src="/2d5/1611832700.webp"></p>
+<p><del>但是随便装个Ubuntu不仅快，他们跑深度学习的时候抄CSDN配置环境也方便</del></p>
+<p><del>最重要的，又不是我用。</del></p>
+<p><del>GNOME内存泄漏关我什么事</del></p>
+<p><del>Ubuntu内部错误关我什么事</del></p>
+<p>还是去用Ubuntu吧.jpg</p>
+<p><img src="/2d5/1611834396.webp"></p>
+<p><img src="/2d5/1611834449.webp"></p>
+<h2 id="认真发言"><a href="#认真发言" class="headerlink" title="认真发言"></a>认真发言</h2><p>其实你可以试试Debian（Canonical强推snap太烦人了）</p>
+<h3 id="关于桌面（DE）"><a href="#关于桌面（DE）" class="headerlink" title="关于桌面（DE）"></a>关于桌面（DE）</h3><p>带桌面的版本建议避开Ubuntu的GNOME，那个东西。。。</p>
+<p>可以试试Linux Mint，或者Fedora（这个的GNOME应该比 Ubuntu 16、18 那几个整天内存泄露的GNOME版本稳多了）</p>
+<p>其实我推荐KDE，可以试试Kubuntu（或者KDE Neon？）</p>
+<p>机器配置较差请直接Lubuntu，稳如老狗，除了略简陋没有别的缺点。</p>
+<p>一众WM用户应该不会搜索这么蠢的关键词搜到我这里来，这里不谈WM了。</p>
+<h3 id="关于服务器"><a href="#关于服务器" class="headerlink" title="关于服务器"></a>关于服务器</h3><p>小作坊没有专职运维和技术支持，其实服务器建议试试Debian或者Ubuntu LTS，Debian stable稳如老狗</p>
+<p><del>众所周知，Debian testing 都比 Ubuntu LTS 稳（注意这个安全更新比较慢，个人用户可以testing，开了公网端口的工作站不要用这个）</del></p>
+<p>不过Ubuntu和CentOS6、7比起来，还是瞬间和蔼可亲了不少</p>
+<p>求求新入坑的别再跟着什么鸟哥私房菜之类的老教程用CentOS了，2020年 CentOS 8 都被扬了，REHL马上就要给小作坊免费了，小作坊真迷信稳定上REHL吧。</p>
+<p>没事不要用所谓稳定的老版本然后找不到包只能自己手动编译，就不说c/c++那一堆lib了，我已经见过不少人在编译python的时候没开ssl当场翻车。</p>
+<p>什么你说容器？你试过在CentOS6上面弄Docker和k8s吗，我在教研室的祖传阿里云上试过一次，从此再也不想看到CentOS了</p>
+<p>（整天在CentOS上手动编译凸显运维重要性和工作量的除外）</p>
+<h2 id="安装参考"><a href="#安装参考" class="headerlink" title="安装参考"></a>安装参考</h2><p><span class="exturl" data-url="dHRwczovL3R1dG9yaWFscy51YnVudHUuY29tL3R1dG9yaWFsL3R1dG9yaWFsLWluc3RhbGwtdWJ1bnR1LXNlcnZlcg==">tutorial-install-ubuntu-server<i class="fa fa-external-link-alt"></i></span><br> <span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL0xWTV8oJUU3JUFFJTgwJUU0JUJEJTkzJUU0JUI4JUFEJUU2JTk2JTg3KQ==">LVM arch-wiki<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly95ZWFzeS5naXRib29rcy5pby9kb2NrZXJfcHJhY3RpY2UvaW5zdGFsbC91YnVudHUuaHRtbA==">Ubuntu 安装 Docker CE<i class="fa fa-external-link-alt"></i></span>、<span class="exturl" data-url="aHR0cHM6Ly95ZWFzeS5naXRib29rcy5pby9kb2NrZXJfcHJhY3RpY2UvaW5zdGFsbC9taXJyb3IuaHRtbA==">镜像加速器<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cudGVjbWludC5jb20vY29uZmlndXJlLW5ldHdvcmstc3RhdGljLWlwLWFkZHJlc3MtaW4tdWJ1bnR1Lw==">How to Configure Network Static IP Address in Ubuntu 18.04<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9uZXRwbGFuLmlvL2V4YW1wbGVz">netplan官网的配置示例<i class="fa fa-external-link-alt"></i></span></p>
+]]></content>
+      <categories>
+        <category>102网吧日常</category>
+      </categories>
+      <tags>
+        <tag>ubuntu</tag>
+        <tag>重装</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>你好，Manjaro。再见，Manjaro。</title>
+    <url>/ff0e/</url>
+    <content><![CDATA[<p>洗手.jpg</p>
+<span id="more"></span>
+
+<p>虽然有一些办法不重装从Manjaro跑路到Arch，</p>
+<!-- 
+比如reddit上这篇帖子[Guide for Manjaro to Arch migration (the dirty way)](https://www.reddit.com/r/ManjaroLinux/comments/jx42ar/guide_for_manjaro_to_arch_migration_the_dirty_way/)
+ -->
+<p>但是你会遇到各种Manjaro魔改的遗留问题（尤其是加入了相当多魔改的最新版Manjaro,据说很早以前比较容易直接滚成Arch）,<strong>the dirty way</strong>。</p>
+<p>我甚至觉得上面这个方法想得到一个纯净的Arch，难度比你去arch的<span class="exturl" data-url="aHR0cHM6Ly9hcmNoaXZlLmFyY2hsaW51eC5vcmcvaXNvLw==">archive<i class="fa fa-external-link-alt"></i></span>下载一个10年前的iso（真正的有图形界面的arch安装镜像哦，官方的）再借助<span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvdGl0bGUvQXJjaF9MaW51eF9BcmNoaXZl">Arch Linux Archive<i class="fa fa-external-link-alt"></i></span>（Rollback Machine）等一点一点滚到最新都麻烦。（至少去年Arch群友们玩过这个活动，勉强可行）</p>
+<p>直接重装一个原味Arch应该是最快的，也是后遗症最小的。总有人觉得直接不重装换源成Arch比较简单，很遗憾，这其实是最麻烦的一种方法。天上不会掉馅饼。</p>
+<h2 id="更新–再见Manjaro，"><a href="#更新–再见Manjaro，" class="headerlink" title="更新–再见Manjaro，"></a>更新–再见Manjaro，</h2><p>前一阵Manjaro社区出的争吵让我跑路了，Manjaro之前用的还比较舒服（当然直到现在都比较舒服），以后就不知道怎么样了。外面Arch社区骂声一片，里面还总在内斗，不断有人出走，前几周连jonathon都气走了（跑去隔壁endeavour os了）</p>
+<p>jonathon的声明在<span class="exturl" data-url="aHR0cHM6Ly9mb3J1bS5tYW5qYXJvLm9yZy90L2NoYW5nZS1vZi10cmVhc3VyZXItZm9yLW1hbmphcm8tY29tbXVuaXR5LWZ1bmRzLzE1NDg4OA==">这篇帖子<i class="fa fa-external-link-alt"></i></span></p>
+<p>过程大概是这样的，philm（Manjaro的CEO，反正Manjaro社区的不少人都觉得此人非常讨厌）挪用社区赞助捐款2000欧元，用于给自己买的电脑。这次购买并没有跟掌钱管家jonathon商量，也没有在社区内征得同意。jonathon觉得按照规定这钱只能用于Manjaro项目的网站建设、项目推广之类的，不是给你们恰烂钱的，然后在论坛发帖子怼philm，然后帖子被删了一次，jonathon的管理员也被撤了。帖子下面众人纷纷表示philm不回应道歉以后再也不捐助Manjaro了，不少人表示以后再也不用Manjaro了，并考虑跑路到KDE Neon、Kubuntu、Arch、Endeavour OS。</p>
+<p>philm的回应闪烁其辞，一直说事情不是大家想的那个样子的，但是大家怼他让他公布他和jonathon的完整聊天记录他又不肯。最后philm屁事没有继续担任Manjaro的领袖，jonathon跑路去了Endeavour OS。</p>
+<h2 id="再次更新–pamac不慎向aur官网打出了DDoS"><a href="#再次更新–pamac不慎向aur官网打出了DDoS" class="headerlink" title="再次更新–pamac不慎向aur官网打出了DDoS"></a>再次更新–pamac不慎向aur官网打出了DDoS</h2><p>Manjaro的Pamac不小心DDoS了aur.archlinux.org， 每秒40多来自pamac的请求，aur遭到暴击。<br>很喜欢reddit评论里的一句话：Just when I thought I couldn’t hate manjaro any more.</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cucmVkZGl0LmNvbS9yL2FyY2hsaW51eC9jb21tZW50cy9tejNiaXovaXNfdGhlX2F1cl9kb3duX2Zvcl9ldmVyeW9uZS8=">https://www.reddit.com/r/archlinux/comments/mz3biz/is_the_aur_down_for_everyone/<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9naXRsYWIubWFuamFyby5vcmcvYXBwbGljYXRpb25zL3BhbWFjLy0vaXNzdWVzLzEwMTc=">https://gitlab.manjaro.org/applications/pamac/-/issues/1017<i class="fa fa-external-link-alt"></i></span>  </p>
+<h2 id="关于社区文化和商业化"><a href="#关于社区文化和商业化" class="headerlink" title="关于社区文化和商业化"></a>关于社区文化和商业化</h2><p>微软的商业化非常成功，苹果和安卓也是。</p>
+<p>即使Linux桌面发行版这种反商业风气比较浓的地方，商业化也不意味着坏事。</p>
+<p>REHL也还算不错，名声也比较好；Canonical争议比较大，虽然不招Debian等开源社区的喜欢，早年间也算对推广Linux桌面有贡献，后面snap等有点evil化了</p>
+<p>当然，或许还要算上国内的Deepin。（奔着Windows的竞品去的，和其他Linux社区的画风和定位不太一样，倒是和安卓的定位挺像，总不是坏事）</p>
+<p>然而Manjaro的商业化我很不看好，就我目前看到的，对上游没有太多贡献，反而给上游带来了更多的麻烦。而且还有一点，Manjaro挪用社区捐款到公司口袋里面，虽然都是Manjaro，但是这在眼里揉不得沙子的很多开源社区人严重这已经是重罪了。当然，也不全是坏事，就不少人的体验来看，至少用起来比Ubuntu舒服不少。</p>
+<p>红帽的商业化就很成功，一开始就是给企业提供服务器支持等商业化内容，挣了钱反哺Linux社区。Deepin有不少情怀，比某些充满国家经费和金钱气息的发行版好不少，打包了很多deepin-wine也好DDE也好争取到国内不少公司配适Linux也好，都还算不错。Deepin虽然也带来了大量的小白，但是没有涌到Debian等社区去造成很多麻烦。</p>
+<p>我们重温一下“b站或许会倒闭但绝不会变质”的典中典（不知不觉蒙古上单发表重要讲话也一年了，笑）。为什么b站就被骂的这么厉害呢？优酷土豆乐视爱奇艺哪个广告不比这个多，开头的广告还无法跳过。论视频质量和推荐无营养的视频、还有强制使用手机app、以及抄袭和营销号，跟抖音快手比现在的b站已经算良心了吧。<br>就像早期的b站那样，这是一群小圈子和爱好者，首先这不是一个商品，这是一个社区，没多少营销号也没有广告，很多人是倾注心血去做视频的，感情很深，氛围也很好。（国内其他视频网站可能也就被封的内涵段子“段友”（现 皮皮虾）有早期b站用户那样类似的归属感了，什么？a站？a站还活着啊？）<br>当然视频网站的运行成本比较高，靠用爱发电一般做不了很大（就算商业化吃香难看都难免亏损，比如爱奇艺），人多了以后商业化是难免的。</p>
+<p>相信大家都能看到Arch社区对Manjaro用户的态度，不管是在archlinuxcn论坛或者irc、电报，还是在国外的reddit社区等，……*&amp;（*%&amp;&amp;￥人*&amp;……（此处省略500字）</p>
+<p>不少Arch用户和维护者对Manjaro的恶意大概就像b站老用户这样（你看苹果微软不是比Manjaro邪恶多了，但是他们敌视这些的次数可能比Manjaro要少）</p>
+<p>Arch背后没有商业化背景，甚至没有红帽或Canonical这样的公司，然而还是有了比背靠大公司的发行版更多的包（算上野包）和更丰富的wiki(可能没有红帽的wiki好，但是中文翻译多)，这都是Arch的维护者和用户们用爱发电一砖一瓦的心血。它不像Windows和Mac或者红帽的RHEL那样一开始就是一个商品，而且Arch的特点也不太适合做服务器或者商业化。（可能gentoo的商业化用途都比Arch多，还是有一点运维在用gentoo当服务器的）Manjaro的商业化，和原来的社区格格不入。很多地方直接和arch的不少理念和作风背道而驰。<br>不幸的是Manjaro的社区也有不少伸手党，大量安利Manjaro的视频和帖子都只说好用、好看、好安装，绝口不提社区文化和用户责任。（<strong>而且还在教程里让你添加archlinuxcn的源，同时还说Manjaro更稳定</strong>）</p>
+<p>曾经的Arch的ISO有GUI安装界面的（10年前），后来就没了，而官方Wiki上的安装指南也对新手不那么友好了（越来越不友好了）。这里面一个比较重要的原因是过滤小白用户和伸手党，提高用户门槛。这个策略应该还是比较成功的，然而这挡不住Manjaro等发行版的用户。（许多完全有能力安装、使用Archlinux甚至为Archlinux做贡献的用户一开始都被吓到了Manjaro，走了一些弯路，兜兜转转又被洗手到了Arch）<br>今年愚人节当天Arch出了一个<span class="exturl" data-url="aHR0cHM6Ly9hcmNobGludXgub3JnL3BhY2thZ2VzL2V4dHJhL2FueS9hcmNoaW5zdGFsbC8=">archinstall<i class="fa fa-external-link-alt"></i></span>的TUI安装方式（还在extra仓库里），当时我一度以为是愚人节玩笑。不过试了一下，还是与其他发行版的GUI安装界面相去甚远。</p>
+<p>短期看来不会，长期看来应该也不会。可能是无奈之举吧，暂时也找不到太多比提高安装门槛更好的过滤伸手党的办法了。</p>
+<p>这种过滤机制类似很多论坛（比如52pojie等）的邀请制、等级制，早期知乎也是这样的邀请制（甚至还要求实名）。前面提到的b站早期也是要答题的（而且题还很难）。<br>这些做法确实很有效，很多论坛都靠邀请制挡住了伸手党和发广告的。知乎在开放邀请后内容质量的下滑速度经历过的人应该印象很深，b站也是。我还是个真·小学生的时候赶上了许多中文论坛的最后余辉，现在再想起那些倒闭的、变质的、冷冷清清没人说话的论坛曾经高朋满座的热闹的场面还是不胜唏嘘。Manjaro给Arch带来的影响，总让我想起曾经经历过的社区没落过程。。。</p>
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><span class="exturl" data-url="aHR0cHM6Ly9yZW50cnkuY28vbWFuamFyby1jb250cm92ZXJzaWVz">Manjaro Controversies<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9vcmlnaW5jby5kZS9NYW5qYXJvLUNvbnRyb3ZlcnNpZXMv">【译】Manjaro 的争议<i class="fa fa-external-link-alt"></i></span> 源码菊巨的中文翻译<br><span class="exturl" data-url="aHR0cHM6Ly93d3cucmVkZGl0LmNvbS9yL2xpbnV4NG5vb2JzL2NvbW1lbnRzL2ZuMmlxOC93aHlfeW91X3Nob3VsZG50X3VzZV9tYW5qYXJvLw==">Why You shouldn’t use Manjaro.<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cucmVkZGl0LmNvbS9yL2xpbnV4cXVlc3Rpb25zL2NvbW1lbnRzL2JycnBxci93aHlfbm90X21hbmphcm8v">Why not Manjaro?<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzQ3NTE0MTIyL2Fuc3dlci8xMDc0MTI1NDk=">Ubuntu 推出的Snap应用架构有什么深远意义? - farseerfc的回答<i class="fa fa-external-link-alt"></i></span>  </p>
+<h3 id="他山之石"><a href="#他山之石" class="headerlink" title="他山之石"></a>他山之石</h3><p>Arch的社区属性要远远大于工具属性和商品属性，我们看看那些耳熟能详的社区。这里扔了很多知乎的链接，是因为，我觉得“btw I use arch”和部分arch粉丝在众人眼中的快要溢出优越感，和早期（13年前）中期（15年前）的知乎特别像。很奇怪openSUSE社区和gentoo社区等都没这种arch这种说不出来风气，如果非要找个相似的，可能是部分vim党（emacs党类比gentoo）<br>还能再诞生一个像早期知乎氛围和内容质量一样的社区吗？我觉得不能（限定简中，长城之内）。还能再诞生一个像arch这样的社区吗？我觉得也不能。有些东西是90年代和2000年初错过就不再有的，未来是商业公司、手机app、短视频直播，自由软件和社区、理想、小众社区诞生的机会不多了。（AOSC等地方能看到火苗和种子，然而每次我看到十年前整个互联网的氛围和现在的样子，还是有点悲观）</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzMzNDA2Njg1Ng==">哔哩哔哩注册为什么要去做题？<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzIwMjY5NzcyL2xvZw==">知乎最近涌入了很多在校大学生，这会对知乎产生什么影响？<i class="fa fa-external-link-alt"></i></span> 这是一个2012年的问题，今天看起来有点苦涩<br><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzI3MjAyNTA4L2Fuc3dlci8zNTgyNzU2Mw==">怎么找到知乎早期的经典回答？<i class="fa fa-external-link-alt"></i></span> 这是一个14年的问题<br><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzIyNjgyNTcz">佐藤謙一等人的离开是知乎的转折点吗？<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzIyNjc1Nzk2">佐藤謙一删掉所有知乎记录离开知乎的原因是什么？<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzIxNTc0NDU1">葛巾为什么离开知乎？<i class="fa fa-external-link-alt"></i></span> 同样是几个14年的问题<br><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzQyNjQ5MjU5Ny9hbnN3ZXIvMTU0MjYzMzE5Mw==">什么是「知乎遗风」，现在还有哪些知乎用户拥有这种「遗风」？<i class="fa fa-external-link-alt"></i></span> 这是一个2020年的问题</p>
+]]></content>
+      <categories>
+        <category>不务正业系列</category>
+      </categories>
+      <tags>
+        <tag>Archlinux</tag>
+        <tag>manjaro</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>也谈心率变异性</title>
     <url>/2873/</url>
     <content><![CDATA[<p>等待填坑</p>
@@ -2275,89 +2867,6 @@ p <span class="token operator">=</span> x
       <tags>
         <tag>HRV</tag>
         <tag>BCG</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>你好，Manjaro。再见，Manjaro。</title>
-    <url>/ff0e/</url>
-    <content><![CDATA[<p>洗手.jpg</p>
-<span id="more"></span>
-
-<p>虽然有一些办法不重装从Manjaro跑路到Arch，</p>
-<!-- 
-比如reddit上这篇帖子[Guide for Manjaro to Arch migration (the dirty way)](https://www.reddit.com/r/ManjaroLinux/comments/jx42ar/guide_for_manjaro_to_arch_migration_the_dirty_way/)
- -->
-<p>但是你会遇到各种Manjaro魔改的遗留问题（尤其是加入了相当多魔改的最新版Manjaro,据说很早以前比较容易直接滚成Arch）,<strong>the dirty way</strong>。</p>
-<p>我甚至觉得上面这个方法想得到一个纯净的Arch，难度比你去arch的<span class="exturl" data-url="aHR0cHM6Ly9hcmNoaXZlLmFyY2hsaW51eC5vcmcvaXNvLw==">archive<i class="fa fa-external-link-alt"></i></span>下载一个10年前的iso（真正的有图形界面的arch安装镜像哦，官方的）再借助<span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvdGl0bGUvQXJjaF9MaW51eF9BcmNoaXZl">Arch Linux Archive<i class="fa fa-external-link-alt"></i></span>（Rollback Machine）等一点一点滚到最新都麻烦。（至少去年Arch群友们玩过这个活动，勉强可行）</p>
-<p>直接重装一个原味Arch应该是最快的，也是后遗症最小的。总有人觉得直接不重装换源成Arch比较简单，很遗憾，这其实是最麻烦的一种方法。天上不会掉馅饼。</p>
-<h2 id="更新–再见Manjaro，"><a href="#更新–再见Manjaro，" class="headerlink" title="更新–再见Manjaro，"></a>更新–再见Manjaro，</h2><p>前一阵Manjaro社区出的争吵让我跑路了，Manjaro之前用的还比较舒服（当然直到现在都比较舒服），以后就不知道怎么样了。外面Arch社区骂声一片，里面还总在内斗，不断有人出走，前几周连jonathon都气走了（跑去隔壁endeavour os了）</p>
-<p>jonathon的声明在<span class="exturl" data-url="aHR0cHM6Ly9mb3J1bS5tYW5qYXJvLm9yZy90L2NoYW5nZS1vZi10cmVhc3VyZXItZm9yLW1hbmphcm8tY29tbXVuaXR5LWZ1bmRzLzE1NDg4OA==">这篇帖子<i class="fa fa-external-link-alt"></i></span></p>
-<p>过程大概是这样的，philm（Manjaro的CEO，反正Manjaro社区的不少人都觉得此人非常讨厌）挪用社区赞助捐款2000欧元，用于给自己买的电脑。这次购买并没有跟掌钱管家jonathon商量，也没有在社区内征得同意。jonathon觉得按照规定这钱只能用于Manjaro项目的网站建设、项目推广之类的，不是给你们恰烂钱的，然后在论坛发帖子怼philm，然后帖子被删了一次，jonathon的管理员也被撤了。帖子下面众人纷纷表示philm不回应道歉以后再也不捐助Manjaro了，不少人表示以后再也不用Manjaro了，并考虑跑路到KDE Neon、Kubuntu、Arch、Endeavour OS。</p>
-<p>philm的回应闪烁其辞，一直说事情不是大家想的那个样子的，但是大家怼他让他公布他和jonathon的完整聊天记录他又不肯。最后philm屁事没有继续担任Manjaro的领袖，jonathon跑路去了Endeavour OS。</p>
-<h2 id="再次更新–pamac不慎向aur官网打出了DDoS"><a href="#再次更新–pamac不慎向aur官网打出了DDoS" class="headerlink" title="再次更新–pamac不慎向aur官网打出了DDoS"></a>再次更新–pamac不慎向aur官网打出了DDoS</h2><p>Manjaro的Pamac不小心DDoS了aur.archlinux.org， 每秒40多来自pamac的请求，aur遭到暴击。<br>很喜欢reddit评论里的一句话：Just when I thought I couldn’t hate manjaro any more.</p>
-<p><span class="exturl" data-url="aHR0cHM6Ly93d3cucmVkZGl0LmNvbS9yL2FyY2hsaW51eC9jb21tZW50cy9tejNiaXovaXNfdGhlX2F1cl9kb3duX2Zvcl9ldmVyeW9uZS8=">https://www.reddit.com/r/archlinux/comments/mz3biz/is_the_aur_down_for_everyone/<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9naXRsYWIubWFuamFyby5vcmcvYXBwbGljYXRpb25zL3BhbWFjLy0vaXNzdWVzLzEwMTc=">https://gitlab.manjaro.org/applications/pamac/-/issues/1017<i class="fa fa-external-link-alt"></i></span>  </p>
-<h2 id="关于社区文化和商业化"><a href="#关于社区文化和商业化" class="headerlink" title="关于社区文化和商业化"></a>关于社区文化和商业化</h2><p>微软的商业化非常成功，苹果和安卓也是。</p>
-<p>即使Linux桌面发行版这种反商业风气比较浓的地方，商业化也不意味着坏事。</p>
-<p>REHL也还算不错，名声也比较好；Canonical争议比较大，虽然不招Debian等开源社区的喜欢，早年间也算对推广Linux桌面有贡献，后面snap等有点evil化了</p>
-<p>当然，或许还要算上国内的Deepin。（奔着Windows的竞品去的，和其他Linux社区的画风和定位不太一样，倒是和安卓的定位挺像，总不是坏事）</p>
-<p>然而Manjaro的商业化我很不看好，就我目前看到的，对上游没有太多贡献，反而给上游带来了更多的麻烦。而且还有一点，Manjaro挪用社区捐款到公司口袋里面，虽然都是Manjaro，但是这在眼里揉不得沙子的很多开源社区人严重这已经是重罪了。当然，也不全是坏事，就不少人的体验来看，至少用起来比Ubuntu舒服不少。</p>
-<p>红帽的商业化就很成功，一开始就是给企业提供服务器支持等商业化内容，挣了钱反哺Linux社区。Deepin有不少情怀，比某些充满国家经费和金钱气息的发行版好不少，打包了很多deepin-wine也好DDE也好争取到国内不少公司配适Linux也好，都还算不错。Deepin虽然也带来了大量的小白，但是没有涌到Debian等社区去造成很多麻烦。</p>
-<p>我们重温一下“b站或许会倒闭但绝不会变质”的典中典（不知不觉蒙古上单发表重要讲话也一年了，笑）。为什么b站就被骂的这么厉害呢？优酷土豆乐视爱奇艺哪个广告不比这个多，开头的广告还无法跳过。论视频质量和推荐无营养的视频、还有强制使用手机app、以及抄袭和营销号，跟抖音快手比现在的b站已经算良心了吧。<br>就像早期的b站那样，这是一群小圈子和爱好者，首先这不是一个商品，这是一个社区，没多少营销号也没有广告，很多人是倾注心血去做视频的，感情很深，氛围也很好。（国内其他视频网站可能也就被封的内涵段子“段友”（现 皮皮虾）有早期b站用户那样类似的归属感了，什么？a站？a站还活着啊？）<br>当然视频网站的运行成本比较高，靠用爱发电一般做不了很大（就算商业化吃香难看都难免亏损，比如爱奇艺），人多了以后商业化是难免的。</p>
-<p>相信大家都能看到Arch社区对Manjaro用户的态度，不管是在archlinuxcn论坛或者irc、电报，还是在国外的reddit社区等，……*&amp;（*%&amp;&amp;￥人*&amp;……（此处省略500字）</p>
-<p>不少Arch用户和维护者对Manjaro的恶意大概就像b站老用户这样（你看苹果微软不是比Manjaro邪恶多了，但是他们敌视这些的次数可能比Manjaro要少）</p>
-<p>Arch背后没有商业化背景，甚至没有红帽或Canonical这样的公司，然而还是有了比背靠大公司的发行版更多的包（算上野包）和更丰富的wiki(可能没有红帽的wiki好，但是中文翻译多)，这都是Arch的维护者和用户们用爱发电一砖一瓦的心血。它不像Windows和Mac或者红帽的RHEL那样一开始就是一个商品，而且Arch的特点也不太适合做服务器或者商业化。（可能gentoo的商业化用途都比Arch多，还是有一点运维在用gentoo当服务器的）Manjaro的商业化，和原来的社区格格不入。很多地方直接和arch的不少理念和作风背道而驰。<br>不幸的是Manjaro的社区也有不少伸手党，大量安利Manjaro的视频和帖子都只说好用、好看、好安装，绝口不提社区文化和用户责任。（<strong>而且还在教程里让你添加archlinuxcn的源，同时还说Manjaro更稳定</strong>）</p>
-<p>曾经的Arch的ISO有GUI安装界面的（10年前），后来就没了，而官方Wiki上的安装指南也对新手不那么友好了（越来越不友好了）。这里面一个比较重要的原因是过滤小白用户和伸手党，提高用户门槛。这个策略应该还是比较成功的，然而这挡不住Manjaro等发行版的用户。（许多完全有能力安装、使用Archlinux甚至为Archlinux做贡献的用户一开始都被吓到了Manjaro，走了一些弯路，兜兜转转又被洗手到了Arch）<br>今年愚人节当天Arch出了一个<span class="exturl" data-url="aHR0cHM6Ly9hcmNobGludXgub3JnL3BhY2thZ2VzL2V4dHJhL2FueS9hcmNoaW5zdGFsbC8=">archinstall<i class="fa fa-external-link-alt"></i></span>的TUI安装方式（还在extra仓库里），当时我一度以为是愚人节玩笑。不过试了一下，还是与其他发行版的GUI安装界面相去甚远。</p>
-<p>短期看来不会，长期看来应该也不会。可能是无奈之举吧，暂时也找不到太多比提高安装门槛更好的过滤伸手党的办法了。</p>
-<p>这种过滤机制类似很多论坛（比如52pojie等）的邀请制、等级制，早期知乎也是这样的邀请制（甚至还要求实名）。前面提到的b站早期也是要答题的（而且题还很难）。<br>这些做法确实很有效，很多论坛都靠邀请制挡住了伸手党和发广告的。知乎在开放邀请后内容质量的下滑速度经历过的人应该印象很深，b站也是。我还是个真·小学生的时候赶上了许多中文论坛的最后余辉，现在再想起那些倒闭的、变质的、冷冷清清没人说话的论坛曾经高朋满座的热闹的场面还是不胜唏嘘。Manjaro给Arch带来的影响，总让我想起曾经经历过的社区没落过程。。。</p>
-<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><span class="exturl" data-url="aHR0cHM6Ly9yZW50cnkuY28vbWFuamFyby1jb250cm92ZXJzaWVz">Manjaro Controversies<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9vcmlnaW5jby5kZS9NYW5qYXJvLUNvbnRyb3ZlcnNpZXMv">【译】Manjaro 的争议<i class="fa fa-external-link-alt"></i></span> 源码菊巨的中文翻译<br><span class="exturl" data-url="aHR0cHM6Ly93d3cucmVkZGl0LmNvbS9yL2xpbnV4NG5vb2JzL2NvbW1lbnRzL2ZuMmlxOC93aHlfeW91X3Nob3VsZG50X3VzZV9tYW5qYXJvLw==">Why You shouldn’t use Manjaro.<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cucmVkZGl0LmNvbS9yL2xpbnV4cXVlc3Rpb25zL2NvbW1lbnRzL2JycnBxci93aHlfbm90X21hbmphcm8v">Why not Manjaro?<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzQ3NTE0MTIyL2Fuc3dlci8xMDc0MTI1NDk=">Ubuntu 推出的Snap应用架构有什么深远意义? - farseerfc的回答<i class="fa fa-external-link-alt"></i></span>  </p>
-<h3 id="他山之石"><a href="#他山之石" class="headerlink" title="他山之石"></a>他山之石</h3><p>Arch的社区属性要远远大于工具属性和商品属性，我们看看那些耳熟能详的社区。这里扔了很多知乎的链接，是因为，我觉得“btw I use arch”和部分arch粉丝在众人眼中的快要溢出优越感，和早期（13年前）中期（15年前）的知乎特别像。很奇怪openSUSE社区和gentoo社区等都没这种arch这种说不出来风气，如果非要找个相似的，可能是部分vim党（emacs党类比gentoo）<br>还能再诞生一个像早期知乎氛围和内容质量一样的社区吗？我觉得不能（限定简中，长城之内）。还能再诞生一个像arch这样的社区吗？我觉得也不能。有些东西是90年代和2000年初错过就不再有的，未来是商业公司、手机app、短视频直播，自由软件和社区、理想、小众社区诞生的机会不多了。（AOSC等地方能看到火苗和种子，然而每次我看到十年前整个互联网的氛围和现在的样子，还是有点悲观）</p>
-<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzMzNDA2Njg1Ng==">哔哩哔哩注册为什么要去做题？<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzIwMjY5NzcyL2xvZw==">知乎最近涌入了很多在校大学生，这会对知乎产生什么影响？<i class="fa fa-external-link-alt"></i></span> 这是一个2012年的问题，今天看起来有点苦涩<br><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzI3MjAyNTA4L2Fuc3dlci8zNTgyNzU2Mw==">怎么找到知乎早期的经典回答？<i class="fa fa-external-link-alt"></i></span> 这是一个14年的问题<br><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzIyNjgyNTcz">佐藤謙一等人的离开是知乎的转折点吗？<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzIyNjc1Nzk2">佐藤謙一删掉所有知乎记录离开知乎的原因是什么？<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzIxNTc0NDU1">葛巾为什么离开知乎？<i class="fa fa-external-link-alt"></i></span> 同样是几个14年的问题<br><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzQyNjQ5MjU5Ny9hbnN3ZXIvMTU0MjYzMzE5Mw==">什么是「知乎遗风」，现在还有哪些知乎用户拥有这种「遗风」？<i class="fa fa-external-link-alt"></i></span> 这是一个2020年的问题</p>
-]]></content>
-      <categories>
-        <category>不务正业系列</category>
-      </categories>
-      <tags>
-        <tag>Archlinux</tag>
-        <tag>manjaro</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>重装Ubuntu</title>
-    <url>/2d5/</url>
-    <content><![CDATA[<p>祖传服务器传到了我的手里, 行吧。其实我想把标题改成Ubuntu内部错误的解决办法（不是</p>
-<span id="more"></span>
-
-<h2 id="更新（和洗手）"><a href="#更新（和洗手）" class="headerlink" title="更新（和洗手）"></a>更新（和洗手）</h2><p>19年写的这个20年不知道怎么在2020年有一段时间被扔到了<code>重装Ubuntu</code>搜索结果的最前面，我这个小破站访问量暴增。然而那个时候20.04LTS都出了，已经有点过时了，而我19年那会写的那个几乎属于个人吐槽，差不多是我博客迁到，完全不适合作为一个教程。可能骗了很多人进来，</p>
-<p>装什么Ubuntu啊，还是Arch香，群里个个都是人才，说话又好听</p>
-<p><img src="/2d5/1611832700.webp"></p>
-<p><del>但是随便装个Ubuntu不仅快，他们跑深度学习的时候抄CSDN配置环境也方便</del></p>
-<p><del>最重要的，又不是我用。</del></p>
-<p><del>GNOME内存泄漏关我什么事</del></p>
-<p><del>Ubuntu内部错误关我什么事</del></p>
-<p>还是去用Ubuntu吧.jpg</p>
-<p><img src="/2d5/1611834396.webp"></p>
-<p><img src="/2d5/1611834449.webp"></p>
-<h2 id="认真发言"><a href="#认真发言" class="headerlink" title="认真发言"></a>认真发言</h2><p>其实你可以试试Debian（Canonical强推snap太烦人了）</p>
-<h3 id="关于桌面（DE）"><a href="#关于桌面（DE）" class="headerlink" title="关于桌面（DE）"></a>关于桌面（DE）</h3><p>带桌面的版本建议避开Ubuntu的GNOME，那个东西。。。</p>
-<p>可以试试Linux Mint，或者Fedora（这个的GNOME应该比 Ubuntu 16、18 那几个整天内存泄露的GNOME版本稳多了）</p>
-<p>其实我推荐KDE，可以试试Kubuntu（或者KDE Neon？）</p>
-<p>机器配置较差请直接Lubuntu，稳如老狗，除了略简陋没有别的缺点。</p>
-<p>一众WM用户应该不会搜索这么蠢的关键词搜到我这里来，这里不谈WM了。</p>
-<h3 id="关于服务器"><a href="#关于服务器" class="headerlink" title="关于服务器"></a>关于服务器</h3><p>小作坊没有专职运维和技术支持，其实服务器建议试试Debian或者Ubuntu LTS，Debian stable稳如老狗</p>
-<p><del>众所周知，Debian testing 都比 Ubuntu LTS 稳（注意这个安全更新比较慢，个人用户可以testing，开了公网端口的工作站不要用这个）</del></p>
-<p>不过Ubuntu和CentOS6、7比起来，还是瞬间和蔼可亲了不少</p>
-<p>求求新入坑的别再跟着什么鸟哥私房菜之类的老教程用CentOS了，2020年 CentOS 8 都被扬了，REHL马上就要给小作坊免费了，小作坊真迷信稳定上REHL吧。</p>
-<p>没事不要用所谓稳定的老版本然后找不到包只能自己手动编译，就不说c/c++那一堆lib了，我已经见过不少人在编译python的时候没开ssl当场翻车。</p>
-<p>什么你说容器？你试过在CentOS6上面弄Docker和k8s吗，我在教研室的祖传阿里云上试过一次，从此再也不想看到CentOS了</p>
-<p>（整天在CentOS上手动编译凸显运维重要性和工作量的除外）</p>
-<h2 id="安装参考"><a href="#安装参考" class="headerlink" title="安装参考"></a>安装参考</h2><p><span class="exturl" data-url="dHRwczovL3R1dG9yaWFscy51YnVudHUuY29tL3R1dG9yaWFsL3R1dG9yaWFsLWluc3RhbGwtdWJ1bnR1LXNlcnZlcg==">tutorial-install-ubuntu-server<i class="fa fa-external-link-alt"></i></span><br> <span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL0xWTV8oJUU3JUFFJTgwJUU0JUJEJTkzJUU0JUI4JUFEJUU2JTk2JTg3KQ==">LVM arch-wiki<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly95ZWFzeS5naXRib29rcy5pby9kb2NrZXJfcHJhY3RpY2UvaW5zdGFsbC91YnVudHUuaHRtbA==">Ubuntu 安装 Docker CE<i class="fa fa-external-link-alt"></i></span>、<span class="exturl" data-url="aHR0cHM6Ly95ZWFzeS5naXRib29rcy5pby9kb2NrZXJfcHJhY3RpY2UvaW5zdGFsbC9taXJyb3IuaHRtbA==">镜像加速器<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cudGVjbWludC5jb20vY29uZmlndXJlLW5ldHdvcmstc3RhdGljLWlwLWFkZHJlc3MtaW4tdWJ1bnR1Lw==">How to Configure Network Static IP Address in Ubuntu 18.04<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9uZXRwbGFuLmlvL2V4YW1wbGVz">netplan官网的配置示例<i class="fa fa-external-link-alt"></i></span></p>
-]]></content>
-      <categories>
-        <category>102网吧日常</category>
-      </categories>
-      <tags>
-        <tag>ubuntu</tag>
-        <tag>重装</tag>
       </tags>
   </entry>
   <entry>
@@ -2652,6 +3161,123 @@ https://cloud.tencent.com/developer/article/1603974 -->
       <tags>
         <tag>Linux</tag>
         <tag>scheduler</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>用Markdown制做PPT</title>
+    <url>/make-ppt-with-markdown/</url>
+    <content><![CDATA[<p>纯文本好，富文本坏。这是一个劝你放弃PowerPoint和Wps演示的安利文，回归简陋，回归开源。</p>
+<span id="more"></span>
+
+<p>这是迫于毕业不得不向PPT低头才干出来的事情，在PPT上浪费时光真没意思。能不做PPT还是不做PPT最好。（没推荐Beamer是因为LaTeX这种专业排版工具还是太复杂了，还是会浪费不少时间在排版上。）</p>
+<h2 id="喧宾夺主的PPT"><a href="#喧宾夺主的PPT" class="headerlink" title="喧宾夺主的PPT"></a>喧宾夺主的PPT</h2><p><del>但是根据约翰霍普金斯大学的研究，喜欢做PPT的大概率是个传销分子</del></p>
+<p>Office三件套里面，我对word只是喜欢不起来（真要做到内容样式分离还是可以的，而且把富文本的所见即所得做到了地表最强），对Excel有点厌恶（谁让你多管闲事把身份者号给我改成科学计数法了？），PPT我真的心力憔悴了。Beamer一类的Slides演示还比较重视内容，你软家的</p>
+<p>如果不是生活所迫谁愿意做PPT呢，直接拿Markdown写文档呗。（我们现在确实除了毕业答辩这种迫不得已的事情，都用Markdown给老板讲东西了。PPT？当年老板嫌弃小胡师兄PPT做的烂，反正PPT不好好做看起来甚至不如Markdown在typora里面或者hexo里面好看）。好在毕业答辩类的学术PPT不用做的太好看，简陋一点反而显得比较朴实无华，Markdown生成的PPT也够看了。而且我前期给老板交差的调研材料什么的基本都是用Markdown写的，改一改就成PPT了。其实如果不是开题、毕设答辩要求PPT，我真的想用Markdown列一个大纲讲。</p>
+<p>至于为什么不用LaTeX的Beamer，那是我对LaTeX不熟，而我对CSS和HTML比较熟，Markdown做不到的可以伤感CSS魔改。<br>功能简陋也好，这样免得我在PPT上面调格式浪费很多时间。<strong>而且可以用键盘操作</strong>。</p>
+<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>作为一个毕业答辩之类的PPT，Marp的功能已经足够做一个丐版的学术简陋风格PPT了，Beamer的功能Marp几乎都有。这个东西有VSCode插件，直接装就好了。网页版也可以直接用。</p>
+<p>当然这个东西没有什么惊艳的动画效果和对布局细致的控制和调整，Markdown本来就不适合干这个事情呢。如果是做传销风格的PPT那还请<del>直接用Office</del>试试隔壁的reveal.js，像写前端一样写你的演示，各种漂亮的动画效果全都有。</p>
+<p>直接新建一个Markdown，在开头启用marp就好了。</p>
+<pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown"><span class="token front-matter-block"><span class="token punctuation">---</span>
+<span class="token font-matter yaml language-yaml"><span class="token key atrule">marp</span><span class="token punctuation">:</span> <span class="token boolean important">true</span></span>
+<span class="token punctuation">---</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>语法都是markdown的语法，每一张PPT之间隔断就用<code>---</code>就可以了（最好在<code>---</code>前面空一行）</p>
+<p>为了更符合传统的PPT界面的布局，VSCode打开Preview，然后将preview调到左边侧栏。好，它现在看起来和wps演示和PowerPoint完全一致。</p>
+<p><img src="/make-ppt-with-markdown/1641736904.png"></p>
+<h2 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h2><p>图片的支持当然没有PowerPoint那么好。Markdown本来就不支持调整图片的大小、图片缩放、指定图片位置这种操作。对于博客文章或者文档可以统一用css去设置居中、边框这些，但是PPT的图片几乎每页的布局和位置都不太一样。Marp对Markdown提供了一些扩展，能基本满足我对图片的位置调整需求。如果不满足要求可以用html标签去调图片。</p>
+<p>下面的操作是一些粗略调整宽度高度的语法、以及上下左右、居中、背景图片。</p>
+<pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown">
+<span class="token url"><span class="token operator">!</span>[<span class="token content">bg right vertical weight:600</span>](<span class="token url">zhixi.png</span>)</span>
+<span class="token comment">&lt;!-- 将图片置于右上，宽度600px --></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h2><p>Marp自带的模板合适可以自己定制，只需要一点CSS就可以了</p>
+<p>定制可以参考：<span class="exturl" data-url="aHR0cHM6Ly9tYXJwaXQubWFycC5hcHAvdGhlbWUtY3Nz">https://marpit.marp.app/theme-css<i class="fa fa-external-link-alt"></i></span></p>
+<p>太长不看版：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21hcnAtdGVhbS9tYXJwL2Rpc2N1c3Npb25zLzExNQ==">How to create a theme?<i class="fa fa-external-link-alt"></i></span>  </p>
+]]></content>
+      <tags>
+        <tag>ppt</tag>
+        <tag>markdown</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>6.824 Lab1 MapReduce 经典老番</title>
+    <url>/map-reduce/</url>
+    <content><![CDATA[<p>Long Live Map Reduce</p>
+<span id="more"></span>
+
+<p>MapReduce的影响挺大的</p>
+<h2 id="Map和Reduce操作"><a href="#Map和Reduce操作" class="headerlink" title="Map和Reduce操作"></a>Map和Reduce操作</h2><p>MapReduce 最早是函数式编程里的概念，我一开始也是在python里面最听到这两个词的。map用来映射，reduce用来聚合。</p>
+<p>python里面是这样的：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> functools <span class="token keyword">import</span> <span class="token builtin">reduce</span>
+
+<span class="token keyword">def</span> <span class="token function">f1</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> x<span class="token operator">*</span>x
+
+<span class="token keyword">def</span> <span class="token function">f2</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> x<span class="token operator">*</span>y
+
+nums <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span> <span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">]</span>
+
+suqare <span class="token operator">=</span> <span class="token builtin">list</span><span class="token punctuation">(</span><span class="token builtin">map</span><span class="token punctuation">(</span>f<span class="token punctuation">,</span> nums<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token operator">//</span><span class="token builtin">reduce</span>作用于一个序列，效果相当于阶乘
+factorial <span class="token operator">=</span> <span class="token builtin">list</span><span class="token punctuation">(</span><span class="token builtin">reduce</span><span class="token punctuation">(</span>f2<span class="token punctuation">,</span> nums<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>求阶乘的操作用循环也可以做到，但是我们注意到这些操作有很好的性质，可以分离开计算再求总和，这样就可以拆解为一些小的并行计算。（循环也可以被SIMD指令并行，这里先不多说了）</p>
+<p>遍历使用迭代器完成的</p>
+<h2 id="分布式的MapReduce"><a href="#分布式的MapReduce" class="headerlink" title="分布式的MapReduce"></a>分布式的MapReduce</h2><p><img src="/map-reduce/1647509929.png"></p>
+<p>Map和Reduce两种操作和上面python的例子用法一样</p>
+<p><img src="/map-reduce/1647509989.png"></p>
+<p>论文以 wc （单词统计）为例。master会分出M个Map任务和N个Reduce任务，然后分配给worker。</p>
+<p>Map任务执行用户自定义的map函数，输出一个&lt;key, value&gt;。</p>
+<p>Reduce执行用户自定义的reduce函数，用来聚合相同的&lt;key, value&gt;。</p>
+<p>要注意Map和Reduce是有先后顺序的，需要完成Map操作</p>
+<h2 id="Lab1-实现一个玩具MapReduce"><a href="#Lab1-实现一个玩具MapReduce" class="headerlink" title="Lab1 实现一个玩具MapReduce"></a>Lab1 实现一个玩具MapReduce</h2><p>注：看起来这个Lab和去年的一样，把去年做的直接拿过来了，当时实现的时候不少地方挺粗糙的。</p>
+<p>6.824的Lab1是做一个MapReduce，例子就是当年Google经典论文里面的那个 word count。wc和阶乘、求和一样有很好的性质，能够并行。</p>
+<p>这个Lab很简单，<code>src/main/mrapps/wc.go</code>给好了一个单机版的例子，实现这样的效果：<code>cat mr-out-* | sort | more</code></p>
+<p>仿照单机版本用rpc通信做一个并行版本就可以了。（这里没有真正的集群，用多个goroutine模拟并行）</p>
+<p>我们需要补全3个文件：coordinator.go, worker.go, rpc.go。这里的coordinator就是论文里的master，因为<del>黑命贵</del>某些原因惨遭和谐，你打开以前的Lab就可以看到它本来就是master.go</p>
+<p>rpc.go 里面已经给了一个例子，我们仿照着写就可以了（其实本来我是想直接用grpc来着）。注意PRC的struct要大写。</p>
+<p>worker很容易，向master发送RPC请求然后接任务并返回就可以了。将Map任务分配到对应的worker中可以直接使用给好的<code>ihash</code>函数</p>
+<p>master要产生并分配map任务和reduce任务，然后接收的时候判断一下是否可以合并。这里一个比较麻烦的地方是处理worker超时、停机等情况。不过这里提示我们用一个简单的方法：For this lab, have the master wait for ten seconds; after that the master should assume the worker has died (of course, it might not have). 不区分超时和宕机，直接等待10s，10s后如果没收到就直接不要这个worker的任务了。</p>
+<h3 id="race问题"><a href="#race问题" class="headerlink" title="race问题"></a>race问题</h3><p>我去年做的时候是给channel加Mutex锁来保证这个问题</p>
+<h2 id="一些问题"><a href="#一些问题" class="headerlink" title="一些问题"></a>一些问题</h2><h3 id="写入的原子性"><a href="#写入的原子性" class="headerlink" title="写入的原子性"></a>写入的原子性</h3><p>Lab的提示告诉你，写入新建一个副本，然后应用更改的时候重命名</p>
+<blockquote>
+<p>To ensure that nobody observes partially written files in the presence of crashes, the MapReduce paper mentions the trick of using a temporary file and atomically renaming it once it is completely written. You can use ioutil.TempFile to create a temporary file and os.Rename to atomically rename it.</p>
+</blockquote>
+<h3 id="master挂了怎么办"><a href="#master挂了怎么办" class="headerlink" title="master挂了怎么办"></a>master挂了怎么办</h3><p>我做Lab的时候没有考虑这个问题，假设它不会挂。</p>
+<p>如果真的挂了那就再来一遍吧（可以保存中间文件，这样已经产生的中间文件就不用从Map操作再产生一遍了）</p>
+<h3 id="输入在变怎么办"><a href="#输入在变怎么办" class="headerlink" title="输入在变怎么办"></a>输入在变怎么办</h3><p>如果输入（比如需要wc的单词）一直在改变，这样也是不适合用MapReduce处理的。这种可以去用storm和flink。实时计算这些我也不不懂，不管了。</p>
+<h3 id="网络问题和恶意篡改"><a href="#网络问题和恶意篡改" class="headerlink" title="网络问题和恶意篡改"></a>网络问题和恶意篡改</h3><p>一般我们部署在内网集群，不考虑网络带宽问题。TB级别的文件分为总文件大小除以64M的Map<br>同理假定所有节点不存在恶意篡改，也不考虑Paxos等算法考虑的拜占庭问题。</p>
+<!-- 
+## Push一下老板
+
+老板给本科生讲课讲王珊《数据库系统概论》，基本就还是老一套。除了上机和作业，一半的时间在讲约束和范式，一半的课时在讲触发器、游标、存储过程，还是有两把刷子的。
+好吧，老板的课我当年都没从头到尾好好听，只听了和看了书里面范式、约束、隔离级别和锁那些。老板讲的那一套用面向对象那一套建好多个表和约束、多表联结查询、逻辑都写在存储过程里面，做一个传统的金融、HIS系统那种对约束要求严格业务繁多的
+
+不过上周组会还是出乎我的意料。老板他老人家最近又有了奇思妙想，虽然他组会上说下周找一个毕业的师兄过来给我们讲一下联邦学习的时候，一口一个大数据，啊，开始吹什么大公司都在用啊这个很有前景啊。
+
+我一脸懵，联邦学习是什么？
+老板：巴拉巴拉....
+我：这不就跟MapReduce那一套东西差不多
+老板：MapReduce是什么？
+我：巴拉巴拉
+老板：不是的，不是这个东西
+
+老板大概是多年没有亲自写过代码了，技术水平和概念还停留在sql server 2000、Oracle那一堆逻辑写在存储过程里面和上个世纪在金蝶公司用C++写图形界面。（**年轻帅气的老板在写代码的时候我甚至还没有出生**，Google经典三篇发布都已经是零几年的事了，当时老板做的东西也还是Oracle单机那一套，没听过可能也正常）
+
+咳咳，不黑老板了
+老板你要是看到我这篇博客，少玩点手机啊，看看DDIA吧
+ -->
+
+
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p> GFS的经典论文</p>
+]]></content>
+      <categories>
+        <category>Concurrency&amp;Go</category>
+      </categories>
+      <tags>
+        <tag>6.824</tag>
+        <tag>MapReduce</tag>
       </tags>
   </entry>
   <entry>
@@ -4285,6 +4911,74 @@ error installing repo packages<span aria-hidden="true" class="line-numbers-rows"
       </tags>
   </entry>
   <entry>
+    <title>RCU，读多写少的锁实现</title>
+    <url>/rcu-and-userspace-rcu/</url>
+    <content><![CDATA[<p>之前做的垃圾骗钱项目有很多都是读多写少，而且不怎么需要实时。一直比较好奇应该用什么锁，读写锁总是不满意，最近看6.S081看到rcu，咦，是我想要找的东西。</p>
+<span id="more"></span>
+
+<h2 id="水平超低预警"><a href="#水平超低预警" class="headerlink" title="水平超低预警"></a>水平超低预警</h2><p>一年前就开始看DDIA和做6.824 Raft 那些东西，不过当时水平太菜了。一直不太敢写并发和分布式相关的东西。并发有很多反直觉的地方，我写出来总是踩坑。好在golang的channel什么的写起来都很舒服。<br>一年过去了，自认水平总没有当初那么菜了，鼓起勇气开始写一点关于并发和Go的东西，所以新开了一个分类。（结果发现一年前看的好多东西都忘了。。。记住的好多也是错的。。。）<br><strong>这个系列肯定有很多丢人现眼的地方，路过的朋友看到我说的不对的地方请在评论告诉我</strong></p>
+<h2 id="用途和概念"><a href="#用途和概念" class="headerlink" title="用途和概念"></a>用途和概念</h2><h3 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h3><p><img src="2022-01-08-22-40-18.png"></p>
+<p>我们可以用读写锁来保证读取和写入的一致性。在大量读取、少量写入的场景，读写锁的效率会比较低，用RCU可以提高读的性能。使用RCU，读的时候可以不加锁，也不用去管什么内存屏障和原子性了，直接读就完事了。<br>而且如果写入很少，几乎没有同时写入的情况，RCU的写入速度是很快的，写并不一定比读写锁慢（Grace Period其实很短）</p>
+<p><img src="2022-01-08-22-34-22.png"></p>
+<p>典型场景包括：路由表、DNS查询、内核</p>
+<blockquote>
+<p>The basic form of such “Pure RCU” designs is as follows:</p>
+<ol>
+<li>Make a change, for example, to the way that the OS reacts to an NMI.</li>
+<li>Wait for all pre-existing read-side critical sections to completely finish (for example,by using the synchronize_sched() primitive). The key observation here is that subsequent RCU read-side critical sections are guaranteed to see whatever change was made.</li>
+<li>Clean up, for example, return status indicating that the change was successfully made</li>
+</ol>
+</blockquote>
+<p>在内核里面主要是处理中断、代替读写锁、订阅发布、代替引用计数等。在内核中应用的介绍可以看文章：<span class="exturl" data-url="aHR0cHM6Ly9wZG9zLmNzYWlsLm1pdC5lZHUvNi44MjgvMjAxOC9yZWFkaW5ncy9yY3UtZGVjYWRlLWxhdGVyLnBkZg==">RCU Usage In the Linux Kernel: One Decade Later<i class="fa fa-external-link-alt"></i></span><br>下面是一个NMI的例子（不可打断中断应该也不会被抢占，正适合RCU）</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token class-name">rcu_list_t</span> nmi_list<span class="token punctuation">;</span>
+<span class="token class-name">spinlock_t</span> nmi_list_lock<span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">handle_nmi</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+	<span class="token function">rcu_read_lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">rcu_list_for_each</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>nmi_list<span class="token punctuation">,</span> <span class="token class-name">handler_t</span> cb<span class="token punctuation">)</span>
+		<span class="token function">cb</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">rcu_read_unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">void</span> <span class="token function">register_nmi_handler</span><span class="token punctuation">(</span><span class="token class-name">handler_t</span> cb<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+	<span class="token function">spin_lock</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>nmi_list_lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">rcu_list_add</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>nmi_list<span class="token punctuation">,</span> cb<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">spin_unlock</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>nmi_list_lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">void</span> <span class="token function">unregister_nmi_handler</span><span class="token punctuation">(</span><span class="token class-name">handler_t</span> cb<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+	<span class="token function">spin_lock</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>nmi_list_lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">rcu_list_remove</span><span class="token punctuation">(</span>cb<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">spin_unlock</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>nmi_list_lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">synchronize_rcu</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>RCU在用户态用的比较少，远不如mutex和spinlock普遍。<br>当然，用户态一般不怎么用这个东西，像数据库那种（用redis上内存用cache硬抗.jpg）</p>
+<h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>reader很简单，就是<code>rcu_read_lock</code>和<code>rcu_read_unlock</code>。<code>rcu_read_lock</code>和<code>rcu_read_unlock</code>中间的这一段通常叫读侧临界区 (read-side critical sections)</p>
+<p>writer的要复杂一点</p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>rcu的实现有很多，比如实时性比较好的srcu（sleepable rcu）、嵌入式用的比较多的tinyrcu、用于CPU核数非常多的tree-rcu；这里只说一下简单经典的rcu实现，其他具体的实现可以去看Paul的文章。<br>这里大部分都是从lwn那里抄来的，建议英文好的直接看原文：<br><span class="exturl" data-url="aHR0cHM6Ly9sd24ubmV0L0FydGljbGVzLzI2MzEzMC8=">What is RCU? Part 2: Usage<i class="fa fa-external-link-alt"></i></span></p>
+<p>如果想看详细实现可以去看linux rcu主要作者Paul的文章和书：<span class="exturl" data-url="aHR0cHM6Ly9taXJyb3JzLmVkZ2Uua2VybmVsLm9yZy9wdWIvbGludXgva2VybmVsL3Blb3BsZS9wYXVsbWNrL3BlcmZib29rL3BlcmZib29rLmh0bWw=">Is Parallel Programming Hard, And, If So, What Can You Do About It?<i class="fa fa-external-link-alt"></i></span></p>
+<p><strong>Linux对于指针的load和store都是原子的</strong>，所以在链表读取的时候，指针要么指向新插入完成的，要么指向旧的还没被删的链表，不会出现正在修改链表的时候刚删除指针还没来得及插入产生<code>segmentation fault</code>。</p>
+<p>以链表为例，写入（Write）的时候先复制（copy）一个副本，然后在读取（read）较少的合适时间执行插入操作。当然，我们可以等到完全没有写入的间隙。但是读取（reader）很多一直没用空闲，写入会非常慢；一直都有reader的极端情况会导致一直无法写入。rcu用宽限期（grace period）巧妙的解决了这个问题。</p>
+<h3 id="怎么知道copy之前的读取全部完成可以reclaim了"><a href="#怎么知道copy之前的读取全部完成可以reclaim了" class="headerlink" title="怎么知道copy之前的读取全部完成可以reclaim了"></a>怎么知道copy之前的读取全部完成可以reclaim了</h3><p>我看rcu之前的第一反应是引用计数，当引用计数降到0就说明copy的副本可以reclaim了。但是引用计数效率太低了，而且多核的时候引用计数更麻烦了。</p>
+<p>经典的rcu模型是不允许抢占的。当读取完成进入临界区，我们认为这个CPU进入一次<strong>静止状态（quiescent state）</strong>，以下简称QS。linux里面用cpumask来记录这个状态，我们就简单的当成是用一个bitmap来保存每个cpu的状态好了。显然，从bitmap得知copy之后每个CPU都经历过一次QS后，那在copy之前的读操作都已经完成了，这个时候就可以reclaim了。</p>
+<h3 id="多个writer怎么处理"><a href="#多个writer怎么处理" class="headerlink" title="多个writer怎么处理"></a>多个writer怎么处理</h3><p>如果有多个writer，那通常会给不同的writer加spin_lock来处理</p>
+<h3 id="无锁"><a href="#无锁" class="headerlink" title="无锁"></a>无锁</h3><p>无锁是对于读来说的，写入的时候锁比较多。在修改bitmap的时候是需要加锁的（一般是spin_lock）。太多的写入同时对bitmap加锁效率很低，于是就有了tree-rcu。tree-rcu是将不同的CPU状态分组加锁，然后树状结构向上汇总状态。</p>
+<p><img src="2022-01-08-22-35-28.png"></p>
+<p>如果你的逻辑CPU数量（就是你在htop里看到的，比如6核12线程的5600x是12）小于16，那它会退化成单个rcu_node。<br>tree-rcu详见[A Tour Through TREE-RCU’s DataStructures]</p>
+<p>多个writer的情况下也要加锁，一般是spin_lock锁。</p>
+<h2 id="用户态"><a href="#用户态" class="headerlink" title="用户态"></a>用户态</h2><p>rcu的实现依赖了很多内核态的东西，移植到用户态比较困难。比较出名的一个用户态rcu是<code>liburcu</code></p>
+<p>模仿rcu的思想可以实现一点读多写少的优化，比如<code>sonic</code>的map<br><span class="exturl" data-url="aHR0cHM6Ly9oYW5zaGFuZ2xpbi5zcGFjZS90ZWNoL3JjdS8=">如何实现一个超快读的map<i class="fa fa-external-link-alt"></i></span></p>
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><span class="exturl" data-url="aHR0cHM6Ly93d3cua2VybmVsLm9yZy9kb2MvaHRtbC9sYXRlc3QvUkNVL3doYXRpc1JDVS5odG1s">What is RCU? – “Read, Copy, Update”<i class="fa fa-external-link-alt"></i></span> Linux Kernel文档的介绍<br><span class="exturl" data-url="aHR0cHM6Ly9wZG9zLmNzYWlsLm1pdC5lZHUvNi44MjgvMjAxOC9yZWFkaW5ncy9yY3UtZGVjYWRlLWxhdGVyLnBkZg==">RCU Usage In the Linux Kernel: One Decade Later<i class="fa fa-external-link-alt"></i></span> MIT 6.828课 RCU的阅读材料，我就是在这个课上看到rcu的，看起来还挺有意思<br><span class="exturl" data-url="aHR0cDovL3d3dy5yZHJvcC5jb20vdXNlcnMvcGF1bG1jay9SQ1Uv">Introduction to RCU<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9taXJyb3JzLmVkZ2Uua2VybmVsLm9yZy9wdWIvbGludXgva2VybmVsL3Blb3BsZS9wYXVsbWNrL3BlcmZib29rL3BlcmZib29rLmh0bWw=">Is Parallel Programming Hard, And, If So, What Can You Do About It?<i class="fa fa-external-link-alt"></i></span> 我对于rcu的不少疑惑是看了这个才懂，推荐（本书主要作者Paul也是linux rcu的主要实现者）<br><span class="exturl" data-url="aHR0cDovL2lmZXZlLmNvbS93cC1jb250ZW50L3VwbG9hZHMvMjAxMy8wNS8lRTYlQjclQjElRTUlODUlQTUlRTclOTAlODYlRTglQTclQTMlRTUlQjklQjYlRTglQTElOEMlRTclQkMlOTYlRTclQTglOEJWMS4wLnBkZg==">深入理解并行编程<i class="fa fa-external-link-alt"></i></span> 上面那本书的中文翻译<br>谢宝友 深入理解RCU系列文章<br><span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8zNzQ5MDIyODI=">Linux锁机制：可抢占RCU原理<i class="fa fa-external-link-alt"></i></span><br>[CPU masks - linux-insiders] linux-insiders的CPU masks介绍（这本书也挺不错的，我好几次查资料翻到，讲的比较易懂）<br><span class="exturl" data-url="aHR0cHM6Ly94aW5xaXUuZ2l0Ym9va3MuaW8vbGludXgtaW5zaWRlcy1jbi9jb250ZW50L0NvbmNlcHRzL2xpbnV4LWNwdS0yLmh0bWw=">CPU masks 介绍<i class="fa fa-external-link-alt"></i></span> 中文翻译  </p>
+]]></content>
+      <categories>
+        <category>Concurrency&amp;Go</category>
+      </categories>
+      <tags>
+        <tag>rcu</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>推荐系统笔记</title>
     <url>/bccd/</url>
     <content><![CDATA[<p>要啥DNN、LSTM、BERT啊，真用起来FM就完事了</p>
@@ -4884,6 +5578,83 @@ lines <span class="token number">2</span>-36/36 <span class="token punctuation">
       </tags>
   </entry>
   <entry>
+    <title>VSCode Neovim插件配置——将VSCode作为Neovim的GUI客户端</title>
+    <url>/vscode-neovim-setting/</url>
+    <content><![CDATA[<p>本来不报希望的试了试这套不伦不类的缝合怪配置，结果缝合出了很好的效果，可以拿这套配置在VSCode下养老了。</p>
+<span id="more"></span>
+
+<p>VSCodevim这个插件和原生Vim的体验差距很大，Vim的很多操作都不支持，而且大文件会特别卡。VSCode Neovim这个插件是在Insert模式几乎和正常的VSCode编辑一样，在Normal模式有满血的Vim体验（不像VSCodevim那样是体验是残血的，只是一个Vim键位和操作的模拟器）</p>
+<p>这个插件直接将Neovim作为后端，在Normal模式下由Neovim控制（直接将内容缓存发往Neovim处理），可以使用Vim的各种键位操作<br>在Insert模式下，操作和渲染由VSCode处理，编辑体验几乎和VSCode完全一致。色彩高亮和代码补全等都由VSCode实现（所以不要装Neovim的LSP等插件，没用，而且可能影响速度）当你保存的时候更改会从VSCode同步到Neovim。  </p>
+<p>VSCode在编辑模式下的舒服体验和插件、Vim在Normal模式下的操作，同时得到了保留，而且性能和速度还可以接受。</p>
+<p>与其说这是VSCode的一个Vim键位插件，不如说是将VSCode直接改造成了Neovim的一个GUI客户端。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>VSCode插件市场装VSCode Neovim，Archlinux安装neovim<code>sudo pacman -S neovim</code><br>然后在设置里面填上路径</p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token property">"vscode-neovim.neovimExecutablePaths.linux"</span><span class="token operator">:</span> <span class="token string">"/usr/bin/nvim"</span><span class="token punctuation">,</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>就可以用了</p>
+<h2 id="中文输入法和Neovim插件Normal模式下冲突"><a href="#中文输入法和Neovim插件Normal模式下冲突" class="headerlink" title="中文输入法和Neovim插件Normal模式下冲突"></a>中文输入法和Neovim插件Normal模式下冲突</h2><p>VSCode的Neovim插件在Normal模式下，如果fcitx5等输入法处于中文模式，那么输入的字符会被输入法全部捕获（就像平时在VSCode里打字一样）</p>
+<p>ArchWiki 给出了下面这种方法，试了一下速度比较慢</p>
+<pre class="line-numbers language-vimrc" data-language="vimrc"><code class="language-vimrc">autocmd InsertLeave * :silent !fcitx5-remote -c &quot; 退出插入模式时禁用输入法
+autocmd BufCreate *  :silent !fcitx5-remote -c &quot; 创建 Buf 时禁用输入法
+autocmd BufEnter *  :silent !fcitx5-remote -c &quot; 进入 Buf 时禁用输入法
+autocmd BufLeave *  :silent !fcitx5-remote -c &quot; 离开 Buf 时禁用输入法<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>比较快的方法是装插件，比如依云的fcitx.vim插件，但是这个插件在neovim下面好像没有效果。</p>
+<p>本来想自己移植一个neovim的插件的，但是看了一下已经有人干了：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2gtaGcvZmNpdHgubnZpbS5naXQ=">fcitx.nvim<i class="fa fa-external-link-alt"></i></span></p>
+<p>我用的vim-plug管理插件，放到<code>~/.config/nvim/init.vim</code>下面就可以了</p>
+<pre class="line-numbers language-vim" data-language="vim"><code class="language-vim"><span class="token keyword">call</span> plug#<span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+Plug <span class="token string">'https://github.com/h-hg/fcitx.nvim.git'</span>
+<span class="token keyword">call</span> plug#<span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="一些按键绑定设置"><a href="#一些按键绑定设置" class="headerlink" title="一些按键绑定设置"></a>一些按键绑定设置</h2><p>首先我不要hjkl这几个上下左右键（根本无法接受，我的肌肉记忆明明是键盘上上下左右四个经典方向键，玩空洞骑士和Ballance用的极其熟练，其次是WASD这个4399键位，其次是鼠标，我鼠标可熟练了）<br>我知道hjkl移动距离短而且移动后方便按距离近的i键进入Insert模式，但是我的肌肉记忆是上下左右，你再给我十年我也改不过来。</p>
+<p>然后我将Casplock映射为ESC，这个万年不用的键放在这么重要的位置还有一个比Tab键还大的键帽，简直浪费。编辑<code>～/Xmodmap</code>修改键盘映射就可以了。</p>
+<p>或者如果喜欢也可以将<code>jj</code>（连按两次）绑定成ESC<code>inoremap jj &lt;Esc&gt;</code>^`</p>
+<p>然后是VSCode里面正常的<code>Ctrl+F</code>当前搜索，这个我们找回来（<code>Ctrl+F</code>在Vim里是向上翻页，我完全用不到，我用PgDn和PgUp）</p>
+<p>然后是VSCode的<code>Ctrl+B</code>展开/收起侧边栏，这个我也留着VSCode的设置。</p>
+<p>编辑<code>~/.config/Code/User/keybindings.json</code></p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+        <span class="token property">"key"</span><span class="token operator">:</span> <span class="token string">"ctrl+f"</span><span class="token punctuation">,</span>
+        <span class="token property">"command"</span><span class="token operator">:</span> <span class="token string">"-vscode-neovim.escape"</span><span class="token punctuation">,</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token punctuation">&#123;</span>
+        <span class="token property">"key"</span><span class="token operator">:</span> <span class="token string">"ctrl+b"</span><span class="token punctuation">,</span>
+        <span class="token property">"command"</span><span class="token operator">:</span> <span class="token string">"-vscode-neovim.escape"</span><span class="token punctuation">,</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token punctuation">&#123;</span>
+        <span class="token property">"key"</span><span class="token operator">:</span> <span class="token string">"ctrl+a"</span><span class="token punctuation">,</span>
+        <span class="token property">"command"</span><span class="token operator">:</span> <span class="token string">"-vscode-neovim.escape"</span><span class="token punctuation">,</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>复制和粘贴我大部分时间直接用linux下x默认的鼠标点击和中键。但是全选等操作的时候我还是习惯<code>Ctrl-A</code>加<code>Ctrl-C</code></p>
+<p>偶尔使用<code>Ctrl-C</code>的人，把<code>Ctrl-C</code>和<code>Ctrl-A</code>找回来还是有必要的，偶尔在<code>insert</code>模式下<code>Ctrl-C</code>会进入normal模式，<code>Ctrl-A</code>会输入<code>。sd</code>，很烦。</p>
+<p>所以我也直接在json设置里面排除了<code>Ctrl-A</code>。ps：如果你想使用mswin.vim那样在neovim里面绑定，那可能会报错<code>nvim_call_function: Vim(let):E684: list index out of range: 0</code>。注意在Neovim的扩展设置里面（Keyboard shortcuts）删掉<code>Ctrl+A</code></p>
+<p>然后在<code>settings.json</code>中设置</p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token property">"vscode-neovim.useCtrlKeysForInsertMode"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+<span class="token property">"vscode-neovim.useCtrlKeysForNormalMode"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>这样就基本上把Ctrl的功能还给VSCode了。</p>
+<h2 id="Neovim插件默认instert模式"><a href="#Neovim插件默认instert模式" class="headerlink" title="Neovim插件默认instert模式"></a>Neovim插件默认instert模式</h2><p>这个样子平时就像正常使用VSCode一样，当用到normal mode的功能时才打开normal mode，可以少按很多次i</p>
+<pre class="line-numbers language-vim" data-language="vim"><code class="language-vim"><span class="token keyword">if</span> <span class="token function">has</span><span class="token punctuation">(</span><span class="token string">'nvim'</span><span class="token punctuation">)</span>
+    <span class="token builtin">autocmd</span> TermOpen <span class="token builtin">term</span><span class="token punctuation">:</span><span class="token operator">/</span><span class="token operator">/</span><span class="token operator">*</span> <span class="token keyword">startinsert</span>
+<span class="token keyword">endif</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>之前只在编辑小文件的时候临时用Vim, 这两年内Vim使用次数逐渐增多，Vim也逐渐熟练，一度产生过将主力编辑器从VSCode换成Vim的想法。VSCode在Linux平台上频繁内存泄漏、VSCode的渲染速度比Vim慢很多（尤其是打开大文件的时候），这些原因导致VSCode在某些时候的体验比Vim差了好多。</p>
+<p>但是Vim我没有找到合适的GUI界面来打造一个对我而言比较舒服的编辑器，gvim在当年上嵌入式课的时候在Ubuntu下就试过一次了，感觉体验和</p>
+<p>SpaceVim试过，装了一堆插件之后太卡，性能不是太好，性能表现几乎和VSCode不相上下，在我的超低配七年老电脑上失去了Vim流畅的优势，而且这一套界面的颜值和使用体验远不如VSCode。</p>
+<p>Neovim的GUI界面有<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FraXlvc2kvZ29uZW92aW0=">goneovim<i class="fa fa-external-link-alt"></i></span>和neovide，体验也不如VSCode。（go居然能拿来写Qt还写成这种样子，哇偶）</p>
+<p>最舒服的Vim体验还是在Alacritty里面，GPU加速渲染速度很快，非常丝滑。</p>
+<p>而且VSCode在我从18年开始使用它的三年内，肉眼可见的进步。未来的前景也很光明，微软掏钱养着也不用担心倒闭的问题，除非微软倒闭（真倒闭了那不是更好吗，还有这种好事，苏联笑话.jpg）<br>现在我除了要写一万行以上的屎山项目才会打开Goland等全家桶IDE，编辑100行以下的配置文件等会打开vim。<br>剩下的绝大多数编辑都是用VSCode,用VSCode来写Go、C、Python、shell，用VSCode来写Markdown和LaTeX, 逐渐抛弃了typora和Word，也放弃了曾经很喜欢的sublime text（纯粹是因为好看和启动速度比vscode快一点）</p>
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><span class="exturl" data-url="aHR0cHM6Ly93d3cuYWhvbm4ubWUvYmxvZy90aGUtdmltLWd1aWRlLWZvci12cy1jb2RlLXVzZXJz">从VSCode到Vim到……两个都用？<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2RhaXBlaWh1c3QvaW0tc2VsZWN0I2luc3RhbGxhdGlvbg==">https://github.com/daipeihust/im-select#installation<i class="fa fa-external-link-alt"></i></span> Windows和Mac以及使用vscodevim插件用户可以用这个解决中文输入法冲突的问题<br><span class="exturl" data-url="aHR0cHM6Ly9kZGFkYWFsLm1lL2FydGljbGVzL2Zyb20tdnNjb2RlLXRvLXZpbS10by1ib3Ro">https://ddadaal.me/articles/from-vscode-to-vim-to-both<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9qZGhhby5naXRodWIuaW8vMjAyMC8wMS8xMi92aW1fbnZpbV9oaXN0b3J5X2RldmVsb3BtZW50Lw==">Vim 和 Neovim 的前世今生<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC9hYzczOWM2ZWE1NDE=">vscode 集成 Neovim<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj1nNGRYWjBSUVdkdw==">VSCode with embedded Neovim<i class="fa fa-external-link-alt"></i></span>  </p>
+]]></content>
+      <categories>
+        <category>不务正业系列</category>
+      </categories>
+      <tags>
+        <tag>VSCode</tag>
+        <tag>Neovim</tag>
+        <tag>Vim</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>毕竟狂澜挽不回，遽怜遗蜕化飞灰</title>
     <url>/SARS-cov-2/</url>
     <content><![CDATA[<p>So this is how liberty die, with thunderous applause</p>
@@ -4999,83 +5770,6 @@ lines <span class="token number">2</span>-36/36 <span class="token punctuation">
       <categories>
         <category>杂七杂八</category>
       </categories>
-  </entry>
-  <entry>
-    <title>VSCode Neovim插件配置——将VSCode作为Neovim的GUI客户端</title>
-    <url>/vscode-neovim-setting/</url>
-    <content><![CDATA[<p>本来不报希望的试了试这套不伦不类的缝合怪配置，结果缝合出了很好的效果，可以拿这套配置在VSCode下养老了。</p>
-<span id="more"></span>
-
-<p>VSCodevim这个插件和原生Vim的体验差距很大，Vim的很多操作都不支持，而且大文件会特别卡。VSCode Neovim这个插件是在Insert模式几乎和正常的VSCode编辑一样，在Normal模式有满血的Vim体验（不像VSCodevim那样是体验是残血的，只是一个Vim键位和操作的模拟器）</p>
-<p>这个插件直接将Neovim作为后端，在Normal模式下由Neovim控制（直接将内容缓存发往Neovim处理），可以使用Vim的各种键位操作<br>在Insert模式下，操作和渲染由VSCode处理，编辑体验几乎和VSCode完全一致。色彩高亮和代码补全等都由VSCode实现（所以不要装Neovim的LSP等插件，没用，而且可能影响速度）当你保存的时候更改会从VSCode同步到Neovim。  </p>
-<p>VSCode在编辑模式下的舒服体验和插件、Vim在Normal模式下的操作，同时得到了保留，而且性能和速度还可以接受。</p>
-<p>与其说这是VSCode的一个Vim键位插件，不如说是将VSCode直接改造成了Neovim的一个GUI客户端。</p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>VSCode插件市场装VSCode Neovim，Archlinux安装neovim<code>sudo pacman -S neovim</code><br>然后在设置里面填上路径</p>
-<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token property">"vscode-neovim.neovimExecutablePaths.linux"</span><span class="token operator">:</span> <span class="token string">"/usr/bin/nvim"</span><span class="token punctuation">,</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>就可以用了</p>
-<h2 id="中文输入法和Neovim插件Normal模式下冲突"><a href="#中文输入法和Neovim插件Normal模式下冲突" class="headerlink" title="中文输入法和Neovim插件Normal模式下冲突"></a>中文输入法和Neovim插件Normal模式下冲突</h2><p>VSCode的Neovim插件在Normal模式下，如果fcitx5等输入法处于中文模式，那么输入的字符会被输入法全部捕获（就像平时在VSCode里打字一样）</p>
-<p>ArchWiki 给出了下面这种方法，试了一下速度比较慢</p>
-<pre class="line-numbers language-vimrc" data-language="vimrc"><code class="language-vimrc">autocmd InsertLeave * :silent !fcitx5-remote -c &quot; 退出插入模式时禁用输入法
-autocmd BufCreate *  :silent !fcitx5-remote -c &quot; 创建 Buf 时禁用输入法
-autocmd BufEnter *  :silent !fcitx5-remote -c &quot; 进入 Buf 时禁用输入法
-autocmd BufLeave *  :silent !fcitx5-remote -c &quot; 离开 Buf 时禁用输入法<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>比较快的方法是装插件，比如依云的fcitx.vim插件，但是这个插件在neovim下面好像没有效果。</p>
-<p>本来想自己移植一个neovim的插件的，但是看了一下已经有人干了：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2gtaGcvZmNpdHgubnZpbS5naXQ=">fcitx.nvim<i class="fa fa-external-link-alt"></i></span></p>
-<p>我用的vim-plug管理插件，放到<code>~/.config/nvim/init.vim</code>下面就可以了</p>
-<pre class="line-numbers language-vim" data-language="vim"><code class="language-vim"><span class="token keyword">call</span> plug#<span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-Plug <span class="token string">'https://github.com/h-hg/fcitx.nvim.git'</span>
-<span class="token keyword">call</span> plug#<span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="一些按键绑定设置"><a href="#一些按键绑定设置" class="headerlink" title="一些按键绑定设置"></a>一些按键绑定设置</h2><p>首先我不要hjkl这几个上下左右键（根本无法接受，我的肌肉记忆明明是键盘上上下左右四个经典方向键，玩空洞骑士和Ballance用的极其熟练，其次是WASD这个4399键位，其次是鼠标，我鼠标可熟练了）<br>我知道hjkl移动距离短而且移动后方便按距离近的i键进入Insert模式，但是我的肌肉记忆是上下左右，你再给我十年我也改不过来。</p>
-<p>然后我将Casplock映射为ESC，这个万年不用的键放在这么重要的位置还有一个比Tab键还大的键帽，简直浪费。编辑<code>～/Xmodmap</code>修改键盘映射就可以了。</p>
-<p>或者如果喜欢也可以将<code>jj</code>（连按两次）绑定成ESC<code>inoremap jj &lt;Esc&gt;</code>^`</p>
-<p>然后是VSCode里面正常的<code>Ctrl+F</code>当前搜索，这个我们找回来（<code>Ctrl+F</code>在Vim里是向上翻页，我完全用不到，我用PgDn和PgUp）</p>
-<p>然后是VSCode的<code>Ctrl+B</code>展开/收起侧边栏，这个我也留着VSCode的设置。</p>
-<p>编辑<code>~/.config/Code/User/keybindings.json</code></p>
-<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
-        <span class="token property">"key"</span><span class="token operator">:</span> <span class="token string">"ctrl+f"</span><span class="token punctuation">,</span>
-        <span class="token property">"command"</span><span class="token operator">:</span> <span class="token string">"-vscode-neovim.escape"</span><span class="token punctuation">,</span>
-    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-    <span class="token punctuation">&#123;</span>
-        <span class="token property">"key"</span><span class="token operator">:</span> <span class="token string">"ctrl+b"</span><span class="token punctuation">,</span>
-        <span class="token property">"command"</span><span class="token operator">:</span> <span class="token string">"-vscode-neovim.escape"</span><span class="token punctuation">,</span>
-    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-    <span class="token punctuation">&#123;</span>
-        <span class="token property">"key"</span><span class="token operator">:</span> <span class="token string">"ctrl+a"</span><span class="token punctuation">,</span>
-        <span class="token property">"command"</span><span class="token operator">:</span> <span class="token string">"-vscode-neovim.escape"</span><span class="token punctuation">,</span>
-    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>复制和粘贴我大部分时间直接用linux下x默认的鼠标点击和中键。但是全选等操作的时候我还是习惯<code>Ctrl-A</code>加<code>Ctrl-C</code></p>
-<p>偶尔使用<code>Ctrl-C</code>的人，把<code>Ctrl-C</code>和<code>Ctrl-A</code>找回来还是有必要的，偶尔在<code>insert</code>模式下<code>Ctrl-C</code>会进入normal模式，<code>Ctrl-A</code>会输入<code>。sd</code>，很烦。</p>
-<p>所以我也直接在json设置里面排除了<code>Ctrl-A</code>。ps：如果你想使用mswin.vim那样在neovim里面绑定，那可能会报错<code>nvim_call_function: Vim(let):E684: list index out of range: 0</code>。注意在Neovim的扩展设置里面（Keyboard shortcuts）删掉<code>Ctrl+A</code></p>
-<p>然后在<code>settings.json</code>中设置</p>
-<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token property">"vscode-neovim.useCtrlKeysForInsertMode"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
-<span class="token property">"vscode-neovim.useCtrlKeysForNormalMode"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p>这样就基本上把Ctrl的功能还给VSCode了。</p>
-<h2 id="Neovim插件默认instert模式"><a href="#Neovim插件默认instert模式" class="headerlink" title="Neovim插件默认instert模式"></a>Neovim插件默认instert模式</h2><p>这个样子平时就像正常使用VSCode一样，当用到normal mode的功能时才打开normal mode，可以少按很多次i</p>
-<pre class="line-numbers language-vim" data-language="vim"><code class="language-vim"><span class="token keyword">if</span> <span class="token function">has</span><span class="token punctuation">(</span><span class="token string">'nvim'</span><span class="token punctuation">)</span>
-    <span class="token builtin">autocmd</span> TermOpen <span class="token builtin">term</span><span class="token punctuation">:</span><span class="token operator">/</span><span class="token operator">/</span><span class="token operator">*</span> <span class="token keyword">startinsert</span>
-<span class="token keyword">endif</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>之前只在编辑小文件的时候临时用Vim, 这两年内Vim使用次数逐渐增多，Vim也逐渐熟练，一度产生过将主力编辑器从VSCode换成Vim的想法。VSCode在Linux平台上频繁内存泄漏、VSCode的渲染速度比Vim慢很多（尤其是打开大文件的时候），这些原因导致VSCode在某些时候的体验比Vim差了好多。</p>
-<p>但是Vim我没有找到合适的GUI界面来打造一个对我而言比较舒服的编辑器，gvim在当年上嵌入式课的时候在Ubuntu下就试过一次了，感觉体验和</p>
-<p>SpaceVim试过，装了一堆插件之后太卡，性能不是太好，性能表现几乎和VSCode不相上下，在我的超低配七年老电脑上失去了Vim流畅的优势，而且这一套界面的颜值和使用体验远不如VSCode。</p>
-<p>Neovim的GUI界面有<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FraXlvc2kvZ29uZW92aW0=">goneovim<i class="fa fa-external-link-alt"></i></span>和neovide，体验也不如VSCode。（go居然能拿来写Qt还写成这种样子，哇偶）</p>
-<p>最舒服的Vim体验还是在Alacritty里面，GPU加速渲染速度很快，非常丝滑。</p>
-<p>而且VSCode在我从18年开始使用它的三年内，肉眼可见的进步。未来的前景也很光明，微软掏钱养着也不用担心倒闭的问题，除非微软倒闭（真倒闭了那不是更好吗，还有这种好事，苏联笑话.jpg）<br>现在我除了要写一万行以上的屎山项目才会打开Goland等全家桶IDE，编辑100行以下的配置文件等会打开vim。<br>剩下的绝大多数编辑都是用VSCode,用VSCode来写Go、C、Python、shell，用VSCode来写Markdown和LaTeX, 逐渐抛弃了typora和Word，也放弃了曾经很喜欢的sublime text（纯粹是因为好看和启动速度比vscode快一点）</p>
-<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><span class="exturl" data-url="aHR0cHM6Ly93d3cuYWhvbm4ubWUvYmxvZy90aGUtdmltLWd1aWRlLWZvci12cy1jb2RlLXVzZXJz">从VSCode到Vim到……两个都用？<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2RhaXBlaWh1c3QvaW0tc2VsZWN0I2luc3RhbGxhdGlvbg==">https://github.com/daipeihust/im-select#installation<i class="fa fa-external-link-alt"></i></span> Windows和Mac以及使用vscodevim插件用户可以用这个解决中文输入法冲突的问题<br><span class="exturl" data-url="aHR0cHM6Ly9kZGFkYWFsLm1lL2FydGljbGVzL2Zyb20tdnNjb2RlLXRvLXZpbS10by1ib3Ro">https://ddadaal.me/articles/from-vscode-to-vim-to-both<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9qZGhhby5naXRodWIuaW8vMjAyMC8wMS8xMi92aW1fbnZpbV9oaXN0b3J5X2RldmVsb3BtZW50Lw==">Vim 和 Neovim 的前世今生<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC9hYzczOWM2ZWE1NDE=">vscode 集成 Neovim<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj1nNGRYWjBSUVdkdw==">VSCode with embedded Neovim<i class="fa fa-external-link-alt"></i></span>  </p>
-]]></content>
-      <categories>
-        <category>不务正业系列</category>
-      </categories>
-      <tags>
-        <tag>VSCode</tag>
-        <tag>Neovim</tag>
-        <tag>Vim</tag>
-      </tags>
   </entry>
   <entry>
     <title>重启博客</title>
