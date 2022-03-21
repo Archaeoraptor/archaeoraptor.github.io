@@ -2674,89 +2674,6 @@ p <span class="token operator">=</span> x
       </tags>
   </entry>
   <entry>
-    <title>重装Ubuntu</title>
-    <url>/2d5/</url>
-    <content><![CDATA[<p>祖传服务器传到了我的手里, 行吧。其实我想把标题改成Ubuntu内部错误的解决办法（不是</p>
-<span id="more"></span>
-
-<h2 id="更新（和洗手）"><a href="#更新（和洗手）" class="headerlink" title="更新（和洗手）"></a>更新（和洗手）</h2><p>19年写的这个20年不知道怎么在2020年有一段时间被扔到了<code>重装Ubuntu</code>搜索结果的最前面，我这个小破站访问量暴增。然而那个时候20.04LTS都出了，已经有点过时了，而我19年那会写的那个几乎属于个人吐槽，差不多是我博客迁到，完全不适合作为一个教程。可能骗了很多人进来，</p>
-<p>装什么Ubuntu啊，还是Arch香，群里个个都是人才，说话又好听</p>
-<p><img src="/2d5/1611832700.webp"></p>
-<p><del>但是随便装个Ubuntu不仅快，他们跑深度学习的时候抄CSDN配置环境也方便</del></p>
-<p><del>最重要的，又不是我用。</del></p>
-<p><del>GNOME内存泄漏关我什么事</del></p>
-<p><del>Ubuntu内部错误关我什么事</del></p>
-<p>还是去用Ubuntu吧.jpg</p>
-<p><img src="/2d5/1611834396.webp"></p>
-<p><img src="/2d5/1611834449.webp"></p>
-<h2 id="认真发言"><a href="#认真发言" class="headerlink" title="认真发言"></a>认真发言</h2><p>其实你可以试试Debian（Canonical强推snap太烦人了）</p>
-<h3 id="关于桌面（DE）"><a href="#关于桌面（DE）" class="headerlink" title="关于桌面（DE）"></a>关于桌面（DE）</h3><p>带桌面的版本建议避开Ubuntu的GNOME，那个东西。。。</p>
-<p>可以试试Linux Mint，或者Fedora（这个的GNOME应该比 Ubuntu 16、18 那几个整天内存泄露的GNOME版本稳多了）</p>
-<p>其实我推荐KDE，可以试试Kubuntu（或者KDE Neon？）</p>
-<p>机器配置较差请直接Lubuntu，稳如老狗，除了略简陋没有别的缺点。</p>
-<p>一众WM用户应该不会搜索这么蠢的关键词搜到我这里来，这里不谈WM了。</p>
-<h3 id="关于服务器"><a href="#关于服务器" class="headerlink" title="关于服务器"></a>关于服务器</h3><p>小作坊没有专职运维和技术支持，其实服务器建议试试Debian或者Ubuntu LTS，Debian stable稳如老狗</p>
-<p><del>众所周知，Debian testing 都比 Ubuntu LTS 稳（注意这个安全更新比较慢，个人用户可以testing，开了公网端口的工作站不要用这个）</del></p>
-<p>不过Ubuntu和CentOS6、7比起来，还是瞬间和蔼可亲了不少</p>
-<p>求求新入坑的别再跟着什么鸟哥私房菜之类的老教程用CentOS了，2020年 CentOS 8 都被扬了，REHL马上就要给小作坊免费了，小作坊真迷信稳定上REHL吧。</p>
-<p>没事不要用所谓稳定的老版本然后找不到包只能自己手动编译，就不说c/c++那一堆lib了，我已经见过不少人在编译python的时候没开ssl当场翻车。</p>
-<p>什么你说容器？你试过在CentOS6上面弄Docker和k8s吗，我在教研室的祖传阿里云上试过一次，从此再也不想看到CentOS了</p>
-<p>（整天在CentOS上手动编译凸显运维重要性和工作量的除外）</p>
-<h2 id="安装参考"><a href="#安装参考" class="headerlink" title="安装参考"></a>安装参考</h2><p><span class="exturl" data-url="dHRwczovL3R1dG9yaWFscy51YnVudHUuY29tL3R1dG9yaWFsL3R1dG9yaWFsLWluc3RhbGwtdWJ1bnR1LXNlcnZlcg==">tutorial-install-ubuntu-server<i class="fa fa-external-link-alt"></i></span><br> <span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL0xWTV8oJUU3JUFFJTgwJUU0JUJEJTkzJUU0JUI4JUFEJUU2JTk2JTg3KQ==">LVM arch-wiki<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly95ZWFzeS5naXRib29rcy5pby9kb2NrZXJfcHJhY3RpY2UvaW5zdGFsbC91YnVudHUuaHRtbA==">Ubuntu 安装 Docker CE<i class="fa fa-external-link-alt"></i></span>、<span class="exturl" data-url="aHR0cHM6Ly95ZWFzeS5naXRib29rcy5pby9kb2NrZXJfcHJhY3RpY2UvaW5zdGFsbC9taXJyb3IuaHRtbA==">镜像加速器<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cudGVjbWludC5jb20vY29uZmlndXJlLW5ldHdvcmstc3RhdGljLWlwLWFkZHJlc3MtaW4tdWJ1bnR1Lw==">How to Configure Network Static IP Address in Ubuntu 18.04<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9uZXRwbGFuLmlvL2V4YW1wbGVz">netplan官网的配置示例<i class="fa fa-external-link-alt"></i></span></p>
-]]></content>
-      <categories>
-        <category>102网吧日常</category>
-      </categories>
-      <tags>
-        <tag>ubuntu</tag>
-        <tag>重装</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>你好，Manjaro。再见，Manjaro。</title>
-    <url>/ff0e/</url>
-    <content><![CDATA[<p>洗手.jpg</p>
-<span id="more"></span>
-
-<p>虽然有一些办法不重装从Manjaro跑路到Arch，</p>
-<!-- 
-比如reddit上这篇帖子[Guide for Manjaro to Arch migration (the dirty way)](https://www.reddit.com/r/ManjaroLinux/comments/jx42ar/guide_for_manjaro_to_arch_migration_the_dirty_way/)
- -->
-<p>但是你会遇到各种Manjaro魔改的遗留问题（尤其是加入了相当多魔改的最新版Manjaro,据说很早以前比较容易直接滚成Arch）,<strong>the dirty way</strong>。</p>
-<p>我甚至觉得上面这个方法想得到一个纯净的Arch，难度比你去arch的<span class="exturl" data-url="aHR0cHM6Ly9hcmNoaXZlLmFyY2hsaW51eC5vcmcvaXNvLw==">archive<i class="fa fa-external-link-alt"></i></span>下载一个10年前的iso（真正的有图形界面的arch安装镜像哦，官方的）再借助<span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvdGl0bGUvQXJjaF9MaW51eF9BcmNoaXZl">Arch Linux Archive<i class="fa fa-external-link-alt"></i></span>（Rollback Machine）等一点一点滚到最新都麻烦。（至少去年Arch群友们玩过这个活动，勉强可行）</p>
-<p>直接重装一个原味Arch应该是最快的，也是后遗症最小的。总有人觉得直接不重装换源成Arch比较简单，很遗憾，这其实是最麻烦的一种方法。天上不会掉馅饼。</p>
-<h2 id="更新–再见Manjaro，"><a href="#更新–再见Manjaro，" class="headerlink" title="更新–再见Manjaro，"></a>更新–再见Manjaro，</h2><p>前一阵Manjaro社区出的争吵让我跑路了，Manjaro之前用的还比较舒服（当然直到现在都比较舒服），以后就不知道怎么样了。外面Arch社区骂声一片，里面还总在内斗，不断有人出走，前几周连jonathon都气走了（跑去隔壁endeavour os了）</p>
-<p>jonathon的声明在<span class="exturl" data-url="aHR0cHM6Ly9mb3J1bS5tYW5qYXJvLm9yZy90L2NoYW5nZS1vZi10cmVhc3VyZXItZm9yLW1hbmphcm8tY29tbXVuaXR5LWZ1bmRzLzE1NDg4OA==">这篇帖子<i class="fa fa-external-link-alt"></i></span></p>
-<p>过程大概是这样的，philm（Manjaro的CEO，反正Manjaro社区的不少人都觉得此人非常讨厌）挪用社区赞助捐款2000欧元，用于给自己买的电脑。这次购买并没有跟掌钱管家jonathon商量，也没有在社区内征得同意。jonathon觉得按照规定这钱只能用于Manjaro项目的网站建设、项目推广之类的，不是给你们恰烂钱的，然后在论坛发帖子怼philm，然后帖子被删了一次，jonathon的管理员也被撤了。帖子下面众人纷纷表示philm不回应道歉以后再也不捐助Manjaro了，不少人表示以后再也不用Manjaro了，并考虑跑路到KDE Neon、Kubuntu、Arch、Endeavour OS。</p>
-<p>philm的回应闪烁其辞，一直说事情不是大家想的那个样子的，但是大家怼他让他公布他和jonathon的完整聊天记录他又不肯。最后philm屁事没有继续担任Manjaro的领袖，jonathon跑路去了Endeavour OS。</p>
-<h2 id="再次更新–pamac不慎向aur官网打出了DDoS"><a href="#再次更新–pamac不慎向aur官网打出了DDoS" class="headerlink" title="再次更新–pamac不慎向aur官网打出了DDoS"></a>再次更新–pamac不慎向aur官网打出了DDoS</h2><p>Manjaro的Pamac不小心DDoS了aur.archlinux.org， 每秒40多来自pamac的请求，aur遭到暴击。<br>很喜欢reddit评论里的一句话：Just when I thought I couldn’t hate manjaro any more.</p>
-<p><span class="exturl" data-url="aHR0cHM6Ly93d3cucmVkZGl0LmNvbS9yL2FyY2hsaW51eC9jb21tZW50cy9tejNiaXovaXNfdGhlX2F1cl9kb3duX2Zvcl9ldmVyeW9uZS8=">https://www.reddit.com/r/archlinux/comments/mz3biz/is_the_aur_down_for_everyone/<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9naXRsYWIubWFuamFyby5vcmcvYXBwbGljYXRpb25zL3BhbWFjLy0vaXNzdWVzLzEwMTc=">https://gitlab.manjaro.org/applications/pamac/-/issues/1017<i class="fa fa-external-link-alt"></i></span>  </p>
-<h2 id="关于社区文化和商业化"><a href="#关于社区文化和商业化" class="headerlink" title="关于社区文化和商业化"></a>关于社区文化和商业化</h2><p>微软的商业化非常成功，苹果和安卓也是。</p>
-<p>即使Linux桌面发行版这种反商业风气比较浓的地方，商业化也不意味着坏事。</p>
-<p>REHL也还算不错，名声也比较好；Canonical争议比较大，虽然不招Debian等开源社区的喜欢，早年间也算对推广Linux桌面有贡献，后面snap等有点evil化了</p>
-<p>当然，或许还要算上国内的Deepin。（奔着Windows的竞品去的，和其他Linux社区的画风和定位不太一样，倒是和安卓的定位挺像，总不是坏事）</p>
-<p>然而Manjaro的商业化我很不看好，就我目前看到的，对上游没有太多贡献，反而给上游带来了更多的麻烦。而且还有一点，Manjaro挪用社区捐款到公司口袋里面，虽然都是Manjaro，但是这在眼里揉不得沙子的很多开源社区人严重这已经是重罪了。当然，也不全是坏事，就不少人的体验来看，至少用起来比Ubuntu舒服不少。</p>
-<p>红帽的商业化就很成功，一开始就是给企业提供服务器支持等商业化内容，挣了钱反哺Linux社区。Deepin有不少情怀，比某些充满国家经费和金钱气息的发行版好不少，打包了很多deepin-wine也好DDE也好争取到国内不少公司配适Linux也好，都还算不错。Deepin虽然也带来了大量的小白，但是没有涌到Debian等社区去造成很多麻烦。</p>
-<p>我们重温一下“b站或许会倒闭但绝不会变质”的典中典（不知不觉蒙古上单发表重要讲话也一年了，笑）。为什么b站就被骂的这么厉害呢？优酷土豆乐视爱奇艺哪个广告不比这个多，开头的广告还无法跳过。论视频质量和推荐无营养的视频、还有强制使用手机app、以及抄袭和营销号，跟抖音快手比现在的b站已经算良心了吧。<br>就像早期的b站那样，这是一群小圈子和爱好者，首先这不是一个商品，这是一个社区，没多少营销号也没有广告，很多人是倾注心血去做视频的，感情很深，氛围也很好。（国内其他视频网站可能也就被封的内涵段子“段友”（现 皮皮虾）有早期b站用户那样类似的归属感了，什么？a站？a站还活着啊？）<br>当然视频网站的运行成本比较高，靠用爱发电一般做不了很大（就算商业化吃香难看都难免亏损，比如爱奇艺），人多了以后商业化是难免的。</p>
-<p>相信大家都能看到Arch社区对Manjaro用户的态度，不管是在archlinuxcn论坛或者irc、电报，还是在国外的reddit社区等，……*&amp;（*%&amp;&amp;￥人*&amp;……（此处省略500字）</p>
-<p>不少Arch用户和维护者对Manjaro的恶意大概就像b站老用户这样（你看苹果微软不是比Manjaro邪恶多了，但是他们敌视这些的次数可能比Manjaro要少）</p>
-<p>Arch背后没有商业化背景，甚至没有红帽或Canonical这样的公司，然而还是有了比背靠大公司的发行版更多的包（算上野包）和更丰富的wiki(可能没有红帽的wiki好，但是中文翻译多)，这都是Arch的维护者和用户们用爱发电一砖一瓦的心血。它不像Windows和Mac或者红帽的RHEL那样一开始就是一个商品，而且Arch的特点也不太适合做服务器或者商业化。（可能gentoo的商业化用途都比Arch多，还是有一点运维在用gentoo当服务器的）Manjaro的商业化，和原来的社区格格不入。很多地方直接和arch的不少理念和作风背道而驰。<br>不幸的是Manjaro的社区也有不少伸手党，大量安利Manjaro的视频和帖子都只说好用、好看、好安装，绝口不提社区文化和用户责任。（<strong>而且还在教程里让你添加archlinuxcn的源，同时还说Manjaro更稳定</strong>）</p>
-<p>曾经的Arch的ISO有GUI安装界面的（10年前），后来就没了，而官方Wiki上的安装指南也对新手不那么友好了（越来越不友好了）。这里面一个比较重要的原因是过滤小白用户和伸手党，提高用户门槛。这个策略应该还是比较成功的，然而这挡不住Manjaro等发行版的用户。（许多完全有能力安装、使用Archlinux甚至为Archlinux做贡献的用户一开始都被吓到了Manjaro，走了一些弯路，兜兜转转又被洗手到了Arch）<br>今年愚人节当天Arch出了一个<span class="exturl" data-url="aHR0cHM6Ly9hcmNobGludXgub3JnL3BhY2thZ2VzL2V4dHJhL2FueS9hcmNoaW5zdGFsbC8=">archinstall<i class="fa fa-external-link-alt"></i></span>的TUI安装方式（还在extra仓库里），当时我一度以为是愚人节玩笑。不过试了一下，还是与其他发行版的GUI安装界面相去甚远。</p>
-<p>短期看来不会，长期看来应该也不会。可能是无奈之举吧，暂时也找不到太多比提高安装门槛更好的过滤伸手党的办法了。</p>
-<p>这种过滤机制类似很多论坛（比如52pojie等）的邀请制、等级制，早期知乎也是这样的邀请制（甚至还要求实名）。前面提到的b站早期也是要答题的（而且题还很难）。<br>这些做法确实很有效，很多论坛都靠邀请制挡住了伸手党和发广告的。知乎在开放邀请后内容质量的下滑速度经历过的人应该印象很深，b站也是。我还是个真·小学生的时候赶上了许多中文论坛的最后余辉，现在再想起那些倒闭的、变质的、冷冷清清没人说话的论坛曾经高朋满座的热闹的场面还是不胜唏嘘。Manjaro给Arch带来的影响，总让我想起曾经经历过的社区没落过程。。。</p>
-<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><span class="exturl" data-url="aHR0cHM6Ly9yZW50cnkuY28vbWFuamFyby1jb250cm92ZXJzaWVz">Manjaro Controversies<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9vcmlnaW5jby5kZS9NYW5qYXJvLUNvbnRyb3ZlcnNpZXMv">【译】Manjaro 的争议<i class="fa fa-external-link-alt"></i></span> 源码菊巨的中文翻译<br><span class="exturl" data-url="aHR0cHM6Ly93d3cucmVkZGl0LmNvbS9yL2xpbnV4NG5vb2JzL2NvbW1lbnRzL2ZuMmlxOC93aHlfeW91X3Nob3VsZG50X3VzZV9tYW5qYXJvLw==">Why You shouldn’t use Manjaro.<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cucmVkZGl0LmNvbS9yL2xpbnV4cXVlc3Rpb25zL2NvbW1lbnRzL2JycnBxci93aHlfbm90X21hbmphcm8v">Why not Manjaro?<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzQ3NTE0MTIyL2Fuc3dlci8xMDc0MTI1NDk=">Ubuntu 推出的Snap应用架构有什么深远意义? - farseerfc的回答<i class="fa fa-external-link-alt"></i></span>  </p>
-<h3 id="他山之石"><a href="#他山之石" class="headerlink" title="他山之石"></a>他山之石</h3><p>Arch的社区属性要远远大于工具属性和商品属性，我们看看那些耳熟能详的社区。这里扔了很多知乎的链接，是因为，我觉得“btw I use arch”和部分arch粉丝在众人眼中的快要溢出优越感，和早期（13年前）中期（15年前）的知乎特别像。很奇怪openSUSE社区和gentoo社区等都没这种arch这种说不出来风气，如果非要找个相似的，可能是部分vim党（emacs党类比gentoo）<br>还能再诞生一个像早期知乎氛围和内容质量一样的社区吗？我觉得不能（限定简中，长城之内）。还能再诞生一个像arch这样的社区吗？我觉得也不能。有些东西是90年代和2000年初错过就不再有的，未来是商业公司、手机app、短视频直播，自由软件和社区、理想、小众社区诞生的机会不多了。（AOSC等地方能看到火苗和种子，然而每次我看到十年前整个互联网的氛围和现在的样子，还是有点悲观）</p>
-<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzMzNDA2Njg1Ng==">哔哩哔哩注册为什么要去做题？<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzIwMjY5NzcyL2xvZw==">知乎最近涌入了很多在校大学生，这会对知乎产生什么影响？<i class="fa fa-external-link-alt"></i></span> 这是一个2012年的问题，今天看起来有点苦涩<br><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzI3MjAyNTA4L2Fuc3dlci8zNTgyNzU2Mw==">怎么找到知乎早期的经典回答？<i class="fa fa-external-link-alt"></i></span> 这是一个14年的问题<br><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzIyNjgyNTcz">佐藤謙一等人的离开是知乎的转折点吗？<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzIyNjc1Nzk2">佐藤謙一删掉所有知乎记录离开知乎的原因是什么？<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzIxNTc0NDU1">葛巾为什么离开知乎？<i class="fa fa-external-link-alt"></i></span> 同样是几个14年的问题<br><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzQyNjQ5MjU5Ny9hbnN3ZXIvMTU0MjYzMzE5Mw==">什么是「知乎遗风」，现在还有哪些知乎用户拥有这种「遗风」？<i class="fa fa-external-link-alt"></i></span> 这是一个2020年的问题</p>
-]]></content>
-      <categories>
-        <category>不务正业系列</category>
-      </categories>
-      <tags>
-        <tag>Archlinux</tag>
-        <tag>manjaro</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>也谈心率变异性</title>
     <url>/2873/</url>
     <content><![CDATA[<p>等待填坑</p>
@@ -2867,6 +2784,89 @@ p <span class="token operator">=</span> x
       <tags>
         <tag>HRV</tag>
         <tag>BCG</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>你好，Manjaro。再见，Manjaro。</title>
+    <url>/ff0e/</url>
+    <content><![CDATA[<p>洗手.jpg</p>
+<span id="more"></span>
+
+<p>虽然有一些办法不重装从Manjaro跑路到Arch，</p>
+<!-- 
+比如reddit上这篇帖子[Guide for Manjaro to Arch migration (the dirty way)](https://www.reddit.com/r/ManjaroLinux/comments/jx42ar/guide_for_manjaro_to_arch_migration_the_dirty_way/)
+ -->
+<p>但是你会遇到各种Manjaro魔改的遗留问题（尤其是加入了相当多魔改的最新版Manjaro,据说很早以前比较容易直接滚成Arch）,<strong>the dirty way</strong>。</p>
+<p>我甚至觉得上面这个方法想得到一个纯净的Arch，难度比你去arch的<span class="exturl" data-url="aHR0cHM6Ly9hcmNoaXZlLmFyY2hsaW51eC5vcmcvaXNvLw==">archive<i class="fa fa-external-link-alt"></i></span>下载一个10年前的iso（真正的有图形界面的arch安装镜像哦，官方的）再借助<span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvdGl0bGUvQXJjaF9MaW51eF9BcmNoaXZl">Arch Linux Archive<i class="fa fa-external-link-alt"></i></span>（Rollback Machine）等一点一点滚到最新都麻烦。（至少去年Arch群友们玩过这个活动，勉强可行）</p>
+<p>直接重装一个原味Arch应该是最快的，也是后遗症最小的。总有人觉得直接不重装换源成Arch比较简单，很遗憾，这其实是最麻烦的一种方法。天上不会掉馅饼。</p>
+<h2 id="更新–再见Manjaro，"><a href="#更新–再见Manjaro，" class="headerlink" title="更新–再见Manjaro，"></a>更新–再见Manjaro，</h2><p>前一阵Manjaro社区出的争吵让我跑路了，Manjaro之前用的还比较舒服（当然直到现在都比较舒服），以后就不知道怎么样了。外面Arch社区骂声一片，里面还总在内斗，不断有人出走，前几周连jonathon都气走了（跑去隔壁endeavour os了）</p>
+<p>jonathon的声明在<span class="exturl" data-url="aHR0cHM6Ly9mb3J1bS5tYW5qYXJvLm9yZy90L2NoYW5nZS1vZi10cmVhc3VyZXItZm9yLW1hbmphcm8tY29tbXVuaXR5LWZ1bmRzLzE1NDg4OA==">这篇帖子<i class="fa fa-external-link-alt"></i></span></p>
+<p>过程大概是这样的，philm（Manjaro的CEO，反正Manjaro社区的不少人都觉得此人非常讨厌）挪用社区赞助捐款2000欧元，用于给自己买的电脑。这次购买并没有跟掌钱管家jonathon商量，也没有在社区内征得同意。jonathon觉得按照规定这钱只能用于Manjaro项目的网站建设、项目推广之类的，不是给你们恰烂钱的，然后在论坛发帖子怼philm，然后帖子被删了一次，jonathon的管理员也被撤了。帖子下面众人纷纷表示philm不回应道歉以后再也不捐助Manjaro了，不少人表示以后再也不用Manjaro了，并考虑跑路到KDE Neon、Kubuntu、Arch、Endeavour OS。</p>
+<p>philm的回应闪烁其辞，一直说事情不是大家想的那个样子的，但是大家怼他让他公布他和jonathon的完整聊天记录他又不肯。最后philm屁事没有继续担任Manjaro的领袖，jonathon跑路去了Endeavour OS。</p>
+<h2 id="再次更新–pamac不慎向aur官网打出了DDoS"><a href="#再次更新–pamac不慎向aur官网打出了DDoS" class="headerlink" title="再次更新–pamac不慎向aur官网打出了DDoS"></a>再次更新–pamac不慎向aur官网打出了DDoS</h2><p>Manjaro的Pamac不小心DDoS了aur.archlinux.org， 每秒40多来自pamac的请求，aur遭到暴击。<br>很喜欢reddit评论里的一句话：Just when I thought I couldn’t hate manjaro any more.</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cucmVkZGl0LmNvbS9yL2FyY2hsaW51eC9jb21tZW50cy9tejNiaXovaXNfdGhlX2F1cl9kb3duX2Zvcl9ldmVyeW9uZS8=">https://www.reddit.com/r/archlinux/comments/mz3biz/is_the_aur_down_for_everyone/<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9naXRsYWIubWFuamFyby5vcmcvYXBwbGljYXRpb25zL3BhbWFjLy0vaXNzdWVzLzEwMTc=">https://gitlab.manjaro.org/applications/pamac/-/issues/1017<i class="fa fa-external-link-alt"></i></span>  </p>
+<h2 id="关于社区文化和商业化"><a href="#关于社区文化和商业化" class="headerlink" title="关于社区文化和商业化"></a>关于社区文化和商业化</h2><p>微软的商业化非常成功，苹果和安卓也是。</p>
+<p>即使Linux桌面发行版这种反商业风气比较浓的地方，商业化也不意味着坏事。</p>
+<p>REHL也还算不错，名声也比较好；Canonical争议比较大，虽然不招Debian等开源社区的喜欢，早年间也算对推广Linux桌面有贡献，后面snap等有点evil化了</p>
+<p>当然，或许还要算上国内的Deepin。（奔着Windows的竞品去的，和其他Linux社区的画风和定位不太一样，倒是和安卓的定位挺像，总不是坏事）</p>
+<p>然而Manjaro的商业化我很不看好，就我目前看到的，对上游没有太多贡献，反而给上游带来了更多的麻烦。而且还有一点，Manjaro挪用社区捐款到公司口袋里面，虽然都是Manjaro，但是这在眼里揉不得沙子的很多开源社区人严重这已经是重罪了。当然，也不全是坏事，就不少人的体验来看，至少用起来比Ubuntu舒服不少。</p>
+<p>红帽的商业化就很成功，一开始就是给企业提供服务器支持等商业化内容，挣了钱反哺Linux社区。Deepin有不少情怀，比某些充满国家经费和金钱气息的发行版好不少，打包了很多deepin-wine也好DDE也好争取到国内不少公司配适Linux也好，都还算不错。Deepin虽然也带来了大量的小白，但是没有涌到Debian等社区去造成很多麻烦。</p>
+<p>我们重温一下“b站或许会倒闭但绝不会变质”的典中典（不知不觉蒙古上单发表重要讲话也一年了，笑）。为什么b站就被骂的这么厉害呢？优酷土豆乐视爱奇艺哪个广告不比这个多，开头的广告还无法跳过。论视频质量和推荐无营养的视频、还有强制使用手机app、以及抄袭和营销号，跟抖音快手比现在的b站已经算良心了吧。<br>就像早期的b站那样，这是一群小圈子和爱好者，首先这不是一个商品，这是一个社区，没多少营销号也没有广告，很多人是倾注心血去做视频的，感情很深，氛围也很好。（国内其他视频网站可能也就被封的内涵段子“段友”（现 皮皮虾）有早期b站用户那样类似的归属感了，什么？a站？a站还活着啊？）<br>当然视频网站的运行成本比较高，靠用爱发电一般做不了很大（就算商业化吃香难看都难免亏损，比如爱奇艺），人多了以后商业化是难免的。</p>
+<p>相信大家都能看到Arch社区对Manjaro用户的态度，不管是在archlinuxcn论坛或者irc、电报，还是在国外的reddit社区等，……*&amp;（*%&amp;&amp;￥人*&amp;……（此处省略500字）</p>
+<p>不少Arch用户和维护者对Manjaro的恶意大概就像b站老用户这样（你看苹果微软不是比Manjaro邪恶多了，但是他们敌视这些的次数可能比Manjaro要少）</p>
+<p>Arch背后没有商业化背景，甚至没有红帽或Canonical这样的公司，然而还是有了比背靠大公司的发行版更多的包（算上野包）和更丰富的wiki(可能没有红帽的wiki好，但是中文翻译多)，这都是Arch的维护者和用户们用爱发电一砖一瓦的心血。它不像Windows和Mac或者红帽的RHEL那样一开始就是一个商品，而且Arch的特点也不太适合做服务器或者商业化。（可能gentoo的商业化用途都比Arch多，还是有一点运维在用gentoo当服务器的）Manjaro的商业化，和原来的社区格格不入。很多地方直接和arch的不少理念和作风背道而驰。<br>不幸的是Manjaro的社区也有不少伸手党，大量安利Manjaro的视频和帖子都只说好用、好看、好安装，绝口不提社区文化和用户责任。（<strong>而且还在教程里让你添加archlinuxcn的源，同时还说Manjaro更稳定</strong>）</p>
+<p>曾经的Arch的ISO有GUI安装界面的（10年前），后来就没了，而官方Wiki上的安装指南也对新手不那么友好了（越来越不友好了）。这里面一个比较重要的原因是过滤小白用户和伸手党，提高用户门槛。这个策略应该还是比较成功的，然而这挡不住Manjaro等发行版的用户。（许多完全有能力安装、使用Archlinux甚至为Archlinux做贡献的用户一开始都被吓到了Manjaro，走了一些弯路，兜兜转转又被洗手到了Arch）<br>今年愚人节当天Arch出了一个<span class="exturl" data-url="aHR0cHM6Ly9hcmNobGludXgub3JnL3BhY2thZ2VzL2V4dHJhL2FueS9hcmNoaW5zdGFsbC8=">archinstall<i class="fa fa-external-link-alt"></i></span>的TUI安装方式（还在extra仓库里），当时我一度以为是愚人节玩笑。不过试了一下，还是与其他发行版的GUI安装界面相去甚远。</p>
+<p>短期看来不会，长期看来应该也不会。可能是无奈之举吧，暂时也找不到太多比提高安装门槛更好的过滤伸手党的办法了。</p>
+<p>这种过滤机制类似很多论坛（比如52pojie等）的邀请制、等级制，早期知乎也是这样的邀请制（甚至还要求实名）。前面提到的b站早期也是要答题的（而且题还很难）。<br>这些做法确实很有效，很多论坛都靠邀请制挡住了伸手党和发广告的。知乎在开放邀请后内容质量的下滑速度经历过的人应该印象很深，b站也是。我还是个真·小学生的时候赶上了许多中文论坛的最后余辉，现在再想起那些倒闭的、变质的、冷冷清清没人说话的论坛曾经高朋满座的热闹的场面还是不胜唏嘘。Manjaro给Arch带来的影响，总让我想起曾经经历过的社区没落过程。。。</p>
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><span class="exturl" data-url="aHR0cHM6Ly9yZW50cnkuY28vbWFuamFyby1jb250cm92ZXJzaWVz">Manjaro Controversies<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9vcmlnaW5jby5kZS9NYW5qYXJvLUNvbnRyb3ZlcnNpZXMv">【译】Manjaro 的争议<i class="fa fa-external-link-alt"></i></span> 源码菊巨的中文翻译<br><span class="exturl" data-url="aHR0cHM6Ly93d3cucmVkZGl0LmNvbS9yL2xpbnV4NG5vb2JzL2NvbW1lbnRzL2ZuMmlxOC93aHlfeW91X3Nob3VsZG50X3VzZV9tYW5qYXJvLw==">Why You shouldn’t use Manjaro.<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cucmVkZGl0LmNvbS9yL2xpbnV4cXVlc3Rpb25zL2NvbW1lbnRzL2JycnBxci93aHlfbm90X21hbmphcm8v">Why not Manjaro?<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzQ3NTE0MTIyL2Fuc3dlci8xMDc0MTI1NDk=">Ubuntu 推出的Snap应用架构有什么深远意义? - farseerfc的回答<i class="fa fa-external-link-alt"></i></span>  </p>
+<h3 id="他山之石"><a href="#他山之石" class="headerlink" title="他山之石"></a>他山之石</h3><p>Arch的社区属性要远远大于工具属性和商品属性，我们看看那些耳熟能详的社区。这里扔了很多知乎的链接，是因为，我觉得“btw I use arch”和部分arch粉丝在众人眼中的快要溢出优越感，和早期（13年前）中期（15年前）的知乎特别像。很奇怪openSUSE社区和gentoo社区等都没这种arch这种说不出来风气，如果非要找个相似的，可能是部分vim党（emacs党类比gentoo）<br>还能再诞生一个像早期知乎氛围和内容质量一样的社区吗？我觉得不能（限定简中，长城之内）。还能再诞生一个像arch这样的社区吗？我觉得也不能。有些东西是90年代和2000年初错过就不再有的，未来是商业公司、手机app、短视频直播，自由软件和社区、理想、小众社区诞生的机会不多了。（AOSC等地方能看到火苗和种子，然而每次我看到十年前整个互联网的氛围和现在的样子，还是有点悲观）</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzMzNDA2Njg1Ng==">哔哩哔哩注册为什么要去做题？<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzIwMjY5NzcyL2xvZw==">知乎最近涌入了很多在校大学生，这会对知乎产生什么影响？<i class="fa fa-external-link-alt"></i></span> 这是一个2012年的问题，今天看起来有点苦涩<br><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzI3MjAyNTA4L2Fuc3dlci8zNTgyNzU2Mw==">怎么找到知乎早期的经典回答？<i class="fa fa-external-link-alt"></i></span> 这是一个14年的问题<br><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzIyNjgyNTcz">佐藤謙一等人的离开是知乎的转折点吗？<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzIyNjc1Nzk2">佐藤謙一删掉所有知乎记录离开知乎的原因是什么？<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzIxNTc0NDU1">葛巾为什么离开知乎？<i class="fa fa-external-link-alt"></i></span> 同样是几个14年的问题<br><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzQyNjQ5MjU5Ny9hbnN3ZXIvMTU0MjYzMzE5Mw==">什么是「知乎遗风」，现在还有哪些知乎用户拥有这种「遗风」？<i class="fa fa-external-link-alt"></i></span> 这是一个2020年的问题</p>
+]]></content>
+      <categories>
+        <category>不务正业系列</category>
+      </categories>
+      <tags>
+        <tag>Archlinux</tag>
+        <tag>manjaro</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>重装Ubuntu</title>
+    <url>/2d5/</url>
+    <content><![CDATA[<p>祖传服务器传到了我的手里, 行吧。其实我想把标题改成Ubuntu内部错误的解决办法（不是</p>
+<span id="more"></span>
+
+<h2 id="更新（和洗手）"><a href="#更新（和洗手）" class="headerlink" title="更新（和洗手）"></a>更新（和洗手）</h2><p>19年写的这个20年不知道怎么在2020年有一段时间被扔到了<code>重装Ubuntu</code>搜索结果的最前面，我这个小破站访问量暴增。然而那个时候20.04LTS都出了，已经有点过时了，而我19年那会写的那个几乎属于个人吐槽，差不多是我博客迁到，完全不适合作为一个教程。可能骗了很多人进来，</p>
+<p>装什么Ubuntu啊，还是Arch香，群里个个都是人才，说话又好听</p>
+<p><img src="/2d5/1611832700.webp"></p>
+<p><del>但是随便装个Ubuntu不仅快，他们跑深度学习的时候抄CSDN配置环境也方便</del></p>
+<p><del>最重要的，又不是我用。</del></p>
+<p><del>GNOME内存泄漏关我什么事</del></p>
+<p><del>Ubuntu内部错误关我什么事</del></p>
+<p>还是去用Ubuntu吧.jpg</p>
+<p><img src="/2d5/1611834396.webp"></p>
+<p><img src="/2d5/1611834449.webp"></p>
+<h2 id="认真发言"><a href="#认真发言" class="headerlink" title="认真发言"></a>认真发言</h2><p>其实你可以试试Debian（Canonical强推snap太烦人了）</p>
+<h3 id="关于桌面（DE）"><a href="#关于桌面（DE）" class="headerlink" title="关于桌面（DE）"></a>关于桌面（DE）</h3><p>带桌面的版本建议避开Ubuntu的GNOME，那个东西。。。</p>
+<p>可以试试Linux Mint，或者Fedora（这个的GNOME应该比 Ubuntu 16、18 那几个整天内存泄露的GNOME版本稳多了）</p>
+<p>其实我推荐KDE，可以试试Kubuntu（或者KDE Neon？）</p>
+<p>机器配置较差请直接Lubuntu，稳如老狗，除了略简陋没有别的缺点。</p>
+<p>一众WM用户应该不会搜索这么蠢的关键词搜到我这里来，这里不谈WM了。</p>
+<h3 id="关于服务器"><a href="#关于服务器" class="headerlink" title="关于服务器"></a>关于服务器</h3><p>小作坊没有专职运维和技术支持，其实服务器建议试试Debian或者Ubuntu LTS，Debian stable稳如老狗</p>
+<p><del>众所周知，Debian testing 都比 Ubuntu LTS 稳（注意这个安全更新比较慢，个人用户可以testing，开了公网端口的工作站不要用这个）</del></p>
+<p>不过Ubuntu和CentOS6、7比起来，还是瞬间和蔼可亲了不少</p>
+<p>求求新入坑的别再跟着什么鸟哥私房菜之类的老教程用CentOS了，2020年 CentOS 8 都被扬了，REHL马上就要给小作坊免费了，小作坊真迷信稳定上REHL吧。</p>
+<p>没事不要用所谓稳定的老版本然后找不到包只能自己手动编译，就不说c/c++那一堆lib了，我已经见过不少人在编译python的时候没开ssl当场翻车。</p>
+<p>什么你说容器？你试过在CentOS6上面弄Docker和k8s吗，我在教研室的祖传阿里云上试过一次，从此再也不想看到CentOS了</p>
+<p>（整天在CentOS上手动编译凸显运维重要性和工作量的除外）</p>
+<h2 id="安装参考"><a href="#安装参考" class="headerlink" title="安装参考"></a>安装参考</h2><p><span class="exturl" data-url="dHRwczovL3R1dG9yaWFscy51YnVudHUuY29tL3R1dG9yaWFsL3R1dG9yaWFsLWluc3RhbGwtdWJ1bnR1LXNlcnZlcg==">tutorial-install-ubuntu-server<i class="fa fa-external-link-alt"></i></span><br> <span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL0xWTV8oJUU3JUFFJTgwJUU0JUJEJTkzJUU0JUI4JUFEJUU2JTk2JTg3KQ==">LVM arch-wiki<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly95ZWFzeS5naXRib29rcy5pby9kb2NrZXJfcHJhY3RpY2UvaW5zdGFsbC91YnVudHUuaHRtbA==">Ubuntu 安装 Docker CE<i class="fa fa-external-link-alt"></i></span>、<span class="exturl" data-url="aHR0cHM6Ly95ZWFzeS5naXRib29rcy5pby9kb2NrZXJfcHJhY3RpY2UvaW5zdGFsbC9taXJyb3IuaHRtbA==">镜像加速器<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cudGVjbWludC5jb20vY29uZmlndXJlLW5ldHdvcmstc3RhdGljLWlwLWFkZHJlc3MtaW4tdWJ1bnR1Lw==">How to Configure Network Static IP Address in Ubuntu 18.04<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9uZXRwbGFuLmlvL2V4YW1wbGVz">netplan官网的配置示例<i class="fa fa-external-link-alt"></i></span></p>
+]]></content>
+      <categories>
+        <category>102网吧日常</category>
+      </categories>
+      <tags>
+        <tag>ubuntu</tag>
+        <tag>重装</tag>
       </tags>
   </entry>
   <entry>
@@ -3164,123 +3164,6 @@ https://cloud.tencent.com/developer/article/1603974 -->
       </tags>
   </entry>
   <entry>
-    <title>用Markdown制做PPT</title>
-    <url>/make-ppt-with-markdown/</url>
-    <content><![CDATA[<p>纯文本好，富文本坏。这是一个劝你放弃PowerPoint和Wps演示的安利文，回归简陋，回归开源。</p>
-<span id="more"></span>
-
-<p>这是迫于毕业不得不向PPT低头才干出来的事情，在PPT上浪费时光真没意思。能不做PPT还是不做PPT最好。（没推荐Beamer是因为LaTeX这种专业排版工具还是太复杂了，还是会浪费不少时间在排版上。）</p>
-<h2 id="喧宾夺主的PPT"><a href="#喧宾夺主的PPT" class="headerlink" title="喧宾夺主的PPT"></a>喧宾夺主的PPT</h2><p><del>但是根据约翰霍普金斯大学的研究，喜欢做PPT的大概率是个传销分子</del></p>
-<p>Office三件套里面，我对word只是喜欢不起来（真要做到内容样式分离还是可以的，而且把富文本的所见即所得做到了地表最强），对Excel有点厌恶（谁让你多管闲事把身份者号给我改成科学计数法了？），PPT我真的心力憔悴了。Beamer一类的Slides演示还比较重视内容，你软家的</p>
-<p>如果不是生活所迫谁愿意做PPT呢，直接拿Markdown写文档呗。（我们现在确实除了毕业答辩这种迫不得已的事情，都用Markdown给老板讲东西了。PPT？当年老板嫌弃小胡师兄PPT做的烂，反正PPT不好好做看起来甚至不如Markdown在typora里面或者hexo里面好看）。好在毕业答辩类的学术PPT不用做的太好看，简陋一点反而显得比较朴实无华，Markdown生成的PPT也够看了。而且我前期给老板交差的调研材料什么的基本都是用Markdown写的，改一改就成PPT了。其实如果不是开题、毕设答辩要求PPT，我真的想用Markdown列一个大纲讲。</p>
-<p>至于为什么不用LaTeX的Beamer，那是我对LaTeX不熟，而我对CSS和HTML比较熟，Markdown做不到的可以伤感CSS魔改。<br>功能简陋也好，这样免得我在PPT上面调格式浪费很多时间。<strong>而且可以用键盘操作</strong>。</p>
-<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>作为一个毕业答辩之类的PPT，Marp的功能已经足够做一个丐版的学术简陋风格PPT了，Beamer的功能Marp几乎都有。这个东西有VSCode插件，直接装就好了。网页版也可以直接用。</p>
-<p>当然这个东西没有什么惊艳的动画效果和对布局细致的控制和调整，Markdown本来就不适合干这个事情呢。如果是做传销风格的PPT那还请<del>直接用Office</del>试试隔壁的reveal.js，像写前端一样写你的演示，各种漂亮的动画效果全都有。</p>
-<p>直接新建一个Markdown，在开头启用marp就好了。</p>
-<pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown"><span class="token front-matter-block"><span class="token punctuation">---</span>
-<span class="token font-matter yaml language-yaml"><span class="token key atrule">marp</span><span class="token punctuation">:</span> <span class="token boolean important">true</span></span>
-<span class="token punctuation">---</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<p>语法都是markdown的语法，每一张PPT之间隔断就用<code>---</code>就可以了（最好在<code>---</code>前面空一行）</p>
-<p>为了更符合传统的PPT界面的布局，VSCode打开Preview，然后将preview调到左边侧栏。好，它现在看起来和wps演示和PowerPoint完全一致。</p>
-<p><img src="/make-ppt-with-markdown/1641736904.png"></p>
-<h2 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h2><p>图片的支持当然没有PowerPoint那么好。Markdown本来就不支持调整图片的大小、图片缩放、指定图片位置这种操作。对于博客文章或者文档可以统一用css去设置居中、边框这些，但是PPT的图片几乎每页的布局和位置都不太一样。Marp对Markdown提供了一些扩展，能基本满足我对图片的位置调整需求。如果不满足要求可以用html标签去调图片。</p>
-<p>下面的操作是一些粗略调整宽度高度的语法、以及上下左右、居中、背景图片。</p>
-<pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown">
-<span class="token url"><span class="token operator">!</span>[<span class="token content">bg right vertical weight:600</span>](<span class="token url">zhixi.png</span>)</span>
-<span class="token comment">&lt;!-- 将图片置于右上，宽度600px --></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h2><p>Marp自带的模板合适可以自己定制，只需要一点CSS就可以了</p>
-<p>定制可以参考：<span class="exturl" data-url="aHR0cHM6Ly9tYXJwaXQubWFycC5hcHAvdGhlbWUtY3Nz">https://marpit.marp.app/theme-css<i class="fa fa-external-link-alt"></i></span></p>
-<p>太长不看版：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21hcnAtdGVhbS9tYXJwL2Rpc2N1c3Npb25zLzExNQ==">How to create a theme?<i class="fa fa-external-link-alt"></i></span>  </p>
-]]></content>
-      <tags>
-        <tag>ppt</tag>
-        <tag>markdown</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>6.824 Lab1 MapReduce 经典老番</title>
-    <url>/map-reduce/</url>
-    <content><![CDATA[<p>Long Live Map Reduce</p>
-<span id="more"></span>
-
-<p>MapReduce的影响挺大的</p>
-<h2 id="Map和Reduce操作"><a href="#Map和Reduce操作" class="headerlink" title="Map和Reduce操作"></a>Map和Reduce操作</h2><p>MapReduce 最早是函数式编程里的概念，我一开始也是在python里面最听到这两个词的。map用来映射，reduce用来聚合。</p>
-<p>python里面是这样的：</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> functools <span class="token keyword">import</span> <span class="token builtin">reduce</span>
-
-<span class="token keyword">def</span> <span class="token function">f1</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">return</span> x<span class="token operator">*</span>x
-
-<span class="token keyword">def</span> <span class="token function">f2</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">return</span> x<span class="token operator">*</span>y
-
-nums <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span> <span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">]</span>
-
-suqare <span class="token operator">=</span> <span class="token builtin">list</span><span class="token punctuation">(</span><span class="token builtin">map</span><span class="token punctuation">(</span>f<span class="token punctuation">,</span> nums<span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token operator">//</span><span class="token builtin">reduce</span>作用于一个序列，效果相当于阶乘
-factorial <span class="token operator">=</span> <span class="token builtin">list</span><span class="token punctuation">(</span><span class="token builtin">reduce</span><span class="token punctuation">(</span>f2<span class="token punctuation">,</span> nums<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>求阶乘的操作用循环也可以做到，但是我们注意到这些操作有很好的性质，可以分离开计算再求总和，这样就可以拆解为一些小的并行计算。（循环也可以被SIMD指令并行，这里先不多说了）</p>
-<p>遍历使用迭代器完成的</p>
-<h2 id="分布式的MapReduce"><a href="#分布式的MapReduce" class="headerlink" title="分布式的MapReduce"></a>分布式的MapReduce</h2><p><img src="/map-reduce/1647509929.png"></p>
-<p>Map和Reduce两种操作和上面python的例子用法一样</p>
-<p><img src="/map-reduce/1647509989.png"></p>
-<p>论文以 wc （单词统计）为例。master会分出M个Map任务和N个Reduce任务，然后分配给worker。</p>
-<p>Map任务执行用户自定义的map函数，输出一个&lt;key, value&gt;。</p>
-<p>Reduce执行用户自定义的reduce函数，用来聚合相同的&lt;key, value&gt;。</p>
-<p>要注意Map和Reduce是有先后顺序的，需要完成Map操作</p>
-<h2 id="Lab1-实现一个玩具MapReduce"><a href="#Lab1-实现一个玩具MapReduce" class="headerlink" title="Lab1 实现一个玩具MapReduce"></a>Lab1 实现一个玩具MapReduce</h2><p>注：看起来这个Lab和去年的一样，把去年做的直接拿过来了，当时实现的时候不少地方挺粗糙的。</p>
-<p>6.824的Lab1是做一个MapReduce，例子就是当年Google经典论文里面的那个 word count。wc和阶乘、求和一样有很好的性质，能够并行。</p>
-<p>这个Lab很简单，<code>src/main/mrapps/wc.go</code>给好了一个单机版的例子，实现这样的效果：<code>cat mr-out-* | sort | more</code></p>
-<p>仿照单机版本用rpc通信做一个并行版本就可以了。（这里没有真正的集群，用多个goroutine模拟并行）</p>
-<p>我们需要补全3个文件：coordinator.go, worker.go, rpc.go。这里的coordinator就是论文里的master，因为<del>黑命贵</del>某些原因惨遭和谐，你打开以前的Lab就可以看到它本来就是master.go</p>
-<p>rpc.go 里面已经给了一个例子，我们仿照着写就可以了（其实本来我是想直接用grpc来着）。注意PRC的struct要大写。</p>
-<p>worker很容易，向master发送RPC请求然后接任务并返回就可以了。将Map任务分配到对应的worker中可以直接使用给好的<code>ihash</code>函数</p>
-<p>master要产生并分配map任务和reduce任务，然后接收的时候判断一下是否可以合并。这里一个比较麻烦的地方是处理worker超时、停机等情况。不过这里提示我们用一个简单的方法：For this lab, have the master wait for ten seconds; after that the master should assume the worker has died (of course, it might not have). 不区分超时和宕机，直接等待10s，10s后如果没收到就直接不要这个worker的任务了。</p>
-<h3 id="race问题"><a href="#race问题" class="headerlink" title="race问题"></a>race问题</h3><p>我去年做的时候是给channel加Mutex锁来保证这个问题</p>
-<h2 id="一些问题"><a href="#一些问题" class="headerlink" title="一些问题"></a>一些问题</h2><h3 id="写入的原子性"><a href="#写入的原子性" class="headerlink" title="写入的原子性"></a>写入的原子性</h3><p>Lab的提示告诉你，写入新建一个副本，然后应用更改的时候重命名</p>
-<blockquote>
-<p>To ensure that nobody observes partially written files in the presence of crashes, the MapReduce paper mentions the trick of using a temporary file and atomically renaming it once it is completely written. You can use ioutil.TempFile to create a temporary file and os.Rename to atomically rename it.</p>
-</blockquote>
-<h3 id="master挂了怎么办"><a href="#master挂了怎么办" class="headerlink" title="master挂了怎么办"></a>master挂了怎么办</h3><p>我做Lab的时候没有考虑这个问题，假设它不会挂。</p>
-<p>如果真的挂了那就再来一遍吧（可以保存中间文件，这样已经产生的中间文件就不用从Map操作再产生一遍了）</p>
-<h3 id="输入在变怎么办"><a href="#输入在变怎么办" class="headerlink" title="输入在变怎么办"></a>输入在变怎么办</h3><p>如果输入（比如需要wc的单词）一直在改变，这样也是不适合用MapReduce处理的。这种可以去用storm和flink。实时计算这些我也不不懂，不管了。</p>
-<h3 id="网络问题和恶意篡改"><a href="#网络问题和恶意篡改" class="headerlink" title="网络问题和恶意篡改"></a>网络问题和恶意篡改</h3><p>一般我们部署在内网集群，不考虑网络带宽问题。TB级别的文件分为总文件大小除以64M的Map<br>同理假定所有节点不存在恶意篡改，也不考虑Paxos等算法考虑的拜占庭问题。</p>
-<!-- 
-## Push一下老板
-
-老板给本科生讲课讲王珊《数据库系统概论》，基本就还是老一套。除了上机和作业，一半的时间在讲约束和范式，一半的课时在讲触发器、游标、存储过程，还是有两把刷子的。
-好吧，老板的课我当年都没从头到尾好好听，只听了和看了书里面范式、约束、隔离级别和锁那些。老板讲的那一套用面向对象那一套建好多个表和约束、多表联结查询、逻辑都写在存储过程里面，做一个传统的金融、HIS系统那种对约束要求严格业务繁多的
-
-不过上周组会还是出乎我的意料。老板他老人家最近又有了奇思妙想，虽然他组会上说下周找一个毕业的师兄过来给我们讲一下联邦学习的时候，一口一个大数据，啊，开始吹什么大公司都在用啊这个很有前景啊。
-
-我一脸懵，联邦学习是什么？
-老板：巴拉巴拉....
-我：这不就跟MapReduce那一套东西差不多
-老板：MapReduce是什么？
-我：巴拉巴拉
-老板：不是的，不是这个东西
-
-老板大概是多年没有亲自写过代码了，技术水平和概念还停留在sql server 2000、Oracle那一堆逻辑写在存储过程里面和上个世纪在金蝶公司用C++写图形界面。（**年轻帅气的老板在写代码的时候我甚至还没有出生**，Google经典三篇发布都已经是零几年的事了，当时老板做的东西也还是Oracle单机那一套，没听过可能也正常）
-
-咳咳，不黑老板了
-老板你要是看到我这篇博客，少玩点手机啊，看看DDIA吧
- -->
-
-
-<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p> GFS的经典论文</p>
-]]></content>
-      <categories>
-        <category>Concurrency&amp;Go</category>
-      </categories>
-      <tags>
-        <tag>6.824</tag>
-        <tag>MapReduce</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Linux系统的抢救和维护（桌面篇）</title>
     <url>/linux-rescue/</url>
     <content><![CDATA[<p>这篇水文主要是写给桌面玩家看的，如果您的服务器打出了GG/被黑了/库被删了，可能不适合来这里找答案。</p>
@@ -3446,6 +3329,123 @@ i8042.noloop	[HW] Disable the AUX Loopback command while probing
       <tags>
         <tag>Linux</tag>
         <tag>rescue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>用Markdown制做PPT</title>
+    <url>/make-ppt-with-markdown/</url>
+    <content><![CDATA[<p>纯文本好，富文本坏。这是一个劝你放弃PowerPoint和Wps演示的安利文，回归简陋，回归开源。</p>
+<span id="more"></span>
+
+<p>这是迫于毕业不得不向PPT低头才干出来的事情，在PPT上浪费时光真没意思。能不做PPT还是不做PPT最好。（没推荐Beamer是因为LaTeX这种专业排版工具还是太复杂了，还是会浪费不少时间在排版上。）</p>
+<h2 id="喧宾夺主的PPT"><a href="#喧宾夺主的PPT" class="headerlink" title="喧宾夺主的PPT"></a>喧宾夺主的PPT</h2><p><del>但是根据约翰霍普金斯大学的研究，喜欢做PPT的大概率是个传销分子</del></p>
+<p>Office三件套里面，我对word只是喜欢不起来（真要做到内容样式分离还是可以的，而且把富文本的所见即所得做到了地表最强），对Excel有点厌恶（谁让你多管闲事把身份者号给我改成科学计数法了？），PPT我真的心力憔悴了。Beamer一类的Slides演示还比较重视内容，你软家的</p>
+<p>如果不是生活所迫谁愿意做PPT呢，直接拿Markdown写文档呗。（我们现在确实除了毕业答辩这种迫不得已的事情，都用Markdown给老板讲东西了。PPT？当年老板嫌弃小胡师兄PPT做的烂，反正PPT不好好做看起来甚至不如Markdown在typora里面或者hexo里面好看）。好在毕业答辩类的学术PPT不用做的太好看，简陋一点反而显得比较朴实无华，Markdown生成的PPT也够看了。而且我前期给老板交差的调研材料什么的基本都是用Markdown写的，改一改就成PPT了。其实如果不是开题、毕设答辩要求PPT，我真的想用Markdown列一个大纲讲。</p>
+<p>至于为什么不用LaTeX的Beamer，那是我对LaTeX不熟，而我对CSS和HTML比较熟，Markdown做不到的可以伤感CSS魔改。<br>功能简陋也好，这样免得我在PPT上面调格式浪费很多时间。<strong>而且可以用键盘操作</strong>。</p>
+<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>作为一个毕业答辩之类的PPT，Marp的功能已经足够做一个丐版的学术简陋风格PPT了，Beamer的功能Marp几乎都有。这个东西有VSCode插件，直接装就好了。网页版也可以直接用。</p>
+<p>当然这个东西没有什么惊艳的动画效果和对布局细致的控制和调整，Markdown本来就不适合干这个事情呢。如果是做传销风格的PPT那还请<del>直接用Office</del>试试隔壁的reveal.js，像写前端一样写你的演示，各种漂亮的动画效果全都有。</p>
+<p>直接新建一个Markdown，在开头启用marp就好了。</p>
+<pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown"><span class="token front-matter-block"><span class="token punctuation">---</span>
+<span class="token font-matter yaml language-yaml"><span class="token key atrule">marp</span><span class="token punctuation">:</span> <span class="token boolean important">true</span></span>
+<span class="token punctuation">---</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>语法都是markdown的语法，每一张PPT之间隔断就用<code>---</code>就可以了（最好在<code>---</code>前面空一行）</p>
+<p>为了更符合传统的PPT界面的布局，VSCode打开Preview，然后将preview调到左边侧栏。好，它现在看起来和wps演示和PowerPoint完全一致。</p>
+<p><img src="/make-ppt-with-markdown/1641736904.png"></p>
+<h2 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h2><p>图片的支持当然没有PowerPoint那么好。Markdown本来就不支持调整图片的大小、图片缩放、指定图片位置这种操作。对于博客文章或者文档可以统一用css去设置居中、边框这些，但是PPT的图片几乎每页的布局和位置都不太一样。Marp对Markdown提供了一些扩展，能基本满足我对图片的位置调整需求。如果不满足要求可以用html标签去调图片。</p>
+<p>下面的操作是一些粗略调整宽度高度的语法、以及上下左右、居中、背景图片。</p>
+<pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown">
+<span class="token url"><span class="token operator">!</span>[<span class="token content">bg right vertical weight:600</span>](<span class="token url">zhixi.png</span>)</span>
+<span class="token comment">&lt;!-- 将图片置于右上，宽度600px --></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h2><p>Marp自带的模板合适可以自己定制，只需要一点CSS就可以了</p>
+<p>定制可以参考：<span class="exturl" data-url="aHR0cHM6Ly9tYXJwaXQubWFycC5hcHAvdGhlbWUtY3Nz">https://marpit.marp.app/theme-css<i class="fa fa-external-link-alt"></i></span></p>
+<p>太长不看版：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21hcnAtdGVhbS9tYXJwL2Rpc2N1c3Npb25zLzExNQ==">How to create a theme?<i class="fa fa-external-link-alt"></i></span>  </p>
+]]></content>
+      <tags>
+        <tag>ppt</tag>
+        <tag>markdown</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>6.824 Lab1 MapReduce 经典老番</title>
+    <url>/map-reduce/</url>
+    <content><![CDATA[<p>Long Live Map Reduce</p>
+<span id="more"></span>
+
+<p>MapReduce的影响挺大的</p>
+<h2 id="Map和Reduce操作"><a href="#Map和Reduce操作" class="headerlink" title="Map和Reduce操作"></a>Map和Reduce操作</h2><p>MapReduce 最早是函数式编程里的概念，我一开始也是在python里面最听到这两个词的。map用来映射，reduce用来聚合。</p>
+<p>python里面是这样的：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> functools <span class="token keyword">import</span> <span class="token builtin">reduce</span>
+
+<span class="token keyword">def</span> <span class="token function">f1</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> x<span class="token operator">*</span>x
+
+<span class="token keyword">def</span> <span class="token function">f2</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> x<span class="token operator">*</span>y
+
+nums <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span> <span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">]</span>
+
+suqare <span class="token operator">=</span> <span class="token builtin">list</span><span class="token punctuation">(</span><span class="token builtin">map</span><span class="token punctuation">(</span>f<span class="token punctuation">,</span> nums<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token operator">//</span><span class="token builtin">reduce</span>作用于一个序列，效果相当于阶乘
+factorial <span class="token operator">=</span> <span class="token builtin">list</span><span class="token punctuation">(</span><span class="token builtin">reduce</span><span class="token punctuation">(</span>f2<span class="token punctuation">,</span> nums<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>求阶乘的操作用循环也可以做到，但是我们注意到这些操作有很好的性质，可以分离开计算再求总和，这样就可以拆解为一些小的并行计算。（循环也可以被SIMD指令并行，这里先不多说了）</p>
+<p>遍历使用迭代器完成的</p>
+<h2 id="分布式的MapReduce"><a href="#分布式的MapReduce" class="headerlink" title="分布式的MapReduce"></a>分布式的MapReduce</h2><p><img src="/map-reduce/1647509929.png"></p>
+<p>Map和Reduce两种操作和上面python的例子用法一样</p>
+<p><img src="/map-reduce/1647509989.png"></p>
+<p>论文以 wc （单词统计）为例。master会分出M个Map任务和N个Reduce任务，然后分配给worker。</p>
+<p>Map任务执行用户自定义的map函数，输出一个&lt;key, value&gt;。</p>
+<p>Reduce执行用户自定义的reduce函数，用来聚合相同的&lt;key, value&gt;。</p>
+<p>要注意Map和Reduce是有先后顺序的，需要完成Map操作</p>
+<h2 id="Lab1-实现一个玩具MapReduce"><a href="#Lab1-实现一个玩具MapReduce" class="headerlink" title="Lab1 实现一个玩具MapReduce"></a>Lab1 实现一个玩具MapReduce</h2><p>注：看起来这个Lab和去年的一样，把去年做的直接拿过来了，当时实现的时候不少地方挺粗糙的。</p>
+<p>6.824的Lab1是做一个MapReduce，例子就是当年Google经典论文里面的那个 word count。wc和阶乘、求和一样有很好的性质，能够并行。</p>
+<p>这个Lab很简单，<code>src/main/mrapps/wc.go</code>给好了一个单机版的例子，实现这样的效果：<code>cat mr-out-* | sort | more</code></p>
+<p>仿照单机版本用rpc通信做一个并行版本就可以了。（这里没有真正的集群，用多个goroutine模拟并行）</p>
+<p>我们需要补全3个文件：coordinator.go, worker.go, rpc.go。这里的coordinator就是论文里的master，因为<del>黑命贵</del>某些原因惨遭和谐，你打开以前的Lab就可以看到它本来就是master.go</p>
+<p>rpc.go 里面已经给了一个例子，我们仿照着写就可以了（其实本来我是想直接用grpc来着）。注意PRC的struct要大写。</p>
+<p>worker很容易，向master发送RPC请求然后接任务并返回就可以了。将Map任务分配到对应的worker中可以直接使用给好的<code>ihash</code>函数</p>
+<p>master要产生并分配map任务和reduce任务，然后接收的时候判断一下是否可以合并。这里一个比较麻烦的地方是处理worker超时、停机等情况。不过这里提示我们用一个简单的方法：For this lab, have the master wait for ten seconds; after that the master should assume the worker has died (of course, it might not have). 不区分超时和宕机，直接等待10s，10s后如果没收到就直接不要这个worker的任务了。</p>
+<h3 id="race问题"><a href="#race问题" class="headerlink" title="race问题"></a>race问题</h3><p>我去年做的时候是给channel加Mutex锁来保证这个问题</p>
+<h2 id="一些问题"><a href="#一些问题" class="headerlink" title="一些问题"></a>一些问题</h2><h3 id="写入的原子性"><a href="#写入的原子性" class="headerlink" title="写入的原子性"></a>写入的原子性</h3><p>Lab的提示告诉你，写入新建一个副本，然后应用更改的时候重命名</p>
+<blockquote>
+<p>To ensure that nobody observes partially written files in the presence of crashes, the MapReduce paper mentions the trick of using a temporary file and atomically renaming it once it is completely written. You can use ioutil.TempFile to create a temporary file and os.Rename to atomically rename it.</p>
+</blockquote>
+<h3 id="master挂了怎么办"><a href="#master挂了怎么办" class="headerlink" title="master挂了怎么办"></a>master挂了怎么办</h3><p>我做Lab的时候没有考虑这个问题，假设它不会挂。</p>
+<p>如果真的挂了那就再来一遍吧（可以保存中间文件，这样已经产生的中间文件就不用从Map操作再产生一遍了）</p>
+<h3 id="输入在变怎么办"><a href="#输入在变怎么办" class="headerlink" title="输入在变怎么办"></a>输入在变怎么办</h3><p>如果输入（比如需要wc的单词）一直在改变，这样也是不适合用MapReduce处理的。这种可以去用storm和flink。实时计算这些我也不不懂，不管了。</p>
+<h3 id="网络问题和恶意篡改"><a href="#网络问题和恶意篡改" class="headerlink" title="网络问题和恶意篡改"></a>网络问题和恶意篡改</h3><p>一般我们部署在内网集群，不考虑网络带宽问题。TB级别的文件分为总文件大小除以64M的Map<br>同理假定所有节点不存在恶意篡改，也不考虑Paxos等算法考虑的拜占庭问题。</p>
+<!-- 
+## Push一下老板
+
+老板给本科生讲课讲王珊《数据库系统概论》，基本就还是老一套。除了上机和作业，一半的时间在讲约束和范式，一半的课时在讲触发器、游标、存储过程，还是有两把刷子的。
+好吧，老板的课我当年都没从头到尾好好听，只听了和看了书里面范式、约束、隔离级别和锁那些。老板讲的那一套用面向对象那一套建好多个表和约束、多表联结查询、逻辑都写在存储过程里面，做一个传统的金融、HIS系统那种对约束要求严格业务繁多的
+
+不过上周组会还是出乎我的意料。老板他老人家最近又有了奇思妙想，虽然他组会上说下周找一个毕业的师兄过来给我们讲一下联邦学习的时候，一口一个大数据，啊，开始吹什么大公司都在用啊这个很有前景啊。
+
+我一脸懵，联邦学习是什么？
+老板：巴拉巴拉....
+我：这不就跟MapReduce那一套东西差不多
+老板：MapReduce是什么？
+我：巴拉巴拉
+老板：不是的，不是这个东西
+
+老板大概是多年没有亲自写过代码了，技术水平和概念还停留在sql server 2000、Oracle那一堆逻辑写在存储过程里面和上个世纪在金蝶公司用C++写图形界面。（**年轻帅气的老板在写代码的时候我甚至还没有出生**，Google经典三篇发布都已经是零几年的事了，当时老板做的东西也还是Oracle单机那一套，没听过可能也正常）
+
+咳咳，不黑老板了
+老板你要是看到我这篇博客，少玩点手机啊，看看DDIA吧
+ -->
+
+
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p> GFS的经典论文</p>
+]]></content>
+      <categories>
+        <category>Concurrency&amp;Go</category>
+      </categories>
+      <tags>
+        <tag>6.824</tag>
+        <tag>MapReduce</tag>
       </tags>
   </entry>
   <entry>
@@ -5578,83 +5578,6 @@ lines <span class="token number">2</span>-36/36 <span class="token punctuation">
       </tags>
   </entry>
   <entry>
-    <title>VSCode Neovim插件配置——将VSCode作为Neovim的GUI客户端</title>
-    <url>/vscode-neovim-setting/</url>
-    <content><![CDATA[<p>本来不报希望的试了试这套不伦不类的缝合怪配置，结果缝合出了很好的效果，可以拿这套配置在VSCode下养老了。</p>
-<span id="more"></span>
-
-<p>VSCodevim这个插件和原生Vim的体验差距很大，Vim的很多操作都不支持，而且大文件会特别卡。VSCode Neovim这个插件是在Insert模式几乎和正常的VSCode编辑一样，在Normal模式有满血的Vim体验（不像VSCodevim那样是体验是残血的，只是一个Vim键位和操作的模拟器）</p>
-<p>这个插件直接将Neovim作为后端，在Normal模式下由Neovim控制（直接将内容缓存发往Neovim处理），可以使用Vim的各种键位操作<br>在Insert模式下，操作和渲染由VSCode处理，编辑体验几乎和VSCode完全一致。色彩高亮和代码补全等都由VSCode实现（所以不要装Neovim的LSP等插件，没用，而且可能影响速度）当你保存的时候更改会从VSCode同步到Neovim。  </p>
-<p>VSCode在编辑模式下的舒服体验和插件、Vim在Normal模式下的操作，同时得到了保留，而且性能和速度还可以接受。</p>
-<p>与其说这是VSCode的一个Vim键位插件，不如说是将VSCode直接改造成了Neovim的一个GUI客户端。</p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>VSCode插件市场装VSCode Neovim，Archlinux安装neovim<code>sudo pacman -S neovim</code><br>然后在设置里面填上路径</p>
-<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token property">"vscode-neovim.neovimExecutablePaths.linux"</span><span class="token operator">:</span> <span class="token string">"/usr/bin/nvim"</span><span class="token punctuation">,</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>就可以用了</p>
-<h2 id="中文输入法和Neovim插件Normal模式下冲突"><a href="#中文输入法和Neovim插件Normal模式下冲突" class="headerlink" title="中文输入法和Neovim插件Normal模式下冲突"></a>中文输入法和Neovim插件Normal模式下冲突</h2><p>VSCode的Neovim插件在Normal模式下，如果fcitx5等输入法处于中文模式，那么输入的字符会被输入法全部捕获（就像平时在VSCode里打字一样）</p>
-<p>ArchWiki 给出了下面这种方法，试了一下速度比较慢</p>
-<pre class="line-numbers language-vimrc" data-language="vimrc"><code class="language-vimrc">autocmd InsertLeave * :silent !fcitx5-remote -c &quot; 退出插入模式时禁用输入法
-autocmd BufCreate *  :silent !fcitx5-remote -c &quot; 创建 Buf 时禁用输入法
-autocmd BufEnter *  :silent !fcitx5-remote -c &quot; 进入 Buf 时禁用输入法
-autocmd BufLeave *  :silent !fcitx5-remote -c &quot; 离开 Buf 时禁用输入法<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>比较快的方法是装插件，比如依云的fcitx.vim插件，但是这个插件在neovim下面好像没有效果。</p>
-<p>本来想自己移植一个neovim的插件的，但是看了一下已经有人干了：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2gtaGcvZmNpdHgubnZpbS5naXQ=">fcitx.nvim<i class="fa fa-external-link-alt"></i></span></p>
-<p>我用的vim-plug管理插件，放到<code>~/.config/nvim/init.vim</code>下面就可以了</p>
-<pre class="line-numbers language-vim" data-language="vim"><code class="language-vim"><span class="token keyword">call</span> plug#<span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-Plug <span class="token string">'https://github.com/h-hg/fcitx.nvim.git'</span>
-<span class="token keyword">call</span> plug#<span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="一些按键绑定设置"><a href="#一些按键绑定设置" class="headerlink" title="一些按键绑定设置"></a>一些按键绑定设置</h2><p>首先我不要hjkl这几个上下左右键（根本无法接受，我的肌肉记忆明明是键盘上上下左右四个经典方向键，玩空洞骑士和Ballance用的极其熟练，其次是WASD这个4399键位，其次是鼠标，我鼠标可熟练了）<br>我知道hjkl移动距离短而且移动后方便按距离近的i键进入Insert模式，但是我的肌肉记忆是上下左右，你再给我十年我也改不过来。</p>
-<p>然后我将Casplock映射为ESC，这个万年不用的键放在这么重要的位置还有一个比Tab键还大的键帽，简直浪费。编辑<code>～/Xmodmap</code>修改键盘映射就可以了。</p>
-<p>或者如果喜欢也可以将<code>jj</code>（连按两次）绑定成ESC<code>inoremap jj &lt;Esc&gt;</code>^`</p>
-<p>然后是VSCode里面正常的<code>Ctrl+F</code>当前搜索，这个我们找回来（<code>Ctrl+F</code>在Vim里是向上翻页，我完全用不到，我用PgDn和PgUp）</p>
-<p>然后是VSCode的<code>Ctrl+B</code>展开/收起侧边栏，这个我也留着VSCode的设置。</p>
-<p>编辑<code>~/.config/Code/User/keybindings.json</code></p>
-<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
-        <span class="token property">"key"</span><span class="token operator">:</span> <span class="token string">"ctrl+f"</span><span class="token punctuation">,</span>
-        <span class="token property">"command"</span><span class="token operator">:</span> <span class="token string">"-vscode-neovim.escape"</span><span class="token punctuation">,</span>
-    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-    <span class="token punctuation">&#123;</span>
-        <span class="token property">"key"</span><span class="token operator">:</span> <span class="token string">"ctrl+b"</span><span class="token punctuation">,</span>
-        <span class="token property">"command"</span><span class="token operator">:</span> <span class="token string">"-vscode-neovim.escape"</span><span class="token punctuation">,</span>
-    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-    <span class="token punctuation">&#123;</span>
-        <span class="token property">"key"</span><span class="token operator">:</span> <span class="token string">"ctrl+a"</span><span class="token punctuation">,</span>
-        <span class="token property">"command"</span><span class="token operator">:</span> <span class="token string">"-vscode-neovim.escape"</span><span class="token punctuation">,</span>
-    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>复制和粘贴我大部分时间直接用linux下x默认的鼠标点击和中键。但是全选等操作的时候我还是习惯<code>Ctrl-A</code>加<code>Ctrl-C</code></p>
-<p>偶尔使用<code>Ctrl-C</code>的人，把<code>Ctrl-C</code>和<code>Ctrl-A</code>找回来还是有必要的，偶尔在<code>insert</code>模式下<code>Ctrl-C</code>会进入normal模式，<code>Ctrl-A</code>会输入<code>。sd</code>，很烦。</p>
-<p>所以我也直接在json设置里面排除了<code>Ctrl-A</code>。ps：如果你想使用mswin.vim那样在neovim里面绑定，那可能会报错<code>nvim_call_function: Vim(let):E684: list index out of range: 0</code>。注意在Neovim的扩展设置里面（Keyboard shortcuts）删掉<code>Ctrl+A</code></p>
-<p>然后在<code>settings.json</code>中设置</p>
-<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token property">"vscode-neovim.useCtrlKeysForInsertMode"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
-<span class="token property">"vscode-neovim.useCtrlKeysForNormalMode"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p>这样就基本上把Ctrl的功能还给VSCode了。</p>
-<h2 id="Neovim插件默认instert模式"><a href="#Neovim插件默认instert模式" class="headerlink" title="Neovim插件默认instert模式"></a>Neovim插件默认instert模式</h2><p>这个样子平时就像正常使用VSCode一样，当用到normal mode的功能时才打开normal mode，可以少按很多次i</p>
-<pre class="line-numbers language-vim" data-language="vim"><code class="language-vim"><span class="token keyword">if</span> <span class="token function">has</span><span class="token punctuation">(</span><span class="token string">'nvim'</span><span class="token punctuation">)</span>
-    <span class="token builtin">autocmd</span> TermOpen <span class="token builtin">term</span><span class="token punctuation">:</span><span class="token operator">/</span><span class="token operator">/</span><span class="token operator">*</span> <span class="token keyword">startinsert</span>
-<span class="token keyword">endif</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>之前只在编辑小文件的时候临时用Vim, 这两年内Vim使用次数逐渐增多，Vim也逐渐熟练，一度产生过将主力编辑器从VSCode换成Vim的想法。VSCode在Linux平台上频繁内存泄漏、VSCode的渲染速度比Vim慢很多（尤其是打开大文件的时候），这些原因导致VSCode在某些时候的体验比Vim差了好多。</p>
-<p>但是Vim我没有找到合适的GUI界面来打造一个对我而言比较舒服的编辑器，gvim在当年上嵌入式课的时候在Ubuntu下就试过一次了，感觉体验和</p>
-<p>SpaceVim试过，装了一堆插件之后太卡，性能不是太好，性能表现几乎和VSCode不相上下，在我的超低配七年老电脑上失去了Vim流畅的优势，而且这一套界面的颜值和使用体验远不如VSCode。</p>
-<p>Neovim的GUI界面有<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FraXlvc2kvZ29uZW92aW0=">goneovim<i class="fa fa-external-link-alt"></i></span>和neovide，体验也不如VSCode。（go居然能拿来写Qt还写成这种样子，哇偶）</p>
-<p>最舒服的Vim体验还是在Alacritty里面，GPU加速渲染速度很快，非常丝滑。</p>
-<p>而且VSCode在我从18年开始使用它的三年内，肉眼可见的进步。未来的前景也很光明，微软掏钱养着也不用担心倒闭的问题，除非微软倒闭（真倒闭了那不是更好吗，还有这种好事，苏联笑话.jpg）<br>现在我除了要写一万行以上的屎山项目才会打开Goland等全家桶IDE，编辑100行以下的配置文件等会打开vim。<br>剩下的绝大多数编辑都是用VSCode,用VSCode来写Go、C、Python、shell，用VSCode来写Markdown和LaTeX, 逐渐抛弃了typora和Word，也放弃了曾经很喜欢的sublime text（纯粹是因为好看和启动速度比vscode快一点）</p>
-<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><span class="exturl" data-url="aHR0cHM6Ly93d3cuYWhvbm4ubWUvYmxvZy90aGUtdmltLWd1aWRlLWZvci12cy1jb2RlLXVzZXJz">从VSCode到Vim到……两个都用？<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2RhaXBlaWh1c3QvaW0tc2VsZWN0I2luc3RhbGxhdGlvbg==">https://github.com/daipeihust/im-select#installation<i class="fa fa-external-link-alt"></i></span> Windows和Mac以及使用vscodevim插件用户可以用这个解决中文输入法冲突的问题<br><span class="exturl" data-url="aHR0cHM6Ly9kZGFkYWFsLm1lL2FydGljbGVzL2Zyb20tdnNjb2RlLXRvLXZpbS10by1ib3Ro">https://ddadaal.me/articles/from-vscode-to-vim-to-both<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9qZGhhby5naXRodWIuaW8vMjAyMC8wMS8xMi92aW1fbnZpbV9oaXN0b3J5X2RldmVsb3BtZW50Lw==">Vim 和 Neovim 的前世今生<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC9hYzczOWM2ZWE1NDE=">vscode 集成 Neovim<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj1nNGRYWjBSUVdkdw==">VSCode with embedded Neovim<i class="fa fa-external-link-alt"></i></span>  </p>
-]]></content>
-      <categories>
-        <category>不务正业系列</category>
-      </categories>
-      <tags>
-        <tag>VSCode</tag>
-        <tag>Neovim</tag>
-        <tag>Vim</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>毕竟狂澜挽不回，遽怜遗蜕化飞灰</title>
     <url>/SARS-cov-2/</url>
     <content><![CDATA[<p>So this is how liberty die, with thunderous applause</p>
@@ -5772,6 +5695,97 @@ Plug <span class="token string">'https://github.com/h-hg/fcitx.nvim.git'</span>
       </categories>
   </entry>
   <entry>
+    <title>VSCode C/C++ 开发环境和调试配置：我认为的正确姿势</title>
+    <url>/vscode-c-and-cpp-develop-and-debug-setting/</url>
+    <content><![CDATA[<p>卸了cpptools和C++ Intelligence吧，来试试clangd或者ccls</p>
+<span id="more"></span>
+
+<h2 id="太长不看版"><a href="#太长不看版" class="headerlink" title="太长不看版"></a>太长不看版</h2><p>别用微软官方的那个C/C++扩展（cpptools）和 C++ intelligence 扩展，用 clangd 和 CodeLLDB。<br><strong>全文完。我们下次再见</strong></p>
+<h2 id="安装和配置"><a href="#安装和配置" class="headerlink" title="安装和配置"></a>安装和配置</h2><p>寻找保姆级教程、习惯鼠标操作、想将VSCode打造成一个C/C++ IDE的读者建议立刻退出并寻找其他教程。以下操作以Archlinux为例，如果你是Windos用户请去用尊贵的宇宙第一IDE Visual Studio 或者通过WSL和VSCode Remote获得一个linux的开发环境。以下假定读者有一定的基础和使用搜索引擎查资料的能力。<strong>这不是一个保姆级教程、详细教程</strong>。  </p>
+<p>配置环境本应该是一件很简单的事情，然而M$的官方文档在推自己的cpptools塞私货，大量配置教程不是太啰嗦就是教你用cpptools，已经造成了信息污染。于是有了这篇clangd和Codelldb安利文。</p>
+<p>事实上这是很简单的，你只需要干这些事：</p>
+<h3 id="安装VSCode"><a href="#安装VSCode" class="headerlink" title="安装VSCode"></a>安装VSCode</h3><p>通常一条命令就可以了，已安装用户请略过</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 安装code-oss版本，和插件市场</span>
+yay -S code code-marketplace
+<span class="token comment"># 如果你想装闭源的VSCode</span>
+yay -S visual-studio-code-bin <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="安装编译器"><a href="#安装编译器" class="headerlink" title="安装编译器"></a>安装编译器</h3><p>想用gcc就用gcc，无特殊需求系统自带的gcc已经足矣（有特殊版本和交叉编译请自行安装对应版本）。想用clang就装clang。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yay -S llvm lld lldb clang<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h3><p>点击安装就可以</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9tYXJrZXRwbGFjZS52aXN1YWxzdHVkaW8uY29tL2l0ZW1zP2l0ZW1OYW1lPWxsdm0tdnMtY29kZS1leHRlbnNpb25zLnZzY29kZS1jbGFuZ2Q=">clangd插件<i class="fa fa-external-link-alt"></i></span>  用于高亮、自动补全、跳转<br><span class="exturl" data-url="aHR0cHM6Ly9tYXJrZXRwbGFjZS52aXN1YWxzdHVkaW8uY29tL2l0ZW1zP2l0ZW1OYW1lPXZhZGltY24udnNjb2RlLWxsZGI=">CodeLLDB插件<i class="fa fa-external-link-alt"></i></span>  如果你需要图形界面debug</p>
+<p>ps: 如果你用闭源的VSCode，那就直接在M$的插件市场装。Code-OSS版本可以修改<code>product.json</code>使用插件市场。如果你使用或者VSCodium版本，请从OpenVSX安装<span class="exturl" data-url="aHR0cHM6Ly9vcGVuLXZzeC5vcmcvZXh0ZW5zaW9uL2xsdm0tdnMtY29kZS1leHRlbnNpb25zL3ZzY29kZS1jbGFuZ2Q=">clangd插件<i class="fa fa-external-link-alt"></i></span>（或者手动下载）</p>
+<h3 id="安装clangd-LSP"><a href="#安装clangd-LSP" class="headerlink" title="安装clangd LSP"></a>安装clangd LSP</h3><p>然后按<code>F1</code>，选<code>clangd:Downlaod Language Server</code>, 下载clangd LSP （如果你想用系统包管理器装clangd也可以, Archlinux在<code>llvm</code>这个包里，Debian等发行版有单独的<code>clangd</code>包）</p>
+<h2 id="Debug和运行"><a href="#Debug和运行" class="headerlink" title="Debug和运行"></a>Debug和运行</h2><p>编译运行这个就没必要装插件了吧，单个文件我使用gcc/g++命令或者clang/clang++命令，编译并运行。一个项目那就写个Makefile或者cmake之类的东西呗。</p>
+<h3 id="使用gdb和lldb命令Debug"><a href="#使用gdb和lldb命令Debug" class="headerlink" title="使用gdb和lldb命令Debug"></a>使用gdb和lldb命令Debug</h3><p>如果你需要Debug，在终端使用gdb和lldb即可， over～</p>
+<h3 id="使用VSCode提供的图形界面Debugger"><a href="#使用VSCode提供的图形界面Debugger" class="headerlink" title="使用VSCode提供的图形界面Debugger"></a>使用VSCode提供的图形界面Debugger</h3><p>哦，你要图形界面啊，安装Codelldb插件。<code>Ctrl+Shift+D</code>点左边栏的debug按钮，然后应该会自动生成一个<code>launch.json</code>，然后自行配置你的debug命令、参数和环境变量，参考：<span class="exturl" data-url="aHR0cHM6Ly9jb2RlLnZpc3VhbHN0dWRpby5jb20vZG9jcy9lZGl0b3IvZGVidWdnaW5n">VSCode Debugging<i class="fa fa-external-link-alt"></i></span></p>
+<p><code>tasks.json</code>如下，我以c语言为例，设置输出到<code>build</code>文件夹下同名<code>.out</code>文件，有需要请自行修改。</p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+    <span class="token property">"version"</span><span class="token operator">:</span> <span class="token string">"2.0.0"</span><span class="token punctuation">,</span>
+    <span class="token property">"tasks"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+        <span class="token punctuation">&#123;</span>
+            <span class="token property">"label"</span><span class="token operator">:</span> <span class="token string">"Compile"</span><span class="token punctuation">,</span>
+            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"process"</span><span class="token punctuation">,</span>
+            <span class="token property">"command"</span><span class="token operator">:</span> <span class="token string">"clang"</span><span class="token punctuation">,</span>
+            <span class="token property">"args"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+                <span class="token string">"$&#123;file&#125;"</span><span class="token punctuation">,</span>
+                <span class="token string">"-g"</span><span class="token punctuation">,</span>
+                <span class="token string">"-o"</span><span class="token punctuation">,</span>
+                <span class="token string">"$&#123;fileDirname&#125;/build/$&#123;fileBasenameNoExtension&#125;.out"</span><span class="token punctuation">,</span> <span class="token comment">// 输出到build文件夹下</span>
+                <span class="token string">"-Wall"</span><span class="token punctuation">,</span>
+                <span class="token string">"-std=c11"</span><span class="token punctuation">,</span>
+            <span class="token punctuation">]</span><span class="token punctuation">,</span>
+            <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+                <span class="token property">"kind"</span><span class="token operator">:</span> <span class="token string">"build"</span><span class="token punctuation">,</span>
+                <span class="token property">"isDefault"</span><span class="token operator">:</span> <span class="token boolean">true</span>
+            <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+            <span class="token property">"options"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+                <span class="token property">"cwd"</span><span class="token operator">:</span> <span class="token string">"$&#123;fileDirname&#125;"</span>
+            <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><code>launch.json</code>如下，注意<code>preLaunchTask</code>要先执行<code>task.json</code>的label为<code>Compile</code>的任务</p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+    <span class="token property">"version"</span><span class="token operator">:</span> <span class="token string">"0.2.0"</span><span class="token punctuation">,</span>
+    <span class="token property">"configurations"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+        <span class="token punctuation">&#123;</span>
+            <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"LLDB Debug"</span><span class="token punctuation">,</span>
+            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"lldb"</span><span class="token punctuation">,</span>
+            <span class="token property">"request"</span><span class="token operator">:</span> <span class="token string">"launch"</span><span class="token punctuation">,</span>
+            <span class="token property">"program"</span><span class="token operator">:</span> <span class="token string">"$&#123;fileDirname&#125;/build/$&#123;fileBasenameNoExtension&#125;.out"</span><span class="token punctuation">,</span>
+            <span class="token property">"cwd"</span><span class="token operator">:</span> <span class="token string">"$&#123;fileDirname&#125;"</span><span class="token punctuation">,</span>
+            <span class="token property">"preLaunchTask"</span><span class="token operator">:</span> <span class="token string">"Compile"</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>好了，这样就可以了。</p>
+<h2 id="其他的配置"><a href="#其他的配置" class="headerlink" title="其他的配置"></a>其他的配置</h2><h3 id="调试时使用命令操作"><a href="#调试时使用命令操作" class="headerlink" title="调试时使用命令操作"></a>调试时使用命令操作</h3><p>按F5进行调试，此时按<code>Ctrl+Shift+Y</code>调出Debug Console REPL就可以用gdb/lldb的命令进行调试了。这样就又回到了熟悉的gdb/lldb的命令，就可以不需要鼠标点点点进行调试了，一些Codelldb不支持显示在图形界面的调试功能也可以用了。</p>
+<h3 id="每次调试都多产生一个Debug-Console"><a href="#每次调试都多产生一个Debug-Console" class="headerlink" title="每次调试都多产生一个Debug Console"></a>每次调试都多产生一个Debug Console</h3><p>给<code>launch.json</code>加上</p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token comment">//args的这个设置是为了防止每次Debug都会多弹出一个Debug Console</span>
+<span class="token property">"args"</span><span class="token operator">:</span> <span class="token punctuation">[</span>   
+    <span class="token string">"&amp;&amp;"</span><span class="token punctuation">,</span>
+    <span class="token string">"exit"</span>
+<span class="token punctuation">]</span><span class="token punctuation">,</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="随便说说"><a href="#随便说说" class="headerlink" title="随便说说"></a>随便说说</h2><h3 id="关于C-C-的LSP其他选择"><a href="#关于C-C-的LSP其他选择" class="headerlink" title="关于C/C++的LSP其他选择"></a>关于C/C++的LSP其他选择</h3><p>目前用的比较多的C/C++的LSP是ccls和clangd，各有优劣。我的体验是ccls没有clangd的补全和错误提示那么舒服，就一直在用clangd，有兴趣可以试试ccls。<br><del>反正这两个都比cpptools好用就是了</del></p>
+<h3 id="关于VSCode和插件"><a href="#关于VSCode和插件" class="headerlink" title="关于VSCode和插件"></a>关于VSCode和插件</h3><p>本来是不想写这个的。但是看到你们官方文档闭口不提clangd，网上各路教程也都在教大家用cpptools和C++ intelligence这两个插件，我蚌埠住了。昨天一个小学弟配vscode的c/c++环境，折腾了一整天，然后跟我吐槽vscode又慢又卡，我心里暗叫不好，这不会是又用了cpptools和C++ intelligence这两个插件吧。我问小学弟为什么不用clangd，他表示官方文档也没说啊，他明明按照官方文档来的。好吧，这也不怪小学弟，连官方文档都在叫你用M$那两个又吃内存又难用的插件。Google能搜到的也都在让你装这个。甚至你从EXTENSOINS的搜索栏里面搜c或者c++，前两个插件就是这两个，至于clangd，已经排在无数个名字里有c/c++插件的后面找不着了。</p>
+<p><strong>我的操作逐渐转为快捷键和terminal，图形界面主要用来展示而不是用来点点点完成操作</strong>。我主要是将VSCode作为一个neovim/gdb/lldb的展示前端来用，<a href="https://zhangjk98.xyz/vscode-neovim-setting/">Neovim插件配置见上一篇博客</a>。目前用习惯了VSCode还真没动力换别的，几次试图切到纯Neovim最后又滚回了VSCode+Neovim插件。  </p>
+<p>VSCode正在变得臃肿，而且打字延迟比Sublime和Neovim高。VSCode丝滑的感觉远不如Sublime Text，也不如高配电脑上的Jetbrains家的全家桶。我比较喜欢VSCode一个是LSP，一个是没有太多捆绑功能+丰富的插件生态和开箱即用。但是最近这两年总感觉它不再想好好做一个编辑器了，总想抢IDE的活，可能是风头压过atom和sublime之后也失去了方向。单纯作为一个文本编辑器，VSCode的打磨和细节体验和Vim、Sublime都有还有不小的差距，但是现在眼看着要向一个IDE的方向狂奔了。</p>
+<p>VSCode的插件良莠不齐，而VSCode本体也逐渐和我想要的编辑器差距越来越大。但是毕竟用习惯了。现在很多网上的教程都是把VSCode配置成IDE，装了一大堆插件，最后又慢又卡。大多数复杂的功能学习所用的时间很有可能赶不上学会以后帮你节省的时间，尤其是点点点的图形界面，每次更新按钮换位置又要从头找起。就算学也学一点一些不怎么变的快捷键和Vim操作，那些在肌肉记忆可以一直用下去。</p>
+<p>我觉得如果VSCode你要用的开心，<strong>不要当IDE用，就当一个编辑器用</strong>。要有一种又不是不能用的<strong>摆烂</strong>心态，不要刻意去配置。简单配置到<strong>能用就行</strong>。</p>
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><span class="exturl" data-url="aHR0cHM6Ly9vcGVuLXZzeC5vcmcv">https://open-vsx.org/<i class="fa fa-external-link-alt"></i></span> M$的VSCode插件市场的开源替代<br><span class="exturl" data-url="aHR0cHM6Ly9jbGFuZ2QubGx2bS5vcmcv">https://clangd.llvm.org<i class="fa fa-external-link-alt"></i></span> clangd项目</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9jb2RlLnZpc3VhbHN0dWRpby5jb20vZG9jcy9lZGl0b3IvZGVidWdnaW5n">https://code.visualstudio.com/docs/editor/debugging<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9jb2RlLnZpc3VhbHN0dWRpby5jb20vZG9jcy9pbnRyb3ZpZGVvcy9kZWJ1Z2dpbmc=">https://code.visualstudio.com/docs/introvideos/debugging<i class="fa fa-external-link-alt"></i></span></p>
+]]></content>
+      <tags>
+        <tag>vscode</tag>
+        <tag>clangd</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>重启博客</title>
     <url>/1a9a/</url>
     <content><![CDATA[<p>新博客又开通了(搬家)，不定期更新</p>
@@ -5796,6 +5810,83 @@ Plug <span class="token string">'https://github.com/h-hg/fcitx.nvim.git'</span>
       </categories>
       <tags>
         <tag>杂记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>VSCode Neovim插件配置——将VSCode作为Neovim的GUI客户端</title>
+    <url>/vscode-neovim-setting/</url>
+    <content><![CDATA[<p>本来不报希望的试了试这套不伦不类的缝合怪配置，结果缝合出了很好的效果，可以拿这套配置在VSCode下养老了。</p>
+<span id="more"></span>
+
+<p>VSCodevim这个插件和原生Vim的体验差距很大，Vim的很多操作都不支持，而且大文件会特别卡。VSCode Neovim这个插件是在Insert模式几乎和正常的VSCode编辑一样，在Normal模式有满血的Vim体验（不像VSCodevim那样是体验是残血的，只是一个Vim键位和操作的模拟器）</p>
+<p>这个插件直接将Neovim作为后端，在Normal模式下由Neovim控制（直接将内容缓存发往Neovim处理），可以使用Vim的各种键位操作<br>在Insert模式下，操作和渲染由VSCode处理，编辑体验几乎和VSCode完全一致。色彩高亮和代码补全等都由VSCode实现（所以不要装Neovim的LSP等插件，没用，而且可能影响速度）当你保存的时候更改会从VSCode同步到Neovim。  </p>
+<p>VSCode在编辑模式下的舒服体验和插件、Vim在Normal模式下的操作，同时得到了保留，而且性能和速度还可以接受。</p>
+<p>与其说这是VSCode的一个Vim键位插件，不如说是将VSCode直接改造成了Neovim的一个GUI客户端。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>VSCode插件市场装VSCode Neovim，Archlinux安装neovim<code>sudo pacman -S neovim</code><br>然后在设置里面填上路径</p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token property">"vscode-neovim.neovimExecutablePaths.linux"</span><span class="token operator">:</span> <span class="token string">"/usr/bin/nvim"</span><span class="token punctuation">,</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>就可以用了</p>
+<h2 id="中文输入法和Neovim插件Normal模式下冲突"><a href="#中文输入法和Neovim插件Normal模式下冲突" class="headerlink" title="中文输入法和Neovim插件Normal模式下冲突"></a>中文输入法和Neovim插件Normal模式下冲突</h2><p>VSCode的Neovim插件在Normal模式下，如果fcitx5等输入法处于中文模式，那么输入的字符会被输入法全部捕获（就像平时在VSCode里打字一样）</p>
+<p>ArchWiki 给出了下面这种方法，试了一下速度比较慢</p>
+<pre class="line-numbers language-vimrc" data-language="vimrc"><code class="language-vimrc">autocmd InsertLeave * :silent !fcitx5-remote -c &quot; 退出插入模式时禁用输入法
+autocmd BufCreate *  :silent !fcitx5-remote -c &quot; 创建 Buf 时禁用输入法
+autocmd BufEnter *  :silent !fcitx5-remote -c &quot; 进入 Buf 时禁用输入法
+autocmd BufLeave *  :silent !fcitx5-remote -c &quot; 离开 Buf 时禁用输入法<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>比较快的方法是装插件，比如依云的fcitx.vim插件，但是这个插件在neovim下面好像没有效果。</p>
+<p>本来想自己移植一个neovim的插件的，但是看了一下已经有人干了：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2gtaGcvZmNpdHgubnZpbS5naXQ=">fcitx.nvim<i class="fa fa-external-link-alt"></i></span></p>
+<p>我用的vim-plug管理插件，放到<code>~/.config/nvim/init.vim</code>下面就可以了</p>
+<pre class="line-numbers language-vim" data-language="vim"><code class="language-vim"><span class="token keyword">call</span> plug#<span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+Plug <span class="token string">'https://github.com/h-hg/fcitx.nvim.git'</span>
+<span class="token keyword">call</span> plug#<span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="一些按键绑定设置"><a href="#一些按键绑定设置" class="headerlink" title="一些按键绑定设置"></a>一些按键绑定设置</h2><p>首先我不要hjkl这几个上下左右键（根本无法接受，我的肌肉记忆明明是键盘上上下左右四个经典方向键，玩空洞骑士和Ballance用的极其熟练，其次是WASD这个4399键位，其次是鼠标，我鼠标可熟练了）<br>我知道hjkl移动距离短而且移动后方便按距离近的i键进入Insert模式，但是我的肌肉记忆是上下左右，你再给我十年我也改不过来。</p>
+<p>然后我将Casplock映射为ESC，这个万年不用的键放在这么重要的位置还有一个比Tab键还大的键帽，简直浪费。编辑<code>～/Xmodmap</code>修改键盘映射就可以了。</p>
+<p>或者如果喜欢也可以将<code>jj</code>（连按两次）绑定成ESC<code>inoremap jj &lt;Esc&gt;</code>^`</p>
+<p>然后是VSCode里面正常的<code>Ctrl+F</code>当前搜索，这个我们找回来（<code>Ctrl+F</code>在Vim里是向上翻页，我完全用不到，我用PgDn和PgUp）</p>
+<p>然后是VSCode的<code>Ctrl+B</code>展开/收起侧边栏，这个我也留着VSCode的设置。</p>
+<p>编辑<code>~/.config/Code/User/keybindings.json</code></p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+        <span class="token property">"key"</span><span class="token operator">:</span> <span class="token string">"ctrl+f"</span><span class="token punctuation">,</span>
+        <span class="token property">"command"</span><span class="token operator">:</span> <span class="token string">"-vscode-neovim.escape"</span><span class="token punctuation">,</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token punctuation">&#123;</span>
+        <span class="token property">"key"</span><span class="token operator">:</span> <span class="token string">"ctrl+b"</span><span class="token punctuation">,</span>
+        <span class="token property">"command"</span><span class="token operator">:</span> <span class="token string">"-vscode-neovim.escape"</span><span class="token punctuation">,</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token punctuation">&#123;</span>
+        <span class="token property">"key"</span><span class="token operator">:</span> <span class="token string">"ctrl+a"</span><span class="token punctuation">,</span>
+        <span class="token property">"command"</span><span class="token operator">:</span> <span class="token string">"-vscode-neovim.escape"</span><span class="token punctuation">,</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>复制和粘贴我大部分时间直接用linux下x默认的鼠标点击和中键。但是全选等操作的时候我还是习惯<code>Ctrl-A</code>加<code>Ctrl-C</code></p>
+<p>偶尔使用<code>Ctrl-C</code>的人，把<code>Ctrl-C</code>和<code>Ctrl-A</code>找回来还是有必要的，偶尔在<code>insert</code>模式下<code>Ctrl-C</code>会进入normal模式，<code>Ctrl-A</code>会输入<code>。sd</code>，很烦。</p>
+<p>所以我也直接在json设置里面排除了<code>Ctrl-A</code>。ps：如果你想使用mswin.vim那样在neovim里面绑定，那可能会报错<code>nvim_call_function: Vim(let):E684: list index out of range: 0</code>。注意在Neovim的扩展设置里面（Keyboard shortcuts）删掉<code>Ctrl+A</code></p>
+<p>然后在<code>settings.json</code>中设置</p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token property">"vscode-neovim.useCtrlKeysForInsertMode"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+<span class="token property">"vscode-neovim.useCtrlKeysForNormalMode"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>这样就基本上把Ctrl的功能还给VSCode了。</p>
+<h2 id="Neovim插件默认instert模式"><a href="#Neovim插件默认instert模式" class="headerlink" title="Neovim插件默认instert模式"></a>Neovim插件默认instert模式</h2><p>这个样子平时就像正常使用VSCode一样，当用到normal mode的功能时才打开normal mode，可以少按很多次i</p>
+<pre class="line-numbers language-vim" data-language="vim"><code class="language-vim"><span class="token keyword">if</span> <span class="token function">has</span><span class="token punctuation">(</span><span class="token string">'nvim'</span><span class="token punctuation">)</span>
+    <span class="token builtin">autocmd</span> TermOpen <span class="token builtin">term</span><span class="token punctuation">:</span><span class="token operator">/</span><span class="token operator">/</span><span class="token operator">*</span> <span class="token keyword">startinsert</span>
+<span class="token keyword">endif</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>之前只在编辑小文件的时候临时用Vim, 这两年内Vim使用次数逐渐增多，Vim也逐渐熟练，一度产生过将主力编辑器从VSCode换成Vim的想法。VSCode在Linux平台上频繁内存泄漏、VSCode的渲染速度比Vim慢很多（尤其是打开大文件的时候），这些原因导致VSCode在某些时候的体验比Vim差了好多。</p>
+<p>但是Vim我没有找到合适的GUI界面来打造一个对我而言比较舒服的编辑器，gvim在当年上嵌入式课的时候在Ubuntu下就试过一次了，感觉体验和</p>
+<p>SpaceVim试过，装了一堆插件之后太卡，性能不是太好，性能表现几乎和VSCode不相上下，在我的超低配七年老电脑上失去了Vim流畅的优势，而且这一套界面的颜值和使用体验远不如VSCode。</p>
+<p>Neovim的GUI界面有<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FraXlvc2kvZ29uZW92aW0=">goneovim<i class="fa fa-external-link-alt"></i></span>和neovide，体验也不如VSCode。（go居然能拿来写Qt还写成这种样子，哇偶）</p>
+<p>最舒服的Vim体验还是在Alacritty里面，GPU加速渲染速度很快，非常丝滑。</p>
+<p>而且VSCode在我从18年开始使用它的三年内，肉眼可见的进步。未来的前景也很光明，微软掏钱养着也不用担心倒闭的问题，除非微软倒闭（真倒闭了那不是更好吗，还有这种好事，苏联笑话.jpg）<br>现在我除了要写一万行以上的屎山项目才会打开Goland等全家桶IDE，编辑100行以下的配置文件等会打开vim。<br>剩下的绝大多数编辑都是用VSCode,用VSCode来写Go、C、Python、shell，用VSCode来写Markdown和LaTeX, 逐渐抛弃了typora和Word，也放弃了曾经很喜欢的sublime text（纯粹是因为好看和启动速度比vscode快一点）</p>
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><span class="exturl" data-url="aHR0cHM6Ly93d3cuYWhvbm4ubWUvYmxvZy90aGUtdmltLWd1aWRlLWZvci12cy1jb2RlLXVzZXJz">从VSCode到Vim到……两个都用？<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2RhaXBlaWh1c3QvaW0tc2VsZWN0I2luc3RhbGxhdGlvbg==">https://github.com/daipeihust/im-select#installation<i class="fa fa-external-link-alt"></i></span> Windows和Mac以及使用vscodevim插件用户可以用这个解决中文输入法冲突的问题<br><span class="exturl" data-url="aHR0cHM6Ly9kZGFkYWFsLm1lL2FydGljbGVzL2Zyb20tdnNjb2RlLXRvLXZpbS10by1ib3Ro">https://ddadaal.me/articles/from-vscode-to-vim-to-both<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9qZGhhby5naXRodWIuaW8vMjAyMC8wMS8xMi92aW1fbnZpbV9oaXN0b3J5X2RldmVsb3BtZW50Lw==">Vim 和 Neovim 的前世今生<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC9hYzczOWM2ZWE1NDE=">vscode 集成 Neovim<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj1nNGRYWjBSUVdkdw==">VSCode with embedded Neovim<i class="fa fa-external-link-alt"></i></span>  </p>
+]]></content>
+      <categories>
+        <category>不务正业系列</category>
+      </categories>
+      <tags>
+        <tag>VSCode</tag>
+        <tag>Neovim</tag>
+        <tag>Vim</tag>
       </tags>
   </entry>
   <entry>
@@ -6364,97 +6455,6 @@ num <span class="token operator">=</span> re<span class="token punctuation">.</s
       </categories>
       <tags>
         <tag>v2ray</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>VSCode C/C++ 开发环境和调试配置：我认为的正确姿势</title>
-    <url>/vscode-c-and-cpp-develop-and-debug-setting/</url>
-    <content><![CDATA[<p>卸了cpptools和C++ Intelligence吧，来试试clangd或者ccls</p>
-<span id="more"></span>
-
-<h2 id="太长不看版"><a href="#太长不看版" class="headerlink" title="太长不看版"></a>太长不看版</h2><p>别用微软官方的那个C/C++扩展（cpptools）和 C++ intelligence 扩展，用 clangd 和 CodeLLDB。<br><strong>全文完。我们下次再见</strong></p>
-<h2 id="安装和配置"><a href="#安装和配置" class="headerlink" title="安装和配置"></a>安装和配置</h2><p>寻找保姆级教程、习惯鼠标操作、想将VSCode打造成一个C/C++ IDE的读者建议立刻退出并寻找其他教程。以下操作以Archlinux为例，如果你是Windos用户请去用尊贵的宇宙第一IDE Visual Studio 或者通过WSL和VSCode Remote获得一个linux的开发环境。以下假定读者有一定的基础和使用搜索引擎查资料的能力。<strong>这不是一个保姆级教程、详细教程</strong>。  </p>
-<p>配置环境本应该是一件很简单的事情，然而M$的官方文档在推自己的cpptools塞私货，大量配置教程不是太啰嗦就是教你用cpptools，已经造成了信息污染。于是有了这篇clangd和Codelldb安利文。</p>
-<p>事实上这是很简单的，你只需要干这些事：</p>
-<h3 id="安装VSCode"><a href="#安装VSCode" class="headerlink" title="安装VSCode"></a>安装VSCode</h3><p>通常一条命令就可以了，已安装用户请略过</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 安装code-oss版本，和插件市场</span>
-yay -S code code-marketplace
-<span class="token comment"># 如果你想装闭源的VSCode</span>
-yay -S visual-studio-code-bin <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="安装编译器"><a href="#安装编译器" class="headerlink" title="安装编译器"></a>安装编译器</h3><p>想用gcc就用gcc，无特殊需求系统自带的gcc已经足矣（有特殊版本和交叉编译请自行安装对应版本）。想用clang就装clang。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yay -S llvm lld lldb clang<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h3 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h3><p>点击安装就可以</p>
-<p><span class="exturl" data-url="aHR0cHM6Ly9tYXJrZXRwbGFjZS52aXN1YWxzdHVkaW8uY29tL2l0ZW1zP2l0ZW1OYW1lPWxsdm0tdnMtY29kZS1leHRlbnNpb25zLnZzY29kZS1jbGFuZ2Q=">clangd插件<i class="fa fa-external-link-alt"></i></span>  用于高亮、自动补全、跳转<br><span class="exturl" data-url="aHR0cHM6Ly9tYXJrZXRwbGFjZS52aXN1YWxzdHVkaW8uY29tL2l0ZW1zP2l0ZW1OYW1lPXZhZGltY24udnNjb2RlLWxsZGI=">CodeLLDB插件<i class="fa fa-external-link-alt"></i></span>  如果你需要图形界面debug</p>
-<p>ps: 如果你用闭源的VSCode，那就直接在M$的插件市场装。Code-OSS版本可以修改<code>product.json</code>使用插件市场。如果你使用或者VSCodium版本，请从OpenVSX安装<span class="exturl" data-url="aHR0cHM6Ly9vcGVuLXZzeC5vcmcvZXh0ZW5zaW9uL2xsdm0tdnMtY29kZS1leHRlbnNpb25zL3ZzY29kZS1jbGFuZ2Q=">clangd插件<i class="fa fa-external-link-alt"></i></span>（或者手动下载）</p>
-<h3 id="安装clangd-LSP"><a href="#安装clangd-LSP" class="headerlink" title="安装clangd LSP"></a>安装clangd LSP</h3><p>然后按<code>F1</code>，选<code>clangd:Downlaod Language Server</code>, 下载clangd LSP （如果你想用系统包管理器装clangd也可以, Archlinux在<code>llvm</code>这个包里，Debian等发行版有单独的<code>clangd</code>包）</p>
-<h2 id="Debug和运行"><a href="#Debug和运行" class="headerlink" title="Debug和运行"></a>Debug和运行</h2><p>编译运行这个就没必要装插件了吧，单个文件我使用gcc/g++命令或者clang/clang++命令，编译并运行。一个项目那就写个Makefile或者cmake之类的东西呗。</p>
-<h3 id="使用gdb和lldb命令Debug"><a href="#使用gdb和lldb命令Debug" class="headerlink" title="使用gdb和lldb命令Debug"></a>使用gdb和lldb命令Debug</h3><p>如果你需要Debug，在终端使用gdb和lldb即可， over～</p>
-<h3 id="使用VSCode提供的图形界面Debugger"><a href="#使用VSCode提供的图形界面Debugger" class="headerlink" title="使用VSCode提供的图形界面Debugger"></a>使用VSCode提供的图形界面Debugger</h3><p>哦，你要图形界面啊，安装Codelldb插件。<code>Ctrl+Shift+D</code>点左边栏的debug按钮，然后应该会自动生成一个<code>launch.json</code>，然后自行配置你的debug命令、参数和环境变量，参考：<span class="exturl" data-url="aHR0cHM6Ly9jb2RlLnZpc3VhbHN0dWRpby5jb20vZG9jcy9lZGl0b3IvZGVidWdnaW5n">VSCode Debugging<i class="fa fa-external-link-alt"></i></span></p>
-<p><code>tasks.json</code>如下，我以c语言为例，设置输出到<code>build</code>文件夹下同名<code>.out</code>文件，有需要请自行修改。</p>
-<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
-    <span class="token property">"version"</span><span class="token operator">:</span> <span class="token string">"2.0.0"</span><span class="token punctuation">,</span>
-    <span class="token property">"tasks"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-        <span class="token punctuation">&#123;</span>
-            <span class="token property">"label"</span><span class="token operator">:</span> <span class="token string">"Compile"</span><span class="token punctuation">,</span>
-            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"process"</span><span class="token punctuation">,</span>
-            <span class="token property">"command"</span><span class="token operator">:</span> <span class="token string">"clang"</span><span class="token punctuation">,</span>
-            <span class="token property">"args"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-                <span class="token string">"$&#123;file&#125;"</span><span class="token punctuation">,</span>
-                <span class="token string">"-g"</span><span class="token punctuation">,</span>
-                <span class="token string">"-o"</span><span class="token punctuation">,</span>
-                <span class="token string">"$&#123;fileDirname&#125;/build/$&#123;fileBasenameNoExtension&#125;.out"</span><span class="token punctuation">,</span> <span class="token comment">// 输出到build文件夹下</span>
-                <span class="token string">"-Wall"</span><span class="token punctuation">,</span>
-                <span class="token string">"-std=c11"</span><span class="token punctuation">,</span>
-            <span class="token punctuation">]</span><span class="token punctuation">,</span>
-            <span class="token property">"group"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
-                <span class="token property">"kind"</span><span class="token operator">:</span> <span class="token string">"build"</span><span class="token punctuation">,</span>
-                <span class="token property">"isDefault"</span><span class="token operator">:</span> <span class="token boolean">true</span>
-            <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-            <span class="token property">"options"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
-                <span class="token property">"cwd"</span><span class="token operator">:</span> <span class="token string">"$&#123;fileDirname&#125;"</span>
-            <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-        <span class="token punctuation">&#125;</span>
-    <span class="token punctuation">]</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p><code>launch.json</code>如下，注意<code>preLaunchTask</code>要先执行<code>task.json</code>的label为<code>Compile</code>的任务</p>
-<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
-    <span class="token property">"version"</span><span class="token operator">:</span> <span class="token string">"0.2.0"</span><span class="token punctuation">,</span>
-    <span class="token property">"configurations"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-        <span class="token punctuation">&#123;</span>
-            <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"LLDB Debug"</span><span class="token punctuation">,</span>
-            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"lldb"</span><span class="token punctuation">,</span>
-            <span class="token property">"request"</span><span class="token operator">:</span> <span class="token string">"launch"</span><span class="token punctuation">,</span>
-            <span class="token property">"program"</span><span class="token operator">:</span> <span class="token string">"$&#123;fileDirname&#125;/build/$&#123;fileBasenameNoExtension&#125;.out"</span><span class="token punctuation">,</span>
-            <span class="token property">"cwd"</span><span class="token operator">:</span> <span class="token string">"$&#123;fileDirname&#125;"</span><span class="token punctuation">,</span>
-            <span class="token property">"preLaunchTask"</span><span class="token operator">:</span> <span class="token string">"Compile"</span>
-        <span class="token punctuation">&#125;</span>
-    <span class="token punctuation">]</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>好了，这样就可以了。</p>
-<h2 id="其他的配置"><a href="#其他的配置" class="headerlink" title="其他的配置"></a>其他的配置</h2><h3 id="调试时使用命令操作"><a href="#调试时使用命令操作" class="headerlink" title="调试时使用命令操作"></a>调试时使用命令操作</h3><p>按F5进行调试，此时按<code>Ctrl+Shift+Y</code>调出Debug Console REPL就可以用gdb/lldb的命令进行调试了。这样就又回到了熟悉的gdb/lldb的命令，就可以不需要鼠标点点点进行调试了，一些Codelldb不支持显示在图形界面的调试功能也可以用了。</p>
-<h3 id="每次调试都多产生一个Debug-Console"><a href="#每次调试都多产生一个Debug-Console" class="headerlink" title="每次调试都多产生一个Debug Console"></a>每次调试都多产生一个Debug Console</h3><p>给<code>launch.json</code>加上</p>
-<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token comment">//args的这个设置是为了防止每次Debug都会多弹出一个Debug Console</span>
-<span class="token property">"args"</span><span class="token operator">:</span> <span class="token punctuation">[</span>   
-    <span class="token string">"&amp;&amp;"</span><span class="token punctuation">,</span>
-    <span class="token string">"exit"</span>
-<span class="token punctuation">]</span><span class="token punctuation">,</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="随便说说"><a href="#随便说说" class="headerlink" title="随便说说"></a>随便说说</h2><h3 id="关于C-C-的LSP其他选择"><a href="#关于C-C-的LSP其他选择" class="headerlink" title="关于C/C++的LSP其他选择"></a>关于C/C++的LSP其他选择</h3><p>目前用的比较多的C/C++的LSP是ccls和clangd，各有优劣。我的体验是ccls没有clangd的补全和错误提示那么舒服，就一直在用clangd，有兴趣可以试试ccls。<br><del>反正这两个都比cpptools好用就是了</del></p>
-<h3 id="关于VSCode和插件"><a href="#关于VSCode和插件" class="headerlink" title="关于VSCode和插件"></a>关于VSCode和插件</h3><p>本来是不想写这个的。但是看到你们官方文档闭口不提clangd，网上各路教程也都在教大家用cpptools和C++ intelligence这两个插件，我蚌埠住了。昨天一个小学弟配vscode的c/c++环境，折腾了一整天，然后跟我吐槽vscode又慢又卡，我心里暗叫不好，这不会是又用了cpptools和C++ intelligence这两个插件吧。我问小学弟为什么不用clangd，他表示官方文档也没说啊，他明明按照官方文档来的。好吧，这也不怪小学弟，连官方文档都在叫你用M$那两个又吃内存又难用的插件。Google能搜到的也都在让你装这个。甚至你从EXTENSOINS的搜索栏里面搜c或者c++，前两个插件就是这两个，至于clangd，已经排在无数个名字里有c/c++插件的后面找不着了。</p>
-<p><strong>我的操作逐渐转为快捷键和terminal，图形界面主要用来展示而不是用来点点点完成操作</strong>。我主要是将VSCode作为一个neovim/gdb/lldb的展示前端来用，<a href="https://zhangjk98.xyz/vscode-neovim-setting/">Neovim插件配置见上一篇博客</a>。目前用习惯了VSCode还真没动力换别的，几次试图切到纯Neovim最后又滚回了VSCode+Neovim插件。  </p>
-<p>VSCode正在变得臃肿，而且打字延迟比Sublime和Neovim高。VSCode丝滑的感觉远不如Sublime Text，也不如高配电脑上的Jetbrains家的全家桶。我比较喜欢VSCode一个是LSP，一个是没有太多捆绑功能+丰富的插件生态和开箱即用。但是最近这两年总感觉它不再想好好做一个编辑器了，总想抢IDE的活，可能是风头压过atom和sublime之后也失去了方向。单纯作为一个文本编辑器，VSCode的打磨和细节体验和Vim、Sublime都有还有不小的差距，但是现在眼看着要向一个IDE的方向狂奔了。</p>
-<p>VSCode的插件良莠不齐，而VSCode本体也逐渐和我想要的编辑器差距越来越大。但是毕竟用习惯了。现在很多网上的教程都是把VSCode配置成IDE，装了一大堆插件，最后又慢又卡。大多数复杂的功能学习所用的时间很有可能赶不上学会以后帮你节省的时间，尤其是点点点的图形界面，每次更新按钮换位置又要从头找起。就算学也学一点一些不怎么变的快捷键和Vim操作，那些在肌肉记忆可以一直用下去。</p>
-<p>我觉得如果VSCode你要用的开心，<strong>不要当IDE用，就当一个编辑器用</strong>。要有一种又不是不能用的<strong>摆烂</strong>心态，不要刻意去配置。简单配置到<strong>能用就行</strong>。</p>
-<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><span class="exturl" data-url="aHR0cHM6Ly9vcGVuLXZzeC5vcmcv">https://open-vsx.org/<i class="fa fa-external-link-alt"></i></span> M$的VSCode插件市场的开源替代<br><span class="exturl" data-url="aHR0cHM6Ly9jbGFuZ2QubGx2bS5vcmcv">https://clangd.llvm.org<i class="fa fa-external-link-alt"></i></span> clangd项目</p>
-<p><span class="exturl" data-url="aHR0cHM6Ly9jb2RlLnZpc3VhbHN0dWRpby5jb20vZG9jcy9lZGl0b3IvZGVidWdnaW5n">https://code.visualstudio.com/docs/editor/debugging<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9jb2RlLnZpc3VhbHN0dWRpby5jb20vZG9jcy9pbnRyb3ZpZGVvcy9kZWJ1Z2dpbmc=">https://code.visualstudio.com/docs/introvideos/debugging<i class="fa fa-external-link-alt"></i></span></p>
-]]></content>
-      <tags>
-        <tag>vscode</tag>
-        <tag>clangd</tag>
       </tags>
   </entry>
 </search>
