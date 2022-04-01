@@ -34,7 +34,7 @@
 <meta property="article:published_time" content="2021-09-15T12:01:25.000Z">
 <meta property="article:author" content="Zhang.j.k">
 <meta property="article:tag" content="6.S081">
-<meta property="article:tag" content="syscalls">
+<meta property="article:tag" content="syscall">
 <meta name="twitter:card" content="summary">
 
 
@@ -156,7 +156,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E4%BA%8Esyscall"><span class="nav-number">1.</span> <span class="nav-text">关于syscall</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lab2"><span class="nav-number">2.</span> <span class="nav-text">Lab2</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#System-call-tracing-moderate"><span class="nav-number">2.1.</span> <span class="nav-text">System call tracing (moderate)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%93%BE%E6%8E%A5"><span class="nav-number">3.</span> <span class="nav-text">链接</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E4%BA%8Esyscall"><span class="nav-number">1.</span> <span class="nav-text">关于syscall</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lab2"><span class="nav-number">2.</span> <span class="nav-text">Lab2</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#System-call-tracing-moderate"><span class="nav-number">2.1.</span> <span class="nav-text">System call tracing (moderate)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux%E4%B8%8B%E7%9A%84syscall"><span class="nav-number">3.</span> <span class="nav-text">Linux下的syscall</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%93%BE%E6%8E%A5"><span class="nav-number">4.</span> <span class="nav-text">链接</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -171,7 +171,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">54</span>
+          <span class="site-state-item-count">53</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -182,7 +182,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">91</span>
+        <span class="site-state-item-count">89</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -317,11 +317,46 @@
 <h2 id="关于syscall"><a href="#关于syscall" class="headerlink" title="关于syscall"></a>关于syscall</h2><p>syscall一般很少直接用，用c语言写东西的时候大部分都是通过wrapper函数间接调用syscall。其他语言里用到系统调用的就更少了，我就只在某次用golang的网络库实现traceroute的时候调用过一次。</p>
 <p>之前对syscall的印象是x86下<code>int 80</code>中断，从用户空间切到内核空间。常用的比如read, write, open, close啊，以及mmap等等。</p>
 <p>6.S081改用risc-v, 不太一样。<br>risc-v中有三种模式：<br>User-mode，用户模式。普通应用会在这个模式下运行。<br>Supervisor-mode， 特权模式。<br>Machine-mode，机器模式，需要的权限比supervisor模式还要高。一些嵌入式几乎整个都运行在这种模式下，完整的操作系统就只有bootloader等是在M模式下，大部分任务都在U和S模式下。<br>关于risc-v的特权模式可以参考手册：The RISC-V Instruction Set Manual<br>Volume II: Privileged Architecture</p>
-<p>进入syscall是通过ecall（环境调用）指令，大部分都是从u模式进入s模式，结束后使用<code>sret</code>指令返回。</p>
+<p>进入syscall是通过ecall（环境调用）指令，从u模式进入s模式，结束后使用<code>sret</code>指令返回。</p>
 <p>还有就是讲义中将异常（exception）和中断（interrupt）都算做陷阱（trap），一开始看讲义的时候一直以为这是三个不同的东西。后来发现涉及到supervisor和machine模式的都算做trap。</p>
 <h2 id="Lab2"><a href="#Lab2" class="headerlink" title="Lab2"></a>Lab2</h2><p>Lab2就两个，简单熟悉一下系统调用，不难。</p>
 <h3 id="System-call-tracing-moderate"><a href="#System-call-tracing-moderate" class="headerlink" title="System call tracing (moderate)"></a>System call tracing (moderate)</h3><p>这个不是很难，不过要改的东西很多，按照提示一点一点做就行了。</p>
-<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><span class="exturl" data-url="aHR0cHM6Ly9tYW43Lm9yZy9saW51eC9tYW4tcGFnZXMvbWFuMi9zeXNjYWxscy4yLmh0bWw=">https://man7.org/linux/man-pages/man2/syscalls.2.html<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9maWxpcHBvLmlvL2xpbnV4LXN5c2NhbGwtdGFibGUv">https://filippo.io/linux-syscall-table/<i class="fa fa-external-link-alt"></i></span>  </p>
+<h2 id="Linux下的syscall"><a href="#Linux下的syscall" class="headerlink" title="Linux下的syscall"></a>Linux下的syscall</h2><p>这里说一下linux中系统调用相关的东西，6.S081的课和Lab没怎么提到，但是这一部分写业务用到的比较多。linux下的syscall一般直接用glibc提供的，现在一般x86下也不用<code>int 0x80</code>了。由于syscall的调用消耗很高，所以有vsyscall和vDSO等技术。</p>
+<p>以date命令为例，我们用strace看一下系统调用，可以看到clock_gettime调用花了0.000006s</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token variable">$strace</span> -cT
+strace: -T/--syscall-times has no effect with -c/--summary-only
+Tue Mar <span class="token number">22</span> 07:16:09 PM CST <span class="token number">2022</span>
+% <span class="token function">time</span>     seconds  usecs/call     calls    errors syscall
+------ ----------- ----------- --------- --------- ----------------
+ <span class="token number">22.18</span>    <span class="token number">0.000057</span>           <span class="token number">6</span>         <span class="token number">9</span>           mmap
+ <span class="token number">12.45</span>    <span class="token number">0.000032</span>           <span class="token number">5</span>         <span class="token number">6</span>           close
+ <span class="token number">12.45</span>    <span class="token number">0.000032</span>           <span class="token number">5</span>         <span class="token number">6</span>           newfstatat
+ <span class="token number">11.67</span>    <span class="token number">0.000030</span>           <span class="token number">7</span>         <span class="token number">4</span>           mprotect
+  <span class="token number">7.00</span>    <span class="token number">0.000018</span>           <span class="token number">4</span>         <span class="token number">4</span>           openat
+  <span class="token number">4.28</span>    <span class="token number">0.000011</span>           <span class="token number">3</span>         <span class="token number">3</span>           <span class="token builtin class-name">read</span>
+  <span class="token number">4.28</span>    <span class="token number">0.000011</span>          <span class="token number">11</span>         <span class="token number">1</span>           munmap
+  <span class="token number">4.28</span>    <span class="token number">0.000011</span>           <span class="token number">3</span>         <span class="token number">3</span>           brk
+  <span class="token number">2.72</span>    <span class="token number">0.000007</span>           <span class="token number">7</span>         <span class="token number">1</span>           <span class="token function">write</span>
+  <span class="token number">2.33</span>    <span class="token number">0.000006</span>           <span class="token number">1</span>         <span class="token number">4</span>           pread64
+  <span class="token number">2.33</span>    <span class="token number">0.000006</span>           <span class="token number">6</span>         <span class="token number">1</span>           clock_gettime
+  <span class="token number">2.33</span>    <span class="token number">0.000006</span>           <span class="token number">6</span>         <span class="token number">1</span>           getrandom
+  <span class="token number">1.95</span>    <span class="token number">0.000005</span>           <span class="token number">5</span>         <span class="token number">1</span>           lseek
+  <span class="token number">1.95</span>    <span class="token number">0.000005</span>           <span class="token number">2</span>         <span class="token number">2</span>         <span class="token number">1</span> arch_prctl
+  <span class="token number">1.95</span>    <span class="token number">0.000005</span>           <span class="token number">5</span>         <span class="token number">1</span>           set_tid_address
+  <span class="token number">1.95</span>    <span class="token number">0.000005</span>           <span class="token number">5</span>         <span class="token number">1</span>           set_robust_list
+  <span class="token number">1.95</span>    <span class="token number">0.000005</span>           <span class="token number">5</span>         <span class="token number">1</span>           prlimit64
+  <span class="token number">1.95</span>    <span class="token number">0.000005</span>           <span class="token number">5</span>         <span class="token number">1</span>           rseq
+  <span class="token number">0.00</span>    <span class="token number">0.000000</span>           <span class="token number">0</span>         <span class="token number">1</span>         <span class="token number">1</span> access
+  <span class="token number">0.00</span>    <span class="token number">0.000000</span>           <span class="token number">0</span>         <span class="token number">1</span>           execve
+------ ----------- ----------- --------- --------- ----------------
+<span class="token number">100.00</span>    <span class="token number">0.000257</span>           <span class="token number">4</span>        <span class="token number">52</span>         <span class="token number">2</span> total<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>vsyscall是将频繁使用的syscall从kernelsapce映射到userspace的页，这样就不需要切换usersapce和kernelspace了。这样对<code>gettimeofday</code>这样的对时间很敏感的系统调用好处很大。但是vsyscall将kernelspace一段固定的地址映射到userspace，存在安全问题。现在已经不常用vsyscall了，基本都改用vDSO了。</p>
+<p>vDSO（virtual dynamic shared object）是一个虚拟的动态库(linux-vdso.so.1)，同样运行在userspace，这样就不需要软中断了。vDSO一个好处是利用ASLR（address space layout randomization）减少了vsyscall的安全问题。现在linux发行版一般都开了地址随机化（可以看<code>/proc/sys/kernel/randomize_va_space</code>），调试内核的时候我建议临时把这个关掉。另一个好处是把不同平台的syscall封装了，给了一套统一的ABI，动态链接库的ABI从kernel的libc独立出去了。</p>
+<p>另一个加快系统调用的技术是快速系统调用（fast system call），这个是x86的一些  指令，直接切换特权，也不需要中断。 </p>
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><span class="exturl" data-url="aHR0cHM6Ly9tYW43Lm9yZy9saW51eC9tYW4tcGFnZXMvbWFuMi9zeXNjYWxscy4yLmh0bWw=">https://man7.org/linux/man-pages/man2/syscalls.2.html<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9maWxpcHBvLmlvL2xpbnV4LXN5c2NhbGwtdGFibGUv">https://filippo.io/linux-syscall-table/<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9sd24ubmV0L0FydGljbGVzLzYwNDI4Ny8=">Anatomy of a system call, part 1<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9sd24ubmV0L0FydGljbGVzLzYwNDUxNS8=">Anatomy of a system call, part 2<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9sd24ubmV0L0FydGljbGVzLzQ0NjUyOC8=">On vsyscalls and the vDSO<i class="fa fa-external-link-alt"></i></span> 这个文章有点老，不感兴趣不用看<br><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnBhY2thZ2VjbG91ZC5pby90aGUtZGVmaW5pdGl2ZS1ndWlkZS10by1saW51eC1zeXN0ZW0tY2FsbHMv">The Definitive Guide to Linux System Calls<i class="fa fa-external-link-alt"></i></span> 相当详细的一片文章，强烈推荐<br><span class="exturl" data-url="aHR0cHM6Ly9hcnRodXJjaGlhby5hcnQvYmxvZy9zeXN0ZW0tY2FsbC1kZWZpbml0aXZlLWd1aWRlLXpoLyMxLSVFNyVCMyVCQiVFNyVCQiU5RiVFOCVCMCU4MyVFNyU5NCVBOCVFNiU5OCVBRiVFNCVCQiU4MCVFNCVCOSU4OA==">[译] Linux 系统调用权威指南（2016）<i class="fa fa-external-link-alt"></i></span> 上面那篇的中文翻译  </p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL01pbnRDTi9saW51eC1pbnNpZGVzLXpo">linux-insides-zh<i class="fa fa-external-link-alt"></i></span> 中文翻译<br><span class="exturl" data-url="aHR0cHM6Ly92dmwubWUvMjAxOS8wNi9saW51eC1zeXNjYWxsLWFuZC12c3lzY2FsbC12ZHNvLWluLXg4Ni8=">x86 架构下 Linux 的系统调用与 vsyscall, vDSO<i class="fa fa-external-link-alt"></i></span>  </p>
 
     </div>
 
@@ -332,7 +367,7 @@
     <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/6-S081/" rel="tag"><i class="fa fa-tag"></i> 6.S081</a>
-              <a href="/tags/syscalls/" rel="tag"><i class="fa fa-tag"></i> syscalls</a>
+              <a href="/tags/syscall/" rel="tag"><i class="fa fa-tag"></i> syscall</a>
           </div>
 
         

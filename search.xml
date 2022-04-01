@@ -258,8 +258,8 @@ mucounteren    Could not fetch register &quot;mucounteren&quot;; remote failure 
         <category>Linux&amp;Unix</category>
       </categories>
       <tags>
-        <tag>debug</tag>
         <tag>6.S081</tag>
+        <tag>debug</tag>
         <tag>VSCode</tag>
       </tags>
   </entry>
@@ -343,30 +343,53 @@ mucounteren    Could not fetch register &quot;mucounteren&quot;; remote failure 
 <h2 id="关于syscall"><a href="#关于syscall" class="headerlink" title="关于syscall"></a>关于syscall</h2><p>syscall一般很少直接用，用c语言写东西的时候大部分都是通过wrapper函数间接调用syscall。其他语言里用到系统调用的就更少了，我就只在某次用golang的网络库实现traceroute的时候调用过一次。</p>
 <p>之前对syscall的印象是x86下<code>int 80</code>中断，从用户空间切到内核空间。常用的比如read, write, open, close啊，以及mmap等等。</p>
 <p>6.S081改用risc-v, 不太一样。<br>risc-v中有三种模式：<br>User-mode，用户模式。普通应用会在这个模式下运行。<br>Supervisor-mode， 特权模式。<br>Machine-mode，机器模式，需要的权限比supervisor模式还要高。一些嵌入式几乎整个都运行在这种模式下，完整的操作系统就只有bootloader等是在M模式下，大部分任务都在U和S模式下。<br>关于risc-v的特权模式可以参考手册：The RISC-V Instruction Set Manual<br>Volume II: Privileged Architecture</p>
-<p>进入syscall是通过ecall（环境调用）指令，大部分都是从u模式进入s模式，结束后使用<code>sret</code>指令返回。</p>
+<p>进入syscall是通过ecall（环境调用）指令，从u模式进入s模式，结束后使用<code>sret</code>指令返回。</p>
 <p>还有就是讲义中将异常（exception）和中断（interrupt）都算做陷阱（trap），一开始看讲义的时候一直以为这是三个不同的东西。后来发现涉及到supervisor和machine模式的都算做trap。</p>
 <h2 id="Lab2"><a href="#Lab2" class="headerlink" title="Lab2"></a>Lab2</h2><p>Lab2就两个，简单熟悉一下系统调用，不难。</p>
 <h3 id="System-call-tracing-moderate"><a href="#System-call-tracing-moderate" class="headerlink" title="System call tracing (moderate)"></a>System call tracing (moderate)</h3><p>这个不是很难，不过要改的东西很多，按照提示一点一点做就行了。</p>
-<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><span class="exturl" data-url="aHR0cHM6Ly9tYW43Lm9yZy9saW51eC9tYW4tcGFnZXMvbWFuMi9zeXNjYWxscy4yLmh0bWw=">https://man7.org/linux/man-pages/man2/syscalls.2.html<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9maWxpcHBvLmlvL2xpbnV4LXN5c2NhbGwtdGFibGUv">https://filippo.io/linux-syscall-table/<i class="fa fa-external-link-alt"></i></span>  </p>
+<h2 id="Linux下的syscall"><a href="#Linux下的syscall" class="headerlink" title="Linux下的syscall"></a>Linux下的syscall</h2><p>这里说一下linux中系统调用相关的东西，6.S081的课和Lab没怎么提到，但是这一部分写业务用到的比较多。linux下的syscall一般直接用glibc提供的，现在一般x86下也不用<code>int 0x80</code>了。由于syscall的调用消耗很高，所以有vsyscall和vDSO等技术。</p>
+<p>以date命令为例，我们用strace看一下系统调用，可以看到clock_gettime调用花了0.000006s</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token variable">$strace</span> -cT
+strace: -T/--syscall-times has no effect with -c/--summary-only
+Tue Mar <span class="token number">22</span> 07:16:09 PM CST <span class="token number">2022</span>
+% <span class="token function">time</span>     seconds  usecs/call     calls    errors syscall
+------ ----------- ----------- --------- --------- ----------------
+ <span class="token number">22.18</span>    <span class="token number">0.000057</span>           <span class="token number">6</span>         <span class="token number">9</span>           mmap
+ <span class="token number">12.45</span>    <span class="token number">0.000032</span>           <span class="token number">5</span>         <span class="token number">6</span>           close
+ <span class="token number">12.45</span>    <span class="token number">0.000032</span>           <span class="token number">5</span>         <span class="token number">6</span>           newfstatat
+ <span class="token number">11.67</span>    <span class="token number">0.000030</span>           <span class="token number">7</span>         <span class="token number">4</span>           mprotect
+  <span class="token number">7.00</span>    <span class="token number">0.000018</span>           <span class="token number">4</span>         <span class="token number">4</span>           openat
+  <span class="token number">4.28</span>    <span class="token number">0.000011</span>           <span class="token number">3</span>         <span class="token number">3</span>           <span class="token builtin class-name">read</span>
+  <span class="token number">4.28</span>    <span class="token number">0.000011</span>          <span class="token number">11</span>         <span class="token number">1</span>           munmap
+  <span class="token number">4.28</span>    <span class="token number">0.000011</span>           <span class="token number">3</span>         <span class="token number">3</span>           brk
+  <span class="token number">2.72</span>    <span class="token number">0.000007</span>           <span class="token number">7</span>         <span class="token number">1</span>           <span class="token function">write</span>
+  <span class="token number">2.33</span>    <span class="token number">0.000006</span>           <span class="token number">1</span>         <span class="token number">4</span>           pread64
+  <span class="token number">2.33</span>    <span class="token number">0.000006</span>           <span class="token number">6</span>         <span class="token number">1</span>           clock_gettime
+  <span class="token number">2.33</span>    <span class="token number">0.000006</span>           <span class="token number">6</span>         <span class="token number">1</span>           getrandom
+  <span class="token number">1.95</span>    <span class="token number">0.000005</span>           <span class="token number">5</span>         <span class="token number">1</span>           lseek
+  <span class="token number">1.95</span>    <span class="token number">0.000005</span>           <span class="token number">2</span>         <span class="token number">2</span>         <span class="token number">1</span> arch_prctl
+  <span class="token number">1.95</span>    <span class="token number">0.000005</span>           <span class="token number">5</span>         <span class="token number">1</span>           set_tid_address
+  <span class="token number">1.95</span>    <span class="token number">0.000005</span>           <span class="token number">5</span>         <span class="token number">1</span>           set_robust_list
+  <span class="token number">1.95</span>    <span class="token number">0.000005</span>           <span class="token number">5</span>         <span class="token number">1</span>           prlimit64
+  <span class="token number">1.95</span>    <span class="token number">0.000005</span>           <span class="token number">5</span>         <span class="token number">1</span>           rseq
+  <span class="token number">0.00</span>    <span class="token number">0.000000</span>           <span class="token number">0</span>         <span class="token number">1</span>         <span class="token number">1</span> access
+  <span class="token number">0.00</span>    <span class="token number">0.000000</span>           <span class="token number">0</span>         <span class="token number">1</span>           execve
+------ ----------- ----------- --------- --------- ----------------
+<span class="token number">100.00</span>    <span class="token number">0.000257</span>           <span class="token number">4</span>        <span class="token number">52</span>         <span class="token number">2</span> total<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>vsyscall是将频繁使用的syscall从kernelsapce映射到userspace的页，这样就不需要切换usersapce和kernelspace了。这样对<code>gettimeofday</code>这样的对时间很敏感的系统调用好处很大。但是vsyscall将kernelspace一段固定的地址映射到userspace，存在安全问题。现在已经不常用vsyscall了，基本都改用vDSO了。</p>
+<p>vDSO（virtual dynamic shared object）是一个虚拟的动态库(linux-vdso.so.1)，同样运行在userspace，这样就不需要软中断了。vDSO一个好处是利用ASLR（address space layout randomization）减少了vsyscall的安全问题。现在linux发行版一般都开了地址随机化（可以看<code>/proc/sys/kernel/randomize_va_space</code>），调试内核的时候我建议临时把这个关掉。另一个好处是把不同平台的syscall封装了，给了一套统一的ABI，动态链接库的ABI从kernel的libc独立出去了。</p>
+<p>另一个加快系统调用的技术是快速系统调用（fast system call），这个是x86的一些  指令，直接切换特权，也不需要中断。 </p>
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><span class="exturl" data-url="aHR0cHM6Ly9tYW43Lm9yZy9saW51eC9tYW4tcGFnZXMvbWFuMi9zeXNjYWxscy4yLmh0bWw=">https://man7.org/linux/man-pages/man2/syscalls.2.html<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9maWxpcHBvLmlvL2xpbnV4LXN5c2NhbGwtdGFibGUv">https://filippo.io/linux-syscall-table/<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9sd24ubmV0L0FydGljbGVzLzYwNDI4Ny8=">Anatomy of a system call, part 1<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9sd24ubmV0L0FydGljbGVzLzYwNDUxNS8=">Anatomy of a system call, part 2<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9sd24ubmV0L0FydGljbGVzLzQ0NjUyOC8=">On vsyscalls and the vDSO<i class="fa fa-external-link-alt"></i></span> 这个文章有点老，不感兴趣不用看<br><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnBhY2thZ2VjbG91ZC5pby90aGUtZGVmaW5pdGl2ZS1ndWlkZS10by1saW51eC1zeXN0ZW0tY2FsbHMv">The Definitive Guide to Linux System Calls<i class="fa fa-external-link-alt"></i></span> 相当详细的一片文章，强烈推荐<br><span class="exturl" data-url="aHR0cHM6Ly9hcnRodXJjaGlhby5hcnQvYmxvZy9zeXN0ZW0tY2FsbC1kZWZpbml0aXZlLWd1aWRlLXpoLyMxLSVFNyVCMyVCQiVFNyVCQiU5RiVFOCVCMCU4MyVFNyU5NCVBOCVFNiU5OCVBRiVFNCVCQiU4MCVFNCVCOSU4OA==">[译] Linux 系统调用权威指南（2016）<i class="fa fa-external-link-alt"></i></span> 上面那篇的中文翻译  </p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL01pbnRDTi9saW51eC1pbnNpZGVzLXpo">linux-insides-zh<i class="fa fa-external-link-alt"></i></span> 中文翻译<br><span class="exturl" data-url="aHR0cHM6Ly92dmwubWUvMjAxOS8wNi9saW51eC1zeXNjYWxsLWFuZC12c3lzY2FsbC12ZHNvLWluLXg4Ni8=">x86 架构下 Linux 的系统调用与 vsyscall, vDSO<i class="fa fa-external-link-alt"></i></span>  </p>
 ]]></content>
       <categories>
         <category>Linux&amp;Unix</category>
       </categories>
       <tags>
         <tag>6.S081</tag>
-        <tag>syscalls</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>6.S081 Lab Trap 笔记</title>
-    <url>/6.S081-lab-trap/</url>
-    <content><![CDATA[<p>这个Lab跟其他的比起来挺简单的，简单说一下吧。顺便讲一下中断之类的东西。</p>
-<span id="more"></span>
-
-<h2 id="RISC-V-assembly-easy"><a href="#RISC-V-assembly-easy" class="headerlink" title="RISC-V assembly (easy)"></a>RISC-V assembly (easy)</h2><h2 id="Backtrace-moderate"><a href="#Backtrace-moderate" class="headerlink" title="Backtrace (moderate)"></a>Backtrace (moderate)</h2><h2 id="Alarm-hard"><a href="#Alarm-hard" class="headerlink" title="Alarm (hard)"></a>Alarm (hard)</h2>]]></content>
-      <tags>
-        <tag>6.S081</tag>
-        <tag>trap</tag>
+        <tag>syscall</tag>
       </tags>
   </entry>
   <entry>
@@ -2926,9 +2949,9 @@ p <span class="token operator">=</span> x
         <category>Linux&amp;Unix</category>
       </categories>
       <tags>
+        <tag>6.S081</tag>
         <tag>Linux</tag>
         <tag>debug</tag>
-        <tag>6.S081</tag>
         <tag>kernel</tag>
       </tags>
   </entry>
@@ -3407,8 +3430,34 @@ factorial <span class="token operator">=</span> <span class="token builtin">list
 <p>rpc.go 里面已经给了一个例子，我们仿照着写就可以了（其实本来我是想直接用grpc来着）。注意PRC的struct要大写。</p>
 <p>worker很容易，向master发送RPC请求然后接任务并返回就可以了。将Map任务分配到对应的worker中可以直接使用给好的<code>ihash</code>函数</p>
 <p>master要产生并分配map任务和reduce任务，然后接收的时候判断一下是否可以合并。这里一个比较麻烦的地方是处理worker超时、停机等情况。不过这里提示我们用一个简单的方法：For this lab, have the master wait for ten seconds; after that the master should assume the worker has died (of course, it might not have). 不区分超时和宕机，直接等待10s，10s后如果没收到就直接不要这个worker的任务了。</p>
-<h3 id="race问题"><a href="#race问题" class="headerlink" title="race问题"></a>race问题</h3><p>我去年做的时候是给channel加Mutex锁来保证这个问题</p>
-<h2 id="一些问题"><a href="#一些问题" class="headerlink" title="一些问题"></a>一些问题</h2><h3 id="写入的原子性"><a href="#写入的原子性" class="headerlink" title="写入的原子性"></a>写入的原子性</h3><p>Lab的提示告诉你，写入新建一个副本，然后应用更改的时候重命名</p>
+<h3 id="race问题"><a href="#race问题" class="headerlink" title="race问题"></a>race问题</h3><p>我去年做的时候是给channel加Mutex锁来保证没有race。go的风格是尽量用channel避免加锁，我试着全用channel但是更乱了，可能是我的操作不对，最后还是用了锁。</p>
+<h3 id="reduce需要在每个map全部完成后再开始"><a href="#reduce需要在每个map全部完成后再开始" class="headerlink" title="reduce需要在每个map全部完成后再开始"></a>reduce需要在每个map全部完成后再开始</h3><p>Map任务和Reduce任务是不能并行的，Reduce需要等待所有Map任务完成之后才能开始。</p>
+<p>之前做的时候是傻呼呼的让reduce任务的节点发rpc给master，然后等到map完成数为M了才开始。这次翻了翻Lab的Hints，原来可以用<code>sync.Cond</code> (条件变量)，大概像下面这样</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">// w.cond = sync.NewCond(w)</span>
+
+<span class="token comment">// master</span>
+<span class="token keyword">func</span> <span class="token punctuation">(</span>w <span class="token operator">*</span>Worker<span class="token punctuation">)</span> BeginReduceWork <span class="token punctuation">&#123;</span>
+    w<span class="token punctuation">.</span>cond<span class="token punctuation">.</span>L<span class="token punctuation">.</span><span class="token function">Lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> <span class="token punctuation">&#123;</span>
+        all_map_task_finish <span class="token boolean">true</span>
+    <span class="token punctuation">&#125;</span>
+    w<span class="token punctuation">.</span>cond<span class="token punctuation">.</span>L<span class="token punctuation">.</span><span class="token function">Unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    w<span class="token punctuation">.</span>cond<span class="token punctuation">.</span><span class="token function">Broadcast</span><span class="token punctuation">(</span><span class="token punctuation">)</span>   <span class="token comment">//广播，开始每一个Reduce任务</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">//worker</span>
+<span class="token keyword">func</span> <span class="token punctuation">(</span>w <span class="token operator">*</span>Worker<span class="token punctuation">)</span> doReduce <span class="token punctuation">&#123;</span>
+    w<span class="token punctuation">.</span>cond<span class="token punctuation">.</span>L<span class="token punctuation">.</span><span class="token function">Lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">for</span> <span class="token operator">!</span>all_map_task_finish <span class="token punctuation">&#123;</span>
+        w<span class="token punctuation">.</span>cond<span class="token punctuation">.</span><span class="token function">Wait</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token comment">// start Reduce Task</span>
+    w<span class="token punctuation">.</span><span class="token function">startReduce</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    w<span class="token punctuation">.</span>cond<span class="token punctuation">.</span>L<span class="token punctuation">.</span><span class="token function">Unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><code>sync.Cond</code>这个讨论串挺有意思的<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2dvbGFuZy9nby9pc3N1ZXMvMjExNjU=">proposal: Go 2: sync: remove the Cond type<i class="fa fa-external-link-alt"></i></span>。</p>
+<h3 id="写入的原子性"><a href="#写入的原子性" class="headerlink" title="写入的原子性"></a>写入的原子性</h3><p>Lab的提示告诉你，写入新建一个副本，然后应用更改的时候重命名</p>
 <blockquote>
 <p>To ensure that nobody observes partially written files in the presence of crashes, the MapReduce paper mentions the trick of using a temporary file and atomically renaming it once it is completely written. You can use ioutil.TempFile to create a temporary file and os.Rename to atomically rename it.</p>
 </blockquote>
@@ -3446,6 +3495,89 @@ factorial <span class="token operator">=</span> <span class="token builtin">list
       <tags>
         <tag>6.824</tag>
         <tag>MapReduce</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>基于BERT的电子病历的命名实体识别</title>
+    <url>/9112/</url>
+    <content><![CDATA[<p>BERT效果确实好，就是有点吃内存</p>
+<span id="more"></span>
+
+<h2 id="序列标注"><a href="#序列标注" class="headerlink" title="序列标注"></a>序列标注</h2><p>一些医院的电子病历拆分的很细，比如主诉这一个大项里面部位、症状、时间、状态都是分开的；另一些医院的电子病历就跟纯文本差不多，要把大段文字中的主要结构提出来需要自然语言处理或者人工录入。一般做自然语言处理的时候都是几个部分分开做的，因为不同部分差异比较大，分开训练识别效果好。大部分电子病历包括入院记录、首次病程记录、病程记录、出院记录、手术记录、护理记录、病案首页，这里面又分为一些检查项、时间、主诉、既往史之类的小项。不少电子病历系统导出都是XML的，一般都是把电子病历拆成主诉那种一个个不能再拆的纯文本部分，比如主诉，见<a href="https://zhangjk98.xyz/81d4/">上一篇</a>，然后再对不能拆分的纯文本用人工或自然语言处理进一步拆分。这就是所谓的电子病历结构化。</p>
+<p>比如一段主诉：</p>
+<blockquote>
+<p>反复胸痛伴胸闷1+年，加重20+天。</p>
+</blockquote>
+<p>按照规范一定的规范可分为几个不同的小块，比如下面这十一种：</p>
+<blockquote>
+<p>部位、症状、持续时间、伴随部位、伴随症状、伴随时间、状 态、病因/其他、观察项目、观察结果、既往史</p>
+</blockquote>
+<p>胸是部位、痛是症状、1+年是持续时间、反复是状态……</p>
+<p>标注出来的结果可以保存为json格式，labels里面的list分别为起始位置、结束位置、标签</p>
+<pre class="line-numbers language-none"><code class="language-none">
+&#123;&quot;text&quot;: &quot;反复胸痛伴胸闷1+年，加重20+天。&quot;, &quot;labels&quot;: [[0, 2, &quot;状态&quot;], [2, 3, &quot;部位&quot;], [3, 4, &quot;症状&quot;], [5, 7, &quot;伴随症状&quot;], [7, 10, &quot;伴随时间&quot;], [11, 17, &quot;持续时间&quot;]]&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>BIO格式，大概是这个样子：B，begin标签开始；I，inside包含在标签内，O，outside在标签外</p>
+<pre class="line-numbers language-none"><code class="language-none">
+反 B-状态
+复 I-状态
+胸 B-部位
+痛 B-症状
+伴 O
+胸 B-伴随症状
+闷 I-伴随症状
+1 B-伴随时间
++ I-伴随时间
+年 I-伴随时间
+， O
+加 B-持续时间
+重 I-持续时间
+2 I-持续时间
+0 I-持续时间
++ I-持续时间
+天 I-持续时间
+。 O<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>BERT的接口是BIO格式，标注工具doccano，这里写两个互相转换的脚本就行了，标注完成后将json转为BIO，训练和预测完成后将BIO预测结果转为JSON</p>
+<h2 id="训练模型"><a href="#训练模型" class="headerlink" title="训练模型"></a>训练模型</h2><p>NLP里面的命名实体识别很早就用在电子病历上，早期的机器学习方法效果一般，后来开始用RNN和CNN，后来用LSTM，再后来用BERT，效果一直在提升，BERT基本上到顶了（好一点的训练数据BERT基本能达到90%以上，对于主诉这样的较短的简单条目甚至能达到98%以上）</p>
+<h2 id="其他杂项"><a href="#其他杂项" class="headerlink" title="其他杂项"></a>其他杂项</h2><h3 id="doccano的部署和使用"><a href="#doccano的部署和使用" class="headerlink" title="doccano的部署和使用"></a>doccano的部署和使用</h3><h4 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h4><h5 id="Docker方式"><a href="#Docker方式" class="headerlink" title="Docker方式"></a>Docker方式</h5><h6 id="构建和部署"><a href="#构建和部署" class="headerlink" title="构建和部署"></a>构建和部署</h6><p>运行以下命令</p>
+<pre class="line-numbers language-none"><code class="language-none">
+$ docker pull chakkiworks&#x2F;doccano # 拉取官方镜像
+$ docker run -d --name doccano -p 80:8000 chakkiworks&#x2F;doccano # 运行镜像，请按需修改端口
+$ docker exec doccano tools&#x2F;create-admin.sh &quot;admin&quot; &quot;[email protected]&quot; &quot;password&quot; # 创建用户并指定密码<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>注意  Docker镜像run之后会产生三个容器，doccona_nginx、doccona_backend、docker_frontend,其中docker_frontend在构建完成后会直接exit，这是一个feature，不是bug，它的主要作用是webpack打包</p>
+<p><img src="/9112/image-20200109220759931.png" alt="img"></p>
+</blockquote>
+<h4 id="访问Docker中的PostgreSQL数据库中的数据"><a href="#访问Docker中的PostgreSQL数据库中的数据" class="headerlink" title="访问Docker中的PostgreSQL数据库中的数据"></a>访问Docker中的PostgreSQL数据库中的数据</h4><p>由于数据库安全问题，数据库分离再一个单独的容器中并且 首先执行<code>Docker exec</code>命令进入相应的PostgreSQL数据库容器</p>
+<p>应该看到下图这样，终端从宿主机切换进容器</p>
+<p><img src="/9112/image-20200109220232851.png" alt="img"></p>
+<p>在容器的shell中用命令进入数据库</p>
+<pre class="line-numbers language-none"><code class="language-none">
+$ psql -h 127.0.0.1 -d doccano -U doccano -p 5432 # 注意你的host，数据库名、用户名和端口<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>应该看到下图这样，终端从Docker容器切进数据库</p>
+<p><img src="/9112/image-20200109220100751.png" alt="img"></p>
+<p>然后执行<code>\l</code>等命令进入和查看数据库（执行SQL）</p>
+<h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><p>后台管理入口是这个<span class="exturl" data-url="aHR0cDovL3lvdXJzaXRlL2FkbWluLyVFRiVCQyU4QyVFNSVCMCVCMSVFNiU5OCVBRiVFNCVCOCU4MCVFNCVCOCVBQURqYW5nbyVFOCU4NyVBQSVFNSVCOCVBNiVFNyU5QSU4NCVFNSU5MCU4RSVFNSU4RiVCMCVFNyVBRSVBMSVFNyU5MCU4Ng==">http://yoursite/admin/，就是一个Django自带的后台管理<i class="fa fa-external-link-alt"></i></span></p>
+<p><img src="/9112/image-20200411204841203-1586654887394.png" alt="img"></p>
+<p><img src="/9112/image-20200411205005107-1586654884937.png" alt="img"></p>
+<p><img src="/9112/image-20200411205102588-1586654882966.png" alt="img"></p>
+<p>登录进去后可自行添加账号和项目并设置权限和标签，标注项目选择sequential labeing即可，导出时选择JSONL格式</p>
+<p>这个数据比较多的时候没有自动跳转比较麻烦，请直接在浏览器地址栏使用url跳转</p>
+<p>比如，修改浏览器后面的url，#后面的offset改为685，直接回车，就可以从当前的689跳转到第685个数据</p>
+<p><span class="exturl" data-url="aHR0cDovL3lvdXJzaXRlL3Byb2plY3RzLzYvI29mZnNldD02ODU=">http://yoursite/projects/6/#offset=685<i class="fa fa-external-link-alt"></i></span></p>
+<p><img src="/9112/image-20200307213544539.png" alt="img"></p>
+<h2 id="注"><a href="#注" class="headerlink" title="注"></a>注</h2><p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2RvY2Nhbm8vZG9jY2Fubw==">https://github.com/doccano/doccano<i class="fa fa-external-link-alt"></i></span> 一个开源的标注工具</p>
+<p> <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21hY2Fudi9CRVJULUJpTFNUTS1DUkYtTkVS">https://github.com/macanv/BERT-BiLSTM-CRF-NER<i class="fa fa-external-link-alt"></i></span> 一个BERT的NER工具包</p>
+]]></content>
+      <categories>
+        <category>102网吧日常</category>
+      </categories>
+      <tags>
+        <tag>bert</tag>
+        <tag>NER</tag>
       </tags>
   </entry>
   <entry>
@@ -4096,89 +4228,6 @@ fpr_xgb<span class="token punctuation">,</span>tpr_xgb<span class="token punctua
       </categories>
       <tags>
         <tag>MIMIC</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>基于BERT的电子病历的命名实体识别</title>
-    <url>/9112/</url>
-    <content><![CDATA[<p>BERT效果确实好，就是有点吃内存</p>
-<span id="more"></span>
-
-<h2 id="序列标注"><a href="#序列标注" class="headerlink" title="序列标注"></a>序列标注</h2><p>一些医院的电子病历拆分的很细，比如主诉这一个大项里面部位、症状、时间、状态都是分开的；另一些医院的电子病历就跟纯文本差不多，要把大段文字中的主要结构提出来需要自然语言处理或者人工录入。一般做自然语言处理的时候都是几个部分分开做的，因为不同部分差异比较大，分开训练识别效果好。大部分电子病历包括入院记录、首次病程记录、病程记录、出院记录、手术记录、护理记录、病案首页，这里面又分为一些检查项、时间、主诉、既往史之类的小项。不少电子病历系统导出都是XML的，一般都是把电子病历拆成主诉那种一个个不能再拆的纯文本部分，比如主诉，见<a href="https://zhangjk98.xyz/81d4/">上一篇</a>，然后再对不能拆分的纯文本用人工或自然语言处理进一步拆分。这就是所谓的电子病历结构化。</p>
-<p>比如一段主诉：</p>
-<blockquote>
-<p>反复胸痛伴胸闷1+年，加重20+天。</p>
-</blockquote>
-<p>按照规范一定的规范可分为几个不同的小块，比如下面这十一种：</p>
-<blockquote>
-<p>部位、症状、持续时间、伴随部位、伴随症状、伴随时间、状 态、病因/其他、观察项目、观察结果、既往史</p>
-</blockquote>
-<p>胸是部位、痛是症状、1+年是持续时间、反复是状态……</p>
-<p>标注出来的结果可以保存为json格式，labels里面的list分别为起始位置、结束位置、标签</p>
-<pre class="line-numbers language-none"><code class="language-none">
-&#123;&quot;text&quot;: &quot;反复胸痛伴胸闷1+年，加重20+天。&quot;, &quot;labels&quot;: [[0, 2, &quot;状态&quot;], [2, 3, &quot;部位&quot;], [3, 4, &quot;症状&quot;], [5, 7, &quot;伴随症状&quot;], [7, 10, &quot;伴随时间&quot;], [11, 17, &quot;持续时间&quot;]]&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p>BIO格式，大概是这个样子：B，begin标签开始；I，inside包含在标签内，O，outside在标签外</p>
-<pre class="line-numbers language-none"><code class="language-none">
-反 B-状态
-复 I-状态
-胸 B-部位
-痛 B-症状
-伴 O
-胸 B-伴随症状
-闷 I-伴随症状
-1 B-伴随时间
-+ I-伴随时间
-年 I-伴随时间
-， O
-加 B-持续时间
-重 I-持续时间
-2 I-持续时间
-0 I-持续时间
-+ I-持续时间
-天 I-持续时间
-。 O<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>BERT的接口是BIO格式，标注工具doccano，这里写两个互相转换的脚本就行了，标注完成后将json转为BIO，训练和预测完成后将BIO预测结果转为JSON</p>
-<h2 id="训练模型"><a href="#训练模型" class="headerlink" title="训练模型"></a>训练模型</h2><p>NLP里面的命名实体识别很早就用在电子病历上，早期的机器学习方法效果一般，后来开始用RNN和CNN，后来用LSTM，再后来用BERT，效果一直在提升，BERT基本上到顶了（好一点的训练数据BERT基本能达到90%以上，对于主诉这样的较短的简单条目甚至能达到98%以上）</p>
-<h2 id="其他杂项"><a href="#其他杂项" class="headerlink" title="其他杂项"></a>其他杂项</h2><h3 id="doccano的部署和使用"><a href="#doccano的部署和使用" class="headerlink" title="doccano的部署和使用"></a>doccano的部署和使用</h3><h4 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h4><h5 id="Docker方式"><a href="#Docker方式" class="headerlink" title="Docker方式"></a>Docker方式</h5><h6 id="构建和部署"><a href="#构建和部署" class="headerlink" title="构建和部署"></a>构建和部署</h6><p>运行以下命令</p>
-<pre class="line-numbers language-none"><code class="language-none">
-$ docker pull chakkiworks&#x2F;doccano # 拉取官方镜像
-$ docker run -d --name doccano -p 80:8000 chakkiworks&#x2F;doccano # 运行镜像，请按需修改端口
-$ docker exec doccano tools&#x2F;create-admin.sh &quot;admin&quot; &quot;[email protected]&quot; &quot;password&quot; # 创建用户并指定密码<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<blockquote>
-<p>注意  Docker镜像run之后会产生三个容器，doccona_nginx、doccona_backend、docker_frontend,其中docker_frontend在构建完成后会直接exit，这是一个feature，不是bug，它的主要作用是webpack打包</p>
-<p><img src="/9112/image-20200109220759931.png" alt="img"></p>
-</blockquote>
-<h4 id="访问Docker中的PostgreSQL数据库中的数据"><a href="#访问Docker中的PostgreSQL数据库中的数据" class="headerlink" title="访问Docker中的PostgreSQL数据库中的数据"></a>访问Docker中的PostgreSQL数据库中的数据</h4><p>由于数据库安全问题，数据库分离再一个单独的容器中并且 首先执行<code>Docker exec</code>命令进入相应的PostgreSQL数据库容器</p>
-<p>应该看到下图这样，终端从宿主机切换进容器</p>
-<p><img src="/9112/image-20200109220232851.png" alt="img"></p>
-<p>在容器的shell中用命令进入数据库</p>
-<pre class="line-numbers language-none"><code class="language-none">
-$ psql -h 127.0.0.1 -d doccano -U doccano -p 5432 # 注意你的host，数据库名、用户名和端口<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p>应该看到下图这样，终端从Docker容器切进数据库</p>
-<p><img src="/9112/image-20200109220100751.png" alt="img"></p>
-<p>然后执行<code>\l</code>等命令进入和查看数据库（执行SQL）</p>
-<h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><p>后台管理入口是这个<span class="exturl" data-url="aHR0cDovL3lvdXJzaXRlL2FkbWluLyVFRiVCQyU4QyVFNSVCMCVCMSVFNiU5OCVBRiVFNCVCOCU4MCVFNCVCOCVBQURqYW5nbyVFOCU4NyVBQSVFNSVCOCVBNiVFNyU5QSU4NCVFNSU5MCU4RSVFNSU4RiVCMCVFNyVBRSVBMSVFNyU5MCU4Ng==">http://yoursite/admin/，就是一个Django自带的后台管理<i class="fa fa-external-link-alt"></i></span></p>
-<p><img src="/9112/image-20200411204841203-1586654887394.png" alt="img"></p>
-<p><img src="/9112/image-20200411205005107-1586654884937.png" alt="img"></p>
-<p><img src="/9112/image-20200411205102588-1586654882966.png" alt="img"></p>
-<p>登录进去后可自行添加账号和项目并设置权限和标签，标注项目选择sequential labeing即可，导出时选择JSONL格式</p>
-<p>这个数据比较多的时候没有自动跳转比较麻烦，请直接在浏览器地址栏使用url跳转</p>
-<p>比如，修改浏览器后面的url，#后面的offset改为685，直接回车，就可以从当前的689跳转到第685个数据</p>
-<p><span class="exturl" data-url="aHR0cDovL3lvdXJzaXRlL3Byb2plY3RzLzYvI29mZnNldD02ODU=">http://yoursite/projects/6/#offset=685<i class="fa fa-external-link-alt"></i></span></p>
-<p><img src="/9112/image-20200307213544539.png" alt="img"></p>
-<h2 id="注"><a href="#注" class="headerlink" title="注"></a>注</h2><p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2RvY2Nhbm8vZG9jY2Fubw==">https://github.com/doccano/doccano<i class="fa fa-external-link-alt"></i></span> 一个开源的标注工具</p>
-<p> <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21hY2Fudi9CRVJULUJpTFNUTS1DUkYtTkVS">https://github.com/macanv/BERT-BiLSTM-CRF-NER<i class="fa fa-external-link-alt"></i></span> 一个BERT的NER工具包</p>
-]]></content>
-      <categories>
-        <category>102网吧日常</category>
-      </categories>
-      <tags>
-        <tag>bert</tag>
-        <tag>NER</tag>
       </tags>
   </entry>
   <entry>
@@ -5695,7 +5744,7 @@ lines <span class="token number">2</span>-36/36 <span class="token punctuation">
       </categories>
   </entry>
   <entry>
-    <title>VSCode C/C++ 开发环境和调试配置：我认为的正确姿势</title>
+    <title>VSCode C/C++ 开发环境和调试配置：Clangd+Codelldb</title>
     <url>/vscode-c-and-cpp-develop-and-debug-setting/</url>
     <content><![CDATA[<p>卸了cpptools和C++ Intelligence吧，来试试clangd或者ccls</p>
 <span id="more"></span>
@@ -5781,35 +5830,8 @@ yay -S visual-studio-code-bin <span aria-hidden="true" class="line-numbers-rows"
 <p><span class="exturl" data-url="aHR0cHM6Ly9jb2RlLnZpc3VhbHN0dWRpby5jb20vZG9jcy9lZGl0b3IvZGVidWdnaW5n">https://code.visualstudio.com/docs/editor/debugging<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9jb2RlLnZpc3VhbHN0dWRpby5jb20vZG9jcy9pbnRyb3ZpZGVvcy9kZWJ1Z2dpbmc=">https://code.visualstudio.com/docs/introvideos/debugging<i class="fa fa-external-link-alt"></i></span></p>
 ]]></content>
       <tags>
-        <tag>vscode</tag>
+        <tag>VSCode</tag>
         <tag>clangd</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>重启博客</title>
-    <url>/1a9a/</url>
-    <content><![CDATA[<p>新博客又开通了(搬家)，不定期更新</p>
-<span id="more"></span>
-
-<p>原域名到期，加上之前的Wordpress网站不太喜欢，索性换到Hexo了，主题域名什么的都全换了。没换Hugo是因为没发现和Next一样这么喜欢的主题，这主题让我感到这个页面的却就是一个博客应该有的样子。</p>
-<p>倒不是说这个主题多好看，它是我印象里博客的样子，让我找回了还是个小朋友的时候第一次注册博客的感觉。对呀，博客就长这个样子。左边是导航栏，下面一小栏放头像和放点徽章挂件；中间是文章，文章最下面是评论。再随便加个背景，简直完美。咿，空荡荡的好像还少点什么；是弹窗小广告，这个就算了…..</p>
-<p>最早的时候沉迷三维弹球和扫雷，以及桌面屏保。后来开始上网，已经错过了聊天室的时代，也错过了拨号上网和Telnet论坛的时代，论坛已经流行用Discuz了，QQ号已经8位了。跟风注册了雅虎伊妹儿和搜狐博客，以及一些论坛帐号，开始了网上冲浪。后来换到Wordpress了，加上一个穷学生手头零花钱也不多，中间关了两次没有续上。</p>
-<p>偶当年还是一只小网虫的时候，并不是特别喜欢发博客，喜欢泡在BBS里，写的东西也都喜欢放在BBS里水帖。论坛里看的人比较多，偶尔斑竹还会出来给加个精。大概从15年开始BBS一个个都亡了。有的因为用户大量出走宣布死亡，有的像贴吧一样开始杀鸡取卵式变现挣钱，还有的因为政策原因关了。有的多次改版丢了好多老帖子，有的格式也乱了，老用户抱怨出走。有的一直停留在远古版本的Discuz，然后有一天站被黑了….</p>
-<p>看多了Flarum的新论坛现在偶尔点进一些没见过的Discuz论坛还是会瞬间恍惚，仿佛又回到了当年</p>
-<p>有的是还没亡却从当年的人声鼎沸变得门可罗雀，不时传来哪个一年到头也没几个人说话的论坛站长支撑不下去又要关站了的消息。认识的好多网友也有逐渐沉寂，失去了联系。</p>
-<p>之前博客里的东西不适合放出来，就默默存在硬盘里了。在论坛里写的东西就放在论坛里和BBS一起消亡吧。</p>
-<blockquote class="blockquote-center">
-<p>山中友，试高吟楚些，重与招魂</p>
-
-</blockquote>
-
-<p><img src="/1a9a/cyperpunk.png" alt="Welcome"></p>
-]]></content>
-      <categories>
-        <category>杂七杂八</category>
-      </categories>
-      <tags>
-        <tag>杂记</tag>
       </tags>
   </entry>
   <entry>
@@ -5822,7 +5844,7 @@ yay -S visual-studio-code-bin <span aria-hidden="true" class="line-numbers-rows"
 <p>这个插件直接将Neovim作为后端，在Normal模式下由Neovim控制（直接将内容缓存发往Neovim处理），可以使用Vim的各种键位操作<br>在Insert模式下，操作和渲染由VSCode处理，编辑体验几乎和VSCode完全一致。色彩高亮和代码补全等都由VSCode实现（所以不要装Neovim的LSP等插件，没用，而且可能影响速度）当你保存的时候更改会从VSCode同步到Neovim。  </p>
 <p>VSCode在编辑模式下的舒服体验和插件、Vim在Normal模式下的操作，同时得到了保留，而且性能和速度还可以接受。</p>
 <p>与其说这是VSCode的一个Vim键位插件，不如说是将VSCode直接改造成了Neovim的一个GUI客户端。</p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>VSCode插件市场装VSCode Neovim，Archlinux安装neovim<code>sudo pacman -S neovim</code><br>然后在设置里面填上路径</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>VSCode插件市场装VSCode Neovim，安装neovim<code>sudo pacman -S neovim</code><br>然后在设置里面填上路径</p>
 <pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token property">"vscode-neovim.neovimExecutablePaths.linux"</span><span class="token operator">:</span> <span class="token string">"/usr/bin/nvim"</span><span class="token punctuation">,</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>就可以用了</p>
@@ -5872,13 +5894,34 @@ Plug <span class="token string">'https://github.com/h-hg/fcitx.nvim.git'</span>
     <span class="token builtin">autocmd</span> TermOpen <span class="token builtin">term</span><span class="token punctuation">:</span><span class="token operator">/</span><span class="token operator">/</span><span class="token operator">*</span> <span class="token keyword">startinsert</span>
 <span class="token keyword">endif</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
+<h2 id="在使用VSCode时选择性启用Neovim插件"><a href="#在使用VSCode时选择性启用Neovim插件" class="headerlink" title="在使用VSCode时选择性启用Neovim插件"></a>在使用VSCode时选择性启用Neovim插件</h2><p>Vim/Neovim的插件和VSCode的插件有功能重叠，我目前各选了一部分。目前我的LSP插件用VSCode的插件，其他像Markdown插件、LaTeX插件和各种杂七杂八不常用的功能也都是用的VSCode插件。我装了EasyMotion的替代品MetaJump（VSCode插件），用于进行跳转。Neovim插件我保留了<code>vim-surround</code>等键盘操作的插件。</p>
+<p>但是很多时候我要在终端用Neovim的时候要启用一些插件，使用VSCode的时候要禁用Neovim部分插件。</p>
+<p>推荐按照官方文档在使用VSCode时禁用Neovim的自动补全、LSP类、语法高亮等插件</p>
+<blockquote>
+<p>You don’t need any code, highlighting, completion, lsp plugins as well any plugins that spawn windows/buffers (nerdtree and similar), fuzzy-finders, etc.</p>
+</blockquote>
+<p>具体参考<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3ZzY29kZS1uZW92aW0vdnNjb2RlLW5lb3ZpbSNjb25kaXRpb25hbC1pbml0dmlt">官方文档<i class="fa fa-external-link-alt"></i></span>, 我用的vim-plug可以这样设置</p>
+<pre class="line-numbers language-none"><code class="language-none">&quot; inside plug#begin:
+&quot; 在使用neovim的时候启用vim-easymotion插件
+Plug &#39;easymotion&#x2F;vim-easymotion&#39;, Cond(!exists(&#39;g:vscode&#39;))
+&quot; 在vscode-neovim插件模式下启用另一个插件
+Plug &#39;asvetliakov&#x2F;vim-easymotion&#39;, Cond(exists(&#39;g:vscode&#39;), &#123; &#39;as&#39;: &#39;vsc-easymotion&#39; &#125;)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>不过后来我的画风逐渐变成了这样：<br>Neovim专心给vscode当backend用，terminal里面用vim，这样就不用管插件何时启用了。</p>
 <h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>之前只在编辑小文件的时候临时用Vim, 这两年内Vim使用次数逐渐增多，Vim也逐渐熟练，一度产生过将主力编辑器从VSCode换成Vim的想法。VSCode在Linux平台上频繁内存泄漏、VSCode的渲染速度比Vim慢很多（尤其是打开大文件的时候），这些原因导致VSCode在某些时候的体验比Vim差了好多。</p>
-<p>但是Vim我没有找到合适的GUI界面来打造一个对我而言比较舒服的编辑器，gvim在当年上嵌入式课的时候在Ubuntu下就试过一次了，感觉体验和</p>
+<p>但是Vim我没有找到合适的GUI界面来打造一个对我而言比较舒服的编辑器，gvim在当年上嵌入式课的时候在Ubuntu下就试过一次了，感觉体验不是很好。</p>
 <p>SpaceVim试过，装了一堆插件之后太卡，性能不是太好，性能表现几乎和VSCode不相上下，在我的超低配七年老电脑上失去了Vim流畅的优势，而且这一套界面的颜值和使用体验远不如VSCode。</p>
 <p>Neovim的GUI界面有<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FraXlvc2kvZ29uZW92aW0=">goneovim<i class="fa fa-external-link-alt"></i></span>和neovide，体验也不如VSCode。（go居然能拿来写Qt还写成这种样子，哇偶）</p>
 <p>最舒服的Vim体验还是在Alacritty里面，GPU加速渲染速度很快，非常丝滑。</p>
-<p>而且VSCode在我从18年开始使用它的三年内，肉眼可见的进步。未来的前景也很光明，微软掏钱养着也不用担心倒闭的问题，除非微软倒闭（真倒闭了那不是更好吗，还有这种好事，苏联笑话.jpg）<br>现在我除了要写一万行以上的屎山项目才会打开Goland等全家桶IDE，编辑100行以下的配置文件等会打开vim。<br>剩下的绝大多数编辑都是用VSCode,用VSCode来写Go、C、Python、shell，用VSCode来写Markdown和LaTeX, 逐渐抛弃了typora和Word，也放弃了曾经很喜欢的sublime text（纯粹是因为好看和启动速度比vscode快一点）</p>
-<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><span class="exturl" data-url="aHR0cHM6Ly93d3cuYWhvbm4ubWUvYmxvZy90aGUtdmltLWd1aWRlLWZvci12cy1jb2RlLXVzZXJz">从VSCode到Vim到……两个都用？<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2RhaXBlaWh1c3QvaW0tc2VsZWN0I2luc3RhbGxhdGlvbg==">https://github.com/daipeihust/im-select#installation<i class="fa fa-external-link-alt"></i></span> Windows和Mac以及使用vscodevim插件用户可以用这个解决中文输入法冲突的问题<br><span class="exturl" data-url="aHR0cHM6Ly9kZGFkYWFsLm1lL2FydGljbGVzL2Zyb20tdnNjb2RlLXRvLXZpbS10by1ib3Ro">https://ddadaal.me/articles/from-vscode-to-vim-to-both<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9qZGhhby5naXRodWIuaW8vMjAyMC8wMS8xMi92aW1fbnZpbV9oaXN0b3J5X2RldmVsb3BtZW50Lw==">Vim 和 Neovim 的前世今生<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC9hYzczOWM2ZWE1NDE=">vscode 集成 Neovim<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj1nNGRYWjBSUVdkdw==">VSCode with embedded Neovim<i class="fa fa-external-link-alt"></i></span>  </p>
+<p>而且VSCode在我从18年开始使用它的三年内，肉眼可见的进步。未来的前景也很光明，微软掏钱养着也不用担心倒闭的问题，除非微软倒闭（真倒闭了那不是更好吗，还有这种好事，苏联笑话.jpg）<br>现在我除了要写一万行以上的屎山项目才会打开Goland等全家桶IDE，编辑100行以下的配置文件等会打开vim。<br>剩下的绝大多数编辑都是用VSCode,用VSCode来写Go、C、Python、shell，用VSCode来写Markdown和LaTeX, 逐渐抛弃了typora和Word，也放弃了曾经很喜欢的sublime text（但是这个好看、比VSCode丝滑，VSCode的渲染和响应速度没有那种丝滑的感觉）</p>
+<h3 id="2022-4更新"><a href="#2022-4更新" class="headerlink" title="2022.4更新"></a>2022.4更新</h3><p>用VSCode Neovim插件半年了，多多少少有点小bug，偶尔出现一些光标不灵和Neovim后端没有启动的小问题。大部分时候reload一下就好了。大多数时候编辑小文件的体验都是alacritty中打开vim更好，打开速度飞快而且打字延迟低、渲染都比VSCode舒服。但是vim/neovim要想配置出vscode/sublime写大一点的项目的工作界面来比较麻烦，所以大多数时间还在用VSCode，没啥迁移的动力。</p>
+<p>用久了发现VSCode的很多图形界面实在没有必要，很多边框和按钮基本用不到还占地方那个。比如最上面的边框（用i3wm等wm不要边框就好了），然后是那个<code>Menu Bar</code>，用鼠标点<code>Menu Bar</code>是很浪费时间的，建议隐藏了。需要进行什么操作建议<code>F1</code>搜索，比拿鼠标点点点舒服。</p>
+<p>然后比较讨厌的的是下方terminal和编辑界面中间宽大的框，左侧边栏（Side Bar）也特别宽（这个间距还不能调，只能<code>Ctrl+“-“</code>进行zoom缩放变相调小）。这个特别难受，当时我刚用VSCode的时候我就觉得VSCode的界面比sublime和jetbrains家的IDE浪费空间好多。</p>
+<p>这个极为浪费空间的UI布局就像新版firefox的proton和新版gnome的移动平板风格，太讨厌了。大概就是这个对比的感觉：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2JsYWNrNzM3NS9GaXJlZm94LVVJLUZpeA==">Firefox-UI-Fix<i class="fa fa-external-link-alt"></i></span>  </p>
+<p>我最早一直看VSCode的界面不顺眼，换上atom或者sublime的主题也不行。后来想了很久这是为什么，最后发现就是这个布局太不紧凑了，太浪费空间了。<br>我心目中好的界面是像大部分QT应用那样的，虽然第一眼颜值没有electron高，但是紧凑高效。比如WPS、Photoshop、Krita这样的，没有特别宽的没用边框出来浪费空间。AutoCAD、Altium Designer和JB家的编辑器也比较紧凑。就连VSCode的竞品atom和sublime也远比VSCode紧凑。</p>
+<p>不过我在找VSCode紧凑布局的办法的时候，发现VSCode有像Vim差不多的 Zen Mode，<code>Ctrl+k z</code>切换为禅意模式，临时进入一个全屏的清爽的编辑界面，默认只有一个居中的编辑界面。有点像typora的全屏+专注模式，感觉还行。</p>
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><span class="exturl" data-url="aHR0cHM6Ly93d3cuYWhvbm4ubWUvYmxvZy90aGUtdmltLWd1aWRlLWZvci12cy1jb2RlLXVzZXJz">从VSCode到Vim到……两个都用？<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2RhaXBlaWh1c3QvaW0tc2VsZWN0I2luc3RhbGxhdGlvbg==">https://github.com/daipeihust/im-select#installation<i class="fa fa-external-link-alt"></i></span> Windows和Mac以及使用vscodevim插件用户可以用这个解决中文输入法冲突的问题<br><span class="exturl" data-url="aHR0cHM6Ly9kZGFkYWFsLm1lL2FydGljbGVzL2Zyb20tdnNjb2RlLXRvLXZpbS10by1ib3Ro">https://ddadaal.me/articles/from-vscode-to-vim-to-both<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9qZGhhby5naXRodWIuaW8vMjAyMC8wMS8xMi92aW1fbnZpbV9oaXN0b3J5X2RldmVsb3BtZW50Lw==">Vim 和 Neovim 的前世今生<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC9hYzczOWM2ZWE1NDE=">vscode 集成 Neovim<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj1nNGRYWjBSUVdkdw==">VSCode with embedded Neovim<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2dsZXBuaXIvbnZpbS1sdWEtZ3VpZGUtemg=">在 neovim 中使用 Lua<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3ZzY29kZS1uZW92aW0vdnNjb2RlLW5lb3ZpbQ==">vscode-neovim<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cubHVuYXJ2aW0ub3JnLw==">LunarVim<i class="fa fa-external-link-alt"></i></span> 这个项目不错，从这学了不少Neovim的配置<br><span class="exturl" data-url="aHR0cHM6Ly93d3cubHVuYXJ2aW0ub3JnL3BsdWdpbnMvI2NvbmZpZ3VyYXRpb24=">LunarVim Core plugins<i class="fa fa-external-link-alt"></i></span> 这里面的插件质量都还不错，挑几个拿过来用挺好的<br><span class="exturl" data-url="aHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj1jdEgtYS0xZVVNRQ==">Neovim IDE from Scratch - Introduction (100% lua config)
+<i class="fa fa-external-link-alt"></i></span> LunarVim作者的教程<br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0x1bmFyVmltL05lb3ZpbS1mcm9tLXNjcmF0Y2g=">Neovim from Scratch<i class="fa fa-external-link-alt"></i></span>  </p>
 ]]></content>
       <categories>
         <category>不务正业系列</category>
@@ -5887,6 +5930,33 @@ Plug <span class="token string">'https://github.com/h-hg/fcitx.nvim.git'</span>
         <tag>VSCode</tag>
         <tag>Neovim</tag>
         <tag>Vim</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>重启博客</title>
+    <url>/1a9a/</url>
+    <content><![CDATA[<p>新博客又开通了(搬家)，不定期更新</p>
+<span id="more"></span>
+
+<p>原域名到期，加上之前的Wordpress网站不太喜欢，索性换到Hexo了，主题域名什么的都全换了。没换Hugo是因为没发现和Next一样这么喜欢的主题，这主题让我感到这个页面的却就是一个博客应该有的样子。</p>
+<p>倒不是说这个主题多好看，它是我印象里博客的样子，让我找回了还是个小朋友的时候第一次注册博客的感觉。对呀，博客就长这个样子。左边是导航栏，下面一小栏放头像和放点徽章挂件；中间是文章，文章最下面是评论。再随便加个背景，简直完美。咿，空荡荡的好像还少点什么；是弹窗小广告，这个就算了…..</p>
+<p>最早的时候沉迷三维弹球和扫雷，以及桌面屏保。后来开始上网，已经错过了聊天室的时代，也错过了拨号上网和Telnet论坛的时代，论坛已经流行用Discuz了，QQ号已经8位了。跟风注册了雅虎伊妹儿和搜狐博客，以及一些论坛帐号，开始了网上冲浪。后来换到Wordpress了，加上一个穷学生手头零花钱也不多，中间关了两次没有续上。</p>
+<p>偶当年还是一只小网虫的时候，并不是特别喜欢发博客，喜欢泡在BBS里，写的东西也都喜欢放在BBS里水帖。论坛里看的人比较多，偶尔斑竹还会出来给加个精。大概从15年开始BBS一个个都亡了。有的因为用户大量出走宣布死亡，有的像贴吧一样开始杀鸡取卵式变现挣钱，还有的因为政策原因关了。有的多次改版丢了好多老帖子，有的格式也乱了，老用户抱怨出走。有的一直停留在远古版本的Discuz，然后有一天站被黑了….</p>
+<p>看多了Flarum的新论坛现在偶尔点进一些没见过的Discuz论坛还是会瞬间恍惚，仿佛又回到了当年</p>
+<p>有的是还没亡却从当年的人声鼎沸变得门可罗雀，不时传来哪个一年到头也没几个人说话的论坛站长支撑不下去又要关站了的消息。认识的好多网友也有逐渐沉寂，失去了联系。</p>
+<p>之前博客里的东西不适合放出来，就默默存在硬盘里了。在论坛里写的东西就放在论坛里和BBS一起消亡吧。</p>
+<blockquote class="blockquote-center">
+<p>山中友，试高吟楚些，重与招魂</p>
+
+</blockquote>
+
+<p><img src="/1a9a/cyperpunk.png" alt="Welcome"></p>
+]]></content>
+      <categories>
+        <category>杂七杂八</category>
+      </categories>
+      <tags>
+        <tag>杂记</tag>
       </tags>
   </entry>
   <entry>
