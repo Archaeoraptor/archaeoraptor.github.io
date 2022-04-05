@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 5.4.0">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.1.0">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/uploads/wizard-hat-16.png">
@@ -168,7 +168,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-count">55</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -179,7 +179,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">89</span>
+        <span class="site-state-item-count">90</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -213,12 +213,6 @@
         </li>
         <li class="links-of-blogroll-item">
           <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnNhbWNodS5jbg==" title="https:&#x2F;&#x2F;blog.samchu.cn">Sam's Blog</span>
-        </li>
-        <li class="links-of-blogroll-item">
-          <span class="exturl" data-url="aHR0cHM6Ly8yMzNoc3lzd2ViLm1s" title="https:&#x2F;&#x2F;233hsysweb.ml">花花</span>
-        </li>
-        <li class="links-of-blogroll-item">
-          <span class="exturl" data-url="aHR0cDovL2Jsb2cuNzRsczc0Lm9yZy8=" title="http:&#x2F;&#x2F;blog.74ls74.org&#x2F;">江永泉</span>
         </li>
     </ul>
   </div>
@@ -335,16 +329,16 @@
 <h3 id="最后还是选择了机场"><a href="#最后还是选择了机场" class="headerlink" title="最后还是选择了机场"></a>最后还是选择了机场</h3><p>现在性价比还是机场最高，同样是每月5美元机场大概能提供远高于自建的速度和线路选择（还有很多Netflix线路和低延迟节点）。</p>
 <h3 id="移动DNS投毒解决方案2019"><a href="#移动DNS投毒解决方案2019" class="headerlink" title="移动DNS投毒解决方案2019"></a>移动DNS投毒解决方案2019</h3><p>使用Pcap_DNSProxy, 先下载<span class="exturl" data-url="aHR0cHM6Ly9ubWFwLm9yZy9kb3dubG9hZC5odG1s">nmap<i class="fa fa-external-link-alt"></i></span>再选winpcap兼容模式安装,再下载Pcap_DNSProxy安装时可能需要管理员权限。然后在网卡设定 DNS 解析为 127.0.0.1 (IPv4) 和 ::1 (IPv6) 。（适合电脑上折腾，有条件还是直接折腾路由器。）<br>详情参考<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2NoZW5ncjI4L1BjYXBfRE5TUHJveHkvdHJlZS9tYXN0ZXIvRG9jdW1lbnRz">https://github.com/chengr28/Pcap_DNSProxy/tree/master/Documents<i class="fa fa-external-link-alt"></i></span><br>以及<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmJnbWUubWUvcG9zdHMvc29tZS1pZGVhcy1hYm91dC1hbnRpLXBvbGx1dGlvbi1kbnMtc2VydmVy">https://blog.bgme.me/posts/some-ideas-about-anti-pollution-dns-server<i class="fa fa-external-link-alt"></i></span></p>
 <h3 id="更换VPS厂商为hostwinds-更换websocket协议为HTTP2"><a href="#更换VPS厂商为hostwinds-更换websocket协议为HTTP2" class="headerlink" title="更换VPS厂商为hostwinds,更换websocket协议为HTTP2"></a>更换VPS厂商为hostwinds,更换websocket协议为HTTP2</h3><p>决定把vultr换成速度更快的hostwinds，世界加钱可及（并没有钱搞Google Fi之类的物理穿越）<br>hostwinds选项有VPS和cloud，cloud是按小时收费的，这个价位当然也不是aws或google cloud那种真正的云主机，问了下客服，答复如下：</p>
-<p>The Difference Between VPS &amp; cloud<br>There is no difference other than the name.<br>The VPSs come with more of a preconfigured set up, Linux/Windows, managed/unmanaged, etc, where the Cloud would start as an unmanaged Linux VPS that you can add additional set up to.</p>
+<p>The Difference Between VPS &amp; cloud<br>There is no difference other than the name.<br>The VPSs come with more of a preconfigured set up, Linux&#x2F;Windows, managed&#x2F;unmanaged, etc, where the Cloud would start as an unmanaged Linux VPS that you can add additional set up to.</p>
 <p>这里我不小心选错了，发工单申请退款速度很快，客服一直在线（但是据说支付鸨坑你会给你退到余额里，不会给你退钱）<br>不愿意买一个月冒险想先试试的可以直接上小时收费的cloud选项<br>这家服务商有给提供rDNS功能，网上冲浪时记得伪装。别的都还好，就是机房有点少，不过暂时还没被盯上。速度也还行吧。（这家不太推荐用来建站, 小站除外）</p>
 <p>看起来并不限速，但是我装上之后速度只有几百k，不知道为什么，有空再看看</p>
 <blockquote>
-<p>Testing download speed……………………………………………………………………..<br>Download: 248.93 Mbit/s<br>Testing upload speed……………………………………………………………………………………<br>Upload: 397.44 Mbit/s</p>
+<p>Testing download speed……………………………………………………………………..<br>Download: 248.93 Mbit&#x2F;s<br>Testing upload speed……………………………………………………………………………………<br>Upload: 397.44 Mbit&#x2F;s</p>
 </blockquote>
 <p>应该是被运营商Qos降了优先级，还是kcp吧</p>
 <h2 id="配置推荐"><a href="#配置推荐" class="headerlink" title="配置推荐"></a>配置推荐</h2><p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2dpbnVlcnpoL2dvc3Q=">gost<i class="fa fa-external-link-alt"></i></span> 用来搞搞跳板和二级代理和多级代理的跳板不错<br><span class="exturl" data-url="aHR0cHM6Ly9tZWRpdW0uY29tL0BUYWNoeW9uRGV2ZWwvJUU2JUJDJUFCJUU4JUIwJTg4JUU1JTkwJTg0JUU3JUE3JThEJUU5JUJCJTkxJUU3JUE3JTkxJUU2JThBJTgwJUU1JUJDJThGLWRucy0lRTYlOEElODAlRTYlOUMlQUYlRTUlOUMlQTglRTQlQkIlQTMlRTclOTAlODYlRTclOEUlQUYlRTUlQTIlODMlRTQlQjglQUQlRTclOUElODQlRTUlQkElOTQlRTclOTQlQTgtNjJjNTBlNThjYmQw">漫谈各种黑科技式 DNS 技术在代理环境中的应用<i class="fa fa-external-link-alt"></i></span> DNS什么的看这里<br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21lbGxvdy1pby9tZWxsb3c=">mellow<i class="fa fa-external-link-alt"></i></span> 跨平台的全局代理<br><span class="exturl" data-url="aHR0cHM6Ly93d3cudjJyYXkuY29tLw==">Project V<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9ndWlkZS52MmZseS5vcmcv">新 V2Ray 白话文指南<i class="fa fa-external-link-alt"></i></span>  推荐稍微懂一点网络知识和能自己折腾VPS的自己直接照着文档和教程装就好了，一键安装脚本反而坑多（VPS小鸡只用来干这个可以直接脚本，但是至少要把默认端口之类的改一改）<br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL216ejIwMTcvVjJSYXlB">v2rayA<i class="fa fa-external-link-alt"></i></span> 一个linux下的web配置工具，感觉还行。linux下图形界面客户端一直是个问题，这种小配置工具拿Qt或者electron搞出来的巨大的包总感觉怪怪的，还是直接web化在浏览器里面启动比较舒服<br><span class="exturl" data-url="aHR0cHM6Ly93d3cuc29mdGV0aGVyLm9yZy8=">https://www.softether.org/<i class="fa fa-external-link-alt"></i></span> 使用ssl型加密的vpn也有比较强的抗封锁能力（由于历史原因，属于第一批被墙打爆的重点照顾对象），但是搭建配置非常麻烦，速度也比v2慢，建议放弃（包月包年买服务另当别论）<br>这里有个wulabing的<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3d1bGFiaW5nL1YyUmF5X3dzLXRsc19iYXNoX29uZWtleQ==">脚本<i class="fa fa-external-link-alt"></i></span><br>卸载要这样。</p>
 <blockquote>
-<p>如果不能重装系统，你可以通过删除以下文件夹，重新安装来完成更新<br>/etc/nginx<br>/etc/v2ray<br>/root/v2ray<br>~/.acme.sh</p>
+<p>如果不能重装系统，你可以通过删除以下文件夹，重新安装来完成更新<br>&#x2F;etc&#x2F;nginx<br>&#x2F;etc&#x2F;v2ray<br>&#x2F;root&#x2F;v2ray<br>~&#x2F;.acme.sh</p>
 </blockquote>
 <p>另，<br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Vkd2FyZHoyNDYwMDMvc2hhZG93c29ja3M=">https://github.com/edwardz246003/shadowsocks<i class="fa fa-external-link-alt"></i></span></p>
 <p>最后，土豪请直接机场，大土豪请去用境外实体卡和Google Fi</p>

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 5.4.0">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.1.0">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/uploads/wizard-hat-16.png">
@@ -166,7 +166,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-count">55</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -177,7 +177,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">89</span>
+        <span class="site-state-item-count">90</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -211,12 +211,6 @@
         </li>
         <li class="links-of-blogroll-item">
           <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnNhbWNodS5jbg==" title="https:&#x2F;&#x2F;blog.samchu.cn">Sam's Blog</span>
-        </li>
-        <li class="links-of-blogroll-item">
-          <span class="exturl" data-url="aHR0cHM6Ly8yMzNoc3lzd2ViLm1s" title="https:&#x2F;&#x2F;233hsysweb.ml">花花</span>
-        </li>
-        <li class="links-of-blogroll-item">
-          <span class="exturl" data-url="aHR0cDovL2Jsb2cuNzRsczc0Lm9yZy8=" title="http:&#x2F;&#x2F;blog.74ls74.org&#x2F;">江永泉</span>
         </li>
     </ul>
   </div>
@@ -320,7 +314,7 @@
 
 <p>主动安装AUR里的可以这样：<code>yay neo4j-community</code>然后<code>Packages to install</code>选项手动选AUR里的。或者你手动下载AUR里的PKGBUILD然后<code>makepkg</code>自己build。<strong>再或者直接不要blackarch这个第三方源了（推荐）</strong>，<code>/etc/pacman.d</code>里注释掉。</p>
 <p>不然每次更新还要忽略一堆<code>warning: neo4j-community: local (4.2.2-1) is newer than blackarch (3.5.14-1)</code>。</p>
-<p>neo4j这种单个没啥影响的包更新迟缓倒也没啥大问题，问题是BlackArch的包经常会影响community/extra的基础包，比如plasma这个包（某一天某个群友亲历，我由于装的是plasma-meta逃过一劫）</p>
+<p>neo4j这种单个没啥影响的包更新迟缓倒也没啥大问题，问题是BlackArch的包经常会影响community&#x2F;extra的基础包，比如plasma这个包（某一天某个群友亲历，我由于装的是plasma-meta逃过一劫）</p>
 <p>KDE用户注意：如果你添加了BlackArch源，按照<span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvdGl0bGUvS0RFI1BsYXNtYQ==">ArchWiki上的KDE页面<i class="fa fa-external-link-alt"></i></span>添加plasma元组</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> pacman -Syu plasma<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
