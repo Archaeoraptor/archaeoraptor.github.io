@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 5.4.0">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.1.0">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/uploads/wizard-hat-16.png">
@@ -172,7 +172,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-count">55</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -183,7 +183,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">89</span>
+        <span class="site-state-item-count">90</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -217,12 +217,6 @@
         </li>
         <li class="links-of-blogroll-item">
           <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnNhbWNodS5jbg==" title="https:&#x2F;&#x2F;blog.samchu.cn">Sam's Blog</span>
-        </li>
-        <li class="links-of-blogroll-item">
-          <span class="exturl" data-url="aHR0cHM6Ly8yMzNoc3lzd2ViLm1s" title="https:&#x2F;&#x2F;233hsysweb.ml">花花</span>
-        </li>
-        <li class="links-of-blogroll-item">
-          <span class="exturl" data-url="aHR0cDovL2Jsb2cuNzRsczc0Lm9yZy8=" title="http:&#x2F;&#x2F;blog.74ls74.org&#x2F;">江永泉</span>
         </li>
     </ul>
   </div>
@@ -396,7 +390,7 @@ lines 2-36&#x2F;36 (END)<span aria-hidden="true" class="line-numbers-rows"><span
 <p>切到root操作，先重命名你的用户目录，随便移到一个空间够的位置</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">mv</span> /home/zhixi /home/zhixi.saved<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p>然后看一下你的用户设置（假设用户名是zhixi,GID=1000），以及所在的用户组设置（1000改成你的GID）</p>
+<p>然后看一下你的用户设置（假设用户名是zhixi,GID&#x3D;1000），以及所在的用户组设置（1000改成你的GID）</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">getent <span class="token function">passwd</span> zhixi
 getent shadow zhixi
 getent group <span class="token number">1000</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
@@ -432,7 +426,7 @@ getent group <span class="token number">1000</span><span aria-hidden="true" clas
 <p>现在使用<code>systemd-homed.service</code>和<code>systemd-userdbd.service</code>两个daemon管理用户，登陆的时候是<code>systemd-logind</code> 在管。大概是这么个流程：</p>
 <p><img src="/systemd-homed/image-20201108172857040.png"></p>
 <p><img src="/systemd-homed/image-20201108172321494.png"></p>
-<p>另外，Yubikeys现在是一等公民（说的好像这小玩意这么贵我买得起一样）<br>Yubikeys或者别的加密设备我手头没有，而且LUKS加密home目录之类的我也没有那么高的安全需求，哪位好心人要是愿意送/借我一个玩玩，我把这部分内容补上</p>
+<p>另外，Yubikeys现在是一等公民（说的好像这小玩意这么贵我买得起一样）<br>Yubikeys或者别的加密设备我手头没有，而且LUKS加密home目录之类的我也没有那么高的安全需求，哪位好心人要是愿意送&#x2F;借我一个玩玩，我把这部分内容补上</p>
 <h3 id="现在的样子"><a href="#现在的样子" class="headerlink" title="现在的样子"></a>现在的样子</h3><p>使用<code>homectl activate</code>激活用户目录后你会看到在<code>/home</code>目录下多了一个用户目录</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ homectl activate zhixi
 🔐 Please enter password <span class="token keyword">for</span> user zhixi: ****** <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
@@ -485,8 +479,8 @@ Disk Ceiling: <span class="token number">769</span>.5G
 lines <span class="token number">2</span>-36/36 <span class="token punctuation">(</span>END<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="存在的一些问题"><a href="#存在的一些问题" class="headerlink" title="存在的一些问题"></a>存在的一些问题</h3><p>这个东西主要是focus on <code> particularly Laptop users</code>，目前可能多多少少有点小问题。企业用途和运维貌似也不怎么需要这个。</p>
-<h4 id="SSH的问题"><a href="#SSH的问题" class="headerlink" title="SSH的问题"></a>SSH的问题</h4><p>这个东西直接把/home全都加密了，当然也包括<code>.ssh</code>目录下面的东西。</p>
-<p>目前看来没有什么很完美的办法，有人是这样干的：先整一个其他的空用户在他的/home/user下面存公钥，用密码登陆，然后su切过去。(反正看起来挺扭曲的)</p>
+<h4 id="SSH的问题"><a href="#SSH的问题" class="headerlink" title="SSH的问题"></a>SSH的问题</h4><p>这个东西直接把&#x2F;home全都加密了，当然也包括<code>.ssh</code>目录下面的东西。</p>
+<p>目前看来没有什么很完美的办法，有人是这样干的：先整一个其他的空用户在他的&#x2F;home&#x2F;user下面存公钥，用密码登陆，然后su切过去。(反正看起来挺扭曲的)</p>
 <p>不过对于笔记本个人用户来说SSH到自己的加密盘貌似不是什么刚需，还是等完善了随身带着硬盘走比较好。</p>
 <h4 id="休眠"><a href="#休眠" class="headerlink" title="休眠"></a>休眠</h4><p>貌似不少人会碰到奇奇怪怪的休眠问题，很在意休眠的笔记本用户请谨慎上车。</p>
 <h4 id="删除用户后SDDM仍有残留"><a href="#删除用户后SDDM仍有残留" class="headerlink" title="删除用户后SDDM仍有残留"></a>删除用户后SDDM仍有残留</h4><p>用<code>homectl activate</code>激活了一个用户temp1，然后用<code>homectl remove</code>删除了这个用户temp1，结果发现我的SDDM在登陆页面仍然有原来的temp1。检查<code>/home</code>发现这下面已经没有temp1.home文件了，但是还有temp1这个文件夹（受保护）。</p>
@@ -575,7 +569,7 @@ lines <span class="token number">2</span>-36/36 <span class="token punctuation">
 <td>update USER</td>
 <td>Update a home area</td>
 <td>更改用户设置和状态</td>
-<td>homectl update me –locked=false</td>
+<td>homectl update me –locked&#x3D;false</td>
 <td></td>
 </tr>
 <tr>
@@ -588,7 +582,7 @@ lines <span class="token number">2</span>-36/36 <span class="token punctuation">
 <tr>
 <td>with USER [COMMAND…]</td>
 <td>Run shell or command with access to a home area</td>
-<td>用到/在某个用户目录下执行命令（需要root或该用户密码）</td>
+<td>用到&#x2F;在某个用户目录下执行命令（需要root或该用户密码）</td>
 <td>homectl with zhixi – mkdir test1</td>
 <td></td>
 </tr>

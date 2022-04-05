@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 5.4.0">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.1.0">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/uploads/wizard-hat-16.png">
@@ -168,7 +168,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-count">55</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -179,7 +179,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">89</span>
+        <span class="site-state-item-count">90</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -213,12 +213,6 @@
         </li>
         <li class="links-of-blogroll-item">
           <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnNhbWNodS5jbg==" title="https:&#x2F;&#x2F;blog.samchu.cn">Sam's Blog</span>
-        </li>
-        <li class="links-of-blogroll-item">
-          <span class="exturl" data-url="aHR0cHM6Ly8yMzNoc3lzd2ViLm1s" title="https:&#x2F;&#x2F;233hsysweb.ml">花花</span>
-        </li>
-        <li class="links-of-blogroll-item">
-          <span class="exturl" data-url="aHR0cDovL2Jsb2cuNzRsczc0Lm9yZy8=" title="http:&#x2F;&#x2F;blog.74ls74.org&#x2F;">江永泉</span>
         </li>
     </ul>
   </div>
@@ -319,7 +313,7 @@
 </li>
 <li><p>配置<code>cgproxy</code>，编辑<code>/etc/cgproxy/config.json</code>：</p>
 <ul>
-<li>在<code>cgroup_proxy</code>中括号里加上”/“（包含引号），<code>port</code>改为Qv2ray首选项里的透明代理的端口。</li>
+<li>在<code>cgroup_proxy</code>中括号里加上”&#x2F;“（包含引号），<code>port</code>改为Qv2ray首选项里的透明代理的端口。</li>
 <li><code>cgproxy</code>默认配置是代理所有tcp和udp，ipv4和ipv6的流量，如果不希望代理其中的某种（些）流量，则将对应的<code>enable_xxx</code>改为false。注意这里的配置要和Qv2ray选项里的配置一致（如，Qv2ray选项里没有勾选udp，则这里务必把<code>enable_udp</code>改为false）。</li>
 <li>如果希望当本机作为网关设备时为连接到本机网关的其他设备（如连接到本机开设的wifi热点的设备）也提供透明代理，则把<code>enable_gateway</code>改为true。</li>
 </ul>
@@ -416,7 +410,7 @@ cgnoproxy firefox <span class="token comment"># 临时关掉透明代理运行�
 
 <p>但是，加了这些参数经常也不太好用。</p>
 <blockquote class="blockquote-center">
-<p>最简单的办法，扬了 docker，换 podman / podman-docker</p>
+<p>最简单的办法，扬了 docker，换 podman &#x2F; podman-docker</p>
 
 </blockquote>
 
@@ -461,7 +455,7 @@ error installing repo packages<span aria-hidden="true" class="line-numbers-rows"
 <p>开了透明代理，理论上不需要对应用单独指定代理了，直接把SwitchyOmega关掉或者规则选 Direct，Firefox的代理设置也填不使用代理</p>
 <h3 id="报错-too-many-open-files"><a href="#报错-too-many-open-files" class="headerlink" title="报错 too many open files"></a>报错 too many open files</h3><p>报这种错:</p>
 <blockquote>
-<p>2021/03/11 22:32:32 [Warning] github.com/v2fly/v2ray-core/v4/transport/internet/tcp: failed to accepted raw connections &gt; accept tcp 127.0.0.1:8889: accept4: too many open files</p>
+<p>2021&#x2F;03&#x2F;11 22:32:32 [Warning] github.com&#x2F;v2fly&#x2F;v2ray-core&#x2F;v4&#x2F;transport&#x2F;internet&#x2F;tcp: failed to accepted raw connections &gt; accept tcp 127.0.0.1:8889: accept4: too many open files</p>
 </blockquote>
 <p>这个在开启UDP透明代理的时候常见, 可能是文件大小限制,也可能是你配置错误出现循环转发,比如<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3YycmF5L3YycmF5LWNvcmUvaXNzdWVzLzE1NjM=">这个issue<i class="fa fa-external-link-alt"></i></span></p>
 <p>编辑<code>/usr/lib/systemd/system/v2ray.service</code> 或 <code>/etc/systemd/system/v2ray.service</code></p>
@@ -486,7 +480,7 @@ user   hard   nofile    40690<span aria-hidden="true" class="line-numbers-rows">
 <h3 id="关于Qv2ray停止维护的事"><a href="#关于Qv2ray停止维护的事" class="headerlink" title="关于Qv2ray停止维护的事"></a>关于Qv2ray停止维护的事</h3><p>现在star最多的那个组织<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1F2MnJheQ==">Qv2ray<i class="fa fa-external-link-alt"></i></span> 停止维护了，意料之中吧。这件事我不想多评价了，我要评价肯定忍不住对rprx的脏话。下面简单说一下qv2ray的事。</p>
 <p>如果你想用老版本的Qv2ray（Qv2ray 3 以前）</p>
 <p>目前AUR里面的qv2ray 2.7.0 版本是无法正常使用插件的。如果想使用可以自行降级到2.6然后用插件。</p>
-<p>更推荐的方式是换<span class="exturl" data-url="aHR0cHM6Ly9hdXIuYXJjaGxpbnV4Lm9yZy9wYWNrYWdlcy9xdjJyYXktZGV2LWdpdC8=">qv2ray-dev-git<i class="fa fa-external-link-alt"></i></span> (这个也停止维护了，是<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1F2MnJheS9RdjJyYXk=">Qv2ray/qv2ray<i class="fa fa-external-link-alt"></i></span>的打包) 这个要新一点（众所周知dev版本比稳定版稳定）</p>
+<p>更推荐的方式是换<span class="exturl" data-url="aHR0cHM6Ly9hdXIuYXJjaGxpbnV4Lm9yZy9wYWNrYWdlcy9xdjJyYXktZGV2LWdpdC8=">qv2ray-dev-git<i class="fa fa-external-link-alt"></i></span> (这个也停止维护了，是<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1F2MnJheS9RdjJyYXk=">Qv2ray&#x2F;qv2ray<i class="fa fa-external-link-alt"></i></span>的打包) 这个要新一点（众所周知dev版本比稳定版稳定）</p>
 <p>上面两个版本足够正常使用，但是都停止更新了。</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yay -S qv2ray-dev-git qv2ray-plugin-command-dev-git <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 5.4.0">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.1.0">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/uploads/wizard-hat-16.png">
@@ -167,7 +167,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-count">55</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -178,7 +178,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">89</span>
+        <span class="site-state-item-count">90</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -212,12 +212,6 @@
         </li>
         <li class="links-of-blogroll-item">
           <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnNhbWNodS5jbg==" title="https:&#x2F;&#x2F;blog.samchu.cn">Sam's Blog</span>
-        </li>
-        <li class="links-of-blogroll-item">
-          <span class="exturl" data-url="aHR0cHM6Ly8yMzNoc3lzd2ViLm1s" title="https:&#x2F;&#x2F;233hsysweb.ml">花花</span>
-        </li>
-        <li class="links-of-blogroll-item">
-          <span class="exturl" data-url="aHR0cDovL2Jsb2cuNzRsczc0Lm9yZy8=" title="http:&#x2F;&#x2F;blog.74ls74.org&#x2F;">江永泉</span>
         </li>
     </ul>
   </div>
@@ -319,7 +313,7 @@
 <h3 id="关于进程"><a href="#关于进程" class="headerlink" title="关于进程"></a>关于进程</h3><p>在<code>include/linux/sched.h</code>头文件里面有进程的定义（一个结构体来表示的task）</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">struct</span> <span class="token class-name">task_struct</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p>Linux系统在启动的时候会首先执行<code>start_kernel()</code>函数<span class="exturl" data-url="aHR0cHM6Ly9lbGl4aXIuYm9vdGxpbi5jb20vbGludXgvdjUuNy1yYzEvc291cmNlL2luaXQvbWFpbi5j">init/main.c<i class="fa fa-external-link-alt"></i></span>。</p>
+<p>Linux系统在启动的时候会首先执行<code>start_kernel()</code>函数<span class="exturl" data-url="aHR0cHM6Ly9lbGl4aXIuYm9vdGxpbi5jb20vbGludXgvdjUuNy1yYzEvc291cmNlL2luaXQvbWFpbi5j">init&#x2F;main.c<i class="fa fa-external-link-alt"></i></span>。</p>
 <p>首先是<code>set_task_stack_end_magic(&amp;init_task)</code>创建一个叫<code>init_task</code>的进程，一般管它叫0号进程（也就是后面的idle进程）。</p>
 <p>然后调用<code>sched_init();</code>函数初始化进程调度。</p>
 <p>然后在<code>start_kernel()</code>函数最后调用<code>rest_init</code>, 两个<code>kernel_thread</code>分别创建了一号进程（<code>init</code>）和二号进程(<code>kthreadd</code>)。</p>
@@ -339,7 +333,7 @@
 <p>一般1号进程是用户态进程，整个用户态的进程树都是它<code>fork</code>出来的。关于1号进程的介绍可以看看systemd作者写的<a target="_blank" rel="noopener" href="http://0pointer.de/blog/projects/systemd.html"><span class="exturl" data-url="aHR0cDovLzBwb2ludGVyLm5ldC9ibG9nL3Byb2plY3RzL3N5c3RlbWQuaHRtbA==">Rethinking PID 1<i class="fa fa-external-link-alt"></i></span></a> 中文翻译: <span class="exturl" data-url="aHR0cDovL2thaXdhbmdjaGVuLmdpdGh1Yi5pby8yMDE0LzEwLzA4L3N5c3RlbWQuaHRtbA==">重新思考 1 号进程<i class="fa fa-external-link-alt"></i></span></p>
 <p>2号进程是内核进程，负责管理和调度内核线程。</p>
 <p>进程描述符里面有一些调度需要的信息，比如。</p>
-<h3 id="初代调度器"><a href="#初代调度器" class="headerlink" title="初代调度器"></a>初代调度器</h3><p>初代调度器非常简单，就是一个runqueue（运行队列），源码在<span class="exturl" data-url="aHR0cHM6Ly9lbGl4aXIuYm9vdGxpbi5jb20vbGludXgvMC4xMS9zb3VyY2Uva2VybmVsL3NjaGVkLmM=">kernel/sched.c<i class="fa fa-external-link-alt"></i></span>,   我们忽略掉系统调用和printk日志以及floppy之类的，只看调度部分：</p>
+<h3 id="初代调度器"><a href="#初代调度器" class="headerlink" title="初代调度器"></a>初代调度器</h3><p>初代调度器非常简单，就是一个runqueue（运行队列），源码在<span class="exturl" data-url="aHR0cHM6Ly9lbGl4aXIuYm9vdGxpbi5jb20vbGludXgvMC4xMS9zb3VyY2Uva2VybmVsL3NjaGVkLmM=">kernel&#x2F;sched.c<i class="fa fa-external-link-alt"></i></span>,   我们忽略掉系统调用和printk日志以及floppy之类的，只看调度部分：</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">/*
  *  'schedule()' is the scheduler function. This is GOOD CODE! There
  * probably won't be any reason to change this, as it should work well
@@ -456,9 +450,9 @@ repeat<span class="token operator">:</span>	current<span class="token operator">
 <h3 id="O-n-调度器"><a href="#O-n-调度器" class="headerlink" title="O(n)调度器"></a>O(n)调度器</h3><p>早期的调度器是和UNIX的差不多，就是O(n)调度器。</p>
 <p>O(n)调度器是用runqueue（运行队列），和初代调度器不同的是CPU每个核都有一个runqueue。</p>
 <h3 id="O-1-调度器"><a href="#O-1-调度器" class="headerlink" title="O(1)调度器"></a>O(1)调度器</h3><p>2.6版本</p>
-<p>O(1)调度器比较适合服务器，基本上做到了将I/O利用率最大化。</p>
+<p>O(1)调度器比较适合服务器，基本上做到了将I&#x2F;O利用率最大化。</p>
 <p>静态优先级（一般叫nice值）</p>
-<h3 id="CFS"><a href="#CFS" class="headerlink" title="CFS"></a>CFS</h3><p>CFS调度器（Completely Fair Scheduler），用的最广的一个（从2.6开始Linux内核主线默认就是他）。CFS的意思是完全公平调度器，完全公平是说每一个进程在一个周期时间内运行相同的时间。在一个生命周期<code>T</code>内，<code>N</code>个task占用CPU的时间均为$T/N$</p>
+<h3 id="CFS"><a href="#CFS" class="headerlink" title="CFS"></a>CFS</h3><p>CFS调度器（Completely Fair Scheduler），用的最广的一个（从2.6开始Linux内核主线默认就是他）。CFS的意思是完全公平调度器，完全公平是说每一个进程在一个周期时间内运行相同的时间。在一个生命周期<code>T</code>内，<code>N</code>个task占用CPU的时间均为$T&#x2F;N$</p>
 <p>CFS是一个红黑树实现的。是几种调度器中实现很复杂的一个调度器，源码在这里：<span class="exturl" data-url="aHR0cHM6Ly9lbGl4aXIuYm9vdGxpbi5jb20vbGludXgvbGF0ZXN0L3NvdXJjZS9rZXJuZWwvc2NoZWQvZmFpci5j">sched_fair.c Linux Kernel Source<i class="fa fa-external-link-alt"></i></span></p>
 <p>文档在这里：<span class="exturl" data-url="aHR0cHM6Ly93d3cua2VybmVsLm9yZy9kb2MvRG9jdW1lbnRhdGlvbi9zY2hlZHVsZXIvc2NoZWQtZGVzaWduLUNGUy50eHQ=">https://www.kernel.org/doc/Documentation/scheduler/sched-design-CFS.txt<i class="fa fa-external-link-alt"></i></span></p>
 <p>调度实体sched_entity，虚拟运行时间vruntime</p>
@@ -488,10 +482,10 @@ F S   <span class="token environment constant">UID</span>     PID    <span class
 <h3 id="多核"><a href="#多核" class="headerlink" title="多核"></a>多核</h3><p>CPU的每个核都有一个runqueue</p>
 <h3 id="组调度"><a href="#组调度" class="headerlink" title="组调度"></a>组调度</h3><p>本来打算先跳过这一部分的，以后写cgroup的时候再说。但是这个东西对桌面的优化很重要，比如这个很老的补丁。</p>
 <p><span class="exturl" data-url="aHR0cHM6Ly93d3cucGhvcm9uaXguY29tL3NjYW4ucGhwP3BhZ2U9YXJ0aWNsZSZpdGVtPWxpbnV4XzI2MzdfdmlkZW8mbnVtPTE=">The ~200 Line Linux Kernel Patch That Does Wonders<i class="fa fa-external-link-alt"></i></span></p>
-<p><span class="exturl" data-url="aHR0cHM6Ly9tYXJjLmluZm8vP2w9bGludXgta2VybmVsJm09MTI4OTc4MzYxNzAwODk4Jnc9Mg==">Re: [RFC/RFT PATCH v3] sched: automated per tty task groups<i class="fa fa-external-link-alt"></i></span> </p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9tYXJjLmluZm8vP2w9bGludXgta2VybmVsJm09MTI4OTc4MzYxNzAwODk4Jnc9Mg==">Re: [RFC&#x2F;RFT PATCH v3] sched: automated per tty task groups<i class="fa fa-external-link-alt"></i></span> </p>
 <p>现在Linux的调度策略比较多，不同用户通过组调度进行资源的分配和隔离。说到这里你是不是想起了cgroup，对，这个东西就是用cgroup实现的。</p>
 <h3 id="其他的调度器"><a href="#其他的调度器" class="headerlink" title="其他的调度器"></a>其他的调度器</h3><p>官方不支持调度器像kernel module一样做成可插拔的，所以其他魔改的调度策略通常单独做一个内核。</p>
-<h2 id="适合桌面的进程调度"><a href="#适合桌面的进程调度" class="headerlink" title="适合桌面的进程调度"></a>适合桌面的进程调度</h2><p>Linux的一些设计和参数偏向服务器、嵌入式设备等用途，毕竟普通桌面用户的意见加起来都比不上半个红帽。<br>IO调度没关系，反正有个SSD就完全够了，用NOOP调度甚至直接不要IO调度都没关系。<br>进程调度就不太行了，默认的CFS (Completely Fair Scheduler)调度非常不适合日常桌面使用。<br>通常服务器多是I/O密集型任务，而桌面（Desktop Enviroment，比如KDE和GNOME这种）需要快速响应（低延迟）和不断切换任务，CFS就不适合了（没法做到不断的切换优先级和抢占）。</p>
+<h2 id="适合桌面的进程调度"><a href="#适合桌面的进程调度" class="headerlink" title="适合桌面的进程调度"></a>适合桌面的进程调度</h2><p>Linux的一些设计和参数偏向服务器、嵌入式设备等用途，毕竟普通桌面用户的意见加起来都比不上半个红帽。<br>IO调度没关系，反正有个SSD就完全够了，用NOOP调度甚至直接不要IO调度都没关系。<br>进程调度就不太行了，默认的CFS (Completely Fair Scheduler)调度非常不适合日常桌面使用。<br>通常服务器多是I&#x2F;O密集型任务，而桌面（Desktop Enviroment，比如KDE和GNOME这种）需要快速响应（低延迟）和不断切换任务，CFS就不适合了（没法做到不断的切换优先级和抢占）。</p>
 <p>比如编译、看视频CPU硬解码、玩游戏，负载高了之后，如果用CFS调度桌面会非常卡，极大影响体验。</p>
 <p>好吧这不太符合Unix哲学，你在terminal里面用管道</p>
 <p>麻醉师Con Kolivas针对桌面系统做的BFS（后来改名叫MuQSS了）</p>
@@ -499,7 +493,7 @@ F S   <span class="token environment constant">UID</span>     PID    <span class
 <h2 id="服务器进程调度"><a href="#服务器进程调度" class="headerlink" title="服务器进程调度"></a>服务器进程调度</h2><p>大多数服务器默认的CFS以及足够合适了。</p>
 <p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1RlbmNlbnQvVGVuY2VudE9TLWtlcm5lbCMlRTclQTYlQkIlRTclQkElQkYlRTglQjAlODMlRTUlQkElQTYlRTclQUUlOTclRTYlQjMlOTVidA==">https://github.com/Tencent/TencentOS-kernel#离线调度算法bt<i class="fa fa-external-link-alt"></i></span></p>
 <h2 id="更改进程调度"><a href="#更改进程调度" class="headerlink" title="更改进程调度"></a>更改进程调度</h2><h3 id="chrt更改调度策略"><a href="#chrt更改调度策略" class="headerlink" title="chrt更改调度策略"></a>chrt更改调度策略</h3><p>使用见<span class="exturl" data-url="aHR0cDovL2Jsb2cubHVqdW45OTcyLndpbi9ibG9nLzIwMTgvMDgvMjgvJUU0JUJEJUJGJUU3JTk0JUE4Y2hydCVFNCVCRiVBRSVFNiU5NCVCOSVFOCVCRiU5QiVFNyVBOCU4QiVFOCVCMCU4MyVFNSVCQSVBNiVFNyVBRCU5NiVFNyU5NSVBNSVFNSU4RiU4QSVFNCVCQyU5OCVFNSU4NSU4OCVFNyVCQSVBNy9pbmRleC5odG1s">使用chrt修改进程调度策略及优先级<i class="fa fa-external-link-alt"></i></span></p>
-<h3 id="内核选择"><a href="#内核选择" class="headerlink" title="内核选择"></a>内核选择</h3><p><em>选择非官方支持的内核请谨慎，因为可能有很多不兼容的问题。</em>没有特别需求和强迫症还是推荐使用有官方支持的内核，比如Archlinux官方源支持维护``linux<code>（没啥特殊偏好就这个呗），</code>linux-lts<code>（lts版，不想天天更新内核就用这个）， </code>linux-zen<code>（跟AMD的zen关系不太大，主要是针对桌面的），</code>linux-harended`（有安全加固，会牺牲一定性能）</p>
+<h3 id="内核选择"><a href="#内核选择" class="headerlink" title="内核选择"></a>内核选择</h3><p><em>选择非官方支持的内核请谨慎，因为可能有很多不兼容的问题。</em>没有特别需求和强迫症还是推荐使用有官方支持的内核，比如Archlinux官方源支持维护&#96;&#96;linux<code>（没啥特殊偏好就这个呗），</code>linux-lts<code>（lts版，不想天天更新内核就用这个）， </code>linux-zen<code>（跟AMD的zen关系不太大，主要是针对桌面的），</code>linux-harended&#96;（有安全加固，会牺牲一定性能）</p>
 <p><code>linux</code>这个包的调度器是CFS，大多数情况下表现都不差。（lts当然也是喽）</p>
 <p>如果你是桌面用户，对性能和延迟有需求，可以试试linux-ck、linux-zen、linux-xanmod、linux-tgk等一堆针对桌面和性能优化的内核。<code>linux-ck</code>的调度器是MuQSS。xanmod的调度器可以选cauche。</p>
 <p>我个人体验是xanmod内核的延迟最低（直接拯救了我玩空洞骑士时肉眼可见的延迟）。玩OSU音游的喜欢用linux-zen，这个包是官方维护，比较省心，xanmod延迟虽然跑分上比这个低，对延迟要求不苛刻、反应慢的，可能体验不出来太大区别。</p>
@@ -508,7 +502,7 @@ F S   <span class="token environment constant">UID</span>     PID    <span class
 <p>如果要用btrfs或者cgroups，请注意MuQSS兼容性不太好。</p>
 <p>Archlinux直接AUR编译就行了。不过很多人换ck内核是因为老机器性能不好，找一个编译好的源（比如repo-ck）或者在别的机子上编译一个吧。</p>
 <h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><span class="exturl" data-url="aHR0cHM6Ly9sd24ubmV0L0FydGljbGVzLzcyMDIyNy8=">https://lwn.net/Articles/720227/<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cubGludXgtbWFnYXppbmUuY29tL09ubGluZS9OZXdzL0Nvbi1Lb2xpdmFzLUludHJvZHVjZXMtTmV3LUJGUy1TY2hlZHVsZXI=">https://www.linux-magazine.com/Online/News/Con-Kolivas-Introduces-New-BFS-Scheduler<i class="fa fa-external-link-alt"></i></span></p>
-<p>为什么Linux CFS调度器没有带来惊艳的碾压效果<br><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2RvZzI1MC9hcnRpY2xlL2RldGFpbHMvOTY1MDAxODY=">Linux桌面GUI系统的调度器应该怎么做才不卡顿呢？<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2RvZzI1MC9hcnRpY2xlL2RldGFpbHMvOTYzNjI3ODk=">为什么Windows/iOS操作很流畅而Linux/Android却很卡顿呢<i class="fa fa-external-link-alt"></i></span> dog250这位博主在CSDN上从2009年开始，一直在写，文章还不错（不要因为CSDN就不看啊，这是早期良心用户）。这样的稀有博主是我一直没舍得狠下心屏蔽CSDN的原因（颇有一种在垃圾坑里淘宝的感觉）</p>
+<p>为什么Linux CFS调度器没有带来惊艳的碾压效果<br><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2RvZzI1MC9hcnRpY2xlL2RldGFpbHMvOTY1MDAxODY=">Linux桌面GUI系统的调度器应该怎么做才不卡顿呢？<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2RvZzI1MC9hcnRpY2xlL2RldGFpbHMvOTYzNjI3ODk=">为什么Windows&#x2F;iOS操作很流畅而Linux&#x2F;Android却很卡顿呢<i class="fa fa-external-link-alt"></i></span> dog250这位博主在CSDN上从2009年开始，一直在写，文章还不错（不要因为CSDN就不看啊，这是早期良心用户）。这样的稀有博主是我一直没舍得狠下心屏蔽CSDN的原因（颇有一种在垃圾坑里淘宝的感觉）</p>
 <p><span class="exturl" data-url="aHR0cHM6Ly9kcmF2ZW5lc3MubWUvc3lzdGVtLWRlc2lnbi1zY2hlZHVsZXIv">调度系统设计精要 - 面向信仰编程<i class="fa fa-external-link-alt"></i></span></p>
 <p><span class="exturl" data-url="aHR0cDovL2NrLmtvbGl2YXMub3JnLw==">http://ck.kolivas.org/<i class="fa fa-external-link-alt"></i></span></p>
 <p><span class="exturl" data-url="aHR0cHM6Ly9saXF1b3JpeC5uZXQv">https://liquorix.net/<i class="fa fa-external-link-alt"></i></span> 这个内核是基于zen内核加了一些其他的补丁和改动（有ck补丁，但是没有MuQSS，原因<code>I&#39;m severely prejudiced against MuQSS, so it will continue &quot;giving a null&quot;.</code>, 见这里<span class="exturl" data-url="aHR0cHM6Ly9idWdzLmFyY2hsaW51eC5vcmcvdGFzay81NjMxMiVFRiVCQyU4OQ==">https://bugs.archlinux.org/task/56312）<i class="fa fa-external-link-alt"></i></span></p>

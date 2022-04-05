@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 5.4.0">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.1.0">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/uploads/wizard-hat-16.png">
@@ -154,7 +154,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#printk"><span class="nav-number">1.</span> <span class="nav-text">printk()</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Kernel-Panic-%E5%90%8E%E6%9D%A5%E4%B8%8D%E5%8F%8Aprintk"><span class="nav-number">1.1.</span> <span class="nav-text">Kernel Panic 后来不及printk</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#proc-sys%E7%AD%89%E7%9B%AE%E5%BD%95"><span class="nav-number">2.</span> <span class="nav-text">&#x2F;proc&#x2F;sys等目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E5%B7%A5%E5%85%B7"><span class="nav-number">3.</span> <span class="nav-text">其他工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#qemu%E7%AD%89%E6%A8%A1%E6%8B%9F%E5%99%A8-%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="nav-number">4.</span> <span class="nav-text">qemu等模拟器&#x2F;虚拟机</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#gdb-qemu"><span class="nav-number">4.1.</span> <span class="nav-text">gdb+qemu</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E7%8E%AF%E5%A2%83"><span class="nav-number">5.</span> <span class="nav-text">其他环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E6%9C%BA%EF%BC%88%E6%AF%94%E5%A6%82Linux%E6%A1%8C%E9%9D%A2%E5%8F%91%E8%A1%8C%E7%89%88%EF%BC%89"><span class="nav-number">5.1.</span> <span class="nav-text">物理机（比如Linux桌面发行版）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E6%9D%BF%E6%88%96%E8%A3%B8%E6%9C%BA"><span class="nav-number">5.2.</span> <span class="nav-text">开发板或裸机</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%83%E8%AF%95%E7%9A%84%E5%8E%9F%E7%90%86"><span class="nav-number">6.</span> <span class="nav-text">调试的原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#gdb"><span class="nav-number">6.1.</span> <span class="nav-text">gdb</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#printk-1"><span class="nav-number">6.2.</span> <span class="nav-text">printk</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#systemtap"><span class="nav-number">6.3.</span> <span class="nav-text">systemtap</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%A0%E7%9C%9F%E7%9A%84%E9%9C%80%E8%A6%81Debugger%E5%90%97"><span class="nav-number">7.</span> <span class="nav-text">你真的需要Debugger吗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%93%BE%E6%8E%A5"><span class="nav-number">8.</span> <span class="nav-text">链接</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#printk"><span class="nav-number">1.</span> <span class="nav-text">printk()</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Kernel-Panic-%E5%90%8E%E6%9D%A5%E4%B8%8D%E5%8F%8Aprintk"><span class="nav-number">1.1.</span> <span class="nav-text">Kernel Panic 后来不及printk</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#x2F-proc-x2F-sys%E7%AD%89%E7%9B%AE%E5%BD%95"><span class="nav-number">2.</span> <span class="nav-text">&#x2F;proc&#x2F;sys等目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E5%B7%A5%E5%85%B7"><span class="nav-number">3.</span> <span class="nav-text">其他工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#qemu%E7%AD%89%E6%A8%A1%E6%8B%9F%E5%99%A8-x2F-%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="nav-number">4.</span> <span class="nav-text">qemu等模拟器&#x2F;虚拟机</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#gdb-qemu"><span class="nav-number">4.1.</span> <span class="nav-text">gdb+qemu</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E7%8E%AF%E5%A2%83"><span class="nav-number">5.</span> <span class="nav-text">其他环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E6%9C%BA%EF%BC%88%E6%AF%94%E5%A6%82Linux%E6%A1%8C%E9%9D%A2%E5%8F%91%E8%A1%8C%E7%89%88%EF%BC%89"><span class="nav-number">5.1.</span> <span class="nav-text">物理机（比如Linux桌面发行版）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E6%9D%BF%E6%88%96%E8%A3%B8%E6%9C%BA"><span class="nav-number">5.2.</span> <span class="nav-text">开发板或裸机</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%83%E8%AF%95%E7%9A%84%E5%8E%9F%E7%90%86"><span class="nav-number">6.</span> <span class="nav-text">调试的原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#gdb"><span class="nav-number">6.1.</span> <span class="nav-text">gdb</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#printk-1"><span class="nav-number">6.2.</span> <span class="nav-text">printk</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#systemtap"><span class="nav-number">6.3.</span> <span class="nav-text">systemtap</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%A0%E7%9C%9F%E7%9A%84%E9%9C%80%E8%A6%81Debugger%E5%90%97"><span class="nav-number">7.</span> <span class="nav-text">你真的需要Debugger吗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%93%BE%E6%8E%A5"><span class="nav-number">8.</span> <span class="nav-text">链接</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -169,7 +169,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-count">55</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -180,7 +180,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">89</span>
+        <span class="site-state-item-count">90</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -214,12 +214,6 @@
         </li>
         <li class="links-of-blogroll-item">
           <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnNhbWNodS5jbg==" title="https:&#x2F;&#x2F;blog.samchu.cn">Sam's Blog</span>
-        </li>
-        <li class="links-of-blogroll-item">
-          <span class="exturl" data-url="aHR0cHM6Ly8yMzNoc3lzd2ViLm1s" title="https:&#x2F;&#x2F;233hsysweb.ml">花花</span>
-        </li>
-        <li class="links-of-blogroll-item">
-          <span class="exturl" data-url="aHR0cDovL2Jsb2cuNzRsczc0Lm9yZy8=" title="http:&#x2F;&#x2F;blog.74ls74.org&#x2F;">江永泉</span>
         </li>
     </ul>
   </div>
@@ -317,11 +311,11 @@
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token function">printk</span><span class="token punctuation">(</span>KERN_WARNING <span class="token string">"这里好像有问题，打印一下"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <h3 id="Kernel-Panic-后来不及printk"><a href="#Kernel-Panic-后来不及printk" class="headerlink" title="Kernel Panic 后来不及printk"></a>Kernel Panic 后来不及printk</h3><p>printk是异步的<br><code>printk.synchronous=1</code></p>
-<p>printk()有一个问题，每次想添加printk()的时候都要重新编译（6.S081/6.828用的教学xv6那种几千行代码的玩具操作系统还好办，Linux内核这样庞大的东西CPU不太好的时候要编译很久的）</p>
-<h2 id="proc-sys等目录"><a href="#proc-sys等目录" class="headerlink" title="/proc/sys等目录"></a>/proc/sys等目录</h2><p>这几个目录比较重要，临时修改参数可以用</p>
+<p>printk()有一个问题，每次想添加printk()的时候都要重新编译（6.S081&#x2F;6.828用的教学xv6那种几千行代码的玩具操作系统还好办，Linux内核这样庞大的东西CPU不太好的时候要编译很久的）</p>
+<h2 id="x2F-proc-x2F-sys等目录"><a href="#x2F-proc-x2F-sys等目录" class="headerlink" title="&#x2F;proc&#x2F;sys等目录"></a>&#x2F;proc&#x2F;sys等目录</h2><p>这几个目录比较重要，临时修改参数可以用</p>
 <h2 id="其他工具"><a href="#其他工具" class="headerlink" title="其他工具"></a>其他工具</h2><p>systemtap，相当于一个kprobe的封装</p>
-<h2 id="qemu等模拟器-虚拟机"><a href="#qemu等模拟器-虚拟机" class="headerlink" title="qemu等模拟器/虚拟机"></a>qemu等模拟器/虚拟机</h2><p>虚拟机里面比较简单，有很多方便的方案可以将日志、页表、堆栈调用给你打印出来。</p>
-<h3 id="gdb-qemu"><a href="#gdb-qemu" class="headerlink" title="gdb+qemu"></a>gdb+qemu</h3><p>下面以6.S081/6.828为例：</p>
+<h2 id="qemu等模拟器-x2F-虚拟机"><a href="#qemu等模拟器-x2F-虚拟机" class="headerlink" title="qemu等模拟器&#x2F;虚拟机"></a>qemu等模拟器&#x2F;虚拟机</h2><p>虚拟机里面比较简单，有很多方便的方案可以将日志、页表、堆栈调用给你打印出来。</p>
+<h3 id="gdb-qemu"><a href="#gdb-qemu" class="headerlink" title="gdb+qemu"></a>gdb+qemu</h3><p>下面以6.S081&#x2F;6.828为例：</p>
 <p>按照课程的推荐装一个合适的gdb（gdb要支持相应的架构，），比如我要调试的内核是RISC-Ⅴ的，在Archlinux下应该是<code>riscv64-linux-gnu-gdb</code>, 在Ubuntu20.04下可以用<code>gdb-multiarch</code>。</p>
 <p>然后打开两个terminal，第一个执行<code>make qemu-gdb</code>启动qemu模拟器， 第二个执行gdb<code>gdb-multiarch</code>。</p>
 <p>这样就可以愉快的用gdb调试了，具体操作见另一篇。（太长不看版，就是普通程序gdb怎么调试这里就怎么调呗）</p>
@@ -348,7 +342,7 @@
 <p>If you dive into the bug, you tend to fix the local issue in the code, but if you think about the bug first, how the bug came to be, you often find and correct a higher-level problem in the code that will improve the design and prevent further bugs.</p>
 </blockquote>
 <p>我试着不用gdb调试、语法高亮和代码补全做了6.S081的Lab1，结果相当惨烈。这几天回去翻出了藏在柜子里面的k&amp;r，从图书馆拿来了《c陷阱和指针》和《debug hacks》，并给VSCode启用了clangd自动补全并配置了断点调试。（我甚至想掏出clion了）</p>
-<p>如果你像我一样菜，去找/买个大屏幕（最好能竖过来），然后打开你的debugger<br>（强烈推荐4k显示器，画质飞跃，头也不疼眼也不花了）</p>
+<p>如果你像我一样菜，去找&#x2F;买个大屏幕（最好能竖过来），然后打开你的debugger<br>（强烈推荐4k显示器，画质飞跃，头也不疼眼也不花了）</p>
 <p>（据说一个大的显示屏有buff加成，据说，据说再在旁边摆一个小显示器开个终端也不错）</p>
 <p>当然，有的时候你也只是想找一下驱动的bug并汇报给厂家，或者你只是个普通用户，想检查一下内核更新后开不了机的问题；掏出调试工具吧！</p>
 <h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p>《Debug Hacks 深入调试的技术和工具》 （吉冈弘隆） 这本书讲的很好，这还是之前我在图书馆乱逛无意间翻到的，结果发现是讲内核的，当时根本看不懂。今天又从图书馆翻出来了，发现讲的还挺好。</p>

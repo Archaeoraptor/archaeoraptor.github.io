@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 5.4.0">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.1.0">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/uploads/wizard-hat-16.png">
@@ -168,7 +168,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-count">55</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -179,7 +179,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">89</span>
+        <span class="site-state-item-count">90</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -213,12 +213,6 @@
         </li>
         <li class="links-of-blogroll-item">
           <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnNhbWNodS5jbg==" title="https:&#x2F;&#x2F;blog.samchu.cn">Sam's Blog</span>
-        </li>
-        <li class="links-of-blogroll-item">
-          <span class="exturl" data-url="aHR0cHM6Ly8yMzNoc3lzd2ViLm1s" title="https:&#x2F;&#x2F;233hsysweb.ml">花花</span>
-        </li>
-        <li class="links-of-blogroll-item">
-          <span class="exturl" data-url="aHR0cDovL2Jsb2cuNzRsczc0Lm9yZy8=" title="http:&#x2F;&#x2F;blog.74ls74.org&#x2F;">江永泉</span>
         </li>
     </ul>
   </div>
@@ -310,7 +304,7 @@
         <p>太长不看：就是把原来内核的OOM killer挪到用户空间（userspace）去，这样就可以在系统卡住之前（通常桌面卡住的时候OOM killer认为还不用kill）提前kill掉占内存最大的一个，让桌面和鼠标可以正常工作。</p>
 <span id="more"></span>
 
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>先来看phoronix的一个报道：<span class="exturl" data-url="aHR0cHM6Ly93d3cucGhvcm9uaXguY29tL3NjYW4ucGhwP3BhZ2U9bmV3c19pdGVtJnB4PUxpbnV4LURvZXMtQmFkLUxvdy1SQU0=">Yes, Linux Does Bad In Low RAM / Memory Pressure Situations On The Desktop<i class="fa fa-external-link-alt"></i></span>  </p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>先来看phoronix的一个报道：<span class="exturl" data-url="aHR0cHM6Ly93d3cucGhvcm9uaXguY29tL3NjYW4ucGhwP3BhZ2U9bmV3c19pdGVtJnB4PUxpbnV4LURvZXMtQmFkLUxvdy1SQU0=">Yes, Linux Does Bad In Low RAM &#x2F; Memory Pressure Situations On The Desktop<i class="fa fa-external-link-alt"></i></span>  </p>
 <p>Linux桌面在小内存、内存紧张的情况下表现很差。（用过Linux现在桌面的相信都有这种感受）</p>
 <p>解决内存不足、内存耗尽的<strong>最好办法还是加钱多装几根内存条</strong>，什么swap、zram还有本文的earlyoom和oomd都是权宜之计。 </p>
 <h2 id="OOM简介"><a href="#OOM简介" class="headerlink" title="OOM简介"></a>OOM简介</h2><p>OOM很多人应该都很熟悉了，服务器上跑的任务申请内存超过了可用内存就会发生OOM（其实是可以Overcommit的，这个以后再说）</p>

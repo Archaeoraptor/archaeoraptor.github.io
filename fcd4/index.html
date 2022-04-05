@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 5.4.0">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.1.0">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/uploads/wizard-hat-16.png">
@@ -167,7 +167,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-count">55</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -178,7 +178,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">89</span>
+        <span class="site-state-item-count">90</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -212,12 +212,6 @@
         </li>
         <li class="links-of-blogroll-item">
           <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnNhbWNodS5jbg==" title="https:&#x2F;&#x2F;blog.samchu.cn">Sam's Blog</span>
-        </li>
-        <li class="links-of-blogroll-item">
-          <span class="exturl" data-url="aHR0cHM6Ly8yMzNoc3lzd2ViLm1s" title="https:&#x2F;&#x2F;233hsysweb.ml">花花</span>
-        </li>
-        <li class="links-of-blogroll-item">
-          <span class="exturl" data-url="aHR0cDovL2Jsb2cuNzRsczc0Lm9yZy8=" title="http:&#x2F;&#x2F;blog.74ls74.org&#x2F;">江永泉</span>
         </li>
     </ul>
   </div>
@@ -314,7 +308,7 @@
 <h3 id="AR模型及功率谱的估计"><a href="#AR模型及功率谱的估计" class="headerlink" title="AR模型及功率谱的估计"></a>AR模型及功率谱的估计</h3><p>主要有前向预测的L-D法，Burg法，Marple法，矩阵分解等算法，此外还有极大似然估计等估计方法。<br>Burg算法和Marple算法都是求前向预测和后向预测误差之和最小，Burg算法较为常用。Marple算法很容易受噪声影响导致不稳定。</p>
 <p>Burg算法对于高斯随机过程等价于最大熵算法</p>
 <p>AR功率谱估计可以突破较短序列由于序列长度N过短对于频率分辨率的限制。经典谱估计的频率分辨率约为</p>
-<p>$$\Delta f={fs \over N}$$</p>
+<p>$$\Delta f&#x3D;{fs \over N}$$</p>
 <p>AR法通过前向和后向预测外推，突破了短序列长度N的限制（N点长序列相当于长序列加窗，频率分辨率受限于主瓣宽度）。但是AR法仍然无法突破奈奎斯特采样定理$\frac{fs}{2}$的限制。要想突破采样定理，只有在特定的条件下采用<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8yMjQ0NTMwMg==">压缩感知<i class="fa fa-external-link-alt"></i></span>等方法改变采样方式，如磁共振重建。</p>
 <p>几种功率谱估计的比较</p>
 <ol>
@@ -323,13 +317,13 @@
 </ol>
 <h3 id="函数包"><a href="#函数包" class="headerlink" title="函数包"></a>函数包</h3><p>这些算法基本都有成熟的工具包<br>比如matlab中：</p>
 <ol>
-<li>pyulear.m  用AR模型的自相关法估计信号的功率谱，其基本调用格式是：<br>[Px,  F] = pyulear(x, order, Nfft, Fs)</li>
+<li>pyulear.m  用AR模型的自相关法估计信号的功率谱，其基本调用格式是：<br>[Px,  F] &#x3D; pyulear(x, order, Nfft, Fs)</li>
 <li>pburg.m  用AR模型的Burg算法估计信号的功率谱，调用格式与pyulear类似</li>
 <li>pcov.m  用AR模型方差方法估计信号的功率谱</li>
 <li>pmcov.m  用AR模型的改进的方差方法估计信号的功率谱</li>
 <li>pmem.m  最大熵功率谱估计，其估计性能类似pyulear</li>
 <li>pmusic.m  用自相关矩阵分解的MUSIC算法估计信号的功率谱</li>
-<li>peig.m  用自相关矩阵分解的特征向量<br>法估计信号的功率谱，其基本调用格式是：<br>[Px,  F] = peig(x, order, Nfft, Fs),<br>[Px, F，V, E] = peig(x, order, Nfft, Fs),<br>x :信号向量，order:模型的阶次，Fs:抽样频率，Nfft:对x作FFT时的长度。Px:估计出的功率谱，F是频率轴坐标。对peig, 输出的E 是由自相关矩阵的特征值所组成的向量，V是由特征向量组成的矩阵。V的列向量张成了噪声子空间，V的行数减去列数即是信号子空间的维数。</li>
+<li>peig.m  用自相关矩阵分解的特征向量<br>法估计信号的功率谱，其基本调用格式是：<br>[Px,  F] &#x3D; peig(x, order, Nfft, Fs),<br>[Px, F，V, E] &#x3D; peig(x, order, Nfft, Fs),<br>x :信号向量，order:模型的阶次，Fs:抽样频率，Nfft:对x作FFT时的长度。Px:估计出的功率谱，F是频率轴坐标。对peig, 输出的E 是由自相关矩阵的特征值所组成的向量，V是由特征向量组成的矩阵。V的列向量张成了噪声子空间，V的行数减去列数即是信号子空间的维数。</li>
 <li>直接得到模型有aryulear、arburg等函数，用法：<br>arburg(x,order)</li>
 </ol>
 <!-- flag of hidden posts -->

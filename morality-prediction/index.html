@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 5.4.0">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.1.0">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/uploads/wizard-hat-16.png">
@@ -31,7 +31,7 @@
 <meta property="og:site_name" content="止息的博客">
 <meta property="og:description" content="更新：推荐使用新版的MIMIC数据库自行构建数据集，并尝试整合eICU的病人数据。据说LSTM等方法效果不错，可以试试。处理过程已经放在github上了：https:&#x2F;&#x2F;github.com&#x2F;Archaeoraptor&#x2F;AMI_morality_prediction.git">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://zhangjk98.xyz/morality-prediction/%E6%95%B0%E6%8D%AE%E6%8F%90%E5%8F%96%E6%B5%81%E7%A8%8B.svg">
+<meta property="og:image" content="https://zhangjk98.xyz/%E6%95%B0%E6%8D%AE%E6%8F%90%E5%8F%96%E6%B5%81%E7%A8%8B.svg">
 <meta property="og:image" content="https://zhangjk98.xyz/morality-prediction/image-20200603192151696.png">
 <meta property="og:image" content="https://zhangjk98.xyz/morality-prediction/image-20200531203632378.png">
 <meta property="og:image" content="https://zhangjk98.xyz/morality-prediction/image-20200531210528257.png">
@@ -39,7 +39,7 @@
 <meta property="article:author" content="Zhang.j.k">
 <meta property="article:tag" content="MIMIC">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://zhangjk98.xyz/morality-prediction/%E6%95%B0%E6%8D%AE%E6%8F%90%E5%8F%96%E6%B5%81%E7%A8%8B.svg">
+<meta name="twitter:image" content="https://zhangjk98.xyz/%E6%95%B0%E6%8D%AE%E6%8F%90%E5%8F%96%E6%B5%81%E7%A8%8B.svg">
 
 
 <link rel="canonical" href="https://zhangjk98.xyz/morality-prediction/">
@@ -171,7 +171,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-count">55</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -182,7 +182,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">89</span>
+        <span class="site-state-item-count">90</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -216,12 +216,6 @@
         </li>
         <li class="links-of-blogroll-item">
           <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnNhbWNodS5jbg==" title="https:&#x2F;&#x2F;blog.samchu.cn">Sam's Blog</span>
-        </li>
-        <li class="links-of-blogroll-item">
-          <span class="exturl" data-url="aHR0cHM6Ly8yMzNoc3lzd2ViLm1s" title="https:&#x2F;&#x2F;233hsysweb.ml">花花</span>
-        </li>
-        <li class="links-of-blogroll-item">
-          <span class="exturl" data-url="aHR0cDovL2Jsb2cuNzRsczc0Lm9yZy8=" title="http:&#x2F;&#x2F;blog.74ls74.org&#x2F;">江永泉</span>
         </li>
     </ul>
   </div>
@@ -326,7 +320,7 @@
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">wget</span> -r -N -c -np --user username --ask-password https://physionet.org/files/mimiciv/0.4/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>下载好建库的时候记得建索引，不然后续操作会很慢</p>
-<h2 id="患者筛选"><a href="#患者筛选" class="headerlink" title="患者筛选"></a>患者筛选</h2><p>在MIMIC数据库中提取ICD-9疾病编号为410大类、疾病名称为 acute myocardial infarction的相关病人全部住院记录。数据表DIAGNOSE_ICD中的ICD9_CODE字段记录了患者的ICD-9编码，其中410大类编码根据发病部位被分为10个小类，例如第1个小类代表发病部位为前外侧壁、第2个小类代表发病部位为下外侧壁；这10 个小类又根据发病时期分为3个小类，0代表未细分，1代表初次入院，2代表再入院；例如，MIMIC数据库中ICD9_CODE字段为41031，对应的ICD-9编码为410.3.1，其中410代表急性心肌梗死，3代表下后壁，1代表初次入院。<br><img src="%E6%95%B0%E6%8D%AE%E6%8F%90%E5%8F%96%E6%B5%81%E7%A8%8B.svg" alt="数据提取示意图"></p>
+<h2 id="患者筛选"><a href="#患者筛选" class="headerlink" title="患者筛选"></a>患者筛选</h2><p>在MIMIC数据库中提取ICD-9疾病编号为410大类、疾病名称为 acute myocardial infarction的相关病人全部住院记录。数据表DIAGNOSE_ICD中的ICD9_CODE字段记录了患者的ICD-9编码，其中410大类编码根据发病部位被分为10个小类，例如第1个小类代表发病部位为前外侧壁、第2个小类代表发病部位为下外侧壁；这10 个小类又根据发病时期分为3个小类，0代表未细分，1代表初次入院，2代表再入院；例如，MIMIC数据库中ICD9_CODE字段为41031，对应的ICD-9编码为410.3.1，其中410代表急性心肌梗死，3代表下后壁，1代表初次入院。<br><img src="/%E6%95%B0%E6%8D%AE%E6%8F%90%E5%8F%96%E6%B5%81%E7%A8%8B.svg" alt="数据提取示意图"></p>
 <p>提取到的除后续照顾类别以外的410大类患者数据中，共有5087次入院记录，去除同一患者重复的入院记录，共有4788名病人患有急性心肌梗死（包括同时患有急性心肌梗死的并发症），其中有727人死亡，总死亡率15.18%。男性患者共2924名，平均年龄为67.2岁，死亡391人，男性死亡率13.37%；女性患者共1864名，平均年龄为73.4岁，死亡337人,女性死亡率18.10%。统计急性心肌梗死患者人群种族信息，可以发现亚裔只有74次入院记录。<br>特征选取</p>
 <p>MIIMC里面能用的特征大概有性别年龄这些个人信息、心率血压这些生理指标、还有些用药记录之类的，为了预测患者初次发病的死亡率，只采用患者初次入院24小时内的记录检查项目作为预测指标</p>
 <p>先把24小时ICUSTAY_ID选出来</p>
@@ -395,7 +389,7 @@
 		CHARTEVENTS<span class="token punctuation">.</span>SUBJECT_ID<span class="token punctuation">,</span>
 		CHARTEVENTS<span class="token punctuation">.</span>ICUSTAY_ID<span class="token punctuation">,</span>
 		CHARTEVENTS<span class="token punctuation">.</span>CHARTTIME<span class="token punctuation">,</span>
-		CHARTEVENTS<span class="token punctuation">.</span><span class="token punctuation">`</span><span class="token keyword">VALUE</span><span class="token punctuation">`</span><span class="token punctuation">,</span>
+		CHARTEVENTS<span class="token punctuation">.</span><span class="token identifier"><span class="token punctuation">`</span>VALUE<span class="token punctuation">`</span></span><span class="token punctuation">,</span>
 		CHARTEVENTS<span class="token punctuation">.</span>VALUEUOM<span class="token punctuation">,</span>
 		CHARTEVENTS<span class="token punctuation">.</span>ERROR<span class="token punctuation">,</span>
 		TIMESTAMPDIFF<span class="token punctuation">(</span> <span class="token keyword">HOUR</span><span class="token punctuation">,</span> T<span class="token punctuation">.</span>INTIME<span class="token punctuation">,</span> CHARTEVENTS<span class="token punctuation">.</span>CHARTTIME <span class="token punctuation">)</span> STAYHOUR 
@@ -475,7 +469,7 @@
 </tr>
 <tr>
 <td>是否有血液恶性肿瘤</td>
-<td>ICD9_CODE =200XX-208XX</td>
+<td>ICD9_CODE &#x3D;200XX-208XX</td>
 </tr>
 <tr>
 <td>收缩压</td>
@@ -787,7 +781,7 @@ fpr_xgb<span class="token punctuation">,</span>tpr_xgb<span class="token punctua
 </tr>
 <tr>
 <td>services</td>
-<td>患者被接纳/转移的服务</td>
+<td>患者被接纳&#x2F;转移的服务</td>
 <td></td>
 </tr>
 <tr>
@@ -858,7 +852,7 @@ fpr_xgb<span class="token punctuation">,</span>tpr_xgb<span class="token punctua
 <tr>
 <td>LABEVENTS</td>
 <td>VALUEUOM</td>
-<td>ITEM的值 检查项目的单位（如K/uL）</td>
+<td>ITEM的值 检查项目的单位（如K&#x2F;uL）</td>
 </tr>
 <tr>
 <td>LABEVENT</td>
@@ -927,7 +921,7 @@ fpr_xgb<span class="token punctuation">,</span>tpr_xgb<span class="token punctua
 </tr>
 <tr>
 <td>是否有血液恶性肿瘤</td>
-<td>ICD9_CODE =200XX-208XX</td>
+<td>ICD9_CODE &#x3D;200XX-208XX</td>
 </tr>
 <tr>
 <td>收缩压</td>

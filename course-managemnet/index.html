@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 5.4.0">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.1.0">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/uploads/wizard-hat-16.png">
@@ -173,7 +173,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-count">55</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -184,7 +184,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">89</span>
+        <span class="site-state-item-count">90</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -218,12 +218,6 @@
         </li>
         <li class="links-of-blogroll-item">
           <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnNhbWNodS5jbg==" title="https:&#x2F;&#x2F;blog.samchu.cn">Sam's Blog</span>
-        </li>
-        <li class="links-of-blogroll-item">
-          <span class="exturl" data-url="aHR0cHM6Ly8yMzNoc3lzd2ViLm1s" title="https:&#x2F;&#x2F;233hsysweb.ml">花花</span>
-        </li>
-        <li class="links-of-blogroll-item">
-          <span class="exturl" data-url="aHR0cDovL2Jsb2cuNzRsczc0Lm9yZy8=" title="http:&#x2F;&#x2F;blog.74ls74.org&#x2F;">江永泉</span>
         </li>
     </ul>
   </div>
@@ -335,11 +329,11 @@
 <p><img src="/course-managemnet/image-20201118214736704.png" alt="后台管理"></p>
 <p><img src="/course-managemnet/image-20201118215636817.png" alt="前台界面"></p>
 <h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><h3 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h3><p>docker安装mysql8（其实不是很推荐把数据库扔到Docker里面）</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> docker pull mysql:8.0
-<span class="token function">sudo</span> docker images mysql:8.0
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">docker</span> pull mysql:8.0
+<span class="token function">sudo</span> <span class="token function">docker</span> images mysql:8.0
 <span class="token function">netstat</span> -tunlp
-docker run -p <span class="token number">3309</span>:3306 --name mysql8.0 -e <span class="token assign-left variable">MYSQL_ROOT_PASSWORD</span><span class="token operator">=</span><span class="token number">102</span>@uestc -d mysql:8.0
-docker <span class="token function">ps</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token function">docker</span> run -p <span class="token number">3309</span>:3306 --name mysql8.0 -e <span class="token assign-left variable">MYSQL_ROOT_PASSWORD</span><span class="token operator">=</span><span class="token number">102</span>@uestc -d mysql:8.0
+<span class="token function">docker</span> <span class="token function">ps</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>初始化数据库，运行</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">mycli -u root -h your_ip_address -P <span class="token number">3309</span> -p your_password<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -377,7 +371,7 @@ Time: 0.009s<span aria-hidden="true" class="line-numbers-rows"><span></span><spa
 <p>配置可以从指定的<code>application.properties</code> 中覆盖</p>
 <p>(本来是都扔在Docker里面的，发现docker images有点大，内存消耗也上去了)</p>
 <h3 id="修改配置"><a href="#修改配置" class="headerlink" title="修改配置"></a>修改配置</h3><p>将<code>src/main/resources/application.properties</code>和<code>src/test/java/CodeGenerator.java</code>中的配置文件（包括数据库端口、密码、密钥等）改成自己的</p>
-<p>或者启动的时候在``application.properties` 中覆盖</p>
+<p>或者启动的时候在&#96;&#96;application.properties&#96; 中覆盖</p>
 <h3 id="NACOS"><a href="#NACOS" class="headerlink" title="NACOS"></a>NACOS</h3><p>一个阿里的动态监控监控服务，有一个控制台。我们只要单机版就够了。还有其他的功能，暂时都没用到。</p>
 <p>阿里官方的建库脚本</p>
 <p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FsaWJhYmEvbmFjb3MvYmxvYi9tYXN0ZXIvZGlzdHJpYnV0aW9uL2NvbmYvbmFjb3MtbXlzcWwuc3Fs">https://github.com/alibaba/nacos/blob/master/distribution/conf/nacos-mysql.sql<i class="fa fa-external-link-alt"></i></span></p>
@@ -439,10 +433,10 @@ mvn -Prelease-nacos -Dmaven.test.skip<span class="token operator">=</span>true c
 COPY default.conf &#x2F;etc&#x2F;nginx&#x2F;conf.d&#x2F;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>构建<code>Docker image</code></p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> docker build -t nginxcm <span class="token builtin class-name">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">docker</span> build -t nginxcm <span class="token builtin class-name">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>启动Docker image</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> docker run -d nginxcm<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">docker</span> run -d nginxcm<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <h3 id="其他的问题"><a href="#其他的问题" class="headerlink" title="其他的问题"></a>其他的问题</h3><p>阿里云aliyun-sdk-vod-upload这玩意未开源，需要手动下</p>
 <pre class="line-numbers language-none"><code class="language-none">Cannot resolve com.aliyun:aliyun-sdk-vod-upload:1.4.11<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -478,8 +472,8 @@ COPY nginx.conf &#x2F;etc&#x2F;nginx&#x2F;conf.d&#x2F;default.conf<span aria-hid
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> docker build -t cm_admin <span class="token builtin class-name">.</span>
-sodo docker run cm_admin<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">docker</span> build -t cm_admin <span class="token builtin class-name">.</span>
+sodo <span class="token function">docker</span> run cm_admin<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 
 

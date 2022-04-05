@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 5.4.0">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.1.0">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/uploads/wizard-hat-16.png">
@@ -168,7 +168,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-count">55</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -179,7 +179,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">89</span>
+        <span class="site-state-item-count">90</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -213,12 +213,6 @@
         </li>
         <li class="links-of-blogroll-item">
           <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnNhbWNodS5jbg==" title="https:&#x2F;&#x2F;blog.samchu.cn">Sam's Blog</span>
-        </li>
-        <li class="links-of-blogroll-item">
-          <span class="exturl" data-url="aHR0cHM6Ly8yMzNoc3lzd2ViLm1s" title="https:&#x2F;&#x2F;233hsysweb.ml">花花</span>
-        </li>
-        <li class="links-of-blogroll-item">
-          <span class="exturl" data-url="aHR0cDovL2Jsb2cuNzRsczc0Lm9yZy8=" title="http:&#x2F;&#x2F;blog.74ls74.org&#x2F;">江永泉</span>
         </li>
     </ul>
   </div>
@@ -334,9 +328,9 @@ Plug <span class="token string">'https://github.com/h-hg/fcitx.nvim.git'</span>
 
 <h2 id="一些按键绑定设置"><a href="#一些按键绑定设置" class="headerlink" title="一些按键绑定设置"></a>一些按键绑定设置</h2><p>首先我不要hjkl这几个上下左右键（根本无法接受，我的肌肉记忆明明是键盘上上下左右四个经典方向键，玩空洞骑士和Ballance用的极其熟练，其次是WASD这个4399键位，其次是鼠标，我鼠标可熟练了）<br>我知道hjkl移动距离短而且移动后方便按距离近的i键进入Insert模式，但是我的肌肉记忆是上下左右，你再给我十年我也改不过来。</p>
 <p>然后我将Casplock映射为ESC，这个万年不用的键放在这么重要的位置还有一个比Tab键还大的键帽，简直浪费。编辑<code>～/Xmodmap</code>修改键盘映射就可以了。</p>
-<p>或者如果喜欢也可以将<code>jj</code>（连按两次）绑定成ESC<code>inoremap jj &lt;Esc&gt;</code>^`</p>
+<p>或者如果喜欢也可以将<code>jj</code>（连按两次）绑定成ESC<code>inoremap jj &lt;Esc&gt;</code>^&#96;</p>
 <p>然后是VSCode里面正常的<code>Ctrl+F</code>当前搜索，这个我们找回来（<code>Ctrl+F</code>在Vim里是向上翻页，我完全用不到，我用PgDn和PgUp）</p>
-<p>然后是VSCode的<code>Ctrl+B</code>展开/收起侧边栏，这个我也留着VSCode的设置。</p>
+<p>然后是VSCode的<code>Ctrl+B</code>展开&#x2F;收起侧边栏，这个我也留着VSCode的设置。</p>
 <p>编辑<code>~/.config/Code/User/keybindings.json</code></p>
 <pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
         <span class="token property">"key"</span><span class="token operator">:</span> <span class="token string">"ctrl+f"</span><span class="token punctuation">,</span>
@@ -364,11 +358,11 @@ Plug <span class="token string">'https://github.com/h-hg/fcitx.nvim.git'</span>
     <span class="token builtin">autocmd</span> TermOpen <span class="token builtin">term</span><span class="token punctuation">:</span><span class="token operator">/</span><span class="token operator">/</span><span class="token operator">*</span> <span class="token keyword">startinsert</span>
 <span class="token keyword">endif</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="在使用VSCode时选择性启用Neovim插件"><a href="#在使用VSCode时选择性启用Neovim插件" class="headerlink" title="在使用VSCode时选择性启用Neovim插件"></a>在使用VSCode时选择性启用Neovim插件</h2><p>Vim/Neovim的插件和VSCode的插件有功能重叠，我目前各选了一部分。目前我的LSP插件用VSCode的插件，其他像Markdown插件、LaTeX插件和各种杂七杂八不常用的功能也都是用的VSCode插件。我装了EasyMotion的替代品MetaJump（VSCode插件），用于进行跳转。Neovim插件我保留了<code>vim-surround</code>等键盘操作的插件。</p>
+<h2 id="在使用VSCode时选择性启用Neovim插件"><a href="#在使用VSCode时选择性启用Neovim插件" class="headerlink" title="在使用VSCode时选择性启用Neovim插件"></a>在使用VSCode时选择性启用Neovim插件</h2><p>Vim&#x2F;Neovim的插件和VSCode的插件有功能重叠，我目前各选了一部分。目前我的LSP插件用VSCode的插件，其他像Markdown插件、LaTeX插件和各种杂七杂八不常用的功能也都是用的VSCode插件。我装了EasyMotion的替代品MetaJump（VSCode插件），用于进行跳转。Neovim插件我保留了<code>vim-surround</code>等键盘操作的插件。</p>
 <p>但是很多时候我要在终端用Neovim的时候要启用一些插件，使用VSCode的时候要禁用Neovim部分插件。</p>
 <p>推荐按照官方文档在使用VSCode时禁用Neovim的自动补全、LSP类、语法高亮等插件</p>
 <blockquote>
-<p>You don’t need any code, highlighting, completion, lsp plugins as well any plugins that spawn windows/buffers (nerdtree and similar), fuzzy-finders, etc.</p>
+<p>You don’t need any code, highlighting, completion, lsp plugins as well any plugins that spawn windows&#x2F;buffers (nerdtree and similar), fuzzy-finders, etc.</p>
 </blockquote>
 <p>具体参考<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3ZzY29kZS1uZW92aW0vdnNjb2RlLW5lb3ZpbSNjb25kaXRpb25hbC1pbml0dmlt">官方文档<i class="fa fa-external-link-alt"></i></span>, 我用的vim-plug可以这样设置</p>
 <pre class="line-numbers language-none"><code class="language-none">&quot; inside plug#begin:
@@ -384,7 +378,7 @@ Plug &#39;asvetliakov&#x2F;vim-easymotion&#39;, Cond(exists(&#39;g:vscode&#39;),
 <p>Neovim的GUI界面有<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FraXlvc2kvZ29uZW92aW0=">goneovim<i class="fa fa-external-link-alt"></i></span>和neovide，体验也不如VSCode。（go居然能拿来写Qt还写成这种样子，哇偶）</p>
 <p>最舒服的Vim体验还是在Alacritty里面，GPU加速渲染速度很快，非常丝滑。</p>
 <p>而且VSCode在我从18年开始使用它的三年内，肉眼可见的进步。未来的前景也很光明，微软掏钱养着也不用担心倒闭的问题，除非微软倒闭（真倒闭了那不是更好吗，还有这种好事，苏联笑话.jpg）<br>现在我除了要写一万行以上的屎山项目才会打开Goland等全家桶IDE，编辑100行以下的配置文件等会打开vim。<br>剩下的绝大多数编辑都是用VSCode,用VSCode来写Go、C、Python、shell，用VSCode来写Markdown和LaTeX, 逐渐抛弃了typora和Word，也放弃了曾经很喜欢的sublime text（但是这个好看、比VSCode丝滑，VSCode的渲染和响应速度没有那种丝滑的感觉）</p>
-<h3 id="2022-4更新"><a href="#2022-4更新" class="headerlink" title="2022.4更新"></a>2022.4更新</h3><p>用VSCode Neovim插件半年了，多多少少有点小bug，偶尔出现一些光标不灵和Neovim后端没有启动的小问题。大部分时候reload一下就好了。大多数时候编辑小文件的体验都是alacritty中打开vim更好，打开速度飞快而且打字延迟低、渲染都比VSCode舒服。但是vim/neovim要想配置出vscode/sublime写大一点的项目的工作界面来比较麻烦，所以大多数时间还在用VSCode，没啥迁移的动力。</p>
+<h3 id="2022-4更新"><a href="#2022-4更新" class="headerlink" title="2022.4更新"></a>2022.4更新</h3><p>用VSCode Neovim插件半年了，多多少少有点小bug，偶尔出现一些光标不灵和Neovim后端没有启动的小问题。大部分时候reload一下就好了。大多数时候编辑小文件的体验都是alacritty中打开vim更好，打开速度飞快而且打字延迟低、渲染都比VSCode舒服。但是vim&#x2F;neovim要想配置出vscode&#x2F;sublime写大一点的项目的工作界面来比较麻烦，所以大多数时间还在用VSCode，没啥迁移的动力。</p>
 <p>用久了发现VSCode的很多图形界面实在没有必要，很多边框和按钮基本用不到还占地方那个。比如最上面的边框（用i3wm等wm不要边框就好了），然后是那个<code>Menu Bar</code>，用鼠标点<code>Menu Bar</code>是很浪费时间的，建议隐藏了。需要进行什么操作建议<code>F1</code>搜索，比拿鼠标点点点舒服。</p>
 <p>然后比较讨厌的的是下方terminal和编辑界面中间宽大的框，左侧边栏（Side Bar）也特别宽（这个间距还不能调，只能<code>Ctrl+“-“</code>进行zoom缩放变相调小）。这个特别难受，当时我刚用VSCode的时候我就觉得VSCode的界面比sublime和jetbrains家的IDE浪费空间好多。</p>
 <p>这个极为浪费空间的UI布局就像新版firefox的proton和新版gnome的移动平板风格，太讨厌了。大概就是这个对比的感觉：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2JsYWNrNzM3NS9GaXJlZm94LVVJLUZpeA==">Firefox-UI-Fix<i class="fa fa-external-link-alt"></i></span>  </p>

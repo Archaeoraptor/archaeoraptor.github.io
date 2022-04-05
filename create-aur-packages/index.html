@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 5.4.0">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.1.0">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/uploads/wizard-hat-16.png">
@@ -167,7 +167,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-count">55</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -178,7 +178,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">89</span>
+        <span class="site-state-item-count">90</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -212,12 +212,6 @@
         </li>
         <li class="links-of-blogroll-item">
           <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnNhbWNodS5jbg==" title="https:&#x2F;&#x2F;blog.samchu.cn">Sam's Blog</span>
-        </li>
-        <li class="links-of-blogroll-item">
-          <span class="exturl" data-url="aHR0cHM6Ly8yMzNoc3lzd2ViLm1s" title="https:&#x2F;&#x2F;233hsysweb.ml">花花</span>
-        </li>
-        <li class="links-of-blogroll-item">
-          <span class="exturl" data-url="aHR0cDovL2Jsb2cuNzRsczc0Lm9yZy8=" title="http:&#x2F;&#x2F;blog.74ls74.org&#x2F;">江永泉</span>
         </li>
     </ul>
   </div>
@@ -310,7 +304,7 @@
 <span id="more"></span>
 
 <blockquote class="blockquote-center">
-<p>快来当AUR打包工具人/打包苦力吧(笑</p>
+<p>快来当AUR打包工具人&#x2F;打包苦力吧(笑</p>
 
 </blockquote>
 
@@ -355,7 +349,7 @@ debtap -p XXX.deb <span class="token comment"># -p 选项生成PKGBUILD</span>
 <h3 id="pip2pkgbuilds"><a href="#pip2pkgbuilds" class="headerlink" title="pip2pkgbuilds"></a>pip2pkgbuilds</h3><p>将pip的包转成aur的包，这个工具很久没更新了（But it works）。这个工具有不少情况不会帮你自动处理，python的不少pip包本身也不太遵循pip的打包规范，要做不少手动检查和调整。</p>
 <h3 id="npm-pkgbuild"><a href="#npm-pkgbuild" class="headerlink" title="npm-pkgbuild"></a>npm-pkgbuild</h3><p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FybGFjNzcvbnBtLXBrZ2J1aWxkI3JlYWRtZQ==">npm-pkgbuild<i class="fa fa-external-link-alt"></i></span> 一个将npm包转成aur的包，和上面那个类似，也是自动生成PKGBUILD。没用过不好评价。</p>
 <h2 id="自动化"><a href="#自动化" class="headerlink" title="自动化"></a>自动化</h2><p>人肉测试每个包然后传上去给大家用是最好的，不过有的上游更新太勤测试不过来，或者一些<span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL1ZDU19wYWNrYWdlX2d1aWRlbGluZXNfKCVFNyVBRSU4MCVFNCVCRCU5MyVFNCVCOCVBRCVFNiU5NiU4Nyk=">用版本控制紧跟上游的包<i class="fa fa-external-link-alt"></i></span><br><del>又或者有的时候你想让用户当小白鼠</del></p>
-<p>可以试试Travis CI、Github Action 之类的CI/CD工具，不过最好还是更新之前人肉测试一下</p>
+<p>可以试试Travis CI、Github Action 之类的CI&#x2F;CD工具，不过最好还是更新之前人肉测试一下</p>
 <h3 id="Github-Action"><a href="#Github-Action" class="headerlink" title="Github Action"></a>Github Action</h3><p>Github Action的好处是可以白嫖（划掉</p>
 <p>可以用Github Action自动生成PKGBUILD：<br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21hcmtldHBsYWNlL2FjdGlvbnMvcHVibGlzaC1hdXItcGFja2FnZQ==">publish-aur-package<i class="fa fa-external-link-alt"></i></span></p>
 <p>鸭鸭的<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0R1Y2tTb2Z0L2J1aWxkLWF1ci1hY3Rpb24=">build-aur-action<i class="fa fa-external-link-alt"></i></span>,用Github Action编译一个AUR包（有时候你不想在自己电脑上编译可以试试这个）</p>
@@ -388,7 +382,7 @@ debtap -p XXX.deb <span class="token comment"># -p 选项生成PKGBUILD</span>
 <p>反正我感觉比deb和rpm的打包简单太多了，而且由于包管理的机制，虽然容易挂，但是依赖一般不会特别麻烦（除了有些要拆包的东西）</p>
 <p>你看看依赖问题<span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzI5MTYwNjEyOC9hbnN3ZXIvMTE5NDU5NjU5MQ==">都把隔壁deb系的老哥逼成什么样了<i class="fa fa-external-link-alt"></i></span>。</p>
 <p>可以看这个<span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuaWJtLmNvbS96aC9hcnRpY2xlcy9sLWxvLXJwbS1idWlsZC1wYWNrYWdlLw==">Linux 中 RPM 的构建与打包<i class="fa fa-external-link-alt"></i></span>感受一下打包流程<br>（当然rpm包用<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2pvcmRhbnNpc3NlbC9mcG0=">fpm<i class="fa fa-external-link-alt"></i></span>之类的打包工具也没有那么麻烦）</p>
-<p>官方的打包示例是要用到make编译c/c++包的例子，但是一些c/c++的包，运行环境和依赖会比较麻烦，而且在x86和arm等不同架构下面也会有很多问题。拿来熟悉打包流程对萌新不太友好。</p>
+<p>官方的打包示例是要用到make编译c&#x2F;c++包的例子，但是一些c&#x2F;c++的包，运行环境和依赖会比较麻烦，而且在x86和arm等不同架构下面也会有很多问题。拿来熟悉打包流程对萌新不太友好。</p>
 <p>练手打包建议用从自己最熟悉的项目和语言开始。如果你什么语言都不熟悉呢，推荐用一些主题或者可以用debtap之类的工具方便的转成AUR包的东西来熟悉一下打包。</p>
 <p>有的系统主题、grub主题、输入法主题之类的包比较好打包，一般来说依赖也少，不会搞出什么大问题。而且主题的文件存放位置和PKGBUILD里面的其他东西可以找AUR里面打包好的其他主题参考，基本大同小异，上手打包不会有太太高难度和坑，不太熟悉流程的可以先用一些主题练手熟悉一下打包流程。（主要是这个依赖也少，破坏性比较小，萌新打出低质量的AUR包也不至于把装这个包的人一波带走闯下大祸）</p>
 <p>而且他们不需要编译，也没有依赖报错，总之非常的适合熟悉一下PKGBUILD的流程</p>

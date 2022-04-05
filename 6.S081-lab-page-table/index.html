@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 5.4.0">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.1.0">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/uploads/wizard-hat-16.png">
@@ -174,7 +174,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-count">55</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -185,7 +185,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">89</span>
+        <span class="site-state-item-count">90</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -219,12 +219,6 @@
         </li>
         <li class="links-of-blogroll-item">
           <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnNhbWNodS5jbg==" title="https:&#x2F;&#x2F;blog.samchu.cn">Sam's Blog</span>
-        </li>
-        <li class="links-of-blogroll-item">
-          <span class="exturl" data-url="aHR0cHM6Ly8yMzNoc3lzd2ViLm1s" title="https:&#x2F;&#x2F;233hsysweb.ml">花花</span>
-        </li>
-        <li class="links-of-blogroll-item">
-          <span class="exturl" data-url="aHR0cDovL2Jsb2cuNzRsczc0Lm9yZy8=" title="http:&#x2F;&#x2F;blog.74ls74.org&#x2F;">江永泉</span>
         </li>
     </ul>
   </div>
@@ -313,7 +307,7 @@
 <p>访问栈就直接用sp去寻址就可以了，简单直接。</p>
 <p>没有MMU也有好处，这样便宜、功耗低、而且比较简单。有的对实时性要求比较高的东西，也没有MMU（比如Cortex-R系列）</p>
 <p>注：嵌入式的soc芯片，如果能跑操作系统的大概率有MMU，但是两者之前没有必然关系。比如uCLinux，就是为了在没有MMU上的设备跑。有MMU，当然也可以不用操作系统，直接跑裸机（MMU其实可以关掉，但是我们一般不关，手动指定映射，因为MMU的cache对性能提升很大）。（uClinux要小心内存碎片，而且由于MMU没了，内存保护、内存置换、COW基本都没了，大部分时候还是用mmap和内存直接打交道）</p>
-<p>单片机可以不要MMU，但是一个运行着很多任务的操作系统需要对内存进行抽象和封装，提供给应用。于是后来诞生了虚拟内存/虚拟存储器（Virtual Memory），虚拟内存可以比物理内存大，可以让每个程序都认为自己拥有一段连续独立的内存，还可以权限控制（内存保护），虚拟内存在硬件上是MMU实现的。操作系统的虚拟内存几乎都依赖MMU。（当然，操作系统有自己的页表，这个一会再说）<br>像Cortex-A系列的soc芯片，是有mmu的，上面能跑一些完整的操作系统，有页表等一系列完整的内存管理机制。下图来自xv6 book，每个进程都有自己独立的虚拟内存，这样主要的好处一个是安全隔离，一个是让进程操作一段连续的内存，即使映射到物理内存上是不连续的（你可以<strong>试试在Cortex-A系列soc的板子上跑个uClinux这种没有虚拟内存的，很容易搞出内存碎片然后OOM了</strong>）。</p>
+<p>单片机可以不要MMU，但是一个运行着很多任务的操作系统需要对内存进行抽象和封装，提供给应用。于是后来诞生了虚拟内存&#x2F;虚拟存储器（Virtual Memory），虚拟内存可以比物理内存大，可以让每个程序都认为自己拥有一段连续独立的内存，还可以权限控制（内存保护），虚拟内存在硬件上是MMU实现的。操作系统的虚拟内存几乎都依赖MMU。（当然，操作系统有自己的页表，这个一会再说）<br>像Cortex-A系列的soc芯片，是有mmu的，上面能跑一些完整的操作系统，有页表等一系列完整的内存管理机制。下图来自xv6 book，每个进程都有自己独立的虚拟内存，这样主要的好处一个是安全隔离，一个是让进程操作一段连续的内存，即使映射到物理内存上是不连续的（你可以<strong>试试在Cortex-A系列soc的板子上跑个uClinux这种没有虚拟内存的，很容易搞出内存碎片然后OOM了</strong>）。</p>
 <p><img src="/6.S081-lab-page-table/1642081823.png"></p>
 <p>下面这是ARM的图，RISC-V和x86我不熟，就没找RISC的图。下面这些图来自：<span class="exturl" data-url="aHR0cHM6Ly9jczE0MGUuc2VyZ2lvLmJ6L2RvY3MvQVJNdjgtQS1Qcm9ncmFtbWVyLUd1aWRlLnBkZg==">ARMv8-A-Programmer-Guide<i class="fa fa-external-link-alt"></i></span></p>
 <p><img src="/6.S081-lab-page-table/1642057127.png"></p>

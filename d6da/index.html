@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 5.4.0">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.1.0">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/uploads/wizard-hat-16.png">
@@ -174,7 +174,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-count">55</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -185,7 +185,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">89</span>
+        <span class="site-state-item-count">90</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -219,12 +219,6 @@
         </li>
         <li class="links-of-blogroll-item">
           <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnNhbWNodS5jbg==" title="https:&#x2F;&#x2F;blog.samchu.cn">Sam's Blog</span>
-        </li>
-        <li class="links-of-blogroll-item">
-          <span class="exturl" data-url="aHR0cHM6Ly8yMzNoc3lzd2ViLm1s" title="https:&#x2F;&#x2F;233hsysweb.ml">花花</span>
-        </li>
-        <li class="links-of-blogroll-item">
-          <span class="exturl" data-url="aHR0cDovL2Jsb2cuNzRsczc0Lm9yZy8=" title="http:&#x2F;&#x2F;blog.74ls74.org&#x2F;">江永泉</span>
         </li>
     </ul>
   </div>
@@ -371,7 +365,7 @@ systemctl <span class="token builtin class-name">enable</span> fail2ban<span ari
 fail2ban-client <span class="token builtin class-name">set</span> sshd unbanip <span class="token operator">&lt;</span>IP<span class="token operator">></span> <span class="token comment"># 解封IP</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>还要配置一下防火墙<br>iptables很繁琐，不涉及太多配置的情况下可以用UFW</p>
-<h3 id="防火墙端口"><a href="#防火墙端口" class="headerlink" title="防火墙端口"></a>防火墙端口</h3><p>端口用的时候要打开，不然会出各种烦人的问题，比如wget下载没开443就会<code>443... failed: Connection refused.</code>，如果你加了~–no-check-certificate`还是failed，那八成是防火墙的问题<br>查看端口开放状态</p>
+<h3 id="防火墙端口"><a href="#防火墙端口" class="headerlink" title="防火墙端口"></a>防火墙端口</h3><p>端口用的时候要打开，不然会出各种烦人的问题，比如wget下载没开443就会<code>443... failed: Connection refused.</code>，如果你加了~–no-check-certificate&#96;还是failed，那八成是防火墙的问题<br>查看端口开放状态</p>
 <pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">netstat</span> -ntlp<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>或者</p>
@@ -483,24 +477,24 @@ dns<span class="token operator">-</span>nameservers <span class="token ip-addres
 <p>reboot一下就行了</p>
 <h2 id="网络问题"><a href="#网络问题" class="headerlink" title="网络问题"></a>网络问题</h2><h3 id="网很慢"><a href="#网很慢" class="headerlink" title="网很慢"></a>网很慢</h3><p>很迷，有的地方很快，有的地方就几乎慢到断线。我的联通就经常ping不同。<br>据说老蔡师兄他那里也经常ping不通</p>
 <p><img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/ping-ubuntu.jpg" alt="Picture"></p>
-<p>就是网不好。。。而且上行网速更差，有的时候只有100k/s（用的是一个月20块的基础套餐，没加钱）</p>
+<p>就是网不好。。。而且上行网速更差，有的时候只有100k&#x2F;s（用的是一个月20块的基础套餐，没加钱）</p>
 <pre class="line-numbers language-none"><code class="language-none">Testing download speed..................................
 Download: 11.72 Mbyte&#x2F;s
 Testing upload speed....................................
 Upload: 2.45 Mbyte&#x2F;s<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="掉线"><a href="#掉线" class="headerlink" title="掉线"></a>掉线</h3><p>受疫情影响，全教研室在家连服务器，但是服务器的网络还总掉线<br>跑一个自动重启网络服务的脚本，直接抄<span class="exturl" data-url="aHR0cDovL3d3dy5saXV4aWFvLm9yZy8yMDE5LzA4L3VidW50dS0lRTQlQjglOEIlRTclOUIlOTElRTYlOEUlQTclRTUlQjklQjYlRTglODclQUElRTUlOEElQTglRTklODclOEQlRTUlOTAlQUYlRTclQkQlOTElRTUlOEQlQTEv">这里<i class="fa fa-external-link-alt"></i></span></p>
-<h2 id="备份和恢复"><a href="#备份和恢复" class="headerlink" title="备份和恢复"></a>备份和恢复</h2><p>师兄也没装什么东西，用的cp直接备份了点文件，一言不合重装系统。<br>先暂时用cp备份一次<br>挂载一下盘(比如挂到/mnt/mydata)，用cp复制<br>(挂载看这里[^3])</p>
+<h2 id="备份和恢复"><a href="#备份和恢复" class="headerlink" title="备份和恢复"></a>备份和恢复</h2><p>师兄也没装什么东西，用的cp直接备份了点文件，一言不合重装系统。<br>先暂时用cp备份一次<br>挂载一下盘(比如挂到&#x2F;mnt&#x2F;mydata)，用cp复制<br>(挂载看这里[^3])</p>
 <pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">mount</span> /dev/sdb7 /mnt
 <span class="token function">nohup</span> <span class="token function">cp</span> -pdr /srv /mnt/mydata <span class="token operator">>></span> logs.out <span class="token operator"><span class="token file-descriptor important">2</span>></span><span class="token file-descriptor important">&amp;1</span> <span class="token operator">&amp;</span>
 <span class="token function">umount</span> /dev/sdb7<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-<p>这样将/srv目录下的文件全部拷贝到mydata下面.<br>文件很大，cp没有进度条，以后试试gcp之类的命令，先这样吧</p>
+<p>这样将&#x2F;srv目录下的文件全部拷贝到mydata下面.<br>文件很大，cp没有进度条，以后试试gcp之类的命令，先这样吧</p>
 <p>看了一下，有接近300G的数据，用cp命令太慢了<br>用dd，把\srv目录底下的迁过去,整盘拷贝（dd命令不要乱用，一不小心就删库了）</p>
 <p>拷贝完<code>umount /mydata</code>再拔</p>
 <p>下次试试rsync同步，据说能断点续传和md5验证</p>
 <p>更新，发现一款叫clonezilla的软件，使用clonezilla备份非常方便。</p>
-<h2 id="使用教研室服务器下载"><a href="#使用教研室服务器下载" class="headerlink" title="使用教研室服务器下载"></a>使用教研室服务器下载</h2><p>教研室的服务器有一个单独的猫和ip，网速绝大多数时候不低于50M/s，今天才发现比我的小破工位上的网速快不少。<br>以后下数据集和数据库文件之类的大东西就用它了！</p>
+<h2 id="使用教研室服务器下载"><a href="#使用教研室服务器下载" class="headerlink" title="使用教研室服务器下载"></a>使用教研室服务器下载</h2><p>教研室的服务器有一个单独的猫和ip，网速绝大多数时候不低于50M&#x2F;s，今天才发现比我的小破工位上的网速快不少。<br>以后下数据集和数据库文件之类的大东西就用它了！</p>
 <h2 id="使用Tmux"><a href="#使用Tmux" class="headerlink" title="使用Tmux"></a>使用Tmux</h2><p>（其实MobaXterm有一个叫Multiexec的功能）<br>正在备份文件结果网断了（没办法，校园网就是这么….）<br>这时就要用tmux之类的工具了</p>
 <pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> tmux<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
@@ -534,14 +528,14 @@ Upload: 2.45 Mbyte&#x2F;s<span aria-hidden="true" class="line-numbers-rows"><spa
 
 <h3 id="域名"><a href="#域名" class="headerlink" title="域名"></a>域名</h3><p>暂时还没有，备案麻烦没弄</p>
 <h2 id="清理Trash"><a href="#清理Trash" class="headerlink" title="清理Trash"></a>清理Trash</h2><p>工作站桌面变得非常卡，clamscan扫描home目录也扫了整整两天，看了一下发现有前前任师兄几百个G的数据。使用rm之后跑到了.local文件夹下。使用跑路命令把它们删掉。(最好不要把 .local全删了，只删Trash就行了<code>.local/share/Trash</code>)</p>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>Gitlab占用过高的问题等见瞎折腾记录(其实没有特殊需求可以用Gogs，小声逼逼)<br>在服务器上部署jupyter参考<span class="exturl" data-url="aHR0cHM6Ly9iaXRtaW5ndy5jb20vMjAxNy8wNy8wOS9ydW4tanVweXRlci1ub3RlYm9vay1zZXJ2ZXIv">搭建 ipython/jupyter notebook 服务器<i class="fa fa-external-link-alt"></i></span></p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>Gitlab占用过高的问题等见瞎折腾记录(其实没有特殊需求可以用Gogs，小声逼逼)<br>在服务器上部署jupyter参考<span class="exturl" data-url="aHR0cHM6Ly9iaXRtaW5ndy5jb20vMjAxNy8wNy8wOS9ydW4tanVweXRlci1ub3RlYm9vay1zZXJ2ZXIv">搭建 ipython&#x2F;jupyter notebook 服务器<i class="fa fa-external-link-alt"></i></span></p>
 <h2 id="远程开发"><a href="#远程开发" class="headerlink" title="远程开发"></a>远程开发</h2><p>为什么要远程呢，因为我的电脑是小破i5，8G内存，装双系统不太行，虚拟机更不行。用wsl真的不如直接上服务器20核CPU、工作站两块1080pi（还有单独的网线和公网IP）。配合SSH端口转发和VSCode、JB全家桶，还是很舒服的。</p>
 <h2 id="部署项目"><a href="#部署项目" class="headerlink" title="部署项目"></a>部署项目</h2><h3 id="标注工具doccano"><a href="#标注工具doccano" class="headerlink" title="标注工具doccano"></a>标注工具doccano</h3><p>这里以开源标注工具doccano为例（该项目提供了Docker镜像和直接部署的方法以及docker-compose示例文件，还给了aws等一键部署脚本）</p>
 <p>我们clone下来，修改settings.py文件</p>
 <p>最简单的方法就是直接上docker</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> clone https://github.com/doccano/doccano.git
 $ <span class="token builtin class-name">cd</span> doccano
-$ docker-compose -f docker-compose.prod.yml up<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+$ <span class="token function">docker-compose</span> -f docker-compose.prod.yml up<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <p>docker打包通常会很大，动不动就上G了，一些轻量且不至于弄坏系统环境的东西建议还是裸跑</p>
 <h2 id="一次被黑记录"><a href="#一次被黑记录" class="headerlink" title="一次被黑记录"></a>一次被黑记录</h2><pre class="line-numbers language-log" data-language="log"><code class="language-log">CPU  <span class="token punctuation">[</span><span class="token operator">|</span><span class="token operator">|</span><span class="token operator">|</span><span class="token operator">|</span><span class="token operator">|</span><span class="token operator">|</span><span class="token operator">|</span><span class="token operator">|</span><span class="token operator">|</span><span class="token operator">|</span><span class="token operator">|</span><span class="token operator">|</span><span class="token operator">|</span><span class="token operator">|</span><span class="token operator">|</span><span class="token operator">|</span>                 <span class="token number">51.8</span><span class="token operator">%</span><span class="token punctuation">]</span>   CPU <span class="token operator">-</span>    <span class="token number">51.8</span><span class="token operator">%</span>  nice<span class="token operator">:</span>     <span class="token number">0.0</span><span class="token operator">%</span>  ctx_sw<span class="token operator">:</span>    <span class="token number">8K</span>   MEM <span class="token operator">-</span>   <span class="token number">21.7</span><span class="token operator">%</span>  active<span class="token operator">:</span>    <span class="token number">5.31G</span>   SWAP <span class="token operator">-</span>    <span class="token number">0.0</span><span class="token operator">%</span>   LOAD    <span class="token number">20</span><span class="token operator">-</span>core
@@ -570,7 +564,7 @@ Sat Mar  <span class="token number">7</span> <span class="token number">16</span
 Sat Mar  <span class="token number">7</span> <span class="token number">16</span>:49:25 <span class="token number">2020</span> -<span class="token operator">></span> bytecode.cvd database is up to <span class="token function">date</span> <span class="token punctuation">(</span>version: <span class="token number">331</span>, sigs: <span class="token number">94</span>, f-level: <span class="token number">63</span>, builder: anvilleg<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>居然显示病毒库是最新的</p>
-<p>可疑进程<br>/opt/atlassian/confluence/jre//bin/java -Djava.ut</p>
+<p>可疑进程<br>&#x2F;opt&#x2F;atlassian&#x2F;confluence&#x2F;jre&#x2F;&#x2F;bin&#x2F;java -Djava.ut</p>
 <p>然后看了一下有没有可疑的定时任务</p>
 <pre class="line-numbers language-none"><code class="language-none">root@xi102:~# crontab -l
 0 0 *&#x2F;3 * * &#x2F;root&#x2F;.bashtemp&#x2F;a&#x2F;upd&gt;&#x2F;dev&#x2F;null 2&gt;&amp;1
@@ -581,7 +575,7 @@ Sat Mar  <span class="token number">7</span> <span class="token number">16</span
 
 <p>那个tmp下面有的时候是<code>0 0 */3 * * /tmp/.X21-unix/.rsync/c/aptitude&gt;/dev/null 2&gt;&amp;1</code></p>
 <p>这个<code>.X某某-unix</code>应该是想伪装成<code>.X11-unix</code>X11转发的临时文件</p>
-<p>root@xi102:~/.bashtemp# ps aux | grep cron<br>root     140526  0.0  0.0  12944  1028 pts/1    S+   17:16   0:00 grep –color=auto cron</p>
+<p>root@xi102:~&#x2F;.bashtemp# ps aux | grep cron<br>root     140526  0.0  0.0  12944  1028 pts&#x2F;1    S+   17:16   0:00 grep –color&#x3D;auto cron</p>
 <p>看了一下这个目录下面，有鬼，应该就是它了</p>
 <pre class="line-numbers language-none"><code class="language-none">root@xi102:~&#x2F;.bashtemp# ls
 a  b  cron.d  dir2.dir<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>

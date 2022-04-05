@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 5.4.0">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.1.0">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/uploads/wizard-hat-16.png">
@@ -32,7 +32,7 @@
 <meta property="og:description" content="6.S081的调试和VSCode环境配置，还有一些踩坑和小技巧，杂七杂八的都放在这一篇里面了。（遇到什么情况就更新，准备一直更到做完Lab）">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://zhangjk98.xyz/6.S081-VSCode-prepare-and-kernel-debugging/1625406448.png">
-<meta property="og:image" content="https://zhangjk98.xyz/6.S081-VSCode-prepare-and-kernel-debugging/6.S081-kernel-debugging/image-20210702150654556.png">
+<meta property="og:image" content="https://zhangjk98.xyz/6.S081-kernel-debugging/image-20210702150654556.png">
 <meta property="og:image" content="https://zhangjk98.xyz/6.S081-VSCode-prepare-and-kernel-debugging/1626525086.png">
 <meta property="og:image" content="https://zhangjk98.xyz/6.S081-VSCode-prepare-and-kernel-debugging/1626525345.png">
 <meta property="og:image" content="https://zhangjk98.xyz/6.S081-VSCode-prepare-and-kernel-debugging/1626526305.png">
@@ -175,7 +175,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-count">55</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -186,7 +186,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">89</span>
+        <span class="site-state-item-count">90</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -220,12 +220,6 @@
         </li>
         <li class="links-of-blogroll-item">
           <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnNhbWNodS5jbg==" title="https:&#x2F;&#x2F;blog.samchu.cn">Sam's Blog</span>
-        </li>
-        <li class="links-of-blogroll-item">
-          <span class="exturl" data-url="aHR0cHM6Ly8yMzNoc3lzd2ViLm1s" title="https:&#x2F;&#x2F;233hsysweb.ml">花花</span>
-        </li>
-        <li class="links-of-blogroll-item">
-          <span class="exturl" data-url="aHR0cDovL2Jsb2cuNzRsczc0Lm9yZy8=" title="http:&#x2F;&#x2F;blog.74ls74.org&#x2F;">江永泉</span>
         </li>
     </ul>
   </div>
@@ -383,7 +377,7 @@ make: *** <span class="token punctuation">[</span>Makefile:165: qemu<span class=
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hello
 Hello, nerd<span class="token operator">!</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<p><img src="6.S081-kernel-debugging/image-20210702150654556.png" alt="image-20210702150654556"></p>
+<p><img src="/6.S081-kernel-debugging/image-20210702150654556.png" alt="image-20210702150654556"></p>
 <h2 id="gdb-qemu调试"><a href="#gdb-qemu调试" class="headerlink" title="gdb+qemu调试"></a>gdb+qemu调试</h2><h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>现在6.S081推荐用<code>gdb-multiarch</code>这个包。<br>然后开两个终端（严格来讲应该叫终端模拟器，以下简称终端）, 第一个</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">make</span> qemu-gdb<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
@@ -489,9 +483,9 @@ dscratch       Could not fetch register &quot;dscratch&quot;; remote failure rep
 mucounteren    Could not fetch register &quot;mucounteren&quot;; remote failure reply &#39;E14&#39;
 (gdb) <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>RISC-V的寄存器有32个，比ARM多，已经超过了我的记忆容量。有需要就去翻<span class="exturl" data-url="aHR0cDovL2NydmEuaWN0LmFjLmNuL2RvY3VtZW50cy9SSVNDLVYtUmVhZGVyLUNoaW5lc2UtdjJwMS5wZGYuMTEuMw==">手册<i class="fa fa-external-link-alt"></i></span>吧<br>调试时大多数情况只要关注a开头的几个就好了, s开头的是系统保留。a0和a1是函数参数和返回值(Function arguments/return values)，a2到a7是变量(Function arguments), 你可以用汇编操作这些寄存器的值。  </p>
+<p>RISC-V的寄存器有32个，比ARM多，已经超过了我的记忆容量。有需要就去翻<span class="exturl" data-url="aHR0cDovL2NydmEuaWN0LmFjLmNuL2RvY3VtZW50cy9SSVNDLVYtUmVhZGVyLUNoaW5lc2UtdjJwMS5wZGYuMTEuMw==">手册<i class="fa fa-external-link-alt"></i></span>吧<br>调试时大多数情况只要关注a开头的几个就好了, s开头的是系统保留。a0和a1是函数参数和返回值(Function arguments&#x2F;return values)，a2到a7是变量(Function arguments), 你可以用汇编操作这些寄存器的值。  </p>
 <h4 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h4><p><code>info threads</code>查看进程</p>
-<h2 id="VSCode配置"><a href="#VSCode配置" class="headerlink" title="VSCode配置"></a>VSCode配置</h2><h3 id="代码提示和自动补全"><a href="#代码提示和自动补全" class="headerlink" title="代码提示和自动补全"></a>代码提示和自动补全</h3><p>自动补全插件推荐clangd（比Microsoft官方的那个c/c++ extension好用）</p>
+<h2 id="VSCode配置"><a href="#VSCode配置" class="headerlink" title="VSCode配置"></a>VSCode配置</h2><h3 id="代码提示和自动补全"><a href="#代码提示和自动补全" class="headerlink" title="代码提示和自动补全"></a>代码提示和自动补全</h3><p>自动补全插件推荐clangd（比Microsoft官方的那个c&#x2F;c++ extension好用）</p>
 <p>默认的库函数提示会告诉你找不到<code>kernel/kernel.h</code>，需要手动添加</p>
 <p><img src="/6.S081-VSCode-prepare-and-kernel-debugging/1626526305.png"></p>
 <h3 id="gdb调试"><a href="#gdb调试" class="headerlink" title="gdb调试"></a>gdb调试</h3><p>参照这篇博客设置<span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vS2F0eXVNYXJpc2FCbG9nL3AvMTM3Mjc1NjUuaHRtbA==">MIT 6.S081 xv6调试不完全指北<i class="fa fa-external-link-alt"></i></span>，改一改那个<code>launch.json</code>。</p>
@@ -535,7 +529,7 @@ mucounteren    Could not fetch register &quot;mucounteren&quot;; remote failure 
 <p><strong>如果真想找一个好的图形化debugger推荐nemiver</strong></p>
 <h3 id="使用clangd-format进行xv6代码风格的格式化"><a href="#使用clangd-format进行xv6代码风格的格式化" class="headerlink" title="使用clangd-format进行xv6代码风格的格式化"></a>使用clangd-format进行xv6代码风格的格式化</h3><p>有没有像Golang的go-fmt一样强制代码格式化的东西呢，有的，<span class="exturl" data-url="aHR0cHM6Ly9jbGFuZy5sbHZtLm9yZy9kb2NzL0NsYW5nRm9ybWF0Lmh0bWw=">clang format<i class="fa fa-external-link-alt"></i></span>。</p>
 <p>安装<code>clangd</code>插件，在VSCode的设置里面启用<code>format on save</code>，然后在根目录下新建<code>.clang-format</code>文件。每次<code>ctrl+s</code>的时候就可以像go-fmt插件那样格式化代码了。</p>
-<p>很遗憾的是，c/c++的代码风格并没有一个官方的统一风格，各种风格争论不休。<br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3RvcnZhbGRzL2xpbnV4L2Jsb2IvbWFzdGVyLy5jbGFuZy1mb3JtYXQ=">Linux的format风格<i class="fa fa-external-link-alt"></i></span>我不太习惯，比如一个tab占8个空格。<br>下面是我改了改llvm风格的配置，跟6.828Lab的xv6风格不太一样，函数类型和函数一行，tab是4个空格（tab空两个看起来真的难受，早期显示屏小才这样子干，我觉得24寸以上显示器空四个才是合理的），括号换行和golang一样。（不然在go和c之间来回切换我要精神分裂了）</p>
+<p>很遗憾的是，c&#x2F;c++的代码风格并没有一个官方的统一风格，各种风格争论不休。<br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3RvcnZhbGRzL2xpbnV4L2Jsb2IvbWFzdGVyLy5jbGFuZy1mb3JtYXQ=">Linux的format风格<i class="fa fa-external-link-alt"></i></span>我不太习惯，比如一个tab占8个空格。<br>下面是我改了改llvm风格的配置，跟6.828Lab的xv6风格不太一样，函数类型和函数一行，tab是4个空格（tab空两个看起来真的难受，早期显示屏小才这样子干，我觉得24寸以上显示器空四个才是合理的），括号换行和golang一样。（不然在go和c之间来回切换我要精神分裂了）</p>
 <p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0FyY2hhZW9yYXB0b3IvZG90ZmlsZXMvYmxvYi9tYXN0ZXIvdnNjb2RlLy5jbGFuZy1mb3JtYXQ=">https://github.com/Archaeoraptor/dotfiles/blob/master/vscode/.clang-format<i class="fa fa-external-link-alt"></i></span></p>
 <p>需要注意的是，一定不要对#include头文件自动排序，要设置<code>SortIncludes:    false</code>不然头文件顺序不对会报错。</p>
 <p>比如排序前：</p>
