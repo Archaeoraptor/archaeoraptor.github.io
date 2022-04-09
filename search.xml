@@ -707,6 +707,17 @@ pip install <span class="token operator">-</span>r requirements<span class="toke
       </tags>
   </entry>
   <entry>
+    <title>又被Docker坑了（其实是被Yaml坑了</title>
+    <url>/aware-docker-yaml/</url>
+    <content><![CDATA[<p>大聪明yaml将60以下的数字识别成60进制，所以需要用引号括起来。自作聪明程度直追Excel将身份证号识别成科学计数法然后直接末尾四位变零。<br>珍爱生命，远离yaml  </p>
+<p>更新：发现了一个网站：<span class="exturl" data-url="aHR0cHM6Ly9ub3lhbWwuY29tLw==">https://noyaml.com/<i class="fa fa-external-link-alt"></i></span></p>
+]]></content>
+      <tags>
+        <tag>Docker</tag>
+        <tag>yaml</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>给Archlinux添加blackarch仓库镜像源</title>
     <url>/add-blackarch-repo-mirrors/</url>
     <content><![CDATA[<p>更新：BlackArch镜像源的很多包质量很差，请谨慎添加，必要时请修改PKGBUILD或自行打包。</p>
@@ -931,17 +942,6 @@ gpg: next trustdb check due at <span class="token number">2020</span>-12-03
       </tags>
   </entry>
   <entry>
-    <title>又被Docker坑了（其实是被Yaml坑了</title>
-    <url>/aware-docker-yaml/</url>
-    <content><![CDATA[<p>大聪明yaml将60以下的数字识别成60进制，所以需要用引号括起来。自作聪明程度直追Excel将身份证号识别成科学计数法然后直接末尾四位变零。<br>珍爱生命，远离yaml  </p>
-<p>更新：发现了一个网站：<span class="exturl" data-url="aHR0cHM6Ly9ub3lhbWwuY29tLw==">https://noyaml.com/<i class="fa fa-external-link-alt"></i></span></p>
-]]></content>
-      <tags>
-        <tag>Docker</tag>
-        <tag>yaml</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>远去的水族生灵</title>
     <url>/before-vanish/</url>
     <content><![CDATA[<p>又南水行七百里，曰孟子之山，其木多梓桐，多桃李，其草多菌浦，其兽多麋鹿。是山也，广员百里。其上有水出焉, 名日碧阳，其中多鳣鲔</p>
@@ -1122,6 +1122,12 @@ The command is executed with a ‘-’ prepended to its argv[0] string.<span ari
       </tags>
   </entry>
   <entry>
+    <title>本站评论由valine更换为DisqusJS</title>
+    <url>/change-comment-to-disqusjs/</url>
+    <content><![CDATA[<p>由于近日不少采用valine作为评论系统网站的遭到几千个垃圾评论刷屏攻击，外加valine存在的安全隐患问题，放弃好看的valine，换用DisqusJS。<br>utteranc继续使用。</p>
+]]></content>
+  </entry>
+  <entry>
     <title>新年开箱一个 Canokey Pigeon</title>
     <url>/canokey-pigeon-unboxing/</url>
     <content><![CDATA[<p>迟来的开箱，本来以为快递1号当天能到的，结果晚了一点。不管怎么说，元旦快落！</p>
@@ -1167,12 +1173,6 @@ The command is executed with a ‘-’ prepended to its argv[0] string.<span ari
       <tags>
         <tag>canokey</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>本站评论由valine更换为DisqusJS</title>
-    <url>/change-comment-to-disqusjs/</url>
-    <content><![CDATA[<p>由于近日不少采用valine作为评论系统网站的遭到几千个垃圾评论刷屏攻击，外加valine存在的安全隐患问题，放弃好看的valine，换用DisqusJS。<br>utteranc继续使用。</p>
-]]></content>
   </entry>
   <entry>
     <title>上线一个Spring Cloud的课程管理服务项目</title>
@@ -1430,6 +1430,118 @@ npm ERR!     &#x2F;root&#x2F;.npm&#x2F;_logs&#x2F;2020-11-16T14_13_24_937Z-debug
       </tags>
   </entry>
   <entry>
+    <title>AUR打包指北</title>
+    <url>/create-aur-packages/</url>
+    <content><![CDATA[<p>（长期施工中，未完待续）</p>
+<span id="more"></span>
+
+<blockquote class="blockquote-center">
+<p>快来当AUR打包工具人&#x2F;打包苦力吧(笑</p>
+
+</blockquote>
+
+<p>其实还是建议你去先看看官方文档</p>
+<h2 id="大致流程"><a href="#大致流程" class="headerlink" title="大致流程"></a>大致流程</h2><h3 id="新建一个测试环境"><a href="#新建一个测试环境" class="headerlink" title="新建一个测试环境"></a>新建一个测试环境</h3><p>在本机上直接打包可能会把你自己的机子环境搞乱搞崩，或者忽略了已经在自己电脑上装了了但是没有的依赖，又或者你想…<br>反正弄一个干净的测试环境是有必要的。可以参考官方Wiki：<span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL0RldmVsb3Blcldpa2k6QnVpbGRpbmdfaW5fYV9jbGVhbl9jaHJvb3Q=">DeveloperWiki:Building in a clean chroot<i class="fa fa-external-link-alt"></i></span>, 或者看肥猫这篇：<span class="exturl" data-url="aHR0cHM6Ly9mZWxpeGMuYXQvMjAxNy8wOC9pbnRyb2R1Y3Rpb24tdG8tYXJjaC1saW51eC1kZXZ0b29scy1idWlsZC1wYWNrYWdlcy1mcm9tLWEtY2xlYW4tY2hyb290Lw==">Arch Linux devtools 简介 – 在干净的环境里编译软件包<i class="fa fa-external-link-alt"></i></span></p>
+<p>当然打包一些很简单、依赖很明确的东西，确定没必要也可以不要这一步。</p>
+<h3 id="编写PKGBUILD"><a href="#编写PKGBUILD" class="headerlink" title="编写PKGBUILD"></a>编写PKGBUILD</h3><p>最快的方法是去找找有没有和你要打包的东西类似的包，然后抄一下它的PKGBUILD。</p>
+<h3 id="检查"><a href="#检查" class="headerlink" title="检查"></a>检查</h3><p>先用namcap检查一下，有没有语法错误或者其他不符合规范的地方</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">namcap PKGBUILD<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">makepkg -s<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>生成的 <code>XXX.tar.xz</code>可以再用 <code>namcap</code>检查一下</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">namcap XXX.tar.xz<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="上传和分享"><a href="#上传和分享" class="headerlink" title="上传和分享"></a>上传和分享</h3><h4 id="AUR"><a href="#AUR" class="headerlink" title="AUR"></a>AUR</h4><p>如果想分享出来，你可以上传到AUR仓库里面。AUR帐号随便就能注册几乎没有审查的（所以传点恶意代码上去也能传的），但是尽量不要把有版权问题之类的东西传上去（虽然出了事应该是你自己负责）</p>
+<p>新建一个账号，然后上传你的SSH公钥和密钥指纹。</p>
+<p>用 <code>git clone</code>拉取一个</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> clone ssh://aur@aur.archlinux.org/your-package-name.git <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>AUR软件仓库需要<span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwLy5TUkNJTkZPXyglRTclQUUlODAlRTQlQkQlOTMlRTQlQjglQUQlRTYlOTYlODcp">SRCINFO<i class="fa fa-external-link-alt"></i></span>,不然会拒绝你的提交</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">makepkg --printsrcinfo <span class="token operator">></span> .SRCINFO<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h4 id="非官方软件仓库"><a href="#非官方软件仓库" class="headerlink" title="非官方软件仓库"></a>非官方软件仓库</h4><p>或者你可以去其他非官方的仓库，这有一大堆：<span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL1Vub2ZmaWNpYWxfdXNlcl9yZXBvc2l0b3JpZXNfKCVFNyVBRSU4MCVFNCVCRCU5MyVFNCVCOCVBRCVFNiU5NiU4Nyk=">Unofficial user repositories<i class="fa fa-external-link-alt"></i></span></p>
+<p>中文用户人最多的是ArchlinuxCN，我猜你很熟悉这个了。</p>
+<p>其他的还有chaotic-aur（里面的包不少，但是国内速度很慢，镜像都在国外，直接访问可能比从AUR拉下来编译还慢），arch4edu（一些教育软件和包，清华的弄得，国内速度还行），blackarch（这个包也很多，约等于arch系的kali源）</p>
+<p>要添加到这些非官方仓库里，可以请求打包，或者跟仓库管理员py。</p>
+<p>或者可以自建一个仓库。</p>
+<p>可参考：</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuYWxveGFmLmNvbS8yMDIwLzA2L2J1aWxkX2F1cl93aXRoX2dpdGh1Yl9hY3Rpb25zLw==">利用 GitHub Actions 编译 AUR 包并建立自己的软件源<i class="fa fa-external-link-alt"></i></span></p>
+<h2 id="一些工具"><a href="#一些工具" class="headerlink" title="一些工具"></a>一些工具</h2><h3 id="namcap"><a href="#namcap" class="headerlink" title="namcap"></a>namcap</h3><p>用来检查打包是否正确</p>
+<h3 id="devtools"><a href="#devtools" class="headerlink" title="devtools"></a>devtools</h3><p>可以干很多事情，最常用的是新建一个干净的环境用来测试你的包。</p>
+<p>还有很多用法去看文档吧，</p>
+<h3 id="debtap"><a href="#debtap" class="headerlink" title="debtap"></a>debtap</h3><p>大多数情况下可以快速把deb包转成aur包<br>有些deb的包或者rpm的包可以拆包然后重新手动打包一下。一般的用debtap可以解决大部分deb包，有些依赖可能没办法需要手动处理。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yay -Syu debtap
+<span class="token function">sudo</span> debtap -u <span class="token comment">#同步数据库，可能比较慢</span>
+debtap -p XXX.deb <span class="token comment"># -p 选项生成PKGBUILD</span>
+<span class="token comment">## 然后根据提示输入包名和协议等</span>
+<span class="token comment">## 然后稍等一会，会比较慢</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后 <code>pacman -U XXX.tar.xz</code>可以装到你的电脑上试一下。</p>
+<h3 id="pip2pkgbuilds"><a href="#pip2pkgbuilds" class="headerlink" title="pip2pkgbuilds"></a>pip2pkgbuilds</h3><p>将pip的包转成aur的包，这个工具很久没更新了（But it works）。这个工具有不少情况不会帮你自动处理，python的不少pip包本身也不太遵循pip的打包规范，要做不少手动检查和调整。</p>
+<h3 id="npm-pkgbuild"><a href="#npm-pkgbuild" class="headerlink" title="npm-pkgbuild"></a>npm-pkgbuild</h3><p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FybGFjNzcvbnBtLXBrZ2J1aWxkI3JlYWRtZQ==">npm-pkgbuild<i class="fa fa-external-link-alt"></i></span> 一个将npm包转成aur的包，和上面那个类似，也是自动生成PKGBUILD。没用过不好评价。</p>
+<h2 id="自动化"><a href="#自动化" class="headerlink" title="自动化"></a>自动化</h2><p>人肉测试每个包然后传上去给大家用是最好的，不过有的上游更新太勤测试不过来，或者一些<span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL1ZDU19wYWNrYWdlX2d1aWRlbGluZXNfKCVFNyVBRSU4MCVFNCVCRCU5MyVFNCVCOCVBRCVFNiU5NiU4Nyk=">用版本控制紧跟上游的包<i class="fa fa-external-link-alt"></i></span><br><del>又或者有的时候你想让用户当小白鼠</del></p>
+<p>可以试试Travis CI、Github Action 之类的CI&#x2F;CD工具，不过最好还是更新之前人肉测试一下</p>
+<h3 id="Github-Action"><a href="#Github-Action" class="headerlink" title="Github Action"></a>Github Action</h3><p>Github Action的好处是可以白嫖（划掉</p>
+<p>可以用Github Action自动生成PKGBUILD：<br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21hcmtldHBsYWNlL2FjdGlvbnMvcHVibGlzaC1hdXItcGFja2FnZQ==">publish-aur-package<i class="fa fa-external-link-alt"></i></span></p>
+<p>鸭鸭的<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0R1Y2tTb2Z0L2J1aWxkLWF1ci1hY3Rpb24=">build-aur-action<i class="fa fa-external-link-alt"></i></span>,用Github Action编译一个AUR包（有时候你不想在自己电脑上编译可以试试这个）</p>
+<p>使用见：<span class="exturl" data-url="aHR0cHM6Ly92aWZseXRoaW5rLmNvbS9Vc2VfR2l0SHViQWN0aW9uc190b19idWlsZF9BVVIv">GitHub Actions 打造 AUR 打包下载一条龙服务<i class="fa fa-external-link-alt"></i></span></p>
+<h2 id="一些小问题"><a href="#一些小问题" class="headerlink" title="一些小问题"></a>一些小问题</h2><h3 id="AUR的依赖包makepkg无法自动识别"><a href="#AUR的依赖包makepkg无法自动识别" class="headerlink" title="AUR的依赖包makepkg无法自动识别"></a>AUR的依赖包makepkg无法自动识别</h3><p>打包的时候如果依赖AUR的包，在 <code>makepkg -s</code>pacman是不会自动安装的需要手动安装</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">error: target not found: python-django-cors-headers
+<span class="token operator">==</span><span class="token operator">></span> ERROR: <span class="token string">'pacman'</span> failed to <span class="token function">install</span> missing dependencies.
+<span class="token operator">==</span><span class="token operator">></span> ERROR: Could not resolve all dependencies.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>如果依赖太多装不过来，可以加 <code>makepkg -d</code>参数忽略依赖，然后对生成的 <code>XXX.tar.xz</code>使用yay或者pikaur之类的AUR helper</p>
+<h3 id="git初次commit不包含SRCINFO导致拒绝提交"><a href="#git初次commit不包含SRCINFO导致拒绝提交" class="headerlink" title="git初次commit不包含SRCINFO导致拒绝提交"></a>git初次commit不包含SRCINFO导致拒绝提交</h3><p>可以用 <code>git filter branch</code></p>
+<p>（其实直接删了重新 <code>git init</code>可能更快）</p>
+<h2 id="常见写法和命令"><a href="#常见写法和命令" class="headerlink" title="常见写法和命令"></a>常见写法和命令</h2><h3 id="install命令"><a href="#install命令" class="headerlink" title="install命令"></a>install命令</h3><p>用过 <code>cmake</code>等编译工具的人应该对 <code>make install</code>很熟了，它在PKGBUILD里面大概像这样</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function-name function">package</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token function">make</span> -C <span class="token string">"<span class="token variable">$pkgname</span>-<span class="token variable">$pkgver</span>"</span> <span class="token assign-left variable">DESTDIR</span><span class="token operator">=</span><span class="token string">"<span class="token variable">$pkgdir</span>"</span> <span class="token function">install</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>在PKGBUILD里面，还经常用它把文件安装到制定目录，并指定权限（一般不用 <code>cp</code>来干这种事）</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function-name function">package</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token builtin class-name">cd</span> <span class="token string">"<span class="token variable">$srcdir</span>/<span class="token variable">$pkgname</span>"</span>
+  <span class="token function">install</span> -vDm <span class="token number">644</span> <span class="token variable">$&#123;pkgname<span class="token operator">%</span>-git&#125;</span><span class="token punctuation">&#123;</span>,.plugin<span class="token punctuation">&#125;</span>.zsh <span class="token punctuation">\</span>
+    -t <span class="token string">"<span class="token variable">$&#123;pkgdir&#125;</span>/usr/share/zsh/plugins/<span class="token variable">$&#123;pkgname&#125;</span>/"</span>
+  <span class="token function">install</span> -Dm644 LICENSE <span class="token string">"<span class="token variable">$pkgdir</span>"</span>/usr/share/licenses/<span class="token variable">$pkgname</span>/LICENSE
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>将可执行文件和LICENSE分别放到指定目录，像LICENSE或者doc权限644就好了，其他的可执行文件酌情给个755权限。</p>
+<p>如果有需要打印详细安装信息方便调试，可以加 <code>-v</code>选项，像这样 <code>install -Dvm755</code></p>
+<h3 id="常见写法"><a href="#常见写法" class="headerlink" title="常见写法"></a>常见写法</h3><p>获取Github Release</p>
+<h2 id="练手推荐"><a href="#练手推荐" class="headerlink" title="练手推荐"></a>练手推荐</h2><p>上手AUR打包基本只需要一点bash脚本的知识就可以了。当然最好还要对打包的项目和所用的语言、框架、依赖比较熟悉。</p>
+<p>反正我感觉比deb和rpm的打包简单太多了，而且由于包管理的机制，虽然容易挂，但是依赖一般不会特别麻烦（除了有些要拆包的东西）</p>
+<p>你看看依赖问题<span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzI5MTYwNjEyOC9hbnN3ZXIvMTE5NDU5NjU5MQ==">都把隔壁deb系的老哥逼成什么样了<i class="fa fa-external-link-alt"></i></span>。</p>
+<p>可以看这个<span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuaWJtLmNvbS96aC9hcnRpY2xlcy9sLWxvLXJwbS1idWlsZC1wYWNrYWdlLw==">Linux 中 RPM 的构建与打包<i class="fa fa-external-link-alt"></i></span>感受一下打包流程<br>（当然rpm包用<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2pvcmRhbnNpc3NlbC9mcG0=">fpm<i class="fa fa-external-link-alt"></i></span>之类的打包工具也没有那么麻烦）</p>
+<p>官方的打包示例是要用到make编译c&#x2F;c++包的例子，但是一些c&#x2F;c++的包，运行环境和依赖会比较麻烦，而且在x86和arm等不同架构下面也会有很多问题。拿来熟悉打包流程对萌新不太友好。</p>
+<p>练手打包建议用从自己最熟悉的项目和语言开始。如果你什么语言都不熟悉呢，推荐用一些主题或者可以用debtap之类的工具方便的转成AUR包的东西来熟悉一下打包。</p>
+<p>有的系统主题、grub主题、输入法主题之类的包比较好打包，一般来说依赖也少，不会搞出什么大问题。而且主题的文件存放位置和PKGBUILD里面的其他东西可以找AUR里面打包好的其他主题参考，基本大同小异，上手打包不会有太太高难度和坑，不太熟悉流程的可以先用一些主题练手熟悉一下打包流程。（主要是这个依赖也少，破坏性比较小，萌新打出低质量的AUR包也不至于把装这个包的人一波带走闯下大祸）</p>
+<p>而且他们不需要编译，也没有依赖报错，总之非常的适合熟悉一下PKGBUILD的流程</p>
+<p>当然打包不能包揽所有工作，一些设置需要用户手动启用或者修改的（比如一些配置，又比如systemd之类的daemon），比如我这里打包了一个GRUB的Cyberpunk主题，需要用户手动修改</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">vim</span> /etc/default/grub<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token assign-left variable">GRUB_THEME</span><span class="token operator">=</span><span class="token string">"/usr/share/grub/themes/Cyberpunk/theme.txt"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">grub-mkconfig</span> -o /boot/grub/grub.cfg<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>需要用户手动修改设置来启用（基本上主题、桌面挂件之类的包都是这么做的）</p>
+<h2 id="闲话"><a href="#闲话" class="headerlink" title="闲话"></a>闲话</h2><p>暑假的时候打了十几个野包，当时水平也菜，刚洗手变成Arch玩家没多久，打的十几个包都没放到AUR上丢人。虽然现在还是真蒟蒻在群里围观各路大佬卖弱不敢说话，看到中文的打包教程这么少，决定还是写点什么。</p>
+<p>当时搜AUR打包相关的资料，发现相关的文章、博客、资料并不多（尤其是中文的）。中文资料保守估计不到Archlinux安装教程的百分之一，也不到deb、rpm、Flatpak打包教程的百分之一。</p>
+<p>Archlinux安装弄的这么难初衷可能是为了筛掉一部分小白和伸手党，不过网上各路保姆级安装教程（一步一步手把手教的视频演示那种）和各种一键安装脚本和 Arch based 的发行版基本上快让<span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL0FyY2hfTGludXhfKCVFNyVBRSU4MCVFNCVCRCU5MyVFNCVCOCVBRCVFNiU5NiU4Nyk=">Arch的理念<i class="fa fa-external-link-alt"></i></span>流产了(特别是广为诟病的Manjaro和网上一大堆不负责任的教程，一口一个适合小白，动不动就教人添加ArchlinuxCN源，搞得很多打包者不堪骚扰)</p>
+<p>小白倒没什么，主要是被伸手党搞怕了。</p>
+<p>独立打一个包应该不会比独立装一个Archlinux难（不考虑Nvidia双显卡博通网卡阴间主板诡异驱动等….）。<br>如果一个用户能参照ArchWiki独立装好、配置好自己的Arch，那就应该有能力自己打包。<br>Arch没有Mac、Windows、ChromeOS那样的财大气粗的公司和掏钱买服务的客户，甚至不能跟RHEL和Ubuntu比，社区纯靠热情。而且由于deb系和rpm系用户众多，基本大部分软件如果支持Linux会给出deb或者rpm的包，有的可能会给个appimage的包，Arch的支持基本没太多上游会管，很多包都是Arch的维护者和用户自行编译打包的（不少还是deb拆包转的）。<br>伸手党太多而打包者太少，那就离凉凉不远了。<br>下次看到没有包当伸手党可不好，没有包就自己打一个吧。</p>
+<h2 id="参考和推荐阅读"><a href="#参考和推荐阅读" class="headerlink" title="参考和推荐阅读"></a>参考和推荐阅读</h2><p><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL0RldmVsb3Blcldpa2k6SW5kZXg=">DeveloperWiki<i class="fa fa-external-link-alt"></i></span> 里面关于打包的部分可以看看<br><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL0FyY2hfcGFja2FnZV9ndWlkZWxpbmVz">Arch package guidelines<i class="fa fa-external-link-alt"></i></span> Arch官方的打包指南<br>[PKGBUILD_(简体中文)]<span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL1BLR0JVSUxEXyglRTclQUUlODAlRTQlQkQlOTMlRTQlQjglQUQlRTYlOTYlODcp">https://wiki.archlinux.org/index.php/PKGBUILD_(简体中文)<i class="fa fa-external-link-alt"></i></span> PKGBUILD的简要介绍<br><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL01ha2Vwa2dfKCVFNyVBRSU4MCVFNCVCRCU5MyVFNCVCOCVBRCVFNiU5NiU4Nyk=">Makepkg_(简体中文)<i class="fa fa-external-link-alt"></i></span> Makepkg也比较重要，有需要可以参考维基修改一下参数<br><span class="exturl" data-url="aHR0cHM6Ly9mZWxpeGMuYXQvMjAxNy8wOC9tYWtlLWFuLWFyY2gtcGFja2FnZS1mb3ItcHl0aG9uLW1vZHVsZS8=">给 Arch 打一个包 – Python 模块篇<i class="fa fa-external-link-alt"></i></span> python的包经常没什么人愿意打（确实依赖比较麻烦，好在有肥猫，打了一大堆python包），希望多来点熟悉python的大佬<br><span class="exturl" data-url="aHR0cHM6Ly9tYW4uYXJjaGxpbnV4Lm9yZy9tYW4vUEtHQlVJTEQuNQ==">PKGBUILD参考手册<i class="fa fa-external-link-alt"></i></span> Arch官网的参考手册，话说Arch最近新上的<span class="exturl" data-url="aHR0cHM6Ly9tYW4uYXJjaGxpbnV4Lm9yZy8=">手册索引<i class="fa fa-external-link-alt"></i></span>挺香的（btw I use tldr）<br><span class="exturl" data-url="aHR0cHM6Ly93d3cudnVsdHIuY29tL2RvY3MvYnVpbGRpbmctcGFja2FnZXMtb24tYXJjaC1saW51eA==">Building Packages on Arch Linux (Including the AUR)<i class="fa fa-external-link-alt"></i></span> Vultr的教程（我也不知道Vultr怎么会有这种东西）<br><span class="exturl" data-url="aHR0cHM6Ly9qdW55dXNzaC5naXRodWIuaW8vcC9hcmNoLWxpbnV4LXBhY2thZ2UtcXVpY2stc3RhcnQv">Arch Linux 第一次打包就上手<i class="fa fa-external-link-alt"></i></span>  新手可以看看这个<br><span class="exturl" data-url="aHR0cHM6Ly9zbGVlcG1hcC5kZS8yMDIyL3BhY2thZ2luZy1mb3ItYXJjaC1saW51eC8=">Packaging for Arch Linux<i class="fa fa-external-link-alt"></i></span>  一个TU写的</p>
+]]></content>
+      <categories>
+        <category>不务正业系列</category>
+      </categories>
+      <tags>
+        <tag>AUR</tag>
+        <tag>Archlinux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>死灰复燃的传统医学</title>
     <url>/curse-of-traditional-medicine/</url>
     <content><![CDATA[<p>舆论的阵地，你不占领，鸿茅药酒就要来占领。</p>
@@ -1559,118 +1671,6 @@ npm ERR!     &#x2F;root&#x2F;.npm&#x2F;_logs&#x2F;2020-11-16T14_13_24_937Z-debug
       <tags>
         <tag>医药</tag>
         <tag>中医</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>AUR打包指北</title>
-    <url>/create-aur-packages/</url>
-    <content><![CDATA[<p>（长期施工中，未完待续）</p>
-<span id="more"></span>
-
-<blockquote class="blockquote-center">
-<p>快来当AUR打包工具人&#x2F;打包苦力吧(笑</p>
-
-</blockquote>
-
-<p>其实还是建议你去先看看官方文档</p>
-<h2 id="大致流程"><a href="#大致流程" class="headerlink" title="大致流程"></a>大致流程</h2><h3 id="新建一个测试环境"><a href="#新建一个测试环境" class="headerlink" title="新建一个测试环境"></a>新建一个测试环境</h3><p>在本机上直接打包可能会把你自己的机子环境搞乱搞崩，或者忽略了已经在自己电脑上装了了但是没有的依赖，又或者你想…<br>反正弄一个干净的测试环境是有必要的。可以参考官方Wiki：<span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL0RldmVsb3Blcldpa2k6QnVpbGRpbmdfaW5fYV9jbGVhbl9jaHJvb3Q=">DeveloperWiki:Building in a clean chroot<i class="fa fa-external-link-alt"></i></span>, 或者看肥猫这篇：<span class="exturl" data-url="aHR0cHM6Ly9mZWxpeGMuYXQvMjAxNy8wOC9pbnRyb2R1Y3Rpb24tdG8tYXJjaC1saW51eC1kZXZ0b29scy1idWlsZC1wYWNrYWdlcy1mcm9tLWEtY2xlYW4tY2hyb290Lw==">Arch Linux devtools 简介 – 在干净的环境里编译软件包<i class="fa fa-external-link-alt"></i></span></p>
-<p>当然打包一些很简单、依赖很明确的东西，确定没必要也可以不要这一步。</p>
-<h3 id="编写PKGBUILD"><a href="#编写PKGBUILD" class="headerlink" title="编写PKGBUILD"></a>编写PKGBUILD</h3><p>最快的方法是去找找有没有和你要打包的东西类似的包，然后抄一下它的PKGBUILD。</p>
-<h3 id="检查"><a href="#检查" class="headerlink" title="检查"></a>检查</h3><p>先用namcap检查一下，有没有语法错误或者其他不符合规范的地方</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">namcap PKGBUILD<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h3 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">makepkg -s<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>生成的 <code>XXX.tar.xz</code>可以再用 <code>namcap</code>检查一下</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">namcap XXX.tar.xz<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h3 id="上传和分享"><a href="#上传和分享" class="headerlink" title="上传和分享"></a>上传和分享</h3><h4 id="AUR"><a href="#AUR" class="headerlink" title="AUR"></a>AUR</h4><p>如果想分享出来，你可以上传到AUR仓库里面。AUR帐号随便就能注册几乎没有审查的（所以传点恶意代码上去也能传的），但是尽量不要把有版权问题之类的东西传上去（虽然出了事应该是你自己负责）</p>
-<p>新建一个账号，然后上传你的SSH公钥和密钥指纹。</p>
-<p>用 <code>git clone</code>拉取一个</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> clone ssh://aur@aur.archlinux.org/your-package-name.git <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>AUR软件仓库需要<span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwLy5TUkNJTkZPXyglRTclQUUlODAlRTQlQkQlOTMlRTQlQjglQUQlRTYlOTYlODcp">SRCINFO<i class="fa fa-external-link-alt"></i></span>,不然会拒绝你的提交</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">makepkg --printsrcinfo <span class="token operator">></span> .SRCINFO<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h4 id="非官方软件仓库"><a href="#非官方软件仓库" class="headerlink" title="非官方软件仓库"></a>非官方软件仓库</h4><p>或者你可以去其他非官方的仓库，这有一大堆：<span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL1Vub2ZmaWNpYWxfdXNlcl9yZXBvc2l0b3JpZXNfKCVFNyVBRSU4MCVFNCVCRCU5MyVFNCVCOCVBRCVFNiU5NiU4Nyk=">Unofficial user repositories<i class="fa fa-external-link-alt"></i></span></p>
-<p>中文用户人最多的是ArchlinuxCN，我猜你很熟悉这个了。</p>
-<p>其他的还有chaotic-aur（里面的包不少，但是国内速度很慢，镜像都在国外，直接访问可能比从AUR拉下来编译还慢），arch4edu（一些教育软件和包，清华的弄得，国内速度还行），blackarch（这个包也很多，约等于arch系的kali源）</p>
-<p>要添加到这些非官方仓库里，可以请求打包，或者跟仓库管理员py。</p>
-<p>或者可以自建一个仓库。</p>
-<p>可参考：</p>
-<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuYWxveGFmLmNvbS8yMDIwLzA2L2J1aWxkX2F1cl93aXRoX2dpdGh1Yl9hY3Rpb25zLw==">利用 GitHub Actions 编译 AUR 包并建立自己的软件源<i class="fa fa-external-link-alt"></i></span></p>
-<h2 id="一些工具"><a href="#一些工具" class="headerlink" title="一些工具"></a>一些工具</h2><h3 id="namcap"><a href="#namcap" class="headerlink" title="namcap"></a>namcap</h3><p>用来检查打包是否正确</p>
-<h3 id="devtools"><a href="#devtools" class="headerlink" title="devtools"></a>devtools</h3><p>可以干很多事情，最常用的是新建一个干净的环境用来测试你的包。</p>
-<p>还有很多用法去看文档吧，</p>
-<h3 id="debtap"><a href="#debtap" class="headerlink" title="debtap"></a>debtap</h3><p>大多数情况下可以快速把deb包转成aur包<br>有些deb的包或者rpm的包可以拆包然后重新手动打包一下。一般的用debtap可以解决大部分deb包，有些依赖可能没办法需要手动处理。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yay -Syu debtap
-<span class="token function">sudo</span> debtap -u <span class="token comment">#同步数据库，可能比较慢</span>
-debtap -p XXX.deb <span class="token comment"># -p 选项生成PKGBUILD</span>
-<span class="token comment">## 然后根据提示输入包名和协议等</span>
-<span class="token comment">## 然后稍等一会，会比较慢</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>然后 <code>pacman -U XXX.tar.xz</code>可以装到你的电脑上试一下。</p>
-<h3 id="pip2pkgbuilds"><a href="#pip2pkgbuilds" class="headerlink" title="pip2pkgbuilds"></a>pip2pkgbuilds</h3><p>将pip的包转成aur的包，这个工具很久没更新了（But it works）。这个工具有不少情况不会帮你自动处理，python的不少pip包本身也不太遵循pip的打包规范，要做不少手动检查和调整。</p>
-<h3 id="npm-pkgbuild"><a href="#npm-pkgbuild" class="headerlink" title="npm-pkgbuild"></a>npm-pkgbuild</h3><p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FybGFjNzcvbnBtLXBrZ2J1aWxkI3JlYWRtZQ==">npm-pkgbuild<i class="fa fa-external-link-alt"></i></span> 一个将npm包转成aur的包，和上面那个类似，也是自动生成PKGBUILD。没用过不好评价。</p>
-<h2 id="自动化"><a href="#自动化" class="headerlink" title="自动化"></a>自动化</h2><p>人肉测试每个包然后传上去给大家用是最好的，不过有的上游更新太勤测试不过来，或者一些<span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL1ZDU19wYWNrYWdlX2d1aWRlbGluZXNfKCVFNyVBRSU4MCVFNCVCRCU5MyVFNCVCOCVBRCVFNiU5NiU4Nyk=">用版本控制紧跟上游的包<i class="fa fa-external-link-alt"></i></span><br><del>又或者有的时候你想让用户当小白鼠</del></p>
-<p>可以试试Travis CI、Github Action 之类的CI&#x2F;CD工具，不过最好还是更新之前人肉测试一下</p>
-<h3 id="Github-Action"><a href="#Github-Action" class="headerlink" title="Github Action"></a>Github Action</h3><p>Github Action的好处是可以白嫖（划掉</p>
-<p>可以用Github Action自动生成PKGBUILD：<br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21hcmtldHBsYWNlL2FjdGlvbnMvcHVibGlzaC1hdXItcGFja2FnZQ==">publish-aur-package<i class="fa fa-external-link-alt"></i></span></p>
-<p>鸭鸭的<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0R1Y2tTb2Z0L2J1aWxkLWF1ci1hY3Rpb24=">build-aur-action<i class="fa fa-external-link-alt"></i></span>,用Github Action编译一个AUR包（有时候你不想在自己电脑上编译可以试试这个）</p>
-<p>使用见：<span class="exturl" data-url="aHR0cHM6Ly92aWZseXRoaW5rLmNvbS9Vc2VfR2l0SHViQWN0aW9uc190b19idWlsZF9BVVIv">GitHub Actions 打造 AUR 打包下载一条龙服务<i class="fa fa-external-link-alt"></i></span></p>
-<h2 id="一些小问题"><a href="#一些小问题" class="headerlink" title="一些小问题"></a>一些小问题</h2><h3 id="AUR的依赖包makepkg无法自动识别"><a href="#AUR的依赖包makepkg无法自动识别" class="headerlink" title="AUR的依赖包makepkg无法自动识别"></a>AUR的依赖包makepkg无法自动识别</h3><p>打包的时候如果依赖AUR的包，在 <code>makepkg -s</code>pacman是不会自动安装的需要手动安装</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">error: target not found: python-django-cors-headers
-<span class="token operator">==</span><span class="token operator">></span> ERROR: <span class="token string">'pacman'</span> failed to <span class="token function">install</span> missing dependencies.
-<span class="token operator">==</span><span class="token operator">></span> ERROR: Could not resolve all dependencies.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<p>如果依赖太多装不过来，可以加 <code>makepkg -d</code>参数忽略依赖，然后对生成的 <code>XXX.tar.xz</code>使用yay或者pikaur之类的AUR helper</p>
-<h3 id="git初次commit不包含SRCINFO导致拒绝提交"><a href="#git初次commit不包含SRCINFO导致拒绝提交" class="headerlink" title="git初次commit不包含SRCINFO导致拒绝提交"></a>git初次commit不包含SRCINFO导致拒绝提交</h3><p>可以用 <code>git filter branch</code></p>
-<p>（其实直接删了重新 <code>git init</code>可能更快）</p>
-<h2 id="常见写法和命令"><a href="#常见写法和命令" class="headerlink" title="常见写法和命令"></a>常见写法和命令</h2><h3 id="install命令"><a href="#install命令" class="headerlink" title="install命令"></a>install命令</h3><p>用过 <code>cmake</code>等编译工具的人应该对 <code>make install</code>很熟了，它在PKGBUILD里面大概像这样</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function-name function">package</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-  <span class="token function">make</span> -C <span class="token string">"<span class="token variable">$pkgname</span>-<span class="token variable">$pkgver</span>"</span> <span class="token assign-left variable">DESTDIR</span><span class="token operator">=</span><span class="token string">"<span class="token variable">$pkgdir</span>"</span> <span class="token function">install</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<p>在PKGBUILD里面，还经常用它把文件安装到制定目录，并指定权限（一般不用 <code>cp</code>来干这种事）</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function-name function">package</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-  <span class="token builtin class-name">cd</span> <span class="token string">"<span class="token variable">$srcdir</span>/<span class="token variable">$pkgname</span>"</span>
-  <span class="token function">install</span> -vDm <span class="token number">644</span> <span class="token variable">$&#123;pkgname<span class="token operator">%</span>-git&#125;</span><span class="token punctuation">&#123;</span>,.plugin<span class="token punctuation">&#125;</span>.zsh <span class="token punctuation">\</span>
-    -t <span class="token string">"<span class="token variable">$&#123;pkgdir&#125;</span>/usr/share/zsh/plugins/<span class="token variable">$&#123;pkgname&#125;</span>/"</span>
-  <span class="token function">install</span> -Dm644 LICENSE <span class="token string">"<span class="token variable">$pkgdir</span>"</span>/usr/share/licenses/<span class="token variable">$pkgname</span>/LICENSE
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>将可执行文件和LICENSE分别放到指定目录，像LICENSE或者doc权限644就好了，其他的可执行文件酌情给个755权限。</p>
-<p>如果有需要打印详细安装信息方便调试，可以加 <code>-v</code>选项，像这样 <code>install -Dvm755</code></p>
-<h3 id="常见写法"><a href="#常见写法" class="headerlink" title="常见写法"></a>常见写法</h3><p>获取Github Release</p>
-<h2 id="练手推荐"><a href="#练手推荐" class="headerlink" title="练手推荐"></a>练手推荐</h2><p>上手AUR打包基本只需要一点bash脚本的知识就可以了。当然最好还要对打包的项目和所用的语言、框架、依赖比较熟悉。</p>
-<p>反正我感觉比deb和rpm的打包简单太多了，而且由于包管理的机制，虽然容易挂，但是依赖一般不会特别麻烦（除了有些要拆包的东西）</p>
-<p>你看看依赖问题<span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzI5MTYwNjEyOC9hbnN3ZXIvMTE5NDU5NjU5MQ==">都把隔壁deb系的老哥逼成什么样了<i class="fa fa-external-link-alt"></i></span>。</p>
-<p>可以看这个<span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuaWJtLmNvbS96aC9hcnRpY2xlcy9sLWxvLXJwbS1idWlsZC1wYWNrYWdlLw==">Linux 中 RPM 的构建与打包<i class="fa fa-external-link-alt"></i></span>感受一下打包流程<br>（当然rpm包用<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2pvcmRhbnNpc3NlbC9mcG0=">fpm<i class="fa fa-external-link-alt"></i></span>之类的打包工具也没有那么麻烦）</p>
-<p>官方的打包示例是要用到make编译c&#x2F;c++包的例子，但是一些c&#x2F;c++的包，运行环境和依赖会比较麻烦，而且在x86和arm等不同架构下面也会有很多问题。拿来熟悉打包流程对萌新不太友好。</p>
-<p>练手打包建议用从自己最熟悉的项目和语言开始。如果你什么语言都不熟悉呢，推荐用一些主题或者可以用debtap之类的工具方便的转成AUR包的东西来熟悉一下打包。</p>
-<p>有的系统主题、grub主题、输入法主题之类的包比较好打包，一般来说依赖也少，不会搞出什么大问题。而且主题的文件存放位置和PKGBUILD里面的其他东西可以找AUR里面打包好的其他主题参考，基本大同小异，上手打包不会有太太高难度和坑，不太熟悉流程的可以先用一些主题练手熟悉一下打包流程。（主要是这个依赖也少，破坏性比较小，萌新打出低质量的AUR包也不至于把装这个包的人一波带走闯下大祸）</p>
-<p>而且他们不需要编译，也没有依赖报错，总之非常的适合熟悉一下PKGBUILD的流程</p>
-<p>当然打包不能包揽所有工作，一些设置需要用户手动启用或者修改的（比如一些配置，又比如systemd之类的daemon），比如我这里打包了一个GRUB的Cyberpunk主题，需要用户手动修改</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">vim</span> /etc/default/grub<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token assign-left variable">GRUB_THEME</span><span class="token operator">=</span><span class="token string">"/usr/share/grub/themes/Cyberpunk/theme.txt"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">grub-mkconfig</span> -o /boot/grub/grub.cfg<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>需要用户手动修改设置来启用（基本上主题、桌面挂件之类的包都是这么做的）</p>
-<h2 id="闲话"><a href="#闲话" class="headerlink" title="闲话"></a>闲话</h2><p>暑假的时候打了十几个野包，当时水平也菜，刚洗手变成Arch玩家没多久，打的十几个包都没放到AUR上丢人。虽然现在还是真蒟蒻在群里围观各路大佬卖弱不敢说话，看到中文的打包教程这么少，决定还是写点什么。</p>
-<p>当时搜AUR打包相关的资料，发现相关的文章、博客、资料并不多（尤其是中文的）。中文资料保守估计不到Archlinux安装教程的百分之一，也不到deb、rpm、Flatpak打包教程的百分之一。</p>
-<p>Archlinux安装弄的这么难初衷可能是为了筛掉一部分小白和伸手党，不过网上各路保姆级安装教程（一步一步手把手教的视频演示那种）和各种一键安装脚本和 Arch based 的发行版基本上快让<span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL0FyY2hfTGludXhfKCVFNyVBRSU4MCVFNCVCRCU5MyVFNCVCOCVBRCVFNiU5NiU4Nyk=">Arch的理念<i class="fa fa-external-link-alt"></i></span>流产了(特别是广为诟病的Manjaro和网上一大堆不负责任的教程，一口一个适合小白，动不动就教人添加ArchlinuxCN源，搞得很多打包者不堪骚扰)</p>
-<p>小白倒没什么，主要是被伸手党搞怕了。</p>
-<p>独立打一个包应该不会比独立装一个Archlinux难（不考虑Nvidia双显卡博通网卡阴间主板诡异驱动等….）。<br>如果一个用户能参照ArchWiki独立装好、配置好自己的Arch，那就应该有能力自己打包。<br>Arch没有Mac、Windows、ChromeOS那样的财大气粗的公司和掏钱买服务的客户，甚至不能跟RHEL和Ubuntu比，社区纯靠热情。而且由于deb系和rpm系用户众多，基本大部分软件如果支持Linux会给出deb或者rpm的包，有的可能会给个appimage的包，Arch的支持基本没太多上游会管，很多包都是Arch的维护者和用户自行编译打包的（不少还是deb拆包转的）。<br>伸手党太多而打包者太少，那就离凉凉不远了。<br>下次看到没有包当伸手党可不好，没有包就自己打一个吧。</p>
-<h2 id="参考和推荐阅读"><a href="#参考和推荐阅读" class="headerlink" title="参考和推荐阅读"></a>参考和推荐阅读</h2><p><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL0RldmVsb3Blcldpa2k6SW5kZXg=">DeveloperWiki<i class="fa fa-external-link-alt"></i></span> 里面关于打包的部分可以看看<br><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL0FyY2hfcGFja2FnZV9ndWlkZWxpbmVz">Arch package guidelines<i class="fa fa-external-link-alt"></i></span> Arch官方的打包指南<br>[PKGBUILD_(简体中文)]<span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL1BLR0JVSUxEXyglRTclQUUlODAlRTQlQkQlOTMlRTQlQjglQUQlRTYlOTYlODcp">https://wiki.archlinux.org/index.php/PKGBUILD_(简体中文)<i class="fa fa-external-link-alt"></i></span> PKGBUILD的简要介绍<br><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL01ha2Vwa2dfKCVFNyVBRSU4MCVFNCVCRCU5MyVFNCVCOCVBRCVFNiU5NiU4Nyk=">Makepkg_(简体中文)<i class="fa fa-external-link-alt"></i></span> Makepkg也比较重要，有需要可以参考维基修改一下参数<br><span class="exturl" data-url="aHR0cHM6Ly9mZWxpeGMuYXQvMjAxNy8wOC9tYWtlLWFuLWFyY2gtcGFja2FnZS1mb3ItcHl0aG9uLW1vZHVsZS8=">给 Arch 打一个包 – Python 模块篇<i class="fa fa-external-link-alt"></i></span> python的包经常没什么人愿意打（确实依赖比较麻烦，好在有肥猫，打了一大堆python包），希望多来点熟悉python的大佬<br><span class="exturl" data-url="aHR0cHM6Ly9tYW4uYXJjaGxpbnV4Lm9yZy9tYW4vUEtHQlVJTEQuNQ==">PKGBUILD参考手册<i class="fa fa-external-link-alt"></i></span> Arch官网的参考手册，话说Arch最近新上的<span class="exturl" data-url="aHR0cHM6Ly9tYW4uYXJjaGxpbnV4Lm9yZy8=">手册索引<i class="fa fa-external-link-alt"></i></span>挺香的（btw I use tldr）<br><span class="exturl" data-url="aHR0cHM6Ly93d3cudnVsdHIuY29tL2RvY3MvYnVpbGRpbmctcGFja2FnZXMtb24tYXJjaC1saW51eA==">Building Packages on Arch Linux (Including the AUR)<i class="fa fa-external-link-alt"></i></span> Vultr的教程（我也不知道Vultr怎么会有这种东西）<br><span class="exturl" data-url="aHR0cHM6Ly9qdW55dXNzaC5naXRodWIuaW8vcC9hcmNoLWxpbnV4LXBhY2thZ2UtcXVpY2stc3RhcnQv">Arch Linux 第一次打包就上手<i class="fa fa-external-link-alt"></i></span>  新手可以看看这个</p>
-]]></content>
-      <categories>
-        <category>不务正业系列</category>
-      </categories>
-      <tags>
-        <tag>AUR</tag>
-        <tag>Archlinux</tag>
       </tags>
   </entry>
   <entry>
@@ -3498,6 +3498,89 @@ factorial <span class="token operator">=</span> <span class="token builtin">list
       </tags>
   </entry>
   <entry>
+    <title>基于BERT的电子病历的命名实体识别</title>
+    <url>/9112/</url>
+    <content><![CDATA[<p>BERT效果确实好，就是有点吃内存</p>
+<span id="more"></span>
+
+<h2 id="序列标注"><a href="#序列标注" class="headerlink" title="序列标注"></a>序列标注</h2><p>一些医院的电子病历拆分的很细，比如主诉这一个大项里面部位、症状、时间、状态都是分开的；另一些医院的电子病历就跟纯文本差不多，要把大段文字中的主要结构提出来需要自然语言处理或者人工录入。一般做自然语言处理的时候都是几个部分分开做的，因为不同部分差异比较大，分开训练识别效果好。大部分电子病历包括入院记录、首次病程记录、病程记录、出院记录、手术记录、护理记录、病案首页，这里面又分为一些检查项、时间、主诉、既往史之类的小项。不少电子病历系统导出都是XML的，一般都是把电子病历拆成主诉那种一个个不能再拆的纯文本部分，比如主诉，见<a href="https://zhangjk98.xyz/81d4/">上一篇</a>，然后再对不能拆分的纯文本用人工或自然语言处理进一步拆分。这就是所谓的电子病历结构化。</p>
+<p>比如一段主诉：</p>
+<blockquote>
+<p>反复胸痛伴胸闷1+年，加重20+天。</p>
+</blockquote>
+<p>按照规范一定的规范可分为几个不同的小块，比如下面这十一种：</p>
+<blockquote>
+<p>部位、症状、持续时间、伴随部位、伴随症状、伴随时间、状 态、病因&#x2F;其他、观察项目、观察结果、既往史</p>
+</blockquote>
+<p>胸是部位、痛是症状、1+年是持续时间、反复是状态……</p>
+<p>标注出来的结果可以保存为json格式，labels里面的list分别为起始位置、结束位置、标签</p>
+<pre class="line-numbers language-none"><code class="language-none">
+&#123;&quot;text&quot;: &quot;反复胸痛伴胸闷1+年，加重20+天。&quot;, &quot;labels&quot;: [[0, 2, &quot;状态&quot;], [2, 3, &quot;部位&quot;], [3, 4, &quot;症状&quot;], [5, 7, &quot;伴随症状&quot;], [7, 10, &quot;伴随时间&quot;], [11, 17, &quot;持续时间&quot;]]&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>BIO格式，大概是这个样子：B，begin标签开始；I，inside包含在标签内，O，outside在标签外</p>
+<pre class="line-numbers language-none"><code class="language-none">
+反 B-状态
+复 I-状态
+胸 B-部位
+痛 B-症状
+伴 O
+胸 B-伴随症状
+闷 I-伴随症状
+1 B-伴随时间
++ I-伴随时间
+年 I-伴随时间
+， O
+加 B-持续时间
+重 I-持续时间
+2 I-持续时间
+0 I-持续时间
++ I-持续时间
+天 I-持续时间
+。 O<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>BERT的接口是BIO格式，标注工具doccano，这里写两个互相转换的脚本就行了，标注完成后将json转为BIO，训练和预测完成后将BIO预测结果转为JSON</p>
+<h2 id="训练模型"><a href="#训练模型" class="headerlink" title="训练模型"></a>训练模型</h2><p>NLP里面的命名实体识别很早就用在电子病历上，早期的机器学习方法效果一般，后来开始用RNN和CNN，后来用LSTM，再后来用BERT，效果一直在提升，BERT基本上到顶了（好一点的训练数据BERT基本能达到90%以上，对于主诉这样的较短的简单条目甚至能达到98%以上）</p>
+<h2 id="其他杂项"><a href="#其他杂项" class="headerlink" title="其他杂项"></a>其他杂项</h2><h3 id="doccano的部署和使用"><a href="#doccano的部署和使用" class="headerlink" title="doccano的部署和使用"></a>doccano的部署和使用</h3><h4 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h4><h5 id="Docker方式"><a href="#Docker方式" class="headerlink" title="Docker方式"></a>Docker方式</h5><h6 id="构建和部署"><a href="#构建和部署" class="headerlink" title="构建和部署"></a>构建和部署</h6><p>运行以下命令</p>
+<pre class="line-numbers language-none"><code class="language-none">
+$ docker pull chakkiworks&#x2F;doccano # 拉取官方镜像
+$ docker run -d --name doccano -p 80:8000 chakkiworks&#x2F;doccano # 运行镜像，请按需修改端口
+$ docker exec doccano tools&#x2F;create-admin.sh &quot;admin&quot; &quot;[email protected]&quot; &quot;password&quot; # 创建用户并指定密码<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>注意  Docker镜像run之后会产生三个容器，doccona_nginx、doccona_backend、docker_frontend,其中docker_frontend在构建完成后会直接exit，这是一个feature，不是bug，它的主要作用是webpack打包</p>
+<p><img src="/9112/image-20200109220759931.png" alt="img"></p>
+</blockquote>
+<h4 id="访问Docker中的PostgreSQL数据库中的数据"><a href="#访问Docker中的PostgreSQL数据库中的数据" class="headerlink" title="访问Docker中的PostgreSQL数据库中的数据"></a>访问Docker中的PostgreSQL数据库中的数据</h4><p>由于数据库安全问题，数据库分离再一个单独的容器中并且 首先执行<code>Docker exec</code>命令进入相应的PostgreSQL数据库容器</p>
+<p>应该看到下图这样，终端从宿主机切换进容器</p>
+<p><img src="/9112/image-20200109220232851.png" alt="img"></p>
+<p>在容器的shell中用命令进入数据库</p>
+<pre class="line-numbers language-none"><code class="language-none">
+$ psql -h 127.0.0.1 -d doccano -U doccano -p 5432 # 注意你的host，数据库名、用户名和端口<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>应该看到下图这样，终端从Docker容器切进数据库</p>
+<p><img src="/9112/image-20200109220100751.png" alt="img"></p>
+<p>然后执行<code>\l</code>等命令进入和查看数据库（执行SQL）</p>
+<h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><p>后台管理入口是这个<span class="exturl" data-url="aHR0cDovL3lvdXJzaXRlL2FkbWluLyVFRiVCQyU4QyVFNSVCMCVCMSVFNiU5OCVBRiVFNCVCOCU4MCVFNCVCOCVBQURqYW5nbyVFOCU4NyVBQSVFNSVCOCVBNiVFNyU5QSU4NCVFNSU5MCU4RSVFNSU4RiVCMCVFNyVBRSVBMSVFNyU5MCU4Ng==">http://yoursite/admin/，就是一个Django自带的后台管理<i class="fa fa-external-link-alt"></i></span></p>
+<p><img src="/9112/image-20200411204841203-1586654887394.png" alt="img"></p>
+<p><img src="/9112/image-20200411205005107-1586654884937.png" alt="img"></p>
+<p><img src="/9112/image-20200411205102588-1586654882966.png" alt="img"></p>
+<p>登录进去后可自行添加账号和项目并设置权限和标签，标注项目选择sequential labeing即可，导出时选择JSONL格式</p>
+<p>这个数据比较多的时候没有自动跳转比较麻烦，请直接在浏览器地址栏使用url跳转</p>
+<p>比如，修改浏览器后面的url，#后面的offset改为685，直接回车，就可以从当前的689跳转到第685个数据</p>
+<p><span class="exturl" data-url="aHR0cDovL3lvdXJzaXRlL3Byb2plY3RzLzYvI29mZnNldD02ODU=">http://yoursite/projects/6/#offset=685<i class="fa fa-external-link-alt"></i></span></p>
+<p><img src="/9112/image-20200307213544539.png" alt="img"></p>
+<h2 id="注"><a href="#注" class="headerlink" title="注"></a>注</h2><p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2RvY2Nhbm8vZG9jY2Fubw==">https://github.com/doccano/doccano<i class="fa fa-external-link-alt"></i></span> 一个开源的标注工具</p>
+<p> <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21hY2Fudi9CRVJULUJpTFNUTS1DUkYtTkVS">https://github.com/macanv/BERT-BiLSTM-CRF-NER<i class="fa fa-external-link-alt"></i></span> 一个BERT的NER工具包</p>
+]]></content>
+      <categories>
+        <category>102网吧日常</category>
+      </categories>
+      <tags>
+        <tag>bert</tag>
+        <tag>NER</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>基于机器学习的ICU急性心肌梗死死亡率预测（MIMIC数据库）</title>
     <url>/morality-prediction/</url>
     <content><![CDATA[<p>更新：推荐使用新版的MIMIC数据库自行构建数据集，并尝试整合eICU的病人数据。据说LSTM等方法效果不错，可以试试。<br>处理过程已经放在github上了：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0FyY2hhZW9yYXB0b3IvQU1JX21vcmFsaXR5X3ByZWRpY3Rpb24uZ2l0">https://github.com/Archaeoraptor/AMI_morality_prediction.git<i class="fa fa-external-link-alt"></i></span></p>
@@ -4145,89 +4228,6 @@ fpr_xgb<span class="token punctuation">,</span>tpr_xgb<span class="token punctua
       </categories>
       <tags>
         <tag>MIMIC</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>基于BERT的电子病历的命名实体识别</title>
-    <url>/9112/</url>
-    <content><![CDATA[<p>BERT效果确实好，就是有点吃内存</p>
-<span id="more"></span>
-
-<h2 id="序列标注"><a href="#序列标注" class="headerlink" title="序列标注"></a>序列标注</h2><p>一些医院的电子病历拆分的很细，比如主诉这一个大项里面部位、症状、时间、状态都是分开的；另一些医院的电子病历就跟纯文本差不多，要把大段文字中的主要结构提出来需要自然语言处理或者人工录入。一般做自然语言处理的时候都是几个部分分开做的，因为不同部分差异比较大，分开训练识别效果好。大部分电子病历包括入院记录、首次病程记录、病程记录、出院记录、手术记录、护理记录、病案首页，这里面又分为一些检查项、时间、主诉、既往史之类的小项。不少电子病历系统导出都是XML的，一般都是把电子病历拆成主诉那种一个个不能再拆的纯文本部分，比如主诉，见<a href="https://zhangjk98.xyz/81d4/">上一篇</a>，然后再对不能拆分的纯文本用人工或自然语言处理进一步拆分。这就是所谓的电子病历结构化。</p>
-<p>比如一段主诉：</p>
-<blockquote>
-<p>反复胸痛伴胸闷1+年，加重20+天。</p>
-</blockquote>
-<p>按照规范一定的规范可分为几个不同的小块，比如下面这十一种：</p>
-<blockquote>
-<p>部位、症状、持续时间、伴随部位、伴随症状、伴随时间、状 态、病因&#x2F;其他、观察项目、观察结果、既往史</p>
-</blockquote>
-<p>胸是部位、痛是症状、1+年是持续时间、反复是状态……</p>
-<p>标注出来的结果可以保存为json格式，labels里面的list分别为起始位置、结束位置、标签</p>
-<pre class="line-numbers language-none"><code class="language-none">
-&#123;&quot;text&quot;: &quot;反复胸痛伴胸闷1+年，加重20+天。&quot;, &quot;labels&quot;: [[0, 2, &quot;状态&quot;], [2, 3, &quot;部位&quot;], [3, 4, &quot;症状&quot;], [5, 7, &quot;伴随症状&quot;], [7, 10, &quot;伴随时间&quot;], [11, 17, &quot;持续时间&quot;]]&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p>BIO格式，大概是这个样子：B，begin标签开始；I，inside包含在标签内，O，outside在标签外</p>
-<pre class="line-numbers language-none"><code class="language-none">
-反 B-状态
-复 I-状态
-胸 B-部位
-痛 B-症状
-伴 O
-胸 B-伴随症状
-闷 I-伴随症状
-1 B-伴随时间
-+ I-伴随时间
-年 I-伴随时间
-， O
-加 B-持续时间
-重 I-持续时间
-2 I-持续时间
-0 I-持续时间
-+ I-持续时间
-天 I-持续时间
-。 O<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>BERT的接口是BIO格式，标注工具doccano，这里写两个互相转换的脚本就行了，标注完成后将json转为BIO，训练和预测完成后将BIO预测结果转为JSON</p>
-<h2 id="训练模型"><a href="#训练模型" class="headerlink" title="训练模型"></a>训练模型</h2><p>NLP里面的命名实体识别很早就用在电子病历上，早期的机器学习方法效果一般，后来开始用RNN和CNN，后来用LSTM，再后来用BERT，效果一直在提升，BERT基本上到顶了（好一点的训练数据BERT基本能达到90%以上，对于主诉这样的较短的简单条目甚至能达到98%以上）</p>
-<h2 id="其他杂项"><a href="#其他杂项" class="headerlink" title="其他杂项"></a>其他杂项</h2><h3 id="doccano的部署和使用"><a href="#doccano的部署和使用" class="headerlink" title="doccano的部署和使用"></a>doccano的部署和使用</h3><h4 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h4><h5 id="Docker方式"><a href="#Docker方式" class="headerlink" title="Docker方式"></a>Docker方式</h5><h6 id="构建和部署"><a href="#构建和部署" class="headerlink" title="构建和部署"></a>构建和部署</h6><p>运行以下命令</p>
-<pre class="line-numbers language-none"><code class="language-none">
-$ docker pull chakkiworks&#x2F;doccano # 拉取官方镜像
-$ docker run -d --name doccano -p 80:8000 chakkiworks&#x2F;doccano # 运行镜像，请按需修改端口
-$ docker exec doccano tools&#x2F;create-admin.sh &quot;admin&quot; &quot;[email protected]&quot; &quot;password&quot; # 创建用户并指定密码<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<blockquote>
-<p>注意  Docker镜像run之后会产生三个容器，doccona_nginx、doccona_backend、docker_frontend,其中docker_frontend在构建完成后会直接exit，这是一个feature，不是bug，它的主要作用是webpack打包</p>
-<p><img src="/9112/image-20200109220759931.png" alt="img"></p>
-</blockquote>
-<h4 id="访问Docker中的PostgreSQL数据库中的数据"><a href="#访问Docker中的PostgreSQL数据库中的数据" class="headerlink" title="访问Docker中的PostgreSQL数据库中的数据"></a>访问Docker中的PostgreSQL数据库中的数据</h4><p>由于数据库安全问题，数据库分离再一个单独的容器中并且 首先执行<code>Docker exec</code>命令进入相应的PostgreSQL数据库容器</p>
-<p>应该看到下图这样，终端从宿主机切换进容器</p>
-<p><img src="/9112/image-20200109220232851.png" alt="img"></p>
-<p>在容器的shell中用命令进入数据库</p>
-<pre class="line-numbers language-none"><code class="language-none">
-$ psql -h 127.0.0.1 -d doccano -U doccano -p 5432 # 注意你的host，数据库名、用户名和端口<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p>应该看到下图这样，终端从Docker容器切进数据库</p>
-<p><img src="/9112/image-20200109220100751.png" alt="img"></p>
-<p>然后执行<code>\l</code>等命令进入和查看数据库（执行SQL）</p>
-<h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><p>后台管理入口是这个<span class="exturl" data-url="aHR0cDovL3lvdXJzaXRlL2FkbWluLyVFRiVCQyU4QyVFNSVCMCVCMSVFNiU5OCVBRiVFNCVCOCU4MCVFNCVCOCVBQURqYW5nbyVFOCU4NyVBQSVFNSVCOCVBNiVFNyU5QSU4NCVFNSU5MCU4RSVFNSU4RiVCMCVFNyVBRSVBMSVFNyU5MCU4Ng==">http://yoursite/admin/，就是一个Django自带的后台管理<i class="fa fa-external-link-alt"></i></span></p>
-<p><img src="/9112/image-20200411204841203-1586654887394.png" alt="img"></p>
-<p><img src="/9112/image-20200411205005107-1586654884937.png" alt="img"></p>
-<p><img src="/9112/image-20200411205102588-1586654882966.png" alt="img"></p>
-<p>登录进去后可自行添加账号和项目并设置权限和标签，标注项目选择sequential labeing即可，导出时选择JSONL格式</p>
-<p>这个数据比较多的时候没有自动跳转比较麻烦，请直接在浏览器地址栏使用url跳转</p>
-<p>比如，修改浏览器后面的url，#后面的offset改为685，直接回车，就可以从当前的689跳转到第685个数据</p>
-<p><span class="exturl" data-url="aHR0cDovL3lvdXJzaXRlL3Byb2plY3RzLzYvI29mZnNldD02ODU=">http://yoursite/projects/6/#offset=685<i class="fa fa-external-link-alt"></i></span></p>
-<p><img src="/9112/image-20200307213544539.png" alt="img"></p>
-<h2 id="注"><a href="#注" class="headerlink" title="注"></a>注</h2><p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2RvY2Nhbm8vZG9jY2Fubw==">https://github.com/doccano/doccano<i class="fa fa-external-link-alt"></i></span> 一个开源的标注工具</p>
-<p> <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21hY2Fudi9CRVJULUJpTFNUTS1DUkYtTkVS">https://github.com/macanv/BERT-BiLSTM-CRF-NER<i class="fa fa-external-link-alt"></i></span> 一个BERT的NER工具包</p>
-]]></content>
-      <categories>
-        <category>102网吧日常</category>
-      </categories>
-      <tags>
-        <tag>bert</tag>
-        <tag>NER</tag>
       </tags>
   </entry>
   <entry>
@@ -5266,172 +5266,6 @@ X_pred <span class="token operator">=</span> np<span class="token punctuation">.
       </tags>
   </entry>
   <entry>
-    <title>毕竟狂澜挽不回，遽怜遗蜕化飞灰</title>
-    <url>/SARS-cov-2/</url>
-    <content><![CDATA[<p>So this is how liberty die, with thunderous applause</p>
-<span id="more"></span>
-
-<p>想来我也算半个医学逃兵，颇有些惭愧（元旦那会听某个学医的群友在电报说武汉不太平，然而我怂，即没敢跟周围任何熟人说也没敢发到国内群里，完美逃过了央视训诫…….</p>
-<h2 id="一管就乱，一放就死"><a href="#一管就乱，一放就死" class="headerlink" title="一管就乱，一放就死"></a>一管就乱，一放就死</h2><p>经此一疫，又有一群不食人间烟火的人黄粱梦醒，纷纷如丧考妣，惊讶愤怒心痛，只觉所住非人间。你们是第一天住在人间吗？或许是承平日久了，想想这十几年真是好日子过多了，真觉得和平发展充满爱是世界主流了，这一片绿油油的韭菜不割都对不住韭菜。就像之前的故宫大G，愤怒可以理解，惊讶就太外宾了。<br>难道你们不知道权贵一直如此？<br>难道你们不知道公卫和防疫本来就是个摆设？<br>难道你们第一天接触慈善和红会？<br>难道你们第一天活在地球？</p>
-<p>然后在恐慌下自相践踏，死伤甚众，隔离这么严疫情没把你们搞死经济先崩了。</p>
-<h2 id="忘记历史就会梅开二度"><a href="#忘记历史就会梅开二度" class="headerlink" title="忘记历史就会梅开二度"></a>忘记历史就会梅开二度</h2><blockquote>
-<p>社会主义没有失业,那叫下岗</p>
-</blockquote>
-<p>有人怕了，就怕跟SARS扯上关系啊</p>
-<p>这病毒终于还是有了个名字叫SARS-cov-2，然而国内官媒一个个都有意回避SARS的说法，甚至绝口不提非典，非得叫新型冠状病毒，却又说不是SARS<br>我们随便点开一个百科,比如默沙东手册:</p>
-<blockquote>
-<p>严重急性呼吸综合征（SARS）是由SARS冠状病毒（SARS-CoV）引起的严重急性呼吸道疾病。</p>
-</blockquote>
-<p>这可不就是SARS，这次疾病就叫 SARS2 我看正合适。<br>WHO（Winne Happy Orgnization）不管这个叫 SARS，当然了，他们还满口可防可控不列疫区，我建议WHO加大力度，力度再大点就可以被总书记<strong>亲自批准</strong>火线入党了，岂不美哉</p>
-<p>你们还是说点人话吧，什么2019-nCov啊，什么NCP啊，特色社会主义都能叫社会主义，这新型冠状病毒都不算SARS？</p>
-<blockquote>
-<p>黑格尔在某个地方说过，一切伟大的世界历史事变和人物，可以说都出现两次。他忘记补充一点：第一次是作为悲剧出现，第二次是作为笑剧出现。<br>—-左壬最爱的鹿克斯祖师《路易·波拿巴的雾月十八》<br>太阳底下并无新鲜事<br>—-某些保守派右壬最喜欢的圣经</p>
-</blockquote>
-<h2 id="国士垂垂老矣"><a href="#国士垂垂老矣" class="headerlink" title="国士垂垂老矣"></a>国士垂垂老矣</h2><p>元旦那会我觉得这个可能要闹大,当时也没想到会闹成今天这个样子。</p>
-<p>03年非典，蒋先生做出了青史留名的举动，涛哥不戴口罩亲临广州街头，臊子面稳住了北京。今天只留下了一个又一个笑话，让大家觉得“彼可取而代也”</p>
-<p>大家一边吹捧钟南山，一边骂双黄连和可防可控，我看得哭笑不得。<br>钟南山当年的板蓝根和可防可控大家都忘了吗？莲花清瘟都忘了吗？<br>他可不是糊涂，他自己是不信的。他父亲都是反中医的。</p>
-<p><img src="/SARS-cov-2/%E6%9D%BF%E8%93%9D%E6%A0%B9.webp" alt="板蓝根"></p>
-<p>以下内容直接复制自维基百科</p>
-<blockquote>
-<p>2月11日上午，广州市政府召开新闻发布会公布广州地区非典型肺炎情况，称所有病人的病情均在控制当中。强调对于广州千万人口300多人染病是个很小的比例，非典型肺炎只是局部发生，河源中山等市已无新发病例报告。还解释了2月前前阶段没有公布情况的原因是：河源中山等地的患者经过治疗大多已康复或好转没有再发病，非典型肺炎并不是法定报告传染病，而发病人数305例并不算多。负责人强调会按传染病法公布疫情。<br>同日下午，广东省卫生厅举行情况通报会。中国工程院院士钟南山表示，市民到公众场所进行正常的活动是不会受到感染的，宣布广东大中小学将会如期开学。专家还指出，从临床角度看，可能是由病毒引起的，也有可能是病毒的亚型或变种引起的。对于患者的治疗都是采用“对症下药”的方法。</p>
-</blockquote>
-<p>当然了，肯定有人让我闭嘴，我算个什么东西，哎，我还真不算个东西。<br>我一个稀里糊涂读了几年生物医学工程的工科狗，给自己脸上贴金也只能算半个医学相关闲杂人等，跑到知乎<span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzI4NjM0ODI5">^2<i class="fa fa-external-link-alt"></i></span>去说两句，能引来几千个人追着骂我。（2020年的，2013年前的应该不能）</p>
-<p>那我就贴一点<span class="exturl" data-url="aHR0cHM6Ly93d3cud2VpYm8uY29tL3UvMTgyOTg3MDIxMg==">小儿外科裴医生<i class="fa fa-external-link-alt"></i></span>的话<br>(以下内容大段粘贴，指不定哪天号就没了，留个备份，前几天刚炸了一大批怼中医的)</p>
-<blockquote>
-<p>小儿外科裴医生<br>2019-9-8 09:36 来自 iPhone客户端<br>你要是以为钟南山在这个“科普”中讲到莲花清瘟胶囊是无意的，或者他只是因为没有了解这个药，那就太幼稚了，人家不蠢，只是没有节操，为了利益，用自己的学术地位给那些没用的药站台背书，就是恶。<span class="exturl" data-url="aHR0cDovL2hiLmNoaW5hZGFpbHkuY29tLmNuL2EvMjAxOTA5LzA3L1dTNWQ3MzhmNjdhMzEwOTlhYjk5NWRlOTNmLmh0bWw=">O“知感冒·防流感——全民科普公益行”活动在汉举… ​​​​<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-<p>这活动还有视频哦（太长了就只贴个图好了）</p>
-<p><img src="/SARS-cov-2/%E8%8E%B2%E8%8A%B1%E6%B8%85%E7%98%9F.webp"></p>
-<p>这底下有个评论：</p>
-<blockquote>
-<p>fanbobb：如果有人问我，连我们最该拥有权威的院士，前几天还有正能量新闻的院士，都宣传中成药，你还成天说中药是骗人的吗？我作为一个非医学专业的普通人还真有点哑口无言</p>
-</blockquote>
-<p>我也哑口无言。</p>
-<blockquote>
-<p>小儿外科裴医生<br>2月2日 22:07 来自 iPhone 11 Pro<br>面对一个大家都不太了解的病毒，被感染了有什么丢脸，为什么要用此这么恶毒的词？我觉得他比钟南山客观、务实、专业、真实多了。&#x2F;&#x2F;@st5873:这样草包还有脸出来到处接受采访<br>@小儿外科裴医生<br>中青报对这篇对@北大呼吸发哥 的访谈很不错，推荐大家看看。O卫健委专家组成员王广发出院了，回答了我们8… ​​​​</p>
-</blockquote>
-<blockquote>
-<p>阿瓦达啃大瓜1633：回复@蓝小诺CC:几年前亲耳听钟老板在欧洲呼吸病年会分会上演讲说他们团队研究治疗H1N1板蓝根有效，莲花清韵胶囊有效，当初差点以为听错了，那时才明白钟老板那一刻的身份是行政官员不是医生。</p>
-</blockquote>
-<p>下面这段已经被删了,戳到某些人的脊梁骨了。这里我手动加粗，以免太长不看的读者在跳读我写的这一堆垃圾时错过重点内容</p>
-<blockquote>
-<p>@小儿外科裴医生:专业我就说几个词吧：<strong>连花清瘟、板蓝根、装修致白血病、兰菌净、羧甲司坦、口罩</strong>。&#x2F;&#x2F;@嘛咪嘛咪-hong:所以我想知道钟南山哪儿不客观，不务实，不专业，不真实呢？（非杠，真心请教）</p>
-</blockquote>
-<p>当然很多都删了，还有很多没有说出口（很多话我也没说出口）</p>
-<blockquote>
-<p>昨天在隔壁号我又有一篇文章被删了，算上之前被删的和推送不出去的，整个疫情期我有约1&#x2F;10的文章没法见人，昨天看到棒棒医生的那篇循证的崩溃的文章也被删了，医学专业人员连专业问题都不能讨论和发言，那可能是这块土地真的不再需要专业和科学了。 ​​​​</p>
-</blockquote>
-<p>19年10月钟南山还在搞：<span class="exturl" data-url="aHR0cHM6Ly93d3cudGhlcGFwZXIuY24vbmV3c0RldGFpbF9mb3J3YXJkXzQ3MzExMDY=">钟南山：正研发新版板蓝根，药效或强五六倍<i class="fa fa-external-link-alt"></i></span>，还给莲花清瘟站台，对了，还有虫草呢（就是内含重金属，改变了平西王历史的进程的那个虫草）</p>
-<p><img src="/SARS-cov-2/%E5%86%AC%E8%99%AB%E5%A4%8F%E8%8D%89.webp"></p>
-<p>什么叫国士无双啊，战术后仰</p>
-<p><img src="/SARS-cov-2/pilipili.webp"></p>
-<p>另，友情提示，李兰娟的人品、水平和能力还不如钟南山。</p>
-<p>没多少人提起，蒋先生的往事<br>据说蒋先生现在身体也不太好，唉</p>
-<p><img src="/SARS-cov-2/%E8%92%8B%E5%BD%A6%E6%B0%B8.webp" alt="蒋彦永先生"></p>
-<p>“我之所以能直面现实，是因为我相信我们的国家。因为国家如果能从我提供的这些情况吸取一定的教训，因此建立好公共防疫制度，从SARS的挑战与困境中站起来，获得全世界人民的信任。”</p>
-<p>这次怕是让老爷子心寒了</p>
-<p>当然某人青年时代就亲自读过莎士比亚，并且在15年引经据典告诉过我们：“凡是过去，皆为序章”。<span class="exturl" data-url="aHR0cDovL3BvbGl0aWNzLnBlb3BsZS5jb20uY24vbi8yMDE1LzEwMjEvYzEwMDEtMjc3MjQ1NzkuaHRtbA==">^1<i class="fa fa-external-link-alt"></i></span></p>
-<p><em>我将无我，亲自指挥</em></p>
-<p>正常表现罢了</p>
-<blockquote>
-<p>因笑王谢诸人，登高怀远，也学英雄涕</p>
-</blockquote>
-<!-- 
-
-建议大家多屯点粮食
-
-有钱记得做空美股（当然你也可以拿期权做空A股，只要你不怕投机倒把当场击毙）
-
-对野生动物保护持续悲观（你看见之前环保部门煤改气了吧）
-
-再多说两句，流浪猫狗应该跟本次非典没有太大关系，不管有没有关系，流浪猫狗本就应该组织扑杀（收容和安乐是宠保人士和猫奴狗奴的事，政府以极大浪费~~纳税人~~韭菜的血汗钱进行收容和安乐都是不合适的，TNR属于迁就猫奴狗奴的绥靖行为，同样不可取）。
-昆明滇池的红嘴鸥和黔灵山公园的猕猴今年缺少游客喂食，景区组织投喂，这是十分不好的。
-
-下面贴一些鸟类爱好者的话：
-
-[中土饲养员]：有研究表明人为投喂淀粉类的面包蛋糕等会降低各种鸥类育雏的成功率，但是还好红嘴鸥只把昆明当成补充体力的中转站
-[JK协捕队2世](https://weibo.com/u/6552893675)：
-[漂泊极北鲵](https://weibo.com/u/5832997504)：...首先 这是红嘴鸥Chroicocephalus ridibundus 不是海鸥Larus canus 其次这些鸥已经被喂得彻底与自然环境分离了 这是在毒害它们
-没事请与野生动物保持距离，不要乱摸、投喂，除了保育和救助等都不要打扰动物
-动物园和景区里的也不行，很多动物园和景区做得都不好，禁止投喂的牌子并不管用，工作人员也制止不过来
-
-我只是半个动物爱好者，这里就不自己扯淡了, 这是一篇土澳学生物的博主写一篇长微博：<https://weibo.com/3962135262/Isy79BHPA>
-我抄一点过来:
->人类的食物，如面包、薯条、饼干，高油高盐，高热量高糖分，对野生动物的健康极为不利，多表现为肥胖、肾衰竭、毛发脱落等。因为人类的饮食根本不是它们自然食物链的一部分。不天然的饮食及其附属物，例如塑料袋、油污，也会污染野生动物的自然栖息地。
->亲密接触野生动物增加疾病的传播概率，这点在当下这个时候，想必不用再过多说明了吧？某市以投喂红嘴鸥为荣的，鸟类身上携带什么疾病来着，禽流感啊，好自为之！去高原上摸旱獭喂食旱獭，自私且无耻，将自己暴露在甲级传染病鼠疫病原的触碰范围内，你又为你家人想过吗？犰狳是恐怖的麻风病宿主，很多小型食肉动物传播狂犬病，动物身体体表和体内的各种寄生虫，野生动物从来都不好惹。
->使野生动物依赖人类获取食物。这次疫情限制出行，很多问题就暴露出来了，为什么贵州那群猴子和某市的红嘴鸥离不开人的投喂了？这是个恶性循环啊，本来就不该投喂野生动物，养成依赖了，现在甩不了手，离不开人了，出了事动物们自己不会觅食，纷纷饿死，有得去投喂，这个循环刹不住车了，你觉得是好事吗。就说红嘴鸥吧，这种鸟类本来还是候鸟，人家到点了想飞走就飞走，想留下就留下，一投喂全留下了，这基数不断变大，竞争压力也不断变大。红嘴鸥的自然种群数量庞大，适应力很好，年前跑鸟类调查，上万只反正是随随便便看到了，它们也不是什么濒危物种，完全不依靠人类“救援”。所以这事，从一开始做的就不对，不是说你现在不投喂要出问题，是一开始就压根不该投喂，动物不是人，它脑子里只有吃和繁殖，这样强行转变了它们的生存策略，到最后只能是出问题。
-
-还有这方面的疑问不建议问我，请直接去问他们
-
-中医早已变成一个庞大的利益集团，随便一个阿胶之类的体量都在鸿茅药酒十倍以上。总规模和能量加起来应该不低于清真食品产业链。
-我不想说什么中医了，我也不拦着，谁爱信谁信。以前看到有人想不开，我都觉得应该劝劝，现在抑郁症想自杀的人我都觉得不应该拦着，信中医就我就更不反对了，都是个人选择，尊重个人意愿。非公共场合抽烟也是个人意愿，还能成为光荣的~~纳税人~~烟草局韭菜。喝中药对他人危害并不高于香烟，还能解决医保和老龄化的难题，顺便进行智商筛选。
-
-在现代医学已经发展到这个样子的今天，再想想《赠医者汤伯高序》文末“嗟夫，使世之医皆若虚、伯高，信之者皆吾里之人，巫其能久胜矣乎”，问题的答案是：你别说，还真能！
-
-楚俗信巫不信医，今天群魔乱舞自称中医的一群人，基本都是跳大神的巫医，谋财害命之徒。可以粗暴的认为是一个宗教性质的东西。
-
-再有人问中医怎样，我建议你们这样安利他们：试试恒河水，这个纯天然，效果也很好，还免费
-
-死生有命，富贵在天
-善哉，善哉
-
->庚子年春，大雪，惊雷，天有五日,瘟疫封城 -->
-
-]]></content>
-      <categories>
-        <category>杂七杂八</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>Vim中的宏：自动化魔法</title>
-    <url>/vim-macros/</url>
-    <content><![CDATA[<p>清明节闲着没事写点Vim的东西。我对Vim有诸多怨念，不过Vim有几个地方我很喜欢，最重要的一个就是操作可以组合和自动化。</p>
-<span id="more"></span>
-
-<h2 id="宏的魔法世界"><a href="#宏的魔法世界" class="headerlink" title="宏的魔法世界"></a>宏的魔法世界</h2><p>宏可以完成很多自动化的操作，不过相比自动化，更迷人的是像写代码一样编辑文本。有一点元编程的画风，不过相比于模板元那种黑魔法，vim里的宏是人见人爱的白魔法。而且vim编辑文本的操作命令很简单，你要打印1000个 Hello, World!，不使用循环等高级功能，只需要将print这一行复制999次</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
-
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Hello, World!\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>用vim这很简单，只需要<code>yy1000p</code>这种组合命令就可以了。用别的编程语言生成这么1000行print都比这麻烦。</p>
-<p>如果要输出从1到1000，那就要用宏了：<br>qa  开始录制，放到a寄存器<br>复制</p>
-<h2 id="稍微正经点的用途"><a href="#稍微正经点的用途" class="headerlink" title="稍微正经点的用途"></a>稍微正经点的用途</h2><p>注释几行文本：</p>
-<p>qa  开始宏录制<br>I#  insert模式行首加#<br>Esc 退出insert<br>j   下一行<br>q   完成宏录制<br>7@a 注释7行</p>
-<h2 id="无需宏的简单命令"><a href="#无需宏的简单命令" class="headerlink" title="无需宏的简单命令"></a>无需宏的简单命令</h2><h2 id="关于Vim的使用姿势"><a href="#关于Vim的使用姿势" class="headerlink" title="关于Vim的使用姿势"></a>关于Vim的使用姿势</h2><p>曾经几年前我对Vim实在说不上喜欢，当时我还在Windows上（Windows上的vim体验你也知道），经常要连到linux上改改东西的时候我日常使用nano（后来发现了micro）。如果只是将Vim当成一套键盘操作，那效率可能并不比IDE的快捷键+鼠标操作更好。（而且vim的hjkl的键位等操作，对很多人是极大的劝退）<br>我觉得吸引玩家入坑vim就应该从录制宏等操作讲起，这些才是图形界面的点击操作不具备的优势。</p>
-]]></content>
-      <tags>
-        <tag>vim</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Vim的寄存器与复制粘贴</title>
-    <url>/vim-registers-copy-and-paste/</url>
-    <content><![CDATA[<p>清明节假期写点Vim相关的东西，说一下寄存器。在此之前我眼中的复制粘贴从未如此复杂，就像我从未</p>
-<span id="more"></span>
-
-<p>另一个比我想象中复杂和有用的是Vim的undotree，有点git那种branch的味道（装上gnudo插件就更像了）。</p>
-<h2 id="Linux下的复制粘贴"><a href="#Linux下的复制粘贴" class="headerlink" title="Linux下的复制粘贴"></a>Linux下的复制粘贴</h2><p>首先说一下linux下面的复制粘贴，一般linux桌面的复制粘贴是<code>x11</code>负责的，复制粘贴的时候和<code>X Server</code>通信（一般管复制粘贴叫selections），有两个常见的selections：</p>
-<p>PRIMARY：鼠标左键选中复制，鼠标中键粘贴<br>CLIPBOARD： <code>Ctrl + Shift + C</code>和<code>Ctrl + Shift + V</code></p>
-<p>这两个保存的内容是不同的，而且当你复制粘贴的时候两个应用必须同时开着，x11本身不全局保存复制的内容，应用关了就没了。所以如果你想要只有一个全局的剪切板，你得装一个<code>clipboard manager</code>（大多数桌面都贴心的自带了，可惜某些suck的wm并没有这个东西，曾经搞得我好几次弄丢了复制的东西不知道怎么回事）</p>
-<p>推荐鼠标操作的时候尝试适应鼠标中键的操作，这样只要一只手控制鼠标就行了，比一只手鼠标一只手<code>Ctrl+C Ctrl+V</code>节省了一只手。在x11下的terminal中复制东西我一般用<code>xclip</code>。</p>
-<h2 id="如果你只是简简单单复制粘贴"><a href="#如果你只是简简单单复制粘贴" class="headerlink" title="如果你只是简简单单复制粘贴"></a>如果你只是简简单单复制粘贴</h2><p>如果你不得不用vim，那还是鼠标选中和的复制粘贴更适合你，进入insert模式粘贴即可。简单的命令可以在normal模式下使用y和p即可（yank和paste， c命令被change占了）。y和p两个命令和其他的命令组合，可以覆盖绝大多数的用途。  </p>
-<h2 id="精细组合操作"><a href="#精细组合操作" class="headerlink" title="精细组合操作"></a>精细组合操作</h2><p>比如<code>yw</code>复制一个单词，<code>yy</code>复制一行，<code>y$</code>复制当前光标到结尾, <code>y^</code>复制当前光标到开头， 同理，<code>yG</code>复制当前行到结尾。<br>这些命令还可以和数字继续组合，比如<code>y3w</code>复制3个单词， <code>2yy</code>复制三个单词。<br>还可以用来复制配对的括号的内容， 比如<code>yi&#123;</code>复制大括号<code>&#123;</code>中的内容，<code>ya&#123;</code>连括号一起复制。    </p>
-<h2 id="寄存器的进阶用法"><a href="#寄存器的进阶用法" class="headerlink" title="寄存器的进阶用法"></a>寄存器的进阶用法</h2><h3 id="多种多样的寄存器"><a href="#多种多样的寄存器" class="headerlink" title="多种多样的寄存器"></a>多种多样的寄存器</h3><p>使用<code>:reg</code>查看寄存器，Vim的寄存器可以让复制粘贴玩出更多的花样， 下面介绍这些寄存器。<br>Vim的0-9寄存器是普通的寄存器，y命令默认会放到0，然后每次y会把最新的放到0，0放到1，依次保存结果。 如果你想粘贴哪个寄存器的值，在insert模式下<code>Ctrl+R 寄存器</code>， 比如粘贴寄存器3：<code>Ctrl+R 3</code>。</p>
-<p>比较有用的是4个只读寄存器和搜索寄存器：</p>
-<p><code>.</code>  最近插入的文本<br><code>:</code>  最近执行的命令<br><code>%</code>  存放当前文件名（相对）<br><code>#</code>  交替文件（这个好像没啥用, 就是你在当前terminal打开的上一个文件的文件名）<br><code>/</code> 搜索寄存器，可以设置默认的搜索内容。比如<code>:let @/ = &quot;package main&quot;</code>, 下次搜索的时候只要输入<code>/</code>， 会自动查找<code>package main</code>这段文本</p>
-<h2 id="后悔药"><a href="#后悔药" class="headerlink" title="后悔药"></a>后悔药</h2><p>小删除寄存器</p>
-<h3 id="Vim剪切板和x11的剪切板交互"><a href="#Vim剪切板和x11的剪切板交互" class="headerlink" title="Vim剪切板和x11的剪切板交互"></a>Vim剪切板和x11的剪切板交互</h3><p>在设置中<code>set clipboard^=unnamed,unnamedplus</code>，开启系统的剪切板，就会多出来两个寄存器<code>*</code>和<code>+</code>。一般<code>*</code>是PRIMARY，<code>+</code>是CLIPBOARD。（开系统剪切板功能你可能需要gvim或者neovim，vim这个包可能不支持）  </p>
-<p>当然这么干会把匿名寄存器“”的值和系统的CLIPBOARD复制粘贴绑定，不过比起少打几个<code>+</code>， 可以接受。<br>（并没有绑定PRIMARY，<code>*p</code>会粘贴CLIPBOARD的内容，PRIMARY直接鼠标中键粘贴就可以了。所以复制同步的过程并不会在每次鼠标选中文本的时候发生，只有在手动<code>Ctrl+Shitf+C</code>的时候才有，可以接受）</p>
-<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvdGl0bGUvQ2xpcGJvYXJk">https://wiki.archlinux.org/title/Clipboard<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cudW5pbmZvcm1hdGl2LmRlL2Jsb2cvcG9zdGluZ3MvMjAxNy0wNC0wMi8wL1BPU1RJTkctZW4uaHRtbA==">X11: How does “the” clipboard work?<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cuYnJpYW5zdG9ydGkuY29tL3ZpbS1yZWdpc3RlcnMv">Vim registers: The basics and beyond<i class="fa fa-external-link-alt"></i></span>  </p>
-]]></content>
-      <tags>
-        <tag>vim</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>systemd-homed简介(homectl设置用户、用户组)</title>
     <url>/systemd-homed/</url>
     <content><![CDATA[<p>在2020.3 发布的systemd 245增加了systemd-homed，改变了<code>/home</code>目录的加密和工作方式。用homectl设置用户组，直接加密整个<code>/home</code>目录更方便了，快来当小白鼠吧。</p>
@@ -5793,6 +5627,211 @@ lines <span class="token number">2</span>-36/36 <span class="token punctuation">
       </tags>
   </entry>
   <entry>
+    <title>毕竟狂澜挽不回，遽怜遗蜕化飞灰</title>
+    <url>/SARS-cov-2/</url>
+    <content><![CDATA[<p>So this is how liberty die, with thunderous applause</p>
+<span id="more"></span>
+
+<p>想来我也算半个医学逃兵，颇有些惭愧（元旦那会听某个学医的群友在电报说武汉不太平，然而我怂，即没敢跟周围任何熟人说也没敢发到国内群里，完美逃过了央视训诫…….</p>
+<h2 id="一管就乱，一放就死"><a href="#一管就乱，一放就死" class="headerlink" title="一管就乱，一放就死"></a>一管就乱，一放就死</h2><p>经此一疫，又有一群不食人间烟火的人黄粱梦醒，纷纷如丧考妣，惊讶愤怒心痛，只觉所住非人间。你们是第一天住在人间吗？或许是承平日久了，想想这十几年真是好日子过多了，真觉得和平发展充满爱是世界主流了，这一片绿油油的韭菜不割都对不住韭菜。就像之前的故宫大G，愤怒可以理解，惊讶就太外宾了。<br>难道你们不知道权贵一直如此？<br>难道你们不知道公卫和防疫本来就是个摆设？<br>难道你们第一天接触慈善和红会？<br>难道你们第一天活在地球？</p>
+<p>然后在恐慌下自相践踏，死伤甚众，隔离这么严疫情没把你们搞死经济先崩了。</p>
+<h2 id="忘记历史就会梅开二度"><a href="#忘记历史就会梅开二度" class="headerlink" title="忘记历史就会梅开二度"></a>忘记历史就会梅开二度</h2><blockquote>
+<p>社会主义没有失业,那叫下岗</p>
+</blockquote>
+<p>有人怕了，就怕跟SARS扯上关系啊</p>
+<p>这病毒终于还是有了个名字叫SARS-cov-2，然而国内官媒一个个都有意回避SARS的说法，甚至绝口不提非典，非得叫新型冠状病毒，却又说不是SARS<br>我们随便点开一个百科,比如默沙东手册:</p>
+<blockquote>
+<p>严重急性呼吸综合征（SARS）是由SARS冠状病毒（SARS-CoV）引起的严重急性呼吸道疾病。</p>
+</blockquote>
+<p>这可不就是SARS，这次疾病就叫 SARS2 我看正合适。<br>WHO（Winne Happy Orgnization）不管这个叫 SARS，当然了，他们还满口可防可控不列疫区，我建议WHO加大力度，力度再大点就可以被总书记<strong>亲自批准</strong>火线入党了，岂不美哉</p>
+<p>你们还是说点人话吧，什么2019-nCov啊，什么NCP啊，特色社会主义都能叫社会主义，这新型冠状病毒都不算SARS？</p>
+<blockquote>
+<p>黑格尔在某个地方说过，一切伟大的世界历史事变和人物，可以说都出现两次。他忘记补充一点：第一次是作为悲剧出现，第二次是作为笑剧出现。<br>—-左壬最爱的鹿克斯祖师《路易·波拿巴的雾月十八》<br>太阳底下并无新鲜事<br>—-某些保守派右壬最喜欢的圣经</p>
+</blockquote>
+<h2 id="国士垂垂老矣"><a href="#国士垂垂老矣" class="headerlink" title="国士垂垂老矣"></a>国士垂垂老矣</h2><p>元旦那会我觉得这个可能要闹大,当时也没想到会闹成今天这个样子。</p>
+<p>03年非典，蒋先生做出了青史留名的举动，涛哥不戴口罩亲临广州街头，臊子面稳住了北京。今天只留下了一个又一个笑话，让大家觉得“彼可取而代也”</p>
+<p>大家一边吹捧钟南山，一边骂双黄连和可防可控，我看得哭笑不得。<br>钟南山当年的板蓝根和可防可控大家都忘了吗？莲花清瘟都忘了吗？<br>他可不是糊涂，他自己是不信的。他父亲都是反中医的。</p>
+<p><img src="/SARS-cov-2/%E6%9D%BF%E8%93%9D%E6%A0%B9.webp" alt="板蓝根"></p>
+<p>以下内容直接复制自维基百科</p>
+<blockquote>
+<p>2月11日上午，广州市政府召开新闻发布会公布广州地区非典型肺炎情况，称所有病人的病情均在控制当中。强调对于广州千万人口300多人染病是个很小的比例，非典型肺炎只是局部发生，河源中山等市已无新发病例报告。还解释了2月前前阶段没有公布情况的原因是：河源中山等地的患者经过治疗大多已康复或好转没有再发病，非典型肺炎并不是法定报告传染病，而发病人数305例并不算多。负责人强调会按传染病法公布疫情。<br>同日下午，广东省卫生厅举行情况通报会。中国工程院院士钟南山表示，市民到公众场所进行正常的活动是不会受到感染的，宣布广东大中小学将会如期开学。专家还指出，从临床角度看，可能是由病毒引起的，也有可能是病毒的亚型或变种引起的。对于患者的治疗都是采用“对症下药”的方法。</p>
+</blockquote>
+<p>当然了，肯定有人让我闭嘴，我算个什么东西，哎，我还真不算个东西。<br>我一个稀里糊涂读了几年生物医学工程的工科狗，给自己脸上贴金也只能算半个医学相关闲杂人等，跑到知乎<span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzI4NjM0ODI5">^2<i class="fa fa-external-link-alt"></i></span>去说两句，能引来几千个人追着骂我。（2020年的，2013年前的应该不能）</p>
+<p>那我就贴一点<span class="exturl" data-url="aHR0cHM6Ly93d3cud2VpYm8uY29tL3UvMTgyOTg3MDIxMg==">小儿外科裴医生<i class="fa fa-external-link-alt"></i></span>的话<br>(以下内容大段粘贴，指不定哪天号就没了，留个备份，前几天刚炸了一大批怼中医的)</p>
+<blockquote>
+<p>小儿外科裴医生<br>2019-9-8 09:36 来自 iPhone客户端<br>你要是以为钟南山在这个“科普”中讲到莲花清瘟胶囊是无意的，或者他只是因为没有了解这个药，那就太幼稚了，人家不蠢，只是没有节操，为了利益，用自己的学术地位给那些没用的药站台背书，就是恶。<span class="exturl" data-url="aHR0cDovL2hiLmNoaW5hZGFpbHkuY29tLmNuL2EvMjAxOTA5LzA3L1dTNWQ3MzhmNjdhMzEwOTlhYjk5NWRlOTNmLmh0bWw=">O“知感冒·防流感——全民科普公益行”活动在汉举… ​​​​<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p>这活动还有视频哦（太长了就只贴个图好了）</p>
+<p><img src="/SARS-cov-2/%E8%8E%B2%E8%8A%B1%E6%B8%85%E7%98%9F.webp"></p>
+<p>这底下有个评论：</p>
+<blockquote>
+<p>fanbobb：如果有人问我，连我们最该拥有权威的院士，前几天还有正能量新闻的院士，都宣传中成药，你还成天说中药是骗人的吗？我作为一个非医学专业的普通人还真有点哑口无言</p>
+</blockquote>
+<p>我也哑口无言。</p>
+<blockquote>
+<p>小儿外科裴医生<br>2月2日 22:07 来自 iPhone 11 Pro<br>面对一个大家都不太了解的病毒，被感染了有什么丢脸，为什么要用此这么恶毒的词？我觉得他比钟南山客观、务实、专业、真实多了。&#x2F;&#x2F;@st5873:这样草包还有脸出来到处接受采访<br>@小儿外科裴医生<br>中青报对这篇对@北大呼吸发哥 的访谈很不错，推荐大家看看。O卫健委专家组成员王广发出院了，回答了我们8… ​​​​</p>
+</blockquote>
+<blockquote>
+<p>阿瓦达啃大瓜1633：回复@蓝小诺CC:几年前亲耳听钟老板在欧洲呼吸病年会分会上演讲说他们团队研究治疗H1N1板蓝根有效，莲花清韵胶囊有效，当初差点以为听错了，那时才明白钟老板那一刻的身份是行政官员不是医生。</p>
+</blockquote>
+<p>下面这段已经被删了,戳到某些人的脊梁骨了。这里我手动加粗，以免太长不看的读者在跳读我写的这一堆垃圾时错过重点内容</p>
+<blockquote>
+<p>@小儿外科裴医生:专业我就说几个词吧：<strong>连花清瘟、板蓝根、装修致白血病、兰菌净、羧甲司坦、口罩</strong>。&#x2F;&#x2F;@嘛咪嘛咪-hong:所以我想知道钟南山哪儿不客观，不务实，不专业，不真实呢？（非杠，真心请教）</p>
+</blockquote>
+<p>当然很多都删了，还有很多没有说出口（很多话我也没说出口）</p>
+<blockquote>
+<p>昨天在隔壁号我又有一篇文章被删了，算上之前被删的和推送不出去的，整个疫情期我有约1&#x2F;10的文章没法见人，昨天看到棒棒医生的那篇循证的崩溃的文章也被删了，医学专业人员连专业问题都不能讨论和发言，那可能是这块土地真的不再需要专业和科学了。 ​​​​</p>
+</blockquote>
+<p>19年10月钟南山还在搞：<span class="exturl" data-url="aHR0cHM6Ly93d3cudGhlcGFwZXIuY24vbmV3c0RldGFpbF9mb3J3YXJkXzQ3MzExMDY=">钟南山：正研发新版板蓝根，药效或强五六倍<i class="fa fa-external-link-alt"></i></span>，还给莲花清瘟站台，对了，还有虫草呢（就是内含重金属，改变了平西王历史的进程的那个虫草）</p>
+<p><img src="/SARS-cov-2/%E5%86%AC%E8%99%AB%E5%A4%8F%E8%8D%89.webp"></p>
+<p>什么叫国士无双啊，战术后仰</p>
+<p><img src="/SARS-cov-2/pilipili.webp"></p>
+<p>另，友情提示，李兰娟的人品、水平和能力还不如钟南山。</p>
+<p>没多少人提起，蒋先生的往事<br>据说蒋先生现在身体也不太好，唉</p>
+<p><img src="/SARS-cov-2/%E8%92%8B%E5%BD%A6%E6%B0%B8.webp" alt="蒋彦永先生"></p>
+<p>“我之所以能直面现实，是因为我相信我们的国家。因为国家如果能从我提供的这些情况吸取一定的教训，因此建立好公共防疫制度，从SARS的挑战与困境中站起来，获得全世界人民的信任。”</p>
+<p>这次怕是让老爷子心寒了</p>
+<p>当然某人青年时代就亲自读过莎士比亚，并且在15年引经据典告诉过我们：“凡是过去，皆为序章”。<span class="exturl" data-url="aHR0cDovL3BvbGl0aWNzLnBlb3BsZS5jb20uY24vbi8yMDE1LzEwMjEvYzEwMDEtMjc3MjQ1NzkuaHRtbA==">^1<i class="fa fa-external-link-alt"></i></span></p>
+<p><em>我将无我，亲自指挥</em></p>
+<p>正常表现罢了</p>
+<blockquote>
+<p>因笑王谢诸人，登高怀远，也学英雄涕</p>
+</blockquote>
+<!-- 
+
+建议大家多屯点粮食
+
+有钱记得做空美股（当然你也可以拿期权做空A股，只要你不怕投机倒把当场击毙）
+
+对野生动物保护持续悲观（你看见之前环保部门煤改气了吧）
+
+再多说两句，流浪猫狗应该跟本次非典没有太大关系，不管有没有关系，流浪猫狗本就应该组织扑杀（收容和安乐是宠保人士和猫奴狗奴的事，政府以极大浪费~~纳税人~~韭菜的血汗钱进行收容和安乐都是不合适的，TNR属于迁就猫奴狗奴的绥靖行为，同样不可取）。
+昆明滇池的红嘴鸥和黔灵山公园的猕猴今年缺少游客喂食，景区组织投喂，这是十分不好的。
+
+下面贴一些鸟类爱好者的话：
+
+[中土饲养员]：有研究表明人为投喂淀粉类的面包蛋糕等会降低各种鸥类育雏的成功率，但是还好红嘴鸥只把昆明当成补充体力的中转站
+[JK协捕队2世](https://weibo.com/u/6552893675)：
+[漂泊极北鲵](https://weibo.com/u/5832997504)：...首先 这是红嘴鸥Chroicocephalus ridibundus 不是海鸥Larus canus 其次这些鸥已经被喂得彻底与自然环境分离了 这是在毒害它们
+没事请与野生动物保持距离，不要乱摸、投喂，除了保育和救助等都不要打扰动物
+动物园和景区里的也不行，很多动物园和景区做得都不好，禁止投喂的牌子并不管用，工作人员也制止不过来
+
+我只是半个动物爱好者，这里就不自己扯淡了, 这是一篇土澳学生物的博主写一篇长微博：<https://weibo.com/3962135262/Isy79BHPA>
+我抄一点过来:
+>人类的食物，如面包、薯条、饼干，高油高盐，高热量高糖分，对野生动物的健康极为不利，多表现为肥胖、肾衰竭、毛发脱落等。因为人类的饮食根本不是它们自然食物链的一部分。不天然的饮食及其附属物，例如塑料袋、油污，也会污染野生动物的自然栖息地。
+>亲密接触野生动物增加疾病的传播概率，这点在当下这个时候，想必不用再过多说明了吧？某市以投喂红嘴鸥为荣的，鸟类身上携带什么疾病来着，禽流感啊，好自为之！去高原上摸旱獭喂食旱獭，自私且无耻，将自己暴露在甲级传染病鼠疫病原的触碰范围内，你又为你家人想过吗？犰狳是恐怖的麻风病宿主，很多小型食肉动物传播狂犬病，动物身体体表和体内的各种寄生虫，野生动物从来都不好惹。
+>使野生动物依赖人类获取食物。这次疫情限制出行，很多问题就暴露出来了，为什么贵州那群猴子和某市的红嘴鸥离不开人的投喂了？这是个恶性循环啊，本来就不该投喂野生动物，养成依赖了，现在甩不了手，离不开人了，出了事动物们自己不会觅食，纷纷饿死，有得去投喂，这个循环刹不住车了，你觉得是好事吗。就说红嘴鸥吧，这种鸟类本来还是候鸟，人家到点了想飞走就飞走，想留下就留下，一投喂全留下了，这基数不断变大，竞争压力也不断变大。红嘴鸥的自然种群数量庞大，适应力很好，年前跑鸟类调查，上万只反正是随随便便看到了，它们也不是什么濒危物种，完全不依靠人类“救援”。所以这事，从一开始做的就不对，不是说你现在不投喂要出问题，是一开始就压根不该投喂，动物不是人，它脑子里只有吃和繁殖，这样强行转变了它们的生存策略，到最后只能是出问题。
+
+还有这方面的疑问不建议问我，请直接去问他们
+
+中医早已变成一个庞大的利益集团，随便一个阿胶之类的体量都在鸿茅药酒十倍以上。总规模和能量加起来应该不低于清真食品产业链。
+我不想说什么中医了，我也不拦着，谁爱信谁信。以前看到有人想不开，我都觉得应该劝劝，现在抑郁症想自杀的人我都觉得不应该拦着，信中医就我就更不反对了，都是个人选择，尊重个人意愿。非公共场合抽烟也是个人意愿，还能成为光荣的~~纳税人~~烟草局韭菜。喝中药对他人危害并不高于香烟，还能解决医保和老龄化的难题，顺便进行智商筛选。
+
+在现代医学已经发展到这个样子的今天，再想想《赠医者汤伯高序》文末“嗟夫，使世之医皆若虚、伯高，信之者皆吾里之人，巫其能久胜矣乎”，问题的答案是：你别说，还真能！
+
+楚俗信巫不信医，今天群魔乱舞自称中医的一群人，基本都是跳大神的巫医，谋财害命之徒。可以粗暴的认为是一个宗教性质的东西。
+
+再有人问中医怎样，我建议你们这样安利他们：试试恒河水，这个纯天然，效果也很好，还免费
+
+死生有命，富贵在天
+善哉，善哉
+
+>庚子年春，大雪，惊雷，天有五日,瘟疫封城 -->
+
+]]></content>
+      <categories>
+        <category>杂七杂八</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Vim中的宏：自动化魔法</title>
+    <url>/vim-macros/</url>
+    <content><![CDATA[<p>清明节闲着没事写点Vim的东西。我对Vim有诸多怨念，不过Vim有几个地方我很喜欢，最重要的一个就是操作可以组合和自动化。</p>
+<span id="more"></span>
+
+<h2 id="宏的魔法世界"><a href="#宏的魔法世界" class="headerlink" title="宏的魔法世界"></a>宏的魔法世界</h2><p>宏可以完成很多自动化的操作，不过相比自动化，更迷人的是像写代码一样编辑文本。有一点元编程的画风，不过相比于模板元那种黑魔法，vim里的宏是人见人爱的白魔法。而且vim编辑文本的操作命令很简单，你要打印1000个 Hello, World!，不使用循环等高级功能，只需要将print这一行复制999次</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Hello, World!"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>用vim这很简单，只需要<code>yy1000p</code>这种组合命令就可以了。用别的编程语言生成这么1000行print都比把print直接放在循环里麻烦。</p>
+<p>如果是很简单的重复操作，也不需要专门录制宏。比如：</p>
+<p><code>.</code>    重复上一个edit命令<br><code>;</code> 重复上一个查找命令<br><code>&amp;</code> 替换下一个文本<br><code>@:</code> 命令重复上一个Editor Command，这个我不常用，我喜欢上箭头选上一个然后回车</p>
+<p>但是如果想连续执行一段<code>;.</code>, 就需要用宏了（<code>11;.</code>的结果是先执行11次;再执行11次.）</p>
+<p>如果要输出从1到1000，用vim的循环也可以完成</p>
+<pre class="line-numbers language-vim" data-language="vim"><code class="language-vim"><span class="token punctuation">:</span><span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token function">range</span><span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span>
+<span class="token punctuation">:</span>   <span class="token keyword">call</span> <span class="token function">setline</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> i<span class="token operator">.</span><span class="token string">' '</span><span class="token operator">.</span><span class="token function">getline</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">:</span><span class="token keyword">endfor</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>如果用宏来操作是这样的，<code>Ctrl+a</code>和<code>Ctrl+x</code>分别是对数字自增和自减，我们可以将操作分解成复制粘贴自增，然后重复998次就可以了</p>
+<pre class="line-numbers language-vim" data-language="vim"><code class="language-vim">第一行输入<span class="token number">1</span>
+
+<span class="token keyword">qa</span> 开始宏录制
+yyp 复制并粘贴第一行
+C<span class="token operator">-</span>a 自增<span class="token number">1</span>
+<span class="token keyword">q</span>   结束宏录制
+<span class="token number">998</span>@ 重复<span class="token number">998</span>次，输出<span class="token number">1</span><span class="token operator">-</span><span class="token number">1000</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="稍微正经点的用途的例子"><a href="#稍微正经点的用途的例子" class="headerlink" title="稍微正经点的用途的例子"></a>稍微正经点的用途的例子</h2><p>注释几行文本：</p>
+<pre class="line-numbers language-vim" data-language="vim"><code class="language-vim"><span class="token keyword">qa</span>  开始宏录制
+I#  insert模式行首加#
+Esc 退出insert
+<span class="token keyword">j</span>   下一行
+<span class="token keyword">q</span>   完成宏录制
+<span class="token number">7</span>@a 注释<span class="token number">7</span>行<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>同理，我们想要把开头序号<code>1.</code>都变成<code>1)</code>的样子</p>
+<pre class="line-numbers language-vim" data-language="vim"><code class="language-vim"><span class="token keyword">qa</span>	<span class="token keyword">q</span>开始录制，保存到a寄存器中
+0f<span class="token operator">.</span> 跳转到开头并查找第一个<span class="token operator">.</span>
+<span class="token keyword">j</span>	跳转到下一行<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>大多数时候这种情况正则更方便，但是有的时候一堆混乱的文本容易误伤，宏的操作加入了位置信息等操作比较容易控制</p>
+<pre class="line-numbers language-none"><code class="language-none">1. X1..XX
+2. SN.1FN
+3. PIN.GF
+4. 12 3.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="注"><a href="#注" class="headerlink" title="注"></a>注</h2><p>这里举例子用宏加注释什么的，其实有很多操作并不需要宏来完成，比如注释有插件。</p>
+<h2 id="关于Vim的使用姿势"><a href="#关于Vim的使用姿势" class="headerlink" title="关于Vim的使用姿势"></a>关于Vim的使用姿势</h2><p>曾经几年前我对Vim实在说不上喜欢，当时我还在Windows上（Windows上的vim体验你也知道），经常要连到linux上改改东西的时候我日常使用nano（后来发现了micro）。如果只是将Vim当成一套键盘操作，那效率可能并不比IDE的快捷键+鼠标操作更好。（而且vim的hjkl的键位等操作，对很多人是极大的劝退）<br>Vim的键位用好了可以形成肌肉记忆将操作交给小脑解放大脑，而宏这些操作是要开动大脑的。<br>我觉得吸引玩家入坑vim就应该从录制宏等操作讲起，这些才是图形界面的点击操作不具备的优势。  </p>
+<p>宏适合干的就是重复的动作，比较适合处理一些枯燥的工作。比如经典的某些大道至简的语言sublime多光标实现泛型这样的事情，我们可以写一个宏去完成它。（其实我个人还是喜欢多光标）</p>
+<p><img src="/uploads/generic.gif" alt="Go Type Parameters in Sublime"></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9tYWNwbGF5LmdpdGh1Yi5pby9wb3N0cy92aW0tYnUteHUteWFvLWR1by1ndWFuZy1iaWFvLWJpYW4tamktZ29uZy1uZW5nLw==">【译】Vim 不需要多光标编辑功能<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9tZWRpdW0uY29tL0BzY2h0b2VmZmVsL3lvdS1kb24tdC1uZWVkLW1vcmUtdGhhbi1vbmUtY3Vyc29yLWluLXZpbS0yYzQ0MTE3ZDUxZGI=">You don’t need more than one cursor in vim<i class="fa fa-external-link-alt"></i></span>   </p>
+]]></content>
+      <categories>
+        <category>不务正业系列</category>
+      </categories>
+      <tags>
+        <tag>Vim</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Vim的寄存器与复制粘贴</title>
+    <url>/vim-registers-copy-and-paste/</url>
+    <content><![CDATA[<p>清明节假期写点Vim相关的东西，说一下寄存器。在此之前我眼中的复制粘贴从未如此复杂，就像我从未</p>
+<span id="more"></span>
+
+<p>另一个比我想象中复杂和有用的是Vim的undotree，有点git那种branch的味道（装上gnudo插件就更像了）。</p>
+<h2 id="Linux下的复制粘贴"><a href="#Linux下的复制粘贴" class="headerlink" title="Linux下的复制粘贴"></a>Linux下的复制粘贴</h2><p>首先说一下linux下面的复制粘贴，一般linux桌面的复制粘贴是<code>x11</code>负责的，复制粘贴的时候和<code>X Server</code>通信（一般管复制粘贴叫selections），有两个常见的selections：</p>
+<p>PRIMARY：鼠标左键选中复制，鼠标中键粘贴<br>CLIPBOARD： <code>Ctrl + Shift + C</code>和<code>Ctrl + Shift + V</code></p>
+<p>这两个保存的内容是不同的，而且当你复制粘贴的时候两个应用必须同时开着，x11本身不全局保存复制的内容，应用关了就没了。所以如果你想要只有一个全局的剪切板，你得装一个<code>clipboard manager</code>（大多数桌面都贴心的自带了，可惜某些suck的wm并没有这个东西，曾经搞得我好几次弄丢了复制的东西不知道怎么回事）</p>
+<p>推荐鼠标操作的时候尝试适应鼠标中键的操作，这样只要一只手控制鼠标就行了，比一只手鼠标一只手<code>Ctrl+C Ctrl+V</code>节省了一只手。在x11下的terminal中复制东西我一般用<code>xclip</code>。</p>
+<h2 id="如果你只是简简单单复制粘贴"><a href="#如果你只是简简单单复制粘贴" class="headerlink" title="如果你只是简简单单复制粘贴"></a>如果你只是简简单单复制粘贴</h2><p>如果你不得不用vim，那还是鼠标选中和的复制粘贴更适合你，进入insert模式粘贴即可。简单的命令可以在normal模式下使用y和p即可（yank和paste， c命令被change占了）。y和p两个命令和其他的命令组合，可以覆盖绝大多数的用途。  </p>
+<h2 id="精细组合操作"><a href="#精细组合操作" class="headerlink" title="精细组合操作"></a>精细组合操作</h2><p>比如<code>yw</code>复制一个单词，<code>yy</code>复制一行，<code>y$</code>复制当前光标到结尾, <code>y^</code>复制当前光标到开头， 同理，<code>yG</code>复制当前行到结尾。<br>这些命令还可以和数字继续组合，比如<code>y3w</code>复制3个单词， <code>2yy</code>复制三个单词。<br>还可以用来复制配对的括号的内容， 比如<code>yi&#123;</code>复制大括号<code>&#123;</code>中的内容，<code>ya&#123;</code>连括号一起复制。    </p>
+<h2 id="寄存器的进阶用法"><a href="#寄存器的进阶用法" class="headerlink" title="寄存器的进阶用法"></a>寄存器的进阶用法</h2><h3 id="多种多样的寄存器"><a href="#多种多样的寄存器" class="headerlink" title="多种多样的寄存器"></a>多种多样的寄存器</h3><p>使用<code>:reg</code>查看寄存器，Vim的寄存器可以让复制粘贴玩出更多的花样， 下面介绍这些寄存器。<br>Vim的0-9寄存器是普通的寄存器，y命令默认会放到0，然后每次y会把最新的放到0，0放到1，依次保存结果。 如果你想粘贴哪个寄存器的值，在insert模式下<code>Ctrl+R 寄存器</code>， 比如粘贴寄存器3：<code>Ctrl+R 3</code>。</p>
+<p>比较有用的是4个只读寄存器和搜索寄存器：</p>
+<p><code>.</code>  最近插入的文本<br><code>:</code>  最近执行的命令<br><code>%</code>  存放当前文件名（相对）<br><code>#</code>  交替文件（这个好像没啥用, 就是你在当前terminal打开的上一个文件的文件名）<br><code>/</code> 搜索寄存器，可以设置默认的搜索内容。比如<code>:let @/ = &quot;package main&quot;</code>, 下次搜索的时候只要输入<code>/</code>， 会自动查找<code>package main</code>这段文本</p>
+<h3 id="一些技巧"><a href="#一些技巧" class="headerlink" title="一些技巧"></a>一些技巧</h3><p><code>xp</code> 交换两个单词，x将一个单词剪切到寄存器，p复制（利用错位交换）<br>（交换两个单词建议用abloish插件）  </p>
+<p>如果你删了东西后悔了可以去小删除寄存器里面找</p>
+<h3 id="Vim剪切板和x11的剪切板交互"><a href="#Vim剪切板和x11的剪切板交互" class="headerlink" title="Vim剪切板和x11的剪切板交互"></a>Vim剪切板和x11的剪切板交互</h3><p>在设置中<code>set clipboard^=unnamed,unnamedplus</code>，开启系统的剪切板，就会多出来两个寄存器<code>*</code>和<code>+</code>。一般<code>*</code>是PRIMARY，<code>+</code>是CLIPBOARD。（开系统剪切板功能你可能需要gvim或者neovim，vim这个包可能不支持）  </p>
+<p>当然这么干会把匿名寄存器“”的值和系统的CLIPBOARD复制粘贴绑定，不过比起少打几个<code>+</code>， 可以接受。<br>（并没有绑定PRIMARY，<code>*p</code>会粘贴CLIPBOARD的内容，PRIMARY直接鼠标中键粘贴就可以了。所以复制同步的过程并不会在每次鼠标选中文本的时候发生，只有在手动<code>Ctrl+Shitf+C</code>的时候才有，可以接受）</p>
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvdGl0bGUvQ2xpcGJvYXJk">https://wiki.archlinux.org/title/Clipboard<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cudW5pbmZvcm1hdGl2LmRlL2Jsb2cvcG9zdGluZ3MvMjAxNy0wNC0wMi8wL1BPU1RJTkctZW4uaHRtbA==">X11: How does “the” clipboard work?<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cuYnJpYW5zdG9ydGkuY29tL3ZpbS1yZWdpc3RlcnMv">Vim registers: The basics and beyond<i class="fa fa-external-link-alt"></i></span>  </p>
+]]></content>
+      <categories>
+        <category>不务正业系列</category>
+      </categories>
+      <tags>
+        <tag>vim</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>VSCode C/C++ 开发环境和调试配置：Clangd+Codelldb</title>
     <url>/vscode-c-and-cpp-develop-and-debug-setting/</url>
     <content><![CDATA[<p>卸了cpptools和C++ Intelligence吧，来试试clangd或者ccls</p>
@@ -5907,12 +5946,12 @@ autocmd BufLeave *  :silent !fcitx5-remote -c &quot; 离开 Buf 时禁用输入�
 <p>比较快的方法是装插件，比如依云的fcitx.vim插件，但是这个插件在neovim下面好像没有效果。</p>
 <p>本来想自己移植一个neovim的插件的，但是看了一下已经有人干了：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2gtaGcvZmNpdHgubnZpbS5naXQ=">fcitx.nvim<i class="fa fa-external-link-alt"></i></span></p>
 <p>我用的vim-plug管理插件，放到<code>~/.config/nvim/init.vim</code>下面就可以了</p>
-<pre class="line-numbers language-vim" data-language="vim"><code class="language-vim"><span class="token keyword">call</span> plug#<span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-Plug <span class="token string">'https://github.com/h-hg/fcitx.nvim.git'</span>
-<span class="token keyword">call</span> plug#<span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-viml" data-language="viml"><code class="language-viml">call plug#begin()
+Plug &#39;https:&#x2F;&#x2F;github.com&#x2F;h-hg&#x2F;fcitx.nvim.git&#39;
+call plug#end()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="一些按键绑定设置"><a href="#一些按键绑定设置" class="headerlink" title="一些按键绑定设置"></a>一些按键绑定设置</h2><p>首先我不要hjkl这几个上下左右键（根本无法接受，我的肌肉记忆明明是键盘上上下左右四个经典方向键，玩空洞骑士和Ballance用的极其熟练，其次是WASD这个4399键位，其次是鼠标，我鼠标可熟练了）<br>我知道hjkl移动距离短而且移动后方便按距离近的i键进入Insert模式，但是我的肌肉记忆是上下左右，你再给我十年我也改不过来。</p>
-<p>然后我将Casplock映射为ESC，这个万年不用的键放在这么重要的位置还有一个比Tab键还大的键帽，简直浪费。编辑<code>～/Xmodmap</code>修改键盘映射就可以了。</p>
+<h2 id="一些按键绑定设置"><a href="#一些按键绑定设置" class="headerlink" title="一些按键绑定设置"></a>一些按键绑定设置</h2><p>我将Capslock映射为ESC，这个万年不用的键放在这么重要的位置还有一个比Tab键还大的键帽，简直浪费。我用<code>interception-caps2esc</code>交换了ESC和Capslock，并且让原Caps键作为组合键的时候是Ctrl（这个是利用udev交换的）</p>
+<p>这样还有一个好处是换到Caps的ESC键离和a（append）非常近，这样只要按Caps和a就可以切换normal和insert模式了。</p>
 <p>或者如果喜欢也可以将<code>jj</code>（连按两次）绑定成ESC<code>inoremap jj &lt;Esc&gt;</code>^&#96;</p>
 <p>然后是VSCode里面正常的<code>Ctrl+F</code>当前搜索，这个我们找回来（<code>Ctrl+F</code>在Vim里是向上翻页，我完全用不到，我用PgDn和PgUp）</p>
 <p>然后是VSCode的<code>Ctrl+B</code>展开&#x2F;收起侧边栏，这个我也留着VSCode的设置。</p>
@@ -5938,6 +5977,32 @@ Plug <span class="token string">'https://github.com/h-hg/fcitx.nvim.git'</span>
 <span class="token property">"vscode-neovim.useCtrlKeysForNormalMode"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>这样就基本上把Ctrl的功能还给VSCode了。</p>
+<p>更新：让VSCode的左侧文件侧栏（file explorer）能用jk进行上下浏览文件。<br>如果装了vscodevim插件会有这个功能。vscode默认没有这个设置选项，看起来官方也不打算加，我们借助插件the multi-command extension实现，<code>settings.json</code>加上</p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token property">"multiCommand.commands"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+  <span class="token punctuation">&#123;</span>
+    <span class="token property">"command"</span><span class="token operator">:</span> <span class="token string">"multiCommand.navigateExplorerDownAndPreviewFile"</span><span class="token punctuation">,</span>
+    <span class="token property">"sequence"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"list.focusDown"</span><span class="token punctuation">,</span> <span class="token string">"filesExplorer.openFilePreserveFocus"</span><span class="token punctuation">]</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token punctuation">&#123;</span>
+    <span class="token property">"command"</span><span class="token operator">:</span> <span class="token string">"multiCommand.navigateExplorerUpAndPreviewFile"</span><span class="token punctuation">,</span>
+    <span class="token property">"sequence"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"list.focusUp"</span><span class="token punctuation">,</span> <span class="token string">"filesExplorer.openFilePreserveFocus"</span><span class="token punctuation">]</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><code>keybingdings.json</code>加上</p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+  <span class="token property">"key"</span><span class="token operator">:</span> <span class="token string">"down"</span><span class="token punctuation">,</span>
+  <span class="token property">"command"</span><span class="token operator">:</span> <span class="token string">"multiCommand.navigateExplorerDownAndPreviewFile"</span><span class="token punctuation">,</span>
+  <span class="token property">"when"</span><span class="token operator">:</span> <span class="token string">"explorerViewletVisible &amp;&amp; filesExplorerFocus &amp;&amp; !explorerResourceIsRoot &amp;&amp; !explorerResourceReadonly &amp;&amp; !inputFocus"</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+<span class="token punctuation">&#123;</span>
+  <span class="token property">"key"</span><span class="token operator">:</span> <span class="token string">"up"</span><span class="token punctuation">,</span>
+  <span class="token property">"command"</span><span class="token operator">:</span> <span class="token string">"multiCommand.navigateExplorerUpAndPreviewFile"</span><span class="token punctuation">,</span>
+  <span class="token property">"when"</span><span class="token operator">:</span> <span class="token string">"explorerViewletVisible &amp;&amp; filesExplorerFocus &amp;&amp; !explorerResourceIsRoot &amp;&amp; !explorerResourceReadonly &amp;&amp; !inputFocus"</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>我是不喜欢用hjkl，我用上下左右四个方向键，玩空洞骑士和蔚蓝上下左右的方向键已经用习惯了。而且单独的方向键有个好处是可以在 insert mode 直接进行移动，不用进入  normal mode 再按hjkl。</p>
+<p>大部分标准键盘的上下左右是符合操作直觉的，上就在上面下就在下面。hjkl那么扭曲我不想去用。不过有些阴间键盘，尤其是笔记本…….</p>
 <h2 id="Neovim插件默认instert模式"><a href="#Neovim插件默认instert模式" class="headerlink" title="Neovim插件默认instert模式"></a>Neovim插件默认instert模式</h2><p>这个样子平时就像正常使用VSCode一样，当用到normal mode的功能时才打开normal mode，可以少按很多次i</p>
 <pre class="line-numbers language-vim" data-language="vim"><code class="language-vim"><span class="token keyword">if</span> <span class="token function">has</span><span class="token punctuation">(</span><span class="token string">'nvim'</span><span class="token punctuation">)</span>
     <span class="token builtin">autocmd</span> TermOpen <span class="token builtin">term</span><span class="token punctuation">:</span><span class="token operator">/</span><span class="token operator">/</span><span class="token operator">*</span> <span class="token keyword">startinsert</span>
@@ -6006,35 +6071,6 @@ Plug &#39;asvetliakov&#x2F;vim-easymotion&#39;, Cond(exists(&#39;g:vscode&#39;),
       </categories>
       <tags>
         <tag>杂记</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>无创血压计</title>
-    <url>/2e86/</url>
-    <content><![CDATA[<p>血压是人体最主要的传统监护指标之一，血压的测量在医学上具有重要意义。相比于有创的测量方法，无创测量具有方便和不易感染的优点，在血压测量中被广泛采用。经典的无创测量方法主要有柯氏音法、超声法。此外，能够连续测量的动脉张力法、容积补偿法、脉搏波速传导法和脉搏波特征参数测定法也有着广阔的应用空间和市场前景。</p>
-<span id="more"></span>
-
-<h2 id="血压测量原理及特点"><a href="#血压测量原理及特点" class="headerlink" title="血压测量原理及特点"></a>血压测量原理及特点</h2><p>血压是重要的人体生理参数指标，具有重要的医学意义，是高血压及休克等多种疾病状态的关键性临床指标。在临床上,测量各个心腔及周围血管的血压,是评估心血管系统功能的重要指标之一,目前已经有多种方法测定血压波形和血压值。常用的血压测量方法有准确度较高的有创血压监测和无创血压监测。对于不同的应用场景和需求，也产生了多种监测设备，主要分为家庭使用的便携设备、医院常规检查设备以及重症病人的监测设备。</p>
-<p>有创的测量手段多用于医院临床监护，被认为是血压测量的金标准，包括中心静脉压力监测、创伤性动脉血压监测、血流动力学监测和血压测量中的动态响应优化。目前已经应用于各大医院的重症监护室、手术室、心脏导管室。 有创的监测手段测量精度高，多集成在医院的综合性生理指标监测设备，该方法的血压测量精度和连续性已经较为成熟，足够用于分析。有创带来的感染问题可以由医院的护理人员处理。</p>
-<p>无创血压监测主要包括柯氏音法、测振法、超声法、双袖带法、恒定袖带法、逐拍跟踪法、张力测定法、恒定容积法等，其中振动法由于其有较好的抗干扰能力,能比较可靠地判断血压、实现血压的自动检测，在无创血压监测中应用最广。张力测定法无法避免机体环境变化时发生的外力和内力不平衡引起的误差;容积法虽然较为成熟，却无法避免长时间测量时静脉充血的影响，存在难以长期保持局部的压力的巍峨提。基于这些原理的血压计主要有，其水银式血压计、电子血压计及基于容积振动法的血压检测装置等。水银式血压计无创血压测量的&quot;金标准&quot;，被业界广泛认可。然而，水银血压计的使用要求较高，对于非医学从业人员尤其是年长老人群体操作使用时存在着一定困难。目前市场有成熟的便携电子血压计，适合家庭中使用。电子血压计大都采用了示波法的原理。然而便携电子血压计检测上也存在缺陷，血压测量精度问题难以解决，通常只用于有高血压等疾病的患者家庭中使用。脉搏波传导时间(PTT)的检测法近年来发展较快，但由于影响因素多，个体差异性大，测量精度有待提高。容积法（振动法）是通过袖带加压中容积脉搏波的变化而确定血管内部压力的测量方法。该方法易于实现电子自动化数字化测量，且测量精度较高。但是，该方法只能直接检测出收缩压，舒张压需通过间接计算，误差较高，甚至可达10%。无创血压计的主要厂家有欧姆龙、爱安德、鱼跃等，主要产品有欧姆龙上臂式血压U12、鱼跃上臂式YE670A等型号，此外迈克大夫等各厂家还拥有不同的心血管监测的专利技术。近年来主要的突破主要是价格的压缩和便携性的提高，在监测准确度上依然不如有创的方法，大部分设备的原理也仍然是振荡法。</p>
-<p>目前对于振荡法的改进主要有采用先进的、严格控制的线性放气过程的硬件设备的改进以及通过综合频谱分析、小波变换、神经网络和基于奇异值矩阵分解的新型曲线拟合算法等信号处理的方法来寻找压力波形的特征计算血压等生理参数。进一步提高测量准确度的方法包括采用操作较复杂的双袖带检测法以及针对不同人群（如区分年龄、性别、体重等个人特征）调整检测算法，调整参数。</p>
-<h2 id="血压监测设备的优化改进"><a href="#血压监测设备的优化改进" class="headerlink" title="血压监测设备的优化改进"></a>血压监测设备的优化改进</h2><p>近年来对于无创血压计的改进主要集中于对于监测算法的改进和成本的降低以及小型化便携化，无创血压监测最大的应用市场。针对生理信号的特征提出了许多不同的监测方法，如基于容积脉搏波振幅梯度的血压检测法。一些监测连续信号的仪器也推出了监测心房颤动等疾病的监测算法。小型化设备的进展也有不少，例如进军医疗领域的苹果公司的Apple Waltch，心率和血压监测已经通过美国食品药品监督管理局（FDA）的认证。老牌厂商欧姆龙也推出了一款名为HeartGuide的手表，具备监测血压心率和睡眠质量的功能，并且可以通过蓝牙连接。</p>
-<p>目前的主流电子血压计采用的振动法主要经历了三个阶段的发展。第一代电子血压计（G1-NIBPM）采用固定加压和机械排气技术，加压方式和效果类似水银血压计的手动充气。由于机械式慢速排气阀存在明显压迫感和精度低、寿命短等缺点，已经很少被采用。第二代电子血压计（G2-NIBPM）采用智能加压和电子控制伺服技术，提高了舒适度和测量结果的稳定性。三、        第三代电子血压计（G3-NIBPM）采用加压同步测量技术，加压速度均匀，并在加压的过程中进行血压测量，提高了测量的速度。第二代电子血压计技术主要用于上臂式电子血压计；第三代电子血压计技术主要用于手腕式电子血压计。</p>
-<img width=400 src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/pic1.png" alt="picture"/>
-
-<p>图1 腕式、臂式血压计和能监测血压的手表</p>
-<p>近年来，连续监测技术的发展使得无创测量的方法在每个心动周期内完成血压的测量，使得无创方法在健康监测和重症监测领域应用成为可能。对于连续的实时监护设备，多采用脉搏波（PTT）时间检测法，能够避免张力测定法与容积补偿法装置复杂成本高、检测难度大的缺陷。该方法利用血压升高动脉管壁会扩张降低动脉弹性和顺应性导致脉搏波传递速度加快，通过脉搏波的速度变化反应动脉血管压力的变化。脉搏波时间检测法不需要加压套袖，方便舒适，随着监测算法的改进，误差已经可以在平稳的情况下达到4mmHg，但是在运动等外部干扰下的表现不好，仍旧有待解决。该方法的发展有望取代一部分有创方法，对病人进行连续的生理特征监测。</p>
-<p>此外动脉张力法也较为常见，市场化较早，也比较成熟，测量精度较高，无需每次定标。但是该方法测量桡动脉部位的动脉压力时难以保持位置固定，容易受到干扰。一些自动跟随的设备，如Bahr的改进张力计，也提高了监测的准确度。 动脉容积钳制法经过Tanoru和Yamakoshi等人的改进后，成为了另一种逐渐成熟的方法。该方法是在手指基部或中部放置气压指套或者液体填充加压袋的测量盒，并同时调节指套压力，并采用红外方式监测脉搏波的变化。指套压力采用自动反馈系统，始终等于动脉压。但是由于该方法测量手指的压力时施加外部压力，长时间测量易引起静脉充血。由于测量部位的原因，准确度不如腕部和上臂的测量方法，但是指尖测量有望实现监护仪的微型化，检测部位和无创血糖的检测部位类似，便于和血氧血糖模块组成小型多生理信号检测设备。对于动脉张力法的主要改进包括，补偿器补偿心脏和指端的流体静力学压差，采用气动袖套等方法解决袖套和心脏不在同一水平位置等问题。此外，通过舒张压和收缩压的特征参数利用线性回归的方法得到血压值等算法的提出也在一定程度上提高了准确度。</p>
-<p>目前有基于脉搏波的臂带式可穿戴设备和使用手机、蓝牙设备的便携监测。能够用于长时间血压的连续监测。考虑到大部分家庭用的电子血压计使用者都是年纪较大的人，针对老年人进行的易操作改进和安全性也在市场产品中不断涌现。目前，200元以下的电子血压计已经基本满足家用需求，测量的准确度和水银柱式血压计相差不大。</p>
-<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>[1]Andreas Patzak,Yuri Mendoza,Heiko Gesche,Martin Konermann. Continuous blood pressure measurement using the pulse transit time: Comparison to intra-arterial measurement[J]. Blood Pressure,2015,24(4).</p>
-<p>[2]株式会社爱安德. 血压计: 日本，201730034188.6 2[P]. 2017-07-28.</p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>测量</tag>
-        <tag>传感器</tag>
       </tags>
   </entry>
   <entry>
@@ -6340,6 +6376,35 @@ a  b  cron.d  dir2.dir<span aria-hidden="true" class="line-numbers-rows"><span><
       <tags>
         <tag>Linux</tag>
         <tag>ubuntu</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>无创血压计</title>
+    <url>/2e86/</url>
+    <content><![CDATA[<p>血压是人体最主要的传统监护指标之一，血压的测量在医学上具有重要意义。相比于有创的测量方法，无创测量具有方便和不易感染的优点，在血压测量中被广泛采用。经典的无创测量方法主要有柯氏音法、超声法。此外，能够连续测量的动脉张力法、容积补偿法、脉搏波速传导法和脉搏波特征参数测定法也有着广阔的应用空间和市场前景。</p>
+<span id="more"></span>
+
+<h2 id="血压测量原理及特点"><a href="#血压测量原理及特点" class="headerlink" title="血压测量原理及特点"></a>血压测量原理及特点</h2><p>血压是重要的人体生理参数指标，具有重要的医学意义，是高血压及休克等多种疾病状态的关键性临床指标。在临床上,测量各个心腔及周围血管的血压,是评估心血管系统功能的重要指标之一,目前已经有多种方法测定血压波形和血压值。常用的血压测量方法有准确度较高的有创血压监测和无创血压监测。对于不同的应用场景和需求，也产生了多种监测设备，主要分为家庭使用的便携设备、医院常规检查设备以及重症病人的监测设备。</p>
+<p>有创的测量手段多用于医院临床监护，被认为是血压测量的金标准，包括中心静脉压力监测、创伤性动脉血压监测、血流动力学监测和血压测量中的动态响应优化。目前已经应用于各大医院的重症监护室、手术室、心脏导管室。 有创的监测手段测量精度高，多集成在医院的综合性生理指标监测设备，该方法的血压测量精度和连续性已经较为成熟，足够用于分析。有创带来的感染问题可以由医院的护理人员处理。</p>
+<p>无创血压监测主要包括柯氏音法、测振法、超声法、双袖带法、恒定袖带法、逐拍跟踪法、张力测定法、恒定容积法等，其中振动法由于其有较好的抗干扰能力,能比较可靠地判断血压、实现血压的自动检测，在无创血压监测中应用最广。张力测定法无法避免机体环境变化时发生的外力和内力不平衡引起的误差;容积法虽然较为成熟，却无法避免长时间测量时静脉充血的影响，存在难以长期保持局部的压力的巍峨提。基于这些原理的血压计主要有，其水银式血压计、电子血压计及基于容积振动法的血压检测装置等。水银式血压计无创血压测量的&quot;金标准&quot;，被业界广泛认可。然而，水银血压计的使用要求较高，对于非医学从业人员尤其是年长老人群体操作使用时存在着一定困难。目前市场有成熟的便携电子血压计，适合家庭中使用。电子血压计大都采用了示波法的原理。然而便携电子血压计检测上也存在缺陷，血压测量精度问题难以解决，通常只用于有高血压等疾病的患者家庭中使用。脉搏波传导时间(PTT)的检测法近年来发展较快，但由于影响因素多，个体差异性大，测量精度有待提高。容积法（振动法）是通过袖带加压中容积脉搏波的变化而确定血管内部压力的测量方法。该方法易于实现电子自动化数字化测量，且测量精度较高。但是，该方法只能直接检测出收缩压，舒张压需通过间接计算，误差较高，甚至可达10%。无创血压计的主要厂家有欧姆龙、爱安德、鱼跃等，主要产品有欧姆龙上臂式血压U12、鱼跃上臂式YE670A等型号，此外迈克大夫等各厂家还拥有不同的心血管监测的专利技术。近年来主要的突破主要是价格的压缩和便携性的提高，在监测准确度上依然不如有创的方法，大部分设备的原理也仍然是振荡法。</p>
+<p>目前对于振荡法的改进主要有采用先进的、严格控制的线性放气过程的硬件设备的改进以及通过综合频谱分析、小波变换、神经网络和基于奇异值矩阵分解的新型曲线拟合算法等信号处理的方法来寻找压力波形的特征计算血压等生理参数。进一步提高测量准确度的方法包括采用操作较复杂的双袖带检测法以及针对不同人群（如区分年龄、性别、体重等个人特征）调整检测算法，调整参数。</p>
+<h2 id="血压监测设备的优化改进"><a href="#血压监测设备的优化改进" class="headerlink" title="血压监测设备的优化改进"></a>血压监测设备的优化改进</h2><p>近年来对于无创血压计的改进主要集中于对于监测算法的改进和成本的降低以及小型化便携化，无创血压监测最大的应用市场。针对生理信号的特征提出了许多不同的监测方法，如基于容积脉搏波振幅梯度的血压检测法。一些监测连续信号的仪器也推出了监测心房颤动等疾病的监测算法。小型化设备的进展也有不少，例如进军医疗领域的苹果公司的Apple Waltch，心率和血压监测已经通过美国食品药品监督管理局（FDA）的认证。老牌厂商欧姆龙也推出了一款名为HeartGuide的手表，具备监测血压心率和睡眠质量的功能，并且可以通过蓝牙连接。</p>
+<p>目前的主流电子血压计采用的振动法主要经历了三个阶段的发展。第一代电子血压计（G1-NIBPM）采用固定加压和机械排气技术，加压方式和效果类似水银血压计的手动充气。由于机械式慢速排气阀存在明显压迫感和精度低、寿命短等缺点，已经很少被采用。第二代电子血压计（G2-NIBPM）采用智能加压和电子控制伺服技术，提高了舒适度和测量结果的稳定性。三、        第三代电子血压计（G3-NIBPM）采用加压同步测量技术，加压速度均匀，并在加压的过程中进行血压测量，提高了测量的速度。第二代电子血压计技术主要用于上臂式电子血压计；第三代电子血压计技术主要用于手腕式电子血压计。</p>
+<img width=400 src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/pic1.png" alt="picture"/>
+
+<p>图1 腕式、臂式血压计和能监测血压的手表</p>
+<p>近年来，连续监测技术的发展使得无创测量的方法在每个心动周期内完成血压的测量，使得无创方法在健康监测和重症监测领域应用成为可能。对于连续的实时监护设备，多采用脉搏波（PTT）时间检测法，能够避免张力测定法与容积补偿法装置复杂成本高、检测难度大的缺陷。该方法利用血压升高动脉管壁会扩张降低动脉弹性和顺应性导致脉搏波传递速度加快，通过脉搏波的速度变化反应动脉血管压力的变化。脉搏波时间检测法不需要加压套袖，方便舒适，随着监测算法的改进，误差已经可以在平稳的情况下达到4mmHg，但是在运动等外部干扰下的表现不好，仍旧有待解决。该方法的发展有望取代一部分有创方法，对病人进行连续的生理特征监测。</p>
+<p>此外动脉张力法也较为常见，市场化较早，也比较成熟，测量精度较高，无需每次定标。但是该方法测量桡动脉部位的动脉压力时难以保持位置固定，容易受到干扰。一些自动跟随的设备，如Bahr的改进张力计，也提高了监测的准确度。 动脉容积钳制法经过Tanoru和Yamakoshi等人的改进后，成为了另一种逐渐成熟的方法。该方法是在手指基部或中部放置气压指套或者液体填充加压袋的测量盒，并同时调节指套压力，并采用红外方式监测脉搏波的变化。指套压力采用自动反馈系统，始终等于动脉压。但是由于该方法测量手指的压力时施加外部压力，长时间测量易引起静脉充血。由于测量部位的原因，准确度不如腕部和上臂的测量方法，但是指尖测量有望实现监护仪的微型化，检测部位和无创血糖的检测部位类似，便于和血氧血糖模块组成小型多生理信号检测设备。对于动脉张力法的主要改进包括，补偿器补偿心脏和指端的流体静力学压差，采用气动袖套等方法解决袖套和心脏不在同一水平位置等问题。此外，通过舒张压和收缩压的特征参数利用线性回归的方法得到血压值等算法的提出也在一定程度上提高了准确度。</p>
+<p>目前有基于脉搏波的臂带式可穿戴设备和使用手机、蓝牙设备的便携监测。能够用于长时间血压的连续监测。考虑到大部分家庭用的电子血压计使用者都是年纪较大的人，针对老年人进行的易操作改进和安全性也在市场产品中不断涌现。目前，200元以下的电子血压计已经基本满足家用需求，测量的准确度和水银柱式血压计相差不大。</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>[1]Andreas Patzak,Yuri Mendoza,Heiko Gesche,Martin Konermann. Continuous blood pressure measurement using the pulse transit time: Comparison to intra-arterial measurement[J]. Blood Pressure,2015,24(4).</p>
+<p>[2]株式会社爱安德. 血压计: 日本，201730034188.6 2[P]. 2017-07-28.</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>测量</tag>
+        <tag>传感器</tag>
       </tags>
   </entry>
   <entry>

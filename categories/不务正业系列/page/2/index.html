@@ -24,29 +24,26 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"zhangjk98.xyz","root":"/","images":"/images","scheme":"Pisces","darkmode":"auto","version":"8.11.0","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqusjs","storage":true,"lazyload":false,"nav":{"disqusjs":{"text":"Load Disqus","order":-1},"utterances":{"order":-2}},"activeClass":"disqusjs"},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"none","post_header":"none","post_body":"none","coll_header":"none","sidebar":"none"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="清明节闲着没事写点Vim的东西。我对Vim有诸多怨念，不过Vim有几个地方我很喜欢，最重要的一个就是操作可以组合和自动化。">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Vim中的宏：自动化魔法">
-<meta property="og:url" content="https://zhangjk98.xyz/vim-macros/index.html">
+    <meta name="description" content="in darkest night">
+<meta property="og:type" content="website">
+<meta property="og:title" content="止息的博客">
+<meta property="og:url" content="https://zhangjk98.xyz/categories/%E4%B8%8D%E5%8A%A1%E6%AD%A3%E4%B8%9A%E7%B3%BB%E5%88%97/page/2/index.html">
 <meta property="og:site_name" content="止息的博客">
-<meta property="og:description" content="清明节闲着没事写点Vim的东西。我对Vim有诸多怨念，不过Vim有几个地方我很喜欢，最重要的一个就是操作可以组合和自动化。">
+<meta property="og:description" content="in darkest night">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://zhangjk98.xyz/uploads/generic.gif">
-<meta property="article:published_time" content="2022-04-01T12:21:15.000Z">
 <meta property="article:author" content="Zhang.j.k">
-<meta property="article:tag" content="Vim">
+<meta property="article:tag" content="Coding, BME">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://zhangjk98.xyz/uploads/generic.gif">
 
 
-<link rel="canonical" href="https://zhangjk98.xyz/vim-macros/">
+<link rel="canonical" href="https://zhangjk98.xyz/categories/%E4%B8%8D%E5%8A%A1%E6%AD%A3%E4%B8%9A%E7%B3%BB%E5%88%97/page/2/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zhangjk98.xyz/vim-macros/","path":"vim-macros/","title":"Vim中的宏：自动化魔法"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"categories/不务正业系列/page/2/index.html","title":""}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Vim中的宏：自动化魔法 | 止息的博客</title>
+<title>分类: 不务正业系列 | 止息的博客</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143393734-1"></script>
   <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-143393734-1","only_pageview":false}</script>
@@ -140,7 +137,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+    <div class="sidebar-inner sidebar-overview-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -153,7 +150,6 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%8F%E7%9A%84%E9%AD%94%E6%B3%95%E4%B8%96%E7%95%8C"><span class="nav-number">1.</span> <span class="nav-text">宏的魔法世界</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A8%8D%E5%BE%AE%E6%AD%A3%E7%BB%8F%E7%82%B9%E7%9A%84%E7%94%A8%E9%80%94%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="nav-number">2.</span> <span class="nav-text">稍微正经点的用途的例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8"><span class="nav-number">3.</span> <span class="nav-text">注</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E4%BA%8EVim%E7%9A%84%E4%BD%BF%E7%94%A8%E5%A7%BF%E5%8A%BF"><span class="nav-number">4.</span> <span class="nav-text">关于Vim的使用姿势</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -239,166 +235,74 @@
 </noscript>
 
 
-    <div class="main-inner post posts-expand">
+    <div class="main-inner category posts-collapse">
 
 
   
-
-
-<div class="post-block">
   
   
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://zhangjk98.xyz/vim-macros/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/jinmao.webp">
-      <meta itemprop="name" content="Zhang.j.k">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="止息的博客">
-      <meta itemprop="description" content="in darkest night">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Vim中的宏：自动化魔法 | 止息的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          Vim中的宏：自动化魔法
+  <div class="post-block">
+    <div class="post-content">
+      <div class="collection-title">
+        <h1 class="collection-header">不务正业系列
+          <small>分类</small>
         </h1>
+      </div>
 
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-04-01 20:21:15" itemprop="dateCreated datePublished" datetime="2022-04-01T20:21:15+08:00">2022-04-01</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E4%B8%8D%E5%8A%A1%E6%AD%A3%E4%B8%9A%E7%B3%BB%E5%88%97/" itemprop="url" rel="index"><span itemprop="name">不务正业系列</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-        <p>清明节闲着没事写点Vim的东西。我对Vim有诸多怨念，不过Vim有几个地方我很喜欢，最重要的一个就是操作可以组合和自动化。</p>
-<span id="more"></span>
-
-<h2 id="宏的魔法世界"><a href="#宏的魔法世界" class="headerlink" title="宏的魔法世界"></a>宏的魔法世界</h2><p>宏可以完成很多自动化的操作，不过相比自动化，更迷人的是像写代码一样编辑文本。有一点元编程的画风，不过相比于模板元那种黑魔法，vim里的宏是人见人爱的白魔法。而且vim编辑文本的操作命令很简单，你要打印1000个 Hello, World!，不使用循环等高级功能，只需要将print这一行复制999次</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Hello, World!"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>用vim这很简单，只需要<code>yy1000p</code>这种组合命令就可以了。用别的编程语言生成这么1000行print都比把print直接放在循环里麻烦。</p>
-<p>如果是很简单的重复操作，也不需要专门录制宏。比如：</p>
-<p><code>.</code>    重复上一个edit命令<br><code>;</code> 重复上一个查找命令<br><code>&amp;</code> 替换下一个文本<br><code>@:</code> 命令重复上一个Editor Command，这个我不常用，我喜欢上箭头选上一个然后回车</p>
-<p>但是如果想连续执行一段<code>;.</code>, 就需要用宏了（<code>11;.</code>的结果是先执行11次;再执行11次.）</p>
-<p>如果要输出从1到1000，用vim的循环也可以完成</p>
-<pre class="line-numbers language-vim" data-language="vim"><code class="language-vim"><span class="token punctuation">:</span><span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token function">range</span><span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span>
-<span class="token punctuation">:</span>   <span class="token keyword">call</span> <span class="token function">setline</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> i<span class="token operator">.</span><span class="token string">' '</span><span class="token operator">.</span><span class="token function">getline</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token punctuation">:</span><span class="token keyword">endfor</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<p>如果用宏来操作是这样的，<code>Ctrl+a</code>和<code>Ctrl+x</code>分别是对数字自增和自减，我们可以将操作分解成复制粘贴自增，然后重复998次就可以了</p>
-<pre class="line-numbers language-vim" data-language="vim"><code class="language-vim">第一行输入<span class="token number">1</span>
-
-<span class="token keyword">qa</span> 开始宏录制
-yyp 复制并粘贴第一行
-C<span class="token operator">-</span>a 自增<span class="token number">1</span>
-<span class="token keyword">q</span>   结束宏录制
-<span class="token number">998</span>@ 重复<span class="token number">998</span>次，输出<span class="token number">1</span><span class="token operator">-</span><span class="token number">1000</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="稍微正经点的用途的例子"><a href="#稍微正经点的用途的例子" class="headerlink" title="稍微正经点的用途的例子"></a>稍微正经点的用途的例子</h2><p>注释几行文本：</p>
-<pre class="line-numbers language-vim" data-language="vim"><code class="language-vim"><span class="token keyword">qa</span>  开始宏录制
-I#  insert模式行首加#
-Esc 退出insert
-<span class="token keyword">j</span>   下一行
-<span class="token keyword">q</span>   完成宏录制
-<span class="token number">7</span>@a 注释<span class="token number">7</span>行<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>同理，我们想要把开头序号<code>1.</code>都变成<code>1)</code>的样子</p>
-<pre class="line-numbers language-vim" data-language="vim"><code class="language-vim"><span class="token keyword">qa</span>	<span class="token keyword">q</span>开始录制，保存到a寄存器中
-0f<span class="token operator">.</span> 跳转到开头并查找第一个<span class="token operator">.</span>
-<span class="token keyword">j</span>	跳转到下一行<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<p>大多数时候这种情况正则更方便，但是有的时候一堆混乱的文本容易误伤，宏的操作加入了位置信息等操作比较容易控制</p>
-<pre class="line-numbers language-none"><code class="language-none">1. X1..XX
-2. SN.1FN
-3. PIN.GF
-4. 12 3.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="注"><a href="#注" class="headerlink" title="注"></a>注</h2><p>这里举例子用宏加注释什么的，其实有很多操作并不需要宏来完成，比如注释有插件。</p>
-<h2 id="关于Vim的使用姿势"><a href="#关于Vim的使用姿势" class="headerlink" title="关于Vim的使用姿势"></a>关于Vim的使用姿势</h2><p>曾经几年前我对Vim实在说不上喜欢，当时我还在Windows上（Windows上的vim体验你也知道），经常要连到linux上改改东西的时候我日常使用nano（后来发现了micro）。如果只是将Vim当成一套键盘操作，那效率可能并不比IDE的快捷键+鼠标操作更好。（而且vim的hjkl的键位等操作，对很多人是极大的劝退）<br>Vim的键位用好了可以形成肌肉记忆将操作交给小脑解放大脑，而宏这些操作是要开动大脑的。<br>我觉得吸引玩家入坑vim就应该从录制宏等操作讲起，这些才是图形界面的点击操作不具备的优势。  </p>
-<p>宏适合干的就是重复的动作，比较适合处理一些枯燥的工作。比如经典的某些大道至简的语言sublime多光标实现泛型这样的事情，我们可以写一个宏去完成它。（其实我个人还是喜欢多光标）</p>
-<p><img src="/uploads/generic.gif" alt="Go Type Parameters in Sublime"></p>
-<p><span class="exturl" data-url="aHR0cHM6Ly9tYWNwbGF5LmdpdGh1Yi5pby9wb3N0cy92aW0tYnUteHUteWFvLWR1by1ndWFuZy1iaWFvLWJpYW4tamktZ29uZy1uZW5nLw==">【译】Vim 不需要多光标编辑功能<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9tZWRpdW0uY29tL0BzY2h0b2VmZmVsL3lvdS1kb24tdC1uZWVkLW1vcmUtdGhhbi1vbmUtY3Vyc29yLWluLXZpbS0yYzQ0MTE3ZDUxZGI=">You don’t need more than one cursor in vim<i class="fa fa-external-link-alt"></i></span>   </p>
-
+      
+    <div class="collection-year">
+      <span class="collection-header">2019</span>
     </div>
 
-    
-    
-    
+  <article itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+      <div class="post-meta-container">
+        <time itemprop="dateCreated"
+              datetime="2019-10-29T21:59:33+08:00"
+              content="2019-10-29">
+          10-29
+        </time>
+      </div>
 
-    <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/Vim/" rel="tag"><i class="fa fa-tag"></i> Vim</a>
-          </div>
+      <div class="post-title">
+          <a class="post-title-link" href="/a10f/" itemprop="url">
+            <span itemprop="name">λ演算&函数式编程</span>
+          </a>
+      </div>
 
-        
-
-          <div class="post-nav">
-            <div class="post-nav-item">
-                <a href="/vim-registers-copy-and-paste/" rel="prev" title="Vim的寄存器与复制粘贴">
-                  <i class="fa fa-chevron-left"></i> Vim的寄存器与复制粘贴
-                </a>
-            </div>
-            <div class="post-nav-item">
-            </div>
-          </div>
-    </footer>
+      
+    </header>
   </article>
-</div>
 
+  <article itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+      <div class="post-meta-container">
+        <time itemprop="dateCreated"
+              datetime="2019-07-07T21:23:24+08:00"
+              content="2019-07-07">
+          07-07
+        </time>
+      </div>
 
+      <div class="post-title">
+          <a class="post-title-link" href="/pythonic/" itemprop="url">
+            <span itemprop="name">Pythonic，我劝你别学</span>
+          </a>
+      </div>
 
+      
+    </header>
+  </article>
 
-
-
-      <div class="tabs tabs-comment">
-        <ul class="nav-tabs">
-            <li class="tab"><a href="#comment-utterances">utterances</a></li>
-            <li class="tab"><a href="#comment-disqusjs">Load Disqus</a></li>
-        </ul>
-        <div class="tab-content">
-            <div class="tab-pane utterances" id="comment-utterances">
-              <div class="comments utterances-container"></div>
-            </div>
-            <div class="tab-pane disqusjs" id="comment-disqusjs">
-              
-  <div class="comments" id="disqus_thread">
-    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
   </div>
   
-            </div>
-        </div>
-      </div>
+  
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/categories/%E4%B8%8D%E5%8A%A1%E6%AD%A3%E4%B8%9A%E7%B3%BB%E5%88%97/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/categories/%E4%B8%8D%E5%8A%A1%E6%AD%A3%E4%B8%9A%E7%B3%BB%E5%88%97/">1</a><span class="page-number current">2</span>
+  </nav>
+
 </div>
   </main>
 
