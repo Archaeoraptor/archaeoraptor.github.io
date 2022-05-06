@@ -165,7 +165,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">54</span>
+          <span class="site-state-item-count">58</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -176,7 +176,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">89</span>
+        <span class="site-state-item-count">92</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -341,7 +341,7 @@ app<span class="token punctuation">.</span>register_blueprint<span class="token 
 
 <p>也可以作为资源放置静态文件，详见官方文档</p>
 <h2 id="视图和模板"><a href="#视图和模板" class="headerlink" title="视图和模板"></a>视图和模板</h2><p>Flask的模板(template)用的Jinja2，基本都是标签的形式，和Django的模板非常像，类似这种</p>
-<pre class="line-numbers language-html" data-language="html"><code class="language-html">&#123;% block title %&#125;&#123;% endblock %&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup">&#123;% block title %&#125;&#123;% endblock %&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>(我刚刚又查了一下，Django的自带模板就是基于Jinja的魔改版，应该是Django模板像Jinja2，说反了)</p>
 <p>视图函数一般用来处理入站请求，我们用装饰器把函数注册为事件处理程序，大概这个样子</p>

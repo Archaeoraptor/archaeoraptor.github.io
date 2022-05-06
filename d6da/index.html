@@ -174,7 +174,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">54</span>
+          <span class="site-state-item-count">58</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -185,7 +185,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">89</span>
+        <span class="site-state-item-count">92</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -313,12 +313,12 @@
 <h2 id="写在前面的话"><a href="#写在前面的话" class="headerlink" title="写在前面的话"></a>写在前面的话</h2><p>top、ls命令并不总是好用，特别是挖矿恶意程序使用rookit等方式隐藏进程、篡改系统命令，会出现CPU跑满但是top命令看不到高占用进程的情况</p>
 <p>不想用vim又不得不在linux下改东西，可以不用nano了，这有个<span class="exturl" data-url="aHR0cHM6Ly93bWRwZC5jb20vcWlhbmctbGllLXR1aS1qaWFuLWxpbnV4emhvbmctZHVhbi13ZW4tYmVuLWJpYW4tamktcWktbWljcm8v">micro<i class="fa fa-external-link-alt"></i></span>, 拿好</p>
 <p>安装：</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token builtin class-name">cd</span> /usr/bin<span class="token punctuation">;</span> <span class="token function">curl</span> https://getmic.ro <span class="token operator">|</span> <span class="token function">sudo</span> <span class="token function">bash</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> /usr/bin<span class="token punctuation">;</span> <span class="token function">curl</span> https://getmic.ro <span class="token operator">|</span> <span class="token function">sudo</span> <span class="token function">bash</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 
 <h2 id="安全问题"><a href="#安全问题" class="headerlink" title="安全问题"></a>安全问题</h2><p>教研室的服务器之前就被黑过<br>老师兄装的Ubuntu，默认端口默认用户名超简单密码直接远程登录，行吧<br>教研室出现了断层，现在的师兄们（以及并夕夕40万却没用过Linux的师姐）Linux都还没我熟，行吧<br>服务器以后就扔给我了，行吧</p>
 <p>之前折腾Docker的时候看日志发现一堆乱七八糟的</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">grep</span> <span class="token string">"Accepted password for root"</span> /var/log/auth.log <span class="token operator">|</span> <span class="token function">awk</span> <span class="token string">'&#123;print $11&#125;'</span> <span class="token operator">|</span> <span class="token function">sort</span> <span class="token operator">|</span> <span class="token function">uniq</span> -c <span class="token operator">|</span> <span class="token function">sort</span> -nr <span class="token operator">|</span> <span class="token function">more</span>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">grep</span> <span class="token string">"Accepted password for root"</span> /var/log/auth.log <span class="token operator">|</span> <span class="token function">awk</span> <span class="token string">'&#123;print $11&#125;'</span> <span class="token operator">|</span> <span class="token function">sort</span> <span class="token operator">|</span> <span class="token function">uniq</span> -c <span class="token operator">|</span> <span class="token function">sort</span> -nr <span class="token operator">|</span> <span class="token function">more</span>
 <span class="token function">grep</span> <span class="token string">"Failed password for root"</span> /var/log/auth.log <span class="token operator">|</span> <span class="token function">awk</span> <span class="token string">'&#123;print $11&#125;'</span> <span class="token operator">|</span> <span class="token function">sort</span> <span class="token operator">|</span> <span class="token function">uniq</span> -c <span class="token operator">|</span> <span class="token function">sort</span> -nr <span class="token operator">|</span> <span class="token function">more</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>发现一堆可疑ip几千次登录尝试,哇,又被当小鸡扫了</p>
@@ -347,7 +347,7 @@
     <span class="token number">51</span> <span class="token ip-address constant">222.186.169.194</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>改一下密码和SSH端口</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">sed</span> -i <span class="token string">"s/Port .*/Port 你的端口/g"</span> /etc/ssh/sshd_config<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sed</span> -i <span class="token string">"s/Port .*/Port 你的端口/g"</span> /etc/ssh/sshd_config<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>安装sshfilter或者flai2ban，这里我用的fail2ban。[^1]</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> fail2ban
@@ -366,32 +366,32 @@ fail2ban-client <span class="token builtin class-name">set</span> sshd unbanip <
 
 <p>还要配置一下防火墙<br>iptables很繁琐，不涉及太多配置的情况下可以用UFW</p>
 <h3 id="防火墙端口"><a href="#防火墙端口" class="headerlink" title="防火墙端口"></a>防火墙端口</h3><p>端口用的时候要打开，不然会出各种烦人的问题，比如wget下载没开443就会<code>443... failed: Connection refused.</code>，如果你加了~–no-check-certificate&#96;还是failed，那八成是防火墙的问题<br>查看端口开放状态</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">netstat</span> -ntlp<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">netstat</span> -ntlp<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>或者</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">telnet <span class="token function">ip</span> port<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">telnet <span class="token function">ip</span> port<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>Ubuntu里用ufw查看状态</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">sudo</span> ufw status<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> ufw status<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>查看指定端口的状态（没输出可能是没开）</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">netstat</span> -ntlp<span class="token operator">|</span><span class="token function">grep</span> <span class="token number">443</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">netstat</span> -ntlp<span class="token operator">|</span><span class="token function">grep</span> <span class="token number">443</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>打开443端口</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">iptables -I INPUT -p tcp --dport <span class="token number">443</span> -j ACCEPT
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">iptables -I INPUT -p tcp --dport <span class="token number">443</span> -j ACCEPT
 <span class="token function">service</span> iptables save
 <span class="token function">service</span> iptables restart<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <p>使用UFW, 直接</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">sudo</span> ufw allow <span class="token number">443</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> ufw allow <span class="token number">443</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>用iptables打开指定端口, 一般开80，443，53，22，其他按需打开</p>
 <p>可以安装这个来永久保存配置</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> iptables-persistent<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> iptables-persistent<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <h3 id="Docker默认修改iptables规则"><a href="#Docker默认修改iptables规则" class="headerlink" title="Docker默认修改iptables规则"></a>Docker默认修改iptables规则</h3><p>Docker不设置会默认修改iptables规则，将端口暴露在外面，导致端口映射在安全上并没有什么卵用，要设置一下一下，可以看这里<br><span class="exturl" data-url="aHR0cHM6Ly93d3cuYmluc3MubWUvYmxvZy9kb2NrZXItcGFzcy10aHJvdWdoLXN5c3RlbS1maXJld2FsbC8=">https://www.binss.me/blog/docker-pass-through-system-firewall/<i class="fa fa-external-link-alt"></i></span></p>
 <h2 id="HTTPs"><a href="#HTTPs" class="headerlink" title="HTTPs"></a>HTTPs</h2><p>申请SSL证书</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> ssl-cert<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> ssl-cert<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>然后搞一个自己的域名，因为境内服务器要备案，此计划中道崩殂</p>
 <h2 id="运行sudo-apt-get-update报错"><a href="#运行sudo-apt-get-update报错" class="headerlink" title="运行sudo apt-get update报错"></a>运行<code>sudo apt-get update</code>报错</h2><p>写在前面，我看到有的镜像源示例配置都是走的HTTPS，似乎没有必要<br>详见<span class="exturl" data-url="aHR0cHM6Ly93aHlkb2VzYXB0bm90dXNlaHR0cHMuY29tLw==">Why does APT not use HTTPS?<i class="fa fa-external-link-alt"></i></span>。<br>至于某Debian镜像源上说的什么安装apt-transport-https更是没有必要，画蛇添足</p>
@@ -468,7 +468,7 @@ dns<span class="token operator">-</span>nameservers <span class="token ip-addres
 
 <h2 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h2><p>发现不是镜像源的问题，是你电的镜像源没安排上https，这个服务器好像是证书的问题，https全都用不了，wget也不行。</p>
 <h2 id="滚动升级"><a href="#滚动升级" class="headerlink" title="滚动升级"></a>滚动升级</h2><p>不存在的，这又不是arch系，不要乱升，乱升级滚挂了是要背锅的<br>要升可以用</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">sudo</span> do-release-upgrade<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> do-release-upgrade<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>升完记得把apt源给换了<br>看到有安全更新，说</p>
 <blockquote>
@@ -485,7 +485,7 @@ Upload: 2.45 Mbyte&#x2F;s<span aria-hidden="true" class="line-numbers-rows"><spa
 
 <h3 id="掉线"><a href="#掉线" class="headerlink" title="掉线"></a>掉线</h3><p>受疫情影响，全教研室在家连服务器，但是服务器的网络还总掉线<br>跑一个自动重启网络服务的脚本，直接抄<span class="exturl" data-url="aHR0cDovL3d3dy5saXV4aWFvLm9yZy8yMDE5LzA4L3VidW50dS0lRTQlQjglOEIlRTclOUIlOTElRTYlOEUlQTclRTUlQjklQjYlRTglODclQUElRTUlOEElQTglRTklODclOEQlRTUlOTAlQUYlRTclQkQlOTElRTUlOEQlQTEv">这里<i class="fa fa-external-link-alt"></i></span></p>
 <h2 id="备份和恢复"><a href="#备份和恢复" class="headerlink" title="备份和恢复"></a>备份和恢复</h2><p>师兄也没装什么东西，用的cp直接备份了点文件，一言不合重装系统。<br>先暂时用cp备份一次<br>挂载一下盘(比如挂到&#x2F;mnt&#x2F;mydata)，用cp复制<br>(挂载看这里[^3])</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">mount</span> /dev/sdb7 /mnt
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">mount</span> /dev/sdb7 /mnt
 <span class="token function">nohup</span> <span class="token function">cp</span> -pdr /srv /mnt/mydata <span class="token operator">>></span> logs.out <span class="token operator"><span class="token file-descriptor important">2</span>></span><span class="token file-descriptor important">&amp;1</span> <span class="token operator">&amp;</span>
 <span class="token function">umount</span> /dev/sdb7<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
@@ -496,7 +496,7 @@ Upload: 2.45 Mbyte&#x2F;s<span aria-hidden="true" class="line-numbers-rows"><spa
 <p>更新，发现一款叫clonezilla的软件，使用clonezilla备份非常方便。</p>
 <h2 id="使用教研室服务器下载"><a href="#使用教研室服务器下载" class="headerlink" title="使用教研室服务器下载"></a>使用教研室服务器下载</h2><p>教研室的服务器有一个单独的猫和ip，网速绝大多数时候不低于50M&#x2F;s，今天才发现比我的小破工位上的网速快不少。<br>以后下数据集和数据库文件之类的大东西就用它了！</p>
 <h2 id="使用Tmux"><a href="#使用Tmux" class="headerlink" title="使用Tmux"></a>使用Tmux</h2><p>（其实MobaXterm有一个叫Multiexec的功能）<br>正在备份文件结果网断了（没办法，校园网就是这么….）<br>这时就要用tmux之类的工具了</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> tmux<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> tmux<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <h2 id="图形界面"><a href="#图形界面" class="headerlink" title="图形界面"></a>图形界面</h2><p>MobaXterm内嵌有Xserver，可以调出图形化窗口。<br>比如nedit,Emacs之类的<br><img src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/xserver.png" alt="Picture"><br>已经足够应付简单的图形化界面需求了<br>完整的桌面需求请直接VNC或teamviewer到工作站操作。</p>
 <h2 id="卸载遗留的Docker并重装"><a href="#卸载遗留的Docker并重装" class="headerlink" title="卸载遗留的Docker并重装"></a>卸载遗留的Docker并重装</h2><p>目前还报这样的错</p>

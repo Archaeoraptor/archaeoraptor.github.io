@@ -24,30 +24,27 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"zhangjk98.xyz","root":"/","images":"/images","scheme":"Pisces","darkmode":"auto","version":"8.11.0","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqusjs","storage":true,"lazyload":false,"nav":{"disqusjs":{"text":"Load Disqus","order":-1},"utterances":{"order":-2}},"activeClass":"disqusjs"},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"none","post_header":"none","post_body":"none","coll_header":"none","sidebar":"none"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="之前做6.s081的lab的时候照猫画虎写了一个类似ext2的超简陋的文件系统，自己用了有将近一年的Btrfs，一直想写点什么。然而之前看OS的书和做Lab都是">
+    <meta name="description" content="好端端一个Docker container，怎么就内存占用过高被kill了呢">
 <meta property="og:type" content="article">
-<meta property="og:title" content="现代文件系统笔记，顺便说说Btrfs">
-<meta property="og:url" content="https://zhangjk98.xyz/filesystem-note-btrfs-introduction/index.html">
+<meta property="og:title" content="又被Docker坑了（这次是内存">
+<meta property="og:url" content="https://zhangjk98.xyz/aware-docker-memory/index.html">
 <meta property="og:site_name" content="止息的博客">
-<meta property="og:description" content="之前做6.s081的lab的时候照猫画虎写了一个类似ext2的超简陋的文件系统，自己用了有将近一年的Btrfs，一直想写点什么。然而之前看OS的书和做Lab都是">
+<meta property="og:description" content="好端端一个Docker container，怎么就内存占用过高被kill了呢">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://imgs.xkcd.com/comics/dark_arts.png">
-<meta property="article:published_time" content="2021-12-17T14:34:07.318Z">
+<meta property="article:published_time" content="2022-04-24T14:07:46.000Z">
 <meta property="article:author" content="Zhang.j.k">
-<meta property="article:tag" content="fs">
-<meta property="article:tag" content="btrfs">
+<meta property="article:tag" content="Docker">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://imgs.xkcd.com/comics/dark_arts.png">
 
 
-<link rel="canonical" href="https://zhangjk98.xyz/filesystem-note-btrfs-introduction/">
+<link rel="canonical" href="https://zhangjk98.xyz/aware-docker-memory/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zhangjk98.xyz/filesystem-note-btrfs-introduction/","path":"filesystem-note-btrfs-introduction/","title":"现代文件系统笔记，顺便说说Btrfs"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zhangjk98.xyz/aware-docker-memory/","path":"aware-docker-memory/","title":"又被Docker坑了（这次是内存"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>现代文件系统笔记，顺便说说Btrfs | 止息的博客</title>
+<title>又被Docker坑了（这次是内存 | 止息的博客</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143393734-1"></script>
   <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-143393734-1","only_pageview":false}</script>
@@ -154,7 +151,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8E%E7%AE%80%E5%8D%95%E7%9A%84%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AF%B4%E8%B5%B7"><span class="nav-number">1.</span> <span class="nav-text">从简单的文件系统说起</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%B0%E4%BB%A3%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="nav-number">2.</span> <span class="nav-text">现代文件系统</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Reference-Link"><span class="nav-number">2.1.</span> <span class="nav-text">Reference Link</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%B4%E8%AF%B4Btrfs"><span class="nav-number">3.</span> <span class="nav-text">说说Btrfs</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8EBtrfs%E6%80%A7%E8%83%BD%E4%B8%8D%E5%A5%BD"><span class="nav-number">3.1.</span> <span class="nav-text">关于Btrfs性能不好</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Copy-on-Write%E5%86%99%E6%97%B6%E5%A4%8D%E5%88%B6"><span class="nav-number">3.2.</span> <span class="nav-text">Copy-on-Write写时复制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%99%E6%95%B0%E6%8D%AE%E5%BA%93%E6%89%80%E5%9C%A8%E7%9A%84%E7%9B%AE%E5%BD%95%E5%85%B3%E9%97%ADCOW"><span class="nav-number">3.2.1.</span> <span class="nav-text">给数据库所在的目录关闭COW</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-number">3.3.</span> <span class="nav-text">使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%83%BD%E8%A6%812022%E5%B9%B4%E4%BA%86%EF%BC%8CBtrfs%E7%A8%B3%E5%AE%9A%E4%BA%86%E5%90%97"><span class="nav-number">3.4.</span> <span class="nav-text">都要2022年了，Btrfs稳定了吗</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Btrfs%E6%8C%82%E4%BA%86%E8%A6%81%E6%80%8E%E4%B9%88%E4%BF%AE"><span class="nav-number">3.5.</span> <span class="nav-text">Btrfs挂了要怎么修</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RAID%E3%80%81%E5%AD%90%E5%8D%B7%E3%80%81%E5%88%86%E5%8C%BA%E9%97%AE%E9%A2%98"><span class="nav-number">3.6.</span> <span class="nav-text">RAID、子卷、分区问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#snapshot"><span class="nav-number">3.7.</span> <span class="nav-text">snapshot</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A6%81%E6%80%8E%E4%B9%88%E6%9F%A5%E7%9C%8Bsnapshot%E7%9A%84%E5%A4%A7%E5%B0%8F"><span class="nav-number">3.7.1.</span> <span class="nav-text">要怎么查看snapshot的大小</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%93%BE%E6%8E%A5"><span class="nav-number">4.</span> <span class="nav-text">链接</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#dentry%E8%BF%98%E6%88%91%E5%86%85%E5%AD%98"><span class="nav-number">1.</span> <span class="nav-text">dentry还我内存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker%E7%9A%84%E4%B8%80%E4%BA%9B%E6%9B%BF%E4%BB%A3%E5%93%81"><span class="nav-number">2.</span> <span class="nav-text">Docker的一些替代品</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%93%BE%E6%8E%A5"><span class="nav-number">3.</span> <span class="nav-text">链接</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -169,7 +166,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">54</span>
+          <span class="site-state-item-count">58</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -180,7 +177,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">89</span>
+        <span class="site-state-item-count">92</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -251,7 +248,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://zhangjk98.xyz/filesystem-note-btrfs-introduction/">
+    <link itemprop="mainEntityOfPage" href="https://zhangjk98.xyz/aware-docker-memory/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/jinmao.webp">
@@ -264,12 +261,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="现代文件系统笔记，顺便说说Btrfs | 止息的博客">
+      <meta itemprop="name" content="又被Docker坑了（这次是内存 | 止息的博客">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          现代文件系统笔记，顺便说说Btrfs
+          又被Docker坑了（这次是内存
         </h1>
 
         <div class="post-meta-container">
@@ -280,16 +277,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2021-12-17 22:34:07" itemprop="dateCreated datePublished" datetime="2021-12-17T22:34:07+08:00">2021-12-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Linux-Unix/" itemprop="url" rel="index"><span itemprop="name">Linux&Unix</span></a>
-        </span>
+      <time title="创建时间：2022-04-24 22:07:46" itemprop="dateCreated datePublished" datetime="2022-04-24T22:07:46+08:00">2022-04-24</time>
     </span>
 
   
@@ -302,37 +290,16 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p><img src="https://imgs.xkcd.com/comics/dark_arts.png"><br>之前做6.s081的lab的时候照猫画虎写了一个类似ext2的超简陋的文件系统，自己用了有将近一年的Btrfs，一直想写点什么。然而之前看OS的书和做Lab都是</p>
+        <p>好端端一个Docker container，怎么就内存占用过高被kill了呢</p>
 <span id="more"></span>
 
-<h2 id="从简单的文件系统说起"><a href="#从简单的文件系统说起" class="headerlink" title="从简单的文件系统说起"></a>从简单的文件系统说起</h2><p>我们先不管日志、快照、原子性、加密这些功能。也暂时先不看类似9p那种分布式文件系统。<br>磁盘被划分成很多块（block），我们拿出来一些块放用户数据（data region），为了记录文件的</p>
-<h2 id="现代文件系统"><a href="#现代文件系统" class="headerlink" title="现代文件系统"></a>现代文件系统</h2><blockquote>
-<p>如果reiserfs没有因为作者杀妻进去<br>如果SUN没有被Oracle收购，ZFS没那些版权问题</p>
-</blockquote>
-<h3 id="Reference-Link"><a href="#Reference-Link" class="headerlink" title="Reference Link"></a>Reference Link</h3><h2 id="说说Btrfs"><a href="#说说Btrfs" class="headerlink" title="说说Btrfs"></a>说说Btrfs</h2><p>Btrfs推出也很久了，最初是打算取代ext3&#x2F;ext4地位做默认的新一代文件系统的。当然，Btrfs已经十几年了，进入Linux内核主线都8年了，大家也看到了。。。</p>
-<p>最近的Linux内核每次更新几乎都有Btrfs的内容，而且在phoronix之类的地方讨论总是很热烈</p>
-<p><a target="_blank" rel="noopener" href="https://www.phoronix.com/forums/forum/software/general-linux-open-source/1276327-btrfs-adds-degenerate-raid-support-performance-improvements-with-linux-5-15"></a><br><span class="exturl" data-url="aHR0cHM6Ly93d3cucGhvcm9uaXguY29tL3NjYW4ucGhwP3BhZ2U9bmV3c19pdGVtJnB4PUZlZG9yYTMzLURlc2t0b3AtQnRyZnMtUHJvcG9zYWw=">There’s A Proposal To Switch Fedora 33 On The Desktop To Using Btrfs<i class="fa fa-external-link-alt"></i></span>  </p>
-<p>这话怎么听着这么耳熟，隔壁Wayland是不是好多年前也说过要*&amp;&amp;%&amp;<em>￥%</em>&amp;……，真是不巧我还在用x11呢。。。</p>
-<p>现在在用Btrfs的大概也就Facebook，群晖，默认用Btrfs的发行版几乎就openSUSE，然后去年好像Fedora也把Btrfs作为默认了（可能）。</p>
-<h3 id="关于Btrfs性能不好"><a href="#关于Btrfs性能不好" class="headerlink" title="关于Btrfs性能不好"></a>关于Btrfs性能不好</h3><p>Btrfs性能不好的说法主要来源于跑分跑不过ext4等等。跑分这种事情很多时候也就图一乐，以下引用fc老师的话</p>
-<blockquote>
-<p>phoronix 測文件系統性能的最大問題在於容易讓讀者以為文件系統是左右存儲性能的關鍵，實際上文件系統只是夾在內存子系統和塊IO子系統中間的決策層，通常瓶頸不會在文件系統，除非文件系統過度簡化設計，對存儲性能影響更大的是別的層面的東西，按他們的方式測試文件系統只能測出一堆難以預計到的副作用的結果，沒法對文件系統優化提供可供參考的提示</p>
-</blockquote>
-<blockquote>
-<p>要測純讀寫做對比肯定不考慮 reflink 和透明壓縮，但是實際幹活的時候這些新特性很節省時間（</p>
-</blockquote>
-<p>当然Btrfs在重io的情况下桌面特别卡，那很有可能是quota的问题，把quota关掉吧，quota有已知的性能问题，尤其是在ssd上。（关了这个磁盘配额你就看不到快照大小、指定不了每个子卷的大小）</p>
-<h3 id="Copy-on-Write写时复制"><a href="#Copy-on-Write写时复制" class="headerlink" title="Copy-on-Write写时复制"></a>Copy-on-Write写时复制</h3><p>写时复制（COW）原理看起来好像很简单，但是实现起来一堆坑。我做6.S081的Lab的时候折腾COW快把我整麻了，从Lab4以后每次做完Lab之后不想写博客总结了，做完之后思绪混乱，没什么心情写笔记。</p>
-<h4 id="给数据库所在的目录关闭COW"><a href="#给数据库所在的目录关闭COW" class="headerlink" title="给数据库所在的目录关闭COW"></a>给数据库所在的目录关闭COW</h4><p>SSD会有写入放大的问题，这个现象在Btrfs上尤其严重。<br>不想和Btrfs和数据库斗智斗勇可以选择别的文件系统。</p>
-<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>如果用不到现代文件系统的那些功能，对于大多数用户直接去用ext4可能是一个更好的选择。然后忘了文件系统这回事吧，就像开头xkcd的漫画说的那样：<code>BUT I NOW </code></p>
-<h3 id="都要2022年了，Btrfs稳定了吗"><a href="#都要2022年了，Btrfs稳定了吗" class="headerlink" title="都要2022年了，Btrfs稳定了吗"></a>都要2022年了，Btrfs稳定了吗</h3><p>无可奉告。<br>平时用倒是能用，不过真出了问题</p>
-<h3 id="Btrfs挂了要怎么修"><a href="#Btrfs挂了要怎么修" class="headerlink" title="Btrfs挂了要怎么修"></a>Btrfs挂了要怎么修</h3><p><del>去群里找fc老师</del></p>
-<p>做好备份，真挂了把备份找回来。大多数修复软件几乎都不怎么支持Btrfs，你去电脑城找做修复的师傅人家也不会，自求多福吧。</p>
-<h3 id="RAID、子卷、分区问题"><a href="#RAID、子卷、分区问题" class="headerlink" title="RAID、子卷、分区问题"></a>RAID、子卷、分区问题</h3><p>之前用ext4等文件系统很多都习惯<code>/</code>，<code>/home</code>, <code>/var</code><br>Btrfs一般不分那么多区，而是用子卷。</p>
-<p>一般对<code>var</code>这样的目录单独建一个子卷，然后禁用COW</p>
-<p>Btrfs可以直接添加、删除设备、调整大小（增加和缩小都行，XFS暂时还不支持缩）</p>
-<h3 id="snapshot"><a href="#snapshot" class="headerlink" title="snapshot"></a>snapshot</h3><h4 id="要怎么查看snapshot的大小"><a href="#要怎么查看snapshot的大小" class="headerlink" title="要怎么查看snapshot的大小"></a>要怎么查看snapshot的大小</h4><p>查看snapshot大小需要打开quota，但是打开quota可能会有性能问题。</p>
-<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><span class="exturl" data-url="aHR0cHM6Ly9hcnhpdi5vcmcvcGRmLzE3MDcuMDg1MTQucGRm">Analyzing IO Amplification in Linux File Systems<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9sd24ubmV0L0FydGljbGVzLzYzODU0Ni8=">XFS: There and back … and there again?<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9mYXJzZWVyZmMubWUvemhzL2J0cmZzLXZzLXpmcy1kaWZmZXJlbmNlLWluLWltcGxlbWVudGluZy1zbmFwc2hvdHMuaHRtbA==">Btrfs vs ZFS 实现 snapshot 的差异<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9oYWJyLmNvbS9ydS9wb3N0LzQ3NjQxNC8=">Выявляем процессы с дисковой активностью в Linux<i class="fa fa-external-link-alt"></i></span>  一篇俄文的Write Amplification讨论  </p>
+<p>好吧这好像也不全算Docker的锅，罪魁祸首竟是dentry</p>
+<h2 id="dentry还我内存"><a href="#dentry还我内存" class="headerlink" title="dentry还我内存"></a>dentry还我内存</h2><p>发现是dentry的锅</p>
+<h2 id="Docker的一些替代品"><a href="#Docker的一些替代品" class="headerlink" title="Docker的一些替代品"></a>Docker的一些替代品</h2><p>说起来当时把那几台老的Ubuntu16.04和远古版本的</p>
+<p>Docker看起来简单但是坑真的不算少，要用好Docker（很多人是图方便才来用Docker的）</p>
+<p>如果只是日常使用为了装一些软件或依赖方便呢，装一个Archlinux显然更方便（这比搞懂Docker那一堆网络、layer、）</p>
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><span class="exturl" data-url="aHR0cHM6Ly93d3cuYXJkYW5sYWJzLmNvbS9ibG9nLzIwMjAvMDIvZG9ja2VyLWltYWdlcy1wYXJ0MS1yZWR1Y2luZy1pbWFnZS1zaXplLmh0bWw=">https://www.ardanlabs.com/blog/2020/02/docker-images-part1-reducing-image-size.html<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC80MzEzMzA4NQ==">https://zhuanlan.zhihu.com/p/43133085<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmFyc3RlcmN6LmNvbS9jZW50b3MtJUU3JUIzJUJCJUU3JUJCJTlGLXNsYWItZGVudHJ5LSVFOCVCRiU4NyVFOSVBQiU5OCVFNSVCQyU5NSVFOCVCNSVCNyVFNyVCMyVCQiVFNyVCQiU5RiVFNSU4RCVBMSVFOSVBMSVCRiVFNSU4OCU4NiVFNiU5RSU5MCVFNSVBNCU4NCVFNyU5MCU4Ni8=">https://blog.arstercz.com/centos-系统-slab-dentry-过高引起系统卡顿分析处理/<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9oYWNrZXJub29uLmNvbS9hbm90aGVyLXJlYXNvbi13aHkteW91ci1kb2NrZXItY29udGFpbmVycy1tYXktYmUtc2xvdy1kMzcyMDdkZWMyN2Y=">https://hackernoon.com/another-reason-why-your-docker-containers-may-be-slow-d37207dec27f<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vZ2FvZ2FvNjcvYXJ0aWNsZXMvMTU1NjgzNzguaHRtbA==">https://www.cnblogs.com/gaogao67/articles/15568378.html<i class="fa fa-external-link-alt"></i></span>  </p>
 
     </div>
 
@@ -342,22 +309,18 @@
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/fs/" rel="tag"><i class="fa fa-tag"></i> fs</a>
-              <a href="/tags/btrfs/" rel="tag"><i class="fa fa-tag"></i> btrfs</a>
+              <a href="/tags/Docker/" rel="tag"><i class="fa fa-tag"></i> Docker</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/build-linux-from-scratch/" rel="prev" title="Linux from Scratch 编译笔记">
-                  <i class="fa fa-chevron-left"></i> Linux from Scratch 编译笔记
+                <a href="/6-S081-lab-multithreading/" rel="prev" title="6.S081 Lab Multithreading 笔记">
+                  <i class="fa fa-chevron-left"></i> 6.S081 Lab Multithreading 笔记
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/reflink-hardlink-symlink/" rel="next" title="文件系统的Reflink">
-                  文件系统的Reflink <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>
