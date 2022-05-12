@@ -183,45 +183,11 @@ mucounteren    Could not fetch register &quot;mucounteren&quot;; remote failure 
 <h2 id="VSCode配置"><a href="#VSCode配置" class="headerlink" title="VSCode配置"></a>VSCode配置</h2><h3 id="代码提示和自动补全"><a href="#代码提示和自动补全" class="headerlink" title="代码提示和自动补全"></a>代码提示和自动补全</h3><p>自动补全插件推荐clangd（比Microsoft官方的那个c&#x2F;c++ extension好用）</p>
 <p>默认的库函数提示会告诉你找不到<code>kernel/kernel.h</code>，需要手动添加</p>
 <p><img src="/6.S081-VSCode-prepare-and-kernel-debugging/1626526305.png"></p>
-<h3 id="gdb调试"><a href="#gdb调试" class="headerlink" title="gdb调试"></a>gdb调试</h3><p>参照这篇博客设置<span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vS2F0eXVNYXJpc2FCbG9nL3AvMTM3Mjc1NjUuaHRtbA==">MIT 6.S081 xv6调试不完全指北<i class="fa fa-external-link-alt"></i></span>，改一改那个<code>launch.json</code>。</p>
-<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
-    <span class="token property">"version"</span><span class="token operator">:</span> <span class="token string">"0.2.0"</span><span class="token punctuation">,</span>
-    <span class="token property">"configurations"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-        <span class="token punctuation">&#123;</span>
-            <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"debug xv6"</span><span class="token punctuation">,</span>
-            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"cppdbg"</span><span class="token punctuation">,</span>
-            <span class="token property">"request"</span><span class="token operator">:</span> <span class="token string">"launch"</span><span class="token punctuation">,</span>
-            <span class="token property">"program"</span><span class="token operator">:</span> <span class="token string">"$&#123;workspaceFolder&#125;/kernel/kernel"</span><span class="token punctuation">,</span>
-            <span class="token property">"args"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-            <span class="token property">"stopAtEntry"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
-            <span class="token property">"cwd"</span><span class="token operator">:</span> <span class="token string">"$&#123;workspaceFolder&#125;"</span><span class="token punctuation">,</span>
-            <span class="token property">"miDebuggerServerAddress"</span><span class="token operator">:</span> <span class="token string">"211.83.111.224:26000"</span><span class="token punctuation">,</span>
-            <span class="token property">"miDebuggerPath"</span><span class="token operator">:</span> <span class="token string">"/usr/bin/gdb-multiarch"</span><span class="token punctuation">,</span>
-            <span class="token property">"environment"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-            <span class="token property">"externalConsole"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
-            <span class="token property">"MIMode"</span><span class="token operator">:</span> <span class="token string">"gdb"</span><span class="token punctuation">,</span>
-            <span class="token property">"setupCommands"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-                <span class="token punctuation">&#123;</span>
-                    <span class="token property">"description"</span><span class="token operator">:</span> <span class="token string">"pretty printing"</span><span class="token punctuation">,</span>
-                    <span class="token property">"text"</span><span class="token operator">:</span> <span class="token string">"-enable-pretty-printing"</span><span class="token punctuation">,</span>
-                    <span class="token property">"ignoreFailures"</span><span class="token operator">:</span> <span class="token boolean">true</span>
-                <span class="token punctuation">&#125;</span>
-            <span class="token punctuation">]</span><span class="token punctuation">,</span>
-            <span class="token property">"logging"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
-                <span class="token comment">// "engineLogging": true,</span>
-                <span class="token comment">// "programOutput": true,</span>
-            <span class="token punctuation">&#125;</span>
-        <span class="token punctuation">&#125;</span>
-    <span class="token punctuation">]</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>用clangd你需要一个<code>compile_commands.json</code>，我们可以安装bear，然后用bear生成<code>compile_commands.json</code></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> pacman -S bear
+bear -- <span class="token function">make</span> qemu<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<p>然后删掉<code>.gdbinit</code>里<code>target remote 127.0.0.1:26000</code></p>
-<p>然后其他的都跟这篇博客里的差不多，以<code>ls</code>为例：</p>
-<pre class="line-numbers language-gdb" data-language="gdb"><code class="language-gdb">-exec file user&#x2F;_ls<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p><img src="/6.S081-VSCode-prepare-and-kernel-debugging/1626579434.png"></p>
-<p>于是就可以并不太愉快的debug了。试了一下发现其实体验还没直接在gdb里面敲命令好，vscode的debugger跟IDE差距很大，鼠标点来点去可能都没有gdb直接敲命令舒服。</p>
-<p><strong>如果真想找一个好的图形化debugger推荐nemiver</strong></p>
+<p>然后clangd插件就可以正常的跳转和识别头文件了</p>
 <h3 id="使用clangd-format进行xv6代码风格的格式化"><a href="#使用clangd-format进行xv6代码风格的格式化" class="headerlink" title="使用clangd-format进行xv6代码风格的格式化"></a>使用clangd-format进行xv6代码风格的格式化</h3><p>有没有像Golang的go-fmt一样强制代码格式化的东西呢，有的，<span class="exturl" data-url="aHR0cHM6Ly9jbGFuZy5sbHZtLm9yZy9kb2NzL0NsYW5nRm9ybWF0Lmh0bWw=">clang format<i class="fa fa-external-link-alt"></i></span>。</p>
 <p>安装<code>clangd</code>插件，在VSCode的设置里面启用<code>format on save</code>，然后在根目录下新建<code>.clang-format</code>文件。每次<code>ctrl+s</code>的时候就可以像go-fmt插件那样格式化代码了。</p>
 <p>很遗憾的是，c&#x2F;c++的代码风格并没有一个官方的统一风格，各种风格争论不休。<br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3RvcnZhbGRzL2xpbnV4L2Jsb2IvbWFzdGVyLy5jbGFuZy1mb3JtYXQ=">Linux的format风格<i class="fa fa-external-link-alt"></i></span>我不太习惯，比如一个tab占8个空格。<br>下面是我改了改llvm风格的配置，跟6.828Lab的xv6风格不太一样，函数类型和函数一行，tab是4个空格（tab空两个看起来真的难受，早期显示屏小才这样子干，我觉得24寸以上显示器空四个才是合理的），括号换行和golang一样。（不然在go和c之间来回切换我要精神分裂了）</p>
@@ -247,12 +213,10 @@ mucounteren    Could not fetch register &quot;mucounteren&quot;; remote failure 
 <span class="token property">make:</span> <span class="token separator comment">***</span> <span class="token punctuation">[</span><span class="token operator">&lt;</span>builtin<span class="token operator">></span><span class="token operator">:</span> user<span class="token operator">/</span>pingpong<span class="token punctuation">.</span>o<span class="token punctuation">]</span> Error <span class="token number">1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>ps：如果你想要xv6Lab的风格，可以用Mozilla的风格改一改。</p>
-<h3 id="clion等IDE"><a href="#clion等IDE" class="headerlink" title="clion等IDE"></a>clion等IDE</h3><p>大多数时候用的VSCode，clion不怎么用。（不是我不想用，教研室那个七年前的老电脑用Jetbrains家的IDE实在是有点卡，而且JB还经常封你电邮箱，要用学生证照片去申请学生帐号）</p>
-<p>clion的配置可以参考<br><span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8xNjY0MTM2MDQ=">https://zhuanlan.zhihu.com/p/166413604<i class="fa fa-external-link-alt"></i></span></p>
 <h2 id="其他问题"><a href="#其他问题" class="headerlink" title="其他问题"></a>其他问题</h2><h3 id="gdb调试报错Cannot-access-memory-at-address"><a href="#gdb调试报错Cannot-access-memory-at-address" class="headerlink" title="gdb调试报错Cannot access memory at address"></a>gdb调试报错Cannot access memory at address</h3><p>我在Archlinux下用<code>riscv64-linux-gnu-gdb</code>调试会报<code>Cannot access memory at address 0x278</code></p>
 <p>本来以为是跟以前在ARM上内核地址随机化一样的问题，关了随机化还是不行，最后发现要在<code>.gdbinit.tmpl-riscv</code>加一条<code>set riscv use-compressed-breakpoints yes</code></p>
 <h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vS2F0eXVNYXJpc2FCbG9nL3AvMTM3Mjc1NjUuaHRtbA==">MIT 6.S081 xv6调试不完全指北<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9wZG9zLmNzYWlsLm1pdC5lZHUvNi44MjgvMjAyMC9sZWMvZ2RiX3NsaWRlcy5wZGY=">Using the GNU Debugger<i class="fa fa-external-link-alt"></i></span></p>
-<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3dhYnNjYWxlL3h2Ni1wdWJsaWM=">https://github.com/wabscale/xv6-public<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3dhYnNjYWxlL3h2Ni1wdWJsaWM=">https://github.com/wabscale/xv6-public<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3JpenNvdHRvL0JlYXI=">https://github.com/rizsotto/Bear<i class="fa fa-external-link-alt"></i></span></p>
 ]]></content>
       <categories>
         <category>Linux&amp;Unix</category>
@@ -472,7 +436,7 @@ mucounteren    Could not fetch register &quot;mucounteren&quot;; remote failure 
   <entry>
     <title>6.S081 Lab Multithreading 笔记</title>
     <url>/6-S081-lab-multithreading/</url>
-    <content><![CDATA[<p>实现一个用户态线程uthread，就照着xv6的内核态线程抄呗。怎么什么FUSE啊、UIO啊，什么东西都想往用户态搬啊，连RCU都有人想往用户态搬。这个跟go的</p>
+    <content><![CDATA[<p>实现一个用户态线程uthread，就照着xv6的内核态线程抄呗。怎么什么FUSE啊、UIO啊，什么东西都想往用户态搬啊，连RCU都有人想往用户态搬。</p>
 <span id="more"></span>
 
 <h2 id="xv6中的process"><a href="#xv6中的process" class="headerlink" title="xv6中的process"></a>xv6中的process</h2><h3 id="process的状态"><a href="#process的状态" class="headerlink" title="process的状态"></a>process的状态</h3><p>xv6的线程状态包括 UNUSED, USED, SLEEPING, RUNNABLE, RUNNING, ZOMBIE</p>
@@ -602,16 +566,16 @@ mucounteren    Could not fetch register &quot;mucounteren&quot;; remote failure 
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>这里swtch是保存并切换context。<code>swtch(&amp;c-&gt;context, &amp;p-&gt;context);</code>表示保存c的context, 加载p的context。我们直接看一下<code>swtch.S</code>的代码就明白了：</p>
-<pre class="line-numbers language-asm" data-language="asm"><code class="language-asm">.globl swtch
+<pre class="line-numbers language-armasm" data-language="armasm"><code class="language-armasm">.globl swtch
 swtch:
-        sd ra, 0(a0)
-        sd sp, 8(a0)
-        sd s0, 16(a0)
+        sd ra<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">(</span>a0<span class="token punctuation">)</span>
+        sd sp<span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">(</span>a0<span class="token punctuation">)</span>
+        sd s0<span class="token punctuation">,</span> <span class="token number">16</span><span class="token punctuation">(</span>a0<span class="token punctuation">)</span>
         .......
 
-        ld ra, 0(a1)
-        ld sp, 8(a1)
-        ld s0, 16(a1)
+        ld ra<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">(</span>a1<span class="token punctuation">)</span>
+        ld sp<span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">(</span>a1<span class="token punctuation">)</span>
+        ld s0<span class="token punctuation">,</span> <span class="token number">16</span><span class="token punctuation">(</span>a1<span class="token punctuation">)</span>
         .......
 
         ret<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
@@ -732,12 +696,333 @@ swtch:
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="Lab"><a href="#Lab" class="headerlink" title="Lab"></a>Lab</h2><p>这个Lab有点意思，实现可以直接照抄内核态线程，做一个naive的用户态线程</p>
-<h3 id="Uthread-switching-between-threads-moderate"><a href="#Uthread-switching-between-threads-moderate" class="headerlink" title="Uthread: switching between threads (moderate)"></a>Uthread: switching between threads (moderate)</h3><h3 id="Using-threads-moderate"><a href="#Using-threads-moderate" class="headerlink" title="Using threads (moderate)"></a>Using threads (moderate)</h3><p>这个就是学一下怎么用pthread（这个是在unix&#x2F;linux里面，不是在qemu里），简单加一个mutex锁就好了</p>
-<h3 id="Barrier"><a href="#Barrier" class="headerlink" title="Barrier"></a>Barrier</h3><p>这个也是在linux下面，练习一下条件变量</p>
+<h3 id="Uthread-switching-between-threads-moderate"><a href="#Uthread-switching-between-threads-moderate" class="headerlink" title="Uthread: switching between threads (moderate)"></a>Uthread: switching between threads (moderate)</h3><p>用户态线程的状态只有三种，FREE, RUNNING, RUNNABLE。状态机比较简单。<code>thread_init</code>初始化的时候状态设为RUNNING</p>
+<p>创建a,b,c三个用户态thread,然后每个线程打印一次后就执行<code>thread_yield</code>切换线程，并将当前线程的状态设置为RUNNABLE</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">thread_yield</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    current_thread<span class="token operator">-></span>state <span class="token operator">=</span> RUNNABLE<span class="token punctuation">;</span>
+    <span class="token function">thread_schedule</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后在线程结束的时候将状态置为FREE, <code>current_thread-&gt;state = FREE;</code>，调用</p>
+<p><code>thread_create</code>传进来的参数是一个函数指针（比如thread_a）, 我们把函数指针存入ra寄存器，用来做恢复。<code>thread_create</code>实现可以参考<code>kernel/proc.c</code>里面的<code>allcproc()</code></p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">thread_create</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token punctuation">(</span><span class="token operator">*</span>func<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">struct</span> <span class="token class-name">thread</span> <span class="token operator">*</span>t<span class="token punctuation">;</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>t <span class="token operator">=</span> all_thread<span class="token punctuation">;</span> t <span class="token operator">&lt;</span> all_thread <span class="token operator">+</span> MAX_THREAD<span class="token punctuation">;</span> t<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>t<span class="token operator">-></span>state <span class="token operator">==</span> FREE<span class="token punctuation">)</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    t<span class="token operator">-></span>state <span class="token operator">=</span> RUNNABLE<span class="token punctuation">;</span>
+    t<span class="token operator">-></span>thread_context<span class="token punctuation">.</span>ra <span class="token operator">=</span> <span class="token punctuation">(</span>uint64<span class="token punctuation">)</span>func<span class="token punctuation">;</span>
+    t<span class="token operator">-></span>thread_context<span class="token punctuation">.</span>sp <span class="token operator">=</span> t<span class="token operator">-></span>stack <span class="token operator">+</span> STACK_SIZE<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>我们把<code>kernel/proc.h</code>中的context抄过来</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">// Saved registers for user context switches.</span>
+<span class="token keyword">struct</span> <span class="token class-name">user_context</span> <span class="token punctuation">&#123;</span>
+  uint64 ra<span class="token punctuation">;</span>
+  uint64 sp<span class="token punctuation">;</span>
+
+  <span class="token comment">// callee-saved</span>
+  uint64 s0<span class="token punctuation">;</span>
+  uint64 s1<span class="token punctuation">;</span>
+  uint64 s2<span class="token punctuation">;</span>
+  uint64 s3<span class="token punctuation">;</span>
+  uint64 s4<span class="token punctuation">;</span>
+  uint64 s5<span class="token punctuation">;</span>
+  uint64 s6<span class="token punctuation">;</span>
+  uint64 s7<span class="token punctuation">;</span>
+  uint64 s8<span class="token punctuation">;</span>
+  uint64 s9<span class="token punctuation">;</span>
+  uint64 s10<span class="token punctuation">;</span>
+  uint64 s11<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">struct</span> <span class="token class-name">thread</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">char</span> stack<span class="token punctuation">[</span>STACK_SIZE<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">/* the thread's stack */</span>
+    <span class="token keyword">int</span> state<span class="token punctuation">;</span>              <span class="token comment">/* FREE, RUNNING, RUNNABLE */</span>
+    <span class="token keyword">struct</span> <span class="token class-name">user_context</span> thread_context<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后<code>user/uthread_switch.S</code>中的<code>thread_switch</code>照抄<code>kernel/swtch.S</code>实现状态切换，不过<code>thread_switch</code>这里的上下文只保存Callee-saved的寄存器就可以了，所以我们删掉<code>sd ra, 0(a0)</code>和<code>ld ra, 0(a1)</code></p>
+<p><strong>sp寄存器是callee寄存器，只有ra寄存器是caller寄存器</strong>，这个不能删，删了之后用户线程没法切换了！一开始记错了把sp寄存器也记成caller寄存器了，没输出调了好久</p>
+<pre class="line-numbers language-armasm" data-language="armasm"><code class="language-armasm"><span class="token operator">#</span> void thread_switch<span class="token punctuation">(</span>struct context <span class="token operator">*</span>old<span class="token punctuation">,</span> struct context <span class="token operator">*</span>new<span class="token punctuation">)</span><span class="token comment">;</span>
+thread_switch:
+    sd sp<span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">(</span>a0<span class="token punctuation">)</span>
+    sd s0<span class="token punctuation">,</span> <span class="token number">16</span><span class="token punctuation">(</span>a0<span class="token punctuation">)</span>
+    sd s1<span class="token punctuation">,</span> <span class="token number">24</span><span class="token punctuation">(</span>a0<span class="token punctuation">)</span>
+    sd s2<span class="token punctuation">,</span> <span class="token number">32</span><span class="token punctuation">(</span>a0<span class="token punctuation">)</span>
+    sd s3<span class="token punctuation">,</span> <span class="token number">40</span><span class="token punctuation">(</span>a0<span class="token punctuation">)</span>
+    sd s4<span class="token punctuation">,</span> <span class="token number">48</span><span class="token punctuation">(</span>a0<span class="token punctuation">)</span>
+    sd s5<span class="token punctuation">,</span> <span class="token number">56</span><span class="token punctuation">(</span>a0<span class="token punctuation">)</span>
+    sd s6<span class="token punctuation">,</span> <span class="token number">64</span><span class="token punctuation">(</span>a0<span class="token punctuation">)</span>
+    sd s7<span class="token punctuation">,</span> <span class="token number">72</span><span class="token punctuation">(</span>a0<span class="token punctuation">)</span>
+    sd s8<span class="token punctuation">,</span> <span class="token number">80</span><span class="token punctuation">(</span>a0<span class="token punctuation">)</span>
+    sd s9<span class="token punctuation">,</span> <span class="token number">88</span><span class="token punctuation">(</span>a0<span class="token punctuation">)</span>
+    sd s10<span class="token punctuation">,</span> <span class="token number">96</span><span class="token punctuation">(</span>a0<span class="token punctuation">)</span>
+    sd s11<span class="token punctuation">,</span> <span class="token number">104</span><span class="token punctuation">(</span>a0<span class="token punctuation">)</span>
+
+    ld sp<span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">(</span>a1<span class="token punctuation">)</span>
+    ld s0<span class="token punctuation">,</span> <span class="token number">16</span><span class="token punctuation">(</span>a1<span class="token punctuation">)</span>
+    ld s1<span class="token punctuation">,</span> <span class="token number">24</span><span class="token punctuation">(</span>a1<span class="token punctuation">)</span>
+    ld s2<span class="token punctuation">,</span> <span class="token number">32</span><span class="token punctuation">(</span>a1<span class="token punctuation">)</span>
+    ld s3<span class="token punctuation">,</span> <span class="token number">40</span><span class="token punctuation">(</span>a1<span class="token punctuation">)</span>
+    ld s4<span class="token punctuation">,</span> <span class="token number">48</span><span class="token punctuation">(</span>a1<span class="token punctuation">)</span>
+    ld s5<span class="token punctuation">,</span> <span class="token number">56</span><span class="token punctuation">(</span>a1<span class="token punctuation">)</span>
+    ld s6<span class="token punctuation">,</span> <span class="token number">64</span><span class="token punctuation">(</span>a1<span class="token punctuation">)</span>
+    ld s7<span class="token punctuation">,</span> <span class="token number">72</span><span class="token punctuation">(</span>a1<span class="token punctuation">)</span>
+    ld s8<span class="token punctuation">,</span> <span class="token number">80</span><span class="token punctuation">(</span>a1<span class="token punctuation">)</span>
+    ld s9<span class="token punctuation">,</span> <span class="token number">88</span><span class="token punctuation">(</span>a1<span class="token punctuation">)</span>
+    ld s10<span class="token punctuation">,</span> <span class="token number">96</span><span class="token punctuation">(</span>a1<span class="token punctuation">)</span>
+    ld s11<span class="token punctuation">,</span> <span class="token number">104</span><span class="token punctuation">(</span>a1<span class="token punctuation">)</span>
+
+	ret    <span class="token operator">/</span><span class="token operator">*</span> return to ra <span class="token operator">*</span><span class="token operator">/</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后在<code>thread_switch</code>里面直接调用<code>thread_switch((uint64)t, (uint64)current_thread);</code></p>
+<p>然后。。。报错了。调了一下午没找到哪出问题了，gdb打出来的调试信息看不出来。这个报错跟当初页表那个很像，debug的时候被误导了。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ uthread
+usertrap<span class="token punctuation">(</span><span class="token punctuation">)</span>: unexpected scause 0x000000000000000f <span class="token assign-left variable">pid</span><span class="token operator">=</span><span class="token number">3</span>
+            <span class="token assign-left variable">sepc</span><span class="token operator">=</span>0x0000000000000002 <span class="token assign-left variable">stval</span><span class="token operator">=</span>0xfffffffffffffff8<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>调了半天发现是我thread_switch的函数参数传错了，传进去的应该是context，寄存器a0是第一个参数，寄存器a1是参数，放的是寄存器的struct，然后按照地址偏移分别对应s0，s1等Callee寄存器的值</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token function">thread_switch</span><span class="token punctuation">(</span><span class="token punctuation">(</span>uint64<span class="token punctuation">)</span><span class="token operator">&amp;</span>t<span class="token operator">-></span>thread_context<span class="token punctuation">,</span> <span class="token punctuation">(</span>uint64<span class="token punctuation">)</span><span class="token operator">&amp;</span>current_thread<span class="token operator">-></span>thread_context<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>终于正常了</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c">$ uthread
+<span class="token number">310514718</span>thread_a started
+thread_b started
+thread_c started
+thread_c <span class="token number">0</span>
+thread_a <span class="token number">0</span>
+thread_b <span class="token number">0</span>
+thread_c <span class="token number">1</span>
+thread_a <span class="token number">1</span>
+thread_b <span class="token number">1</span>
+thread_c <span class="token number">2</span>
+thread_a <span class="token number">2</span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+thread_c <span class="token number">99</span>
+thread_a <span class="token number">99</span>
+thread_b <span class="token number">99</span>
+thread_c<span class="token operator">:</span> exit after <span class="token number">100</span>
+thread_a<span class="token operator">:</span> exit after <span class="token number">100</span>
+thread_b<span class="token operator">:</span> exit after <span class="token number">100</span>
+thread_schedule<span class="token operator">:</span> no runnable threads<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="Using-threads-moderate"><a href="#Using-threads-moderate" class="headerlink" title="Using threads (moderate)"></a>Using threads (moderate)</h3><p>这个就是学一下怎么用pthread（这个是在unix&#x2F;linux里面，不是在qemu里），练习一下加mutex锁。<code>ph.c</code>里面有一个并发不安全的哈希表，就是一个简单的取模，然后放到相应的bucket里面，bucket中有重复的key就依次加到链表的后面。实现就和leetcode 706 设计哈希映射的官方题解差不多。这里bucket数量是5，所以很容易发生冲突，缓解hash冲突的一般做法是bucket去一个更大的质数，或者设计其他更好的hash函数减少hash冲突，或者我们不要链表，用开放定址或者rehash去解决hash冲突</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token variable">$make</span> ph
+$./ph <span class="token number">1</span>
+<span class="token number">100000</span> puts, <span class="token number">5.690</span> seconds, <span class="token number">17573</span> puts/second
+<span class="token number">0</span>: <span class="token number">0</span> keys missing
+<span class="token number">100000</span> gets, <span class="token number">5.491</span> seconds, <span class="token number">18211</span> gets/second<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>我们把线程开多一点</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$./ph <span class="token number">10</span>
+<span class="token number">100000</span> puts, <span class="token number">0.333</span> seconds, <span class="token number">300217</span> puts/second
+<span class="token number">2</span>: <span class="token number">63594</span> keys missing
+<span class="token number">7</span>: <span class="token number">63594</span> keys missing
+<span class="token number">1</span>: <span class="token number">63594</span> keys missing
+<span class="token number">9</span>: <span class="token number">63594</span> keys missing
+<span class="token number">5</span>: <span class="token number">63594</span> keys missing
+<span class="token number">8</span>: <span class="token number">63594</span> keys missing
+<span class="token number">6</span>: <span class="token number">63594</span> keys missing
+<span class="token number">4</span>: <span class="token number">63594</span> keys missing
+<span class="token number">0</span>: <span class="token number">63594</span> keys missing
+<span class="token number">3</span>: <span class="token number">63594</span> keys missing
+<span class="token number">1000000</span> gets, <span class="token number">5.871</span> seconds, <span class="token number">170320</span> gets/second<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后我们把线程开到100，现在打字都卡了, 成千上万个 key missng。这里的hashmap在并发写的时候会冲突，就像go的map一样并发写的时候会直接报<code>fatal error: concurrent map writes</code>。读是没有关系的，但是<code>ph.c</code>第26行那个insert在写的时候是向entry（存key和value的链表后面加），并发写会把同时正在插入的覆盖掉。</p>
+<p>Go map in actions 中有一个非常简单的给map加锁的例子</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">var</span> counter <span class="token operator">=</span> <span class="token keyword">struct</span><span class="token punctuation">&#123;</span>
+    sync<span class="token punctuation">.</span>RWMutex
+    m <span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token builtin">int</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">&#123;</span>m<span class="token punctuation">:</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span><span class="token punctuation">&#125;</span>
+
+counter<span class="token punctuation">.</span><span class="token function">RLock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+n <span class="token operator">:=</span> counter<span class="token punctuation">.</span>m<span class="token punctuation">[</span><span class="token string">"some_key"</span><span class="token punctuation">]</span>
+counter<span class="token punctuation">.</span><span class="token function">RUnlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"some_key:"</span><span class="token punctuation">,</span> n<span class="token punctuation">)</span>
+
+counter<span class="token punctuation">.</span><span class="token function">Lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+counter<span class="token punctuation">.</span>m<span class="token punctuation">[</span><span class="token string">"some_key"</span><span class="token punctuation">]</span><span class="token operator">++</span>
+counter<span class="token punctuation">.</span><span class="token function">Unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>我们仿照go的map写入加<code>sync.Mutex</code>，给insert加互斥锁。</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token class-name">pthread_mutex_t</span> lock<span class="token punctuation">;</span> <span class="token comment">// declare a lock</span>
+
+<span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token operator">*</span><span class="token function">put_thread</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>xa<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> n <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">long</span><span class="token punctuation">)</span>xa<span class="token punctuation">;</span> <span class="token comment">// thread number</span>
+    <span class="token keyword">int</span> b <span class="token operator">=</span> NKEYS <span class="token operator">/</span> nthread<span class="token punctuation">;</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> b<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">pthread_mutex_lock</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">put</span><span class="token punctuation">(</span>keys<span class="token punctuation">[</span>b <span class="token operator">*</span> n <span class="token operator">+</span> i<span class="token punctuation">]</span><span class="token punctuation">,</span> n<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">pthread_mutex_unlock</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后就没有missing了</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token variable">$make</span> ph
+$./ph <span class="token number">2</span>
+<span class="token number">100000</span> puts, <span class="token number">5.522</span> seconds, <span class="token number">18111</span> puts/second
+<span class="token number">1</span>: <span class="token number">0</span> keys missing
+<span class="token number">0</span>: <span class="token number">0</span> keys missing
+<span class="token number">200000</span> gets, <span class="token number">5.628</span> seconds, <span class="token number">35535</span> gets/second<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>但是这样有一个问题，速度没什么优势，把nthread开到10，puts用时6.094 seconds，还不如单线程。<code>make grade</code>的时候只能跑过<code>ph_safe</code>，没法通过<code>ph_fast</code>的。</p>
+<p>想要速度我们需要更细粒度的锁，我们仿照go的concurrent-map那样分片加锁的方案在insert插入的时候给对应的bucket加锁。（go的sync.Map的那个加锁比较适合读多写少的方案，这里大量写入优势不大）这里我们只要对每个bucket单独加锁就可以了，问题转换为对entry链表加锁，我们用NBUCKET把小锁分别对NBUCKET个entry链表加锁。</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token class-name">pthread_mutex_t</span> lock<span class="token punctuation">[</span>NBUCKET<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// declare a lock</span>
+
+<span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">put</span><span class="token punctuation">(</span><span class="token keyword">int</span> key<span class="token punctuation">,</span> <span class="token keyword">int</span> value<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> i <span class="token operator">=</span> key <span class="token operator">%</span> NBUCKET<span class="token punctuation">;</span>
+
+    <span class="token comment">// is the key already present?</span>
+    <span class="token keyword">struct</span> <span class="token class-name">entry</span> <span class="token operator">*</span>e <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>e <span class="token operator">=</span> table<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span> e <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">;</span> e <span class="token operator">=</span> e<span class="token operator">-></span>next<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>e<span class="token operator">-></span>key <span class="token operator">==</span> key<span class="token punctuation">)</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// update the existing key.</span>
+        e<span class="token operator">-></span>value <span class="token operator">=</span> value<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// the new is new.</span>
+        <span class="token function">pthread_mutex_lock</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>lock<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">insert</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> value<span class="token punctuation">,</span> <span class="token operator">&amp;</span>table<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> table<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">pthread_mutex_lock</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>lock<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">pthread_mutex_init</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>lock<span class="token punctuation">[</span>NBUCKET<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$./ph <span class="token number">10</span>
+<span class="token number">100000</span> puts, <span class="token number">0.684</span> seconds, <span class="token number">146180</span> puts/second
+<span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>这样就足以跑过<code>ph_fast</code>的测试了（其实如果想偷鸡直接将NBUCKET改成一个大点的质数减少一下hash冲突就能用大锁跑过测试）</p>
+<p>还有更细粒度的加锁方案，就是对链表（entry）的节点加锁，不过通常设计比较好的hashmap的拉链，链表不会很长。这里就不这么加了。</p>
+<p>还有一种链表并发的方案就是rcu，不过这个是在内核态实现的，想要在userspace模仿一个有点难。</p>
+<h3 id="Barrier"><a href="#Barrier" class="headerlink" title="Barrier"></a>Barrier</h3><p>这个也是在Unix&#x2F;linux真机下面，练习一下条件变量。这个barrier是用<code>pthread_cond</code>实现的，<code>a point in an application at which all participating threads must wait until all other participating threads reach that point too. </code></p>
+<p>让执行完的线程wait(睡眠)，然后面足条件的时候调用signal唤醒，这里全部唤醒用broadcast就好了。</p>
+<p>注意使用条件变量的时候需要加锁，参考Three Easy Piecies第30章。某些情况下signal可以不加锁，但是wait必须要加锁。<code>hold the lock when calling signal</code>，不然会发生race，书里给了一个例子：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">thr_exit</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  done <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+  <span class="token function">Pthread_cond_signal</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>c<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">void</span> <span class="token function">thr_join</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>done <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">Pthread_cond_wait</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>c<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这个时候如果一个thread执行<code>thr_join</code>，满足done为0，开始wait睡眠，但是在判断完if到执行wait睡眠的期间，<code>thr_exit()</code>开始执行唤醒全部全部线程，那么这个thread执行wait就会一直sleep醒不过来了（书里面是用的parent和child的例子）</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">barrier</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// Block until all threads have called barrier() and</span>
+    <span class="token function">pthread_mutex_lock</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>bstate<span class="token punctuation">.</span>barrier_mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    bstate<span class="token punctuation">.</span>nthread<span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>bstate<span class="token punctuation">.</span>nthread <span class="token operator">&lt;</span> nthread<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">pthread_cond_wait</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>bstate<span class="token punctuation">.</span>barrier_cond<span class="token punctuation">,</span> <span class="token operator">&amp;</span>bstate<span class="token punctuation">.</span>barrier_mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span> 
+    <span class="token function">pthread_mutex_unlock</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>bstate<span class="token punctuation">.</span>barrier_mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 这个锁也要加上，不然唤醒的时候如果有线程睡眠会睡死</span>
+    <span class="token function">pthread_mutex_lock</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>bstate<span class="token punctuation">.</span>barrier_mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>bstate<span class="token punctuation">.</span>nthread <span class="token operator">==</span> nthread<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        bstate<span class="token punctuation">.</span>nthread <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        bstate<span class="token punctuation">.</span>round<span class="token operator">++</span><span class="token punctuation">;</span>
+        <span class="token function">pthread_cond_broadcast</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>bstate<span class="token punctuation">.</span>barrier_cond<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">pthread_mutex_unlock</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>bstate<span class="token punctuation">.</span>barrier_mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这样<code>./barrier 100</code>就pass了。如果我们不加mutex锁，那么<code>./barrier 100</code>是会一直卡在那里结束不了的。如果我们执行strace看一下<code>strace ./barrier 100</code>，会发现卡在这个地方</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token function">futex</span><span class="token punctuation">(</span><span class="token number">0x7f0a8b7a1910</span><span class="token punctuation">,</span> FUTEX_WAIT_BITSET<span class="token operator">|</span>FUTEX_CLOCK_REALTIME<span class="token punctuation">,</span> <span class="token number">219673</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> FUTEX_BITSET_MATCH_ANY<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token operator">?</span> <span class="token function">ERESTARTSYS</span> <span class="token punctuation">(</span>To be restarted <span class="token keyword">if</span> SA_RESTART is set<span class="token punctuation">)</span>
+<span class="token operator">--</span><span class="token operator">-</span> SIGWINCH <span class="token punctuation">&#123;</span>si_signo<span class="token operator">=</span>SIGWINCH<span class="token punctuation">,</span> si_code<span class="token operator">=</span>SI_KERNEL<span class="token punctuation">&#125;</span> <span class="token operator">--</span><span class="token operator">-</span>
+<span class="token function">futex</span><span class="token punctuation">(</span><span class="token number">0x7f0a8b7a1910</span><span class="token punctuation">,</span> FUTEX_WAIT_BITSET<span class="token operator">|</span>FUTEX_CLOCK_REALTIME<span class="token punctuation">,</span> <span class="token number">219673</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> FUTEX_BITSET_MATCH_ANY<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>用<code>valgrind --tool=helgrind ./barrier 2</code>检查了一下，应该这样也是可以的，都加到一把锁里面</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">barrier</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// Block until all threads have called barrier() and</span>
+    <span class="token function">pthread_mutex_lock</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>bstate<span class="token punctuation">.</span>barrier_mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    bstate<span class="token punctuation">.</span>nthread<span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>bstate<span class="token punctuation">.</span>nthread <span class="token operator">&lt;</span> nthread<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">pthread_cond_wait</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>bstate<span class="token punctuation">.</span>barrier_cond<span class="token punctuation">,</span> <span class="token operator">&amp;</span>bstate<span class="token punctuation">.</span>barrier_mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span> 
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>bstate<span class="token punctuation">.</span>nthread <span class="token operator">==</span> nthread<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        bstate<span class="token punctuation">.</span>nthread <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        bstate<span class="token punctuation">.</span>round<span class="token operator">++</span><span class="token punctuation">;</span>
+        <span class="token function">pthread_cond_broadcast</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>bstate<span class="token punctuation">.</span>barrier_cond<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">pthread_mutex_unlock</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>bstate<span class="token punctuation">.</span>barrier_mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>这次看题目本来以为很简单的，用户态thread就照着内核线程抄一个呗，剩下两个就是用一下pthread和锁呗。然后写起来debug就花了很久的时间，对寄存器不太熟，频繁翻车。然后折腾了两天才整出来</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">make</span> grade
+uthread: OK <span class="token punctuation">(</span><span class="token number">2</span>.5s<span class="token punctuation">)</span> 
+<span class="token operator">==</span> Test answers-thread.txt <span class="token operator">==</span> answers-thread.txt: OK 
+<span class="token operator">==</span> Test ph_safe <span class="token operator">==</span> make<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>: Entering directory <span class="token string">'/home/zhixi/codes/xv6-labs-2021'</span>
+gcc -o ph -g -O2 -DSOL_THREAD -DLAB_THREAD notxv6/ph.c -pthread
+make<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>: Leaving directory <span class="token string">'/home/zhixi/codes/xv6-labs-2021'</span>
+ph_safe: OK <span class="token punctuation">(</span><span class="token number">8</span>.0s<span class="token punctuation">)</span> 
+<span class="token operator">==</span> Test ph_fast <span class="token operator">==</span> make<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>: Entering directory <span class="token string">'/home/zhixi/codes/xv6-labs-2021'</span>
+make<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>: <span class="token string">'ph'</span> is up to date.
+make<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>: Leaving directory <span class="token string">'/home/zhixi/codes/xv6-labs-2021'</span>
+ph_fast: OK <span class="token punctuation">(</span><span class="token number">19</span>.7s<span class="token punctuation">)</span> 
+<span class="token operator">==</span> Test barrier <span class="token operator">==</span> make<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>: Entering directory <span class="token string">'/home/zhixi/codes/xv6-labs-2021'</span>
+gcc -o barrier -g -O2 -DSOL_THREAD -DLAB_THREAD notxv6/barrier.c -pthread
+make<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>: Leaving directory <span class="token string">'/home/zhixi/codes/xv6-labs-2021'</span>
+barrier: OK <span class="token punctuation">(</span><span class="token number">2</span>.7s<span class="token punctuation">)</span> 
+<span class="token operator">==</span> Test <span class="token function">time</span> <span class="token operator">==</span> 
+time: OK 
+Score: <span class="token number">60</span>/60<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><span class="exturl" data-url="aHR0cHM6Ly9wZG9zLmNzYWlsLm1pdC5lZHUvNi5TMDgxLzIwMjAvbGFicy90aHJlYWQuaHRtbA==">https://pdos.csail.mit.edu/6.S081/2020/labs/thread.html<i class="fa fa-external-link-alt"></i></span>   </p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9xdWVzdGlvbnMvOTQxMC9ob3ctZG8teW91LXBhc3MtYS1mdW5jdGlvbi1hcy1hLXBhcmFtZXRlci1pbi1j">How do you pass a function as a parameter in C?<i class="fa fa-external-link-alt"></i></span>  </p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9nby5kZXYvYmxvZy9tYXBz">Go Map in Actions<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2dvbGFuZy9nby9ibG9iL21hc3Rlci9zcmMvc3luYy9tYXAuZ28=">https://github.com/golang/go/blob/master/src/sync/map.go<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9wa2cuZ28uZGV2L3N5bmM/dXRtX3NvdXJjZT1nb2RvYyNNYXA=">https://pkg.go.dev/sync?utm_source=godoc#Map<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9jb2xvYnUuY29tLzIwMTcvMDcvMTEvZGl2ZS1pbnRvLXN5bmMtTWFwLw==">Go 1.9 sync.Map揭秘<i class="fa fa-external-link-alt"></i></span> 鸟窝大大写的sync.Mutex介绍  </p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9wYWdlcy5jcy53aXNjLmVkdS9+cmVtemkvT1NURVAv">Operating Systems Three Easy Pices<i class="fa fa-external-link-alt"></i></span>，中文就是那个蓝皮的操作系统导论<br>第29章，讲并发链表、并发队列和并发散列表<br>第20章，讲条件变量  </p>
 ]]></content>
+      <categories>
+        <category>Linux&amp;Unix</category>
+      </categories>
       <tags>
         <tag>6.S081</tag>
         <tag>thread</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>6.S081 Lab Networking 笔记，完结撒花</title>
+    <url>/6-S081-lab-network-driver/</url>
+    <content><![CDATA[<p>这个Lab就是补全一个DMA收发的驱动, 不要被Lab标的Hard难度吓到，我感觉这是6.S081这几个Lab最简单的几个Lab之一。写个驱动都不用上板子调试，没啥意思，怎么感觉比当年你电PPT吹水课程微嵌的实验大作业给FPGA的板子写个驱动还水。。。<br>最后一个Lab放水，愉快的完结撒花。等等，这个Lab还有附加内容，实现一个TCP&#x2F;UDP协议栈。。。</p>
+<span id="more"></span>
+
+<h2 id="Lab内容"><a href="#Lab内容" class="headerlink" title="Lab内容"></a>Lab内容</h2><p>做起来这个Lab挺没意思的，e1000这种远古网卡</p>
+<blockquote>
+<p>Your job is to complete e1000_transmit() and e1000_recv(), both in kernel&#x2F;e1000.c, so that the driver can transmit and receive packets</p>
+</blockquote>
+<p>这个好办，我们直接扒拉e1000的手册就可以了。</p>
+<h2 id="完结撒花"><a href="#完结撒花" class="headerlink" title="完结撒花"></a>完结撒花</h2><p>又是讨厌的驱动，勾起了我当年痛苦的。上一次写驱动的大作业还是本科的时候，当时换了两块xilinx的阴间开发板全都是坏的，害得我还以为是我自己写的有问题，找了一周没找到bug。本来是抱着人又麻了的</p>
+<p>好久之前写的Lab，由于懒癌发作一直没有写笔记，现在把Lab的笔记补上。这个Lab比较玩具，没啥好讲的。驱动和网络单独拿出来都是一个大坑，水平有限不多讲了。</p>
+<p>这个Lab的Optional Challenges比较麻烦，其中最后两个challenge是：</p>
+<blockquote>
+<p>Implement a UDP server for xv6. (moderate)<br>Implement a minimal TCP stack and download a web page. (hard)</p>
+</blockquote>
+<p>由于懒癌发作我当然又是没做，我的菜鸡计网水平和对TCP的熟悉程度应该一时半会做不出来。听说有cs144这门课就是实现一个TCP协议栈，等研三有空了回头把这个做了把这个大坑填上。</p>
+<p>6.S081这个课从去年7月开始，断断续续做了将近一年把Lab做了，xv6的源码看了不到一半。xv6作为一个教学的系统，挺精简挺小巧，能比较顺利的看下去。像linux源码那种看不太动，拿着赵炯那本《linux内核完全注释》看早期内核也比较麻烦。xv6-book写的真的好，推荐做Lab和读xv6源码的时候好好把xv6-book看一下：</p>
+<p><em>xv6: a simple, Unix-like teaching operating system</em><br>作者Russ Cox, Frans Kaashoek, Robert Morris 应该都听过，Russ Cox是争议比较大的go现任掌门，喜欢在go的issue区开喷，Morris是6.824这门课的主讲，就是那个蠕虫病毒的作者。</p>
+<p>一开始我没在意，觉得这本书就是跟手册一样，偶尔翻一翻。后来发现这本册子写的是真的好，几乎没有一点废话，比课程讲义好多了。早应该看这个的。</p>
+<p>更新：不等研三了，直接上CS144了。之前没事喜欢摆弄nmap、wireshark这些东西瞎玩，却没好好看过TCP的细节，再这样不思进取下去就要沦为脚本小子了</p>
+]]></content>
+      <categories>
+        <category>Linux&amp;Unix</category>
+      </categories>
+      <tags>
+        <tag>6.S081</tag>
+        <tag>network</tag>
       </tags>
   </entry>
   <entry>
@@ -2060,6 +2345,12 @@ The command is executed with a ‘-’ prepended to its argv[0] string.<span ari
       </tags>
   </entry>
   <entry>
+    <title>本站评论由valine更换为DisqusJS</title>
+    <url>/change-comment-to-disqusjs/</url>
+    <content><![CDATA[<p>由于近日不少采用valine作为评论系统网站的遭到几千个垃圾评论刷屏攻击，外加valine存在的安全隐患问题，放弃好看的valine，换用DisqusJS。<br>utteranc继续使用。</p>
+]]></content>
+  </entry>
+  <entry>
     <title>新年开箱一个 Canokey Pigeon</title>
     <url>/canokey-pigeon-unboxing/</url>
     <content><![CDATA[<p>迟来的开箱，本来以为快递1号当天能到的，结果晚了一点。不管怎么说，元旦快落！</p>
@@ -2105,12 +2396,6 @@ The command is executed with a ‘-’ prepended to its argv[0] string.<span ari
       <tags>
         <tag>canokey</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>本站评论由valine更换为DisqusJS</title>
-    <url>/change-comment-to-disqusjs/</url>
-    <content><![CDATA[<p>由于近日不少采用valine作为评论系统网站的遭到几千个垃圾评论刷屏攻击，外加valine存在的安全隐患问题，放弃好看的valine，换用DisqusJS。<br>utteranc继续使用。</p>
-]]></content>
   </entry>
   <entry>
     <title>上线一个Spring Cloud的课程管理服务项目</title>
@@ -2477,6 +2762,150 @@ debtap -p XXX.deb <span class="token comment"># -p 选项生成PKGBUILD</span>
       <tags>
         <tag>AUR</tag>
         <tag>Archlinux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CS144 Lab0 笔记：环境配置和热身</title>
+    <url>/cs144-note/</url>
+    <content><![CDATA[<p>写习惯了go之后c&#x2F;cpp水平直线下滑，每三行都有一行忘了加分号。麻了，全靠clang-tidy和报错clang报错救我狗命</p>
+<span id="more"></span>
+
+<h2 id="关于cs144"><a href="#关于cs144" class="headerlink" title="关于cs144"></a>关于cs144</h2><p>cs144的Lab是实现一个TCP协议栈，可惜是用C++写的，而且那个代码风格我也不怎么喜欢。我C++水平很菜，基本写东西都是C with Class 风格的。而且我不怎么喜欢 Modern C++， 所以不会按照Lab的要求（比如用迭代器代替循环、不使用malloc&#x2F;free之类的东西、使用智能指针等）</p>
+<h3 id="做了几个Lab之后的更新"><a href="#做了几个Lab之后的更新" class="headerlink" title="做了几个Lab之后的更新"></a>做了几个Lab之后的更新</h3><p>做了三个Lab了回来说一下，这个课程的讲解和Lab的参考材料非常不详细，不像6.S081那样有不少Hints，各种讲解和助教的大作业FAQ什么的也把容易踩坑的地方都提到了。于是CS144的Lab做起来就很麻，颇有一种<code>fly bitch!</code>的感觉。</p>
+<p><img src="/cs144-note/1652191785.png"></p>
+<p>我做这个东西人麻了的程度甚至比6.824那一堆race条件debug找不出来还要麻。6.824实现Raft好好看论文和资料，大概知道Raft的状态转移和实现思路，剩下的是漫长的debug和race条件抓虫。这个不一样，这个好多思路和细节Lab根本不告诉你，然后实现的时候脑子是懵的，经常不知道干嘛，完全没有思路。然后翻了半天《TCP&#x2F;IP详解：卷2》，然后各种乱找资料</p>
+<p>而且golang我用的比c++，尤其是modern c++熟太多了。然后这个Lab的各种命名也不像xv6那种unix和POSIX风格的精简</p>
+<h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><p>Archlinux下装这些包很简单，直接把<span class="exturl" data-url="aHR0cHM6Ly9zdGFuZm9yZC5lZHUvY2xhc3MvY3MxNDQvdm1faG93dG8vdm0taG93dG8tYnlvLmh0bWw=">BYO Linux installation<i class="fa fa-external-link-alt"></i></span> 列出来的包用pacman装一遍就好了</p>
+<p>需要注意的是NetworkManger要配置一下忽略实验用的虚拟设备。</p>
+<h2 id="Lab-0"><a href="#Lab-0" class="headerlink" title="Lab 0"></a>Lab 0</h2><p>前面几个Lab是用一下telnet和nc玩，跳过（nc用的不多，我还是习惯nmap）</p>
+<h3 id="webget"><a href="#webget" class="headerlink" title="webget"></a>webget</h3><p>准备环境：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> clone https://github.com/cs144/sponge 
+<span class="token builtin class-name">cd</span> sponge
+<span class="token function">mkdir</span> build
+<span class="token builtin class-name">cd</span> build
+<span class="token comment"># 我比较喜欢用clang，报错比较舒服</span>
+<span class="token assign-left variable">CC</span><span class="token operator">=</span>clang <span class="token assign-left variable">CXX</span><span class="token operator">=</span>clang++ cmake <span class="token punctuation">..</span>
+<span class="token function">make</span> -j12<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这个很简单，直接照着<code>TCPSocket</code>的文档改就可以了， 见 <span class="exturl" data-url="aHR0cHM6Ly9jczE0NC5naXRodWIuaW8vZG9jL2xhYjAvY2xhc3NfdF9jX3Bfc29ja2V0Lmh0bWw=">https://cs144.github.io/doc/lab0/class_t_c_p_socket.html<i class="fa fa-external-link-alt"></i></span></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">get_URL</span><span class="token punctuation">(</span><span class="token keyword">const</span> string <span class="token operator">&amp;</span>host<span class="token punctuation">,</span> <span class="token keyword">const</span> string <span class="token operator">&amp;</span>path<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// Your code here.</span>
+    TCPSocket sock1<span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+    sock1<span class="token punctuation">.</span><span class="token function">connect</span><span class="token punctuation">(</span><span class="token function">Address</span><span class="token punctuation">(</span>host<span class="token punctuation">,</span> <span class="token string">"http"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    sock1<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token string">"GET "</span> <span class="token operator">+</span> path <span class="token operator">+</span> <span class="token string">" HTTP/1.1\r\nHost: "</span> <span class="token operator">+</span> host <span class="token operator">+</span> <span class="token string">"\r\n\r\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    sock1<span class="token punctuation">.</span><span class="token function">shutdown</span><span class="token punctuation">(</span>SHUT_WR<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span>sock1<span class="token punctuation">.</span><span class="token function">eof</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        cout <span class="token operator">&lt;&lt;</span> sock1<span class="token punctuation">.</span><span class="token function">read</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    sock1<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后编译并测试</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">make</span> webget
+<span class="token function">make</span> check_webget<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h3 id="An-in-memory-reliable-byte-stream"><a href="#An-in-memory-reliable-byte-stream" class="headerlink" title="An in-memory reliable byte stream"></a>An in-memory reliable byte stream</h3><p>实现一个内存中有序的字节流。这个算是开胃菜，TCP是在不可靠的网络下实现有序的字节流。这里不要求并发和加锁，所以只要一个非常简单的队列+buffer缓冲就可以了。</p>
+<blockquote>
+<p>Your byte stream is for use in a single thread—you don’t have to worry about concurrent writers&#x2F;readers, locking, or race conditions.</p>
+</blockquote>
+<p>看到这句话之前我还以为这个Lab要折腾menory barrier那些东西，这样就好办了。</p>
+<p>第一反应是整一个像kqueue那样的循环队列，可是这个Lab的C++风格他不让我用指针，习惯了c风格好难受。算了算了上stl吧。字节流那就直接用队列吧。然后这个类里面再加上是容量（capacity），写入字节，读取字节、是否结束，就差不多了。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">ByteStream</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">private</span><span class="token operator">:</span>
+    <span class="token comment">// Your code here -- add private members as necessary.</span>
+    std<span class="token double-colon punctuation">::</span>deque<span class="token operator">&lt;</span><span class="token keyword">char</span><span class="token operator">></span> _buffer<span class="token punctuation">;</span>
+    size_t _capacity<span class="token punctuation">;</span>
+    <span class="token keyword">bool</span> _input_end<span class="token punctuation">;</span>
+    size_t _byte_written<span class="token punctuation">;</span>
+    size_t _byte_read<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后我们分别实现这几个类的方法，write好办，注意一下长度就行了。这里要求编码规范是Modern C++, 但是我Modern C++ 不熟，也没怎么用迭代器，蠢蠢的扔了好多for循环之类的东西</p>
+<p>write就是一个简单的队尾出队，然后<code>_byte_written</code>计数增加</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">size_t <span class="token class-name">ByteStream</span><span class="token double-colon punctuation">::</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token keyword">const</span> string <span class="token operator">&amp;</span>data<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>_input_end <span class="token operator">==</span> <span class="token boolean">true</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    size_t _data_length <span class="token operator">=</span> data<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>_data_length <span class="token operator">+</span> _buffer<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">></span> _capacity<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        _data_length <span class="token operator">=</span> _capacity <span class="token operator">-</span> _buffer<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    _byte_written <span class="token operator">+=</span> _data_length<span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>size_t i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> _data_length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        _buffer<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>data<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> _data_length<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>peek好办，直接拼成字符串就行了</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// peek的时候输出是一个string</span>
+<span class="token comment">//! \param[in] len bytes will be copied from the output side of the buffer</span>
+string <span class="token class-name">ByteStream</span><span class="token double-colon punctuation">::</span><span class="token function">peek_output</span><span class="token punctuation">(</span><span class="token keyword">const</span> size_t len<span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token punctuation">&#123;</span>
+    size_t _length <span class="token operator">=</span> len<span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>_length <span class="token operator">></span> _buffer<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        _length <span class="token operator">=</span> _buffer<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    string <span class="token function">str</span><span class="token punctuation">(</span>_buffer<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> _buffer<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> _length<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> str<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><code>pop_output</code>也简单，注意一下长度然后从队列头部pop就好了</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// buffer里面弹出长度为len的字节，需要考虑len > _buffer.size()的情况</span>
+<span class="token comment">//! \param[in] len bytes will be removed from the output side of the buffer</span>
+<span class="token keyword">void</span> <span class="token class-name">ByteStream</span><span class="token double-colon punctuation">::</span><span class="token function">pop_output</span><span class="token punctuation">(</span><span class="token keyword">const</span> size_t len<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    size_t _data_length <span class="token operator">=</span> len<span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>_data_length <span class="token operator">></span> _buffer<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        _data_length <span class="token operator">=</span> _buffer<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>size_t i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> _data_length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        _buffer<span class="token punctuation">.</span><span class="token function">pop_front</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        _byte_read<span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后read就是先<code>peek_output</code>再<code>pop_output</code>，</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 写端的read，注意需要pop_ouput, 读出来之后需要pop的</span>
+std<span class="token double-colon punctuation">::</span>string <span class="token class-name">ByteStream</span><span class="token double-colon punctuation">::</span><span class="token function">read</span><span class="token punctuation">(</span><span class="token keyword">const</span> size_t len<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    string output <span class="token operator">=</span> <span class="token function">peek_output</span><span class="token punctuation">(</span>len<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">pop_output</span><span class="token punctuation">(</span>len<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> output<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后这一堆方法就直接返回相应的值就好了</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token class-name">ByteStream</span><span class="token double-colon punctuation">::</span><span class="token function">end_input</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> _input_end <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+
+<span class="token keyword">bool</span> <span class="token class-name">ByteStream</span><span class="token double-colon punctuation">::</span><span class="token function">input_ended</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> _input_end<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+
+size_t <span class="token class-name">ByteStream</span><span class="token double-colon punctuation">::</span><span class="token function">buffer_size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> _buffer<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+
+<span class="token keyword">bool</span> <span class="token class-name">ByteStream</span><span class="token double-colon punctuation">::</span><span class="token function">buffer_empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> _buffer<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+
+<span class="token keyword">bool</span> <span class="token class-name">ByteStream</span><span class="token double-colon punctuation">::</span><span class="token function">eof</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> _input_end<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+
+size_t <span class="token class-name">ByteStream</span><span class="token double-colon punctuation">::</span><span class="token function">bytes_written</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> _byte_written<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+
+size_t <span class="token class-name">ByteStream</span><span class="token double-colon punctuation">::</span><span class="token function">bytes_read</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> _byte_read<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+
+size_t <span class="token class-name">ByteStream</span><span class="token double-colon punctuation">::</span><span class="token function">remaining_capacity</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> _capacity <span class="token operator">-</span> _buffer<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>emmmmm, 然后<code>make check_lab0</code>有两个test没过，看一下报错<code>Failure message:        The ByteStream should have had eof equal to 0 but instead it was 1</code></p>
+<p>哦，忘了设置EOF了。不对我设了，那是哪出问题了。。。找了五分钟发现EOF要加上队列empty的条件，我是傻逼</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">bool</span> <span class="token class-name">ByteStream</span><span class="token double-colon punctuation">::</span><span class="token function">eof</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> _input_end <span class="token operator">&amp;&amp;</span> <span class="token function">buffer_empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>这样测试就过了</p>
+<h2 id="链接和参考材料"><a href="#链接和参考材料" class="headerlink" title="链接和参考材料"></a>链接和参考材料</h2><p><span class="exturl" data-url="aHR0cHM6Ly9jczE0NC5naXRodWIuaW8v">https://cs144.github.io/<i class="fa fa-external-link-alt"></i></span> 课程主页<br>还有视频录像不过我不喜欢看视频，没看，直接上的Lab<br>《TCP&#x2F;IP详解 卷2》 这个有不少实现的细节, Lab讲的不详细我基本上都是跑到这里面翻的<br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Z6eXo5OTkvQW5hbHlzaXNfVENQX2luX0xpbnV4">Linux 4.4.0内核源码分析——TCP实现<i class="fa fa-external-link-alt"></i></span> 太感动了这个资料，注释极为详细（不过linux协议栈的实现很复杂，适合没思路的时候偶尔翻翻找找灵感，这个Lab的实现一般都很Naive，差别很大不适合照抄）  </p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3NhbWluaWlyL2xldmVsLWlw">level-ip<i class="fa fa-external-link-alt"></i></span> 一个用户态玩具TCP&#x2F;IP协议栈，c写的<br>我最开始先看的这个，对TCP&#x2F;IP协议栈有个大概的概念，感觉这个看过一遍有了点头绪，CS144的Lab指导看完对整个TCP&#x2F;IP协议栈是啥样的没啥头绪<br><span class="exturl" data-url="aHR0cHM6Ly93d3cuc2FtaW5paXIuY29tL2xldHMtY29kZS10Y3AtaXAtc3RhY2stMS1ldGhlcm5ldC1hcnAv">Let’s code a TCP&#x2F;IP stack, 1: Ethernet &amp; ARP<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cuc2FtaW5paXIuY29tL2xldHMtY29kZS10Y3AtaXAtc3RhY2stMi1pcHY0LWljbXB2NC8=">Let’s code a TCP&#x2F;IP stack, 2: IPv4 &amp; ICMPv4<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cuc2FtaW5paXIuY29tL2xldHMtY29kZS10Y3AtaXAtc3RhY2stMy10Y3AtaGFuZHNoYWtlLw==">Let’s code a TCP&#x2F;IP stack, 3: TCP Basics &amp; Handshake<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cuc2FtaW5paXIuY29tL2xldHMtY29kZS10Y3AtaXAtc3RhY2stNC10Y3AtZGF0YS1mbG93LXNvY2tldC1hcGkv">Let’s code a TCP&#x2F;IP stack, 4: TCP Data Flow &amp; Socket API<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cuc2FtaW5paXIuY29tL2xldHMtY29kZS10Y3AtaXAtc3RhY2stNS10Y3AtcmV0cmFuc21pc3Npb24v">Let’s code a TCP&#x2F;IP stack, 5: TCP Retransmission<i class="fa fa-external-link-alt"></i></span>  </p>
+<p>然后是对写这门课的Lab可能帮助不是特别大的书和资料(资料本身其实都还不错)</p>
+<p>《TCP&#x2F;IP详解 卷1》 这个主要讲概念，看完一遍之后还是不知道怎么实现，如果是为了做Lab找资料推荐直接翻卷2<br>《计算机网络: 自顶向下方法》这个书好是好，但是讲的太简略了，看完想实现没啥头绪，还得去TCP&#x2F;IP协议卷2翻细节，这本书的协议栈实现讲的是<code>4.4BSD-Lite</code>，<br>《深入理解LINUX网络技术内幕》大量的章节都在讲网络驱动，和这门课的Lab的TCP协议栈的内容关系不是特别大<br>《Effective Modern C++ 中文版》 这本书我研一买的，彩色印刷，包装很烂。我当时就想看看modern c++，然后看到一半彻底对C++喜欢不起来了。当时我唯一的想法就是不要把有限的生命浪费在一个充斥着语言律师的语言上。那个时候还在看《The Little Schemer》，看那些优雅连贯的递归的奇妙感觉，和同时在看的c++的繁杂形成了鲜明的对比。也是在那会，被C++坑的多了突然喜欢上go了。  </p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnBhY2thZ2VjbG91ZC5pby9lbmcvMjAxNy8wMi8wNi9tb25pdG9yaW5nLXR1bmluZy1saW51eC1uZXR3b3JraW5nLXN0YWNrLXNlbmRpbmctZGF0YQ==">Monitoring and Tuning the Linux Networking Stack: Sending Data<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnBhY2thZ2VjbG91ZC5pby9lbmcvMjAxNi8wNi8yMi9tb25pdG9yaW5nLXR1bmluZy1saW51eC1uZXR3b3JraW5nLXN0YWNrLXJlY2VpdmluZy1kYXRhLw==">Monitoring and Tuning the Linux Networking Stack: Receiving Data<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL2FydGh1cmNoaWFvLmFydC9ibG9nL3R1bmluZy1zdGFjay10eC16aC8=">[译] Linux 网络栈监控和调优：发送数据（2017）<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL2FydGh1cmNoaWFvLmFydC9ibG9nL3R1bmluZy1zdGFjay1yeC16aC8=">[译] Linux 网络栈监控和调优：接收数据（2016）<i class="fa fa-external-link-alt"></i></span>  这两篇文章适合做完Lab再看，很容易迷失在细节里面  </p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cucmZjLWVkaXRvci5vcmcvcmZjL3JmYzExODAudHh0">A TCP&#x2F;IP Tutorial<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL2FydGh1cmNoaWFvLmFydC9ibG9nL3JmYzExODAtYS10Y3AtaXAtdHV0b3JpYWwtemgv">[译] RFC 1180：朴素 TCP&#x2F;IP 教程（1991）<i class="fa fa-external-link-alt"></i></span><br>我一开始还以为是实现一个TCP协议栈的，点开才发现很老的一个简短介绍，大概相当于TCP&#x2F;IP卷1的太长不看版。其实讲的还可以，没有一点废话，不过对Lab没啥帮助。</p>
+]]></content>
+      <categories>
+        <category>Linux&amp;Unix</category>
+      </categories>
+      <tags>
+        <tag>network</tag>
+        <tag>cs144</tag>
       </tags>
   </entry>
   <entry>
@@ -3845,8 +4274,8 @@ p <span class="token operator">=</span> x
       </categories>
       <tags>
         <tag>6.S081</tag>
-        <tag>Linux</tag>
         <tag>debug</tag>
+        <tag>Linux</tag>
         <tag>kernel</tag>
       </tags>
   </entry>
@@ -5181,6 +5610,213 @@ $ psql -h 127.0.0.1 -d doccano -U doccano -p 5432 # 注意你的host，数据库
       </tags>
   </entry>
   <entry>
+    <title>Linux新一代音视频服务Pipewire尝鲜</title>
+    <url>/pipewire/</url>
+    <content><![CDATA[<p>2021年9月更新：<br>听说fedora都上Pipiwire了，正好这几天有点空，那就试试吧</p>
+<span id="more"></span>
+
+<p>Pipewire是红帽造的新一代音视频轮子，主要是用来取代PulseAudio、jack还有gstreams什么的。<br><strong>据说</strong>延迟补偿还不错，<strong>据说</strong>能统一音视频框架还兼容PulseAudio和Jack，据说是朝着专业级音效去的。据说支持Wayland和平板，据说支持Flatpak之类的容器内使用，据说有类似PolKit的权限管理，不需要像PulseAudio那样新建音频用户组和添加用户了。。。。</p>
+<blockquote>
+<p>It provides a low-latency, graph based processing engine on top of audio and video devices that can be used to support the use cases currently handled by both pulseaudio and JACK. PipeWire was designed with a powerful security model that makes interacting with audio and video devices from containerized applications easy, with supporting Flatpak applications being the primary goal. Alongside Wayland and Flatpak we expect PipeWire to provide a core building block for the future of Linux application development.</p>
+</blockquote>
+<p>都是据说啊，被Wayland骗了一次之后我已经不敢信这些宣传了，先试试实际效果再说。</p>
+<p>当然这个目前貌似只正经适配了GNOME和Fedora，不过据说兼容PulseAudio，Arch上的坑已经有人踩了好久了，现在还有点小问题，不过可以考虑上了。<br>昨天刚把Arch和笔记本的EndeavourOS更了python 3.9，除了autojump出了点小问题外一切正常。索性直接上Pipewire看看吧，反正笔记本那个全损音质也跟没有一样，换了说不定能抢救一下。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> pacman -S pipewire<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>要替代PulseAudio和Jack装这两个包<code>pipewire-pulse</code>、<code>pipewire-jack-dropin</code>。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yay -S pipewire-jack-dropin pipewire-pulse<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>然后systemd设置一下（archwiki说蓝牙设备需要手动设置一下，编辑<code>/etc/pipewire/pipewire.conf</code>，我手头没蓝牙耳机就不弄了）</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl <span class="token builtin class-name">enable</span> --user pipewire-pulse<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>然后退出登录或重启。</p>
+<p>运行<code>pactl info</code>，如果看到</p>
+<pre class="line-numbers language-log" data-language="log"><code class="language-log"><span class="token property">Server Name:</span> PulseAudio <span class="token operator">(</span>on PipeWire <span class="token number">0.3.17</span><span class="token operator">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>说明正常。</p>
+<h3 id="蓝牙设备"><a href="#蓝牙设备" class="headerlink" title="蓝牙设备"></a>蓝牙设备</h3><p>感谢室友赞助的一个索尼蓝牙音箱用于测试</p>
+<p>pipewire自带了蓝牙的模块，不需要像PulseAudio那样安装<code>pulseaudio-bluetooth</code>之类的包</p>
+<p>安装了pipewire-pulse之后编辑<code>/etc/pipewire/pipewire.conf</code>在<code>exec /usr/bin/pipewire-media-session</code>后面加上<code>-e bluez5</code>就可以使用了。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">exec</span> /usr/bin/pipewire-media-session -e bluez5<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="卸载"><a href="#卸载" class="headerlink" title="卸载"></a>卸载</h2><p>换回PulseAudio或者Jack可以用这个<span class="exturl" data-url="aHR0cHM6Ly9naXRsYWIuZnJlZWRlc2t0b3Aub3JnL3BpcGV3aXJlL3BpcGV3aXJlLy0vc25pcHBldHMvMTE2NA==">脚本<i class="fa fa-external-link-alt"></i></span></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> /usr/lib64/
+
+<span class="token function">sudo</span> <span class="token function">rm</span> /usr/lib64/libpulse-mainloop-glib.so.0.999.0
+<span class="token function">sudo</span> <span class="token function">rm</span> /usr/lib64/libpulse-simple.so.0.999.0
+<span class="token function">sudo</span> <span class="token function">rm</span> /usr/lib64/libpulse.so.0.999.0
+
+<span class="token function">sudo</span> <span class="token function">rm</span> /usr/lib64/libjack.so.0.999.0
+<span class="token function">sudo</span> <span class="token function">rm</span> /usr/lib64/libjacknet.so.0.999.0
+<span class="token function">sudo</span> <span class="token function">rm</span> /usr/lib64/libjackserver.so.0.999.0
+
+<span class="token function">sudo</span> ldconfig<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>用pacman包管理器装的就</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl disable pipewire-pulse --user
+systemctl disable pipewire --user
+yay -Rs pipewire-pulse
+yay -S pulseaudio<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="更新一点实测"><a href="#更新一点实测" class="headerlink" title="更新一点实测"></a>更新一点实测</h2><h3 id="人耳效果和使用体验"><a href="#人耳效果和使用体验" class="headerlink" title="人耳效果和使用体验"></a>人耳效果和使用体验</h3><p>昨天回到宿舍，发现笔记本的EndeavourOS更新python 3.9<br> Optimus-manager 出问题了，好在很快解决了。<br>然后在工具人室友的帮助下测试了绿联的外接声卡一块、某大法耳机一个音响一个，傻多戴显示器自带小音箱一个，均工作正常。</p>
+<p><img src="/pipewire/1607053618.png"><br><img src="/pipewire/1607053601.png"></p>
+<p>两种音质人耳都听不出差别，室友把两段音频放到Adobe Audition也看不出什么大区别</p>
+<p>笔记本自带外放在KDE的设置中从其他音频播放设备切换过去之后出现没有声音的状况，经检查其实是有的，只是非常小，将声音调整到最大还是几乎要被笔记本的风扇声音盖住（这貌似不是pipewire的锅，），重启后外放音量恢复正常。<br>除了笔记本自带外放，在笔记本上音频切换KDE设置都没有出现卡死的状况，，声音也播放正常，没出现切换之后没声了的状况。</p>
+<h3 id="面板参数"><a href="#面板参数" class="headerlink" title="面板参数"></a>面板参数</h3><p>笔记本使用原来的PulseAudio详情：</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">Server String</span><span class="token punctuation">:</span> /run/user/1000/pulse/native
+<span class="token key atrule">Library Protocol Version</span><span class="token punctuation">:</span> <span class="token number">34</span>
+<span class="token key atrule">Server Protocol Version</span><span class="token punctuation">:</span> <span class="token number">34</span>
+<span class="token key atrule">Is Local</span><span class="token punctuation">:</span> yes
+<span class="token key atrule">Client Index</span><span class="token punctuation">:</span> <span class="token number">16</span>
+<span class="token key atrule">Tile Size</span><span class="token punctuation">:</span> <span class="token number">65472</span>
+<span class="token key atrule">User Name</span><span class="token punctuation">:</span> zjk
+<span class="token key atrule">Host Name</span><span class="token punctuation">:</span> zjk<span class="token punctuation">-</span><span class="token number">7591</span>
+<span class="token key atrule">Server Name</span><span class="token punctuation">:</span> pulseaudio
+<span class="token key atrule">Server Version</span><span class="token punctuation">:</span> <span class="token number">14.0</span>
+<span class="token key atrule">Default Sample Specification</span><span class="token punctuation">:</span> s16le 2ch 44100Hz
+<span class="token key atrule">Default Channel Map</span><span class="token punctuation">:</span> front<span class="token punctuation">-</span>left<span class="token punctuation">,</span>front<span class="token punctuation">-</span>right
+<span class="token key atrule">Default Sink</span><span class="token punctuation">:</span> alsa_output.pci<span class="token punctuation">-</span>0000_00_1f.3<span class="token punctuation">-</span>platform<span class="token punctuation">-</span>skl_hda_dsp_generic.HiFi__hw_sofhdadsp__sink
+<span class="token key atrule">Default Source</span><span class="token punctuation">:</span> combined.monitor
+<span class="token key atrule">Cookie</span><span class="token punctuation">:</span> 94e6<span class="token punctuation">:</span>e6bf<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>更换pipewire-pulse之后：</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">Server String</span><span class="token punctuation">:</span> /run/user/1000/pulse/native
+<span class="token key atrule">Library Protocol Version</span><span class="token punctuation">:</span> <span class="token number">34</span>
+<span class="token key atrule">Server Protocol Version</span><span class="token punctuation">:</span> <span class="token number">34</span>
+<span class="token key atrule">Is Local</span><span class="token punctuation">:</span> yes
+<span class="token key atrule">Client Index</span><span class="token punctuation">:</span> <span class="token number">69</span>
+<span class="token key atrule">Tile Size</span><span class="token punctuation">:</span> <span class="token number">65472</span>
+<span class="token key atrule">User Name</span><span class="token punctuation">:</span> zjk
+<span class="token key atrule">Host Name</span><span class="token punctuation">:</span> zjk<span class="token punctuation">-</span><span class="token number">7591</span>
+<span class="token key atrule">Server Name</span><span class="token punctuation">:</span> PulseAudio (on PipeWire 0.3.17)
+<span class="token key atrule">Server Version</span><span class="token punctuation">:</span> 14.0.0
+<span class="token key atrule">Default Sample Specification</span><span class="token punctuation">:</span> float32le 2ch 48000Hz
+<span class="token key atrule">Default Channel Map</span><span class="token punctuation">:</span> front<span class="token punctuation">-</span>left<span class="token punctuation">,</span>front<span class="token punctuation">-</span>right
+<span class="token key atrule">Default Sink</span><span class="token punctuation">:</span> <span class="token key atrule">alsa_output.pci-0000:00:1f.3-platform-skl_hda_dsp_generic.HiFi</span><span class="token punctuation">:</span> hw<span class="token punctuation">:</span>sofhdadsp<span class="token punctuation">,</span><span class="token key atrule">5</span><span class="token punctuation">:</span> sink
+<span class="token key atrule">Default Source</span><span class="token punctuation">:</span> <span class="token key atrule">alsa_input.pci-0000:00:1f.3-platform-skl_hda_dsp_generic.HiFi</span><span class="token punctuation">:</span> <span class="token key atrule">hw:sofhdadsp</span><span class="token punctuation">:</span> source
+<span class="token key atrule">Cookie</span><span class="token punctuation">:</span> 6242<span class="token punctuation">:</span><span class="token number">4425</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>看起来参数是好了一点，实测听不出来。</p>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>据说pipewire音视频延迟低了，手头没有专业设备没法测。其他的混响、均衡、采样手头没有专业设备也测不出来。</p>
+<p>视频的话，浏览器HTML5播放器和本地VLC能正常播放。笔记本播放youtube4k视频外接4k显示器硬解没有大问题。VLC播放用N卡（笔记本的1650）解码也没有问题，驱动正常。</p>
+<p>其他的视频方面和屏幕共享之类的功能暂时还没有测试。我也找不到熟悉视频的工具人了，等找到了再说吧，自己瞎测估计也测不出什么来。</p>
+<h2 id="体验"><a href="#体验" class="headerlink" title="体验"></a>体验</h2><h3 id="音质"><a href="#音质" class="headerlink" title="音质"></a>音质</h3><p><code>pw-cli</code>显示的台式机面板参数</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ pw-cli info <span class="token number">0</span>
+        id: <span class="token number">0</span>
+        permissions: rwxm
+        type: PipeWire:Interface:Core/3
+        cookie: <span class="token number">653542227</span>
+        user-name: <span class="token string">"zjk"</span>
+        host-name: <span class="token string">"zjk-allseries"</span>
+        version: <span class="token string">"0.3.17"</span>
+        name: <span class="token string">"pipewire-0"</span>
+*       properties:
+*               core.name <span class="token operator">=</span> <span class="token string">"pipewire-0"</span>
+*               context.profile.modules <span class="token operator">=</span> <span class="token string">"none"</span>
+*               core.daemon <span class="token operator">=</span> <span class="token string">"true"</span>
+*               link.max-buffers <span class="token operator">=</span> <span class="token string">"16"</span>
+*               default.clock.rate <span class="token operator">=</span> <span class="token string">"48000"</span>
+*               default.clock.quantum <span class="token operator">=</span> <span class="token string">"1024"</span>
+*               default.clock.min-quantum <span class="token operator">=</span> <span class="token string">"32"</span>
+*               default.clock.max-quantum <span class="token operator">=</span> <span class="token string">"8192"</span>
+*               default.video.width <span class="token operator">=</span> <span class="token string">"640"</span>
+*               default.video.height <span class="token operator">=</span> <span class="token string">"480"</span>
+*               default.video.rate.num <span class="token operator">=</span> <span class="token string">"25"</span>
+*               default.video.rate.denom <span class="token operator">=</span> <span class="token string">"1"</span>
+*               mem.allow-mlock <span class="token operator">=</span> <span class="token string">"true"</span>
+*               cpu.max-align <span class="token operator">=</span> <span class="token string">"32"</span>
+*               object.id <span class="token operator">=</span> <span class="token string">"0"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>教研室的Arch台式机的老声卡接耳机和外接绿联声卡接耳机看不出什么大的区别。<br>Arch开Virtualbox里的win7能用，但是音质不知道为什么变差了特别多。 </p>
+<p>只有笔记本外放音质确实好了一点，我的笔记本外放能听出差别的那种，然而还是比win10差了不少（这个没有参考价值，我的笔记本Realtek驱动太阴间了）。<br>据说延迟低了，这个听不出来，手头上也没有专业设备。  </p>
+<p>其他的等我的校交响乐团的工具人室友回来了再说。  </p>
+<h3 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><p>目前使用的问题大概有：</p>
+<ol>
+<li><code>systemctl status --user pipewire-pulse</code>报错</li>
+</ol>
+<pre class="line-numbers language-log" data-language="log"><code class="language-log">● <span class="token domain constant">pipewire-pulse.service</span> <span class="token operator">-</span> PipeWire PulseAudio
+     <span class="token property">Loaded:</span> loaded <span class="token operator">(</span><span class="token file-path string">/usr/lib/systemd/user/pipewire-pulse.service</span><span class="token operator">;</span> enabled<span class="token operator">;</span> vendor preset<span class="token operator">:</span> enabled<span class="token operator">)</span>
+     <span class="token property">Active:</span> active <span class="token operator">(</span>running<span class="token operator">)</span> since Thu <span class="token date number">2020-12-03</span> <span class="token time number">17:10:09</span> CST<span class="token operator">;</span> <span class="token number">12min</span> ago
+<span class="token property">TriggeredBy:</span> ● <span class="token domain constant">pipewire-pulse.socket</span>
+   <span class="token property">Main PID:</span> <span class="token number">1787</span> <span class="token operator">(</span>pipewire<span class="token operator">-</span>pulse<span class="token operator">)</span>
+     <span class="token property">CGroup:</span> <span class="token file-path string">/user.slice/user-1000.slice/user@1000.service/app.slice/pipewire-pulse.service</span>
+             └─<span class="token number">1787</span> <span class="token file-path string">/usr/bin/pipewire-pulse</span>
+
+<span class="token number">12</span>月 <span class="token number">03</span> <span class="token time number">17:17:02</span> zjk<span class="token operator">-</span>allseries pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1787</span><span class="token punctuation">]</span><span class="token operator">:</span> core <span class="token number">0x55fc6c39e410</span><span class="token operator">:</span> proxy <span class="token number">0x55fc6c39e410</span> id<span class="token operator">:</span><span class="token number">0</span><span class="token operator">:</span> bound<span class="token operator">:</span><span class="token operator">-</span><span class="token number">1</span> seq<span class="token operator">:</span><span class="token number">1272</span> res<span class="token operator">:</span><span class="token operator">-</span><span class="token number">32</span> <span class="token operator">(</span>Broken pipe<span class="token operator">)</span> msg<span class="token operator">:</span><span class="token string">"connection error"</span>
+<span class="token number">12</span>月 <span class="token number">03</span> <span class="token time number">17:17:25</span> zjk<span class="token operator">-</span>allseries pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1787</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x55fc6c30c300</span><span class="token operator">:</span> <span class="token punctuation">[</span>Google Chrome<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">42</span> <span class="token operator">(</span>FLUSH_PLAYBACK_STREAM<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">168</span> error<span class="token operator">:</span><span class="token number">5</span> <span class="token operator">(</span>No such file or directory<span class="token operator">)</span>
+<span class="token number">12</span>月 <span class="token number">03</span> <span class="token time number">17:17:25</span> zjk<span class="token operator">-</span>allseries pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1787</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x55fc6c30c300</span><span class="token operator">:</span> <span class="token punctuation">[</span>Google Chrome<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">41</span> <span class="token operator">(</span>CORK_PLAYBACK_STREAM<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">169</span> error<span class="token operator">:</span><span class="token number">5</span> <span class="token operator">(</span>No such file or directory<span class="token operator">)</span>
+<span class="token number">12</span>月 <span class="token number">03</span> <span class="token time number">17:17:26</span> zjk<span class="token operator">-</span>allseries pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1787</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x55fc6c30c300</span><span class="token operator">:</span> <span class="token punctuation">[</span>Google Chrome<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">41</span> <span class="token operator">(</span>CORK_PLAYBACK_STREAM<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">170</span> error<span class="token operator">:</span><span class="token number">5</span> <span class="token operator">(</span>No such file or directory<span class="token operator">)</span>
+<span class="token number">12</span>月 <span class="token number">03</span> <span class="token time number">17:19:16</span> zjk<span class="token operator">-</span>allseries pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1787</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x55fc6c3deb80</span><span class="token operator">:</span> <span class="token punctuation">[</span>code<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">18</span> <span class="token operator">(</span>PLAY_SAMPLE<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">3</span> error<span class="token operator">:</span><span class="token number">5</span> <span class="token operator">(</span>No such file or directory<span class="token operator">)</span>
+<span class="token number">12</span>月 <span class="token number">03</span> <span class="token time number">17:19:16</span> zjk<span class="token operator">-</span>allseries pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1787</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x55fc6c3deb80</span><span class="token operator">:</span> <span class="token punctuation">[</span>code<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">18</span> <span class="token operator">(</span>PLAY_SAMPLE<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">4</span> error<span class="token operator">:</span><span class="token number">5</span> <span class="token operator">(</span>No such file or directory<span class="token operator">)</span>
+<span class="token number">12</span>月 <span class="token number">03</span> <span class="token time number">17:19:16</span> zjk<span class="token operator">-</span>allseries pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1787</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x55fc6c3deb80</span><span class="token operator">:</span> <span class="token punctuation">[</span>code<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">18</span> <span class="token operator">(</span>PLAY_SAMPLE<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">5</span> error<span class="token operator">:</span><span class="token number">5</span> <span class="token operator">(</span>No such file or directory<span class="token operator">)</span>
+<span class="token number">12</span>月 <span class="token number">03</span> <span class="token time number">17:19:17</span> zjk<span class="token operator">-</span>allseries pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1787</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x55fc6c3deb80</span><span class="token operator">:</span> <span class="token punctuation">[</span>code<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">18</span> <span class="token operator">(</span>PLAY_SAMPLE<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">6</span> error<span class="token operator">:</span><span class="token number">5</span> <span class="token operator">(</span>No such file or directory<span class="token operator">)</span>
+<span class="token number">12</span>月 <span class="token number">03</span> <span class="token time number">17:19:18</span> zjk<span class="token operator">-</span>allseries pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1787</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x55fc6c3deb80</span><span class="token operator">:</span> <span class="token punctuation">[</span>code<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">18</span> <span class="token operator">(</span>PLAY_SAMPLE<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">7</span> error<span class="token operator">:</span><span class="token number">5</span> <span class="token operator">(</span>No such file or directory<span class="token operator">)</span>
+<span class="token number">12</span>月 <span class="token number">03</span> <span class="token time number">17:19:18</span> zjk<span class="token operator">-</span>allseries pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1787</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x55fc6c3deb80</span><span class="token operator">:</span> <span class="token punctuation">[</span>code<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">18</span> <span class="token operator">(</span>PLAY_SAMPLE<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">8</span> error<span class="token operator">:</span><span class="token number">5</span> <span class="token operator">(</span>No such file or directory<span class="token operator">)</span>
+<span class="token separator comment">***</span>
+<span class="token number">12</span>月 <span class="token number">03</span> <span class="token time number">18:58:02</span> zjk<span class="token operator">-</span>allseries pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1787</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x55fc6c37c6f0</span><span class="token operator">:</span> <span class="token punctuation">[</span>VirtualBox<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">23</span> <span class="token operator">(</span>GET_SOURCE_INFO<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">249</span> error<span class="token operator">:</span><span class="token number">5</span> <span class="token operator">(</span>No such file or directory<span class="token operator">)</span>
+<span class="token number">12</span>月 <span class="token number">03</span> <span class="token time number">19:00:16</span> zjk<span class="token operator">-</span>allseries pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1787</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x55fc6c37c6f0</span><span class="token operator">:</span> <span class="token punctuation">[</span>VirtualBox<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">23</span> <span class="token operator">(</span>GET_SOURCE_INFO<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">376</span> error<span class="token operator">:</span><span class="token number">5</span> <span class="token operator">(</span>No such file or directory<span class="token operator">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>不过貌似都不影响使用</p>
+<ol start="2">
+<li>KDE调节音量的按钮换了之后经常卡死（KDE下面整个任务栏都卡死了），恢复之后调节音量无效</li>
+</ol>
+<p><img src="/pipewire/1606991672.png"></p>
+<ol start="3">
+<li>KDE音频切换设置偶尔卡死</li>
+</ol>
+<p>下图这个</p>
+<p><img src="/pipewire/1606992266.png"><br><img src="/pipewire/1606992430.png"></p>
+<p>点终止之后整个plasma桌面都无了</p>
+<p><img src="/pipewire/1606992508.png"></p>
+<ol start="4">
+<li><p>上图中的Build-in Audio切换之后耳机没有声音</p>
+</li>
+<li><p>切换外放麦克风和耳机之后再切回来没声了</p>
+</li>
+<li><p>有几个人之前说virtualbox会冲突，我这暂时没遇到</p>
+</li>
+<li><p>2021.2更新后再次出问题了,<code>pw-cli info 0</code>显示</p>
+</li>
+</ol>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">Error: <span class="token string">"failed to connect: Host is down"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>检查了一下发现systemd daemon不知道怎么没了。</p>
+<pre class="line-numbers language-none"><code class="language-none">Unit pipewire.service could not be found.
+Unit pipewire-pulse.service could not be found.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>执行<code>systemctl enable pipewire --user</code>后重启还是找不到</p>
+<p><code>systemctl status pipewire-pulse --user</code></p>
+<p>报错：</p>
+<pre class="line-numbers language-log" data-language="log"><code class="language-log">● <span class="token domain constant">pipewire-pulse.service</span> <span class="token operator">-</span> PipeWire PulseAudio
+     <span class="token property">Loaded:</span> loaded <span class="token operator">(</span><span class="token file-path string">/usr/lib/systemd/user/pipewire-pulse.service</span><span class="token operator">;</span> enabled<span class="token operator">;</span> vendor preset<span class="token operator">:</span> enabled<span class="token operator">)</span>
+     <span class="token property">Active:</span> active <span class="token operator">(</span>running<span class="token operator">)</span> since Sun <span class="token date number">2021-02-14</span> <span class="token time number">10:03:07</span> CST<span class="token operator">;</span> <span class="token number">12min</span> ago
+<span class="token property">TriggeredBy:</span> ● <span class="token domain constant">pipewire-pulse.socket</span>
+   <span class="token property">Main PID:</span> <span class="token number">1168</span> <span class="token operator">(</span>pipewire<span class="token operator">-</span>pulse<span class="token operator">)</span>
+     <span class="token property">CGroup:</span> <span class="token file-path string">/user.slice/user-1000.slice/user@1000.service/app.slice/pipewire-pulse.service</span>
+             └─<span class="token number">1168</span> <span class="token file-path string">/usr/bin/pipewire-pulse</span>
+
+<span class="token number">2</span>月 <span class="token number">14</span> <span class="token time number">10:15:40</span> zjk<span class="token operator">-</span><span class="token number">7591</span> pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1168</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x557a2d6b64f0</span><span class="token operator">:</span> failed to connect client<span class="token operator">:</span> Host is down
+<span class="token number">2</span>月 <span class="token number">14</span> <span class="token time number">10:15:40</span> zjk<span class="token operator">-</span><span class="token number">7591</span> pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1168</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x557a2d6ceab0</span><span class="token operator">:</span> <span class="token punctuation">[</span>QPulse<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">9</span> <span class="token operator">(</span>SET_CLIENT_NAME<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">1</span> error<span class="token operator">:</span><span class="token number">6</span> <span class="token operator">></span>
+<span class="token number">2</span>月 <span class="token number">14</span> <span class="token time number">10:15:41</span> zjk<span class="token operator">-</span><span class="token number">7591</span> pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1168</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x557a2d6b64f0</span><span class="token operator">:</span> failed to connect client<span class="token operator">:</span> Host is down
+<span class="token number">2</span>月 <span class="token number">14</span> <span class="token time number">10:15:41</span> zjk<span class="token operator">-</span><span class="token number">7591</span> pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1168</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x557a2d6e1cb0</span><span class="token operator">:</span> <span class="token punctuation">[</span>QPulse<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">9</span> <span class="token operator">(</span>SET_CLIENT_NAME<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">1</span> error<span class="token operator">:</span><span class="token number">6</span> <span class="token operator">></span>
+<span class="token number">2</span>月 <span class="token number">14</span> <span class="token time number">10:15:42</span> zjk<span class="token operator">-</span><span class="token number">7591</span> pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1168</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x557a2d6b64f0</span><span class="token operator">:</span> failed to connect client<span class="token operator">:</span> Host is down<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="退坑保平安"><a href="#退坑保平安" class="headerlink" title="退坑保平安"></a>退坑保平安</h3><p>换回PulseAudio了，不当小白鼠了，心累，好几次升级都有小问题，每次内核更新提心吊胆的。</p>
+<p>2021.2 </p>
+<p>最近更新了Pipewire和kernel，开机加载界面的时候只加载出壁纸，kwin慢了十秒，Pipewire daemon加载失败，不想修了，直接换回PulseAudio。</p>
+<p>在Pipewire出1.0稳定版和正式支持KDE之前一直用PulseAudio了。</p>
+<!-- 如果需要屏幕共享，chrome需要启用WebRTC PipWire支持`chrome://flags/#enable-webrtc-pipewire-capturer`，可能需要用`libpipewire02` -->
+
+<h2 id="参见"><a href="#参见" class="headerlink" title="参见"></a>参见</h2><p><span class="exturl" data-url="aHR0cHM6Ly9waXBld2lyZS5vcmcv">https://pipewire.org/<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL1BpcGVXaXJl">https://wiki.archlinux.org/index.php/PipeWire<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvUHVsc2VBdWRpbw==">https://zh.wikipedia.org/wiki/PulseAudio<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9sd24ubmV0L0FydGljbGVzLzczNDEwMy8=">https://lwn.net/Articles/734103/<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9ibG9ncy5nbm9tZS5vcmcvdXJhZXVzLzIwMjAvMDkvMDQvcGlwZXdpcmUtbGF0ZS1zdW1tZXItdXBkYXRlLTIwMjAv">https://blogs.gnome.org/uraeus/2020/09/04/pipewire-late-summer-update-2020/<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9naXRsYWIuZnJlZWRlc2t0b3Aub3JnL3BpcGV3aXJlL3BpcGV3aXJlLy0vd2lraXMvTGltaXRhdGlvbnMtaW4tMC4z">pipewire 0.3的一些局限和问题<i class="fa fa-external-link-alt"></i></span>  </p>
+]]></content>
+      <categories>
+        <category>不务正业系列</category>
+      </categories>
+      <tags>
+        <tag>pipewire</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Archlinux下VSCode+Latex+Zotero的论文写作方案</title>
     <url>/paper-with-latex-zotero-vscode/</url>
     <content><![CDATA[<p>开源拖拉机将就着用吧，又不是不能用，再见Word、EndNote和Windows。顺便说一下你电的LaTeX模板怎么用。不定期更新到毕业。</p>
@@ -5431,213 +6067,6 @@ I found no \bibstyle command<span class="token separator comment">---</span>whil
       <tags>
         <tag>Zotero</tag>
         <tag>LaTeX</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux新一代音视频服务Pipewire尝鲜</title>
-    <url>/pipewire/</url>
-    <content><![CDATA[<p>2021年9月更新：<br>听说fedora都上Pipiwire了，正好这几天有点空，那就试试吧</p>
-<span id="more"></span>
-
-<p>Pipewire是红帽造的新一代音视频轮子，主要是用来取代PulseAudio、jack还有gstreams什么的。<br><strong>据说</strong>延迟补偿还不错，<strong>据说</strong>能统一音视频框架还兼容PulseAudio和Jack，据说是朝着专业级音效去的。据说支持Wayland和平板，据说支持Flatpak之类的容器内使用，据说有类似PolKit的权限管理，不需要像PulseAudio那样新建音频用户组和添加用户了。。。。</p>
-<blockquote>
-<p>It provides a low-latency, graph based processing engine on top of audio and video devices that can be used to support the use cases currently handled by both pulseaudio and JACK. PipeWire was designed with a powerful security model that makes interacting with audio and video devices from containerized applications easy, with supporting Flatpak applications being the primary goal. Alongside Wayland and Flatpak we expect PipeWire to provide a core building block for the future of Linux application development.</p>
-</blockquote>
-<p>都是据说啊，被Wayland骗了一次之后我已经不敢信这些宣传了，先试试实际效果再说。</p>
-<p>当然这个目前貌似只正经适配了GNOME和Fedora，不过据说兼容PulseAudio，Arch上的坑已经有人踩了好久了，现在还有点小问题，不过可以考虑上了。<br>昨天刚把Arch和笔记本的EndeavourOS更了python 3.9，除了autojump出了点小问题外一切正常。索性直接上Pipewire看看吧，反正笔记本那个全损音质也跟没有一样，换了说不定能抢救一下。</p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> pacman -S pipewire<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>要替代PulseAudio和Jack装这两个包<code>pipewire-pulse</code>、<code>pipewire-jack-dropin</code>。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yay -S pipewire-jack-dropin pipewire-pulse<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>然后systemd设置一下（archwiki说蓝牙设备需要手动设置一下，编辑<code>/etc/pipewire/pipewire.conf</code>，我手头没蓝牙耳机就不弄了）</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl <span class="token builtin class-name">enable</span> --user pipewire-pulse<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>然后退出登录或重启。</p>
-<p>运行<code>pactl info</code>，如果看到</p>
-<pre class="line-numbers language-log" data-language="log"><code class="language-log"><span class="token property">Server Name:</span> PulseAudio <span class="token operator">(</span>on PipeWire <span class="token number">0.3.17</span><span class="token operator">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>说明正常。</p>
-<h3 id="蓝牙设备"><a href="#蓝牙设备" class="headerlink" title="蓝牙设备"></a>蓝牙设备</h3><p>感谢室友赞助的一个索尼蓝牙音箱用于测试</p>
-<p>pipewire自带了蓝牙的模块，不需要像PulseAudio那样安装<code>pulseaudio-bluetooth</code>之类的包</p>
-<p>安装了pipewire-pulse之后编辑<code>/etc/pipewire/pipewire.conf</code>在<code>exec /usr/bin/pipewire-media-session</code>后面加上<code>-e bluez5</code>就可以使用了。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">exec</span> /usr/bin/pipewire-media-session -e bluez5<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h2 id="卸载"><a href="#卸载" class="headerlink" title="卸载"></a>卸载</h2><p>换回PulseAudio或者Jack可以用这个<span class="exturl" data-url="aHR0cHM6Ly9naXRsYWIuZnJlZWRlc2t0b3Aub3JnL3BpcGV3aXJlL3BpcGV3aXJlLy0vc25pcHBldHMvMTE2NA==">脚本<i class="fa fa-external-link-alt"></i></span></p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> /usr/lib64/
-
-<span class="token function">sudo</span> <span class="token function">rm</span> /usr/lib64/libpulse-mainloop-glib.so.0.999.0
-<span class="token function">sudo</span> <span class="token function">rm</span> /usr/lib64/libpulse-simple.so.0.999.0
-<span class="token function">sudo</span> <span class="token function">rm</span> /usr/lib64/libpulse.so.0.999.0
-
-<span class="token function">sudo</span> <span class="token function">rm</span> /usr/lib64/libjack.so.0.999.0
-<span class="token function">sudo</span> <span class="token function">rm</span> /usr/lib64/libjacknet.so.0.999.0
-<span class="token function">sudo</span> <span class="token function">rm</span> /usr/lib64/libjackserver.so.0.999.0
-
-<span class="token function">sudo</span> ldconfig<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>用pacman包管理器装的就</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl disable pipewire-pulse --user
-systemctl disable pipewire --user
-yay -Rs pipewire-pulse
-yay -S pulseaudio<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="更新一点实测"><a href="#更新一点实测" class="headerlink" title="更新一点实测"></a>更新一点实测</h2><h3 id="人耳效果和使用体验"><a href="#人耳效果和使用体验" class="headerlink" title="人耳效果和使用体验"></a>人耳效果和使用体验</h3><p>昨天回到宿舍，发现笔记本的EndeavourOS更新python 3.9<br> Optimus-manager 出问题了，好在很快解决了。<br>然后在工具人室友的帮助下测试了绿联的外接声卡一块、某大法耳机一个音响一个，傻多戴显示器自带小音箱一个，均工作正常。</p>
-<p><img src="/pipewire/1607053618.png"><br><img src="/pipewire/1607053601.png"></p>
-<p>两种音质人耳都听不出差别，室友把两段音频放到Adobe Audition也看不出什么大区别</p>
-<p>笔记本自带外放在KDE的设置中从其他音频播放设备切换过去之后出现没有声音的状况，经检查其实是有的，只是非常小，将声音调整到最大还是几乎要被笔记本的风扇声音盖住（这貌似不是pipewire的锅，），重启后外放音量恢复正常。<br>除了笔记本自带外放，在笔记本上音频切换KDE设置都没有出现卡死的状况，，声音也播放正常，没出现切换之后没声了的状况。</p>
-<h3 id="面板参数"><a href="#面板参数" class="headerlink" title="面板参数"></a>面板参数</h3><p>笔记本使用原来的PulseAudio详情：</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">Server String</span><span class="token punctuation">:</span> /run/user/1000/pulse/native
-<span class="token key atrule">Library Protocol Version</span><span class="token punctuation">:</span> <span class="token number">34</span>
-<span class="token key atrule">Server Protocol Version</span><span class="token punctuation">:</span> <span class="token number">34</span>
-<span class="token key atrule">Is Local</span><span class="token punctuation">:</span> yes
-<span class="token key atrule">Client Index</span><span class="token punctuation">:</span> <span class="token number">16</span>
-<span class="token key atrule">Tile Size</span><span class="token punctuation">:</span> <span class="token number">65472</span>
-<span class="token key atrule">User Name</span><span class="token punctuation">:</span> zjk
-<span class="token key atrule">Host Name</span><span class="token punctuation">:</span> zjk<span class="token punctuation">-</span><span class="token number">7591</span>
-<span class="token key atrule">Server Name</span><span class="token punctuation">:</span> pulseaudio
-<span class="token key atrule">Server Version</span><span class="token punctuation">:</span> <span class="token number">14.0</span>
-<span class="token key atrule">Default Sample Specification</span><span class="token punctuation">:</span> s16le 2ch 44100Hz
-<span class="token key atrule">Default Channel Map</span><span class="token punctuation">:</span> front<span class="token punctuation">-</span>left<span class="token punctuation">,</span>front<span class="token punctuation">-</span>right
-<span class="token key atrule">Default Sink</span><span class="token punctuation">:</span> alsa_output.pci<span class="token punctuation">-</span>0000_00_1f.3<span class="token punctuation">-</span>platform<span class="token punctuation">-</span>skl_hda_dsp_generic.HiFi__hw_sofhdadsp__sink
-<span class="token key atrule">Default Source</span><span class="token punctuation">:</span> combined.monitor
-<span class="token key atrule">Cookie</span><span class="token punctuation">:</span> 94e6<span class="token punctuation">:</span>e6bf<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>更换pipewire-pulse之后：</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">Server String</span><span class="token punctuation">:</span> /run/user/1000/pulse/native
-<span class="token key atrule">Library Protocol Version</span><span class="token punctuation">:</span> <span class="token number">34</span>
-<span class="token key atrule">Server Protocol Version</span><span class="token punctuation">:</span> <span class="token number">34</span>
-<span class="token key atrule">Is Local</span><span class="token punctuation">:</span> yes
-<span class="token key atrule">Client Index</span><span class="token punctuation">:</span> <span class="token number">69</span>
-<span class="token key atrule">Tile Size</span><span class="token punctuation">:</span> <span class="token number">65472</span>
-<span class="token key atrule">User Name</span><span class="token punctuation">:</span> zjk
-<span class="token key atrule">Host Name</span><span class="token punctuation">:</span> zjk<span class="token punctuation">-</span><span class="token number">7591</span>
-<span class="token key atrule">Server Name</span><span class="token punctuation">:</span> PulseAudio (on PipeWire 0.3.17)
-<span class="token key atrule">Server Version</span><span class="token punctuation">:</span> 14.0.0
-<span class="token key atrule">Default Sample Specification</span><span class="token punctuation">:</span> float32le 2ch 48000Hz
-<span class="token key atrule">Default Channel Map</span><span class="token punctuation">:</span> front<span class="token punctuation">-</span>left<span class="token punctuation">,</span>front<span class="token punctuation">-</span>right
-<span class="token key atrule">Default Sink</span><span class="token punctuation">:</span> <span class="token key atrule">alsa_output.pci-0000:00:1f.3-platform-skl_hda_dsp_generic.HiFi</span><span class="token punctuation">:</span> hw<span class="token punctuation">:</span>sofhdadsp<span class="token punctuation">,</span><span class="token key atrule">5</span><span class="token punctuation">:</span> sink
-<span class="token key atrule">Default Source</span><span class="token punctuation">:</span> <span class="token key atrule">alsa_input.pci-0000:00:1f.3-platform-skl_hda_dsp_generic.HiFi</span><span class="token punctuation">:</span> <span class="token key atrule">hw:sofhdadsp</span><span class="token punctuation">:</span> source
-<span class="token key atrule">Cookie</span><span class="token punctuation">:</span> 6242<span class="token punctuation">:</span><span class="token number">4425</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>看起来参数是好了一点，实测听不出来。</p>
-<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>据说pipewire音视频延迟低了，手头没有专业设备没法测。其他的混响、均衡、采样手头没有专业设备也测不出来。</p>
-<p>视频的话，浏览器HTML5播放器和本地VLC能正常播放。笔记本播放youtube4k视频外接4k显示器硬解没有大问题。VLC播放用N卡（笔记本的1650）解码也没有问题，驱动正常。</p>
-<p>其他的视频方面和屏幕共享之类的功能暂时还没有测试。我也找不到熟悉视频的工具人了，等找到了再说吧，自己瞎测估计也测不出什么来。</p>
-<h2 id="体验"><a href="#体验" class="headerlink" title="体验"></a>体验</h2><h3 id="音质"><a href="#音质" class="headerlink" title="音质"></a>音质</h3><p><code>pw-cli</code>显示的台式机面板参数</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ pw-cli info <span class="token number">0</span>
-        id: <span class="token number">0</span>
-        permissions: rwxm
-        type: PipeWire:Interface:Core/3
-        cookie: <span class="token number">653542227</span>
-        user-name: <span class="token string">"zjk"</span>
-        host-name: <span class="token string">"zjk-allseries"</span>
-        version: <span class="token string">"0.3.17"</span>
-        name: <span class="token string">"pipewire-0"</span>
-*       properties:
-*               core.name <span class="token operator">=</span> <span class="token string">"pipewire-0"</span>
-*               context.profile.modules <span class="token operator">=</span> <span class="token string">"none"</span>
-*               core.daemon <span class="token operator">=</span> <span class="token string">"true"</span>
-*               link.max-buffers <span class="token operator">=</span> <span class="token string">"16"</span>
-*               default.clock.rate <span class="token operator">=</span> <span class="token string">"48000"</span>
-*               default.clock.quantum <span class="token operator">=</span> <span class="token string">"1024"</span>
-*               default.clock.min-quantum <span class="token operator">=</span> <span class="token string">"32"</span>
-*               default.clock.max-quantum <span class="token operator">=</span> <span class="token string">"8192"</span>
-*               default.video.width <span class="token operator">=</span> <span class="token string">"640"</span>
-*               default.video.height <span class="token operator">=</span> <span class="token string">"480"</span>
-*               default.video.rate.num <span class="token operator">=</span> <span class="token string">"25"</span>
-*               default.video.rate.denom <span class="token operator">=</span> <span class="token string">"1"</span>
-*               mem.allow-mlock <span class="token operator">=</span> <span class="token string">"true"</span>
-*               cpu.max-align <span class="token operator">=</span> <span class="token string">"32"</span>
-*               object.id <span class="token operator">=</span> <span class="token string">"0"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>教研室的Arch台式机的老声卡接耳机和外接绿联声卡接耳机看不出什么大的区别。<br>Arch开Virtualbox里的win7能用，但是音质不知道为什么变差了特别多。 </p>
-<p>只有笔记本外放音质确实好了一点，我的笔记本外放能听出差别的那种，然而还是比win10差了不少（这个没有参考价值，我的笔记本Realtek驱动太阴间了）。<br>据说延迟低了，这个听不出来，手头上也没有专业设备。  </p>
-<p>其他的等我的校交响乐团的工具人室友回来了再说。  </p>
-<h3 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><p>目前使用的问题大概有：</p>
-<ol>
-<li><code>systemctl status --user pipewire-pulse</code>报错</li>
-</ol>
-<pre class="line-numbers language-log" data-language="log"><code class="language-log">● <span class="token domain constant">pipewire-pulse.service</span> <span class="token operator">-</span> PipeWire PulseAudio
-     <span class="token property">Loaded:</span> loaded <span class="token operator">(</span><span class="token file-path string">/usr/lib/systemd/user/pipewire-pulse.service</span><span class="token operator">;</span> enabled<span class="token operator">;</span> vendor preset<span class="token operator">:</span> enabled<span class="token operator">)</span>
-     <span class="token property">Active:</span> active <span class="token operator">(</span>running<span class="token operator">)</span> since Thu <span class="token date number">2020-12-03</span> <span class="token time number">17:10:09</span> CST<span class="token operator">;</span> <span class="token number">12min</span> ago
-<span class="token property">TriggeredBy:</span> ● <span class="token domain constant">pipewire-pulse.socket</span>
-   <span class="token property">Main PID:</span> <span class="token number">1787</span> <span class="token operator">(</span>pipewire<span class="token operator">-</span>pulse<span class="token operator">)</span>
-     <span class="token property">CGroup:</span> <span class="token file-path string">/user.slice/user-1000.slice/user@1000.service/app.slice/pipewire-pulse.service</span>
-             └─<span class="token number">1787</span> <span class="token file-path string">/usr/bin/pipewire-pulse</span>
-
-<span class="token number">12</span>月 <span class="token number">03</span> <span class="token time number">17:17:02</span> zjk<span class="token operator">-</span>allseries pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1787</span><span class="token punctuation">]</span><span class="token operator">:</span> core <span class="token number">0x55fc6c39e410</span><span class="token operator">:</span> proxy <span class="token number">0x55fc6c39e410</span> id<span class="token operator">:</span><span class="token number">0</span><span class="token operator">:</span> bound<span class="token operator">:</span><span class="token operator">-</span><span class="token number">1</span> seq<span class="token operator">:</span><span class="token number">1272</span> res<span class="token operator">:</span><span class="token operator">-</span><span class="token number">32</span> <span class="token operator">(</span>Broken pipe<span class="token operator">)</span> msg<span class="token operator">:</span><span class="token string">"connection error"</span>
-<span class="token number">12</span>月 <span class="token number">03</span> <span class="token time number">17:17:25</span> zjk<span class="token operator">-</span>allseries pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1787</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x55fc6c30c300</span><span class="token operator">:</span> <span class="token punctuation">[</span>Google Chrome<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">42</span> <span class="token operator">(</span>FLUSH_PLAYBACK_STREAM<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">168</span> error<span class="token operator">:</span><span class="token number">5</span> <span class="token operator">(</span>No such file or directory<span class="token operator">)</span>
-<span class="token number">12</span>月 <span class="token number">03</span> <span class="token time number">17:17:25</span> zjk<span class="token operator">-</span>allseries pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1787</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x55fc6c30c300</span><span class="token operator">:</span> <span class="token punctuation">[</span>Google Chrome<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">41</span> <span class="token operator">(</span>CORK_PLAYBACK_STREAM<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">169</span> error<span class="token operator">:</span><span class="token number">5</span> <span class="token operator">(</span>No such file or directory<span class="token operator">)</span>
-<span class="token number">12</span>月 <span class="token number">03</span> <span class="token time number">17:17:26</span> zjk<span class="token operator">-</span>allseries pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1787</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x55fc6c30c300</span><span class="token operator">:</span> <span class="token punctuation">[</span>Google Chrome<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">41</span> <span class="token operator">(</span>CORK_PLAYBACK_STREAM<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">170</span> error<span class="token operator">:</span><span class="token number">5</span> <span class="token operator">(</span>No such file or directory<span class="token operator">)</span>
-<span class="token number">12</span>月 <span class="token number">03</span> <span class="token time number">17:19:16</span> zjk<span class="token operator">-</span>allseries pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1787</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x55fc6c3deb80</span><span class="token operator">:</span> <span class="token punctuation">[</span>code<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">18</span> <span class="token operator">(</span>PLAY_SAMPLE<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">3</span> error<span class="token operator">:</span><span class="token number">5</span> <span class="token operator">(</span>No such file or directory<span class="token operator">)</span>
-<span class="token number">12</span>月 <span class="token number">03</span> <span class="token time number">17:19:16</span> zjk<span class="token operator">-</span>allseries pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1787</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x55fc6c3deb80</span><span class="token operator">:</span> <span class="token punctuation">[</span>code<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">18</span> <span class="token operator">(</span>PLAY_SAMPLE<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">4</span> error<span class="token operator">:</span><span class="token number">5</span> <span class="token operator">(</span>No such file or directory<span class="token operator">)</span>
-<span class="token number">12</span>月 <span class="token number">03</span> <span class="token time number">17:19:16</span> zjk<span class="token operator">-</span>allseries pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1787</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x55fc6c3deb80</span><span class="token operator">:</span> <span class="token punctuation">[</span>code<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">18</span> <span class="token operator">(</span>PLAY_SAMPLE<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">5</span> error<span class="token operator">:</span><span class="token number">5</span> <span class="token operator">(</span>No such file or directory<span class="token operator">)</span>
-<span class="token number">12</span>月 <span class="token number">03</span> <span class="token time number">17:19:17</span> zjk<span class="token operator">-</span>allseries pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1787</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x55fc6c3deb80</span><span class="token operator">:</span> <span class="token punctuation">[</span>code<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">18</span> <span class="token operator">(</span>PLAY_SAMPLE<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">6</span> error<span class="token operator">:</span><span class="token number">5</span> <span class="token operator">(</span>No such file or directory<span class="token operator">)</span>
-<span class="token number">12</span>月 <span class="token number">03</span> <span class="token time number">17:19:18</span> zjk<span class="token operator">-</span>allseries pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1787</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x55fc6c3deb80</span><span class="token operator">:</span> <span class="token punctuation">[</span>code<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">18</span> <span class="token operator">(</span>PLAY_SAMPLE<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">7</span> error<span class="token operator">:</span><span class="token number">5</span> <span class="token operator">(</span>No such file or directory<span class="token operator">)</span>
-<span class="token number">12</span>月 <span class="token number">03</span> <span class="token time number">17:19:18</span> zjk<span class="token operator">-</span>allseries pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1787</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x55fc6c3deb80</span><span class="token operator">:</span> <span class="token punctuation">[</span>code<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">18</span> <span class="token operator">(</span>PLAY_SAMPLE<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">8</span> error<span class="token operator">:</span><span class="token number">5</span> <span class="token operator">(</span>No such file or directory<span class="token operator">)</span>
-<span class="token separator comment">***</span>
-<span class="token number">12</span>月 <span class="token number">03</span> <span class="token time number">18:58:02</span> zjk<span class="token operator">-</span>allseries pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1787</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x55fc6c37c6f0</span><span class="token operator">:</span> <span class="token punctuation">[</span>VirtualBox<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">23</span> <span class="token operator">(</span>GET_SOURCE_INFO<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">249</span> error<span class="token operator">:</span><span class="token number">5</span> <span class="token operator">(</span>No such file or directory<span class="token operator">)</span>
-<span class="token number">12</span>月 <span class="token number">03</span> <span class="token time number">19:00:16</span> zjk<span class="token operator">-</span>allseries pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1787</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x55fc6c37c6f0</span><span class="token operator">:</span> <span class="token punctuation">[</span>VirtualBox<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">23</span> <span class="token operator">(</span>GET_SOURCE_INFO<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">376</span> error<span class="token operator">:</span><span class="token number">5</span> <span class="token operator">(</span>No such file or directory<span class="token operator">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>不过貌似都不影响使用</p>
-<ol start="2">
-<li>KDE调节音量的按钮换了之后经常卡死（KDE下面整个任务栏都卡死了），恢复之后调节音量无效</li>
-</ol>
-<p><img src="/pipewire/1606991672.png"></p>
-<ol start="3">
-<li>KDE音频切换设置偶尔卡死</li>
-</ol>
-<p>下图这个</p>
-<p><img src="/pipewire/1606992266.png"><br><img src="/pipewire/1606992430.png"></p>
-<p>点终止之后整个plasma桌面都无了</p>
-<p><img src="/pipewire/1606992508.png"></p>
-<ol start="4">
-<li><p>上图中的Build-in Audio切换之后耳机没有声音</p>
-</li>
-<li><p>切换外放麦克风和耳机之后再切回来没声了</p>
-</li>
-<li><p>有几个人之前说virtualbox会冲突，我这暂时没遇到</p>
-</li>
-<li><p>2021.2更新后再次出问题了,<code>pw-cli info 0</code>显示</p>
-</li>
-</ol>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">Error: <span class="token string">"failed to connect: Host is down"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>检查了一下发现systemd daemon不知道怎么没了。</p>
-<pre class="line-numbers language-none"><code class="language-none">Unit pipewire.service could not be found.
-Unit pipewire-pulse.service could not be found.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p>执行<code>systemctl enable pipewire --user</code>后重启还是找不到</p>
-<p><code>systemctl status pipewire-pulse --user</code></p>
-<p>报错：</p>
-<pre class="line-numbers language-log" data-language="log"><code class="language-log">● <span class="token domain constant">pipewire-pulse.service</span> <span class="token operator">-</span> PipeWire PulseAudio
-     <span class="token property">Loaded:</span> loaded <span class="token operator">(</span><span class="token file-path string">/usr/lib/systemd/user/pipewire-pulse.service</span><span class="token operator">;</span> enabled<span class="token operator">;</span> vendor preset<span class="token operator">:</span> enabled<span class="token operator">)</span>
-     <span class="token property">Active:</span> active <span class="token operator">(</span>running<span class="token operator">)</span> since Sun <span class="token date number">2021-02-14</span> <span class="token time number">10:03:07</span> CST<span class="token operator">;</span> <span class="token number">12min</span> ago
-<span class="token property">TriggeredBy:</span> ● <span class="token domain constant">pipewire-pulse.socket</span>
-   <span class="token property">Main PID:</span> <span class="token number">1168</span> <span class="token operator">(</span>pipewire<span class="token operator">-</span>pulse<span class="token operator">)</span>
-     <span class="token property">CGroup:</span> <span class="token file-path string">/user.slice/user-1000.slice/user@1000.service/app.slice/pipewire-pulse.service</span>
-             └─<span class="token number">1168</span> <span class="token file-path string">/usr/bin/pipewire-pulse</span>
-
-<span class="token number">2</span>月 <span class="token number">14</span> <span class="token time number">10:15:40</span> zjk<span class="token operator">-</span><span class="token number">7591</span> pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1168</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x557a2d6b64f0</span><span class="token operator">:</span> failed to connect client<span class="token operator">:</span> Host is down
-<span class="token number">2</span>月 <span class="token number">14</span> <span class="token time number">10:15:40</span> zjk<span class="token operator">-</span><span class="token number">7591</span> pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1168</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x557a2d6ceab0</span><span class="token operator">:</span> <span class="token punctuation">[</span>QPulse<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">9</span> <span class="token operator">(</span>SET_CLIENT_NAME<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">1</span> error<span class="token operator">:</span><span class="token number">6</span> <span class="token operator">></span>
-<span class="token number">2</span>月 <span class="token number">14</span> <span class="token time number">10:15:41</span> zjk<span class="token operator">-</span><span class="token number">7591</span> pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1168</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x557a2d6b64f0</span><span class="token operator">:</span> failed to connect client<span class="token operator">:</span> Host is down
-<span class="token number">2</span>月 <span class="token number">14</span> <span class="token time number">10:15:41</span> zjk<span class="token operator">-</span><span class="token number">7591</span> pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1168</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x557a2d6e1cb0</span><span class="token operator">:</span> <span class="token punctuation">[</span>QPulse<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">9</span> <span class="token operator">(</span>SET_CLIENT_NAME<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">1</span> error<span class="token operator">:</span><span class="token number">6</span> <span class="token operator">></span>
-<span class="token number">2</span>月 <span class="token number">14</span> <span class="token time number">10:15:42</span> zjk<span class="token operator">-</span><span class="token number">7591</span> pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1168</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x557a2d6b64f0</span><span class="token operator">:</span> failed to connect client<span class="token operator">:</span> Host is down<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="退坑保平安"><a href="#退坑保平安" class="headerlink" title="退坑保平安"></a>退坑保平安</h3><p>换回PulseAudio了，不当小白鼠了，心累，好几次升级都有小问题，每次内核更新提心吊胆的。</p>
-<p>2021.2 </p>
-<p>最近更新了Pipewire和kernel，开机加载界面的时候只加载出壁纸，kwin慢了十秒，Pipewire daemon加载失败，不想修了，直接换回PulseAudio。</p>
-<p>在Pipewire出1.0稳定版和正式支持KDE之前一直用PulseAudio了。</p>
-<!-- 如果需要屏幕共享，chrome需要启用WebRTC PipWire支持`chrome://flags/#enable-webrtc-pipewire-capturer`，可能需要用`libpipewire02` -->
-
-<h2 id="参见"><a href="#参见" class="headerlink" title="参见"></a>参见</h2><p><span class="exturl" data-url="aHR0cHM6Ly9waXBld2lyZS5vcmcv">https://pipewire.org/<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL1BpcGVXaXJl">https://wiki.archlinux.org/index.php/PipeWire<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvUHVsc2VBdWRpbw==">https://zh.wikipedia.org/wiki/PulseAudio<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9sd24ubmV0L0FydGljbGVzLzczNDEwMy8=">https://lwn.net/Articles/734103/<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9ibG9ncy5nbm9tZS5vcmcvdXJhZXVzLzIwMjAvMDkvMDQvcGlwZXdpcmUtbGF0ZS1zdW1tZXItdXBkYXRlLTIwMjAv">https://blogs.gnome.org/uraeus/2020/09/04/pipewire-late-summer-update-2020/<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9naXRsYWIuZnJlZWRlc2t0b3Aub3JnL3BpcGV3aXJlL3BpcGV3aXJlLy0vd2lraXMvTGltaXRhdGlvbnMtaW4tMC4z">pipewire 0.3的一些局限和问题<i class="fa fa-external-link-alt"></i></span>  </p>
-]]></content>
-      <categories>
-        <category>不务正业系列</category>
-      </categories>
-      <tags>
-        <tag>pipewire</tag>
       </tags>
   </entry>
   <entry>
@@ -6639,27 +7068,6 @@ lines <span class="token number">2</span>-36/36 <span class="token punctuation">
       </categories>
   </entry>
   <entry>
-    <title>轨迹球Kensington k72337开箱</title>
-    <url>/unboxing-trackball-kensington-k72337/</url>
-    <content><![CDATA[<p>这么圆润的球球，老了逛公园可以放在手上盘</p>
-<span id="more"></span>
-
-<p>之前用鼠标多了手腕都磨出了老茧。后来买了硅胶鼠标垫好多了。看到轨迹之前用鼠标多了手腕都磨出了老茧。后来买了硅胶鼠标垫好多了。看到轨迹球可以盘，还是手痒决定买一个。就在不久之前我突然发现左手鼠标的好处，离键盘主要区域很近。这样可以避开数字小键盘导致鼠标离键盘双手放的区域太远导致切鼠标和键盘跨度太大很难受的问题。（我想要的就是机械键盘中的那种87键tkl键盘，薄膜没找到合适的，不是全键盘就是键位布局逆天，静电容那个价格我感觉是在打劫我）。挑轨迹球的时候本来想买罗技的那几个侧面有轨迹球的，但是那几个都没有左手的，于是还是入了肯辛通这个最基础的款式，先试试水。球可以盘，还是手痒决定买一个。就在不久之前我突然发现左手鼠标的好处，离键盘主要区域很近。这样可以避开数字小键盘导致鼠标离键盘双手放的区域太远导致切鼠标和键盘跨度太大很难受的问题。（我想要的就是机械键盘中的那种87键tkl键盘，薄膜没找到合适的，不是全键盘就是键位布局逆天，静电容那个价格我感觉是在打劫我）。挑轨迹球的时候本来想买罗技的那几个侧面有轨迹球的，但是那几个都没有左手的，于是还是入了肯辛通这个最基础的款式，先试试水。</p>
-<p>拿到手一眼顶真，鉴定为大。到手前完全没想过这玩意这么大，放一张轨迹球和罗技G102的大小对比</p>
-<p><img src="/unboxing-trackball-kensington-k72337/1651829354.png"></p>
-<p>这个大小我拆开之前完全没想到，比想象中的大太多了。上手操作首要放的很开，我手不算小，但是依然有点吃力。给的这个塑料手托挺硬的，而且这个轨迹球的高度比大部分鼠标都要高。握起来远没有G102鼠标舒服，两边的左右键按起来一种10块钱的廉价鼠标的感觉，球周围那一圈滚轮的摩擦声感觉也不太好，滚起来有沙沙的感觉，一些人可能会头皮发麻。这个滚轮既没有轴承那种丝滑流畅的感觉，也没有G102的滚轮那种一卡一顿能够精确的停下来的感觉。</p>
-<p>然后是一下中键的问题，这个真的有点难受。linux下Primary Selection是鼠标左键选中复制，鼠标中键粘贴。没有中键粘贴有点麻烦。KDE可以在设置里面将左右键同时按下设置成中键，但是这个轨迹球的左右键同时按下体验很差。</p>
-<p>球的时候本来想买罗技的那几个侧面有轨迹球的，但是那几个都没有左手的，于是还是入了肯辛通这个最基础的款式，先试试水。这个大小我拆开之前完全没想到，比想象中的大太多了。上手操作首要放的很开，我手不算小，但是依然有点吃力。给的这个塑料手托挺硬的，而且这个轨迹球的高度比大部分鼠标都要高。握起来远没有G102鼠标舒服，两边的左右键按起来一种10块钱的廉价鼠标的感觉，球周围那一圈滚轮的摩擦声感觉也不太好，滚起来有沙沙的感觉，一些人可能会头皮发麻。这个滚轮既没有轴承那种丝滑流畅的感觉，也没有G102的滚轮那种一卡一顿能够精确的停下来的感觉。</p>
-<p>说一下轨迹球的优点吧，控制很精确，适合用来画图，可惜我现在不画PCB了。不过市面上的轨迹球普遍价格偏贵，颜值手感和性价比都被g102之类的鼠标暴打（也可能是g102）。除了用手指滚球是真的丝滑流畅，再也不用费劲用手腕了。手指操作轨迹球的快感完全无法抵消这个难用的左右键和同时左右键充当中键时候的难受。入坑需谨慎。</p>
-]]></content>
-      <categories>
-        <category>不务正业系列</category>
-      </categories>
-      <tags>
-        <tag>trackball</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Vim中的宏：自动化魔法</title>
     <url>/vim-macros/</url>
     <content><![CDATA[<p>清明节闲着没事写点Vim的东西。我对Vim有诸多怨念，不过Vim有几个地方我很喜欢，最重要的一个就是操作可以组合和自动化。</p>
@@ -6865,33 +7273,6 @@ python scripts/clang-tools/gen_compile_commands.py<span aria-hidden="true" class
       </tags>
   </entry>
   <entry>
-    <title>重启博客</title>
-    <url>/1a9a/</url>
-    <content><![CDATA[<p>新博客又开通了(搬家)，不定期更新</p>
-<span id="more"></span>
-
-<p>原域名到期，加上之前的Wordpress网站不太喜欢，索性换到Hexo了，主题域名什么的都全换了。没换Hugo是因为没发现和Next一样这么喜欢的主题，这主题让我感到这个页面的却就是一个博客应该有的样子。</p>
-<p>倒不是说这个主题多好看，它是我印象里博客的样子，让我找回了还是个小朋友的时候第一次注册博客的感觉。对呀，博客就长这个样子。左边是导航栏，下面一小栏放头像和放点徽章挂件；中间是文章，文章最下面是评论。再随便加个背景，简直完美。咿，空荡荡的好像还少点什么；是弹窗小广告，这个就算了…..</p>
-<p>最早的时候沉迷三维弹球和扫雷，以及桌面屏保。后来开始上网，已经错过了聊天室的时代，也错过了拨号上网和Telnet论坛的时代，论坛已经流行用Discuz了，QQ号已经8位了。跟风注册了雅虎伊妹儿和搜狐博客，以及一些论坛帐号，开始了网上冲浪。后来换到Wordpress了，加上一个穷学生手头零花钱也不多，中间关了两次没有续上。</p>
-<p>偶当年还是一只小网虫的时候，并不是特别喜欢发博客，喜欢泡在BBS里，写的东西也都喜欢放在BBS里水帖。论坛里看的人比较多，偶尔斑竹还会出来给加个精。大概从15年开始BBS一个个都亡了。有的因为用户大量出走宣布死亡，有的像贴吧一样开始杀鸡取卵式变现挣钱，还有的因为政策原因关了。有的多次改版丢了好多老帖子，有的格式也乱了，老用户抱怨出走。有的一直停留在远古版本的Discuz，然后有一天站被黑了….</p>
-<p>看多了Flarum的新论坛现在偶尔点进一些没见过的Discuz论坛还是会瞬间恍惚，仿佛又回到了当年</p>
-<p>有的是还没亡却从当年的人声鼎沸变得门可罗雀，不时传来哪个一年到头也没几个人说话的论坛站长支撑不下去又要关站了的消息。认识的好多网友也有逐渐沉寂，失去了联系。</p>
-<p>之前博客里的东西不适合放出来，就默默存在硬盘里了。在论坛里写的东西就放在论坛里和BBS一起消亡吧。</p>
-<blockquote class="blockquote-center">
-<p>山中友，试高吟楚些，重与招魂</p>
-
-</blockquote>
-
-<p><img src="/1a9a/cyperpunk.png" alt="Welcome"></p>
-]]></content>
-      <categories>
-        <category>杂七杂八</category>
-      </categories>
-      <tags>
-        <tag>杂记</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>VSCode Neovim插件配置——将VSCode作为Neovim的GUI客户端</title>
     <url>/vscode-neovim-setting/</url>
     <content><![CDATA[<p>本来不报希望的试了试这套不伦不类的缝合怪配置，结果缝合出了很好的效果，可以拿这套配置在VSCode下养老了。</p>
@@ -7018,6 +7399,33 @@ Plug &#39;asvetliakov&#x2F;vim-easymotion&#39;, Cond(exists(&#39;g:vscode&#39;),
         <tag>VSCode</tag>
         <tag>Vim</tag>
         <tag>Neovim</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>重启博客</title>
+    <url>/1a9a/</url>
+    <content><![CDATA[<p>新博客又开通了(搬家)，不定期更新</p>
+<span id="more"></span>
+
+<p>原域名到期，加上之前的Wordpress网站不太喜欢，索性换到Hexo了，主题域名什么的都全换了。没换Hugo是因为没发现和Next一样这么喜欢的主题，这主题让我感到这个页面的却就是一个博客应该有的样子。</p>
+<p>倒不是说这个主题多好看，它是我印象里博客的样子，让我找回了还是个小朋友的时候第一次注册博客的感觉。对呀，博客就长这个样子。左边是导航栏，下面一小栏放头像和放点徽章挂件；中间是文章，文章最下面是评论。再随便加个背景，简直完美。咿，空荡荡的好像还少点什么；是弹窗小广告，这个就算了…..</p>
+<p>最早的时候沉迷三维弹球和扫雷，以及桌面屏保。后来开始上网，已经错过了聊天室的时代，也错过了拨号上网和Telnet论坛的时代，论坛已经流行用Discuz了，QQ号已经8位了。跟风注册了雅虎伊妹儿和搜狐博客，以及一些论坛帐号，开始了网上冲浪。后来换到Wordpress了，加上一个穷学生手头零花钱也不多，中间关了两次没有续上。</p>
+<p>偶当年还是一只小网虫的时候，并不是特别喜欢发博客，喜欢泡在BBS里，写的东西也都喜欢放在BBS里水帖。论坛里看的人比较多，偶尔斑竹还会出来给加个精。大概从15年开始BBS一个个都亡了。有的因为用户大量出走宣布死亡，有的像贴吧一样开始杀鸡取卵式变现挣钱，还有的因为政策原因关了。有的多次改版丢了好多老帖子，有的格式也乱了，老用户抱怨出走。有的一直停留在远古版本的Discuz，然后有一天站被黑了….</p>
+<p>看多了Flarum的新论坛现在偶尔点进一些没见过的Discuz论坛还是会瞬间恍惚，仿佛又回到了当年</p>
+<p>有的是还没亡却从当年的人声鼎沸变得门可罗雀，不时传来哪个一年到头也没几个人说话的论坛站长支撑不下去又要关站了的消息。认识的好多网友也有逐渐沉寂，失去了联系。</p>
+<p>之前博客里的东西不适合放出来，就默默存在硬盘里了。在论坛里写的东西就放在论坛里和BBS一起消亡吧。</p>
+<blockquote class="blockquote-center">
+<p>山中友，试高吟楚些，重与招魂</p>
+
+</blockquote>
+
+<p><img src="/1a9a/cyperpunk.png" alt="Welcome"></p>
+]]></content>
+      <categories>
+        <category>杂七杂八</category>
+      </categories>
+      <tags>
+        <tag>杂记</tag>
       </tags>
   </entry>
   <entry>

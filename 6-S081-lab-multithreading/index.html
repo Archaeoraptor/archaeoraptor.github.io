@@ -24,12 +24,12 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"zhangjk98.xyz","root":"/","images":"/images","scheme":"Pisces","darkmode":"auto","version":"8.11.0","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqusjs","storage":true,"lazyload":false,"nav":{"disqusjs":{"text":"Load Disqus","order":-1},"utterances":{"order":-2}},"activeClass":"disqusjs"},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"none","post_header":"none","post_body":"none","coll_header":"none","sidebar":"none"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="实现一个用户态线程uthread，就照着xv6的内核态线程抄呗。怎么什么FUSE啊、UIO啊，什么东西都想往用户态搬啊，连RCU都有人想往用户态搬。这个跟go的">
+    <meta name="description" content="实现一个用户态线程uthread，就照着xv6的内核态线程抄呗。怎么什么FUSE啊、UIO啊，什么东西都想往用户态搬啊，连RCU都有人想往用户态搬。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="6.S081 Lab Multithreading 笔记">
 <meta property="og:url" content="https://zhangjk98.xyz/6-S081-lab-multithreading/index.html">
 <meta property="og:site_name" content="止息的博客">
-<meta property="og:description" content="实现一个用户态线程uthread，就照着xv6的内核态线程抄呗。怎么什么FUSE啊、UIO啊，什么东西都想往用户态搬啊，连RCU都有人想往用户态搬。这个跟go的">
+<meta property="og:description" content="实现一个用户态线程uthread，就照着xv6的内核态线程抄呗。怎么什么FUSE啊、UIO啊，什么东西都想往用户态搬啊，连RCU都有人想往用户态搬。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://zhangjk98.xyz/6-S081-lab-multithreading/1650459636.png">
 <meta property="og:image" content="https://zhangjk98.xyz/6-S081-lab-multithreading/1650459961.png">
@@ -155,7 +155,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#xv6%E4%B8%AD%E7%9A%84process"><span class="nav-number">1.</span> <span class="nav-text">xv6中的process</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#process%E7%9A%84%E7%8A%B6%E6%80%81"><span class="nav-number">1.1.</span> <span class="nav-text">process的状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#process%E8%B0%83%E5%BA%A6"><span class="nav-number">1.2.</span> <span class="nav-text">process调度</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E7%8A%B6%E6%80%81%E5%88%87%E6%8D%A2"><span class="nav-number">1.2.1.</span> <span class="nav-text">运行状态切换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9D%A1%E7%9C%A0%E5%92%8C%E5%94%A4%E9%86%92"><span class="nav-number">1.2.2.</span> <span class="nav-text">睡眠和唤醒</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lab"><span class="nav-number">2.</span> <span class="nav-text">Lab</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Uthread-switching-between-threads-moderate"><span class="nav-number">2.1.</span> <span class="nav-text">Uthread: switching between threads (moderate)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-threads-moderate"><span class="nav-number">2.2.</span> <span class="nav-text">Using threads (moderate)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Barrier"><span class="nav-number">2.3.</span> <span class="nav-text">Barrier</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#xv6%E4%B8%AD%E7%9A%84process"><span class="nav-number">1.</span> <span class="nav-text">xv6中的process</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#process%E7%9A%84%E7%8A%B6%E6%80%81"><span class="nav-number">1.1.</span> <span class="nav-text">process的状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#process%E8%B0%83%E5%BA%A6"><span class="nav-number">1.2.</span> <span class="nav-text">process调度</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E7%8A%B6%E6%80%81%E5%88%87%E6%8D%A2"><span class="nav-number">1.2.1.</span> <span class="nav-text">运行状态切换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9D%A1%E7%9C%A0%E5%92%8C%E5%94%A4%E9%86%92"><span class="nav-number">1.2.2.</span> <span class="nav-text">睡眠和唤醒</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lab"><span class="nav-number">2.</span> <span class="nav-text">Lab</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Uthread-switching-between-threads-moderate"><span class="nav-number">2.1.</span> <span class="nav-text">Uthread: switching between threads (moderate)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-threads-moderate"><span class="nav-number">2.2.</span> <span class="nav-text">Using threads (moderate)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Barrier"><span class="nav-number">2.3.</span> <span class="nav-text">Barrier</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">3.</span> <span class="nav-text">小结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%93%BE%E6%8E%A5"><span class="nav-number">4.</span> <span class="nav-text">链接</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -170,7 +170,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">58</span>
+          <span class="site-state-item-count">59</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -181,7 +181,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">92</span>
+        <span class="site-state-item-count">94</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -283,6 +283,15 @@
 
       <time title="创建时间：2022-04-20 19:27:58" itemprop="dateCreated datePublished" datetime="2022-04-20T19:27:58+08:00">2022-04-20</time>
     </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux-Unix/" itemprop="url" rel="index"><span itemprop="name">Linux&Unix</span></a>
+        </span>
+    </span>
 
   
 </div>
@@ -294,7 +303,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>实现一个用户态线程uthread，就照着xv6的内核态线程抄呗。怎么什么FUSE啊、UIO啊，什么东西都想往用户态搬啊，连RCU都有人想往用户态搬。这个跟go的</p>
+        <p>实现一个用户态线程uthread，就照着xv6的内核态线程抄呗。怎么什么FUSE啊、UIO啊，什么东西都想往用户态搬啊，连RCU都有人想往用户态搬。</p>
 <span id="more"></span>
 
 <h2 id="xv6中的process"><a href="#xv6中的process" class="headerlink" title="xv6中的process"></a>xv6中的process</h2><h3 id="process的状态"><a href="#process的状态" class="headerlink" title="process的状态"></a>process的状态</h3><p>xv6的线程状态包括 UNUSED, USED, SLEEPING, RUNNABLE, RUNNING, ZOMBIE</p>
@@ -424,16 +433,16 @@
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>这里swtch是保存并切换context。<code>swtch(&amp;c-&gt;context, &amp;p-&gt;context);</code>表示保存c的context, 加载p的context。我们直接看一下<code>swtch.S</code>的代码就明白了：</p>
-<pre class="line-numbers language-asm" data-language="asm"><code class="language-asm">.globl swtch
+<pre class="line-numbers language-armasm" data-language="armasm"><code class="language-armasm">.globl swtch
 swtch:
-        sd ra, 0(a0)
-        sd sp, 8(a0)
-        sd s0, 16(a0)
+        sd ra<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">(</span>a0<span class="token punctuation">)</span>
+        sd sp<span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">(</span>a0<span class="token punctuation">)</span>
+        sd s0<span class="token punctuation">,</span> <span class="token number">16</span><span class="token punctuation">(</span>a0<span class="token punctuation">)</span>
         .......
 
-        ld ra, 0(a1)
-        ld sp, 8(a1)
-        ld s0, 16(a1)
+        ld ra<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">(</span>a1<span class="token punctuation">)</span>
+        ld sp<span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">(</span>a1<span class="token punctuation">)</span>
+        ld s0<span class="token punctuation">,</span> <span class="token number">16</span><span class="token punctuation">(</span>a1<span class="token punctuation">)</span>
         .......
 
         ret<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
@@ -554,8 +563,295 @@ swtch:
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="Lab"><a href="#Lab" class="headerlink" title="Lab"></a>Lab</h2><p>这个Lab有点意思，实现可以直接照抄内核态线程，做一个naive的用户态线程</p>
-<h3 id="Uthread-switching-between-threads-moderate"><a href="#Uthread-switching-between-threads-moderate" class="headerlink" title="Uthread: switching between threads (moderate)"></a>Uthread: switching between threads (moderate)</h3><h3 id="Using-threads-moderate"><a href="#Using-threads-moderate" class="headerlink" title="Using threads (moderate)"></a>Using threads (moderate)</h3><p>这个就是学一下怎么用pthread（这个是在unix&#x2F;linux里面，不是在qemu里），简单加一个mutex锁就好了</p>
-<h3 id="Barrier"><a href="#Barrier" class="headerlink" title="Barrier"></a>Barrier</h3><p>这个也是在linux下面，练习一下条件变量</p>
+<h3 id="Uthread-switching-between-threads-moderate"><a href="#Uthread-switching-between-threads-moderate" class="headerlink" title="Uthread: switching between threads (moderate)"></a>Uthread: switching between threads (moderate)</h3><p>用户态线程的状态只有三种，FREE, RUNNING, RUNNABLE。状态机比较简单。<code>thread_init</code>初始化的时候状态设为RUNNING</p>
+<p>创建a,b,c三个用户态thread,然后每个线程打印一次后就执行<code>thread_yield</code>切换线程，并将当前线程的状态设置为RUNNABLE</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">thread_yield</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    current_thread<span class="token operator">-></span>state <span class="token operator">=</span> RUNNABLE<span class="token punctuation">;</span>
+    <span class="token function">thread_schedule</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后在线程结束的时候将状态置为FREE, <code>current_thread-&gt;state = FREE;</code>，调用</p>
+<p><code>thread_create</code>传进来的参数是一个函数指针（比如thread_a）, 我们把函数指针存入ra寄存器，用来做恢复。<code>thread_create</code>实现可以参考<code>kernel/proc.c</code>里面的<code>allcproc()</code></p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">thread_create</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token punctuation">(</span><span class="token operator">*</span>func<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">struct</span> <span class="token class-name">thread</span> <span class="token operator">*</span>t<span class="token punctuation">;</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>t <span class="token operator">=</span> all_thread<span class="token punctuation">;</span> t <span class="token operator">&lt;</span> all_thread <span class="token operator">+</span> MAX_THREAD<span class="token punctuation">;</span> t<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>t<span class="token operator">-></span>state <span class="token operator">==</span> FREE<span class="token punctuation">)</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    t<span class="token operator">-></span>state <span class="token operator">=</span> RUNNABLE<span class="token punctuation">;</span>
+    t<span class="token operator">-></span>thread_context<span class="token punctuation">.</span>ra <span class="token operator">=</span> <span class="token punctuation">(</span>uint64<span class="token punctuation">)</span>func<span class="token punctuation">;</span>
+    t<span class="token operator">-></span>thread_context<span class="token punctuation">.</span>sp <span class="token operator">=</span> t<span class="token operator">-></span>stack <span class="token operator">+</span> STACK_SIZE<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>我们把<code>kernel/proc.h</code>中的context抄过来</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">// Saved registers for user context switches.</span>
+<span class="token keyword">struct</span> <span class="token class-name">user_context</span> <span class="token punctuation">&#123;</span>
+  uint64 ra<span class="token punctuation">;</span>
+  uint64 sp<span class="token punctuation">;</span>
+
+  <span class="token comment">// callee-saved</span>
+  uint64 s0<span class="token punctuation">;</span>
+  uint64 s1<span class="token punctuation">;</span>
+  uint64 s2<span class="token punctuation">;</span>
+  uint64 s3<span class="token punctuation">;</span>
+  uint64 s4<span class="token punctuation">;</span>
+  uint64 s5<span class="token punctuation">;</span>
+  uint64 s6<span class="token punctuation">;</span>
+  uint64 s7<span class="token punctuation">;</span>
+  uint64 s8<span class="token punctuation">;</span>
+  uint64 s9<span class="token punctuation">;</span>
+  uint64 s10<span class="token punctuation">;</span>
+  uint64 s11<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">struct</span> <span class="token class-name">thread</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">char</span> stack<span class="token punctuation">[</span>STACK_SIZE<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">/* the thread's stack */</span>
+    <span class="token keyword">int</span> state<span class="token punctuation">;</span>              <span class="token comment">/* FREE, RUNNING, RUNNABLE */</span>
+    <span class="token keyword">struct</span> <span class="token class-name">user_context</span> thread_context<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后<code>user/uthread_switch.S</code>中的<code>thread_switch</code>照抄<code>kernel/swtch.S</code>实现状态切换，不过<code>thread_switch</code>这里的上下文只保存Callee-saved的寄存器就可以了，所以我们删掉<code>sd ra, 0(a0)</code>和<code>ld ra, 0(a1)</code></p>
+<p><strong>sp寄存器是callee寄存器，只有ra寄存器是caller寄存器</strong>，这个不能删，删了之后用户线程没法切换了！一开始记错了把sp寄存器也记成caller寄存器了，没输出调了好久</p>
+<pre class="line-numbers language-armasm" data-language="armasm"><code class="language-armasm"><span class="token operator">#</span> void thread_switch<span class="token punctuation">(</span>struct context <span class="token operator">*</span>old<span class="token punctuation">,</span> struct context <span class="token operator">*</span>new<span class="token punctuation">)</span><span class="token comment">;</span>
+thread_switch:
+    sd sp<span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">(</span>a0<span class="token punctuation">)</span>
+    sd s0<span class="token punctuation">,</span> <span class="token number">16</span><span class="token punctuation">(</span>a0<span class="token punctuation">)</span>
+    sd s1<span class="token punctuation">,</span> <span class="token number">24</span><span class="token punctuation">(</span>a0<span class="token punctuation">)</span>
+    sd s2<span class="token punctuation">,</span> <span class="token number">32</span><span class="token punctuation">(</span>a0<span class="token punctuation">)</span>
+    sd s3<span class="token punctuation">,</span> <span class="token number">40</span><span class="token punctuation">(</span>a0<span class="token punctuation">)</span>
+    sd s4<span class="token punctuation">,</span> <span class="token number">48</span><span class="token punctuation">(</span>a0<span class="token punctuation">)</span>
+    sd s5<span class="token punctuation">,</span> <span class="token number">56</span><span class="token punctuation">(</span>a0<span class="token punctuation">)</span>
+    sd s6<span class="token punctuation">,</span> <span class="token number">64</span><span class="token punctuation">(</span>a0<span class="token punctuation">)</span>
+    sd s7<span class="token punctuation">,</span> <span class="token number">72</span><span class="token punctuation">(</span>a0<span class="token punctuation">)</span>
+    sd s8<span class="token punctuation">,</span> <span class="token number">80</span><span class="token punctuation">(</span>a0<span class="token punctuation">)</span>
+    sd s9<span class="token punctuation">,</span> <span class="token number">88</span><span class="token punctuation">(</span>a0<span class="token punctuation">)</span>
+    sd s10<span class="token punctuation">,</span> <span class="token number">96</span><span class="token punctuation">(</span>a0<span class="token punctuation">)</span>
+    sd s11<span class="token punctuation">,</span> <span class="token number">104</span><span class="token punctuation">(</span>a0<span class="token punctuation">)</span>
+
+    ld sp<span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">(</span>a1<span class="token punctuation">)</span>
+    ld s0<span class="token punctuation">,</span> <span class="token number">16</span><span class="token punctuation">(</span>a1<span class="token punctuation">)</span>
+    ld s1<span class="token punctuation">,</span> <span class="token number">24</span><span class="token punctuation">(</span>a1<span class="token punctuation">)</span>
+    ld s2<span class="token punctuation">,</span> <span class="token number">32</span><span class="token punctuation">(</span>a1<span class="token punctuation">)</span>
+    ld s3<span class="token punctuation">,</span> <span class="token number">40</span><span class="token punctuation">(</span>a1<span class="token punctuation">)</span>
+    ld s4<span class="token punctuation">,</span> <span class="token number">48</span><span class="token punctuation">(</span>a1<span class="token punctuation">)</span>
+    ld s5<span class="token punctuation">,</span> <span class="token number">56</span><span class="token punctuation">(</span>a1<span class="token punctuation">)</span>
+    ld s6<span class="token punctuation">,</span> <span class="token number">64</span><span class="token punctuation">(</span>a1<span class="token punctuation">)</span>
+    ld s7<span class="token punctuation">,</span> <span class="token number">72</span><span class="token punctuation">(</span>a1<span class="token punctuation">)</span>
+    ld s8<span class="token punctuation">,</span> <span class="token number">80</span><span class="token punctuation">(</span>a1<span class="token punctuation">)</span>
+    ld s9<span class="token punctuation">,</span> <span class="token number">88</span><span class="token punctuation">(</span>a1<span class="token punctuation">)</span>
+    ld s10<span class="token punctuation">,</span> <span class="token number">96</span><span class="token punctuation">(</span>a1<span class="token punctuation">)</span>
+    ld s11<span class="token punctuation">,</span> <span class="token number">104</span><span class="token punctuation">(</span>a1<span class="token punctuation">)</span>
+
+	ret    <span class="token operator">/</span><span class="token operator">*</span> return to ra <span class="token operator">*</span><span class="token operator">/</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后在<code>thread_switch</code>里面直接调用<code>thread_switch((uint64)t, (uint64)current_thread);</code></p>
+<p>然后。。。报错了。调了一下午没找到哪出问题了，gdb打出来的调试信息看不出来。这个报错跟当初页表那个很像，debug的时候被误导了。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ uthread
+usertrap<span class="token punctuation">(</span><span class="token punctuation">)</span>: unexpected scause 0x000000000000000f <span class="token assign-left variable">pid</span><span class="token operator">=</span><span class="token number">3</span>
+            <span class="token assign-left variable">sepc</span><span class="token operator">=</span>0x0000000000000002 <span class="token assign-left variable">stval</span><span class="token operator">=</span>0xfffffffffffffff8<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>调了半天发现是我thread_switch的函数参数传错了，传进去的应该是context，寄存器a0是第一个参数，寄存器a1是参数，放的是寄存器的struct，然后按照地址偏移分别对应s0，s1等Callee寄存器的值</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token function">thread_switch</span><span class="token punctuation">(</span><span class="token punctuation">(</span>uint64<span class="token punctuation">)</span><span class="token operator">&amp;</span>t<span class="token operator">-></span>thread_context<span class="token punctuation">,</span> <span class="token punctuation">(</span>uint64<span class="token punctuation">)</span><span class="token operator">&amp;</span>current_thread<span class="token operator">-></span>thread_context<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>终于正常了</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c">$ uthread
+<span class="token number">310514718</span>thread_a started
+thread_b started
+thread_c started
+thread_c <span class="token number">0</span>
+thread_a <span class="token number">0</span>
+thread_b <span class="token number">0</span>
+thread_c <span class="token number">1</span>
+thread_a <span class="token number">1</span>
+thread_b <span class="token number">1</span>
+thread_c <span class="token number">2</span>
+thread_a <span class="token number">2</span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+thread_c <span class="token number">99</span>
+thread_a <span class="token number">99</span>
+thread_b <span class="token number">99</span>
+thread_c<span class="token operator">:</span> exit after <span class="token number">100</span>
+thread_a<span class="token operator">:</span> exit after <span class="token number">100</span>
+thread_b<span class="token operator">:</span> exit after <span class="token number">100</span>
+thread_schedule<span class="token operator">:</span> no runnable threads<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="Using-threads-moderate"><a href="#Using-threads-moderate" class="headerlink" title="Using threads (moderate)"></a>Using threads (moderate)</h3><p>这个就是学一下怎么用pthread（这个是在unix&#x2F;linux里面，不是在qemu里），练习一下加mutex锁。<code>ph.c</code>里面有一个并发不安全的哈希表，就是一个简单的取模，然后放到相应的bucket里面，bucket中有重复的key就依次加到链表的后面。实现就和leetcode 706 设计哈希映射的官方题解差不多。这里bucket数量是5，所以很容易发生冲突，缓解hash冲突的一般做法是bucket去一个更大的质数，或者设计其他更好的hash函数减少hash冲突，或者我们不要链表，用开放定址或者rehash去解决hash冲突</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token variable">$make</span> ph
+$./ph <span class="token number">1</span>
+<span class="token number">100000</span> puts, <span class="token number">5.690</span> seconds, <span class="token number">17573</span> puts/second
+<span class="token number">0</span>: <span class="token number">0</span> keys missing
+<span class="token number">100000</span> gets, <span class="token number">5.491</span> seconds, <span class="token number">18211</span> gets/second<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>我们把线程开多一点</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$./ph <span class="token number">10</span>
+<span class="token number">100000</span> puts, <span class="token number">0.333</span> seconds, <span class="token number">300217</span> puts/second
+<span class="token number">2</span>: <span class="token number">63594</span> keys missing
+<span class="token number">7</span>: <span class="token number">63594</span> keys missing
+<span class="token number">1</span>: <span class="token number">63594</span> keys missing
+<span class="token number">9</span>: <span class="token number">63594</span> keys missing
+<span class="token number">5</span>: <span class="token number">63594</span> keys missing
+<span class="token number">8</span>: <span class="token number">63594</span> keys missing
+<span class="token number">6</span>: <span class="token number">63594</span> keys missing
+<span class="token number">4</span>: <span class="token number">63594</span> keys missing
+<span class="token number">0</span>: <span class="token number">63594</span> keys missing
+<span class="token number">3</span>: <span class="token number">63594</span> keys missing
+<span class="token number">1000000</span> gets, <span class="token number">5.871</span> seconds, <span class="token number">170320</span> gets/second<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后我们把线程开到100，现在打字都卡了, 成千上万个 key missng。这里的hashmap在并发写的时候会冲突，就像go的map一样并发写的时候会直接报<code>fatal error: concurrent map writes</code>。读是没有关系的，但是<code>ph.c</code>第26行那个insert在写的时候是向entry（存key和value的链表后面加），并发写会把同时正在插入的覆盖掉。</p>
+<p>Go map in actions 中有一个非常简单的给map加锁的例子</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">var</span> counter <span class="token operator">=</span> <span class="token keyword">struct</span><span class="token punctuation">&#123;</span>
+    sync<span class="token punctuation">.</span>RWMutex
+    m <span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token builtin">int</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">&#123;</span>m<span class="token punctuation">:</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span><span class="token punctuation">&#125;</span>
+
+counter<span class="token punctuation">.</span><span class="token function">RLock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+n <span class="token operator">:=</span> counter<span class="token punctuation">.</span>m<span class="token punctuation">[</span><span class="token string">"some_key"</span><span class="token punctuation">]</span>
+counter<span class="token punctuation">.</span><span class="token function">RUnlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"some_key:"</span><span class="token punctuation">,</span> n<span class="token punctuation">)</span>
+
+counter<span class="token punctuation">.</span><span class="token function">Lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+counter<span class="token punctuation">.</span>m<span class="token punctuation">[</span><span class="token string">"some_key"</span><span class="token punctuation">]</span><span class="token operator">++</span>
+counter<span class="token punctuation">.</span><span class="token function">Unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>我们仿照go的map写入加<code>sync.Mutex</code>，给insert加互斥锁。</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token class-name">pthread_mutex_t</span> lock<span class="token punctuation">;</span> <span class="token comment">// declare a lock</span>
+
+<span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token operator">*</span><span class="token function">put_thread</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>xa<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> n <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">long</span><span class="token punctuation">)</span>xa<span class="token punctuation">;</span> <span class="token comment">// thread number</span>
+    <span class="token keyword">int</span> b <span class="token operator">=</span> NKEYS <span class="token operator">/</span> nthread<span class="token punctuation">;</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> b<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">pthread_mutex_lock</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">put</span><span class="token punctuation">(</span>keys<span class="token punctuation">[</span>b <span class="token operator">*</span> n <span class="token operator">+</span> i<span class="token punctuation">]</span><span class="token punctuation">,</span> n<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">pthread_mutex_unlock</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后就没有missing了</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token variable">$make</span> ph
+$./ph <span class="token number">2</span>
+<span class="token number">100000</span> puts, <span class="token number">5.522</span> seconds, <span class="token number">18111</span> puts/second
+<span class="token number">1</span>: <span class="token number">0</span> keys missing
+<span class="token number">0</span>: <span class="token number">0</span> keys missing
+<span class="token number">200000</span> gets, <span class="token number">5.628</span> seconds, <span class="token number">35535</span> gets/second<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>但是这样有一个问题，速度没什么优势，把nthread开到10，puts用时6.094 seconds，还不如单线程。<code>make grade</code>的时候只能跑过<code>ph_safe</code>，没法通过<code>ph_fast</code>的。</p>
+<p>想要速度我们需要更细粒度的锁，我们仿照go的concurrent-map那样分片加锁的方案在insert插入的时候给对应的bucket加锁。（go的sync.Map的那个加锁比较适合读多写少的方案，这里大量写入优势不大）这里我们只要对每个bucket单独加锁就可以了，问题转换为对entry链表加锁，我们用NBUCKET把小锁分别对NBUCKET个entry链表加锁。</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token class-name">pthread_mutex_t</span> lock<span class="token punctuation">[</span>NBUCKET<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// declare a lock</span>
+
+<span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">put</span><span class="token punctuation">(</span><span class="token keyword">int</span> key<span class="token punctuation">,</span> <span class="token keyword">int</span> value<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> i <span class="token operator">=</span> key <span class="token operator">%</span> NBUCKET<span class="token punctuation">;</span>
+
+    <span class="token comment">// is the key already present?</span>
+    <span class="token keyword">struct</span> <span class="token class-name">entry</span> <span class="token operator">*</span>e <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>e <span class="token operator">=</span> table<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span> e <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">;</span> e <span class="token operator">=</span> e<span class="token operator">-></span>next<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>e<span class="token operator">-></span>key <span class="token operator">==</span> key<span class="token punctuation">)</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// update the existing key.</span>
+        e<span class="token operator">-></span>value <span class="token operator">=</span> value<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// the new is new.</span>
+        <span class="token function">pthread_mutex_lock</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>lock<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">insert</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> value<span class="token punctuation">,</span> <span class="token operator">&amp;</span>table<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> table<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">pthread_mutex_lock</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>lock<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">pthread_mutex_init</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>lock<span class="token punctuation">[</span>NBUCKET<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$./ph <span class="token number">10</span>
+<span class="token number">100000</span> puts, <span class="token number">0.684</span> seconds, <span class="token number">146180</span> puts/second
+<span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>这样就足以跑过<code>ph_fast</code>的测试了（其实如果想偷鸡直接将NBUCKET改成一个大点的质数减少一下hash冲突就能用大锁跑过测试）</p>
+<p>还有更细粒度的加锁方案，就是对链表（entry）的节点加锁，不过通常设计比较好的hashmap的拉链，链表不会很长。这里就不这么加了。</p>
+<p>还有一种链表并发的方案就是rcu，不过这个是在内核态实现的，想要在userspace模仿一个有点难。</p>
+<h3 id="Barrier"><a href="#Barrier" class="headerlink" title="Barrier"></a>Barrier</h3><p>这个也是在Unix&#x2F;linux真机下面，练习一下条件变量。这个barrier是用<code>pthread_cond</code>实现的，<code>a point in an application at which all participating threads must wait until all other participating threads reach that point too. </code></p>
+<p>让执行完的线程wait(睡眠)，然后面足条件的时候调用signal唤醒，这里全部唤醒用broadcast就好了。</p>
+<p>注意使用条件变量的时候需要加锁，参考Three Easy Piecies第30章。某些情况下signal可以不加锁，但是wait必须要加锁。<code>hold the lock when calling signal</code>，不然会发生race，书里给了一个例子：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">thr_exit</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  done <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+  <span class="token function">Pthread_cond_signal</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>c<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">void</span> <span class="token function">thr_join</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>done <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">Pthread_cond_wait</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>c<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这个时候如果一个thread执行<code>thr_join</code>，满足done为0，开始wait睡眠，但是在判断完if到执行wait睡眠的期间，<code>thr_exit()</code>开始执行唤醒全部全部线程，那么这个thread执行wait就会一直sleep醒不过来了（书里面是用的parent和child的例子）</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">barrier</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// Block until all threads have called barrier() and</span>
+    <span class="token function">pthread_mutex_lock</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>bstate<span class="token punctuation">.</span>barrier_mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    bstate<span class="token punctuation">.</span>nthread<span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>bstate<span class="token punctuation">.</span>nthread <span class="token operator">&lt;</span> nthread<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">pthread_cond_wait</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>bstate<span class="token punctuation">.</span>barrier_cond<span class="token punctuation">,</span> <span class="token operator">&amp;</span>bstate<span class="token punctuation">.</span>barrier_mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span> 
+    <span class="token function">pthread_mutex_unlock</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>bstate<span class="token punctuation">.</span>barrier_mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 这个锁也要加上，不然唤醒的时候如果有线程睡眠会睡死</span>
+    <span class="token function">pthread_mutex_lock</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>bstate<span class="token punctuation">.</span>barrier_mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>bstate<span class="token punctuation">.</span>nthread <span class="token operator">==</span> nthread<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        bstate<span class="token punctuation">.</span>nthread <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        bstate<span class="token punctuation">.</span>round<span class="token operator">++</span><span class="token punctuation">;</span>
+        <span class="token function">pthread_cond_broadcast</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>bstate<span class="token punctuation">.</span>barrier_cond<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">pthread_mutex_unlock</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>bstate<span class="token punctuation">.</span>barrier_mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这样<code>./barrier 100</code>就pass了。如果我们不加mutex锁，那么<code>./barrier 100</code>是会一直卡在那里结束不了的。如果我们执行strace看一下<code>strace ./barrier 100</code>，会发现卡在这个地方</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token function">futex</span><span class="token punctuation">(</span><span class="token number">0x7f0a8b7a1910</span><span class="token punctuation">,</span> FUTEX_WAIT_BITSET<span class="token operator">|</span>FUTEX_CLOCK_REALTIME<span class="token punctuation">,</span> <span class="token number">219673</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> FUTEX_BITSET_MATCH_ANY<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token operator">?</span> <span class="token function">ERESTARTSYS</span> <span class="token punctuation">(</span>To be restarted <span class="token keyword">if</span> SA_RESTART is set<span class="token punctuation">)</span>
+<span class="token operator">--</span><span class="token operator">-</span> SIGWINCH <span class="token punctuation">&#123;</span>si_signo<span class="token operator">=</span>SIGWINCH<span class="token punctuation">,</span> si_code<span class="token operator">=</span>SI_KERNEL<span class="token punctuation">&#125;</span> <span class="token operator">--</span><span class="token operator">-</span>
+<span class="token function">futex</span><span class="token punctuation">(</span><span class="token number">0x7f0a8b7a1910</span><span class="token punctuation">,</span> FUTEX_WAIT_BITSET<span class="token operator">|</span>FUTEX_CLOCK_REALTIME<span class="token punctuation">,</span> <span class="token number">219673</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> FUTEX_BITSET_MATCH_ANY<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>用<code>valgrind --tool=helgrind ./barrier 2</code>检查了一下，应该这样也是可以的，都加到一把锁里面</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">barrier</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// Block until all threads have called barrier() and</span>
+    <span class="token function">pthread_mutex_lock</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>bstate<span class="token punctuation">.</span>barrier_mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    bstate<span class="token punctuation">.</span>nthread<span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>bstate<span class="token punctuation">.</span>nthread <span class="token operator">&lt;</span> nthread<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">pthread_cond_wait</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>bstate<span class="token punctuation">.</span>barrier_cond<span class="token punctuation">,</span> <span class="token operator">&amp;</span>bstate<span class="token punctuation">.</span>barrier_mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span> 
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>bstate<span class="token punctuation">.</span>nthread <span class="token operator">==</span> nthread<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        bstate<span class="token punctuation">.</span>nthread <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        bstate<span class="token punctuation">.</span>round<span class="token operator">++</span><span class="token punctuation">;</span>
+        <span class="token function">pthread_cond_broadcast</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>bstate<span class="token punctuation">.</span>barrier_cond<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">pthread_mutex_unlock</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>bstate<span class="token punctuation">.</span>barrier_mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>这次看题目本来以为很简单的，用户态thread就照着内核线程抄一个呗，剩下两个就是用一下pthread和锁呗。然后写起来debug就花了很久的时间，对寄存器不太熟，频繁翻车。然后折腾了两天才整出来</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">make</span> grade
+uthread: OK <span class="token punctuation">(</span><span class="token number">2</span>.5s<span class="token punctuation">)</span> 
+<span class="token operator">==</span> Test answers-thread.txt <span class="token operator">==</span> answers-thread.txt: OK 
+<span class="token operator">==</span> Test ph_safe <span class="token operator">==</span> make<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>: Entering directory <span class="token string">'/home/zhixi/codes/xv6-labs-2021'</span>
+gcc -o ph -g -O2 -DSOL_THREAD -DLAB_THREAD notxv6/ph.c -pthread
+make<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>: Leaving directory <span class="token string">'/home/zhixi/codes/xv6-labs-2021'</span>
+ph_safe: OK <span class="token punctuation">(</span><span class="token number">8</span>.0s<span class="token punctuation">)</span> 
+<span class="token operator">==</span> Test ph_fast <span class="token operator">==</span> make<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>: Entering directory <span class="token string">'/home/zhixi/codes/xv6-labs-2021'</span>
+make<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>: <span class="token string">'ph'</span> is up to date.
+make<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>: Leaving directory <span class="token string">'/home/zhixi/codes/xv6-labs-2021'</span>
+ph_fast: OK <span class="token punctuation">(</span><span class="token number">19</span>.7s<span class="token punctuation">)</span> 
+<span class="token operator">==</span> Test barrier <span class="token operator">==</span> make<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>: Entering directory <span class="token string">'/home/zhixi/codes/xv6-labs-2021'</span>
+gcc -o barrier -g -O2 -DSOL_THREAD -DLAB_THREAD notxv6/barrier.c -pthread
+make<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>: Leaving directory <span class="token string">'/home/zhixi/codes/xv6-labs-2021'</span>
+barrier: OK <span class="token punctuation">(</span><span class="token number">2</span>.7s<span class="token punctuation">)</span> 
+<span class="token operator">==</span> Test <span class="token function">time</span> <span class="token operator">==</span> 
+time: OK 
+Score: <span class="token number">60</span>/60<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><span class="exturl" data-url="aHR0cHM6Ly9wZG9zLmNzYWlsLm1pdC5lZHUvNi5TMDgxLzIwMjAvbGFicy90aHJlYWQuaHRtbA==">https://pdos.csail.mit.edu/6.S081/2020/labs/thread.html<i class="fa fa-external-link-alt"></i></span>   </p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9xdWVzdGlvbnMvOTQxMC9ob3ctZG8teW91LXBhc3MtYS1mdW5jdGlvbi1hcy1hLXBhcmFtZXRlci1pbi1j">How do you pass a function as a parameter in C?<i class="fa fa-external-link-alt"></i></span>  </p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9nby5kZXYvYmxvZy9tYXBz">Go Map in Actions<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2dvbGFuZy9nby9ibG9iL21hc3Rlci9zcmMvc3luYy9tYXAuZ28=">https://github.com/golang/go/blob/master/src/sync/map.go<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9wa2cuZ28uZGV2L3N5bmM/dXRtX3NvdXJjZT1nb2RvYyNNYXA=">https://pkg.go.dev/sync?utm_source=godoc#Map<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9jb2xvYnUuY29tLzIwMTcvMDcvMTEvZGl2ZS1pbnRvLXN5bmMtTWFwLw==">Go 1.9 sync.Map揭秘<i class="fa fa-external-link-alt"></i></span> 鸟窝大大写的sync.Mutex介绍  </p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9wYWdlcy5jcy53aXNjLmVkdS9+cmVtemkvT1NURVAv">Operating Systems Three Easy Pices<i class="fa fa-external-link-alt"></i></span>，中文就是那个蓝皮的操作系统导论<br>第29章，讲并发链表、并发队列和并发散列表<br>第20章，讲条件变量  </p>
 
     </div>
 
@@ -573,8 +869,8 @@ swtch:
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/unboxing-trackball-kensington-k72337/" rel="prev" title="轨迹球Kensington k72337开箱">
-                  <i class="fa fa-chevron-left"></i> 轨迹球Kensington k72337开箱
+                <a href="/6-S081-lab-filesystem/" rel="prev" title="6.S081 Lab Filesystem 笔记">
+                  <i class="fa fa-chevron-left"></i> 6.S081 Lab Filesystem 笔记
                 </a>
             </div>
             <div class="post-nav-item">

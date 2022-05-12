@@ -36,7 +36,6 @@
 <meta property="og:image" content="https://zhangjk98.xyz/6.S081-VSCode-prepare-and-kernel-debugging/1626525086.png">
 <meta property="og:image" content="https://zhangjk98.xyz/6.S081-VSCode-prepare-and-kernel-debugging/1626525345.png">
 <meta property="og:image" content="https://zhangjk98.xyz/6.S081-VSCode-prepare-and-kernel-debugging/1626526305.png">
-<meta property="og:image" content="https://zhangjk98.xyz/6.S081-VSCode-prepare-and-kernel-debugging/1626579434.png">
 <meta property="article:published_time" content="2021-07-08T14:11:18.000Z">
 <meta property="article:author" content="Zhang.j.k">
 <meta property="article:tag" content="6.S081">
@@ -160,7 +159,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E7%8E%AF%E5%A2%83"><span class="nav-number">1.</span> <span class="nav-text">准备环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Archlinux%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-number">1.1.</span> <span class="nav-text">Archlinux环境配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0Ubuntu20-04%E9%85%8D%E7%BD%AE"><span class="nav-number">1.2.</span> <span class="nav-text">更新Ubuntu20.04配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hello-World"><span class="nav-number">1.3.</span> <span class="nav-text">Hello, World</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gdb-qemu%E8%B0%83%E8%AF%95"><span class="nav-number">2.</span> <span class="nav-text">gdb+qemu调试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-number">2.1.</span> <span class="nav-text">使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E4%BF%A1%E6%81%AF"><span class="nav-number">2.2.</span> <span class="nav-text">其他信息</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-number">2.2.1.</span> <span class="nav-text">寄存器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B"><span class="nav-number">2.2.2.</span> <span class="nav-text">进程</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VSCode%E9%85%8D%E7%BD%AE"><span class="nav-number">3.</span> <span class="nav-text">VSCode配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E6%8F%90%E7%A4%BA%E5%92%8C%E8%87%AA%E5%8A%A8%E8%A1%A5%E5%85%A8"><span class="nav-number">3.1.</span> <span class="nav-text">代码提示和自动补全</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gdb%E8%B0%83%E8%AF%95"><span class="nav-number">3.2.</span> <span class="nav-text">gdb调试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8clangd-format%E8%BF%9B%E8%A1%8Cxv6%E4%BB%A3%E7%A0%81%E9%A3%8E%E6%A0%BC%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96"><span class="nav-number">3.3.</span> <span class="nav-text">使用clangd-format进行xv6代码风格的格式化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#clion%E7%AD%89IDE"><span class="nav-number">3.4.</span> <span class="nav-text">clion等IDE</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E9%97%AE%E9%A2%98"><span class="nav-number">4.</span> <span class="nav-text">其他问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#gdb%E8%B0%83%E8%AF%95%E6%8A%A5%E9%94%99Cannot-access-memory-at-address"><span class="nav-number">4.1.</span> <span class="nav-text">gdb调试报错Cannot access memory at address</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%93%BE%E6%8E%A5"><span class="nav-number">5.</span> <span class="nav-text">链接</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E7%8E%AF%E5%A2%83"><span class="nav-number">1.</span> <span class="nav-text">准备环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Archlinux%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-number">1.1.</span> <span class="nav-text">Archlinux环境配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0Ubuntu20-04%E9%85%8D%E7%BD%AE"><span class="nav-number">1.2.</span> <span class="nav-text">更新Ubuntu20.04配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hello-World"><span class="nav-number">1.3.</span> <span class="nav-text">Hello, World</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gdb-qemu%E8%B0%83%E8%AF%95"><span class="nav-number">2.</span> <span class="nav-text">gdb+qemu调试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-number">2.1.</span> <span class="nav-text">使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E4%BF%A1%E6%81%AF"><span class="nav-number">2.2.</span> <span class="nav-text">其他信息</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-number">2.2.1.</span> <span class="nav-text">寄存器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B"><span class="nav-number">2.2.2.</span> <span class="nav-text">进程</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VSCode%E9%85%8D%E7%BD%AE"><span class="nav-number">3.</span> <span class="nav-text">VSCode配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E6%8F%90%E7%A4%BA%E5%92%8C%E8%87%AA%E5%8A%A8%E8%A1%A5%E5%85%A8"><span class="nav-number">3.1.</span> <span class="nav-text">代码提示和自动补全</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8clangd-format%E8%BF%9B%E8%A1%8Cxv6%E4%BB%A3%E7%A0%81%E9%A3%8E%E6%A0%BC%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96"><span class="nav-number">3.2.</span> <span class="nav-text">使用clangd-format进行xv6代码风格的格式化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E9%97%AE%E9%A2%98"><span class="nav-number">4.</span> <span class="nav-text">其他问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#gdb%E8%B0%83%E8%AF%95%E6%8A%A5%E9%94%99Cannot-access-memory-at-address"><span class="nav-number">4.1.</span> <span class="nav-text">gdb调试报错Cannot access memory at address</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%93%BE%E6%8E%A5"><span class="nav-number">5.</span> <span class="nav-text">链接</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -175,7 +174,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">58</span>
+          <span class="site-state-item-count">59</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -186,7 +185,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">92</span>
+        <span class="site-state-item-count">94</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -488,45 +487,11 @@ mucounteren    Could not fetch register &quot;mucounteren&quot;; remote failure 
 <h2 id="VSCode配置"><a href="#VSCode配置" class="headerlink" title="VSCode配置"></a>VSCode配置</h2><h3 id="代码提示和自动补全"><a href="#代码提示和自动补全" class="headerlink" title="代码提示和自动补全"></a>代码提示和自动补全</h3><p>自动补全插件推荐clangd（比Microsoft官方的那个c&#x2F;c++ extension好用）</p>
 <p>默认的库函数提示会告诉你找不到<code>kernel/kernel.h</code>，需要手动添加</p>
 <p><img src="/6.S081-VSCode-prepare-and-kernel-debugging/1626526305.png"></p>
-<h3 id="gdb调试"><a href="#gdb调试" class="headerlink" title="gdb调试"></a>gdb调试</h3><p>参照这篇博客设置<span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vS2F0eXVNYXJpc2FCbG9nL3AvMTM3Mjc1NjUuaHRtbA==">MIT 6.S081 xv6调试不完全指北<i class="fa fa-external-link-alt"></i></span>，改一改那个<code>launch.json</code>。</p>
-<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
-    <span class="token property">"version"</span><span class="token operator">:</span> <span class="token string">"0.2.0"</span><span class="token punctuation">,</span>
-    <span class="token property">"configurations"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-        <span class="token punctuation">&#123;</span>
-            <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"debug xv6"</span><span class="token punctuation">,</span>
-            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"cppdbg"</span><span class="token punctuation">,</span>
-            <span class="token property">"request"</span><span class="token operator">:</span> <span class="token string">"launch"</span><span class="token punctuation">,</span>
-            <span class="token property">"program"</span><span class="token operator">:</span> <span class="token string">"$&#123;workspaceFolder&#125;/kernel/kernel"</span><span class="token punctuation">,</span>
-            <span class="token property">"args"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-            <span class="token property">"stopAtEntry"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
-            <span class="token property">"cwd"</span><span class="token operator">:</span> <span class="token string">"$&#123;workspaceFolder&#125;"</span><span class="token punctuation">,</span>
-            <span class="token property">"miDebuggerServerAddress"</span><span class="token operator">:</span> <span class="token string">"211.83.111.224:26000"</span><span class="token punctuation">,</span>
-            <span class="token property">"miDebuggerPath"</span><span class="token operator">:</span> <span class="token string">"/usr/bin/gdb-multiarch"</span><span class="token punctuation">,</span>
-            <span class="token property">"environment"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-            <span class="token property">"externalConsole"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
-            <span class="token property">"MIMode"</span><span class="token operator">:</span> <span class="token string">"gdb"</span><span class="token punctuation">,</span>
-            <span class="token property">"setupCommands"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-                <span class="token punctuation">&#123;</span>
-                    <span class="token property">"description"</span><span class="token operator">:</span> <span class="token string">"pretty printing"</span><span class="token punctuation">,</span>
-                    <span class="token property">"text"</span><span class="token operator">:</span> <span class="token string">"-enable-pretty-printing"</span><span class="token punctuation">,</span>
-                    <span class="token property">"ignoreFailures"</span><span class="token operator">:</span> <span class="token boolean">true</span>
-                <span class="token punctuation">&#125;</span>
-            <span class="token punctuation">]</span><span class="token punctuation">,</span>
-            <span class="token property">"logging"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
-                <span class="token comment">// "engineLogging": true,</span>
-                <span class="token comment">// "programOutput": true,</span>
-            <span class="token punctuation">&#125;</span>
-        <span class="token punctuation">&#125;</span>
-    <span class="token punctuation">]</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>用clangd你需要一个<code>compile_commands.json</code>，我们可以安装bear，然后用bear生成<code>compile_commands.json</code></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> pacman -S bear
+bear -- <span class="token function">make</span> qemu<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<p>然后删掉<code>.gdbinit</code>里<code>target remote 127.0.0.1:26000</code></p>
-<p>然后其他的都跟这篇博客里的差不多，以<code>ls</code>为例：</p>
-<pre class="line-numbers language-gdb" data-language="gdb"><code class="language-gdb">-exec file user&#x2F;_ls<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p><img src="/6.S081-VSCode-prepare-and-kernel-debugging/1626579434.png"></p>
-<p>于是就可以并不太愉快的debug了。试了一下发现其实体验还没直接在gdb里面敲命令好，vscode的debugger跟IDE差距很大，鼠标点来点去可能都没有gdb直接敲命令舒服。</p>
-<p><strong>如果真想找一个好的图形化debugger推荐nemiver</strong></p>
+<p>然后clangd插件就可以正常的跳转和识别头文件了</p>
 <h3 id="使用clangd-format进行xv6代码风格的格式化"><a href="#使用clangd-format进行xv6代码风格的格式化" class="headerlink" title="使用clangd-format进行xv6代码风格的格式化"></a>使用clangd-format进行xv6代码风格的格式化</h3><p>有没有像Golang的go-fmt一样强制代码格式化的东西呢，有的，<span class="exturl" data-url="aHR0cHM6Ly9jbGFuZy5sbHZtLm9yZy9kb2NzL0NsYW5nRm9ybWF0Lmh0bWw=">clang format<i class="fa fa-external-link-alt"></i></span>。</p>
 <p>安装<code>clangd</code>插件，在VSCode的设置里面启用<code>format on save</code>，然后在根目录下新建<code>.clang-format</code>文件。每次<code>ctrl+s</code>的时候就可以像go-fmt插件那样格式化代码了。</p>
 <p>很遗憾的是，c&#x2F;c++的代码风格并没有一个官方的统一风格，各种风格争论不休。<br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3RvcnZhbGRzL2xpbnV4L2Jsb2IvbWFzdGVyLy5jbGFuZy1mb3JtYXQ=">Linux的format风格<i class="fa fa-external-link-alt"></i></span>我不太习惯，比如一个tab占8个空格。<br>下面是我改了改llvm风格的配置，跟6.828Lab的xv6风格不太一样，函数类型和函数一行，tab是4个空格（tab空两个看起来真的难受，早期显示屏小才这样子干，我觉得24寸以上显示器空四个才是合理的），括号换行和golang一样。（不然在go和c之间来回切换我要精神分裂了）</p>
@@ -552,12 +517,10 @@ mucounteren    Could not fetch register &quot;mucounteren&quot;; remote failure 
 <span class="token property">make:</span> <span class="token separator comment">***</span> <span class="token punctuation">[</span><span class="token operator">&lt;</span>builtin<span class="token operator">></span><span class="token operator">:</span> user<span class="token operator">/</span>pingpong<span class="token punctuation">.</span>o<span class="token punctuation">]</span> Error <span class="token number">1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>ps：如果你想要xv6Lab的风格，可以用Mozilla的风格改一改。</p>
-<h3 id="clion等IDE"><a href="#clion等IDE" class="headerlink" title="clion等IDE"></a>clion等IDE</h3><p>大多数时候用的VSCode，clion不怎么用。（不是我不想用，教研室那个七年前的老电脑用Jetbrains家的IDE实在是有点卡，而且JB还经常封你电邮箱，要用学生证照片去申请学生帐号）</p>
-<p>clion的配置可以参考<br><span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8xNjY0MTM2MDQ=">https://zhuanlan.zhihu.com/p/166413604<i class="fa fa-external-link-alt"></i></span></p>
 <h2 id="其他问题"><a href="#其他问题" class="headerlink" title="其他问题"></a>其他问题</h2><h3 id="gdb调试报错Cannot-access-memory-at-address"><a href="#gdb调试报错Cannot-access-memory-at-address" class="headerlink" title="gdb调试报错Cannot access memory at address"></a>gdb调试报错Cannot access memory at address</h3><p>我在Archlinux下用<code>riscv64-linux-gnu-gdb</code>调试会报<code>Cannot access memory at address 0x278</code></p>
 <p>本来以为是跟以前在ARM上内核地址随机化一样的问题，关了随机化还是不行，最后发现要在<code>.gdbinit.tmpl-riscv</code>加一条<code>set riscv use-compressed-breakpoints yes</code></p>
 <h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vS2F0eXVNYXJpc2FCbG9nL3AvMTM3Mjc1NjUuaHRtbA==">MIT 6.S081 xv6调试不完全指北<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9wZG9zLmNzYWlsLm1pdC5lZHUvNi44MjgvMjAyMC9sZWMvZ2RiX3NsaWRlcy5wZGY=">Using the GNU Debugger<i class="fa fa-external-link-alt"></i></span></p>
-<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3dhYnNjYWxlL3h2Ni1wdWJsaWM=">https://github.com/wabscale/xv6-public<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3dhYnNjYWxlL3h2Ni1wdWJsaWM=">https://github.com/wabscale/xv6-public<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3JpenNvdHRvL0JlYXI=">https://github.com/rizsotto/Bear<i class="fa fa-external-link-alt"></i></span></p>
 
     </div>
 
