@@ -997,24 +997,109 @@ Score: <span class="token number">60</span>/60<span aria-hidden="true" class="li
   <entry>
     <title>6.S081 Lab Networking 笔记，完结撒花</title>
     <url>/6-S081-lab-network-driver/</url>
-    <content><![CDATA[<p>这个Lab就是补全一个DMA收发的驱动, 不要被Lab标的Hard难度吓到，我感觉这是6.S081这几个Lab最简单的几个Lab之一。写个驱动都不用上板子调试，没啥意思，怎么感觉比当年你电PPT吹水课程微嵌的实验大作业给FPGA的板子写个驱动还水。。。<br>最后一个Lab放水，愉快的完结撒花。等等，这个Lab还有附加内容，实现一个TCP&#x2F;UDP协议栈。。。</p>
+    <content><![CDATA[<p>这个Lab就是补全一个DMA收发的驱动, 不要被Lab标的Hard难度吓到，我感觉这是6.S081这几个Lab最简单的几个Lab之一。写个驱动都不用上板子调试，没啥意思，怎么感觉比当年你电PPT吹水课程微嵌的实验大作业给FPGA的板子写个驱动还水。。。<br>最后一个Lab放水，愉快的完结撒花。也难怪在2021 fall的lab net不是最后一个。等等，这个Lab还有附加内容，实现一个TCP&#x2F;UDP协议栈。。。</p>
 <span id="more"></span>
 
-<h2 id="Lab内容"><a href="#Lab内容" class="headerlink" title="Lab内容"></a>Lab内容</h2><p>做起来这个Lab挺没意思的，e1000这种远古网卡</p>
+<h2 id="Lab内容"><a href="#Lab内容" class="headerlink" title="Lab内容"></a>Lab内容</h2><p>这个难度明明是easy，不要被标的那个hard吓到了。做起来这个Lab挺没意思的，e1000这种远古网卡，现在应该没多少人用了。这个网卡是qemu虚拟出来的网卡，就跟代理的时候用的那个tun&#x2F;tap差不多</p>
 <blockquote>
 <p>Your job is to complete e1000_transmit() and e1000_recv(), both in kernel&#x2F;e1000.c, so that the driver can transmit and receive packets</p>
 </blockquote>
-<p>这个好办，我们直接扒拉e1000的手册就可以了。</p>
-<h2 id="完结撒花"><a href="#完结撒花" class="headerlink" title="完结撒花"></a>完结撒花</h2><p>又是讨厌的驱动，勾起了我当年痛苦的。上一次写驱动的大作业还是本科的时候，当时换了两块xilinx的阴间开发板全都是坏的，害得我还以为是我自己写的有问题，找了一周没找到bug。本来是抱着人又麻了的</p>
+<p>这个好办，我们直接扒拉e1000的手册就可以了。或者我们直接看<code>kernel/e1000_dev.h</code>, <code>E1000_RDH</code>是E1000 RX Descriptor Head， <code>E1000_RDT</code>是RX descriptor tail，同理<code>E1000_TDT</code>是TX descriptor tail（由TX的功能我们可以知道这是the next packet的坐标）， <code>E1000_RXD_STAT_DD</code>是 Descriptor Done， 然后<code>E1000_TXD_CMD_EOP</code>是 End of Packet。</p>
+<p>RX ring接受网卡数据的读取buffer， TX ring是发送packet的发送buffer。<code>rx_ring</code>是一个环形链表<code>rx_desc</code>，里面放的是packet的地址（packet是通过DMA放在内存里面）</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">// [E1000 3.2.3]</span>
+<span class="token keyword">struct</span> <span class="token class-name">rx_desc</span>
+<span class="token punctuation">&#123;</span>
+  uint64 addr<span class="token punctuation">;</span>       <span class="token comment">/* Address of the descriptor's data buffer */</span>
+  uint16 length<span class="token punctuation">;</span>     <span class="token comment">/* Length of data DMAed into data buffer */</span>
+  uint16 csum<span class="token punctuation">;</span>       <span class="token comment">/* Packet checksum */</span>
+  uint8 status<span class="token punctuation">;</span>      <span class="token comment">/* Descriptor status */</span>
+  uint8 errors<span class="token punctuation">;</span>      <span class="token comment">/* Descriptor Errors */</span>
+  uint16 special<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后我们照着提示就可以补全<code>kernel/e1000.c</code>了</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">e1000_transmit</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">mbuf</span> <span class="token operator">*</span>m<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// the mbuf contains an ethernet frame; program it into</span>
+    <span class="token comment">// the TX descriptor ring so that the e1000 sends it. Stash</span>
+    <span class="token comment">// a pointer so that it can be freed after sending.</span>
+    <span class="token comment">//</span>
+    <span class="token function">acquire</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>e1000_lock<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 发送时加spin_lock</span>
+    uint32 idx <span class="token operator">=</span> regs<span class="token punctuation">[</span>E1000_TDT<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token punctuation">(</span>E1000_TXD_STAT_DD <span class="token operator">&amp;</span> tx_ring<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">.</span>status<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// buffer不足</span>
+        <span class="token function">release</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>e1000_lock<span class="token punctuation">)</span><span class="token punctuation">;</span>                         <span class="token comment">// 释放锁</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>tx_mbufs<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">mbuffree</span><span class="token punctuation">(</span>tx_mbufs<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        tx_mbufs<span class="token punctuation">[</span>idx<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    tx_ring<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">.</span>addr <span class="token operator">=</span> <span class="token punctuation">(</span>uint64<span class="token punctuation">)</span>m<span class="token operator">-></span>head<span class="token punctuation">;</span>
+    tx_ring<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">.</span>length <span class="token operator">=</span> m<span class="token operator">-></span>len<span class="token punctuation">;</span>
+
+    tx_ring<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">.</span>cmd <span class="token operator">=</span> E1000_TXD_CMD_EOP <span class="token operator">|</span> E1000_TXD_CMD_RS<span class="token punctuation">;</span>
+    tx_mbufs<span class="token punctuation">[</span>idx<span class="token punctuation">]</span> <span class="token operator">=</span> m<span class="token punctuation">;</span>
+
+    regs<span class="token punctuation">[</span>E1000_TDT<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span>idx <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">%</span> TX_RING_SIZE<span class="token punctuation">;</span>
+    <span class="token function">release</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>e1000_lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">e1000_recv</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">//</span>
+    <span class="token comment">// Your code here.</span>
+    <span class="token comment">//</span>
+    <span class="token comment">// Check for packets that have arrived from the e1000</span>
+    <span class="token comment">// Create and deliver an mbuf for each packet (using net_rx()).</span>
+    <span class="token comment">//</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// First ask the E1000 for the ring index at which the next waiting</span>
+        <span class="token comment">// received packet (if any) is located, by fetching the E1000_RDT</span>
+        <span class="token comment">// control register and adding one modulo RX_RING_SIZE.</span>
+        uint32 idx <span class="token operator">=</span> regs<span class="token punctuation">[</span>E1000_RDT<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        idx <span class="token operator">=</span> <span class="token punctuation">(</span>idx <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">%</span> RX_RING_SIZE<span class="token punctuation">;</span> <span class="token comment">// 这是个环形链表，需要mod ring size</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token punctuation">(</span>E1000_RXD_STAT_DD <span class="token operator">&amp;</span> rx_ring<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">.</span>status<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        rx_mbufs<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token operator">-></span>len <span class="token operator">=</span> rx_ring<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">.</span>length<span class="token punctuation">;</span>
+        <span class="token function">net_rx</span><span class="token punctuation">(</span>rx_mbufs<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        rx_mbufs<span class="token punctuation">[</span>idx<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">mbufalloc</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//这里直接mbufalloc就可以了，不需要kalloc</span>
+        rx_ring<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">.</span>addr <span class="token operator">=</span> <span class="token punctuation">(</span>uint64<span class="token punctuation">)</span>rx_mbufs<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token operator">-></span>head<span class="token punctuation">;</span>
+        rx_ring<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">.</span>status <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        regs<span class="token punctuation">[</span>E1000_RDT<span class="token punctuation">]</span> <span class="token operator">=</span> idx<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="完结撒花"><a href="#完结撒花" class="headerlink" title="完结撒花"></a>完结撒花</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">make</span> grade
+make<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>: Leaving directory <span class="token string">'/home/zhixi/codes/xv6-labs-2021'</span>
+<span class="token operator">==</span> Test running nettests <span class="token operator">==</span> 
+$ <span class="token function">make</span> qemu-gdb
+<span class="token punctuation">(</span><span class="token number">2</span>.8s<span class="token punctuation">)</span> 
+<span class="token operator">==</span> Test   nettest: <span class="token function">ping</span> <span class="token operator">==</span> 
+  nettest: ping: OK 
+<span class="token operator">==</span> Test   nettest: single process <span class="token operator">==</span> 
+  nettest: single process: OK 
+<span class="token operator">==</span> Test   nettest: multi-process <span class="token operator">==</span> 
+  nettest: multi-process: OK 
+<span class="token operator">==</span> Test   nettest: DNS <span class="token operator">==</span> 
+  nettest: DNS: OK 
+<span class="token operator">==</span> Test <span class="token function">time</span> <span class="token operator">==</span> 
+time: OK 
+Score: <span class="token number">100</span>/100<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>一开始以为很难，又是讨厌的驱动，然后一看难度还是hard，勾起了我当年痛苦的。上一次写驱动的大作业还是本科的时候，当时换了两块xilinx的阴间开发板全都是坏的，害得我还以为是我自己写的有问题，找了一周没找到bug。本来是抱着人又麻了的心态来做这个Lab的（这个Lab在2020年是最后一个Lab，在2021年放到了前面），拖了几个月，别的Lab都做完了，然后陆续把笔记也补上了，最后捡起了一直咕咕咕的6.824，做到Raft的Lab4死活跑不过测试这才回来做这个Lab，结果发现意外的简单。</p>
 <p>好久之前写的Lab，由于懒癌发作一直没有写笔记，现在把Lab的笔记补上。这个Lab比较玩具，没啥好讲的。驱动和网络单独拿出来都是一个大坑，水平有限不多讲了。</p>
 <p>这个Lab的Optional Challenges比较麻烦，其中最后两个challenge是：</p>
 <blockquote>
 <p>Implement a UDP server for xv6. (moderate)<br>Implement a minimal TCP stack and download a web page. (hard)</p>
 </blockquote>
+<p>然后搜了一下发现有一个xv6-net的实现：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3BhbmRheDM4MS94djYtbmV0L2Jsb2IvbmV0L3RjcC5j">https://github.com/pandax381/xv6-net/blob/net/tcp.c<i class="fa fa-external-link-alt"></i></span></p>
 <p>由于懒癌发作我当然又是没做，我的菜鸡计网水平和对TCP的熟悉程度应该一时半会做不出来。听说有cs144这门课就是实现一个TCP协议栈，等研三有空了回头把这个做了把这个大坑填上。</p>
 <p>6.S081这个课从去年7月开始，断断续续做了将近一年把Lab做了，xv6的源码看了不到一半。xv6作为一个教学的系统，挺精简挺小巧，能比较顺利的看下去。像linux源码那种看不太动，拿着赵炯那本《linux内核完全注释》看早期内核也比较麻烦。xv6-book写的真的好，推荐做Lab和读xv6源码的时候好好把xv6-book看一下：</p>
 <p><em>xv6: a simple, Unix-like teaching operating system</em><br>作者Russ Cox, Frans Kaashoek, Robert Morris 应该都听过，Russ Cox是争议比较大的go现任掌门，喜欢在go的issue区开喷，Morris是6.824这门课的主讲，就是那个蠕虫病毒的作者。</p>
 <p>一开始我没在意，觉得这本书就是跟手册一样，偶尔翻一翻。后来发现这本册子写的是真的好，几乎没有一点废话，比课程讲义好多了。早应该看这个的。</p>
+<p>然后就是重新翻了k&amp;r这本书，写的真好，也没有多少废话。里面的例子非常精简。</p>
 <p>更新：不等研三了，直接上CS144了。之前没事喜欢摆弄nmap、wireshark这些东西瞎玩，却没好好看过TCP的细节，再这样不思进取下去就要沦为脚本小子了</p>
 ]]></content>
       <categories>
@@ -2345,12 +2430,6 @@ The command is executed with a ‘-’ prepended to its argv[0] string.<span ari
       </tags>
   </entry>
   <entry>
-    <title>本站评论由valine更换为DisqusJS</title>
-    <url>/change-comment-to-disqusjs/</url>
-    <content><![CDATA[<p>由于近日不少采用valine作为评论系统网站的遭到几千个垃圾评论刷屏攻击，外加valine存在的安全隐患问题，放弃好看的valine，换用DisqusJS。<br>utteranc继续使用。</p>
-]]></content>
-  </entry>
-  <entry>
     <title>新年开箱一个 Canokey Pigeon</title>
     <url>/canokey-pigeon-unboxing/</url>
     <content><![CDATA[<p>迟来的开箱，本来以为快递1号当天能到的，结果晚了一点。不管怎么说，元旦快落！</p>
@@ -2396,6 +2475,12 @@ The command is executed with a ‘-’ prepended to its argv[0] string.<span ari
       <tags>
         <tag>canokey</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>本站评论由valine更换为DisqusJS</title>
+    <url>/change-comment-to-disqusjs/</url>
+    <content><![CDATA[<p>由于近日不少采用valine作为评论系统网站的遭到几千个垃圾评论刷屏攻击，外加valine存在的安全隐患问题，放弃好看的valine，换用DisqusJS。<br>utteranc继续使用。</p>
+]]></content>
   </entry>
   <entry>
     <title>上线一个Spring Cloud的课程管理服务项目</title>
@@ -2755,6 +2840,8 @@ debtap -p XXX.deb <span class="token comment"># -p 选项生成PKGBUILD</span>
 <p>小白倒没什么，主要是被伸手党搞怕了。</p>
 <p>独立打一个包应该不会比独立装一个Archlinux难（不考虑Nvidia双显卡博通网卡阴间主板诡异驱动等….）。<br>如果一个用户能参照ArchWiki独立装好、配置好自己的Arch，那就应该有能力自己打包。<br>Arch没有Mac、Windows、ChromeOS那样的财大气粗的公司和掏钱买服务的客户，甚至不能跟RHEL和Ubuntu比，社区纯靠热情。而且由于deb系和rpm系用户众多，基本大部分软件如果支持Linux会给出deb或者rpm的包，有的可能会给个appimage的包，Arch的支持基本没太多上游会管，很多包都是Arch的维护者和用户自行编译打包的（不少还是deb拆包转的）。<br>伸手党太多而打包者太少，那就离凉凉不远了。<br>下次看到没有包当伸手党可不好，没有包就自己打一个吧。</p>
 <h2 id="参考和推荐阅读"><a href="#参考和推荐阅读" class="headerlink" title="参考和推荐阅读"></a>参考和推荐阅读</h2><p><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL0RldmVsb3Blcldpa2k6SW5kZXg=">DeveloperWiki<i class="fa fa-external-link-alt"></i></span> 里面关于打包的部分可以看看<br><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL0FyY2hfcGFja2FnZV9ndWlkZWxpbmVz">Arch package guidelines<i class="fa fa-external-link-alt"></i></span> Arch官方的打包指南<br>[PKGBUILD_(简体中文)]<span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL1BLR0JVSUxEXyglRTclQUUlODAlRTQlQkQlOTMlRTQlQjglQUQlRTYlOTYlODcp">https://wiki.archlinux.org/index.php/PKGBUILD_(简体中文)<i class="fa fa-external-link-alt"></i></span> PKGBUILD的简要介绍<br><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL01ha2Vwa2dfKCVFNyVBRSU4MCVFNCVCRCU5MyVFNCVCOCVBRCVFNiU5NiU4Nyk=">Makepkg_(简体中文)<i class="fa fa-external-link-alt"></i></span> Makepkg也比较重要，有需要可以参考维基修改一下参数<br><span class="exturl" data-url="aHR0cHM6Ly9mZWxpeGMuYXQvMjAxNy8wOC9tYWtlLWFuLWFyY2gtcGFja2FnZS1mb3ItcHl0aG9uLW1vZHVsZS8=">给 Arch 打一个包 – Python 模块篇<i class="fa fa-external-link-alt"></i></span> python的包经常没什么人愿意打（确实依赖比较麻烦，好在有肥猫，打了一大堆python包），希望多来点熟悉python的大佬<br><span class="exturl" data-url="aHR0cHM6Ly9tYW4uYXJjaGxpbnV4Lm9yZy9tYW4vUEtHQlVJTEQuNQ==">PKGBUILD参考手册<i class="fa fa-external-link-alt"></i></span> Arch官网的参考手册，话说Arch最近新上的<span class="exturl" data-url="aHR0cHM6Ly9tYW4uYXJjaGxpbnV4Lm9yZy8=">手册索引<i class="fa fa-external-link-alt"></i></span>挺香的（btw I use tldr）<br><span class="exturl" data-url="aHR0cHM6Ly93d3cudnVsdHIuY29tL2RvY3MvYnVpbGRpbmctcGFja2FnZXMtb24tYXJjaC1saW51eA==">Building Packages on Arch Linux (Including the AUR)<i class="fa fa-external-link-alt"></i></span> Vultr的教程（我也不知道Vultr怎么会有这种东西）<br><span class="exturl" data-url="aHR0cHM6Ly9qdW55dXNzaC5naXRodWIuaW8vcC9hcmNoLWxpbnV4LXBhY2thZ2UtcXVpY2stc3RhcnQv">Arch Linux 第一次打包就上手<i class="fa fa-external-link-alt"></i></span>  新手可以看看这个<br><span class="exturl" data-url="aHR0cHM6Ly9zbGVlcG1hcC5kZS8yMDIyL3BhY2thZ2luZy1mb3ItYXJjaC1saW51eC8=">Packaging for Arch Linux<i class="fa fa-external-link-alt"></i></span>  一个TU写的</p>
+<h3 id="其他的一些打包的阅读资料"><a href="#其他的一些打包的阅读资料" class="headerlink" title="其他的一些打包的阅读资料"></a>其他的一些打包的阅读资料</h3><p>下面这些和AUR关系不是很大，闲着没事可以看着玩</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9sd24ubmV0L0FydGljbGVzLzM1OTA3MC8=">FatELF: universal binaries for Linux<i class="fa fa-external-link-alt"></i></span>  </p>
 ]]></content>
       <categories>
         <category>不务正业系列</category>
@@ -2895,10 +2982,12 @@ size_t <span class="token class-name">ByteStream</span><span class="token double
 <p>这样测试就过了</p>
 <h2 id="链接和参考材料"><a href="#链接和参考材料" class="headerlink" title="链接和参考材料"></a>链接和参考材料</h2><p><span class="exturl" data-url="aHR0cHM6Ly9jczE0NC5naXRodWIuaW8v">https://cs144.github.io/<i class="fa fa-external-link-alt"></i></span> 课程主页<br>还有视频录像不过我不喜欢看视频，没看，直接上的Lab<br>《TCP&#x2F;IP详解 卷2》 这个有不少实现的细节, Lab讲的不详细我基本上都是跑到这里面翻的<br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Z6eXo5OTkvQW5hbHlzaXNfVENQX2luX0xpbnV4">Linux 4.4.0内核源码分析——TCP实现<i class="fa fa-external-link-alt"></i></span> 太感动了这个资料，注释极为详细（不过linux协议栈的实现很复杂，适合没思路的时候偶尔翻翻找找灵感，这个Lab的实现一般都很Naive，差别很大不适合照抄）  </p>
 <p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3NhbWluaWlyL2xldmVsLWlw">level-ip<i class="fa fa-external-link-alt"></i></span> 一个用户态玩具TCP&#x2F;IP协议栈，c写的<br>我最开始先看的这个，对TCP&#x2F;IP协议栈有个大概的概念，感觉这个看过一遍有了点头绪，CS144的Lab指导看完对整个TCP&#x2F;IP协议栈是啥样的没啥头绪<br><span class="exturl" data-url="aHR0cHM6Ly93d3cuc2FtaW5paXIuY29tL2xldHMtY29kZS10Y3AtaXAtc3RhY2stMS1ldGhlcm5ldC1hcnAv">Let’s code a TCP&#x2F;IP stack, 1: Ethernet &amp; ARP<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cuc2FtaW5paXIuY29tL2xldHMtY29kZS10Y3AtaXAtc3RhY2stMi1pcHY0LWljbXB2NC8=">Let’s code a TCP&#x2F;IP stack, 2: IPv4 &amp; ICMPv4<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cuc2FtaW5paXIuY29tL2xldHMtY29kZS10Y3AtaXAtc3RhY2stMy10Y3AtaGFuZHNoYWtlLw==">Let’s code a TCP&#x2F;IP stack, 3: TCP Basics &amp; Handshake<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cuc2FtaW5paXIuY29tL2xldHMtY29kZS10Y3AtaXAtc3RhY2stNC10Y3AtZGF0YS1mbG93LXNvY2tldC1hcGkv">Let’s code a TCP&#x2F;IP stack, 4: TCP Data Flow &amp; Socket API<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cuc2FtaW5paXIuY29tL2xldHMtY29kZS10Y3AtaXAtc3RhY2stNS10Y3AtcmV0cmFuc21pc3Npb24v">Let’s code a TCP&#x2F;IP stack, 5: TCP Retransmission<i class="fa fa-external-link-alt"></i></span>  </p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9yZmMuZnlpLw==">rfc.fyi<i class="fa fa-external-link-alt"></i></span> RFC标准速查表  </p>
 <p>然后是对写这门课的Lab可能帮助不是特别大的书和资料(资料本身其实都还不错)</p>
 <p>《TCP&#x2F;IP详解 卷1》 这个主要讲概念，看完一遍之后还是不知道怎么实现，如果是为了做Lab找资料推荐直接翻卷2<br>《计算机网络: 自顶向下方法》这个书好是好，但是讲的太简略了，看完想实现没啥头绪，还得去TCP&#x2F;IP协议卷2翻细节，这本书的协议栈实现讲的是<code>4.4BSD-Lite</code>，<br>《深入理解LINUX网络技术内幕》大量的章节都在讲网络驱动，和这门课的Lab的TCP协议栈的内容关系不是特别大<br>《Effective Modern C++ 中文版》 这本书我研一买的，彩色印刷，包装很烂。我当时就想看看modern c++，然后看到一半彻底对C++喜欢不起来了。当时我唯一的想法就是不要把有限的生命浪费在一个充斥着语言律师的语言上。那个时候还在看《The Little Schemer》，看那些优雅连贯的递归的奇妙感觉，和同时在看的c++的繁杂形成了鲜明的对比。也是在那会，被C++坑的多了突然喜欢上go了。  </p>
 <p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnBhY2thZ2VjbG91ZC5pby9lbmcvMjAxNy8wMi8wNi9tb25pdG9yaW5nLXR1bmluZy1saW51eC1uZXR3b3JraW5nLXN0YWNrLXNlbmRpbmctZGF0YQ==">Monitoring and Tuning the Linux Networking Stack: Sending Data<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnBhY2thZ2VjbG91ZC5pby9lbmcvMjAxNi8wNi8yMi9tb25pdG9yaW5nLXR1bmluZy1saW51eC1uZXR3b3JraW5nLXN0YWNrLXJlY2VpdmluZy1kYXRhLw==">Monitoring and Tuning the Linux Networking Stack: Receiving Data<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL2FydGh1cmNoaWFvLmFydC9ibG9nL3R1bmluZy1zdGFjay10eC16aC8=">[译] Linux 网络栈监控和调优：发送数据（2017）<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL2FydGh1cmNoaWFvLmFydC9ibG9nL3R1bmluZy1zdGFjay1yeC16aC8=">[译] Linux 网络栈监控和调优：接收数据（2016）<i class="fa fa-external-link-alt"></i></span>  这两篇文章适合做完Lab再看，很容易迷失在细节里面  </p>
 <p><span class="exturl" data-url="aHR0cHM6Ly93d3cucmZjLWVkaXRvci5vcmcvcmZjL3JmYzExODAudHh0">A TCP&#x2F;IP Tutorial<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL2FydGh1cmNoaWFvLmFydC9ibG9nL3JmYzExODAtYS10Y3AtaXAtdHV0b3JpYWwtemgv">[译] RFC 1180：朴素 TCP&#x2F;IP 教程（1991）<i class="fa fa-external-link-alt"></i></span><br>我一开始还以为是实现一个TCP协议栈的，点开才发现很老的一个简短介绍，大概相当于TCP&#x2F;IP卷1的太长不看版。其实讲的还可以，没有一点废话，不过对Lab没啥帮助。</p>
+<p><span class="exturl" data-url="aHR0cDovL3d3dy41MmltLm5ldC90aHJlYWQtMTAwMy0xLTEuaHRtbA==">不为人知的网络编程(一)：浅析TCP协议中的疑难杂症(上篇)<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL3d3dy41MmltLm5ldC90aHJlYWQtMTAwNC0xLTEuaHRtbA==">不为人知的网络编程(二)：浅析TCP协议中的疑难杂症(下篇)<i class="fa fa-external-link-alt"></i></span> 做Lab4的时候搜资料看到的，解决了我对TCP的一点疑惑  </p>
 ]]></content>
       <categories>
         <category>Linux&amp;Unix</category>
@@ -4511,12 +4600,52 @@ https://cloud.tencent.com/developer/article/1603974 -->
       </tags>
   </entry>
   <entry>
+    <title>用Markdown制做PPT</title>
+    <url>/make-ppt-with-markdown/</url>
+    <content><![CDATA[<p>纯文本好，富文本坏。这是一个劝你放弃PowerPoint和Wps演示的安利文，回归简陋，回归开源。</p>
+<span id="more"></span>
+
+<p>这是迫于毕业不得不向PPT低头才干出来的事情，在PPT上浪费时光真没意思。能不做PPT还是不做PPT最好。（没推荐Beamer是因为LaTeX这种专业排版工具还是太复杂了，还是会浪费不少时间在排版上。）</p>
+<h2 id="喧宾夺主的PPT"><a href="#喧宾夺主的PPT" class="headerlink" title="喧宾夺主的PPT"></a>喧宾夺主的PPT</h2><p><del>但是根据约翰霍普金斯大学的研究，喜欢做PPT的大概率是个传销分子</del></p>
+<p>Office三件套里面，我对word只是喜欢不起来（真要做到内容样式分离还是可以的，而且把富文本的所见即所得做到了地表最强），对Excel有点厌恶（谁让你多管闲事把身份者号给我改成科学计数法了？），PPT我真的心力憔悴了。Beamer一类的Slides演示还比较重视内容，你软家的</p>
+<p>如果不是生活所迫谁愿意做PPT呢，直接拿Markdown写文档呗。（我们现在确实除了毕业答辩这种迫不得已的事情，都用Markdown给老板讲东西了。PPT？当年老板嫌弃小胡师兄PPT做的烂，反正PPT不好好做看起来甚至不如Markdown在typora里面或者hexo里面好看）。好在毕业答辩类的学术PPT不用做的太好看，简陋一点反而显得比较朴实无华，Markdown生成的PPT也够看了。而且我前期给老板交差的调研材料什么的基本都是用Markdown写的，改一改就成PPT了。其实如果不是开题、毕设答辩要求PPT，我真的想用Markdown列一个大纲讲。</p>
+<p>至于为什么不用LaTeX的Beamer，那是我对LaTeX不熟，而我对CSS和HTML比较熟，Markdown做不到的可以伤感CSS魔改。<br>功能简陋也好，这样免得我在PPT上面调格式浪费很多时间。<strong>而且可以用键盘操作</strong>。</p>
+<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>作为一个毕业答辩之类的PPT，Marp的功能已经足够做一个丐版的学术简陋风格PPT了，Beamer的功能Marp几乎都有。这个东西有VSCode插件，直接装就好了。网页版也可以直接用。</p>
+<p>当然这个东西没有什么惊艳的动画效果和对布局细致的控制和调整，Markdown本来就不适合干这个事情呢。如果是做传销风格的PPT那还请<del>直接用Office</del>试试隔壁的reveal.js，像写前端一样写你的演示，各种漂亮的动画效果全都有。</p>
+<p>直接新建一个Markdown，在开头启用marp就好了。</p>
+<pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown"><span class="token front-matter-block"><span class="token punctuation">---</span>
+<span class="token front-matter yaml language-yaml"><span class="token key atrule">marp</span><span class="token punctuation">:</span> <span class="token boolean important">true</span></span>
+<span class="token punctuation">---</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>语法都是markdown的语法，每一张PPT之间隔断就用<code>---</code>就可以了（最好在<code>---</code>前面空一行）</p>
+<p>为了更符合传统的PPT界面的布局，VSCode打开Preview，然后将preview调到左边侧栏。好，它现在看起来和wps演示和PowerPoint完全一致。</p>
+<p><img src="/make-ppt-with-markdown/1641736904.png"></p>
+<h2 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h2><p>图片的支持当然没有PowerPoint那么好。Markdown本来就不支持调整图片的大小、图片缩放、指定图片位置这种操作。对于博客文章或者文档可以统一用css去设置居中、边框这些，但是PPT的图片几乎每页的布局和位置都不太一样。Marp对Markdown提供了一些扩展，能基本满足我对图片的位置调整需求。如果不满足要求可以用html标签去调图片。</p>
+<p>下面的操作是一些粗略调整宽度高度的语法、以及上下左右、居中、背景图片。</p>
+<pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown">
+<span class="token url"><span class="token operator">!</span>[<span class="token content">bg right vertical weight:600</span>](<span class="token url">zhixi.png</span>)</span>
+<span class="token comment">&lt;!-- 将图片置于右上，宽度600px --></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h2><p>Marp自带的模板合适可以自己定制，只需要一点CSS就可以了</p>
+<p>定制可以参考：<span class="exturl" data-url="aHR0cHM6Ly9tYXJwaXQubWFycC5hcHAvdGhlbWUtY3Nz">https://marpit.marp.app/theme-css<i class="fa fa-external-link-alt"></i></span></p>
+<p>太长不看版：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21hcnAtdGVhbS9tYXJwL2Rpc2N1c3Npb25zLzExNQ==">How to create a theme?<i class="fa fa-external-link-alt"></i></span>  </p>
+]]></content>
+      <tags>
+        <tag>ppt</tag>
+        <tag>markdown</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Linux系统的抢救和维护（桌面篇）</title>
     <url>/linux-rescue/</url>
     <content><![CDATA[<p>这篇水文主要是写给桌面玩家看的，如果您的服务器打出了GG&#x2F;被黑了&#x2F;库被删了，可能不适合来这里找答案。</p>
 <span id="more"></span>
 
 <p>由于这篇水文是写给普通玩家的，所以尽量简单易懂、适合萌新操作。所以像eBPF、Systemtap这样的神兵利器几乎不会多讲 （这还是我在《性能之巅》这本书看到作者传教DTrace才了解的，这些东西对于一般路过普通用户大概就像vim和emacs, 很强，但是学习成本太高）<br>这里面有一些systemd的内容，openrc用户请跳过（相信这年头还在坚守openrc和其他非systemd的用户水平应该不用看我博客）。<br>由于本人水平有限，而且这篇写的比较仓促，文中可能有不少错误，光临我博客的大佬们发现了请告诉我。<br>暂时先写这么多，还有很多有意思的、重要的、不好写的没有写，以后再更新。</p>
+<h2 id="更新-在群里发送报错信息的方式"><a href="#更新-在群里发送报错信息的方式" class="headerlink" title="更新:在群里发送报错信息的方式"></a>更新:在群里发送报错信息的方式</h2><p>请选择你的截图导师.jpg</p>
+<p>不要再贴一大段巨长的报错了，能联网的情况也不要发一张拍的模糊不清的截图了。就算图形界面挂了，在tty环境下只要有网也是可以将报错信息上传到在线剪切板的，比如Ubuntu paste，比如pastebin，比如fars.ee。然后你就可以在另一台机子上搜索报错或者将链接放到群里面问人了（记得阅读提问的智慧）</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">fcitx5-diagnose <span class="token operator">|</span> <span class="token function">curl</span> -F <span class="token string">"c=@-"</span> https://fars.ee/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <h2 id="通常的卡死解决流程"><a href="#通常的卡死解决流程" class="headerlink" title="通常的卡死解决流程"></a>通常的卡死解决流程</h2><h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><ol>
 <li>此处的“卡死”，指鼠标动不了或某个应用、进程没有响应了</li>
 <li>以下流程展示以KDE和Archlinux为例</li>
@@ -4585,12 +4714,26 @@ startx<span aria-hidden="true" class="line-numbers-rows"><span></span><span></sp
 <p><strong>但是，追根溯源找到问题并修好它，很有意思，不是吗？</strong></p>
 <p>网上充斥着性能优化的教程，好多都盗了下面这张图，不仅不标注<span class="exturl" data-url="aHR0cDovL3d3dy5icmVuZGFuZ3JlZ2cuY29tL2Jsb2cvMjAxOS0wNy0xNS9icGYtcGVyZm9ybWFuY2UtdG9vbHMtYm9vay5odG1s">来源<i class="fa fa-external-link-alt"></i></span>还把右下角来源抹去（而且还是17年版的老图传来传去）<br><img src="/linux-rescue/1618031552.png"><br>本来想仿照这个做一个调试的图，但是想到指不定又被盗了。算了，随便写点大家将就着看吧。</p>
 <h3 id="查看报错和日志"><a href="#查看报错和日志" class="headerlink" title="查看报错和日志"></a>查看报错和日志</h3><p>遇到解决不了的问题先把报错和版本信息记下来，然后去谷歌一下，搜不到的就去拿着详细的报错去相应的地方请教大佬（希望您提问之前已经阅读了<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3J5YW5oYW53dS9Ib3ctVG8tQXNrLVF1ZXN0aW9ucy1UaGUtU21hcnQtV2F5L2JsbyUyMGIvbWFpbi9SRUFETUUtemhfQ04ubWQ=">《提问的智慧》<i class="fa fa-external-link-alt"></i></span>、<span class="exturl" data-url="aHR0cHM6Ly9jb29sc2hlbGwuY24vYXJ0aWNsZXMvMTA4MDQuaHRtbA==">X-Y Problem<i class="fa fa-external-link-alt"></i></span>等）</p>
-<p>进入急救模式</p>
+<h4 id="systemd"><a href="#systemd" class="headerlink" title="systemd"></a>systemd</h4><p>进入急救模式</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl rescue
 systemctl emergency<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">journalctl -x<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>查看systemd日志</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">journalctl -x
+journalctl -k <span class="token comment"># 查看内核日志</span>
+journalctl -b <span class="token comment"># 查看从启动以来的日志</span>
+journalctl -b -1 <span class="token comment"># 上次启动的日志</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
+<p>查看某个守护进程</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl status NetworkManager
+journalctl -u unit<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+
+
+<h4 id="输入法"><a href="#输入法" class="headerlink" title="输入法"></a>输入法</h4><p>fcitx5的诊断</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">fcitx5-diagnose<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h4 id="vscode"><a href="#vscode" class="headerlink" title="vscode"></a>vscode</h4><p><code>cmd-shift-p</code> -&gt; Search <code>Show Logs</code> -&gt; <code>Extension Host</code></p>
 <h3 id="如何调试内核"><a href="#如何调试内核" class="headerlink" title="如何调试内核"></a>如何调试内核</h3><p>用户态的问题都还比较好调试，总不至于崩了连个报错信息和崩溃日志都保存不下来。内核相关的问题比较麻烦，不过好在除非自己各种折腾或者用Arch这种内核经常滚动升级的，一般碰不到这些问题。</p>
 <p>我调试内核的经验也不多，为数不多的几次几乎都是当年在开发板上。sniper写得那个《Linux内核调试指南》写得挺好，然而不太适合普通的桌面玩家，而且有一点年头了。gdb调试，printk在桌面发型版kernel panic的时候几乎都失效了。对于普通的桌面玩家，遇到了 kernel panic 等严重问题，发现自己解决不了，不妨去论坛&#x2F;群里提问，找有空的大佬帮你看看（有些小白尝试debug的时候可能越折腾问题越严重）。桌面玩家检查一下自己最近干了什么或者最近系统更新了什么应该就能找到问题了。</p>
 <p>常见的调试方式包括：</p>
@@ -4667,8 +4810,9 @@ i8042.noloop	[HW] Disable the AUX Loopback command while probing
 <p>ArchLinux相关：</p>
 <p><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwLy9HZW5lcmFsX3JlY29tbWVuZGF0aW9uc18oJUU3JUFFJTgwJUU0JUJEJTkzJUU0JUI4JUFEJUU2JTk2JTg3KQ==">ArchWiki: General recommendations (简体中文)<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL0dlbmVyYWxfdHJvdWJsZXNob290aW5n">ArchWiki: General troubleshooting<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL0RlYnVnXy1fR2V0dGluZ19UcmFjZXM=">ArchWiki Debug - Getting Traces<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL0J1Z19yZXBvcnRpbmdfZ3VpZGVsaW5lcw==">ArchWiki Bug reporting guidelines<i class="fa fa-external-link-alt"></i></span>  </p>
 <p>安全相关：</p>
-<p><span class="exturl" data-url="aHR0cHM6Ly9tYWRhaWRhbnMtaW5zZWN1cml0aWVzLmdpdGh1Yi5pby9ndWlkZXMvbGludXgtaGFyZGVuaW5nLmh0bWwjY2hvb3NpbmctdGhlLXJpZ2h0LWRpc3Rybw==">https://madaidans-insecurities.github.io/guides/linux-hardening.html#choosing-the-right-distro<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvdGl0bGUvU2VjdXJpdHlfKCVFNyVBRSU4MCVFNCVCRCU5MyVFNCVCOCVBRCVFNiU5NiU4Nyk=">https://wiki.archlinux.org/title/Security_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2ltdGhlbmFjaG9tYW4vSG93LVRvLVNlY3VyZS1BLUxpbnV4LVNlcnZlciNkaXNhYmxlLXJvb3QtbG9naW4=">https://github.com/imthenachoman/How-To-Secure-A-Linux-Server#disable-root-login<i class="fa fa-external-link-alt"></i></span></p>
-<h3 id="喜欢折腾且有时间可以看看这些"><a href="#喜欢折腾且有时间可以看看这些" class="headerlink" title="喜欢折腾且有时间可以看看这些"></a>喜欢折腾且有时间可以看看这些</h3><p><span class="exturl" data-url="aHR0cDovL3d3dy5saW51eGZyb21zY3JhdGNoLm9yZy9sZnMvdmlldy9zdGFibGUv">Linux From Scratch<i class="fa fa-external-link-alt"></i></span> 著名的LFS，教你从头编译，照着教程来不难，需要一点耐心和性能足够好的机器用来编译。这有个<span class="exturl" data-url="aHR0cHM6Ly9sY3R0LmdpdGh1Yi5pby9MRlMtQk9PSy9sZnMtc3lzdi9MRlMtQk9PSy5odG1s">中文翻译<i class="fa fa-external-link-alt"></i></span>可以参考。<br><span class="exturl" data-url="aHR0cHM6Ly9ib290bGluLmNvbS9kb2MvbGVnYWN5L2VsZnMvZW1iZWRkZWRfbGZzLnBkZg==">Embedded Linux From Scratch<i class="fa fa-external-link-alt"></i></span> bootlin的嵌入式Linux教程，略老<br><span class="exturl" data-url="aHR0cHM6Ly9yaXNjdi5vcmcvbmV3cy8yMDIwLzEyL2VtYmVkZGVkLWxpbnV4LWZyb20tc2NyYXRjaC1pbi00NS1taW51dGVzLW9uLXJpc2Mtdi1ib290bGluLw==">Embedded Linux “from scratch” in 45 minutes…on RISC-V | Bootlin<i class="fa fa-external-link-alt"></i></span> 貌似现在流行risc-v和Rust写嵌入式的东西，老了，没玩过。<br><span class="exturl" data-url="aHR0cHM6Ly9lbGl4aXIuYm9vdGxpbi5jb20vbGludXgvbGF0ZXN0L3NvdXJjZQ==">Elixir Cross Referencer<i class="fa fa-external-link-alt"></i></span> 还是bootlin的，能在线查看Linux源码<br><span class="exturl" data-url="aHR0cHM6Ly93d3cuY29kZWR1bXAuaW5mby9wb3N0LzIwMjAwMTI4LXN5c3RlbXRhcC1ieS1leGFtcGxlLw==">通过实例快速入门Systemtap<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2xpY2h1YW5nL2F3ZXNvbWUtc3lzdGVtdGFwLWNu">awesome-systemtap-cn<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLm9wZW5yZXN0eS5jb20uY24vY24vZHluYW1pYy10cmFjaW5nLw==">动态追踪技术漫谈<i class="fa fa-external-link-alt"></i></span> 强烈推荐<br><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnBhY2thZ2VjbG91ZC5pby9lbmcvMjAxNi8wNi8yMi9tb25pdG9yaW5nLXR1bmluZy1saW51eC1uZXR3b3JraW5nLXN0YWNrLXJlY2VpdmluZy1kYXRhLyM=">Monitoring and Tuning the Linux Networking Stack: Receiving Data<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnBhY2thZ2VjbG91ZC5pby9lbmcvMjAxNy8wMi8wNi9tb25pdG9yaW5nLXR1bmluZy1saW51eC1uZXR3b3JraW5nLXN0YWNrLXNlbmRpbmctZGF0YS8=">Monitoring and Tuning the Linux Networking Stack: Sending Data<i class="fa fa-external-link-alt"></i></span> 这两篇是讲网络栈监控和调优的，经典文章。流传很广，也有很多中文翻译，不过原文直白简练，推荐直接看原文</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvdGl0bGUvU2VjdXJpdHlfKCVFNyVBRSU4MCVFNCVCRCU5MyVFNCVCOCVBRCVFNiU5NiU4Nyk=">Security (简体中文)<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2ltdGhlbmFjaG9tYW4vSG93LVRvLVNlY3VyZS1BLUxpbnV4LVNlcnZlciNkaXNhYmxlLXJvb3QtbG9naW4=">How-To-Secure-A-Linux-Server<i class="fa fa-external-link-alt"></i></span>  </p>
+<h3 id="喜欢折腾且有时间可以看看这些"><a href="#喜欢折腾且有时间可以看看这些" class="headerlink" title="喜欢折腾且有时间可以看看这些"></a>喜欢折腾且有时间可以看看这些</h3><p><span class="exturl" data-url="aHR0cDovL3d3dy5saW51eGZyb21zY3JhdGNoLm9yZy9sZnMvdmlldy9zdGFibGUv">Linux From Scratch<i class="fa fa-external-link-alt"></i></span> 著名的LFS，教你从头编译，照着教程来不难，需要一点耐心和性能足够好的机器用来编译。这有个<span class="exturl" data-url="aHR0cHM6Ly9sY3R0LmdpdGh1Yi5pby9MRlMtQk9PSy9sZnMtc3lzdi9MRlMtQk9PSy5odG1s">中文翻译<i class="fa fa-external-link-alt"></i></span>可以参考。<br><span class="exturl" data-url="aHR0cHM6Ly9ib290bGluLmNvbS9kb2MvbGVnYWN5L2VsZnMvZW1iZWRkZWRfbGZzLnBkZg==">Embedded Linux From Scratch<i class="fa fa-external-link-alt"></i></span> bootlin的嵌入式Linux教程，略老<br><span class="exturl" data-url="aHR0cHM6Ly9yaXNjdi5vcmcvbmV3cy8yMDIwLzEyL2VtYmVkZGVkLWxpbnV4LWZyb20tc2NyYXRjaC1pbi00NS1taW51dGVzLW9uLXJpc2Mtdi1ib290bGluLw==">Embedded Linux “from scratch” in 45 minutes…on RISC-V | Bootlin<i class="fa fa-external-link-alt"></i></span> 貌似现在流行risc-v和Rust写嵌入式的东西，老了，没玩过。<br><span class="exturl" data-url="aHR0cHM6Ly9lbGl4aXIuYm9vdGxpbi5jb20vbGludXgvbGF0ZXN0L3NvdXJjZQ==">Elixir Cross Referencer<i class="fa fa-external-link-alt"></i></span> 还是bootlin的，能在线查看Linux源码<br><span class="exturl" data-url="aHR0cHM6Ly93d3cuY29kZWR1bXAuaW5mby9wb3N0LzIwMjAwMTI4LXN5c3RlbXRhcC1ieS1leGFtcGxlLw==">通过实例快速入门Systemtap<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2xpY2h1YW5nL2F3ZXNvbWUtc3lzdGVtdGFwLWNu">awesome-systemtap-cn<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLm9wZW5yZXN0eS5jb20uY24vY24vZHluYW1pYy10cmFjaW5nLw==">动态追踪技术漫谈<i class="fa fa-external-link-alt"></i></span> 强烈推荐<br><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnBhY2thZ2VjbG91ZC5pby9lbmcvMjAxNi8wNi8yMi9tb25pdG9yaW5nLXR1bmluZy1saW51eC1uZXR3b3JraW5nLXN0YWNrLXJlY2VpdmluZy1kYXRhLyM=">Monitoring and Tuning the Linux Networking Stack: Receiving Data<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnBhY2thZ2VjbG91ZC5pby9lbmcvMjAxNy8wMi8wNi9tb25pdG9yaW5nLXR1bmluZy1saW51eC1uZXR3b3JraW5nLXN0YWNrLXNlbmRpbmctZGF0YS8=">Monitoring and Tuning the Linux Networking Stack: Sending Data<i class="fa fa-external-link-alt"></i></span> 这两篇是讲网络栈监控和调优的，经典文章。流传很广，也有很多中文翻译，不过原文直白简练，推荐直接看原文  </p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9jYXRjYXQuY2MvcG9zdC8yMDIwLTEwLTMxLw==">Linux fontconfig 的字体匹配机制<i class="fa fa-external-link-alt"></i></span>  对字体有疑问的强烈推荐阅读<br><span class="exturl" data-url="aHR0cHM6Ly9jYXRjYXQuY2MvcG9zdC8yMDIxLTAzLTA3Lw==">用 fontconfig 治理 Linux 中的字体<i class="fa fa-external-link-alt"></i></span>  </p>
 ]]></content>
       <categories>
         <category>Linux&amp;Unix</category>
@@ -4676,42 +4820,6 @@ i8042.noloop	[HW] Disable the AUX Loopback command while probing
       <tags>
         <tag>Linux</tag>
         <tag>rescue</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>用Markdown制做PPT</title>
-    <url>/make-ppt-with-markdown/</url>
-    <content><![CDATA[<p>纯文本好，富文本坏。这是一个劝你放弃PowerPoint和Wps演示的安利文，回归简陋，回归开源。</p>
-<span id="more"></span>
-
-<p>这是迫于毕业不得不向PPT低头才干出来的事情，在PPT上浪费时光真没意思。能不做PPT还是不做PPT最好。（没推荐Beamer是因为LaTeX这种专业排版工具还是太复杂了，还是会浪费不少时间在排版上。）</p>
-<h2 id="喧宾夺主的PPT"><a href="#喧宾夺主的PPT" class="headerlink" title="喧宾夺主的PPT"></a>喧宾夺主的PPT</h2><p><del>但是根据约翰霍普金斯大学的研究，喜欢做PPT的大概率是个传销分子</del></p>
-<p>Office三件套里面，我对word只是喜欢不起来（真要做到内容样式分离还是可以的，而且把富文本的所见即所得做到了地表最强），对Excel有点厌恶（谁让你多管闲事把身份者号给我改成科学计数法了？），PPT我真的心力憔悴了。Beamer一类的Slides演示还比较重视内容，你软家的</p>
-<p>如果不是生活所迫谁愿意做PPT呢，直接拿Markdown写文档呗。（我们现在确实除了毕业答辩这种迫不得已的事情，都用Markdown给老板讲东西了。PPT？当年老板嫌弃小胡师兄PPT做的烂，反正PPT不好好做看起来甚至不如Markdown在typora里面或者hexo里面好看）。好在毕业答辩类的学术PPT不用做的太好看，简陋一点反而显得比较朴实无华，Markdown生成的PPT也够看了。而且我前期给老板交差的调研材料什么的基本都是用Markdown写的，改一改就成PPT了。其实如果不是开题、毕设答辩要求PPT，我真的想用Markdown列一个大纲讲。</p>
-<p>至于为什么不用LaTeX的Beamer，那是我对LaTeX不熟，而我对CSS和HTML比较熟，Markdown做不到的可以伤感CSS魔改。<br>功能简陋也好，这样免得我在PPT上面调格式浪费很多时间。<strong>而且可以用键盘操作</strong>。</p>
-<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>作为一个毕业答辩之类的PPT，Marp的功能已经足够做一个丐版的学术简陋风格PPT了，Beamer的功能Marp几乎都有。这个东西有VSCode插件，直接装就好了。网页版也可以直接用。</p>
-<p>当然这个东西没有什么惊艳的动画效果和对布局细致的控制和调整，Markdown本来就不适合干这个事情呢。如果是做传销风格的PPT那还请<del>直接用Office</del>试试隔壁的reveal.js，像写前端一样写你的演示，各种漂亮的动画效果全都有。</p>
-<p>直接新建一个Markdown，在开头启用marp就好了。</p>
-<pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown"><span class="token front-matter-block"><span class="token punctuation">---</span>
-<span class="token front-matter yaml language-yaml"><span class="token key atrule">marp</span><span class="token punctuation">:</span> <span class="token boolean important">true</span></span>
-<span class="token punctuation">---</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<p>语法都是markdown的语法，每一张PPT之间隔断就用<code>---</code>就可以了（最好在<code>---</code>前面空一行）</p>
-<p>为了更符合传统的PPT界面的布局，VSCode打开Preview，然后将preview调到左边侧栏。好，它现在看起来和wps演示和PowerPoint完全一致。</p>
-<p><img src="/make-ppt-with-markdown/1641736904.png"></p>
-<h2 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h2><p>图片的支持当然没有PowerPoint那么好。Markdown本来就不支持调整图片的大小、图片缩放、指定图片位置这种操作。对于博客文章或者文档可以统一用css去设置居中、边框这些，但是PPT的图片几乎每页的布局和位置都不太一样。Marp对Markdown提供了一些扩展，能基本满足我对图片的位置调整需求。如果不满足要求可以用html标签去调图片。</p>
-<p>下面的操作是一些粗略调整宽度高度的语法、以及上下左右、居中、背景图片。</p>
-<pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown">
-<span class="token url"><span class="token operator">!</span>[<span class="token content">bg right vertical weight:600</span>](<span class="token url">zhixi.png</span>)</span>
-<span class="token comment">&lt;!-- 将图片置于右上，宽度600px --></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h2><p>Marp自带的模板合适可以自己定制，只需要一点CSS就可以了</p>
-<p>定制可以参考：<span class="exturl" data-url="aHR0cHM6Ly9tYXJwaXQubWFycC5hcHAvdGhlbWUtY3Nz">https://marpit.marp.app/theme-css<i class="fa fa-external-link-alt"></i></span></p>
-<p>太长不看版：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21hcnAtdGVhbS9tYXJwL2Rpc2N1c3Npb25zLzExNQ==">How to create a theme?<i class="fa fa-external-link-alt"></i></span>  </p>
-]]></content>
-      <tags>
-        <tag>ppt</tag>
-        <tag>markdown</tag>
       </tags>
   </entry>
   <entry>
@@ -5610,213 +5718,6 @@ $ psql -h 127.0.0.1 -d doccano -U doccano -p 5432 # 注意你的host，数据库
       </tags>
   </entry>
   <entry>
-    <title>Linux新一代音视频服务Pipewire尝鲜</title>
-    <url>/pipewire/</url>
-    <content><![CDATA[<p>2021年9月更新：<br>听说fedora都上Pipiwire了，正好这几天有点空，那就试试吧</p>
-<span id="more"></span>
-
-<p>Pipewire是红帽造的新一代音视频轮子，主要是用来取代PulseAudio、jack还有gstreams什么的。<br><strong>据说</strong>延迟补偿还不错，<strong>据说</strong>能统一音视频框架还兼容PulseAudio和Jack，据说是朝着专业级音效去的。据说支持Wayland和平板，据说支持Flatpak之类的容器内使用，据说有类似PolKit的权限管理，不需要像PulseAudio那样新建音频用户组和添加用户了。。。。</p>
-<blockquote>
-<p>It provides a low-latency, graph based processing engine on top of audio and video devices that can be used to support the use cases currently handled by both pulseaudio and JACK. PipeWire was designed with a powerful security model that makes interacting with audio and video devices from containerized applications easy, with supporting Flatpak applications being the primary goal. Alongside Wayland and Flatpak we expect PipeWire to provide a core building block for the future of Linux application development.</p>
-</blockquote>
-<p>都是据说啊，被Wayland骗了一次之后我已经不敢信这些宣传了，先试试实际效果再说。</p>
-<p>当然这个目前貌似只正经适配了GNOME和Fedora，不过据说兼容PulseAudio，Arch上的坑已经有人踩了好久了，现在还有点小问题，不过可以考虑上了。<br>昨天刚把Arch和笔记本的EndeavourOS更了python 3.9，除了autojump出了点小问题外一切正常。索性直接上Pipewire看看吧，反正笔记本那个全损音质也跟没有一样，换了说不定能抢救一下。</p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> pacman -S pipewire<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>要替代PulseAudio和Jack装这两个包<code>pipewire-pulse</code>、<code>pipewire-jack-dropin</code>。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yay -S pipewire-jack-dropin pipewire-pulse<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>然后systemd设置一下（archwiki说蓝牙设备需要手动设置一下，编辑<code>/etc/pipewire/pipewire.conf</code>，我手头没蓝牙耳机就不弄了）</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl <span class="token builtin class-name">enable</span> --user pipewire-pulse<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>然后退出登录或重启。</p>
-<p>运行<code>pactl info</code>，如果看到</p>
-<pre class="line-numbers language-log" data-language="log"><code class="language-log"><span class="token property">Server Name:</span> PulseAudio <span class="token operator">(</span>on PipeWire <span class="token number">0.3.17</span><span class="token operator">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>说明正常。</p>
-<h3 id="蓝牙设备"><a href="#蓝牙设备" class="headerlink" title="蓝牙设备"></a>蓝牙设备</h3><p>感谢室友赞助的一个索尼蓝牙音箱用于测试</p>
-<p>pipewire自带了蓝牙的模块，不需要像PulseAudio那样安装<code>pulseaudio-bluetooth</code>之类的包</p>
-<p>安装了pipewire-pulse之后编辑<code>/etc/pipewire/pipewire.conf</code>在<code>exec /usr/bin/pipewire-media-session</code>后面加上<code>-e bluez5</code>就可以使用了。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">exec</span> /usr/bin/pipewire-media-session -e bluez5<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h2 id="卸载"><a href="#卸载" class="headerlink" title="卸载"></a>卸载</h2><p>换回PulseAudio或者Jack可以用这个<span class="exturl" data-url="aHR0cHM6Ly9naXRsYWIuZnJlZWRlc2t0b3Aub3JnL3BpcGV3aXJlL3BpcGV3aXJlLy0vc25pcHBldHMvMTE2NA==">脚本<i class="fa fa-external-link-alt"></i></span></p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> /usr/lib64/
-
-<span class="token function">sudo</span> <span class="token function">rm</span> /usr/lib64/libpulse-mainloop-glib.so.0.999.0
-<span class="token function">sudo</span> <span class="token function">rm</span> /usr/lib64/libpulse-simple.so.0.999.0
-<span class="token function">sudo</span> <span class="token function">rm</span> /usr/lib64/libpulse.so.0.999.0
-
-<span class="token function">sudo</span> <span class="token function">rm</span> /usr/lib64/libjack.so.0.999.0
-<span class="token function">sudo</span> <span class="token function">rm</span> /usr/lib64/libjacknet.so.0.999.0
-<span class="token function">sudo</span> <span class="token function">rm</span> /usr/lib64/libjackserver.so.0.999.0
-
-<span class="token function">sudo</span> ldconfig<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>用pacman包管理器装的就</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl disable pipewire-pulse --user
-systemctl disable pipewire --user
-yay -Rs pipewire-pulse
-yay -S pulseaudio<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="更新一点实测"><a href="#更新一点实测" class="headerlink" title="更新一点实测"></a>更新一点实测</h2><h3 id="人耳效果和使用体验"><a href="#人耳效果和使用体验" class="headerlink" title="人耳效果和使用体验"></a>人耳效果和使用体验</h3><p>昨天回到宿舍，发现笔记本的EndeavourOS更新python 3.9<br> Optimus-manager 出问题了，好在很快解决了。<br>然后在工具人室友的帮助下测试了绿联的外接声卡一块、某大法耳机一个音响一个，傻多戴显示器自带小音箱一个，均工作正常。</p>
-<p><img src="/pipewire/1607053618.png"><br><img src="/pipewire/1607053601.png"></p>
-<p>两种音质人耳都听不出差别，室友把两段音频放到Adobe Audition也看不出什么大区别</p>
-<p>笔记本自带外放在KDE的设置中从其他音频播放设备切换过去之后出现没有声音的状况，经检查其实是有的，只是非常小，将声音调整到最大还是几乎要被笔记本的风扇声音盖住（这貌似不是pipewire的锅，），重启后外放音量恢复正常。<br>除了笔记本自带外放，在笔记本上音频切换KDE设置都没有出现卡死的状况，，声音也播放正常，没出现切换之后没声了的状况。</p>
-<h3 id="面板参数"><a href="#面板参数" class="headerlink" title="面板参数"></a>面板参数</h3><p>笔记本使用原来的PulseAudio详情：</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">Server String</span><span class="token punctuation">:</span> /run/user/1000/pulse/native
-<span class="token key atrule">Library Protocol Version</span><span class="token punctuation">:</span> <span class="token number">34</span>
-<span class="token key atrule">Server Protocol Version</span><span class="token punctuation">:</span> <span class="token number">34</span>
-<span class="token key atrule">Is Local</span><span class="token punctuation">:</span> yes
-<span class="token key atrule">Client Index</span><span class="token punctuation">:</span> <span class="token number">16</span>
-<span class="token key atrule">Tile Size</span><span class="token punctuation">:</span> <span class="token number">65472</span>
-<span class="token key atrule">User Name</span><span class="token punctuation">:</span> zjk
-<span class="token key atrule">Host Name</span><span class="token punctuation">:</span> zjk<span class="token punctuation">-</span><span class="token number">7591</span>
-<span class="token key atrule">Server Name</span><span class="token punctuation">:</span> pulseaudio
-<span class="token key atrule">Server Version</span><span class="token punctuation">:</span> <span class="token number">14.0</span>
-<span class="token key atrule">Default Sample Specification</span><span class="token punctuation">:</span> s16le 2ch 44100Hz
-<span class="token key atrule">Default Channel Map</span><span class="token punctuation">:</span> front<span class="token punctuation">-</span>left<span class="token punctuation">,</span>front<span class="token punctuation">-</span>right
-<span class="token key atrule">Default Sink</span><span class="token punctuation">:</span> alsa_output.pci<span class="token punctuation">-</span>0000_00_1f.3<span class="token punctuation">-</span>platform<span class="token punctuation">-</span>skl_hda_dsp_generic.HiFi__hw_sofhdadsp__sink
-<span class="token key atrule">Default Source</span><span class="token punctuation">:</span> combined.monitor
-<span class="token key atrule">Cookie</span><span class="token punctuation">:</span> 94e6<span class="token punctuation">:</span>e6bf<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>更换pipewire-pulse之后：</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">Server String</span><span class="token punctuation">:</span> /run/user/1000/pulse/native
-<span class="token key atrule">Library Protocol Version</span><span class="token punctuation">:</span> <span class="token number">34</span>
-<span class="token key atrule">Server Protocol Version</span><span class="token punctuation">:</span> <span class="token number">34</span>
-<span class="token key atrule">Is Local</span><span class="token punctuation">:</span> yes
-<span class="token key atrule">Client Index</span><span class="token punctuation">:</span> <span class="token number">69</span>
-<span class="token key atrule">Tile Size</span><span class="token punctuation">:</span> <span class="token number">65472</span>
-<span class="token key atrule">User Name</span><span class="token punctuation">:</span> zjk
-<span class="token key atrule">Host Name</span><span class="token punctuation">:</span> zjk<span class="token punctuation">-</span><span class="token number">7591</span>
-<span class="token key atrule">Server Name</span><span class="token punctuation">:</span> PulseAudio (on PipeWire 0.3.17)
-<span class="token key atrule">Server Version</span><span class="token punctuation">:</span> 14.0.0
-<span class="token key atrule">Default Sample Specification</span><span class="token punctuation">:</span> float32le 2ch 48000Hz
-<span class="token key atrule">Default Channel Map</span><span class="token punctuation">:</span> front<span class="token punctuation">-</span>left<span class="token punctuation">,</span>front<span class="token punctuation">-</span>right
-<span class="token key atrule">Default Sink</span><span class="token punctuation">:</span> <span class="token key atrule">alsa_output.pci-0000:00:1f.3-platform-skl_hda_dsp_generic.HiFi</span><span class="token punctuation">:</span> hw<span class="token punctuation">:</span>sofhdadsp<span class="token punctuation">,</span><span class="token key atrule">5</span><span class="token punctuation">:</span> sink
-<span class="token key atrule">Default Source</span><span class="token punctuation">:</span> <span class="token key atrule">alsa_input.pci-0000:00:1f.3-platform-skl_hda_dsp_generic.HiFi</span><span class="token punctuation">:</span> <span class="token key atrule">hw:sofhdadsp</span><span class="token punctuation">:</span> source
-<span class="token key atrule">Cookie</span><span class="token punctuation">:</span> 6242<span class="token punctuation">:</span><span class="token number">4425</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>看起来参数是好了一点，实测听不出来。</p>
-<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>据说pipewire音视频延迟低了，手头没有专业设备没法测。其他的混响、均衡、采样手头没有专业设备也测不出来。</p>
-<p>视频的话，浏览器HTML5播放器和本地VLC能正常播放。笔记本播放youtube4k视频外接4k显示器硬解没有大问题。VLC播放用N卡（笔记本的1650）解码也没有问题，驱动正常。</p>
-<p>其他的视频方面和屏幕共享之类的功能暂时还没有测试。我也找不到熟悉视频的工具人了，等找到了再说吧，自己瞎测估计也测不出什么来。</p>
-<h2 id="体验"><a href="#体验" class="headerlink" title="体验"></a>体验</h2><h3 id="音质"><a href="#音质" class="headerlink" title="音质"></a>音质</h3><p><code>pw-cli</code>显示的台式机面板参数</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ pw-cli info <span class="token number">0</span>
-        id: <span class="token number">0</span>
-        permissions: rwxm
-        type: PipeWire:Interface:Core/3
-        cookie: <span class="token number">653542227</span>
-        user-name: <span class="token string">"zjk"</span>
-        host-name: <span class="token string">"zjk-allseries"</span>
-        version: <span class="token string">"0.3.17"</span>
-        name: <span class="token string">"pipewire-0"</span>
-*       properties:
-*               core.name <span class="token operator">=</span> <span class="token string">"pipewire-0"</span>
-*               context.profile.modules <span class="token operator">=</span> <span class="token string">"none"</span>
-*               core.daemon <span class="token operator">=</span> <span class="token string">"true"</span>
-*               link.max-buffers <span class="token operator">=</span> <span class="token string">"16"</span>
-*               default.clock.rate <span class="token operator">=</span> <span class="token string">"48000"</span>
-*               default.clock.quantum <span class="token operator">=</span> <span class="token string">"1024"</span>
-*               default.clock.min-quantum <span class="token operator">=</span> <span class="token string">"32"</span>
-*               default.clock.max-quantum <span class="token operator">=</span> <span class="token string">"8192"</span>
-*               default.video.width <span class="token operator">=</span> <span class="token string">"640"</span>
-*               default.video.height <span class="token operator">=</span> <span class="token string">"480"</span>
-*               default.video.rate.num <span class="token operator">=</span> <span class="token string">"25"</span>
-*               default.video.rate.denom <span class="token operator">=</span> <span class="token string">"1"</span>
-*               mem.allow-mlock <span class="token operator">=</span> <span class="token string">"true"</span>
-*               cpu.max-align <span class="token operator">=</span> <span class="token string">"32"</span>
-*               object.id <span class="token operator">=</span> <span class="token string">"0"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>教研室的Arch台式机的老声卡接耳机和外接绿联声卡接耳机看不出什么大的区别。<br>Arch开Virtualbox里的win7能用，但是音质不知道为什么变差了特别多。 </p>
-<p>只有笔记本外放音质确实好了一点，我的笔记本外放能听出差别的那种，然而还是比win10差了不少（这个没有参考价值，我的笔记本Realtek驱动太阴间了）。<br>据说延迟低了，这个听不出来，手头上也没有专业设备。  </p>
-<p>其他的等我的校交响乐团的工具人室友回来了再说。  </p>
-<h3 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><p>目前使用的问题大概有：</p>
-<ol>
-<li><code>systemctl status --user pipewire-pulse</code>报错</li>
-</ol>
-<pre class="line-numbers language-log" data-language="log"><code class="language-log">● <span class="token domain constant">pipewire-pulse.service</span> <span class="token operator">-</span> PipeWire PulseAudio
-     <span class="token property">Loaded:</span> loaded <span class="token operator">(</span><span class="token file-path string">/usr/lib/systemd/user/pipewire-pulse.service</span><span class="token operator">;</span> enabled<span class="token operator">;</span> vendor preset<span class="token operator">:</span> enabled<span class="token operator">)</span>
-     <span class="token property">Active:</span> active <span class="token operator">(</span>running<span class="token operator">)</span> since Thu <span class="token date number">2020-12-03</span> <span class="token time number">17:10:09</span> CST<span class="token operator">;</span> <span class="token number">12min</span> ago
-<span class="token property">TriggeredBy:</span> ● <span class="token domain constant">pipewire-pulse.socket</span>
-   <span class="token property">Main PID:</span> <span class="token number">1787</span> <span class="token operator">(</span>pipewire<span class="token operator">-</span>pulse<span class="token operator">)</span>
-     <span class="token property">CGroup:</span> <span class="token file-path string">/user.slice/user-1000.slice/user@1000.service/app.slice/pipewire-pulse.service</span>
-             └─<span class="token number">1787</span> <span class="token file-path string">/usr/bin/pipewire-pulse</span>
-
-<span class="token number">12</span>月 <span class="token number">03</span> <span class="token time number">17:17:02</span> zjk<span class="token operator">-</span>allseries pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1787</span><span class="token punctuation">]</span><span class="token operator">:</span> core <span class="token number">0x55fc6c39e410</span><span class="token operator">:</span> proxy <span class="token number">0x55fc6c39e410</span> id<span class="token operator">:</span><span class="token number">0</span><span class="token operator">:</span> bound<span class="token operator">:</span><span class="token operator">-</span><span class="token number">1</span> seq<span class="token operator">:</span><span class="token number">1272</span> res<span class="token operator">:</span><span class="token operator">-</span><span class="token number">32</span> <span class="token operator">(</span>Broken pipe<span class="token operator">)</span> msg<span class="token operator">:</span><span class="token string">"connection error"</span>
-<span class="token number">12</span>月 <span class="token number">03</span> <span class="token time number">17:17:25</span> zjk<span class="token operator">-</span>allseries pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1787</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x55fc6c30c300</span><span class="token operator">:</span> <span class="token punctuation">[</span>Google Chrome<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">42</span> <span class="token operator">(</span>FLUSH_PLAYBACK_STREAM<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">168</span> error<span class="token operator">:</span><span class="token number">5</span> <span class="token operator">(</span>No such file or directory<span class="token operator">)</span>
-<span class="token number">12</span>月 <span class="token number">03</span> <span class="token time number">17:17:25</span> zjk<span class="token operator">-</span>allseries pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1787</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x55fc6c30c300</span><span class="token operator">:</span> <span class="token punctuation">[</span>Google Chrome<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">41</span> <span class="token operator">(</span>CORK_PLAYBACK_STREAM<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">169</span> error<span class="token operator">:</span><span class="token number">5</span> <span class="token operator">(</span>No such file or directory<span class="token operator">)</span>
-<span class="token number">12</span>月 <span class="token number">03</span> <span class="token time number">17:17:26</span> zjk<span class="token operator">-</span>allseries pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1787</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x55fc6c30c300</span><span class="token operator">:</span> <span class="token punctuation">[</span>Google Chrome<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">41</span> <span class="token operator">(</span>CORK_PLAYBACK_STREAM<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">170</span> error<span class="token operator">:</span><span class="token number">5</span> <span class="token operator">(</span>No such file or directory<span class="token operator">)</span>
-<span class="token number">12</span>月 <span class="token number">03</span> <span class="token time number">17:19:16</span> zjk<span class="token operator">-</span>allseries pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1787</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x55fc6c3deb80</span><span class="token operator">:</span> <span class="token punctuation">[</span>code<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">18</span> <span class="token operator">(</span>PLAY_SAMPLE<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">3</span> error<span class="token operator">:</span><span class="token number">5</span> <span class="token operator">(</span>No such file or directory<span class="token operator">)</span>
-<span class="token number">12</span>月 <span class="token number">03</span> <span class="token time number">17:19:16</span> zjk<span class="token operator">-</span>allseries pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1787</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x55fc6c3deb80</span><span class="token operator">:</span> <span class="token punctuation">[</span>code<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">18</span> <span class="token operator">(</span>PLAY_SAMPLE<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">4</span> error<span class="token operator">:</span><span class="token number">5</span> <span class="token operator">(</span>No such file or directory<span class="token operator">)</span>
-<span class="token number">12</span>月 <span class="token number">03</span> <span class="token time number">17:19:16</span> zjk<span class="token operator">-</span>allseries pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1787</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x55fc6c3deb80</span><span class="token operator">:</span> <span class="token punctuation">[</span>code<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">18</span> <span class="token operator">(</span>PLAY_SAMPLE<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">5</span> error<span class="token operator">:</span><span class="token number">5</span> <span class="token operator">(</span>No such file or directory<span class="token operator">)</span>
-<span class="token number">12</span>月 <span class="token number">03</span> <span class="token time number">17:19:17</span> zjk<span class="token operator">-</span>allseries pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1787</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x55fc6c3deb80</span><span class="token operator">:</span> <span class="token punctuation">[</span>code<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">18</span> <span class="token operator">(</span>PLAY_SAMPLE<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">6</span> error<span class="token operator">:</span><span class="token number">5</span> <span class="token operator">(</span>No such file or directory<span class="token operator">)</span>
-<span class="token number">12</span>月 <span class="token number">03</span> <span class="token time number">17:19:18</span> zjk<span class="token operator">-</span>allseries pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1787</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x55fc6c3deb80</span><span class="token operator">:</span> <span class="token punctuation">[</span>code<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">18</span> <span class="token operator">(</span>PLAY_SAMPLE<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">7</span> error<span class="token operator">:</span><span class="token number">5</span> <span class="token operator">(</span>No such file or directory<span class="token operator">)</span>
-<span class="token number">12</span>月 <span class="token number">03</span> <span class="token time number">17:19:18</span> zjk<span class="token operator">-</span>allseries pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1787</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x55fc6c3deb80</span><span class="token operator">:</span> <span class="token punctuation">[</span>code<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">18</span> <span class="token operator">(</span>PLAY_SAMPLE<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">8</span> error<span class="token operator">:</span><span class="token number">5</span> <span class="token operator">(</span>No such file or directory<span class="token operator">)</span>
-<span class="token separator comment">***</span>
-<span class="token number">12</span>月 <span class="token number">03</span> <span class="token time number">18:58:02</span> zjk<span class="token operator">-</span>allseries pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1787</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x55fc6c37c6f0</span><span class="token operator">:</span> <span class="token punctuation">[</span>VirtualBox<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">23</span> <span class="token operator">(</span>GET_SOURCE_INFO<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">249</span> error<span class="token operator">:</span><span class="token number">5</span> <span class="token operator">(</span>No such file or directory<span class="token operator">)</span>
-<span class="token number">12</span>月 <span class="token number">03</span> <span class="token time number">19:00:16</span> zjk<span class="token operator">-</span>allseries pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1787</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x55fc6c37c6f0</span><span class="token operator">:</span> <span class="token punctuation">[</span>VirtualBox<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">23</span> <span class="token operator">(</span>GET_SOURCE_INFO<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">376</span> error<span class="token operator">:</span><span class="token number">5</span> <span class="token operator">(</span>No such file or directory<span class="token operator">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>不过貌似都不影响使用</p>
-<ol start="2">
-<li>KDE调节音量的按钮换了之后经常卡死（KDE下面整个任务栏都卡死了），恢复之后调节音量无效</li>
-</ol>
-<p><img src="/pipewire/1606991672.png"></p>
-<ol start="3">
-<li>KDE音频切换设置偶尔卡死</li>
-</ol>
-<p>下图这个</p>
-<p><img src="/pipewire/1606992266.png"><br><img src="/pipewire/1606992430.png"></p>
-<p>点终止之后整个plasma桌面都无了</p>
-<p><img src="/pipewire/1606992508.png"></p>
-<ol start="4">
-<li><p>上图中的Build-in Audio切换之后耳机没有声音</p>
-</li>
-<li><p>切换外放麦克风和耳机之后再切回来没声了</p>
-</li>
-<li><p>有几个人之前说virtualbox会冲突，我这暂时没遇到</p>
-</li>
-<li><p>2021.2更新后再次出问题了,<code>pw-cli info 0</code>显示</p>
-</li>
-</ol>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">Error: <span class="token string">"failed to connect: Host is down"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>检查了一下发现systemd daemon不知道怎么没了。</p>
-<pre class="line-numbers language-none"><code class="language-none">Unit pipewire.service could not be found.
-Unit pipewire-pulse.service could not be found.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p>执行<code>systemctl enable pipewire --user</code>后重启还是找不到</p>
-<p><code>systemctl status pipewire-pulse --user</code></p>
-<p>报错：</p>
-<pre class="line-numbers language-log" data-language="log"><code class="language-log">● <span class="token domain constant">pipewire-pulse.service</span> <span class="token operator">-</span> PipeWire PulseAudio
-     <span class="token property">Loaded:</span> loaded <span class="token operator">(</span><span class="token file-path string">/usr/lib/systemd/user/pipewire-pulse.service</span><span class="token operator">;</span> enabled<span class="token operator">;</span> vendor preset<span class="token operator">:</span> enabled<span class="token operator">)</span>
-     <span class="token property">Active:</span> active <span class="token operator">(</span>running<span class="token operator">)</span> since Sun <span class="token date number">2021-02-14</span> <span class="token time number">10:03:07</span> CST<span class="token operator">;</span> <span class="token number">12min</span> ago
-<span class="token property">TriggeredBy:</span> ● <span class="token domain constant">pipewire-pulse.socket</span>
-   <span class="token property">Main PID:</span> <span class="token number">1168</span> <span class="token operator">(</span>pipewire<span class="token operator">-</span>pulse<span class="token operator">)</span>
-     <span class="token property">CGroup:</span> <span class="token file-path string">/user.slice/user-1000.slice/user@1000.service/app.slice/pipewire-pulse.service</span>
-             └─<span class="token number">1168</span> <span class="token file-path string">/usr/bin/pipewire-pulse</span>
-
-<span class="token number">2</span>月 <span class="token number">14</span> <span class="token time number">10:15:40</span> zjk<span class="token operator">-</span><span class="token number">7591</span> pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1168</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x557a2d6b64f0</span><span class="token operator">:</span> failed to connect client<span class="token operator">:</span> Host is down
-<span class="token number">2</span>月 <span class="token number">14</span> <span class="token time number">10:15:40</span> zjk<span class="token operator">-</span><span class="token number">7591</span> pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1168</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x557a2d6ceab0</span><span class="token operator">:</span> <span class="token punctuation">[</span>QPulse<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">9</span> <span class="token operator">(</span>SET_CLIENT_NAME<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">1</span> error<span class="token operator">:</span><span class="token number">6</span> <span class="token operator">></span>
-<span class="token number">2</span>月 <span class="token number">14</span> <span class="token time number">10:15:41</span> zjk<span class="token operator">-</span><span class="token number">7591</span> pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1168</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x557a2d6b64f0</span><span class="token operator">:</span> failed to connect client<span class="token operator">:</span> Host is down
-<span class="token number">2</span>月 <span class="token number">14</span> <span class="token time number">10:15:41</span> zjk<span class="token operator">-</span><span class="token number">7591</span> pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1168</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x557a2d6e1cb0</span><span class="token operator">:</span> <span class="token punctuation">[</span>QPulse<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">9</span> <span class="token operator">(</span>SET_CLIENT_NAME<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">1</span> error<span class="token operator">:</span><span class="token number">6</span> <span class="token operator">></span>
-<span class="token number">2</span>月 <span class="token number">14</span> <span class="token time number">10:15:42</span> zjk<span class="token operator">-</span><span class="token number">7591</span> pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1168</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x557a2d6b64f0</span><span class="token operator">:</span> failed to connect client<span class="token operator">:</span> Host is down<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="退坑保平安"><a href="#退坑保平安" class="headerlink" title="退坑保平安"></a>退坑保平安</h3><p>换回PulseAudio了，不当小白鼠了，心累，好几次升级都有小问题，每次内核更新提心吊胆的。</p>
-<p>2021.2 </p>
-<p>最近更新了Pipewire和kernel，开机加载界面的时候只加载出壁纸，kwin慢了十秒，Pipewire daemon加载失败，不想修了，直接换回PulseAudio。</p>
-<p>在Pipewire出1.0稳定版和正式支持KDE之前一直用PulseAudio了。</p>
-<!-- 如果需要屏幕共享，chrome需要启用WebRTC PipWire支持`chrome://flags/#enable-webrtc-pipewire-capturer`，可能需要用`libpipewire02` -->
-
-<h2 id="参见"><a href="#参见" class="headerlink" title="参见"></a>参见</h2><p><span class="exturl" data-url="aHR0cHM6Ly9waXBld2lyZS5vcmcv">https://pipewire.org/<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL1BpcGVXaXJl">https://wiki.archlinux.org/index.php/PipeWire<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvUHVsc2VBdWRpbw==">https://zh.wikipedia.org/wiki/PulseAudio<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9sd24ubmV0L0FydGljbGVzLzczNDEwMy8=">https://lwn.net/Articles/734103/<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9ibG9ncy5nbm9tZS5vcmcvdXJhZXVzLzIwMjAvMDkvMDQvcGlwZXdpcmUtbGF0ZS1zdW1tZXItdXBkYXRlLTIwMjAv">https://blogs.gnome.org/uraeus/2020/09/04/pipewire-late-summer-update-2020/<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9naXRsYWIuZnJlZWRlc2t0b3Aub3JnL3BpcGV3aXJlL3BpcGV3aXJlLy0vd2lraXMvTGltaXRhdGlvbnMtaW4tMC4z">pipewire 0.3的一些局限和问题<i class="fa fa-external-link-alt"></i></span>  </p>
-]]></content>
-      <categories>
-        <category>不务正业系列</category>
-      </categories>
-      <tags>
-        <tag>pipewire</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Archlinux下VSCode+Latex+Zotero的论文写作方案</title>
     <url>/paper-with-latex-zotero-vscode/</url>
     <content><![CDATA[<p>开源拖拉机将就着用吧，又不是不能用，再见Word、EndNote和Windows。顺便说一下你电的LaTeX模板怎么用。不定期更新到毕业。</p>
@@ -6067,6 +5968,213 @@ I found no \bibstyle command<span class="token separator comment">---</span>whil
       <tags>
         <tag>Zotero</tag>
         <tag>LaTeX</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux新一代音视频服务Pipewire尝鲜</title>
+    <url>/pipewire/</url>
+    <content><![CDATA[<p>2021年9月更新：<br>听说fedora都上Pipiwire了，正好这几天有点空，那就试试吧</p>
+<span id="more"></span>
+
+<p>Pipewire是红帽造的新一代音视频轮子，主要是用来取代PulseAudio、jack还有gstreams什么的。<br><strong>据说</strong>延迟补偿还不错，<strong>据说</strong>能统一音视频框架还兼容PulseAudio和Jack，据说是朝着专业级音效去的。据说支持Wayland和平板，据说支持Flatpak之类的容器内使用，据说有类似PolKit的权限管理，不需要像PulseAudio那样新建音频用户组和添加用户了。。。。</p>
+<blockquote>
+<p>It provides a low-latency, graph based processing engine on top of audio and video devices that can be used to support the use cases currently handled by both pulseaudio and JACK. PipeWire was designed with a powerful security model that makes interacting with audio and video devices from containerized applications easy, with supporting Flatpak applications being the primary goal. Alongside Wayland and Flatpak we expect PipeWire to provide a core building block for the future of Linux application development.</p>
+</blockquote>
+<p>都是据说啊，被Wayland骗了一次之后我已经不敢信这些宣传了，先试试实际效果再说。</p>
+<p>当然这个目前貌似只正经适配了GNOME和Fedora，不过据说兼容PulseAudio，Arch上的坑已经有人踩了好久了，现在还有点小问题，不过可以考虑上了。<br>昨天刚把Arch和笔记本的EndeavourOS更了python 3.9，除了autojump出了点小问题外一切正常。索性直接上Pipewire看看吧，反正笔记本那个全损音质也跟没有一样，换了说不定能抢救一下。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> pacman -S pipewire<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>要替代PulseAudio和Jack装这两个包<code>pipewire-pulse</code>、<code>pipewire-jack-dropin</code>。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yay -S pipewire-jack-dropin pipewire-pulse<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>然后systemd设置一下（archwiki说蓝牙设备需要手动设置一下，编辑<code>/etc/pipewire/pipewire.conf</code>，我手头没蓝牙耳机就不弄了）</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl <span class="token builtin class-name">enable</span> --user pipewire-pulse<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>然后退出登录或重启。</p>
+<p>运行<code>pactl info</code>，如果看到</p>
+<pre class="line-numbers language-log" data-language="log"><code class="language-log"><span class="token property">Server Name:</span> PulseAudio <span class="token operator">(</span>on PipeWire <span class="token number">0.3.17</span><span class="token operator">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>说明正常。</p>
+<h3 id="蓝牙设备"><a href="#蓝牙设备" class="headerlink" title="蓝牙设备"></a>蓝牙设备</h3><p>感谢室友赞助的一个索尼蓝牙音箱用于测试</p>
+<p>pipewire自带了蓝牙的模块，不需要像PulseAudio那样安装<code>pulseaudio-bluetooth</code>之类的包</p>
+<p>安装了pipewire-pulse之后编辑<code>/etc/pipewire/pipewire.conf</code>在<code>exec /usr/bin/pipewire-media-session</code>后面加上<code>-e bluez5</code>就可以使用了。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">exec</span> /usr/bin/pipewire-media-session -e bluez5<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="卸载"><a href="#卸载" class="headerlink" title="卸载"></a>卸载</h2><p>换回PulseAudio或者Jack可以用这个<span class="exturl" data-url="aHR0cHM6Ly9naXRsYWIuZnJlZWRlc2t0b3Aub3JnL3BpcGV3aXJlL3BpcGV3aXJlLy0vc25pcHBldHMvMTE2NA==">脚本<i class="fa fa-external-link-alt"></i></span></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> /usr/lib64/
+
+<span class="token function">sudo</span> <span class="token function">rm</span> /usr/lib64/libpulse-mainloop-glib.so.0.999.0
+<span class="token function">sudo</span> <span class="token function">rm</span> /usr/lib64/libpulse-simple.so.0.999.0
+<span class="token function">sudo</span> <span class="token function">rm</span> /usr/lib64/libpulse.so.0.999.0
+
+<span class="token function">sudo</span> <span class="token function">rm</span> /usr/lib64/libjack.so.0.999.0
+<span class="token function">sudo</span> <span class="token function">rm</span> /usr/lib64/libjacknet.so.0.999.0
+<span class="token function">sudo</span> <span class="token function">rm</span> /usr/lib64/libjackserver.so.0.999.0
+
+<span class="token function">sudo</span> ldconfig<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>用pacman包管理器装的就</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl disable pipewire-pulse --user
+systemctl disable pipewire --user
+yay -Rs pipewire-pulse
+yay -S pulseaudio<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="更新一点实测"><a href="#更新一点实测" class="headerlink" title="更新一点实测"></a>更新一点实测</h2><h3 id="人耳效果和使用体验"><a href="#人耳效果和使用体验" class="headerlink" title="人耳效果和使用体验"></a>人耳效果和使用体验</h3><p>昨天回到宿舍，发现笔记本的EndeavourOS更新python 3.9<br> Optimus-manager 出问题了，好在很快解决了。<br>然后在工具人室友的帮助下测试了绿联的外接声卡一块、某大法耳机一个音响一个，傻多戴显示器自带小音箱一个，均工作正常。</p>
+<p><img src="/pipewire/1607053618.png"><br><img src="/pipewire/1607053601.png"></p>
+<p>两种音质人耳都听不出差别，室友把两段音频放到Adobe Audition也看不出什么大区别</p>
+<p>笔记本自带外放在KDE的设置中从其他音频播放设备切换过去之后出现没有声音的状况，经检查其实是有的，只是非常小，将声音调整到最大还是几乎要被笔记本的风扇声音盖住（这貌似不是pipewire的锅，），重启后外放音量恢复正常。<br>除了笔记本自带外放，在笔记本上音频切换KDE设置都没有出现卡死的状况，，声音也播放正常，没出现切换之后没声了的状况。</p>
+<h3 id="面板参数"><a href="#面板参数" class="headerlink" title="面板参数"></a>面板参数</h3><p>笔记本使用原来的PulseAudio详情：</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">Server String</span><span class="token punctuation">:</span> /run/user/1000/pulse/native
+<span class="token key atrule">Library Protocol Version</span><span class="token punctuation">:</span> <span class="token number">34</span>
+<span class="token key atrule">Server Protocol Version</span><span class="token punctuation">:</span> <span class="token number">34</span>
+<span class="token key atrule">Is Local</span><span class="token punctuation">:</span> yes
+<span class="token key atrule">Client Index</span><span class="token punctuation">:</span> <span class="token number">16</span>
+<span class="token key atrule">Tile Size</span><span class="token punctuation">:</span> <span class="token number">65472</span>
+<span class="token key atrule">User Name</span><span class="token punctuation">:</span> zjk
+<span class="token key atrule">Host Name</span><span class="token punctuation">:</span> zjk<span class="token punctuation">-</span><span class="token number">7591</span>
+<span class="token key atrule">Server Name</span><span class="token punctuation">:</span> pulseaudio
+<span class="token key atrule">Server Version</span><span class="token punctuation">:</span> <span class="token number">14.0</span>
+<span class="token key atrule">Default Sample Specification</span><span class="token punctuation">:</span> s16le 2ch 44100Hz
+<span class="token key atrule">Default Channel Map</span><span class="token punctuation">:</span> front<span class="token punctuation">-</span>left<span class="token punctuation">,</span>front<span class="token punctuation">-</span>right
+<span class="token key atrule">Default Sink</span><span class="token punctuation">:</span> alsa_output.pci<span class="token punctuation">-</span>0000_00_1f.3<span class="token punctuation">-</span>platform<span class="token punctuation">-</span>skl_hda_dsp_generic.HiFi__hw_sofhdadsp__sink
+<span class="token key atrule">Default Source</span><span class="token punctuation">:</span> combined.monitor
+<span class="token key atrule">Cookie</span><span class="token punctuation">:</span> 94e6<span class="token punctuation">:</span>e6bf<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>更换pipewire-pulse之后：</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">Server String</span><span class="token punctuation">:</span> /run/user/1000/pulse/native
+<span class="token key atrule">Library Protocol Version</span><span class="token punctuation">:</span> <span class="token number">34</span>
+<span class="token key atrule">Server Protocol Version</span><span class="token punctuation">:</span> <span class="token number">34</span>
+<span class="token key atrule">Is Local</span><span class="token punctuation">:</span> yes
+<span class="token key atrule">Client Index</span><span class="token punctuation">:</span> <span class="token number">69</span>
+<span class="token key atrule">Tile Size</span><span class="token punctuation">:</span> <span class="token number">65472</span>
+<span class="token key atrule">User Name</span><span class="token punctuation">:</span> zjk
+<span class="token key atrule">Host Name</span><span class="token punctuation">:</span> zjk<span class="token punctuation">-</span><span class="token number">7591</span>
+<span class="token key atrule">Server Name</span><span class="token punctuation">:</span> PulseAudio (on PipeWire 0.3.17)
+<span class="token key atrule">Server Version</span><span class="token punctuation">:</span> 14.0.0
+<span class="token key atrule">Default Sample Specification</span><span class="token punctuation">:</span> float32le 2ch 48000Hz
+<span class="token key atrule">Default Channel Map</span><span class="token punctuation">:</span> front<span class="token punctuation">-</span>left<span class="token punctuation">,</span>front<span class="token punctuation">-</span>right
+<span class="token key atrule">Default Sink</span><span class="token punctuation">:</span> <span class="token key atrule">alsa_output.pci-0000:00:1f.3-platform-skl_hda_dsp_generic.HiFi</span><span class="token punctuation">:</span> hw<span class="token punctuation">:</span>sofhdadsp<span class="token punctuation">,</span><span class="token key atrule">5</span><span class="token punctuation">:</span> sink
+<span class="token key atrule">Default Source</span><span class="token punctuation">:</span> <span class="token key atrule">alsa_input.pci-0000:00:1f.3-platform-skl_hda_dsp_generic.HiFi</span><span class="token punctuation">:</span> <span class="token key atrule">hw:sofhdadsp</span><span class="token punctuation">:</span> source
+<span class="token key atrule">Cookie</span><span class="token punctuation">:</span> 6242<span class="token punctuation">:</span><span class="token number">4425</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>看起来参数是好了一点，实测听不出来。</p>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>据说pipewire音视频延迟低了，手头没有专业设备没法测。其他的混响、均衡、采样手头没有专业设备也测不出来。</p>
+<p>视频的话，浏览器HTML5播放器和本地VLC能正常播放。笔记本播放youtube4k视频外接4k显示器硬解没有大问题。VLC播放用N卡（笔记本的1650）解码也没有问题，驱动正常。</p>
+<p>其他的视频方面和屏幕共享之类的功能暂时还没有测试。我也找不到熟悉视频的工具人了，等找到了再说吧，自己瞎测估计也测不出什么来。</p>
+<h2 id="体验"><a href="#体验" class="headerlink" title="体验"></a>体验</h2><h3 id="音质"><a href="#音质" class="headerlink" title="音质"></a>音质</h3><p><code>pw-cli</code>显示的台式机面板参数</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ pw-cli info <span class="token number">0</span>
+        id: <span class="token number">0</span>
+        permissions: rwxm
+        type: PipeWire:Interface:Core/3
+        cookie: <span class="token number">653542227</span>
+        user-name: <span class="token string">"zjk"</span>
+        host-name: <span class="token string">"zjk-allseries"</span>
+        version: <span class="token string">"0.3.17"</span>
+        name: <span class="token string">"pipewire-0"</span>
+*       properties:
+*               core.name <span class="token operator">=</span> <span class="token string">"pipewire-0"</span>
+*               context.profile.modules <span class="token operator">=</span> <span class="token string">"none"</span>
+*               core.daemon <span class="token operator">=</span> <span class="token string">"true"</span>
+*               link.max-buffers <span class="token operator">=</span> <span class="token string">"16"</span>
+*               default.clock.rate <span class="token operator">=</span> <span class="token string">"48000"</span>
+*               default.clock.quantum <span class="token operator">=</span> <span class="token string">"1024"</span>
+*               default.clock.min-quantum <span class="token operator">=</span> <span class="token string">"32"</span>
+*               default.clock.max-quantum <span class="token operator">=</span> <span class="token string">"8192"</span>
+*               default.video.width <span class="token operator">=</span> <span class="token string">"640"</span>
+*               default.video.height <span class="token operator">=</span> <span class="token string">"480"</span>
+*               default.video.rate.num <span class="token operator">=</span> <span class="token string">"25"</span>
+*               default.video.rate.denom <span class="token operator">=</span> <span class="token string">"1"</span>
+*               mem.allow-mlock <span class="token operator">=</span> <span class="token string">"true"</span>
+*               cpu.max-align <span class="token operator">=</span> <span class="token string">"32"</span>
+*               object.id <span class="token operator">=</span> <span class="token string">"0"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>教研室的Arch台式机的老声卡接耳机和外接绿联声卡接耳机看不出什么大的区别。<br>Arch开Virtualbox里的win7能用，但是音质不知道为什么变差了特别多。 </p>
+<p>只有笔记本外放音质确实好了一点，我的笔记本外放能听出差别的那种，然而还是比win10差了不少（这个没有参考价值，我的笔记本Realtek驱动太阴间了）。<br>据说延迟低了，这个听不出来，手头上也没有专业设备。  </p>
+<p>其他的等我的校交响乐团的工具人室友回来了再说。  </p>
+<h3 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><p>目前使用的问题大概有：</p>
+<ol>
+<li><code>systemctl status --user pipewire-pulse</code>报错</li>
+</ol>
+<pre class="line-numbers language-log" data-language="log"><code class="language-log">● <span class="token domain constant">pipewire-pulse.service</span> <span class="token operator">-</span> PipeWire PulseAudio
+     <span class="token property">Loaded:</span> loaded <span class="token operator">(</span><span class="token file-path string">/usr/lib/systemd/user/pipewire-pulse.service</span><span class="token operator">;</span> enabled<span class="token operator">;</span> vendor preset<span class="token operator">:</span> enabled<span class="token operator">)</span>
+     <span class="token property">Active:</span> active <span class="token operator">(</span>running<span class="token operator">)</span> since Thu <span class="token date number">2020-12-03</span> <span class="token time number">17:10:09</span> CST<span class="token operator">;</span> <span class="token number">12min</span> ago
+<span class="token property">TriggeredBy:</span> ● <span class="token domain constant">pipewire-pulse.socket</span>
+   <span class="token property">Main PID:</span> <span class="token number">1787</span> <span class="token operator">(</span>pipewire<span class="token operator">-</span>pulse<span class="token operator">)</span>
+     <span class="token property">CGroup:</span> <span class="token file-path string">/user.slice/user-1000.slice/user@1000.service/app.slice/pipewire-pulse.service</span>
+             └─<span class="token number">1787</span> <span class="token file-path string">/usr/bin/pipewire-pulse</span>
+
+<span class="token number">12</span>月 <span class="token number">03</span> <span class="token time number">17:17:02</span> zjk<span class="token operator">-</span>allseries pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1787</span><span class="token punctuation">]</span><span class="token operator">:</span> core <span class="token number">0x55fc6c39e410</span><span class="token operator">:</span> proxy <span class="token number">0x55fc6c39e410</span> id<span class="token operator">:</span><span class="token number">0</span><span class="token operator">:</span> bound<span class="token operator">:</span><span class="token operator">-</span><span class="token number">1</span> seq<span class="token operator">:</span><span class="token number">1272</span> res<span class="token operator">:</span><span class="token operator">-</span><span class="token number">32</span> <span class="token operator">(</span>Broken pipe<span class="token operator">)</span> msg<span class="token operator">:</span><span class="token string">"connection error"</span>
+<span class="token number">12</span>月 <span class="token number">03</span> <span class="token time number">17:17:25</span> zjk<span class="token operator">-</span>allseries pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1787</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x55fc6c30c300</span><span class="token operator">:</span> <span class="token punctuation">[</span>Google Chrome<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">42</span> <span class="token operator">(</span>FLUSH_PLAYBACK_STREAM<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">168</span> error<span class="token operator">:</span><span class="token number">5</span> <span class="token operator">(</span>No such file or directory<span class="token operator">)</span>
+<span class="token number">12</span>月 <span class="token number">03</span> <span class="token time number">17:17:25</span> zjk<span class="token operator">-</span>allseries pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1787</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x55fc6c30c300</span><span class="token operator">:</span> <span class="token punctuation">[</span>Google Chrome<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">41</span> <span class="token operator">(</span>CORK_PLAYBACK_STREAM<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">169</span> error<span class="token operator">:</span><span class="token number">5</span> <span class="token operator">(</span>No such file or directory<span class="token operator">)</span>
+<span class="token number">12</span>月 <span class="token number">03</span> <span class="token time number">17:17:26</span> zjk<span class="token operator">-</span>allseries pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1787</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x55fc6c30c300</span><span class="token operator">:</span> <span class="token punctuation">[</span>Google Chrome<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">41</span> <span class="token operator">(</span>CORK_PLAYBACK_STREAM<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">170</span> error<span class="token operator">:</span><span class="token number">5</span> <span class="token operator">(</span>No such file or directory<span class="token operator">)</span>
+<span class="token number">12</span>月 <span class="token number">03</span> <span class="token time number">17:19:16</span> zjk<span class="token operator">-</span>allseries pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1787</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x55fc6c3deb80</span><span class="token operator">:</span> <span class="token punctuation">[</span>code<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">18</span> <span class="token operator">(</span>PLAY_SAMPLE<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">3</span> error<span class="token operator">:</span><span class="token number">5</span> <span class="token operator">(</span>No such file or directory<span class="token operator">)</span>
+<span class="token number">12</span>月 <span class="token number">03</span> <span class="token time number">17:19:16</span> zjk<span class="token operator">-</span>allseries pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1787</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x55fc6c3deb80</span><span class="token operator">:</span> <span class="token punctuation">[</span>code<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">18</span> <span class="token operator">(</span>PLAY_SAMPLE<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">4</span> error<span class="token operator">:</span><span class="token number">5</span> <span class="token operator">(</span>No such file or directory<span class="token operator">)</span>
+<span class="token number">12</span>月 <span class="token number">03</span> <span class="token time number">17:19:16</span> zjk<span class="token operator">-</span>allseries pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1787</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x55fc6c3deb80</span><span class="token operator">:</span> <span class="token punctuation">[</span>code<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">18</span> <span class="token operator">(</span>PLAY_SAMPLE<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">5</span> error<span class="token operator">:</span><span class="token number">5</span> <span class="token operator">(</span>No such file or directory<span class="token operator">)</span>
+<span class="token number">12</span>月 <span class="token number">03</span> <span class="token time number">17:19:17</span> zjk<span class="token operator">-</span>allseries pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1787</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x55fc6c3deb80</span><span class="token operator">:</span> <span class="token punctuation">[</span>code<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">18</span> <span class="token operator">(</span>PLAY_SAMPLE<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">6</span> error<span class="token operator">:</span><span class="token number">5</span> <span class="token operator">(</span>No such file or directory<span class="token operator">)</span>
+<span class="token number">12</span>月 <span class="token number">03</span> <span class="token time number">17:19:18</span> zjk<span class="token operator">-</span>allseries pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1787</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x55fc6c3deb80</span><span class="token operator">:</span> <span class="token punctuation">[</span>code<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">18</span> <span class="token operator">(</span>PLAY_SAMPLE<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">7</span> error<span class="token operator">:</span><span class="token number">5</span> <span class="token operator">(</span>No such file or directory<span class="token operator">)</span>
+<span class="token number">12</span>月 <span class="token number">03</span> <span class="token time number">17:19:18</span> zjk<span class="token operator">-</span>allseries pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1787</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x55fc6c3deb80</span><span class="token operator">:</span> <span class="token punctuation">[</span>code<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">18</span> <span class="token operator">(</span>PLAY_SAMPLE<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">8</span> error<span class="token operator">:</span><span class="token number">5</span> <span class="token operator">(</span>No such file or directory<span class="token operator">)</span>
+<span class="token separator comment">***</span>
+<span class="token number">12</span>月 <span class="token number">03</span> <span class="token time number">18:58:02</span> zjk<span class="token operator">-</span>allseries pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1787</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x55fc6c37c6f0</span><span class="token operator">:</span> <span class="token punctuation">[</span>VirtualBox<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">23</span> <span class="token operator">(</span>GET_SOURCE_INFO<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">249</span> error<span class="token operator">:</span><span class="token number">5</span> <span class="token operator">(</span>No such file or directory<span class="token operator">)</span>
+<span class="token number">12</span>月 <span class="token number">03</span> <span class="token time number">19:00:16</span> zjk<span class="token operator">-</span>allseries pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1787</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x55fc6c37c6f0</span><span class="token operator">:</span> <span class="token punctuation">[</span>VirtualBox<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">23</span> <span class="token operator">(</span>GET_SOURCE_INFO<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">376</span> error<span class="token operator">:</span><span class="token number">5</span> <span class="token operator">(</span>No such file or directory<span class="token operator">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>不过貌似都不影响使用</p>
+<ol start="2">
+<li>KDE调节音量的按钮换了之后经常卡死（KDE下面整个任务栏都卡死了），恢复之后调节音量无效</li>
+</ol>
+<p><img src="/pipewire/1606991672.png"></p>
+<ol start="3">
+<li>KDE音频切换设置偶尔卡死</li>
+</ol>
+<p>下图这个</p>
+<p><img src="/pipewire/1606992266.png"><br><img src="/pipewire/1606992430.png"></p>
+<p>点终止之后整个plasma桌面都无了</p>
+<p><img src="/pipewire/1606992508.png"></p>
+<ol start="4">
+<li><p>上图中的Build-in Audio切换之后耳机没有声音</p>
+</li>
+<li><p>切换外放麦克风和耳机之后再切回来没声了</p>
+</li>
+<li><p>有几个人之前说virtualbox会冲突，我这暂时没遇到</p>
+</li>
+<li><p>2021.2更新后再次出问题了,<code>pw-cli info 0</code>显示</p>
+</li>
+</ol>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">Error: <span class="token string">"failed to connect: Host is down"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>检查了一下发现systemd daemon不知道怎么没了。</p>
+<pre class="line-numbers language-none"><code class="language-none">Unit pipewire.service could not be found.
+Unit pipewire-pulse.service could not be found.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>执行<code>systemctl enable pipewire --user</code>后重启还是找不到</p>
+<p><code>systemctl status pipewire-pulse --user</code></p>
+<p>报错：</p>
+<pre class="line-numbers language-log" data-language="log"><code class="language-log">● <span class="token domain constant">pipewire-pulse.service</span> <span class="token operator">-</span> PipeWire PulseAudio
+     <span class="token property">Loaded:</span> loaded <span class="token operator">(</span><span class="token file-path string">/usr/lib/systemd/user/pipewire-pulse.service</span><span class="token operator">;</span> enabled<span class="token operator">;</span> vendor preset<span class="token operator">:</span> enabled<span class="token operator">)</span>
+     <span class="token property">Active:</span> active <span class="token operator">(</span>running<span class="token operator">)</span> since Sun <span class="token date number">2021-02-14</span> <span class="token time number">10:03:07</span> CST<span class="token operator">;</span> <span class="token number">12min</span> ago
+<span class="token property">TriggeredBy:</span> ● <span class="token domain constant">pipewire-pulse.socket</span>
+   <span class="token property">Main PID:</span> <span class="token number">1168</span> <span class="token operator">(</span>pipewire<span class="token operator">-</span>pulse<span class="token operator">)</span>
+     <span class="token property">CGroup:</span> <span class="token file-path string">/user.slice/user-1000.slice/user@1000.service/app.slice/pipewire-pulse.service</span>
+             └─<span class="token number">1168</span> <span class="token file-path string">/usr/bin/pipewire-pulse</span>
+
+<span class="token number">2</span>月 <span class="token number">14</span> <span class="token time number">10:15:40</span> zjk<span class="token operator">-</span><span class="token number">7591</span> pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1168</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x557a2d6b64f0</span><span class="token operator">:</span> failed to connect client<span class="token operator">:</span> Host is down
+<span class="token number">2</span>月 <span class="token number">14</span> <span class="token time number">10:15:40</span> zjk<span class="token operator">-</span><span class="token number">7591</span> pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1168</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x557a2d6ceab0</span><span class="token operator">:</span> <span class="token punctuation">[</span>QPulse<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">9</span> <span class="token operator">(</span>SET_CLIENT_NAME<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">1</span> error<span class="token operator">:</span><span class="token number">6</span> <span class="token operator">></span>
+<span class="token number">2</span>月 <span class="token number">14</span> <span class="token time number">10:15:41</span> zjk<span class="token operator">-</span><span class="token number">7591</span> pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1168</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x557a2d6b64f0</span><span class="token operator">:</span> failed to connect client<span class="token operator">:</span> Host is down
+<span class="token number">2</span>月 <span class="token number">14</span> <span class="token time number">10:15:41</span> zjk<span class="token operator">-</span><span class="token number">7591</span> pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1168</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x557a2d6e1cb0</span><span class="token operator">:</span> <span class="token punctuation">[</span>QPulse<span class="token punctuation">]</span> <span class="token level error important">ERROR</span> command<span class="token operator">:</span><span class="token number">9</span> <span class="token operator">(</span>SET_CLIENT_NAME<span class="token operator">)</span> tag<span class="token operator">:</span><span class="token number">1</span> error<span class="token operator">:</span><span class="token number">6</span> <span class="token operator">></span>
+<span class="token number">2</span>月 <span class="token number">14</span> <span class="token time number">10:15:42</span> zjk<span class="token operator">-</span><span class="token number">7591</span> pipewire<span class="token operator">-</span>pulse<span class="token punctuation">[</span><span class="token number">1168</span><span class="token punctuation">]</span><span class="token operator">:</span> pulse<span class="token operator">-</span>server <span class="token number">0x557a2d6b64f0</span><span class="token operator">:</span> failed to connect client<span class="token operator">:</span> Host is down<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="退坑保平安"><a href="#退坑保平安" class="headerlink" title="退坑保平安"></a>退坑保平安</h3><p>换回PulseAudio了，不当小白鼠了，心累，好几次升级都有小问题，每次内核更新提心吊胆的。</p>
+<p>2021.2 </p>
+<p>最近更新了Pipewire和kernel，开机加载界面的时候只加载出壁纸，kwin慢了十秒，Pipewire daemon加载失败，不想修了，直接换回PulseAudio。</p>
+<p>在Pipewire出1.0稳定版和正式支持KDE之前一直用PulseAudio了。</p>
+<!-- 如果需要屏幕共享，chrome需要启用WebRTC PipWire支持`chrome://flags/#enable-webrtc-pipewire-capturer`，可能需要用`libpipewire02` -->
+
+<h2 id="参见"><a href="#参见" class="headerlink" title="参见"></a>参见</h2><p><span class="exturl" data-url="aHR0cHM6Ly9waXBld2lyZS5vcmcv">https://pipewire.org/<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL1BpcGVXaXJl">https://wiki.archlinux.org/index.php/PipeWire<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvUHVsc2VBdWRpbw==">https://zh.wikipedia.org/wiki/PulseAudio<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9sd24ubmV0L0FydGljbGVzLzczNDEwMy8=">https://lwn.net/Articles/734103/<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9ibG9ncy5nbm9tZS5vcmcvdXJhZXVzLzIwMjAvMDkvMDQvcGlwZXdpcmUtbGF0ZS1zdW1tZXItdXBkYXRlLTIwMjAv">https://blogs.gnome.org/uraeus/2020/09/04/pipewire-late-summer-update-2020/<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9naXRsYWIuZnJlZWRlc2t0b3Aub3JnL3BpcGV3aXJlL3BpcGV3aXJlLy0vd2lraXMvTGltaXRhdGlvbnMtaW4tMC4z">pipewire 0.3的一些局限和问题<i class="fa fa-external-link-alt"></i></span>  </p>
+]]></content>
+      <categories>
+        <category>不务正业系列</category>
+      </categories>
+      <tags>
+        <tag>pipewire</tag>
       </tags>
   </entry>
   <entry>
@@ -6587,6 +6695,148 @@ X_pred <span class="token operator">=</span> np<span class="token punctuation">.
       <tags>
         <tag>jvm</tag>
         <tag>Spring</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>用systemd-boot做bootloader</title>
+    <url>/systemd-boot/</url>
+    <content><![CDATA[<p>又研究了一下linux的启动流程，然后换成systemd-boot了。原先好看的grub主题就不要了，但是systemd-boot它启动快啊，grub好臃肿</p>
+<span id="more"></span>
+
+<h2 id="从Grub迁移到systemd-boot"><a href="#从Grub迁移到systemd-boot" class="headerlink" title="从Grub迁移到systemd-boot"></a>从Grub迁移到systemd-boot</h2><p>grub有好看的主题，也能方便的在开机的时候选内核版本、进btrfs的sanpshot回滚。但是我想尝试一下systemd-boot，grub看起来实在是太复杂了，我用不到那些功能。systemd-boot已经在systemd全家桶里面了，所以不需要额外安装。</p>
+<p>systemd-boot一般要放在第一个EFI分区，而且直到今天systemd-boot和btrfs配合的还不是很好。我建了一个512M的EFI分区, 格式化为FAT32</p>
+<p>注意需要EFI分区(EFI system partition, ef00)，不能是Linux filesystem(8300), 分区的Type如果是这样，grub是可以的，但是systemd-boot不认。用cgdisk重新分区的时候Type选ef00</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token variable">$sudo</span> bootctl --path<span class="token operator">=</span>/boot <span class="token function">install</span>
+File system <span class="token string">"/dev/block/259:1"</span> has wrong <span class="token builtin class-name">type</span> <span class="token keyword">for</span> an EFI System Partition <span class="token punctuation">(</span>ESP<span class="token punctuation">)</span>.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>然后安装hook让每次更新内核的时候自动配置</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yay -S systemd-boot-pacman-hook<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>systemd-boot是单文件启动的，配置文件放在<code>/boot/loader/entries</code>下面，可以根据不同的启动选项创建不同的配置文件，比如按照Arch Wiki的推荐创建一个<code>arch.conf</code></p>
+<pre class="line-numbers language-config" data-language="config"><code class="language-config">title Arch
+linux &#x2F;vmlinuz-linux
+initrd &#x2F;amd-ucode.img
+initrd &#x2F;initramfs-linux.img
+options root&#x3D;LABEL&#x3D;ROOT rootflags&#x3D;subvol&#x3D;@ rw<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>title是名称，就是systemd-boot界面显示的那个。<br>linux选项是指定可执行的压缩内核，一般就<code>vmlinuz-linux</code>，如果是桌面用户装了其他内核应该能在<code>boot</code>目录下找到，比如<code>vmlinuz-linux-zen</code></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">/boot❯ <span class="token function">ls</span>
+amd-ucode.img                     initramfs-linux-lts.img              initramfs-linux-zen.img  vmlinuz-linux-lts
+EFI                               initramfs-linux-xanmod-fallback.img  initramfs-linux.img      vmlinuz-linux-xanmod
+initramfs-linux-fallback.img      initramfs-linux-xanmod.img           loader                   vmlinuz-linux-zen
+initramfs-linux-lts-fallback.img  initramfs-linux-zen-fallback.img     vmlinuz-linux <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后用initrd选项指定一下想要的initramfs镜像，装了amd或者intel的微码也要指定一下</p>
+<p>最后options里面指定一下根分区和内核参数（如果用btrfs还有rootflags指定一下是哪个subvol）</p>
+<p>ps: 在写rootflags的时候我们可以直接照抄grub生成的</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">grub-mkconfig</span> <span class="token operator"><span class="token file-descriptor important">2</span>></span>/dev/null <span class="token operator">|</span> <span class="token function">grep</span> vmlinuz<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>然后我们配置一下loader.conf, 指定默认启动使用<code>arch.conf</code>的配置</p>
+<pre class="line-numbers language-config" data-language="config"><code class="language-config">default arch.conf
+timeout 4
+console-mode max
+editor vim<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>现在boot目录的结构大概是这个样子：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">❯ tree /boot
+/boot
+├── amd-ucode.img
+├── EFI
+│   ├── BOOT
+│   │   └── BOOTX64.EFI
+│   ├── Linux
+│   └── systemd
+│       └── systemd-bootx64.efi
+├── initramfs-linux-fallback.img
+├── initramfs-linux.img
+├── loader
+│   ├── entries
+│   │   └── arch.conf
+│   ├── loader.conf
+│   └── random-seed
+├── vmlinuz-linux<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后我们可以把grub卸了</p>
+<h3 id="使用Unified-Kernel-image"><a href="#使用Unified-Kernel-image" class="headerlink" title="使用Unified Kernel image"></a>使用Unified Kernel image</h3><p>就是把vmlinuz、ucode、initramfs的img都揉到一起做了一的大的可执行的内核镜像</p>
+<h3 id="systemd-boot如何设置内核参数（参数是怎么传递的）"><a href="#systemd-boot如何设置内核参数（参数是怎么传递的）" class="headerlink" title="systemd-boot如何设置内核参数（参数是怎么传递的）"></a>systemd-boot如何设置内核参数（参数是怎么传递的）</h3><p>在options选项里面附加就可以了，然后systemd-boot会把参数传给initramfs，然后就是<span class="exturl" data-url="aHR0cHM6Ly93d3cua2VybmVsLm9yZy9kb2MvaHRtbC92NC4xNC9hZG1pbi1ndWlkZS9rZXJuZWwtcGFyYW1ldGVycy5odG1s">kernel’s command-line parameters<i class="fa fa-external-link-alt"></i></span>那一套(能用<code>cat /proc/cmdline</code>看到的)，就是嵌入式uboot启动传参的那个tag链表。然后init的时候将参数传给systemd（既然你都用systemd-boot了那你的init系统肯定是systemd吧）</p>
+<p>我以前看名字以为systemd直接就接管了，传给systemd之后就是熟悉的sysctl那一套<code>systemd-sysctl</code>。后来发现systemd-boot就是一个<code>bootctl</code>那种efi引导文件生成的一个工具（可以理解为一个bootloader差不多的东西），bootloader的界面那个时候就跟其他的bootloader差不多， 那个时候还没systemd什么事呢。</p>
+<p>内核参数的传递大概是这样的：grub等bootloader的配置中配置了一些内核参数，然后grub在引导过程中将参数传给initramfs ，initramfs 先掛載一遍根，然後 initramfs 裡面的 init switch-root 到根裡面的 systemd ，然後 systemd 讀 fstab 生成 mount 文件，對根做 remount 。有些參數能在 remount 的時候改，比如 rw</p>
+<h3 id="怎么指定启动时的kernel"><a href="#怎么指定启动时的kernel" class="headerlink" title="怎么指定启动时的kernel"></a>怎么指定启动时的kernel</h3><p>在systemd-boot的开机选择画面按e</p>
+<h3 id="systemd-boot开机怎么进rootfs"><a href="#systemd-boot开机怎么进rootfs" class="headerlink" title="systemd-boot开机怎么进rootfs"></a>systemd-boot开机怎么进rootfs</h3><p>一开始用了比较扭曲的办法，后来发现这个只要在将UUID指定成boot分区的UUID就可以了</p>
+<h3 id="systemd-boot开机怎么进bytfs-snapshot"><a href="#systemd-boot开机怎么进bytfs-snapshot" class="headerlink" title="systemd-boot开机怎么进bytfs snapshot"></a>systemd-boot开机怎么进bytfs snapshot</h3><p>这个貌似还真没啥好办法，要用这个还是装回grub吧。如果想开机进snapshot,需要手动将那个rootflag指定成snapshot所在的subvol。reddit上有一种方案是同时保留systemd-boot和grub, 然后在BIOS里面把systemd-boot的启动项放在前面，但是我不想要grub了。</p>
+<blockquote>
+<p>To use a subvolume as the root mountpoint specify the subvolume via a kernel parameter using rootflags&#x3D;subvol&#x3D;&#x2F;path&#x2F;to&#x2F;subvolume. Edit the root mountpoint in &#x2F;etc&#x2F;fstab and specify the mount option subvol&#x3D;. Alternatively the subvolume can be specified with its id, rootflags&#x3D;subvolid&#x3D;objectid as kernel parameter and subvolid&#x3D;objectid as mount option in &#x2F;etc&#x2F;fstab. It is preferable to mount using subvol&#x3D;&#x2F;path&#x2F;to&#x2F;subvolume, rather than the subvolid, as the subvolid may change when restoring #Snapshots, requiring a change of mount configuration, or else the system will not boot.</p>
+</blockquote>
+<p>如果要用systemd-boot进snapshot，需要改systemd-boot的配置文件指定rootflags。既然要手动改，不如直接用livecd进chroot操作更方便一点。需要手动改systemd-boot的参数不如grub那样装上<code>grub-btrfs</code>之后用上下键选择用哪个内核或者进入snapshot进行修复。</p>
+<h3 id="重启"><a href="#重启" class="headerlink" title="重启"></a>重启</h3><p>可以在systemctl命令中直接选择entry</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl <span class="token function">reboot</span> --boot-loader-entry<span class="token operator">=</span>auto-windows<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="其他的一些操作"><a href="#其他的一些操作" class="headerlink" title="其他的一些操作"></a>其他的一些操作</h2><h3 id="如何加快启动速度"><a href="#如何加快启动速度" class="headerlink" title="如何加快启动速度"></a>如何加快启动速度</h3><p>换成systemd-boot已经很快了，不过如果你想再快，可以用<code>systemd-analyze</code>, 看一下是什么拖慢了你的启动速度</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token variable">$systemd</span>-analyze
+Startup finished <span class="token keyword">in</span> <span class="token number">11</span>.282s <span class="token punctuation">(</span>firmware<span class="token punctuation">)</span> + <span class="token number">4</span>.842s <span class="token punctuation">(</span>loader<span class="token punctuation">)</span> + <span class="token number">3</span>.317s <span class="token punctuation">(</span>kernel<span class="token punctuation">)</span> + <span class="token number">7</span>.955s <span class="token punctuation">(</span>userspace<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">27</span>.398s
+graphical.target reached after <span class="token number">7</span>.955s <span class="token keyword">in</span> userspace<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>如果想更详细的调查一下， <code>systemd-analyze blame</code>或者<code>systemd-analyze plot &gt; boot_process.svg</code></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token variable">$systemd</span>-analyze blame
+<span class="token number">4</span>.841s NetworkManager-wait-online.service
+<span class="token number">2</span>.429s systemd-udev-settle.service
+<span class="token number">2</span>.144s systemd-modules-load.service
+ 579ms systemd-binfmt.service
+ 496ms systemd-timesyncd.service
+ 320ms dev-nvme0n1p1.device
+ 223ms docker.service
+ 157ms systemd-journal-flush.service
+ 129ms systemd-remount-fs.service
+  93ms udisks2.service
+  84ms boot.mount
+  83ms user@1000.service
+  64ms libvirtd.service
+  63ms lvm2-monitor.service
+  38ms systemd-udev-trigger.service
+  37ms systemd-journald.service
+  36ms upower.service
+  33ms systemd-tmpfiles-setup.service
+  32ms systemd-udevd.service
+  30ms systemd-tmpfiles-clean.service
+  30ms systemd-logind.service<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>可以看到是NetworkManger拖慢了我们的速度，然后发现是<code>systemd-networkd-wait-online.service</code>, 如果我们不需要这个直接禁用就好了</p>
+<p>一般systemd-boot和systemd开机那一堆service和DM和DE（Desktop Environment）的加载相比不会拖慢你的速度的。不过我们其实可以连bootlaoder都不要的，如果是UEFI， 那直接EFI Stub就可以了</p>
+<p>BIOS加载bootloader的启动文件（比如systemd-boot的systemd-bootx64.efi），bootloader再去引导内核启动</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c">❯ tree EFI
+EFI
+├── BOOT
+│   └── BOOTX64<span class="token punctuation">.</span>EFI
+├── Linux
+└── systemd
+    └── systemd<span class="token operator">-</span>bootx64<span class="token punctuation">.</span>efi<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>其实我们可以直接用efibootmgr生成linux的efi启动文件，然后跳过booloader这个中间商。同样指定ucode和initramfs的img， 以及root所在的分区，然后会生成一个efi文件，直接引导进linux</p>
+<h3 id="直接跑在内存上"><a href="#直接跑在内存上" class="headerlink" title="直接跑在内存上"></a>直接跑在内存上</h3><p>Archlinux可以直接用ramroot, 这个只要装个AUR包然后配置一下就可以了</p>
+<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><h3 id="关于UEFI和BIOS"><a href="#关于UEFI和BIOS" class="headerlink" title="关于UEFI和BIOS"></a>关于UEFI和BIOS</h3><p>UEFI确切的说法是UEFI BIOS，其实也算作BIOS的一种，通常所说的BIOS指Legacy BIOS。这里按照通常习惯简称UEFI BIOS为UEFI, Legacy BIOS为BIOS。</p>
+<h3 id="bootloader"><a href="#bootloader" class="headerlink" title="bootloader"></a>bootloader</h3><p>linux在很早的时候是不需要bootloader的，后来有了bootloader这种东西，不过你还是可以不要bootloader的，比如上面说到的EFI Stub。<br>systemd-boot也算是个bootloader，不过相比其他的booloader已经精简了很多了。</p>
+<h3 id="关于initramfs和rootfs"><a href="#关于initramfs和rootfs" class="headerlink" title="关于initramfs和rootfs"></a>关于initramfs和rootfs</h3><p>看这里： <span class="exturl" data-url="aHR0cHM6Ly93d3cua2VybmVsLm9yZy9kb2MvRG9jdW1lbnRhdGlvbi9maWxlc3lzdGVtcy9yYW1mcy1yb290ZnMtaW5pdHJhbWZzLnR4dA==">https://www.kernel.org/doc/Documentation/filesystems/ramfs-rootfs-initramfs.txt<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmdlbnRvby5vcmcvd2lraS9Jbml0cmFtZnMvR3VpZGUvemgtY24=">https://wiki.gentoo.org/wiki/Initramfs/Guide/zh-cn<i class="fa fa-external-link-alt"></i></span>  </p>
+<h3 id="傻多戴的阴间BIOS固件"><a href="#傻多戴的阴间BIOS固件" class="headerlink" title="傻多戴的阴间BIOS固件"></a>傻多戴的阴间BIOS固件</h3><p>你戴的阴间BIOS固件，强制升级不能回退就算了，每次TM升级bug不修还锁CPU频率，次次更新BIOS反向升级，想淘汰老用户就直说呗。当年我想不要grub了整个EFI Stub玩，结果发现你戴的阴间BIOS怎么还是不行。。。</p>
+<blockquote>
+<p>EFISTUB does not work on some Dell systems<br>Several generation Dell firmwares are wrongly passing the arguments to the bootloader, thus making EFISTUB parse a null command line which normally means unbootable system (see the complete linux-efi thread).</p>
+</blockquote>
+<blockquote>
+<p>A workaround has been found since Linux 5.10 to correct this behavior (see this commit ). For Linux &lt; 5.10, you can use an efi-packer like arch-efiboot, or a different bootloader.</p>
+</blockquote>
+<p>从13年到现在用过3台dell的笔记本了，一个比一个糟心，我再买dell的笔记本我是XX</p>
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvdGl0bGUvQXJjaF9ib290X3Byb2Nlc3NfKCVFNyVBRSU4MCVFNCVCRCU5MyVFNCVCOCVBRCVFNiU5NiU4Nyk=">Arch boot process(简体中文)<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9iYnMucGVkaXkuY29tL3RocmVhZC0yNjAzOTkuaHRt">浅析安全启动（Secure Boot）<i class="fa fa-external-link-alt"></i></span>  </p>
+<p><span class="exturl" data-url="aHR0cDovLzUwbGluZXNvZmNvLmRlL3Bvc3QvMjAxOC0wMi0yOC13cml0aW5nLWFuLXg4Ni1oZWxsby13b3JsZC1ib290bG9hZGVyLXdpdGgtYXNzZW1ibHk=">Writing an x86 “Hello world” bootloader with assembly<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cuanVubWFqaW5sb25nLmNvbS9saW51eC9zeXN0ZW1kL3N5c3RlbWRfYm9vdHVwLw==">systemd时代的开机启动流程(UEFI+systemd)<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL2Jsb2cuY2hpbmF1bml4Lm5ldC91aWQtOTU0MzE3My1pZC0xOTg5MDA0Lmh0bWw=">Linux内核参数传递Tag(init_tags)<i class="fa fa-external-link-alt"></i></span>  </p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9zeXN0ZW1kLmlvL0JPT1RfTE9BREVSX1NQRUNJRklDQVRJT04v">systemd The Boot Loader Specification<i class="fa fa-external-link-alt"></i></span>  官方文档  </p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvdGl0bGUvSW5pdF8oJUU3JUFFJTgwJUU0JUJEJTkzJUU0JUI4JUFEJUU2JTk2JTg3KQ==">init (简体中文)<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvdGl0bGUvQXJjaF9ib290X3Byb2Nlc3M=">https://wiki.archlinux.org/title/Arch_boot_process<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvdGl0bGUvU3lzdGVtZC1ib290">https://wiki.archlinux.org/title/Systemd-boot<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvdGl0bGUvRUZJX3N5c3RlbV9wYXJ0aXRpb24=">https://wiki.archlinux.org/title/EFI_system_partition<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvdGl0bGUvVW5pZmllZF9rZXJuZWxfaW1hZ2U=">https://wiki.archlinux.org/title/Unified_kernel_image<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvdGl0bGUvbWljcm9jb2Rl">https://wiki.archlinux.org/title/microcode<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvdGl0bGUvRUZJU1RVQg==">https://wiki.archlinux.org/title/EFISTUB<i class="fa fa-external-link-alt"></i></span>  </p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9yYW1zZGVuai5jb20vMjAxNi8wNC8xNS9tdWx0aS1ib290LWxpbnV4LXdpdGgtb25lLWJvb3QtcGFydGl0aW9uLmh0bWw=">Multi Boot Linux With One Boot Partition<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvTGlzdF9vZl9MaW51eF9kaXN0cmlidXRpb25zX3RoYXRfcnVuX2Zyb21fUkFN">https://en.wikipedia.org/wiki/List_of_Linux_distributions_that_run_from_RAM<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FyY21hZ3MvcmFtcm9vdA==">https://github.com/arcmags/ramroot<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cua2VybmVsLm9yZy9kb2MvaHRtbC92NC4xNC9hZG1pbi1ndWlkZS9rZXJuZWwtcGFyYW1ldGVycy5odG1s">https://www.kernel.org/doc/html/v4.14/admin-guide/kernel-parameters.html<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cua2VybmVsLm9yZy9kb2MvRG9jdW1lbnRhdGlvbi9lZmktc3R1Yi50eHQ=">https://www.kernel.org/doc/Documentation/efi-stub.txt<i class="fa fa-external-link-alt"></i></span>  </p>
+]]></content>
+      <categories>
+        <category>Linux&amp;Unix</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+        <tag>systemd-boot</tag>
+        <tag>bootloader</tag>
       </tags>
   </entry>
   <entry>

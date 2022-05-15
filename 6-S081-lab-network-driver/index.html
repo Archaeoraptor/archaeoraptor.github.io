@@ -24,12 +24,12 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"zhangjk98.xyz","root":"/","images":"/images","scheme":"Pisces","darkmode":"auto","version":"8.11.0","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqusjs","storage":true,"lazyload":false,"nav":{"disqusjs":{"text":"Load Disqus","order":-1},"utterances":{"order":-2}},"activeClass":"disqusjs"},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"none","post_header":"none","post_body":"none","coll_header":"none","sidebar":"none"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="这个Lab就是补全一个DMA收发的驱动, 不要被Lab标的Hard难度吓到，我感觉这是6.S081这几个Lab最简单的几个Lab之一。写个驱动都不用上板子调试，没啥意思，怎么感觉比当年你电PPT吹水课程微嵌的实验大作业给FPGA的板子写个驱动还水。。。最后一个Lab放水，愉快的完结撒花。等等，这个Lab还有附加内容，实现一个TCP&#x2F;UDP协议栈。。。">
+    <meta name="description" content="这个Lab就是补全一个DMA收发的驱动, 不要被Lab标的Hard难度吓到，我感觉这是6.S081这几个Lab最简单的几个Lab之一。写个驱动都不用上板子调试，没啥意思，怎么感觉比当年你电PPT吹水课程微嵌的实验大作业给FPGA的板子写个驱动还水。。。最后一个Lab放水，愉快的完结撒花。也难怪在2021 fall的lab net不是最后一个。等等，这个Lab还有附加内容，实现一个TCP&#x2F;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="6.S081 Lab Networking 笔记，完结撒花">
 <meta property="og:url" content="https://zhangjk98.xyz/6-S081-lab-network-driver/index.html">
 <meta property="og:site_name" content="止息的博客">
-<meta property="og:description" content="这个Lab就是补全一个DMA收发的驱动, 不要被Lab标的Hard难度吓到，我感觉这是6.S081这几个Lab最简单的几个Lab之一。写个驱动都不用上板子调试，没啥意思，怎么感觉比当年你电PPT吹水课程微嵌的实验大作业给FPGA的板子写个驱动还水。。。最后一个Lab放水，愉快的完结撒花。等等，这个Lab还有附加内容，实现一个TCP&#x2F;UDP协议栈。。。">
+<meta property="og:description" content="这个Lab就是补全一个DMA收发的驱动, 不要被Lab标的Hard难度吓到，我感觉这是6.S081这几个Lab最简单的几个Lab之一。写个驱动都不用上板子调试，没啥意思，怎么感觉比当年你电PPT吹水课程微嵌的实验大作业给FPGA的板子写个驱动还水。。。最后一个Lab放水，愉快的完结撒花。也难怪在2021 fall的lab net不是最后一个。等等，这个Lab还有附加内容，实现一个TCP&#x2F;">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-05-05T09:15:11.000Z">
 <meta property="article:author" content="Zhang.j.k">
@@ -167,7 +167,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">60</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -178,7 +178,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">94</span>
+        <span class="site-state-item-count">97</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -300,24 +300,109 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>这个Lab就是补全一个DMA收发的驱动, 不要被Lab标的Hard难度吓到，我感觉这是6.S081这几个Lab最简单的几个Lab之一。写个驱动都不用上板子调试，没啥意思，怎么感觉比当年你电PPT吹水课程微嵌的实验大作业给FPGA的板子写个驱动还水。。。<br>最后一个Lab放水，愉快的完结撒花。等等，这个Lab还有附加内容，实现一个TCP&#x2F;UDP协议栈。。。</p>
+        <p>这个Lab就是补全一个DMA收发的驱动, 不要被Lab标的Hard难度吓到，我感觉这是6.S081这几个Lab最简单的几个Lab之一。写个驱动都不用上板子调试，没啥意思，怎么感觉比当年你电PPT吹水课程微嵌的实验大作业给FPGA的板子写个驱动还水。。。<br>最后一个Lab放水，愉快的完结撒花。也难怪在2021 fall的lab net不是最后一个。等等，这个Lab还有附加内容，实现一个TCP&#x2F;UDP协议栈。。。</p>
 <span id="more"></span>
 
-<h2 id="Lab内容"><a href="#Lab内容" class="headerlink" title="Lab内容"></a>Lab内容</h2><p>做起来这个Lab挺没意思的，e1000这种远古网卡</p>
+<h2 id="Lab内容"><a href="#Lab内容" class="headerlink" title="Lab内容"></a>Lab内容</h2><p>这个难度明明是easy，不要被标的那个hard吓到了。做起来这个Lab挺没意思的，e1000这种远古网卡，现在应该没多少人用了。这个网卡是qemu虚拟出来的网卡，就跟代理的时候用的那个tun&#x2F;tap差不多</p>
 <blockquote>
 <p>Your job is to complete e1000_transmit() and e1000_recv(), both in kernel&#x2F;e1000.c, so that the driver can transmit and receive packets</p>
 </blockquote>
-<p>这个好办，我们直接扒拉e1000的手册就可以了。</p>
-<h2 id="完结撒花"><a href="#完结撒花" class="headerlink" title="完结撒花"></a>完结撒花</h2><p>又是讨厌的驱动，勾起了我当年痛苦的。上一次写驱动的大作业还是本科的时候，当时换了两块xilinx的阴间开发板全都是坏的，害得我还以为是我自己写的有问题，找了一周没找到bug。本来是抱着人又麻了的</p>
+<p>这个好办，我们直接扒拉e1000的手册就可以了。或者我们直接看<code>kernel/e1000_dev.h</code>, <code>E1000_RDH</code>是E1000 RX Descriptor Head， <code>E1000_RDT</code>是RX descriptor tail，同理<code>E1000_TDT</code>是TX descriptor tail（由TX的功能我们可以知道这是the next packet的坐标）， <code>E1000_RXD_STAT_DD</code>是 Descriptor Done， 然后<code>E1000_TXD_CMD_EOP</code>是 End of Packet。</p>
+<p>RX ring接受网卡数据的读取buffer， TX ring是发送packet的发送buffer。<code>rx_ring</code>是一个环形链表<code>rx_desc</code>，里面放的是packet的地址（packet是通过DMA放在内存里面）</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">// [E1000 3.2.3]</span>
+<span class="token keyword">struct</span> <span class="token class-name">rx_desc</span>
+<span class="token punctuation">&#123;</span>
+  uint64 addr<span class="token punctuation">;</span>       <span class="token comment">/* Address of the descriptor's data buffer */</span>
+  uint16 length<span class="token punctuation">;</span>     <span class="token comment">/* Length of data DMAed into data buffer */</span>
+  uint16 csum<span class="token punctuation">;</span>       <span class="token comment">/* Packet checksum */</span>
+  uint8 status<span class="token punctuation">;</span>      <span class="token comment">/* Descriptor status */</span>
+  uint8 errors<span class="token punctuation">;</span>      <span class="token comment">/* Descriptor Errors */</span>
+  uint16 special<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后我们照着提示就可以补全<code>kernel/e1000.c</code>了</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">e1000_transmit</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">mbuf</span> <span class="token operator">*</span>m<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// the mbuf contains an ethernet frame; program it into</span>
+    <span class="token comment">// the TX descriptor ring so that the e1000 sends it. Stash</span>
+    <span class="token comment">// a pointer so that it can be freed after sending.</span>
+    <span class="token comment">//</span>
+    <span class="token function">acquire</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>e1000_lock<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 发送时加spin_lock</span>
+    uint32 idx <span class="token operator">=</span> regs<span class="token punctuation">[</span>E1000_TDT<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token punctuation">(</span>E1000_TXD_STAT_DD <span class="token operator">&amp;</span> tx_ring<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">.</span>status<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// buffer不足</span>
+        <span class="token function">release</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>e1000_lock<span class="token punctuation">)</span><span class="token punctuation">;</span>                         <span class="token comment">// 释放锁</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>tx_mbufs<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">mbuffree</span><span class="token punctuation">(</span>tx_mbufs<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        tx_mbufs<span class="token punctuation">[</span>idx<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    tx_ring<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">.</span>addr <span class="token operator">=</span> <span class="token punctuation">(</span>uint64<span class="token punctuation">)</span>m<span class="token operator">-></span>head<span class="token punctuation">;</span>
+    tx_ring<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">.</span>length <span class="token operator">=</span> m<span class="token operator">-></span>len<span class="token punctuation">;</span>
+
+    tx_ring<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">.</span>cmd <span class="token operator">=</span> E1000_TXD_CMD_EOP <span class="token operator">|</span> E1000_TXD_CMD_RS<span class="token punctuation">;</span>
+    tx_mbufs<span class="token punctuation">[</span>idx<span class="token punctuation">]</span> <span class="token operator">=</span> m<span class="token punctuation">;</span>
+
+    regs<span class="token punctuation">[</span>E1000_TDT<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span>idx <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">%</span> TX_RING_SIZE<span class="token punctuation">;</span>
+    <span class="token function">release</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>e1000_lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">e1000_recv</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">//</span>
+    <span class="token comment">// Your code here.</span>
+    <span class="token comment">//</span>
+    <span class="token comment">// Check for packets that have arrived from the e1000</span>
+    <span class="token comment">// Create and deliver an mbuf for each packet (using net_rx()).</span>
+    <span class="token comment">//</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// First ask the E1000 for the ring index at which the next waiting</span>
+        <span class="token comment">// received packet (if any) is located, by fetching the E1000_RDT</span>
+        <span class="token comment">// control register and adding one modulo RX_RING_SIZE.</span>
+        uint32 idx <span class="token operator">=</span> regs<span class="token punctuation">[</span>E1000_RDT<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        idx <span class="token operator">=</span> <span class="token punctuation">(</span>idx <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">%</span> RX_RING_SIZE<span class="token punctuation">;</span> <span class="token comment">// 这是个环形链表，需要mod ring size</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token punctuation">(</span>E1000_RXD_STAT_DD <span class="token operator">&amp;</span> rx_ring<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">.</span>status<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        rx_mbufs<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token operator">-></span>len <span class="token operator">=</span> rx_ring<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">.</span>length<span class="token punctuation">;</span>
+        <span class="token function">net_rx</span><span class="token punctuation">(</span>rx_mbufs<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        rx_mbufs<span class="token punctuation">[</span>idx<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">mbufalloc</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//这里直接mbufalloc就可以了，不需要kalloc</span>
+        rx_ring<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">.</span>addr <span class="token operator">=</span> <span class="token punctuation">(</span>uint64<span class="token punctuation">)</span>rx_mbufs<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token operator">-></span>head<span class="token punctuation">;</span>
+        rx_ring<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">.</span>status <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        regs<span class="token punctuation">[</span>E1000_RDT<span class="token punctuation">]</span> <span class="token operator">=</span> idx<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="完结撒花"><a href="#完结撒花" class="headerlink" title="完结撒花"></a>完结撒花</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">make</span> grade
+make<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>: Leaving directory <span class="token string">'/home/zhixi/codes/xv6-labs-2021'</span>
+<span class="token operator">==</span> Test running nettests <span class="token operator">==</span> 
+$ <span class="token function">make</span> qemu-gdb
+<span class="token punctuation">(</span><span class="token number">2</span>.8s<span class="token punctuation">)</span> 
+<span class="token operator">==</span> Test   nettest: <span class="token function">ping</span> <span class="token operator">==</span> 
+  nettest: ping: OK 
+<span class="token operator">==</span> Test   nettest: single process <span class="token operator">==</span> 
+  nettest: single process: OK 
+<span class="token operator">==</span> Test   nettest: multi-process <span class="token operator">==</span> 
+  nettest: multi-process: OK 
+<span class="token operator">==</span> Test   nettest: DNS <span class="token operator">==</span> 
+  nettest: DNS: OK 
+<span class="token operator">==</span> Test <span class="token function">time</span> <span class="token operator">==</span> 
+time: OK 
+Score: <span class="token number">100</span>/100<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>一开始以为很难，又是讨厌的驱动，然后一看难度还是hard，勾起了我当年痛苦的。上一次写驱动的大作业还是本科的时候，当时换了两块xilinx的阴间开发板全都是坏的，害得我还以为是我自己写的有问题，找了一周没找到bug。本来是抱着人又麻了的心态来做这个Lab的（这个Lab在2020年是最后一个Lab，在2021年放到了前面），拖了几个月，别的Lab都做完了，然后陆续把笔记也补上了，最后捡起了一直咕咕咕的6.824，做到Raft的Lab4死活跑不过测试这才回来做这个Lab，结果发现意外的简单。</p>
 <p>好久之前写的Lab，由于懒癌发作一直没有写笔记，现在把Lab的笔记补上。这个Lab比较玩具，没啥好讲的。驱动和网络单独拿出来都是一个大坑，水平有限不多讲了。</p>
 <p>这个Lab的Optional Challenges比较麻烦，其中最后两个challenge是：</p>
 <blockquote>
 <p>Implement a UDP server for xv6. (moderate)<br>Implement a minimal TCP stack and download a web page. (hard)</p>
 </blockquote>
+<p>然后搜了一下发现有一个xv6-net的实现：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3BhbmRheDM4MS94djYtbmV0L2Jsb2IvbmV0L3RjcC5j">https://github.com/pandax381/xv6-net/blob/net/tcp.c<i class="fa fa-external-link-alt"></i></span></p>
 <p>由于懒癌发作我当然又是没做，我的菜鸡计网水平和对TCP的熟悉程度应该一时半会做不出来。听说有cs144这门课就是实现一个TCP协议栈，等研三有空了回头把这个做了把这个大坑填上。</p>
 <p>6.S081这个课从去年7月开始，断断续续做了将近一年把Lab做了，xv6的源码看了不到一半。xv6作为一个教学的系统，挺精简挺小巧，能比较顺利的看下去。像linux源码那种看不太动，拿着赵炯那本《linux内核完全注释》看早期内核也比较麻烦。xv6-book写的真的好，推荐做Lab和读xv6源码的时候好好把xv6-book看一下：</p>
 <p><em>xv6: a simple, Unix-like teaching operating system</em><br>作者Russ Cox, Frans Kaashoek, Robert Morris 应该都听过，Russ Cox是争议比较大的go现任掌门，喜欢在go的issue区开喷，Morris是6.824这门课的主讲，就是那个蠕虫病毒的作者。</p>
 <p>一开始我没在意，觉得这本书就是跟手册一样，偶尔翻一翻。后来发现这本册子写的是真的好，几乎没有一点废话，比课程讲义好多了。早应该看这个的。</p>
+<p>然后就是重新翻了k&amp;r这本书，写的真好，也没有多少废话。里面的例子非常精简。</p>
 <p>更新：不等研三了，直接上CS144了。之前没事喜欢摆弄nmap、wireshark这些东西瞎玩，却没好好看过TCP的细节，再这样不思进取下去就要沦为脚本小子了</p>
 
     </div>

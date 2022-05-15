@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/uploads/wizard-hat-16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/uploads/wizard-hat-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/uploads/wizard-hat-16.png">
+  <link rel="mask-icon" href="/uploads/wizard-hat-32.png" color="#222">
+  <meta name="google-site-verification" content="4Rj54anORAwcoMXLe3miFnoH78ZtUZfdamS--ffoxVE">
+  <meta name="msvalidate.01" content="872DC4637276109A6B54FF149DCABA8A">
+  <meta name="yandex-verification" content="0d554b4a05a80f0d">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhangjk98.xyz","root":"/","images":"/images","scheme":"Pisces","darkmode":"auto","version":"8.11.0","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqusjs","storage":true,"lazyload":false,"nav":{"disqusjs":{"text":"Load Disqus","order":-1},"utterances":{"order":-2}},"activeClass":"disqusjs"},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"none","post_header":"none","post_body":"none","coll_header":"none","sidebar":"none"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="又研究了一下linux的启动流程，然后换成systemd-boot了。原先好看的grub主题就不要了，但是systemd-boot它启动快啊，grub好臃肿">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用systemd-boot做bootloader">
+<meta property="og:url" content="https://zhangjk98.xyz/systemd-boot/index.html">
+<meta property="og:site_name" content="止息的博客">
+<meta property="og:description" content="又研究了一下linux的启动流程，然后换成systemd-boot了。原先好看的grub主题就不要了，但是systemd-boot它启动快啊，grub好臃肿">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-04-10T05:41:03.000Z">
+<meta property="article:author" content="Zhang.j.k">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="systemd-boot">
+<meta property="article:tag" content="bootloader">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://zhangjk98.xyz/systemd-boot/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zhangjk98.xyz/systemd-boot/","path":"systemd-boot/","title":"用systemd-boot做bootloader"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>用systemd-boot做bootloader | 止息的博客</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143393734-1"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-143393734-1","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="止息的博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">止息的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">唯见月寒日暖，来煎人寿</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8EGrub%E8%BF%81%E7%A7%BB%E5%88%B0systemd-boot"><span class="nav-number">1.</span> <span class="nav-text">从Grub迁移到systemd-boot</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8Unified-Kernel-image"><span class="nav-number">1.1.</span> <span class="nav-text">使用Unified Kernel image</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#systemd-boot%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E5%86%85%E6%A0%B8%E5%8F%82%E6%95%B0%EF%BC%88%E5%8F%82%E6%95%B0%E6%98%AF%E6%80%8E%E4%B9%88%E4%BC%A0%E9%80%92%E7%9A%84%EF%BC%89"><span class="nav-number">1.2.</span> <span class="nav-text">systemd-boot如何设置内核参数（参数是怎么传递的）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%8E%E4%B9%88%E6%8C%87%E5%AE%9A%E5%90%AF%E5%8A%A8%E6%97%B6%E7%9A%84kernel"><span class="nav-number">1.3.</span> <span class="nav-text">怎么指定启动时的kernel</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#systemd-boot%E5%BC%80%E6%9C%BA%E6%80%8E%E4%B9%88%E8%BF%9Brootfs"><span class="nav-number">1.4.</span> <span class="nav-text">systemd-boot开机怎么进rootfs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#systemd-boot%E5%BC%80%E6%9C%BA%E6%80%8E%E4%B9%88%E8%BF%9Bbytfs-snapshot"><span class="nav-number">1.5.</span> <span class="nav-text">systemd-boot开机怎么进bytfs snapshot</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E5%90%AF"><span class="nav-number">1.6.</span> <span class="nav-text">重启</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E7%9A%84%E4%B8%80%E4%BA%9B%E6%93%8D%E4%BD%9C"><span class="nav-number">2.</span> <span class="nav-text">其他的一些操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%8A%A0%E5%BF%AB%E5%90%AF%E5%8A%A8%E9%80%9F%E5%BA%A6"><span class="nav-number">2.1.</span> <span class="nav-text">如何加快启动速度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B4%E6%8E%A5%E8%B7%91%E5%9C%A8%E5%86%85%E5%AD%98%E4%B8%8A"><span class="nav-number">2.2.</span> <span class="nav-text">直接跑在内存上</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%B4%E6%98%8E"><span class="nav-number">3.</span> <span class="nav-text">说明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8EUEFI%E5%92%8CBIOS"><span class="nav-number">3.1.</span> <span class="nav-text">关于UEFI和BIOS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bootloader"><span class="nav-number">3.2.</span> <span class="nav-text">bootloader</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8Einitramfs%E5%92%8Crootfs"><span class="nav-number">3.3.</span> <span class="nav-text">关于initramfs和rootfs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%82%BB%E5%A4%9A%E6%88%B4%E7%9A%84%E9%98%B4%E9%97%B4BIOS%E5%9B%BA%E4%BB%B6"><span class="nav-number">3.4.</span> <span class="nav-text">傻多戴的阴间BIOS固件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%93%BE%E6%8E%A5"><span class="nav-number">4.</span> <span class="nav-text">链接</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Zhang.j.k"
+      src="/uploads/jinmao.webp">
+  <p class="site-author-name" itemprop="name">Zhang.j.k</p>
+  <div class="site-description" itemprop="description">in darkest night</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">60</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">97</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FyY2hhZW9yYXB0b3I=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;archaeoraptor"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOnpoaXhpQHVlc3RjbHVnLm9yZw==" title="E-Mail → mailto:zhixi@uestclug.org"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      友链
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly96aGFuZ3NodXFpYW8ub3Jn" title="https:&#x2F;&#x2F;zhangshuqiao.org">米米的博客</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly95YW5xaXl1LmluZm8=" title="https:&#x2F;&#x2F;yanqiyu.info">Karuboniru's Blog</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnNhbWNodS5jbg==" title="https:&#x2F;&#x2F;blog.samchu.cn">Sam's Blog</span>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FyY2hhZW9yYXB0b3I=" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zhangjk98.xyz/systemd-boot/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/jinmao.webp">
+      <meta itemprop="name" content="Zhang.j.k">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="止息的博客">
+      <meta itemprop="description" content="in darkest night">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="用systemd-boot做bootloader | 止息的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          用systemd-boot做bootloader
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-04-10 13:41:03" itemprop="dateCreated datePublished" datetime="2022-04-10T13:41:03+08:00">2022-04-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux-Unix/" itemprop="url" rel="index"><span itemprop="name">Linux&Unix</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>又研究了一下linux的启动流程，然后换成systemd-boot了。原先好看的grub主题就不要了，但是systemd-boot它启动快啊，grub好臃肿</p>
+<span id="more"></span>
+
+<h2 id="从Grub迁移到systemd-boot"><a href="#从Grub迁移到systemd-boot" class="headerlink" title="从Grub迁移到systemd-boot"></a>从Grub迁移到systemd-boot</h2><p>grub有好看的主题，也能方便的在开机的时候选内核版本、进btrfs的sanpshot回滚。但是我想尝试一下systemd-boot，grub看起来实在是太复杂了，我用不到那些功能。systemd-boot已经在systemd全家桶里面了，所以不需要额外安装。</p>
+<p>systemd-boot一般要放在第一个EFI分区，而且直到今天systemd-boot和btrfs配合的还不是很好。我建了一个512M的EFI分区, 格式化为FAT32</p>
+<p>注意需要EFI分区(EFI system partition, ef00)，不能是Linux filesystem(8300), 分区的Type如果是这样，grub是可以的，但是systemd-boot不认。用cgdisk重新分区的时候Type选ef00</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token variable">$sudo</span> bootctl --path<span class="token operator">=</span>/boot <span class="token function">install</span>
+File system <span class="token string">"/dev/block/259:1"</span> has wrong <span class="token builtin class-name">type</span> <span class="token keyword">for</span> an EFI System Partition <span class="token punctuation">(</span>ESP<span class="token punctuation">)</span>.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>然后安装hook让每次更新内核的时候自动配置</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yay -S systemd-boot-pacman-hook<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>systemd-boot是单文件启动的，配置文件放在<code>/boot/loader/entries</code>下面，可以根据不同的启动选项创建不同的配置文件，比如按照Arch Wiki的推荐创建一个<code>arch.conf</code></p>
+<pre class="line-numbers language-config" data-language="config"><code class="language-config">title Arch
+linux &#x2F;vmlinuz-linux
+initrd &#x2F;amd-ucode.img
+initrd &#x2F;initramfs-linux.img
+options root&#x3D;LABEL&#x3D;ROOT rootflags&#x3D;subvol&#x3D;@ rw<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>title是名称，就是systemd-boot界面显示的那个。<br>linux选项是指定可执行的压缩内核，一般就<code>vmlinuz-linux</code>，如果是桌面用户装了其他内核应该能在<code>boot</code>目录下找到，比如<code>vmlinuz-linux-zen</code></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">/boot❯ <span class="token function">ls</span>
+amd-ucode.img                     initramfs-linux-lts.img              initramfs-linux-zen.img  vmlinuz-linux-lts
+EFI                               initramfs-linux-xanmod-fallback.img  initramfs-linux.img      vmlinuz-linux-xanmod
+initramfs-linux-fallback.img      initramfs-linux-xanmod.img           loader                   vmlinuz-linux-zen
+initramfs-linux-lts-fallback.img  initramfs-linux-zen-fallback.img     vmlinuz-linux <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后用initrd选项指定一下想要的initramfs镜像，装了amd或者intel的微码也要指定一下</p>
+<p>最后options里面指定一下根分区和内核参数（如果用btrfs还有rootflags指定一下是哪个subvol）</p>
+<p>ps: 在写rootflags的时候我们可以直接照抄grub生成的</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">grub-mkconfig</span> <span class="token operator"><span class="token file-descriptor important">2</span>></span>/dev/null <span class="token operator">|</span> <span class="token function">grep</span> vmlinuz<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>然后我们配置一下loader.conf, 指定默认启动使用<code>arch.conf</code>的配置</p>
+<pre class="line-numbers language-config" data-language="config"><code class="language-config">default arch.conf
+timeout 4
+console-mode max
+editor vim<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>现在boot目录的结构大概是这个样子：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">❯ tree /boot
+/boot
+├── amd-ucode.img
+├── EFI
+│   ├── BOOT
+│   │   └── BOOTX64.EFI
+│   ├── Linux
+│   └── systemd
+│       └── systemd-bootx64.efi
+├── initramfs-linux-fallback.img
+├── initramfs-linux.img
+├── loader
+│   ├── entries
+│   │   └── arch.conf
+│   ├── loader.conf
+│   └── random-seed
+├── vmlinuz-linux<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后我们可以把grub卸了</p>
+<h3 id="使用Unified-Kernel-image"><a href="#使用Unified-Kernel-image" class="headerlink" title="使用Unified Kernel image"></a>使用Unified Kernel image</h3><p>就是把vmlinuz、ucode、initramfs的img都揉到一起做了一的大的可执行的内核镜像</p>
+<h3 id="systemd-boot如何设置内核参数（参数是怎么传递的）"><a href="#systemd-boot如何设置内核参数（参数是怎么传递的）" class="headerlink" title="systemd-boot如何设置内核参数（参数是怎么传递的）"></a>systemd-boot如何设置内核参数（参数是怎么传递的）</h3><p>在options选项里面附加就可以了，然后systemd-boot会把参数传给initramfs，然后就是<span class="exturl" data-url="aHR0cHM6Ly93d3cua2VybmVsLm9yZy9kb2MvaHRtbC92NC4xNC9hZG1pbi1ndWlkZS9rZXJuZWwtcGFyYW1ldGVycy5odG1s">kernel’s command-line parameters<i class="fa fa-external-link-alt"></i></span>那一套(能用<code>cat /proc/cmdline</code>看到的)，就是嵌入式uboot启动传参的那个tag链表。然后init的时候将参数传给systemd（既然你都用systemd-boot了那你的init系统肯定是systemd吧）</p>
+<p>我以前看名字以为systemd直接就接管了，传给systemd之后就是熟悉的sysctl那一套<code>systemd-sysctl</code>。后来发现systemd-boot就是一个<code>bootctl</code>那种efi引导文件生成的一个工具（可以理解为一个bootloader差不多的东西），bootloader的界面那个时候就跟其他的bootloader差不多， 那个时候还没systemd什么事呢。</p>
+<p>内核参数的传递大概是这样的：grub等bootloader的配置中配置了一些内核参数，然后grub在引导过程中将参数传给initramfs ，initramfs 先掛載一遍根，然後 initramfs 裡面的 init switch-root 到根裡面的 systemd ，然後 systemd 讀 fstab 生成 mount 文件，對根做 remount 。有些參數能在 remount 的時候改，比如 rw</p>
+<h3 id="怎么指定启动时的kernel"><a href="#怎么指定启动时的kernel" class="headerlink" title="怎么指定启动时的kernel"></a>怎么指定启动时的kernel</h3><p>在systemd-boot的开机选择画面按e</p>
+<h3 id="systemd-boot开机怎么进rootfs"><a href="#systemd-boot开机怎么进rootfs" class="headerlink" title="systemd-boot开机怎么进rootfs"></a>systemd-boot开机怎么进rootfs</h3><p>一开始用了比较扭曲的办法，后来发现这个只要在将UUID指定成boot分区的UUID就可以了</p>
+<h3 id="systemd-boot开机怎么进bytfs-snapshot"><a href="#systemd-boot开机怎么进bytfs-snapshot" class="headerlink" title="systemd-boot开机怎么进bytfs snapshot"></a>systemd-boot开机怎么进bytfs snapshot</h3><p>这个貌似还真没啥好办法，要用这个还是装回grub吧。如果想开机进snapshot,需要手动将那个rootflag指定成snapshot所在的subvol。reddit上有一种方案是同时保留systemd-boot和grub, 然后在BIOS里面把systemd-boot的启动项放在前面，但是我不想要grub了。</p>
+<blockquote>
+<p>To use a subvolume as the root mountpoint specify the subvolume via a kernel parameter using rootflags&#x3D;subvol&#x3D;&#x2F;path&#x2F;to&#x2F;subvolume. Edit the root mountpoint in &#x2F;etc&#x2F;fstab and specify the mount option subvol&#x3D;. Alternatively the subvolume can be specified with its id, rootflags&#x3D;subvolid&#x3D;objectid as kernel parameter and subvolid&#x3D;objectid as mount option in &#x2F;etc&#x2F;fstab. It is preferable to mount using subvol&#x3D;&#x2F;path&#x2F;to&#x2F;subvolume, rather than the subvolid, as the subvolid may change when restoring #Snapshots, requiring a change of mount configuration, or else the system will not boot.</p>
+</blockquote>
+<p>如果要用systemd-boot进snapshot，需要改systemd-boot的配置文件指定rootflags。既然要手动改，不如直接用livecd进chroot操作更方便一点。需要手动改systemd-boot的参数不如grub那样装上<code>grub-btrfs</code>之后用上下键选择用哪个内核或者进入snapshot进行修复。</p>
+<h3 id="重启"><a href="#重启" class="headerlink" title="重启"></a>重启</h3><p>可以在systemctl命令中直接选择entry</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl <span class="token function">reboot</span> --boot-loader-entry<span class="token operator">=</span>auto-windows<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="其他的一些操作"><a href="#其他的一些操作" class="headerlink" title="其他的一些操作"></a>其他的一些操作</h2><h3 id="如何加快启动速度"><a href="#如何加快启动速度" class="headerlink" title="如何加快启动速度"></a>如何加快启动速度</h3><p>换成systemd-boot已经很快了，不过如果你想再快，可以用<code>systemd-analyze</code>, 看一下是什么拖慢了你的启动速度</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token variable">$systemd</span>-analyze
+Startup finished <span class="token keyword">in</span> <span class="token number">11</span>.282s <span class="token punctuation">(</span>firmware<span class="token punctuation">)</span> + <span class="token number">4</span>.842s <span class="token punctuation">(</span>loader<span class="token punctuation">)</span> + <span class="token number">3</span>.317s <span class="token punctuation">(</span>kernel<span class="token punctuation">)</span> + <span class="token number">7</span>.955s <span class="token punctuation">(</span>userspace<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">27</span>.398s
+graphical.target reached after <span class="token number">7</span>.955s <span class="token keyword">in</span> userspace<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>如果想更详细的调查一下， <code>systemd-analyze blame</code>或者<code>systemd-analyze plot &gt; boot_process.svg</code></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token variable">$systemd</span>-analyze blame
+<span class="token number">4</span>.841s NetworkManager-wait-online.service
+<span class="token number">2</span>.429s systemd-udev-settle.service
+<span class="token number">2</span>.144s systemd-modules-load.service
+ 579ms systemd-binfmt.service
+ 496ms systemd-timesyncd.service
+ 320ms dev-nvme0n1p1.device
+ 223ms docker.service
+ 157ms systemd-journal-flush.service
+ 129ms systemd-remount-fs.service
+  93ms udisks2.service
+  84ms boot.mount
+  83ms user@1000.service
+  64ms libvirtd.service
+  63ms lvm2-monitor.service
+  38ms systemd-udev-trigger.service
+  37ms systemd-journald.service
+  36ms upower.service
+  33ms systemd-tmpfiles-setup.service
+  32ms systemd-udevd.service
+  30ms systemd-tmpfiles-clean.service
+  30ms systemd-logind.service<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>可以看到是NetworkManger拖慢了我们的速度，然后发现是<code>systemd-networkd-wait-online.service</code>, 如果我们不需要这个直接禁用就好了</p>
+<p>一般systemd-boot和systemd开机那一堆service和DM和DE（Desktop Environment）的加载相比不会拖慢你的速度的。不过我们其实可以连bootlaoder都不要的，如果是UEFI， 那直接EFI Stub就可以了</p>
+<p>BIOS加载bootloader的启动文件（比如systemd-boot的systemd-bootx64.efi），bootloader再去引导内核启动</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c">❯ tree EFI
+EFI
+├── BOOT
+│   └── BOOTX64<span class="token punctuation">.</span>EFI
+├── Linux
+└── systemd
+    └── systemd<span class="token operator">-</span>bootx64<span class="token punctuation">.</span>efi<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>其实我们可以直接用efibootmgr生成linux的efi启动文件，然后跳过booloader这个中间商。同样指定ucode和initramfs的img， 以及root所在的分区，然后会生成一个efi文件，直接引导进linux</p>
+<h3 id="直接跑在内存上"><a href="#直接跑在内存上" class="headerlink" title="直接跑在内存上"></a>直接跑在内存上</h3><p>Archlinux可以直接用ramroot, 这个只要装个AUR包然后配置一下就可以了</p>
+<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><h3 id="关于UEFI和BIOS"><a href="#关于UEFI和BIOS" class="headerlink" title="关于UEFI和BIOS"></a>关于UEFI和BIOS</h3><p>UEFI确切的说法是UEFI BIOS，其实也算作BIOS的一种，通常所说的BIOS指Legacy BIOS。这里按照通常习惯简称UEFI BIOS为UEFI, Legacy BIOS为BIOS。</p>
+<h3 id="bootloader"><a href="#bootloader" class="headerlink" title="bootloader"></a>bootloader</h3><p>linux在很早的时候是不需要bootloader的，后来有了bootloader这种东西，不过你还是可以不要bootloader的，比如上面说到的EFI Stub。<br>systemd-boot也算是个bootloader，不过相比其他的booloader已经精简了很多了。</p>
+<h3 id="关于initramfs和rootfs"><a href="#关于initramfs和rootfs" class="headerlink" title="关于initramfs和rootfs"></a>关于initramfs和rootfs</h3><p>看这里： <span class="exturl" data-url="aHR0cHM6Ly93d3cua2VybmVsLm9yZy9kb2MvRG9jdW1lbnRhdGlvbi9maWxlc3lzdGVtcy9yYW1mcy1yb290ZnMtaW5pdHJhbWZzLnR4dA==">https://www.kernel.org/doc/Documentation/filesystems/ramfs-rootfs-initramfs.txt<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmdlbnRvby5vcmcvd2lraS9Jbml0cmFtZnMvR3VpZGUvemgtY24=">https://wiki.gentoo.org/wiki/Initramfs/Guide/zh-cn<i class="fa fa-external-link-alt"></i></span>  </p>
+<h3 id="傻多戴的阴间BIOS固件"><a href="#傻多戴的阴间BIOS固件" class="headerlink" title="傻多戴的阴间BIOS固件"></a>傻多戴的阴间BIOS固件</h3><p>你戴的阴间BIOS固件，强制升级不能回退就算了，每次TM升级bug不修还锁CPU频率，次次更新BIOS反向升级，想淘汰老用户就直说呗。当年我想不要grub了整个EFI Stub玩，结果发现你戴的阴间BIOS怎么还是不行。。。</p>
+<blockquote>
+<p>EFISTUB does not work on some Dell systems<br>Several generation Dell firmwares are wrongly passing the arguments to the bootloader, thus making EFISTUB parse a null command line which normally means unbootable system (see the complete linux-efi thread).</p>
+</blockquote>
+<blockquote>
+<p>A workaround has been found since Linux 5.10 to correct this behavior (see this commit ). For Linux &lt; 5.10, you can use an efi-packer like arch-efiboot, or a different bootloader.</p>
+</blockquote>
+<p>从13年到现在用过3台dell的笔记本了，一个比一个糟心，我再买dell的笔记本我是XX</p>
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvdGl0bGUvQXJjaF9ib290X3Byb2Nlc3NfKCVFNyVBRSU4MCVFNCVCRCU5MyVFNCVCOCVBRCVFNiU5NiU4Nyk=">Arch boot process(简体中文)<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9iYnMucGVkaXkuY29tL3RocmVhZC0yNjAzOTkuaHRt">浅析安全启动（Secure Boot）<i class="fa fa-external-link-alt"></i></span>  </p>
+<p><span class="exturl" data-url="aHR0cDovLzUwbGluZXNvZmNvLmRlL3Bvc3QvMjAxOC0wMi0yOC13cml0aW5nLWFuLXg4Ni1oZWxsby13b3JsZC1ib290bG9hZGVyLXdpdGgtYXNzZW1ibHk=">Writing an x86 “Hello world” bootloader with assembly<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cuanVubWFqaW5sb25nLmNvbS9saW51eC9zeXN0ZW1kL3N5c3RlbWRfYm9vdHVwLw==">systemd时代的开机启动流程(UEFI+systemd)<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL2Jsb2cuY2hpbmF1bml4Lm5ldC91aWQtOTU0MzE3My1pZC0xOTg5MDA0Lmh0bWw=">Linux内核参数传递Tag(init_tags)<i class="fa fa-external-link-alt"></i></span>  </p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9zeXN0ZW1kLmlvL0JPT1RfTE9BREVSX1NQRUNJRklDQVRJT04v">systemd The Boot Loader Specification<i class="fa fa-external-link-alt"></i></span>  官方文档  </p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvdGl0bGUvSW5pdF8oJUU3JUFFJTgwJUU0JUJEJTkzJUU0JUI4JUFEJUU2JTk2JTg3KQ==">init (简体中文)<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvdGl0bGUvQXJjaF9ib290X3Byb2Nlc3M=">https://wiki.archlinux.org/title/Arch_boot_process<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvdGl0bGUvU3lzdGVtZC1ib290">https://wiki.archlinux.org/title/Systemd-boot<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvdGl0bGUvRUZJX3N5c3RlbV9wYXJ0aXRpb24=">https://wiki.archlinux.org/title/EFI_system_partition<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvdGl0bGUvVW5pZmllZF9rZXJuZWxfaW1hZ2U=">https://wiki.archlinux.org/title/Unified_kernel_image<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvdGl0bGUvbWljcm9jb2Rl">https://wiki.archlinux.org/title/microcode<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvdGl0bGUvRUZJU1RVQg==">https://wiki.archlinux.org/title/EFISTUB<i class="fa fa-external-link-alt"></i></span>  </p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9yYW1zZGVuai5jb20vMjAxNi8wNC8xNS9tdWx0aS1ib290LWxpbnV4LXdpdGgtb25lLWJvb3QtcGFydGl0aW9uLmh0bWw=">Multi Boot Linux With One Boot Partition<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvTGlzdF9vZl9MaW51eF9kaXN0cmlidXRpb25zX3RoYXRfcnVuX2Zyb21fUkFN">https://en.wikipedia.org/wiki/List_of_Linux_distributions_that_run_from_RAM<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FyY21hZ3MvcmFtcm9vdA==">https://github.com/arcmags/ramroot<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cua2VybmVsLm9yZy9kb2MvaHRtbC92NC4xNC9hZG1pbi1ndWlkZS9rZXJuZWwtcGFyYW1ldGVycy5odG1s">https://www.kernel.org/doc/html/v4.14/admin-guide/kernel-parameters.html<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cua2VybmVsLm9yZy9kb2MvRG9jdW1lbnRhdGlvbi9lZmktc3R1Yi50eHQ=">https://www.kernel.org/doc/Documentation/efi-stub.txt<i class="fa fa-external-link-alt"></i></span>  </p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"><i class="fa fa-tag"></i> linux</a>
+              <a href="/tags/systemd-boot/" rel="tag"><i class="fa fa-tag"></i> systemd-boot</a>
+              <a href="/tags/bootloader/" rel="tag"><i class="fa fa-tag"></i> bootloader</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/vim-macros/" rel="prev" title="Vim中的宏：自动化魔法">
+                  <i class="fa fa-chevron-left"></i> Vim中的宏：自动化魔法
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/6-S081-lab-filesystem/" rel="next" title="6.S081 Lab Filesystem 笔记">
+                  6.S081 Lab Filesystem 笔记 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+      <div class="tabs tabs-comment">
+        <ul class="nav-tabs">
+            <li class="tab"><a href="#comment-utterances">utterances</a></li>
+            <li class="tab"><a href="#comment-disqusjs">Load Disqus</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane utterances" id="comment-utterances">
+              <div class="comments utterances-container"></div>
+            </div>
+            <div class="tab-pane disqusjs" id="comment-disqusjs">
+              
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+            </div>
+        </div>
+      </div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">止息</span>
+</div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdn.jsdelivr.net/npm/pdfobject@2.2.7/pdfobject.min.js","integrity":"sha256-ph3Dk89VmuTVXG6x/RDzk53SU9LPdAh1tpv0UvnDZ2I="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="/js/third-party/tags/pdf.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/disqusjs@1.3.0/dist/disqusjs.css" integrity="sha256-GxdCIOyfxQ1OBfS99qAIJDoGK1ADuBsxhMTqXG82fAY=" crossorigin="anonymous">
+
+<script class="next-config" data-name="disqusjs" type="application/json">{"enable":true,"api":"https://disqus.skk.moe/disqus/","apikey":"3qJ515uApWlP58gXhzPCCk3L0NlOvrMLwt5dDITBndS8fp8She7PT1gvBdDcgwrt","shortname":"arcaheoraptor","js":{"url":"https://cdn.jsdelivr.net/npm/disqusjs@1.3.0/dist/disqus.js","integrity":"sha256-LVaMHPQ2zLqOc5rXSAfr4d1PIkEGNLyyUTDNPZmTtUw="}}</script>
+<script src="/js/third-party/comments/disqusjs.js"></script>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"Archaeoraptor/archaeoraptor.github.io","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

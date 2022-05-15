@@ -169,7 +169,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">60</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -180,7 +180,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">94</span>
+        <span class="site-state-item-count">97</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -430,10 +430,12 @@ size_t <span class="token class-name">ByteStream</span><span class="token double
 <p>这样测试就过了</p>
 <h2 id="链接和参考材料"><a href="#链接和参考材料" class="headerlink" title="链接和参考材料"></a>链接和参考材料</h2><p><span class="exturl" data-url="aHR0cHM6Ly9jczE0NC5naXRodWIuaW8v">https://cs144.github.io/<i class="fa fa-external-link-alt"></i></span> 课程主页<br>还有视频录像不过我不喜欢看视频，没看，直接上的Lab<br>《TCP&#x2F;IP详解 卷2》 这个有不少实现的细节, Lab讲的不详细我基本上都是跑到这里面翻的<br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Z6eXo5OTkvQW5hbHlzaXNfVENQX2luX0xpbnV4">Linux 4.4.0内核源码分析——TCP实现<i class="fa fa-external-link-alt"></i></span> 太感动了这个资料，注释极为详细（不过linux协议栈的实现很复杂，适合没思路的时候偶尔翻翻找找灵感，这个Lab的实现一般都很Naive，差别很大不适合照抄）  </p>
 <p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3NhbWluaWlyL2xldmVsLWlw">level-ip<i class="fa fa-external-link-alt"></i></span> 一个用户态玩具TCP&#x2F;IP协议栈，c写的<br>我最开始先看的这个，对TCP&#x2F;IP协议栈有个大概的概念，感觉这个看过一遍有了点头绪，CS144的Lab指导看完对整个TCP&#x2F;IP协议栈是啥样的没啥头绪<br><span class="exturl" data-url="aHR0cHM6Ly93d3cuc2FtaW5paXIuY29tL2xldHMtY29kZS10Y3AtaXAtc3RhY2stMS1ldGhlcm5ldC1hcnAv">Let’s code a TCP&#x2F;IP stack, 1: Ethernet &amp; ARP<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cuc2FtaW5paXIuY29tL2xldHMtY29kZS10Y3AtaXAtc3RhY2stMi1pcHY0LWljbXB2NC8=">Let’s code a TCP&#x2F;IP stack, 2: IPv4 &amp; ICMPv4<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cuc2FtaW5paXIuY29tL2xldHMtY29kZS10Y3AtaXAtc3RhY2stMy10Y3AtaGFuZHNoYWtlLw==">Let’s code a TCP&#x2F;IP stack, 3: TCP Basics &amp; Handshake<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cuc2FtaW5paXIuY29tL2xldHMtY29kZS10Y3AtaXAtc3RhY2stNC10Y3AtZGF0YS1mbG93LXNvY2tldC1hcGkv">Let’s code a TCP&#x2F;IP stack, 4: TCP Data Flow &amp; Socket API<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cuc2FtaW5paXIuY29tL2xldHMtY29kZS10Y3AtaXAtc3RhY2stNS10Y3AtcmV0cmFuc21pc3Npb24v">Let’s code a TCP&#x2F;IP stack, 5: TCP Retransmission<i class="fa fa-external-link-alt"></i></span>  </p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9yZmMuZnlpLw==">rfc.fyi<i class="fa fa-external-link-alt"></i></span> RFC标准速查表  </p>
 <p>然后是对写这门课的Lab可能帮助不是特别大的书和资料(资料本身其实都还不错)</p>
 <p>《TCP&#x2F;IP详解 卷1》 这个主要讲概念，看完一遍之后还是不知道怎么实现，如果是为了做Lab找资料推荐直接翻卷2<br>《计算机网络: 自顶向下方法》这个书好是好，但是讲的太简略了，看完想实现没啥头绪，还得去TCP&#x2F;IP协议卷2翻细节，这本书的协议栈实现讲的是<code>4.4BSD-Lite</code>，<br>《深入理解LINUX网络技术内幕》大量的章节都在讲网络驱动，和这门课的Lab的TCP协议栈的内容关系不是特别大<br>《Effective Modern C++ 中文版》 这本书我研一买的，彩色印刷，包装很烂。我当时就想看看modern c++，然后看到一半彻底对C++喜欢不起来了。当时我唯一的想法就是不要把有限的生命浪费在一个充斥着语言律师的语言上。那个时候还在看《The Little Schemer》，看那些优雅连贯的递归的奇妙感觉，和同时在看的c++的繁杂形成了鲜明的对比。也是在那会，被C++坑的多了突然喜欢上go了。  </p>
 <p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnBhY2thZ2VjbG91ZC5pby9lbmcvMjAxNy8wMi8wNi9tb25pdG9yaW5nLXR1bmluZy1saW51eC1uZXR3b3JraW5nLXN0YWNrLXNlbmRpbmctZGF0YQ==">Monitoring and Tuning the Linux Networking Stack: Sending Data<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnBhY2thZ2VjbG91ZC5pby9lbmcvMjAxNi8wNi8yMi9tb25pdG9yaW5nLXR1bmluZy1saW51eC1uZXR3b3JraW5nLXN0YWNrLXJlY2VpdmluZy1kYXRhLw==">Monitoring and Tuning the Linux Networking Stack: Receiving Data<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL2FydGh1cmNoaWFvLmFydC9ibG9nL3R1bmluZy1zdGFjay10eC16aC8=">[译] Linux 网络栈监控和调优：发送数据（2017）<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL2FydGh1cmNoaWFvLmFydC9ibG9nL3R1bmluZy1zdGFjay1yeC16aC8=">[译] Linux 网络栈监控和调优：接收数据（2016）<i class="fa fa-external-link-alt"></i></span>  这两篇文章适合做完Lab再看，很容易迷失在细节里面  </p>
 <p><span class="exturl" data-url="aHR0cHM6Ly93d3cucmZjLWVkaXRvci5vcmcvcmZjL3JmYzExODAudHh0">A TCP&#x2F;IP Tutorial<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL2FydGh1cmNoaWFvLmFydC9ibG9nL3JmYzExODAtYS10Y3AtaXAtdHV0b3JpYWwtemgv">[译] RFC 1180：朴素 TCP&#x2F;IP 教程（1991）<i class="fa fa-external-link-alt"></i></span><br>我一开始还以为是实现一个TCP协议栈的，点开才发现很老的一个简短介绍，大概相当于TCP&#x2F;IP卷1的太长不看版。其实讲的还可以，没有一点废话，不过对Lab没啥帮助。</p>
+<p><span class="exturl" data-url="aHR0cDovL3d3dy41MmltLm5ldC90aHJlYWQtMTAwMy0xLTEuaHRtbA==">不为人知的网络编程(一)：浅析TCP协议中的疑难杂症(上篇)<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL3d3dy41MmltLm5ldC90aHJlYWQtMTAwNC0xLTEuaHRtbA==">不为人知的网络编程(二)：浅析TCP协议中的疑难杂症(下篇)<i class="fa fa-external-link-alt"></i></span> 做Lab4的时候搜资料看到的，解决了我对TCP的一点疑惑  </p>
 
     </div>
 
