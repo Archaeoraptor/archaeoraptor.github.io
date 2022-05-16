@@ -434,6 +434,122 @@ bear -- <span class="token function">make</span> qemu<span aria-hidden="true" cl
       </tags>
   </entry>
   <entry>
+    <title>6.S081 Lab Networking 笔记，完结撒花</title>
+    <url>/6-S081-lab-network-driver/</url>
+    <content><![CDATA[<p>这个Lab就是补全一个DMA收发的驱动, 不要被Lab标的Hard难度吓到，我感觉这是6.S081这几个Lab最简单的几个Lab之一。写个驱动都不用上板子调试，没啥意思，怎么感觉比当年你电PPT吹水课程微嵌的实验大作业给FPGA的板子写个驱动还水。。。<br>最后一个Lab放水，愉快的完结撒花。也难怪在2021 fall的lab net不是最后一个。等等，这个Lab还有附加内容，实现一个TCP&#x2F;UDP协议栈。。。</p>
+<span id="more"></span>
+
+<h2 id="Lab内容"><a href="#Lab内容" class="headerlink" title="Lab内容"></a>Lab内容</h2><p>这个难度明明是easy，不要被标的那个hard吓到了。做起来这个Lab挺没意思的，e1000这种远古网卡，现在应该没多少人用了。这个网卡是qemu虚拟出来的网卡，就跟代理的时候用的那个tun&#x2F;tap差不多</p>
+<blockquote>
+<p>Your job is to complete e1000_transmit() and e1000_recv(), both in kernel&#x2F;e1000.c, so that the driver can transmit and receive packets</p>
+</blockquote>
+<p>这个好办，我们直接扒拉e1000的手册就可以了。或者我们直接看<code>kernel/e1000_dev.h</code>, <code>E1000_RDH</code>是E1000 RX Descriptor Head， <code>E1000_RDT</code>是RX descriptor tail，同理<code>E1000_TDT</code>是TX descriptor tail（由TX的功能我们可以知道这是the next packet的坐标）， <code>E1000_RXD_STAT_DD</code>是 Descriptor Done， 然后<code>E1000_TXD_CMD_EOP</code>是 End of Packet。</p>
+<p>RX ring接受网卡数据的读取buffer， TX ring是发送packet的发送buffer。<code>rx_ring</code>是一个环形链表<code>rx_desc</code>，里面放的是packet的地址（packet是通过DMA放在内存里面）</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">// [E1000 3.2.3]</span>
+<span class="token keyword">struct</span> <span class="token class-name">rx_desc</span>
+<span class="token punctuation">&#123;</span>
+  uint64 addr<span class="token punctuation">;</span>       <span class="token comment">/* Address of the descriptor's data buffer */</span>
+  uint16 length<span class="token punctuation">;</span>     <span class="token comment">/* Length of data DMAed into data buffer */</span>
+  uint16 csum<span class="token punctuation">;</span>       <span class="token comment">/* Packet checksum */</span>
+  uint8 status<span class="token punctuation">;</span>      <span class="token comment">/* Descriptor status */</span>
+  uint8 errors<span class="token punctuation">;</span>      <span class="token comment">/* Descriptor Errors */</span>
+  uint16 special<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后我们照着提示就可以补全<code>kernel/e1000.c</code>了</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">e1000_transmit</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">mbuf</span> <span class="token operator">*</span>m<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// the mbuf contains an ethernet frame; program it into</span>
+    <span class="token comment">// the TX descriptor ring so that the e1000 sends it. Stash</span>
+    <span class="token comment">// a pointer so that it can be freed after sending.</span>
+    <span class="token comment">//</span>
+    <span class="token function">acquire</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>e1000_lock<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 发送时加spin_lock</span>
+    uint32 idx <span class="token operator">=</span> regs<span class="token punctuation">[</span>E1000_TDT<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token punctuation">(</span>E1000_TXD_STAT_DD <span class="token operator">&amp;</span> tx_ring<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">.</span>status<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// buffer不足</span>
+        <span class="token function">release</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>e1000_lock<span class="token punctuation">)</span><span class="token punctuation">;</span>                         <span class="token comment">// 释放锁</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>tx_mbufs<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">mbuffree</span><span class="token punctuation">(</span>tx_mbufs<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        tx_mbufs<span class="token punctuation">[</span>idx<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    tx_ring<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">.</span>addr <span class="token operator">=</span> <span class="token punctuation">(</span>uint64<span class="token punctuation">)</span>m<span class="token operator">-></span>head<span class="token punctuation">;</span>
+    tx_ring<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">.</span>length <span class="token operator">=</span> m<span class="token operator">-></span>len<span class="token punctuation">;</span>
+
+    tx_ring<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">.</span>cmd <span class="token operator">=</span> E1000_TXD_CMD_EOP <span class="token operator">|</span> E1000_TXD_CMD_RS<span class="token punctuation">;</span>
+    tx_mbufs<span class="token punctuation">[</span>idx<span class="token punctuation">]</span> <span class="token operator">=</span> m<span class="token punctuation">;</span>
+
+    regs<span class="token punctuation">[</span>E1000_TDT<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span>idx <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">%</span> TX_RING_SIZE<span class="token punctuation">;</span>
+    <span class="token function">release</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>e1000_lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">e1000_recv</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">//</span>
+    <span class="token comment">// Your code here.</span>
+    <span class="token comment">//</span>
+    <span class="token comment">// Check for packets that have arrived from the e1000</span>
+    <span class="token comment">// Create and deliver an mbuf for each packet (using net_rx()).</span>
+    <span class="token comment">//</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// First ask the E1000 for the ring index at which the next waiting</span>
+        <span class="token comment">// received packet (if any) is located, by fetching the E1000_RDT</span>
+        <span class="token comment">// control register and adding one modulo RX_RING_SIZE.</span>
+        uint32 idx <span class="token operator">=</span> regs<span class="token punctuation">[</span>E1000_RDT<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        idx <span class="token operator">=</span> <span class="token punctuation">(</span>idx <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">%</span> RX_RING_SIZE<span class="token punctuation">;</span> <span class="token comment">// 这是个环形链表，需要mod ring size</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token punctuation">(</span>E1000_RXD_STAT_DD <span class="token operator">&amp;</span> rx_ring<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">.</span>status<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        rx_mbufs<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token operator">-></span>len <span class="token operator">=</span> rx_ring<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">.</span>length<span class="token punctuation">;</span>
+        <span class="token function">net_rx</span><span class="token punctuation">(</span>rx_mbufs<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        rx_mbufs<span class="token punctuation">[</span>idx<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">mbufalloc</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//这里直接mbufalloc就可以了，不需要kalloc</span>
+        rx_ring<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">.</span>addr <span class="token operator">=</span> <span class="token punctuation">(</span>uint64<span class="token punctuation">)</span>rx_mbufs<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token operator">-></span>head<span class="token punctuation">;</span>
+        rx_ring<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">.</span>status <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        regs<span class="token punctuation">[</span>E1000_RDT<span class="token punctuation">]</span> <span class="token operator">=</span> idx<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="完结撒花"><a href="#完结撒花" class="headerlink" title="完结撒花"></a>完结撒花</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">make</span> grade
+make<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>: Leaving directory <span class="token string">'/home/zhixi/codes/xv6-labs-2021'</span>
+<span class="token operator">==</span> Test running nettests <span class="token operator">==</span> 
+$ <span class="token function">make</span> qemu-gdb
+<span class="token punctuation">(</span><span class="token number">2</span>.8s<span class="token punctuation">)</span> 
+<span class="token operator">==</span> Test   nettest: <span class="token function">ping</span> <span class="token operator">==</span> 
+  nettest: ping: OK 
+<span class="token operator">==</span> Test   nettest: single process <span class="token operator">==</span> 
+  nettest: single process: OK 
+<span class="token operator">==</span> Test   nettest: multi-process <span class="token operator">==</span> 
+  nettest: multi-process: OK 
+<span class="token operator">==</span> Test   nettest: DNS <span class="token operator">==</span> 
+  nettest: DNS: OK 
+<span class="token operator">==</span> Test <span class="token function">time</span> <span class="token operator">==</span> 
+time: OK 
+Score: <span class="token number">100</span>/100<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>一开始以为很难，又是讨厌的驱动，然后一看难度还是hard，勾起了我当年痛苦的。上一次写驱动的大作业还是本科的时候，当时换了两块xilinx的阴间开发板全都是坏的，害得我还以为是我自己写的有问题，找了一周没找到bug。本来是抱着人又麻了的心态来做这个Lab的（这个Lab在2020年是最后一个Lab，在2021年放到了前面），拖了几个月，别的Lab都做完了，然后陆续把笔记也补上了，最后捡起了一直咕咕咕的6.824，做到Raft的Lab4死活跑不过测试这才回来做这个Lab，结果发现意外的简单。</p>
+<p>好久之前写的Lab，由于懒癌发作一直没有写笔记，现在把Lab的笔记补上。这个Lab比较玩具，没啥好讲的。驱动和网络单独拿出来都是一个大坑，水平有限不多讲了。</p>
+<p>这个Lab的Optional Challenges比较麻烦，其中最后两个challenge是：</p>
+<blockquote>
+<p>Implement a UDP server for xv6. (moderate)<br>Implement a minimal TCP stack and download a web page. (hard)</p>
+</blockquote>
+<p>然后搜了一下发现有一个xv6-net的实现：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3BhbmRheDM4MS94djYtbmV0L2Jsb2IvbmV0L3RjcC5j">https://github.com/pandax381/xv6-net/blob/net/tcp.c<i class="fa fa-external-link-alt"></i></span></p>
+<p>由于懒癌发作我当然又是没做，我的菜鸡计网水平和对TCP的熟悉程度应该一时半会做不出来。听说有cs144这门课就是实现一个TCP协议栈，等研三有空了回头把这个做了把这个大坑填上。</p>
+<p>6.S081这个课从去年7月开始，断断续续做了将近一年把Lab做了，xv6的源码看了不到一半。xv6作为一个教学的系统，挺精简挺小巧，能比较顺利的看下去。像linux源码那种看不太动，拿着赵炯那本《linux内核完全注释》看早期内核也比较麻烦。xv6-book写的真的好，推荐做Lab和读xv6源码的时候好好把xv6-book看一下：</p>
+<p><em>xv6: a simple, Unix-like teaching operating system</em><br>作者Russ Cox, Frans Kaashoek, Robert Morris 应该都听过，Russ Cox是争议比较大的go现任掌门，喜欢在go的issue区开喷，Morris是6.824这门课的主讲，就是那个蠕虫病毒的作者。</p>
+<p>一开始我没在意，觉得这本书就是跟手册一样，偶尔翻一翻。后来发现这本册子写的是真的好，几乎没有一点废话，比课程讲义好多了。早应该看这个的。</p>
+<p>然后就是重新翻了k&amp;r这本书，写的真好，也没有多少废话。里面的例子非常精简。</p>
+<p>更新：不等研三了，直接上CS144了。之前没事喜欢摆弄nmap、wireshark这些东西瞎玩，却没好好看过TCP的细节，再这样不思进取下去就要沦为脚本小子了</p>
+]]></content>
+      <categories>
+        <category>Linux&amp;Unix</category>
+      </categories>
+      <tags>
+        <tag>6.S081</tag>
+        <tag>network</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>6.S081 Lab Multithreading 笔记</title>
     <url>/6-S081-lab-multithreading/</url>
     <content><![CDATA[<p>实现一个用户态线程uthread，就照着xv6的内核态线程抄呗。怎么什么FUSE啊、UIO啊，什么东西都想往用户态搬啊，连RCU都有人想往用户态搬。</p>
@@ -992,122 +1108,6 @@ Score: <span class="token number">60</span>/60<span aria-hidden="true" class="li
       <tags>
         <tag>6.S081</tag>
         <tag>thread</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>6.S081 Lab Networking 笔记，完结撒花</title>
-    <url>/6-S081-lab-network-driver/</url>
-    <content><![CDATA[<p>这个Lab就是补全一个DMA收发的驱动, 不要被Lab标的Hard难度吓到，我感觉这是6.S081这几个Lab最简单的几个Lab之一。写个驱动都不用上板子调试，没啥意思，怎么感觉比当年你电PPT吹水课程微嵌的实验大作业给FPGA的板子写个驱动还水。。。<br>最后一个Lab放水，愉快的完结撒花。也难怪在2021 fall的lab net不是最后一个。等等，这个Lab还有附加内容，实现一个TCP&#x2F;UDP协议栈。。。</p>
-<span id="more"></span>
-
-<h2 id="Lab内容"><a href="#Lab内容" class="headerlink" title="Lab内容"></a>Lab内容</h2><p>这个难度明明是easy，不要被标的那个hard吓到了。做起来这个Lab挺没意思的，e1000这种远古网卡，现在应该没多少人用了。这个网卡是qemu虚拟出来的网卡，就跟代理的时候用的那个tun&#x2F;tap差不多</p>
-<blockquote>
-<p>Your job is to complete e1000_transmit() and e1000_recv(), both in kernel&#x2F;e1000.c, so that the driver can transmit and receive packets</p>
-</blockquote>
-<p>这个好办，我们直接扒拉e1000的手册就可以了。或者我们直接看<code>kernel/e1000_dev.h</code>, <code>E1000_RDH</code>是E1000 RX Descriptor Head， <code>E1000_RDT</code>是RX descriptor tail，同理<code>E1000_TDT</code>是TX descriptor tail（由TX的功能我们可以知道这是the next packet的坐标）， <code>E1000_RXD_STAT_DD</code>是 Descriptor Done， 然后<code>E1000_TXD_CMD_EOP</code>是 End of Packet。</p>
-<p>RX ring接受网卡数据的读取buffer， TX ring是发送packet的发送buffer。<code>rx_ring</code>是一个环形链表<code>rx_desc</code>，里面放的是packet的地址（packet是通过DMA放在内存里面）</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">// [E1000 3.2.3]</span>
-<span class="token keyword">struct</span> <span class="token class-name">rx_desc</span>
-<span class="token punctuation">&#123;</span>
-  uint64 addr<span class="token punctuation">;</span>       <span class="token comment">/* Address of the descriptor's data buffer */</span>
-  uint16 length<span class="token punctuation">;</span>     <span class="token comment">/* Length of data DMAed into data buffer */</span>
-  uint16 csum<span class="token punctuation">;</span>       <span class="token comment">/* Packet checksum */</span>
-  uint8 status<span class="token punctuation">;</span>      <span class="token comment">/* Descriptor status */</span>
-  uint8 errors<span class="token punctuation">;</span>      <span class="token comment">/* Descriptor Errors */</span>
-  uint16 special<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>然后我们照着提示就可以补全<code>kernel/e1000.c</code>了</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">e1000_transmit</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">mbuf</span> <span class="token operator">*</span>m<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token comment">// the mbuf contains an ethernet frame; program it into</span>
-    <span class="token comment">// the TX descriptor ring so that the e1000 sends it. Stash</span>
-    <span class="token comment">// a pointer so that it can be freed after sending.</span>
-    <span class="token comment">//</span>
-    <span class="token function">acquire</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>e1000_lock<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 发送时加spin_lock</span>
-    uint32 idx <span class="token operator">=</span> regs<span class="token punctuation">[</span>E1000_TDT<span class="token punctuation">]</span><span class="token punctuation">;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token punctuation">(</span>E1000_TXD_STAT_DD <span class="token operator">&amp;</span> tx_ring<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">.</span>status<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// buffer不足</span>
-        <span class="token function">release</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>e1000_lock<span class="token punctuation">)</span><span class="token punctuation">;</span>                         <span class="token comment">// 释放锁</span>
-        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>tx_mbufs<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token function">mbuffree</span><span class="token punctuation">(</span>tx_mbufs<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        tx_mbufs<span class="token punctuation">[</span>idx<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-
-    tx_ring<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">.</span>addr <span class="token operator">=</span> <span class="token punctuation">(</span>uint64<span class="token punctuation">)</span>m<span class="token operator">-></span>head<span class="token punctuation">;</span>
-    tx_ring<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">.</span>length <span class="token operator">=</span> m<span class="token operator">-></span>len<span class="token punctuation">;</span>
-
-    tx_ring<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">.</span>cmd <span class="token operator">=</span> E1000_TXD_CMD_EOP <span class="token operator">|</span> E1000_TXD_CMD_RS<span class="token punctuation">;</span>
-    tx_mbufs<span class="token punctuation">[</span>idx<span class="token punctuation">]</span> <span class="token operator">=</span> m<span class="token punctuation">;</span>
-
-    regs<span class="token punctuation">[</span>E1000_TDT<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span>idx <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">%</span> TX_RING_SIZE<span class="token punctuation">;</span>
-    <span class="token function">release</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>e1000_lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
-
-<span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">e1000_recv</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token comment">//</span>
-    <span class="token comment">// Your code here.</span>
-    <span class="token comment">//</span>
-    <span class="token comment">// Check for packets that have arrived from the e1000</span>
-    <span class="token comment">// Create and deliver an mbuf for each packet (using net_rx()).</span>
-    <span class="token comment">//</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token comment">// First ask the E1000 for the ring index at which the next waiting</span>
-        <span class="token comment">// received packet (if any) is located, by fetching the E1000_RDT</span>
-        <span class="token comment">// control register and adding one modulo RX_RING_SIZE.</span>
-        uint32 idx <span class="token operator">=</span> regs<span class="token punctuation">[</span>E1000_RDT<span class="token punctuation">]</span><span class="token punctuation">;</span>
-        idx <span class="token operator">=</span> <span class="token punctuation">(</span>idx <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">%</span> RX_RING_SIZE<span class="token punctuation">;</span> <span class="token comment">// 这是个环形链表，需要mod ring size</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token punctuation">(</span>E1000_RXD_STAT_DD <span class="token operator">&amp;</span> rx_ring<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">.</span>status<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            <span class="token keyword">return</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        rx_mbufs<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token operator">-></span>len <span class="token operator">=</span> rx_ring<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">.</span>length<span class="token punctuation">;</span>
-        <span class="token function">net_rx</span><span class="token punctuation">(</span>rx_mbufs<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        rx_mbufs<span class="token punctuation">[</span>idx<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">mbufalloc</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//这里直接mbufalloc就可以了，不需要kalloc</span>
-        rx_ring<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">.</span>addr <span class="token operator">=</span> <span class="token punctuation">(</span>uint64<span class="token punctuation">)</span>rx_mbufs<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token operator">-></span>head<span class="token punctuation">;</span>
-        rx_ring<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">.</span>status <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-        regs<span class="token punctuation">[</span>E1000_RDT<span class="token punctuation">]</span> <span class="token operator">=</span> idx<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="完结撒花"><a href="#完结撒花" class="headerlink" title="完结撒花"></a>完结撒花</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">make</span> grade
-make<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>: Leaving directory <span class="token string">'/home/zhixi/codes/xv6-labs-2021'</span>
-<span class="token operator">==</span> Test running nettests <span class="token operator">==</span> 
-$ <span class="token function">make</span> qemu-gdb
-<span class="token punctuation">(</span><span class="token number">2</span>.8s<span class="token punctuation">)</span> 
-<span class="token operator">==</span> Test   nettest: <span class="token function">ping</span> <span class="token operator">==</span> 
-  nettest: ping: OK 
-<span class="token operator">==</span> Test   nettest: single process <span class="token operator">==</span> 
-  nettest: single process: OK 
-<span class="token operator">==</span> Test   nettest: multi-process <span class="token operator">==</span> 
-  nettest: multi-process: OK 
-<span class="token operator">==</span> Test   nettest: DNS <span class="token operator">==</span> 
-  nettest: DNS: OK 
-<span class="token operator">==</span> Test <span class="token function">time</span> <span class="token operator">==</span> 
-time: OK 
-Score: <span class="token number">100</span>/100<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>一开始以为很难，又是讨厌的驱动，然后一看难度还是hard，勾起了我当年痛苦的。上一次写驱动的大作业还是本科的时候，当时换了两块xilinx的阴间开发板全都是坏的，害得我还以为是我自己写的有问题，找了一周没找到bug。本来是抱着人又麻了的心态来做这个Lab的（这个Lab在2020年是最后一个Lab，在2021年放到了前面），拖了几个月，别的Lab都做完了，然后陆续把笔记也补上了，最后捡起了一直咕咕咕的6.824，做到Raft的Lab4死活跑不过测试这才回来做这个Lab，结果发现意外的简单。</p>
-<p>好久之前写的Lab，由于懒癌发作一直没有写笔记，现在把Lab的笔记补上。这个Lab比较玩具，没啥好讲的。驱动和网络单独拿出来都是一个大坑，水平有限不多讲了。</p>
-<p>这个Lab的Optional Challenges比较麻烦，其中最后两个challenge是：</p>
-<blockquote>
-<p>Implement a UDP server for xv6. (moderate)<br>Implement a minimal TCP stack and download a web page. (hard)</p>
-</blockquote>
-<p>然后搜了一下发现有一个xv6-net的实现：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3BhbmRheDM4MS94djYtbmV0L2Jsb2IvbmV0L3RjcC5j">https://github.com/pandax381/xv6-net/blob/net/tcp.c<i class="fa fa-external-link-alt"></i></span></p>
-<p>由于懒癌发作我当然又是没做，我的菜鸡计网水平和对TCP的熟悉程度应该一时半会做不出来。听说有cs144这门课就是实现一个TCP协议栈，等研三有空了回头把这个做了把这个大坑填上。</p>
-<p>6.S081这个课从去年7月开始，断断续续做了将近一年把Lab做了，xv6的源码看了不到一半。xv6作为一个教学的系统，挺精简挺小巧，能比较顺利的看下去。像linux源码那种看不太动，拿着赵炯那本《linux内核完全注释》看早期内核也比较麻烦。xv6-book写的真的好，推荐做Lab和读xv6源码的时候好好把xv6-book看一下：</p>
-<p><em>xv6: a simple, Unix-like teaching operating system</em><br>作者Russ Cox, Frans Kaashoek, Robert Morris 应该都听过，Russ Cox是争议比较大的go现任掌门，喜欢在go的issue区开喷，Morris是6.824这门课的主讲，就是那个蠕虫病毒的作者。</p>
-<p>一开始我没在意，觉得这本书就是跟手册一样，偶尔翻一翻。后来发现这本册子写的是真的好，几乎没有一点废话，比课程讲义好多了。早应该看这个的。</p>
-<p>然后就是重新翻了k&amp;r这本书，写的真好，也没有多少废话。里面的例子非常精简。</p>
-<p>更新：不等研三了，直接上CS144了。之前没事喜欢摆弄nmap、wireshark这些东西瞎玩，却没好好看过TCP的细节，再这样不思进取下去就要沦为脚本小子了</p>
-]]></content>
-      <categories>
-        <category>Linux&amp;Unix</category>
-      </categories>
-      <tags>
-        <tag>6.S081</tag>
-        <tag>network</tag>
       </tags>
   </entry>
   <entry>
@@ -2310,7 +2310,8 @@ gpg: next trustdb check due at <span class="token number">2020</span>-12-03
 <p>推荐阅读：<span class="exturl" data-url="aHR0cHM6Ly90dHlzMy5kZXYvcG9zdC9kby1ub3QtdXNlLWFscGluZS1pbi1wcm9kdWN0aW9uLWVudmlyb25tZW50Lw==">不要在生产环境中使用alpine基础镜像 – 容器基础镜像的选择<i class="fa fa-external-link-alt"></i></span></p>
 <p>之前觉得就是一个安装超麻烦版的Arch&#x2F;Gentoo，就没试过。最近终于试了一下，学到的东西倒不是很多，没有当时第一次完整安装Arch时的收获大。</p>
 <p>这个东西告诉你linux里面glibc之类的依赖关系是什么样的。这个东西就像单片机最小系统一样，告诉你。你可以从头开始看一看系统是怎么从源码构建的，glibc那一堆依赖又是怎么鸡生蛋、蛋生鸡的。推荐想了解系统构建依赖的Linux用户看一看这个东西。</p>
-<p>闲着没事的人最适合玩一玩这个了，不过不太推荐日常使用。虽然还是是有一些人真的把这个当日用主力的，比如fcitx输入法初代目鱼王（Yuking）就是在LFS上面写了早期的fcitx输入法。<br>LFS is free if your time is free.     </p>
+<p>闲着没事的人最适合玩一玩这个了，不过不太推荐日常使用。虽然还是是有一些人真的把这个当日用主力的，比如fcitx输入法初代目鱼王（Yuking）就是在LFS上面写了早期的fcitx输入法。<br>LFS is free if your time is free.  </p>
+<h2 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h2><p>最近找资料的时候无意间又看到了一本书，，是在找《深度探索嵌入式操作系统 从零开始设计、架构和开发》的时候看到的，名字叫《深度探索Linux操作系统 系统构建和原理解析》，这本书和LFS比起来多了一些原理的讲解。13年出版的，里面的很多内容相比LFS有点老了，我挑了3、4、5章的内容翻了翻，感觉还可以。这本书后面还讲了x window和桌面图形渲染那些，不太感兴趣没看。这本书貌似也没有出后续的再版，而且穿插着操作和讲原理有点乱。中间那些initramfs、vmlinuz和根文件系统讲的还算详细，其他的感觉交叉编译和链接那些不如看别的书， 比如《程序员的自我修养》，后面那些图形界面和渲染感觉不如直接去玩玩Unity之类的东西，x window那些感觉不如自己整个dwm玩。<br>这种东西感觉不太适合写书，像LFS做成小册子那样持续更新比较好，如果想真的编译一个还是推荐LFS，或者操作和原理分开写。</p>
 <h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>首先去找一个好一点的机器用来编译。你要有一个宿主机，一般用Ubuntu 20的比较多一点，我用的Arch, 暂时没遇到什么大问题。</p>
 <p>然后下载LFS的手册和源码，我用的是最新的r11.0-92这个版本：<span class="exturl" data-url="aHR0cHM6Ly93d3cubGludXhmcm9tc2NyYXRjaC5vcmcvbGZzL2Rvd25sb2Fkcy9kZXZlbG9wbWVudC8=">https://www.linuxfromscratch.org/lfs/downloads/development/<i class="fa fa-external-link-alt"></i></span></p>
 <p>手册说的wget-list没有说在哪，wget-list 可以用香港的镜像： <span class="exturl" data-url="aHR0cHM6Ly9sZnMtaGsua29kZG9zLm5ldC9sZnMvdmlldy9yMTEuMC05Mi93Z2V0LWxpc3Q=">https://lfs-hk.koddos.net/lfs/view/r11.0-92/wget-list<i class="fa fa-external-link-alt"></i></span></p>
@@ -4600,42 +4601,6 @@ https://cloud.tencent.com/developer/article/1603974 -->
       </tags>
   </entry>
   <entry>
-    <title>用Markdown制做PPT</title>
-    <url>/make-ppt-with-markdown/</url>
-    <content><![CDATA[<p>纯文本好，富文本坏。这是一个劝你放弃PowerPoint和Wps演示的安利文，回归简陋，回归开源。</p>
-<span id="more"></span>
-
-<p>这是迫于毕业不得不向PPT低头才干出来的事情，在PPT上浪费时光真没意思。能不做PPT还是不做PPT最好。（没推荐Beamer是因为LaTeX这种专业排版工具还是太复杂了，还是会浪费不少时间在排版上。）</p>
-<h2 id="喧宾夺主的PPT"><a href="#喧宾夺主的PPT" class="headerlink" title="喧宾夺主的PPT"></a>喧宾夺主的PPT</h2><p><del>但是根据约翰霍普金斯大学的研究，喜欢做PPT的大概率是个传销分子</del></p>
-<p>Office三件套里面，我对word只是喜欢不起来（真要做到内容样式分离还是可以的，而且把富文本的所见即所得做到了地表最强），对Excel有点厌恶（谁让你多管闲事把身份者号给我改成科学计数法了？），PPT我真的心力憔悴了。Beamer一类的Slides演示还比较重视内容，你软家的</p>
-<p>如果不是生活所迫谁愿意做PPT呢，直接拿Markdown写文档呗。（我们现在确实除了毕业答辩这种迫不得已的事情，都用Markdown给老板讲东西了。PPT？当年老板嫌弃小胡师兄PPT做的烂，反正PPT不好好做看起来甚至不如Markdown在typora里面或者hexo里面好看）。好在毕业答辩类的学术PPT不用做的太好看，简陋一点反而显得比较朴实无华，Markdown生成的PPT也够看了。而且我前期给老板交差的调研材料什么的基本都是用Markdown写的，改一改就成PPT了。其实如果不是开题、毕设答辩要求PPT，我真的想用Markdown列一个大纲讲。</p>
-<p>至于为什么不用LaTeX的Beamer，那是我对LaTeX不熟，而我对CSS和HTML比较熟，Markdown做不到的可以伤感CSS魔改。<br>功能简陋也好，这样免得我在PPT上面调格式浪费很多时间。<strong>而且可以用键盘操作</strong>。</p>
-<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>作为一个毕业答辩之类的PPT，Marp的功能已经足够做一个丐版的学术简陋风格PPT了，Beamer的功能Marp几乎都有。这个东西有VSCode插件，直接装就好了。网页版也可以直接用。</p>
-<p>当然这个东西没有什么惊艳的动画效果和对布局细致的控制和调整，Markdown本来就不适合干这个事情呢。如果是做传销风格的PPT那还请<del>直接用Office</del>试试隔壁的reveal.js，像写前端一样写你的演示，各种漂亮的动画效果全都有。</p>
-<p>直接新建一个Markdown，在开头启用marp就好了。</p>
-<pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown"><span class="token front-matter-block"><span class="token punctuation">---</span>
-<span class="token front-matter yaml language-yaml"><span class="token key atrule">marp</span><span class="token punctuation">:</span> <span class="token boolean important">true</span></span>
-<span class="token punctuation">---</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<p>语法都是markdown的语法，每一张PPT之间隔断就用<code>---</code>就可以了（最好在<code>---</code>前面空一行）</p>
-<p>为了更符合传统的PPT界面的布局，VSCode打开Preview，然后将preview调到左边侧栏。好，它现在看起来和wps演示和PowerPoint完全一致。</p>
-<p><img src="/make-ppt-with-markdown/1641736904.png"></p>
-<h2 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h2><p>图片的支持当然没有PowerPoint那么好。Markdown本来就不支持调整图片的大小、图片缩放、指定图片位置这种操作。对于博客文章或者文档可以统一用css去设置居中、边框这些，但是PPT的图片几乎每页的布局和位置都不太一样。Marp对Markdown提供了一些扩展，能基本满足我对图片的位置调整需求。如果不满足要求可以用html标签去调图片。</p>
-<p>下面的操作是一些粗略调整宽度高度的语法、以及上下左右、居中、背景图片。</p>
-<pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown">
-<span class="token url"><span class="token operator">!</span>[<span class="token content">bg right vertical weight:600</span>](<span class="token url">zhixi.png</span>)</span>
-<span class="token comment">&lt;!-- 将图片置于右上，宽度600px --></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h2><p>Marp自带的模板合适可以自己定制，只需要一点CSS就可以了</p>
-<p>定制可以参考：<span class="exturl" data-url="aHR0cHM6Ly9tYXJwaXQubWFycC5hcHAvdGhlbWUtY3Nz">https://marpit.marp.app/theme-css<i class="fa fa-external-link-alt"></i></span></p>
-<p>太长不看版：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21hcnAtdGVhbS9tYXJwL2Rpc2N1c3Npb25zLzExNQ==">How to create a theme?<i class="fa fa-external-link-alt"></i></span>  </p>
-]]></content>
-      <tags>
-        <tag>ppt</tag>
-        <tag>markdown</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Linux系统的抢救和维护（桌面篇）</title>
     <url>/linux-rescue/</url>
     <content><![CDATA[<p>这篇水文主要是写给桌面玩家看的，如果您的服务器打出了GG&#x2F;被黑了&#x2F;库被删了，可能不适合来这里找答案。</p>
@@ -4820,6 +4785,42 @@ i8042.noloop	[HW] Disable the AUX Loopback command while probing
       <tags>
         <tag>Linux</tag>
         <tag>rescue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>用Markdown制做PPT</title>
+    <url>/make-ppt-with-markdown/</url>
+    <content><![CDATA[<p>纯文本好，富文本坏。这是一个劝你放弃PowerPoint和Wps演示的安利文，回归简陋，回归开源。</p>
+<span id="more"></span>
+
+<p>这是迫于毕业不得不向PPT低头才干出来的事情，在PPT上浪费时光真没意思。能不做PPT还是不做PPT最好。（没推荐Beamer是因为LaTeX这种专业排版工具还是太复杂了，还是会浪费不少时间在排版上。）</p>
+<h2 id="喧宾夺主的PPT"><a href="#喧宾夺主的PPT" class="headerlink" title="喧宾夺主的PPT"></a>喧宾夺主的PPT</h2><p><del>但是根据约翰霍普金斯大学的研究，喜欢做PPT的大概率是个传销分子</del></p>
+<p>Office三件套里面，我对word只是喜欢不起来（真要做到内容样式分离还是可以的，而且把富文本的所见即所得做到了地表最强），对Excel有点厌恶（谁让你多管闲事把身份者号给我改成科学计数法了？），PPT我真的心力憔悴了。Beamer一类的Slides演示还比较重视内容，你软家的</p>
+<p>如果不是生活所迫谁愿意做PPT呢，直接拿Markdown写文档呗。（我们现在确实除了毕业答辩这种迫不得已的事情，都用Markdown给老板讲东西了。PPT？当年老板嫌弃小胡师兄PPT做的烂，反正PPT不好好做看起来甚至不如Markdown在typora里面或者hexo里面好看）。好在毕业答辩类的学术PPT不用做的太好看，简陋一点反而显得比较朴实无华，Markdown生成的PPT也够看了。而且我前期给老板交差的调研材料什么的基本都是用Markdown写的，改一改就成PPT了。其实如果不是开题、毕设答辩要求PPT，我真的想用Markdown列一个大纲讲。</p>
+<p>至于为什么不用LaTeX的Beamer，那是我对LaTeX不熟，而我对CSS和HTML比较熟，Markdown做不到的可以伤感CSS魔改。<br>功能简陋也好，这样免得我在PPT上面调格式浪费很多时间。<strong>而且可以用键盘操作</strong>。</p>
+<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>作为一个毕业答辩之类的PPT，Marp的功能已经足够做一个丐版的学术简陋风格PPT了，Beamer的功能Marp几乎都有。这个东西有VSCode插件，直接装就好了。网页版也可以直接用。</p>
+<p>当然这个东西没有什么惊艳的动画效果和对布局细致的控制和调整，Markdown本来就不适合干这个事情呢。如果是做传销风格的PPT那还请<del>直接用Office</del>试试隔壁的reveal.js，像写前端一样写你的演示，各种漂亮的动画效果全都有。</p>
+<p>直接新建一个Markdown，在开头启用marp就好了。</p>
+<pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown"><span class="token front-matter-block"><span class="token punctuation">---</span>
+<span class="token front-matter yaml language-yaml"><span class="token key atrule">marp</span><span class="token punctuation">:</span> <span class="token boolean important">true</span></span>
+<span class="token punctuation">---</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>语法都是markdown的语法，每一张PPT之间隔断就用<code>---</code>就可以了（最好在<code>---</code>前面空一行）</p>
+<p>为了更符合传统的PPT界面的布局，VSCode打开Preview，然后将preview调到左边侧栏。好，它现在看起来和wps演示和PowerPoint完全一致。</p>
+<p><img src="/make-ppt-with-markdown/1641736904.png"></p>
+<h2 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h2><p>图片的支持当然没有PowerPoint那么好。Markdown本来就不支持调整图片的大小、图片缩放、指定图片位置这种操作。对于博客文章或者文档可以统一用css去设置居中、边框这些，但是PPT的图片几乎每页的布局和位置都不太一样。Marp对Markdown提供了一些扩展，能基本满足我对图片的位置调整需求。如果不满足要求可以用html标签去调图片。</p>
+<p>下面的操作是一些粗略调整宽度高度的语法、以及上下左右、居中、背景图片。</p>
+<pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown">
+<span class="token url"><span class="token operator">!</span>[<span class="token content">bg right vertical weight:600</span>](<span class="token url">zhixi.png</span>)</span>
+<span class="token comment">&lt;!-- 将图片置于右上，宽度600px --></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h2><p>Marp自带的模板合适可以自己定制，只需要一点CSS就可以了</p>
+<p>定制可以参考：<span class="exturl" data-url="aHR0cHM6Ly9tYXJwaXQubWFycC5hcHAvdGhlbWUtY3Nz">https://marpit.marp.app/theme-css<i class="fa fa-external-link-alt"></i></span></p>
+<p>太长不看版：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21hcnAtdGVhbS9tYXJwL2Rpc2N1c3Npb25zLzExNQ==">How to create a theme?<i class="fa fa-external-link-alt"></i></span>  </p>
+]]></content>
+      <tags>
+        <tag>ppt</tag>
+        <tag>markdown</tag>
       </tags>
   </entry>
   <entry>
@@ -6178,6 +6179,74 @@ Unit pipewire-pulse.service could not be found.<span aria-hidden="true" class="l
       </tags>
   </entry>
   <entry>
+    <title>RCU，读多写少的锁实现</title>
+    <url>/rcu-and-userspace-rcu/</url>
+    <content><![CDATA[<p>之前做的垃圾骗钱项目有很多都是读多写少，而且不怎么需要实时。一直比较好奇应该用什么锁，读写锁总是不满意，最近看6.S081看到rcu，咦，是我想要找的东西。</p>
+<span id="more"></span>
+
+<h2 id="水平超低预警"><a href="#水平超低预警" class="headerlink" title="水平超低预警"></a>水平超低预警</h2><p>一年前就开始看DDIA和做6.824 Raft 那些东西，不过当时水平太菜了。一直不太敢写并发和分布式相关的东西。并发有很多反直觉的地方，我写出来总是踩坑。好在golang的channel什么的写起来都很舒服。<br>一年过去了，自认水平总没有当初那么菜了，鼓起勇气开始写一点关于并发和Go的东西，所以新开了一个分类。（结果发现一年前看的好多东西都忘了。。。记住的好多也是错的。。。）<br><strong>这个系列肯定有很多丢人现眼的地方，路过的朋友看到我说的不对的地方请在评论告诉我</strong></p>
+<h2 id="用途和概念"><a href="#用途和概念" class="headerlink" title="用途和概念"></a>用途和概念</h2><h3 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h3><p><img src="/2022-01-08-22-40-18.png"></p>
+<p>我们可以用读写锁来保证读取和写入的一致性。在大量读取、少量写入的场景，读写锁的效率会比较低，用RCU可以提高读的性能。使用RCU，读的时候可以不加锁，也不用去管什么内存屏障和原子性了，直接读就完事了。<br>而且如果写入很少，几乎没有同时写入的情况，RCU的写入速度是很快的，写并不一定比读写锁慢（Grace Period其实很短）</p>
+<p><img src="/2022-01-08-22-34-22.png"></p>
+<p>典型场景包括：路由表、DNS查询、内核</p>
+<blockquote>
+<p>The basic form of such “Pure RCU” designs is as follows:</p>
+<ol>
+<li>Make a change, for example, to the way that the OS reacts to an NMI.</li>
+<li>Wait for all pre-existing read-side critical sections to completely finish (for example,by using the synchronize_sched() primitive). The key observation here is that subsequent RCU read-side critical sections are guaranteed to see whatever change was made.</li>
+<li>Clean up, for example, return status indicating that the change was successfully made</li>
+</ol>
+</blockquote>
+<p>在内核里面主要是处理中断、代替读写锁、订阅发布、代替引用计数等。在内核中应用的介绍可以看文章：<span class="exturl" data-url="aHR0cHM6Ly9wZG9zLmNzYWlsLm1pdC5lZHUvNi44MjgvMjAxOC9yZWFkaW5ncy9yY3UtZGVjYWRlLWxhdGVyLnBkZg==">RCU Usage In the Linux Kernel: One Decade Later<i class="fa fa-external-link-alt"></i></span><br>下面是一个NMI的例子（不可打断中断应该也不会被抢占，正适合RCU）</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token class-name">rcu_list_t</span> nmi_list<span class="token punctuation">;</span>
+<span class="token class-name">spinlock_t</span> nmi_list_lock<span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">handle_nmi</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+	<span class="token function">rcu_read_lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">rcu_list_for_each</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>nmi_list<span class="token punctuation">,</span> <span class="token class-name">handler_t</span> cb<span class="token punctuation">)</span>
+		<span class="token function">cb</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">rcu_read_unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">void</span> <span class="token function">register_nmi_handler</span><span class="token punctuation">(</span><span class="token class-name">handler_t</span> cb<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+	<span class="token function">spin_lock</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>nmi_list_lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">rcu_list_add</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>nmi_list<span class="token punctuation">,</span> cb<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">spin_unlock</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>nmi_list_lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">void</span> <span class="token function">unregister_nmi_handler</span><span class="token punctuation">(</span><span class="token class-name">handler_t</span> cb<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+	<span class="token function">spin_lock</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>nmi_list_lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">rcu_list_remove</span><span class="token punctuation">(</span>cb<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">spin_unlock</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>nmi_list_lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">synchronize_rcu</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>RCU在用户态用的比较少，远不如mutex和spinlock普遍。<br>当然，用户态一般不怎么用这个东西，像数据库那种（用redis上内存用cache硬抗.jpg）</p>
+<h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>reader很简单，就是<code>rcu_read_lock</code>和<code>rcu_read_unlock</code>。<code>rcu_read_lock</code>和<code>rcu_read_unlock</code>中间的这一段通常叫读侧临界区 (read-side critical sections)</p>
+<p>writer的要复杂一点</p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>rcu的实现有很多，比如实时性比较好的srcu（sleepable rcu）、嵌入式用的比较多的tinyrcu、用于CPU核数非常多的tree-rcu；这里只说一下简单经典的rcu实现，其他具体的实现可以去看Paul的文章。<br>这里大部分都是从lwn那里抄来的，建议英文好的直接看原文：<br><span class="exturl" data-url="aHR0cHM6Ly9sd24ubmV0L0FydGljbGVzLzI2MzEzMC8=">What is RCU? Part 2: Usage<i class="fa fa-external-link-alt"></i></span></p>
+<p>如果想看详细实现可以去看linux rcu主要作者Paul的文章和书：<span class="exturl" data-url="aHR0cHM6Ly9taXJyb3JzLmVkZ2Uua2VybmVsLm9yZy9wdWIvbGludXgva2VybmVsL3Blb3BsZS9wYXVsbWNrL3BlcmZib29rL3BlcmZib29rLmh0bWw=">Is Parallel Programming Hard, And, If So, What Can You Do About It?<i class="fa fa-external-link-alt"></i></span></p>
+<p><strong>Linux对于指针的load和store都是原子的</strong>，所以在链表读取的时候，指针要么指向新插入完成的，要么指向旧的还没被删的链表，不会出现正在修改链表的时候刚删除指针还没来得及插入产生<code>segmentation fault</code>。</p>
+<p>以链表为例，写入（Write）的时候先复制（copy）一个副本，然后在读取（read）较少的合适时间执行插入操作。当然，我们可以等到完全没有写入的间隙。但是读取（reader）很多一直没用空闲，写入会非常慢；一直都有reader的极端情况会导致一直无法写入。rcu用宽限期（grace period）巧妙的解决了这个问题。</p>
+<h3 id="怎么知道copy之前的读取全部完成可以reclaim了"><a href="#怎么知道copy之前的读取全部完成可以reclaim了" class="headerlink" title="怎么知道copy之前的读取全部完成可以reclaim了"></a>怎么知道copy之前的读取全部完成可以reclaim了</h3><p>我看rcu之前的第一反应是引用计数，当引用计数降到0就说明copy的副本可以reclaim了。但是引用计数效率太低了，而且多核的时候引用计数更麻烦了。</p>
+<p>经典的rcu模型是不允许抢占的。当读取完成进入临界区，我们认为这个CPU进入一次<strong>静止状态（quiescent state）</strong>，以下简称QS。linux里面用cpumask来记录这个状态，我们就简单的当成是用一个bitmap来保存每个cpu的状态好了。显然，从bitmap得知copy之后每个CPU都经历过一次QS后，那在copy之前的读操作都已经完成了，这个时候就可以reclaim了。</p>
+<h3 id="多个writer怎么处理"><a href="#多个writer怎么处理" class="headerlink" title="多个writer怎么处理"></a>多个writer怎么处理</h3><p>如果有多个writer，那通常会给不同的writer加spin_lock来处理</p>
+<h3 id="无锁"><a href="#无锁" class="headerlink" title="无锁"></a>无锁</h3><p>无锁是对于读来说的，写入的时候锁比较多。在修改bitmap的时候是需要加锁的（一般是spin_lock）。太多的写入同时对bitmap加锁效率很低，于是就有了tree-rcu。tree-rcu是将不同的CPU状态分组加锁，然后树状结构向上汇总状态。</p>
+<p><img src="/2022-01-08-22-35-28.png"></p>
+<p>如果你的逻辑CPU数量（就是你在htop里看到的，比如6核12线程的5600x是12）小于16，那它会退化成单个rcu_node。<br>tree-rcu详见[A Tour Through TREE-RCU’s DataStructures]</p>
+<p>多个writer的情况下也要加锁，一般是spin_lock锁。</p>
+<h2 id="用户态"><a href="#用户态" class="headerlink" title="用户态"></a>用户态</h2><p>rcu的实现依赖了很多内核态的东西，移植到用户态比较困难。比较出名的一个用户态rcu是<code>liburcu</code></p>
+<p>模仿rcu的思想可以实现一点读多写少的优化，比如<code>sonic</code>的map<br><span class="exturl" data-url="aHR0cHM6Ly9oYW5zaGFuZ2xpbi5zcGFjZS90ZWNoL3JjdS8=">如何实现一个超快读的map<i class="fa fa-external-link-alt"></i></span></p>
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><span class="exturl" data-url="aHR0cHM6Ly93d3cua2VybmVsLm9yZy9kb2MvaHRtbC9sYXRlc3QvUkNVL3doYXRpc1JDVS5odG1s">What is RCU? – “Read, Copy, Update”<i class="fa fa-external-link-alt"></i></span> Linux Kernel文档的介绍<br><span class="exturl" data-url="aHR0cHM6Ly9wZG9zLmNzYWlsLm1pdC5lZHUvNi44MjgvMjAxOC9yZWFkaW5ncy9yY3UtZGVjYWRlLWxhdGVyLnBkZg==">RCU Usage In the Linux Kernel: One Decade Later<i class="fa fa-external-link-alt"></i></span> MIT 6.828课 RCU的阅读材料，我就是在这个课上看到rcu的，看起来还挺有意思<br><span class="exturl" data-url="aHR0cDovL3d3dy5yZHJvcC5jb20vdXNlcnMvcGF1bG1jay9SQ1Uv">Introduction to RCU<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9taXJyb3JzLmVkZ2Uua2VybmVsLm9yZy9wdWIvbGludXgva2VybmVsL3Blb3BsZS9wYXVsbWNrL3BlcmZib29rL3BlcmZib29rLmh0bWw=">Is Parallel Programming Hard, And, If So, What Can You Do About It?<i class="fa fa-external-link-alt"></i></span> 我对于rcu的不少疑惑是看了这个才懂，推荐（本书主要作者Paul也是linux rcu的主要实现者）<br><span class="exturl" data-url="aHR0cDovL2lmZXZlLmNvbS93cC1jb250ZW50L3VwbG9hZHMvMjAxMy8wNS8lRTYlQjclQjElRTUlODUlQTUlRTclOTAlODYlRTglQTclQTMlRTUlQjklQjYlRTglQTElOEMlRTclQkMlOTYlRTclQTglOEJWMS4wLnBkZg==">深入理解并行编程<i class="fa fa-external-link-alt"></i></span> 上面那本书的中文翻译<br>谢宝友 深入理解RCU系列文章<br><span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8zNzQ5MDIyODI=">Linux锁机制：可抢占RCU原理<i class="fa fa-external-link-alt"></i></span><br>[CPU masks - linux-insiders] linux-insiders的CPU masks介绍（这本书也挺不错的，我好几次查资料翻到，讲的比较易懂）<br><span class="exturl" data-url="aHR0cHM6Ly94aW5xaXUuZ2l0Ym9va3MuaW8vbGludXgtaW5zaWRlcy1jbi9jb250ZW50L0NvbmNlcHRzL2xpbnV4LWNwdS0yLmh0bWw=">CPU masks 介绍<i class="fa fa-external-link-alt"></i></span> 中文翻译  </p>
+]]></content>
+      <categories>
+        <category>Concurrency&amp;Go</category>
+      </categories>
+      <tags>
+        <tag>rcu</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>『转载』使用Qv2ray+cgproxy配置透明代理（仅限Linux）</title>
     <url>/qv2ray-transparent-proxy/</url>
     <content><![CDATA[<p>从Qv2ray电报群里转来的，透明代理老有人问，感觉这个方案比tproxy等方案好，转出来。版权归Qv2ray及cgproxy所有</p>
@@ -6389,74 +6458,6 @@ error installing repo packages<span aria-hidden="true" class="line-numbers-rows"
         <tag>qv2ray</tag>
         <tag>cgproxy</tag>
         <tag>transparent-proxy</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>RCU，读多写少的锁实现</title>
-    <url>/rcu-and-userspace-rcu/</url>
-    <content><![CDATA[<p>之前做的垃圾骗钱项目有很多都是读多写少，而且不怎么需要实时。一直比较好奇应该用什么锁，读写锁总是不满意，最近看6.S081看到rcu，咦，是我想要找的东西。</p>
-<span id="more"></span>
-
-<h2 id="水平超低预警"><a href="#水平超低预警" class="headerlink" title="水平超低预警"></a>水平超低预警</h2><p>一年前就开始看DDIA和做6.824 Raft 那些东西，不过当时水平太菜了。一直不太敢写并发和分布式相关的东西。并发有很多反直觉的地方，我写出来总是踩坑。好在golang的channel什么的写起来都很舒服。<br>一年过去了，自认水平总没有当初那么菜了，鼓起勇气开始写一点关于并发和Go的东西，所以新开了一个分类。（结果发现一年前看的好多东西都忘了。。。记住的好多也是错的。。。）<br><strong>这个系列肯定有很多丢人现眼的地方，路过的朋友看到我说的不对的地方请在评论告诉我</strong></p>
-<h2 id="用途和概念"><a href="#用途和概念" class="headerlink" title="用途和概念"></a>用途和概念</h2><h3 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h3><p><img src="/2022-01-08-22-40-18.png"></p>
-<p>我们可以用读写锁来保证读取和写入的一致性。在大量读取、少量写入的场景，读写锁的效率会比较低，用RCU可以提高读的性能。使用RCU，读的时候可以不加锁，也不用去管什么内存屏障和原子性了，直接读就完事了。<br>而且如果写入很少，几乎没有同时写入的情况，RCU的写入速度是很快的，写并不一定比读写锁慢（Grace Period其实很短）</p>
-<p><img src="/2022-01-08-22-34-22.png"></p>
-<p>典型场景包括：路由表、DNS查询、内核</p>
-<blockquote>
-<p>The basic form of such “Pure RCU” designs is as follows:</p>
-<ol>
-<li>Make a change, for example, to the way that the OS reacts to an NMI.</li>
-<li>Wait for all pre-existing read-side critical sections to completely finish (for example,by using the synchronize_sched() primitive). The key observation here is that subsequent RCU read-side critical sections are guaranteed to see whatever change was made.</li>
-<li>Clean up, for example, return status indicating that the change was successfully made</li>
-</ol>
-</blockquote>
-<p>在内核里面主要是处理中断、代替读写锁、订阅发布、代替引用计数等。在内核中应用的介绍可以看文章：<span class="exturl" data-url="aHR0cHM6Ly9wZG9zLmNzYWlsLm1pdC5lZHUvNi44MjgvMjAxOC9yZWFkaW5ncy9yY3UtZGVjYWRlLWxhdGVyLnBkZg==">RCU Usage In the Linux Kernel: One Decade Later<i class="fa fa-external-link-alt"></i></span><br>下面是一个NMI的例子（不可打断中断应该也不会被抢占，正适合RCU）</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token class-name">rcu_list_t</span> nmi_list<span class="token punctuation">;</span>
-<span class="token class-name">spinlock_t</span> nmi_list_lock<span class="token punctuation">;</span>
-<span class="token keyword">void</span> <span class="token function">handle_nmi</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-	<span class="token function">rcu_read_lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token function">rcu_list_for_each</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>nmi_list<span class="token punctuation">,</span> <span class="token class-name">handler_t</span> cb<span class="token punctuation">)</span>
-		<span class="token function">cb</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token function">rcu_read_unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
-<span class="token keyword">void</span> <span class="token function">register_nmi_handler</span><span class="token punctuation">(</span><span class="token class-name">handler_t</span> cb<span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-	<span class="token function">spin_lock</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>nmi_list_lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token function">rcu_list_add</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>nmi_list<span class="token punctuation">,</span> cb<span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token function">spin_unlock</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>nmi_list_lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
-<span class="token keyword">void</span> <span class="token function">unregister_nmi_handler</span><span class="token punctuation">(</span><span class="token class-name">handler_t</span> cb<span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-	<span class="token function">spin_lock</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>nmi_list_lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token function">rcu_list_remove</span><span class="token punctuation">(</span>cb<span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token function">spin_unlock</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>nmi_list_lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token function">synchronize_rcu</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>RCU在用户态用的比较少，远不如mutex和spinlock普遍。<br>当然，用户态一般不怎么用这个东西，像数据库那种（用redis上内存用cache硬抗.jpg）</p>
-<h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>reader很简单，就是<code>rcu_read_lock</code>和<code>rcu_read_unlock</code>。<code>rcu_read_lock</code>和<code>rcu_read_unlock</code>中间的这一段通常叫读侧临界区 (read-side critical sections)</p>
-<p>writer的要复杂一点</p>
-<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>rcu的实现有很多，比如实时性比较好的srcu（sleepable rcu）、嵌入式用的比较多的tinyrcu、用于CPU核数非常多的tree-rcu；这里只说一下简单经典的rcu实现，其他具体的实现可以去看Paul的文章。<br>这里大部分都是从lwn那里抄来的，建议英文好的直接看原文：<br><span class="exturl" data-url="aHR0cHM6Ly9sd24ubmV0L0FydGljbGVzLzI2MzEzMC8=">What is RCU? Part 2: Usage<i class="fa fa-external-link-alt"></i></span></p>
-<p>如果想看详细实现可以去看linux rcu主要作者Paul的文章和书：<span class="exturl" data-url="aHR0cHM6Ly9taXJyb3JzLmVkZ2Uua2VybmVsLm9yZy9wdWIvbGludXgva2VybmVsL3Blb3BsZS9wYXVsbWNrL3BlcmZib29rL3BlcmZib29rLmh0bWw=">Is Parallel Programming Hard, And, If So, What Can You Do About It?<i class="fa fa-external-link-alt"></i></span></p>
-<p><strong>Linux对于指针的load和store都是原子的</strong>，所以在链表读取的时候，指针要么指向新插入完成的，要么指向旧的还没被删的链表，不会出现正在修改链表的时候刚删除指针还没来得及插入产生<code>segmentation fault</code>。</p>
-<p>以链表为例，写入（Write）的时候先复制（copy）一个副本，然后在读取（read）较少的合适时间执行插入操作。当然，我们可以等到完全没有写入的间隙。但是读取（reader）很多一直没用空闲，写入会非常慢；一直都有reader的极端情况会导致一直无法写入。rcu用宽限期（grace period）巧妙的解决了这个问题。</p>
-<h3 id="怎么知道copy之前的读取全部完成可以reclaim了"><a href="#怎么知道copy之前的读取全部完成可以reclaim了" class="headerlink" title="怎么知道copy之前的读取全部完成可以reclaim了"></a>怎么知道copy之前的读取全部完成可以reclaim了</h3><p>我看rcu之前的第一反应是引用计数，当引用计数降到0就说明copy的副本可以reclaim了。但是引用计数效率太低了，而且多核的时候引用计数更麻烦了。</p>
-<p>经典的rcu模型是不允许抢占的。当读取完成进入临界区，我们认为这个CPU进入一次<strong>静止状态（quiescent state）</strong>，以下简称QS。linux里面用cpumask来记录这个状态，我们就简单的当成是用一个bitmap来保存每个cpu的状态好了。显然，从bitmap得知copy之后每个CPU都经历过一次QS后，那在copy之前的读操作都已经完成了，这个时候就可以reclaim了。</p>
-<h3 id="多个writer怎么处理"><a href="#多个writer怎么处理" class="headerlink" title="多个writer怎么处理"></a>多个writer怎么处理</h3><p>如果有多个writer，那通常会给不同的writer加spin_lock来处理</p>
-<h3 id="无锁"><a href="#无锁" class="headerlink" title="无锁"></a>无锁</h3><p>无锁是对于读来说的，写入的时候锁比较多。在修改bitmap的时候是需要加锁的（一般是spin_lock）。太多的写入同时对bitmap加锁效率很低，于是就有了tree-rcu。tree-rcu是将不同的CPU状态分组加锁，然后树状结构向上汇总状态。</p>
-<p><img src="/2022-01-08-22-35-28.png"></p>
-<p>如果你的逻辑CPU数量（就是你在htop里看到的，比如6核12线程的5600x是12）小于16，那它会退化成单个rcu_node。<br>tree-rcu详见[A Tour Through TREE-RCU’s DataStructures]</p>
-<p>多个writer的情况下也要加锁，一般是spin_lock锁。</p>
-<h2 id="用户态"><a href="#用户态" class="headerlink" title="用户态"></a>用户态</h2><p>rcu的实现依赖了很多内核态的东西，移植到用户态比较困难。比较出名的一个用户态rcu是<code>liburcu</code></p>
-<p>模仿rcu的思想可以实现一点读多写少的优化，比如<code>sonic</code>的map<br><span class="exturl" data-url="aHR0cHM6Ly9oYW5zaGFuZ2xpbi5zcGFjZS90ZWNoL3JjdS8=">如何实现一个超快读的map<i class="fa fa-external-link-alt"></i></span></p>
-<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><span class="exturl" data-url="aHR0cHM6Ly93d3cua2VybmVsLm9yZy9kb2MvaHRtbC9sYXRlc3QvUkNVL3doYXRpc1JDVS5odG1s">What is RCU? – “Read, Copy, Update”<i class="fa fa-external-link-alt"></i></span> Linux Kernel文档的介绍<br><span class="exturl" data-url="aHR0cHM6Ly9wZG9zLmNzYWlsLm1pdC5lZHUvNi44MjgvMjAxOC9yZWFkaW5ncy9yY3UtZGVjYWRlLWxhdGVyLnBkZg==">RCU Usage In the Linux Kernel: One Decade Later<i class="fa fa-external-link-alt"></i></span> MIT 6.828课 RCU的阅读材料，我就是在这个课上看到rcu的，看起来还挺有意思<br><span class="exturl" data-url="aHR0cDovL3d3dy5yZHJvcC5jb20vdXNlcnMvcGF1bG1jay9SQ1Uv">Introduction to RCU<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9taXJyb3JzLmVkZ2Uua2VybmVsLm9yZy9wdWIvbGludXgva2VybmVsL3Blb3BsZS9wYXVsbWNrL3BlcmZib29rL3BlcmZib29rLmh0bWw=">Is Parallel Programming Hard, And, If So, What Can You Do About It?<i class="fa fa-external-link-alt"></i></span> 我对于rcu的不少疑惑是看了这个才懂，推荐（本书主要作者Paul也是linux rcu的主要实现者）<br><span class="exturl" data-url="aHR0cDovL2lmZXZlLmNvbS93cC1jb250ZW50L3VwbG9hZHMvMjAxMy8wNS8lRTYlQjclQjElRTUlODUlQTUlRTclOTAlODYlRTglQTclQTMlRTUlQjklQjYlRTglQTElOEMlRTclQkMlOTYlRTclQTglOEJWMS4wLnBkZg==">深入理解并行编程<i class="fa fa-external-link-alt"></i></span> 上面那本书的中文翻译<br>谢宝友 深入理解RCU系列文章<br><span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8zNzQ5MDIyODI=">Linux锁机制：可抢占RCU原理<i class="fa fa-external-link-alt"></i></span><br>[CPU masks - linux-insiders] linux-insiders的CPU masks介绍（这本书也挺不错的，我好几次查资料翻到，讲的比较易懂）<br><span class="exturl" data-url="aHR0cHM6Ly94aW5xaXUuZ2l0Ym9va3MuaW8vbGludXgtaW5zaWRlcy1jbi9jb250ZW50L0NvbmNlcHRzL2xpbnV4LWNwdS0yLmh0bWw=">CPU masks 介绍<i class="fa fa-external-link-alt"></i></span> 中文翻译  </p>
-]]></content>
-      <categories>
-        <category>Concurrency&amp;Go</category>
-      </categories>
-      <tags>
-        <tag>rcu</tag>
       </tags>
   </entry>
   <entry>
@@ -7679,6 +7680,35 @@ Plug &#39;asvetliakov&#x2F;vim-easymotion&#39;, Cond(exists(&#39;g:vscode&#39;),
       </tags>
   </entry>
   <entry>
+    <title>无创血压计</title>
+    <url>/2e86/</url>
+    <content><![CDATA[<p>血压是人体最主要的传统监护指标之一，血压的测量在医学上具有重要意义。相比于有创的测量方法，无创测量具有方便和不易感染的优点，在血压测量中被广泛采用。经典的无创测量方法主要有柯氏音法、超声法。此外，能够连续测量的动脉张力法、容积补偿法、脉搏波速传导法和脉搏波特征参数测定法也有着广阔的应用空间和市场前景。</p>
+<span id="more"></span>
+
+<h2 id="血压测量原理及特点"><a href="#血压测量原理及特点" class="headerlink" title="血压测量原理及特点"></a>血压测量原理及特点</h2><p>血压是重要的人体生理参数指标，具有重要的医学意义，是高血压及休克等多种疾病状态的关键性临床指标。在临床上,测量各个心腔及周围血管的血压,是评估心血管系统功能的重要指标之一,目前已经有多种方法测定血压波形和血压值。常用的血压测量方法有准确度较高的有创血压监测和无创血压监测。对于不同的应用场景和需求，也产生了多种监测设备，主要分为家庭使用的便携设备、医院常规检查设备以及重症病人的监测设备。</p>
+<p>有创的测量手段多用于医院临床监护，被认为是血压测量的金标准，包括中心静脉压力监测、创伤性动脉血压监测、血流动力学监测和血压测量中的动态响应优化。目前已经应用于各大医院的重症监护室、手术室、心脏导管室。 有创的监测手段测量精度高，多集成在医院的综合性生理指标监测设备，该方法的血压测量精度和连续性已经较为成熟，足够用于分析。有创带来的感染问题可以由医院的护理人员处理。</p>
+<p>无创血压监测主要包括柯氏音法、测振法、超声法、双袖带法、恒定袖带法、逐拍跟踪法、张力测定法、恒定容积法等，其中振动法由于其有较好的抗干扰能力,能比较可靠地判断血压、实现血压的自动检测，在无创血压监测中应用最广。张力测定法无法避免机体环境变化时发生的外力和内力不平衡引起的误差;容积法虽然较为成熟，却无法避免长时间测量时静脉充血的影响，存在难以长期保持局部的压力的巍峨提。基于这些原理的血压计主要有，其水银式血压计、电子血压计及基于容积振动法的血压检测装置等。水银式血压计无创血压测量的&quot;金标准&quot;，被业界广泛认可。然而，水银血压计的使用要求较高，对于非医学从业人员尤其是年长老人群体操作使用时存在着一定困难。目前市场有成熟的便携电子血压计，适合家庭中使用。电子血压计大都采用了示波法的原理。然而便携电子血压计检测上也存在缺陷，血压测量精度问题难以解决，通常只用于有高血压等疾病的患者家庭中使用。脉搏波传导时间(PTT)的检测法近年来发展较快，但由于影响因素多，个体差异性大，测量精度有待提高。容积法（振动法）是通过袖带加压中容积脉搏波的变化而确定血管内部压力的测量方法。该方法易于实现电子自动化数字化测量，且测量精度较高。但是，该方法只能直接检测出收缩压，舒张压需通过间接计算，误差较高，甚至可达10%。无创血压计的主要厂家有欧姆龙、爱安德、鱼跃等，主要产品有欧姆龙上臂式血压U12、鱼跃上臂式YE670A等型号，此外迈克大夫等各厂家还拥有不同的心血管监测的专利技术。近年来主要的突破主要是价格的压缩和便携性的提高，在监测准确度上依然不如有创的方法，大部分设备的原理也仍然是振荡法。</p>
+<p>目前对于振荡法的改进主要有采用先进的、严格控制的线性放气过程的硬件设备的改进以及通过综合频谱分析、小波变换、神经网络和基于奇异值矩阵分解的新型曲线拟合算法等信号处理的方法来寻找压力波形的特征计算血压等生理参数。进一步提高测量准确度的方法包括采用操作较复杂的双袖带检测法以及针对不同人群（如区分年龄、性别、体重等个人特征）调整检测算法，调整参数。</p>
+<h2 id="血压监测设备的优化改进"><a href="#血压监测设备的优化改进" class="headerlink" title="血压监测设备的优化改进"></a>血压监测设备的优化改进</h2><p>近年来对于无创血压计的改进主要集中于对于监测算法的改进和成本的降低以及小型化便携化，无创血压监测最大的应用市场。针对生理信号的特征提出了许多不同的监测方法，如基于容积脉搏波振幅梯度的血压检测法。一些监测连续信号的仪器也推出了监测心房颤动等疾病的监测算法。小型化设备的进展也有不少，例如进军医疗领域的苹果公司的Apple Waltch，心率和血压监测已经通过美国食品药品监督管理局（FDA）的认证。老牌厂商欧姆龙也推出了一款名为HeartGuide的手表，具备监测血压心率和睡眠质量的功能，并且可以通过蓝牙连接。</p>
+<p>目前的主流电子血压计采用的振动法主要经历了三个阶段的发展。第一代电子血压计（G1-NIBPM）采用固定加压和机械排气技术，加压方式和效果类似水银血压计的手动充气。由于机械式慢速排气阀存在明显压迫感和精度低、寿命短等缺点，已经很少被采用。第二代电子血压计（G2-NIBPM）采用智能加压和电子控制伺服技术，提高了舒适度和测量结果的稳定性。三、        第三代电子血压计（G3-NIBPM）采用加压同步测量技术，加压速度均匀，并在加压的过程中进行血压测量，提高了测量的速度。第二代电子血压计技术主要用于上臂式电子血压计；第三代电子血压计技术主要用于手腕式电子血压计。</p>
+<img width=400 src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/pic1.png" alt="picture"/>
+
+<p>图1 腕式、臂式血压计和能监测血压的手表</p>
+<p>近年来，连续监测技术的发展使得无创测量的方法在每个心动周期内完成血压的测量，使得无创方法在健康监测和重症监测领域应用成为可能。对于连续的实时监护设备，多采用脉搏波（PTT）时间检测法，能够避免张力测定法与容积补偿法装置复杂成本高、检测难度大的缺陷。该方法利用血压升高动脉管壁会扩张降低动脉弹性和顺应性导致脉搏波传递速度加快，通过脉搏波的速度变化反应动脉血管压力的变化。脉搏波时间检测法不需要加压套袖，方便舒适，随着监测算法的改进，误差已经可以在平稳的情况下达到4mmHg，但是在运动等外部干扰下的表现不好，仍旧有待解决。该方法的发展有望取代一部分有创方法，对病人进行连续的生理特征监测。</p>
+<p>此外动脉张力法也较为常见，市场化较早，也比较成熟，测量精度较高，无需每次定标。但是该方法测量桡动脉部位的动脉压力时难以保持位置固定，容易受到干扰。一些自动跟随的设备，如Bahr的改进张力计，也提高了监测的准确度。 动脉容积钳制法经过Tanoru和Yamakoshi等人的改进后，成为了另一种逐渐成熟的方法。该方法是在手指基部或中部放置气压指套或者液体填充加压袋的测量盒，并同时调节指套压力，并采用红外方式监测脉搏波的变化。指套压力采用自动反馈系统，始终等于动脉压。但是由于该方法测量手指的压力时施加外部压力，长时间测量易引起静脉充血。由于测量部位的原因，准确度不如腕部和上臂的测量方法，但是指尖测量有望实现监护仪的微型化，检测部位和无创血糖的检测部位类似，便于和血氧血糖模块组成小型多生理信号检测设备。对于动脉张力法的主要改进包括，补偿器补偿心脏和指端的流体静力学压差，采用气动袖套等方法解决袖套和心脏不在同一水平位置等问题。此外，通过舒张压和收缩压的特征参数利用线性回归的方法得到血压值等算法的提出也在一定程度上提高了准确度。</p>
+<p>目前有基于脉搏波的臂带式可穿戴设备和使用手机、蓝牙设备的便携监测。能够用于长时间血压的连续监测。考虑到大部分家庭用的电子血压计使用者都是年纪较大的人，针对老年人进行的易操作改进和安全性也在市场产品中不断涌现。目前，200元以下的电子血压计已经基本满足家用需求，测量的准确度和水银柱式血压计相差不大。</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>[1]Andreas Patzak,Yuri Mendoza,Heiko Gesche,Martin Konermann. Continuous blood pressure measurement using the pulse transit time: Comparison to intra-arterial measurement[J]. Blood Pressure,2015,24(4).</p>
+<p>[2]株式会社爱安德. 血压计: 日本，201730034188.6 2[P]. 2017-07-28.</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>测量</tag>
+        <tag>传感器</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>教研室服务器维护</title>
     <url>/d6da/</url>
     <content><![CDATA[<p>教研室要倒闭啦，师兄毕业跑路啦！</p>
@@ -7981,35 +8011,6 @@ a  b  cron.d  dir2.dir<span aria-hidden="true" class="line-numbers-rows"><span><
       <tags>
         <tag>Linux</tag>
         <tag>ubuntu</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>无创血压计</title>
-    <url>/2e86/</url>
-    <content><![CDATA[<p>血压是人体最主要的传统监护指标之一，血压的测量在医学上具有重要意义。相比于有创的测量方法，无创测量具有方便和不易感染的优点，在血压测量中被广泛采用。经典的无创测量方法主要有柯氏音法、超声法。此外，能够连续测量的动脉张力法、容积补偿法、脉搏波速传导法和脉搏波特征参数测定法也有着广阔的应用空间和市场前景。</p>
-<span id="more"></span>
-
-<h2 id="血压测量原理及特点"><a href="#血压测量原理及特点" class="headerlink" title="血压测量原理及特点"></a>血压测量原理及特点</h2><p>血压是重要的人体生理参数指标，具有重要的医学意义，是高血压及休克等多种疾病状态的关键性临床指标。在临床上,测量各个心腔及周围血管的血压,是评估心血管系统功能的重要指标之一,目前已经有多种方法测定血压波形和血压值。常用的血压测量方法有准确度较高的有创血压监测和无创血压监测。对于不同的应用场景和需求，也产生了多种监测设备，主要分为家庭使用的便携设备、医院常规检查设备以及重症病人的监测设备。</p>
-<p>有创的测量手段多用于医院临床监护，被认为是血压测量的金标准，包括中心静脉压力监测、创伤性动脉血压监测、血流动力学监测和血压测量中的动态响应优化。目前已经应用于各大医院的重症监护室、手术室、心脏导管室。 有创的监测手段测量精度高，多集成在医院的综合性生理指标监测设备，该方法的血压测量精度和连续性已经较为成熟，足够用于分析。有创带来的感染问题可以由医院的护理人员处理。</p>
-<p>无创血压监测主要包括柯氏音法、测振法、超声法、双袖带法、恒定袖带法、逐拍跟踪法、张力测定法、恒定容积法等，其中振动法由于其有较好的抗干扰能力,能比较可靠地判断血压、实现血压的自动检测，在无创血压监测中应用最广。张力测定法无法避免机体环境变化时发生的外力和内力不平衡引起的误差;容积法虽然较为成熟，却无法避免长时间测量时静脉充血的影响，存在难以长期保持局部的压力的巍峨提。基于这些原理的血压计主要有，其水银式血压计、电子血压计及基于容积振动法的血压检测装置等。水银式血压计无创血压测量的&quot;金标准&quot;，被业界广泛认可。然而，水银血压计的使用要求较高，对于非医学从业人员尤其是年长老人群体操作使用时存在着一定困难。目前市场有成熟的便携电子血压计，适合家庭中使用。电子血压计大都采用了示波法的原理。然而便携电子血压计检测上也存在缺陷，血压测量精度问题难以解决，通常只用于有高血压等疾病的患者家庭中使用。脉搏波传导时间(PTT)的检测法近年来发展较快，但由于影响因素多，个体差异性大，测量精度有待提高。容积法（振动法）是通过袖带加压中容积脉搏波的变化而确定血管内部压力的测量方法。该方法易于实现电子自动化数字化测量，且测量精度较高。但是，该方法只能直接检测出收缩压，舒张压需通过间接计算，误差较高，甚至可达10%。无创血压计的主要厂家有欧姆龙、爱安德、鱼跃等，主要产品有欧姆龙上臂式血压U12、鱼跃上臂式YE670A等型号，此外迈克大夫等各厂家还拥有不同的心血管监测的专利技术。近年来主要的突破主要是价格的压缩和便携性的提高，在监测准确度上依然不如有创的方法，大部分设备的原理也仍然是振荡法。</p>
-<p>目前对于振荡法的改进主要有采用先进的、严格控制的线性放气过程的硬件设备的改进以及通过综合频谱分析、小波变换、神经网络和基于奇异值矩阵分解的新型曲线拟合算法等信号处理的方法来寻找压力波形的特征计算血压等生理参数。进一步提高测量准确度的方法包括采用操作较复杂的双袖带检测法以及针对不同人群（如区分年龄、性别、体重等个人特征）调整检测算法，调整参数。</p>
-<h2 id="血压监测设备的优化改进"><a href="#血压监测设备的优化改进" class="headerlink" title="血压监测设备的优化改进"></a>血压监测设备的优化改进</h2><p>近年来对于无创血压计的改进主要集中于对于监测算法的改进和成本的降低以及小型化便携化，无创血压监测最大的应用市场。针对生理信号的特征提出了许多不同的监测方法，如基于容积脉搏波振幅梯度的血压检测法。一些监测连续信号的仪器也推出了监测心房颤动等疾病的监测算法。小型化设备的进展也有不少，例如进军医疗领域的苹果公司的Apple Waltch，心率和血压监测已经通过美国食品药品监督管理局（FDA）的认证。老牌厂商欧姆龙也推出了一款名为HeartGuide的手表，具备监测血压心率和睡眠质量的功能，并且可以通过蓝牙连接。</p>
-<p>目前的主流电子血压计采用的振动法主要经历了三个阶段的发展。第一代电子血压计（G1-NIBPM）采用固定加压和机械排气技术，加压方式和效果类似水银血压计的手动充气。由于机械式慢速排气阀存在明显压迫感和精度低、寿命短等缺点，已经很少被采用。第二代电子血压计（G2-NIBPM）采用智能加压和电子控制伺服技术，提高了舒适度和测量结果的稳定性。三、        第三代电子血压计（G3-NIBPM）采用加压同步测量技术，加压速度均匀，并在加压的过程中进行血压测量，提高了测量的速度。第二代电子血压计技术主要用于上臂式电子血压计；第三代电子血压计技术主要用于手腕式电子血压计。</p>
-<img width=400 src="https://raw.githubusercontent.com/Archaeoraptor/image_resources/ImageofBlog/pic1.png" alt="picture"/>
-
-<p>图1 腕式、臂式血压计和能监测血压的手表</p>
-<p>近年来，连续监测技术的发展使得无创测量的方法在每个心动周期内完成血压的测量，使得无创方法在健康监测和重症监测领域应用成为可能。对于连续的实时监护设备，多采用脉搏波（PTT）时间检测法，能够避免张力测定法与容积补偿法装置复杂成本高、检测难度大的缺陷。该方法利用血压升高动脉管壁会扩张降低动脉弹性和顺应性导致脉搏波传递速度加快，通过脉搏波的速度变化反应动脉血管压力的变化。脉搏波时间检测法不需要加压套袖，方便舒适，随着监测算法的改进，误差已经可以在平稳的情况下达到4mmHg，但是在运动等外部干扰下的表现不好，仍旧有待解决。该方法的发展有望取代一部分有创方法，对病人进行连续的生理特征监测。</p>
-<p>此外动脉张力法也较为常见，市场化较早，也比较成熟，测量精度较高，无需每次定标。但是该方法测量桡动脉部位的动脉压力时难以保持位置固定，容易受到干扰。一些自动跟随的设备，如Bahr的改进张力计，也提高了监测的准确度。 动脉容积钳制法经过Tanoru和Yamakoshi等人的改进后，成为了另一种逐渐成熟的方法。该方法是在手指基部或中部放置气压指套或者液体填充加压袋的测量盒，并同时调节指套压力，并采用红外方式监测脉搏波的变化。指套压力采用自动反馈系统，始终等于动脉压。但是由于该方法测量手指的压力时施加外部压力，长时间测量易引起静脉充血。由于测量部位的原因，准确度不如腕部和上臂的测量方法，但是指尖测量有望实现监护仪的微型化，检测部位和无创血糖的检测部位类似，便于和血氧血糖模块组成小型多生理信号检测设备。对于动脉张力法的主要改进包括，补偿器补偿心脏和指端的流体静力学压差，采用气动袖套等方法解决袖套和心脏不在同一水平位置等问题。此外，通过舒张压和收缩压的特征参数利用线性回归的方法得到血压值等算法的提出也在一定程度上提高了准确度。</p>
-<p>目前有基于脉搏波的臂带式可穿戴设备和使用手机、蓝牙设备的便携监测。能够用于长时间血压的连续监测。考虑到大部分家庭用的电子血压计使用者都是年纪较大的人，针对老年人进行的易操作改进和安全性也在市场产品中不断涌现。目前，200元以下的电子血压计已经基本满足家用需求，测量的准确度和水银柱式血压计相差不大。</p>
-<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>[1]Andreas Patzak,Yuri Mendoza,Heiko Gesche,Martin Konermann. Continuous blood pressure measurement using the pulse transit time: Comparison to intra-arterial measurement[J]. Blood Pressure,2015,24(4).</p>
-<p>[2]株式会社爱安德. 血压计: 日本，201730034188.6 2[P]. 2017-07-28.</p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>测量</tag>
-        <tag>传感器</tag>
       </tags>
   </entry>
   <entry>
