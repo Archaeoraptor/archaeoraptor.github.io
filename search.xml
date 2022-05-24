@@ -228,6 +228,246 @@ bear -- <span class="token function">make</span> qemu<span aria-hidden="true" cl
       </tags>
   </entry>
   <entry>
+    <title>6.S081 Lab Copy on Write笔记</title>
+    <url>/6-S081-lab-cow/</url>
+    <content><![CDATA[<p>COW实现起来好多小坑啊（更新了一点页表相关的笔记，当时做页表那个Lab的时候xv6页表相关的源码研究的不仔细, 把页表和进程那一堆东西好好看一遍这个Lab就好做了）</p>
+<span id="more"></span>
+
+<h2 id="Copy-on-Write"><a href="#Copy-on-Write" class="headerlink" title="Copy on Write"></a>Copy on Write</h2><p>大概思路就是，父子进程fork出来的时候共享物理内存（这个时候是只读的）。当子进程修改的时候copy出来一份（通过page fault触发的）。</p>
+<p>设置内存是只读还是可写就在PTE里面修改相关的标志位：</p>
+<p>PTE_V: is the PTE present? （是否valid，如果不是尝试访问将会缺页异常）<br>PTE_R: allowed to read (to the page)? （COW刚fork出来的时候是只读的）<br>PTE_W: allowed to write? （COW时child有修改，复制后状态变为可写）<br>PTE_X: interpret the content of the page as instructions and execute （内容（4k大小的页里面村的东西）能否被当成指令执行）<br>PTE_U: allowed user mode instructions to access the page （这个是用来区分用户页表和内核页表的，下面Lab用到的是用户进程页表）</p>
+<p><img src="/6-S081-lab-cow/1652757417.png"></p>
+<p>然后先说一下RISC-V中的page fault，当CPU无法完成虚拟地址（virtual address）到物理地址（physical address）的转换，就会page fault。一般有三种：  </p>
+<p>load page fault：load指令不能地址转换<br>store page fault：store指令不能完成地址转换<br>instruction page fault：when the address for an instruction<br>doesn’t translate</p>
+<p>前面两个比较熟悉，那个<code>instruction page fault</code>是什么呢， 翻了一下RISC-V的手册的SCAUSE，好像就是其他指令触发的page fault</p>
+<p><img src="/6-S081-lab-cow/1652757093.png"></p>
+<p>我们要获取page fault的原因就去读SCAUSE寄存器的值，xv6中直接用xv6封装好的<code>r_scause()</code>函数</p>
+<p>要判断是哪个virtual address造成的page fault就去看STVAL寄存器， xv6中可以用封装好的<code>r_stval()</code>函数（STVAl寄存器保存的是page fault时出错的地址， Supervisor bad address or instruction.）</p>
+<p>然后就是引用计数的问题，在xv6面一个physical page一般只对应一个进程（或者COW的父子进程），进程销毁物理页就直接删了就好了。所以不需要引用计数也能跑过这个Lab的test。但是在linux等其他系统中，会存在多个进程共享一个物理页的情况，一般是用引用计数来解决这个问题。</p>
+<h2 id="xv6进程的虚拟内存和页表操作"><a href="#xv6进程的虚拟内存和页表操作" class="headerlink" title="xv6进程的虚拟内存和页表操作"></a>xv6进程的虚拟内存和页表操作</h2><p>相关函数在<code>kernel/vm.c</code>，一些定义在<code>riscv.h</code>。</p>
+<p>页大小是4k，然后pageshift（offset）是12（32位系统）。下面引用一下linux里面PAGE_SHIFT的作用：</p>
+<blockquote>
+<p>PAGE_SHIFT的作用是通过对地址右移PAGE_SHIFT得到一个地址所在页的页号<br>内核地址，无论是虚拟的还物理的，其都由两部分组成。往往是高N位是页号，低M位是页内的偏移量。<br>当我们将地址中的低M位偏移量抛弃不用，高N位的页号，移到右端，得到这个结果称页帧号。<br>移动位以在页帧数和地址之间转换是一个常用操作。宏PAGE_SHIFT， 告诉我们要右移多少位得到页帧号。</p>
+</blockquote>
+<p>这个先简单的当成offset就可以了</p>
+<p><img src="/6-S081-lab-cow/1652791105.png"></p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">PGSIZE</span> <span class="token expression"><span class="token number">4096</span> </span><span class="token comment">// bytes per page</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">PGSHIFT</span> <span class="token expression"><span class="token number">12</span>  </span><span class="token comment">// bits of offset within a page</span></span>
+
+<span class="token comment">// 以PGSIZE为单位向上取整， 比如514会被取整为4096</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name function">PGROUNDUP</span><span class="token expression"><span class="token punctuation">(</span>sz<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">(</span>sz<span class="token punctuation">)</span> <span class="token operator">+</span> PGSIZE <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token operator">~</span><span class="token punctuation">(</span>PGSIZE <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span></span></span>
+<span class="token comment">// 以PGSIZE为单位向下取整， 比如114会被取整为0</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name function">PGROUNDDOWN</span><span class="token expression"><span class="token punctuation">(</span>a<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token operator">~</span><span class="token punctuation">(</span>PGSIZE <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>pagetable_t类型是一个uint64</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">typedef</span> uint64 <span class="token operator">*</span><span class="token class-name">pagetable_t</span><span class="token punctuation">;</span> <span class="token comment">// 512 PTEs</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>PTE(page table, entry, 页表项)也是一个uint64</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">typedef</span> uint64 <span class="token class-name">pte_t</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>然后我们看mappages，用来创建Virtual Address的PTE, 将长度为size，从pa开始的物理内存映射到虚拟内存</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">// Create PTEs for virtual addresses starting at va that refer to</span>
+<span class="token comment">// physical addresses starting at pa. va and size might not</span>
+<span class="token comment">// be page-aligned. Returns 0 on success, -1 if walk() couldn't</span>
+<span class="token comment">// allocate a needed page-table page.</span>
+<span class="token keyword">int</span> <span class="token function">mappages</span><span class="token punctuation">(</span><span class="token class-name">pagetable_t</span> pagetable<span class="token punctuation">,</span> uint64 va<span class="token punctuation">,</span> uint64 size<span class="token punctuation">,</span> uint64 pa<span class="token punctuation">,</span>
+             <span class="token keyword">int</span> perm<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    uint64 a<span class="token punctuation">,</span> last<span class="token punctuation">;</span>
+    <span class="token class-name">pte_t</span> <span class="token operator">*</span>pte<span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>size <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+        <span class="token function">panic</span><span class="token punctuation">(</span><span class="token string">"mappages: size"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    a <span class="token operator">=</span> <span class="token function">PGROUNDDOWN</span><span class="token punctuation">(</span>va<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    last <span class="token operator">=</span> <span class="token function">PGROUNDDOWN</span><span class="token punctuation">(</span>va <span class="token operator">+</span> size <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token punctuation">;</span><span class="token punctuation">;</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>pte <span class="token operator">=</span> <span class="token function">walk</span><span class="token punctuation">(</span>pagetable<span class="token punctuation">,</span> a<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+            <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">*</span>pte <span class="token operator">&amp;</span> PTE_V<span class="token punctuation">)</span>
+            <span class="token function">panic</span><span class="token punctuation">(</span><span class="token string">"mappages: remap"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token operator">*</span>pte <span class="token operator">=</span> <span class="token function">PA2PTE</span><span class="token punctuation">(</span>pa<span class="token punctuation">)</span> <span class="token operator">|</span> perm <span class="token operator">|</span> PTE_V<span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>a <span class="token operator">==</span> last<span class="token punctuation">)</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+        a <span class="token operator">+=</span> PGSIZE<span class="token punctuation">;</span>
+        pa <span class="token operator">+=</span> PGSIZE<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>进程在fork的时候调用了uvmcopy，用来从parent拷贝一份一样的内存到child</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">fork</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token comment">// Copy user memory from parent to child.</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">uvmcopy</span><span class="token punctuation">(</span>p<span class="token operator">-></span>pagetable<span class="token punctuation">,</span> np<span class="token operator">-></span>pagetable<span class="token punctuation">,</span> p<span class="token operator">-></span>sz<span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">freeproc</span><span class="token punctuation">(</span>np<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">release</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>np<span class="token operator">-></span>lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这里的实现是直接copy的，类似memcpy那样直接拷贝了一段内存（实际上xv6里面的memcpy就是memmove实现的）</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">// Given a parent process's page table, copy</span>
+<span class="token comment">// its memory into a child's page table.</span>
+<span class="token comment">// Copies both the page table and the</span>
+<span class="token comment">// physical memory.</span>
+<span class="token comment">// returns 0 on success, -1 on failure.</span>
+<span class="token comment">// frees any allocated pages on failure.</span>
+<span class="token keyword">int</span> <span class="token function">uvmcopy</span><span class="token punctuation">(</span><span class="token class-name">pagetable_t</span> old<span class="token punctuation">,</span> <span class="token class-name">pagetable_t</span> new<span class="token punctuation">,</span> uint64 sz<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">pte_t</span> <span class="token operator">*</span>pte<span class="token punctuation">;</span>
+    uint64 pa<span class="token punctuation">,</span> i<span class="token punctuation">;</span>
+    uint flags<span class="token punctuation">;</span>
+    <span class="token keyword">char</span> <span class="token operator">*</span>mem<span class="token punctuation">;</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> sz<span class="token punctuation">;</span> i <span class="token operator">+=</span> PGSIZE<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>pte <span class="token operator">=</span> <span class="token function">walk</span><span class="token punctuation">(</span>old<span class="token punctuation">,</span> i<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+            <span class="token function">panic</span><span class="token punctuation">(</span><span class="token string">"uvmcopy: pte should exist"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token operator">*</span>pte <span class="token operator">&amp;</span> PTE_V<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+            <span class="token function">panic</span><span class="token punctuation">(</span><span class="token string">"uvmcopy: page not present"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        pa <span class="token operator">=</span> <span class="token function">PTE2PA</span><span class="token punctuation">(</span><span class="token operator">*</span>pte<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        flags <span class="token operator">=</span> <span class="token function">PTE_FLAGS</span><span class="token punctuation">(</span><span class="token operator">*</span>pte<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>mem <span class="token operator">=</span> <span class="token function">kalloc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+            <span class="token keyword">goto</span> err<span class="token punctuation">;</span>
+        <span class="token function">memmove</span><span class="token punctuation">(</span>mem<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">char</span> <span class="token operator">*</span><span class="token punctuation">)</span>pa<span class="token punctuation">,</span> PGSIZE<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">mappages</span><span class="token punctuation">(</span>new<span class="token punctuation">,</span> i<span class="token punctuation">,</span> PGSIZE<span class="token punctuation">,</span> <span class="token punctuation">(</span>uint64<span class="token punctuation">)</span>mem<span class="token punctuation">,</span> flags<span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token function">kfree</span><span class="token punctuation">(</span>mem<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">goto</span> err<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+err<span class="token operator">:</span>
+    <span class="token function">uvmunmap</span><span class="token punctuation">(</span>new<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> i <span class="token operator">/</span> PGSIZE<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>uvmcreate也是类似的，分别调用了<code>kalloc</code>， 然后设置一下PTE标志位</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">// create an empty user page table.</span>
+<span class="token comment">// returns 0 if out of memory.</span>
+<span class="token class-name">pagetable_t</span> <span class="token function">uvmcreate</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">pagetable_t</span> pagetable<span class="token punctuation">;</span>
+    pagetable <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">pagetable_t</span><span class="token punctuation">)</span><span class="token function">kalloc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>pagetable <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token function">memset</span><span class="token punctuation">(</span>pagetable<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> PGSIZE<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> pagetable<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>相对应的是<code>uvmfree</code>，这个需要递归的释放子进程的内存，<code>freewalk</code>递归的释放了所有子进程的内存</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">// Recursively free page-table pages.</span>
+<span class="token comment">// All leaf mappings must already have been removed.</span>
+<span class="token keyword">void</span> <span class="token function">freewalk</span><span class="token punctuation">(</span><span class="token class-name">pagetable_t</span> pagetable<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// there are 2^9 = 512 PTEs in a page table.</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">512</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">pte_t</span> pte <span class="token operator">=</span> pagetable<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>pte <span class="token operator">&amp;</span> PTE_V<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span>pte <span class="token operator">&amp;</span> <span class="token punctuation">(</span>PTE_R <span class="token operator">|</span> PTE_W <span class="token operator">|</span> PTE_X<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token comment">// this PTE points to a lower-level page table.</span>
+            uint64 child <span class="token operator">=</span> <span class="token function">PTE2PA</span><span class="token punctuation">(</span>pte<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token function">freewalk</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token class-name">pagetable_t</span><span class="token punctuation">)</span>child<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            pagetable<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>pte <span class="token operator">&amp;</span> PTE_V<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token function">panic</span><span class="token punctuation">(</span><span class="token string">"freewalk: leaf"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token function">kfree</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span>pagetable<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>在<code>kernel/proc.c</code>中, <code>proc_freepagetable</code>先调用uvmunmap释放当前进程的内存，然后调用了<code>uvmfree</code>释放子进程的pagetable</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">// Free a process's page table, and free the</span>
+<span class="token comment">// physical memory it refers to.</span>
+<span class="token keyword">void</span> <span class="token function">proc_freepagetable</span><span class="token punctuation">(</span><span class="token class-name">pagetable_t</span> pagetable<span class="token punctuation">,</span> uint64 sz<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">uvmunmap</span><span class="token punctuation">(</span>pagetable<span class="token punctuation">,</span> TRAMPOLINE<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">uvmunmap</span><span class="token punctuation">(</span>pagetable<span class="token punctuation">,</span> TRAPFRAME<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">uvmfree</span><span class="token punctuation">(</span>pagetable<span class="token punctuation">,</span> sz<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后是<code>uvmalloc</code>和<code>uvmdealloc</code>用来调整virtual memory的大小，封装调用了kalloc、memset和uvmunmap这些，这里不多说了。</p>
+<p>说完用户态页表我们看一下内核页表, 在开机的时候由kvminit直接创建，这些是不参与page fault的，也没有COW或者换页那些，也不会参与TLB或者参与分页</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">// add a mapping to the kernel page table.</span>
+<span class="token comment">// only used when booting.</span>
+<span class="token comment">// does not flush TLB or enable paging.</span>
+<span class="token keyword">void</span> <span class="token function">kvmmap</span><span class="token punctuation">(</span><span class="token class-name">pagetable_t</span> kpgtbl<span class="token punctuation">,</span> uint64 va<span class="token punctuation">,</span> uint64 pa<span class="token punctuation">,</span> uint64 sz<span class="token punctuation">,</span> <span class="token keyword">int</span> perm<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">mappages</span><span class="token punctuation">(</span>kpgtbl<span class="token punctuation">,</span> va<span class="token punctuation">,</span> sz<span class="token punctuation">,</span> pa<span class="token punctuation">,</span> perm<span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">)</span>
+        <span class="token function">panic</span><span class="token punctuation">(</span><span class="token string">"kvmmap"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="Lab"><a href="#Lab" class="headerlink" title="Lab"></a>Lab</h2><blockquote>
+<p>Your task is to implement copy-on-write fork in the xv6 kernel. You are done if your modified kernel executes both the cowtest and usertests programs successfully.</p>
+</blockquote>
+<p>我们要通过修改PTE来调整内存的访问权限， PTE相关的标志为已经给出了：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">PTE_V</span> <span class="token expression"><span class="token punctuation">(</span><span class="token number">1L</span> <span class="token operator">&lt;&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> </span><span class="token comment">// valid</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">PTE_R</span> <span class="token expression"><span class="token punctuation">(</span><span class="token number">1L</span> <span class="token operator">&lt;&lt;</span> <span class="token number">1</span><span class="token punctuation">)</span></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">PTE_W</span> <span class="token expression"><span class="token punctuation">(</span><span class="token number">1L</span> <span class="token operator">&lt;&lt;</span> <span class="token number">2</span><span class="token punctuation">)</span></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">PTE_X</span> <span class="token expression"><span class="token punctuation">(</span><span class="token number">1L</span> <span class="token operator">&lt;&lt;</span> <span class="token number">3</span><span class="token punctuation">)</span></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">PTE_U</span> <span class="token expression"><span class="token punctuation">(</span><span class="token number">1L</span> <span class="token operator">&lt;&lt;</span> <span class="token number">4</span><span class="token punctuation">)</span> </span><span class="token comment">// 1 -> user can access</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="/6-S081-lab-cow/1652761766.png"></p>
+<p>在PTE的标志位中， 第8-9位是保留的（Reversed for supervisor software）， 我们可以把第八位指定成COW的标志位（上图RSW那里）</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">PTE_COW</span> <span class="token expression"><span class="token punctuation">(</span><span class="token number">1L</span> <span class="token operator">&lt;&lt;</span> <span class="token number">8</span><span class="token punctuation">)</span> </span><span class="token comment">// cow</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<blockquote>
+<p>Modify uvmcopy() to map the parent’s physical pages into the child, instead of allocating new pages. Clear PTE_W in the PTEs of both child and parent.</p>
+</blockquote>
+<p>首先我们修改<code>uvmcopy()</code>, 在copy的时候将父子进程的PTE标志位都设为只读</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">// Given a parent process's page table, copy</span>
+<span class="token comment">// its memory into a child's page table.</span>
+<span class="token comment">// Copies both the page table and the</span>
+<span class="token comment">// physical memory.</span>
+<span class="token comment">// returns 0 on success, -1 on failure.</span>
+<span class="token comment">// frees any allocated pages on failure.</span>
+<span class="token keyword">int</span> <span class="token function">uvmcopy</span><span class="token punctuation">(</span><span class="token class-name">pagetable_t</span> old<span class="token punctuation">,</span> <span class="token class-name">pagetable_t</span> new<span class="token punctuation">,</span> uint64 sz<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">pte_t</span> <span class="token operator">*</span>pte<span class="token punctuation">;</span>
+    uint64 pa<span class="token punctuation">,</span> i<span class="token punctuation">;</span>
+    uint flags<span class="token punctuation">;</span>
+    <span class="token keyword">char</span> <span class="token operator">*</span>mem<span class="token punctuation">;</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> sz<span class="token punctuation">;</span> i <span class="token operator">+=</span> PGSIZE<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>pte <span class="token operator">=</span> <span class="token function">walk</span><span class="token punctuation">(</span>old<span class="token punctuation">,</span> i<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+            <span class="token function">panic</span><span class="token punctuation">(</span><span class="token string">"uvmcopy: pte should exist"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token operator">*</span>pte <span class="token operator">&amp;</span> PTE_V<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+            <span class="token function">panic</span><span class="token punctuation">(</span><span class="token string">"uvmcopy: page not present"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        pa <span class="token operator">=</span> <span class="token function">PTE2PA</span><span class="token punctuation">(</span><span class="token operator">*</span>pte<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token operator">*</span>pte <span class="token operator">&amp;=</span> <span class="token operator">~</span>PTE_W<span class="token punctuation">;</span>
+        <span class="token operator">*</span>pte <span class="token operator">|=</span> PTE_COW<span class="token punctuation">;</span>
+        flags <span class="token operator">=</span> <span class="token function">PTE_FLAGS</span><span class="token punctuation">(</span><span class="token operator">*</span>pte<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 这里不需要立即memove分配内存了，注释掉</span>
+        <span class="token comment">// if ((mem = kalloc()) == 0)</span>
+        <span class="token comment">//     goto err;</span>
+        <span class="token comment">// memmove(mem, (char *)pa, PGSIZE);</span>
+
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">mappages</span><span class="token punctuation">(</span>new<span class="token punctuation">,</span> i<span class="token punctuation">,</span> PGSIZE<span class="token punctuation">,</span> <span class="token punctuation">(</span>uint64<span class="token punctuation">)</span>pa<span class="token punctuation">,</span> flags<span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token comment">// kfree(mem);</span>
+            <span class="token keyword">goto</span> err<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+err<span class="token operator">:</span>
+    <span class="token function">uvmunmap</span><span class="token punctuation">(</span>new<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> i <span class="token operator">/</span> PGSIZE<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>Modify usertrap() to recognize page faults. When a page-fault occurs on a COW page, allocate a new page with kalloc(), copy the old page to the new page, and install the new page in the PTE with PTE_W set.</p>
+</blockquote>
+<p>然后发生page fault的时候（要用<code>r_scasue</code>判断是否发生原因），然后用kalloc分配内存，同时将PTE标志位从只读变为可写。</p>
+<blockquote>
+<p>Ensure that each physical page is freed when the last PTE reference to it goes away – but not before. A good way to do this is to keep, for each physical page, a “reference count” of the number of user page tables that refer to that page. Set a page’s reference count to one when kalloc() allocates it. Increment a page’s reference count when fork causes a child to share the page, and decrement a page’s count each time any process drops the page from its page table. kfree() should only place a page back on the free list if its reference count is zero. It’s OK to to keep these counts in a fixed-size array of integers. You’ll have to work out a scheme for how to index the array and how to choose its size. For example, you could index the array with the page’s physical address divided by 4096, and give the array a number of elements equal to highest physical address of any page placed on the free list by kinit() in kalloc.c.</p>
+</blockquote>
+<p>按照这个提示，我们在kalloc的时候将引用计数设为1, 在fork的时候增加引用计数，然后在进程不需要这个页的时候将引用计数减1，等到引用计数为0的时候就可以kfree了</p>
+<blockquote>
+<p>Modify copyout() to use the same scheme as page faults when it encounters a COW page.</p>
+</blockquote>
+<h2 id="闲聊一下Linux的COW漏洞"><a href="#闲聊一下Linux的COW漏洞" class="headerlink" title="闲聊一下Linux的COW漏洞"></a>闲聊一下Linux的COW漏洞</h2><h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2>]]></content>
+      <categories>
+        <category>Linux&amp;Unix</category>
+      </categories>
+      <tags>
+        <tag>6.S081</tag>
+        <tag>cow</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>6.S081 Lab Filesystem 笔记</title>
     <url>/6-S081-lab-filesystem/</url>
     <content><![CDATA[<p>鸽了有点日子的6.S081的filesystem笔记，主要是看到ZFS和Btrfs之类的现代文件系统，再看看自己做的Lab，感觉跟幼儿园哄小孩玩的一样</p>
@@ -547,6 +787,79 @@ Score: <span class="token number">100</span>/100<span aria-hidden="true" class="
       <tags>
         <tag>6.S081</tag>
         <tag>network</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>6.S081 Lab Page table 笔记：虚拟内存、页表和MMU</title>
+    <url>/6.S081-lab-page-table/</url>
+    <content><![CDATA[<p>这个Lab前几个月写的，最近比较闲整理一下之前做的Lab。内存管理这块比较复杂，当时做Lab的时候对内存这块理解也浅，实现有些挺蠢的地方，重新整理了一下。接下来的笔记会多一点和Lab作业关系不是特别大的东西，闲着没事看OS相关的东西觉得有意思就一起记到笔记里了。</p>
+<span id="more"></span>
+
+<h2 id="从单片机的内存和MMU说起"><a href="#从单片机的内存和MMU说起" class="headerlink" title="从单片机的内存和MMU说起"></a>从单片机的内存和MMU说起</h2><p>早期的操作系统是就像现在的一些单片机一样没有虚拟内存、页表这些东西的。以前我一开始用ARM的STM32的单片机的时候，用的是cortex-m系列，没有MMU（Memory Management Unit，内存管理单元）的，直接访问物理地址。当时我上嵌入式的课上也不讲这些东西，上课、做实验讲到内存的时候都直接访问物理地址的（Keil里面直接看物理地址的值确实比较简单）。</p>
+<p>这个时候内存的管理方式挺简单的，<strong>可能为数不多的坑就是大小端</strong>，有一次被坑了挺久</p>
+<p>下面这张图很熟悉了，堆、栈，数据段、代码段</p>
+<p>访问栈就直接用sp去寻址就可以了，简单直接。</p>
+<p>没有MMU也有好处，这样便宜、功耗低、而且比较简单。有的对实时性要求比较高的东西，也没有MMU（比如Cortex-R系列）</p>
+<p>注：嵌入式的soc芯片，如果能跑操作系统的大概率有MMU，但是两者之前没有必然关系。比如uCLinux，就是为了在没有MMU上的设备跑。有MMU，当然也可以不用操作系统，直接跑裸机（MMU其实可以关掉，但是我们一般不关，手动指定映射，因为MMU的cache对性能提升很大）。（uClinux要小心内存碎片，而且由于MMU没了，内存保护、内存置换、COW基本都没了，大部分时候还是用mmap和内存直接打交道）</p>
+<p>单片机可以不要MMU，但是一个运行着很多任务的操作系统需要对内存进行抽象和封装，提供给应用。于是后来诞生了虚拟内存&#x2F;虚拟存储器（Virtual Memory），虚拟内存可以比物理内存大，可以让每个程序都认为自己拥有一段连续独立的内存，还可以权限控制（内存保护），虚拟内存在硬件上是MMU实现的。操作系统的虚拟内存几乎都依赖MMU。（当然，操作系统有自己的页表，这个一会再说）<br>像Cortex-A系列的soc芯片，是有mmu的，上面能跑一些完整的操作系统，有页表等一系列完整的内存管理机制。下图来自xv6 book，每个进程都有自己独立的虚拟内存，这样主要的好处一个是安全隔离，一个是让进程操作一段连续的内存，即使映射到物理内存上是不连续的（你可以<strong>试试在Cortex-A系列soc的板子上跑个uClinux这种没有虚拟内存的，很容易搞出内存碎片然后OOM了</strong>）。</p>
+<p><img src="/6.S081-lab-page-table/1642081823.png"></p>
+<p>下面这是ARM的图，RISC-V和x86我不熟，就没找RISC的图。下面这些图来自：<span class="exturl" data-url="aHR0cHM6Ly9jczE0MGUuc2VyZ2lvLmJ6L2RvY3MvQVJNdjgtQS1Qcm9ncmFtbWVyLUd1aWRlLnBkZg==">ARMv8-A-Programmer-Guide<i class="fa fa-external-link-alt"></i></span></p>
+<p><img src="/6.S081-lab-page-table/1642057127.png"></p>
+<p>MMU以页为最小单位将内存从物理地址映射到虚拟地址，页表大小一般是4k。除了地址映射MMU还实现了内存保护。每个页有读、写、执行三种权限。</p>
+<p>MMU里有TLB（Translation Lookaside Buffer），专门用来缓存页表，CPU要访问内存的时候会先去TLB里面找，没有命中再去遍历找物理地址（Translation Table Walk）。</p>
+<p>图中的Caches就是我们熟悉的L1、L2、L3缓存，l1一般有ICache和DCache，分别用来缓存指令和数据。</p>
+<p><img src="/6.S081-lab-page-table/1642057382.png"></p>
+<p>一部分ARM的芯片是将L1的ICache做成逻辑地址的（不经过MMU），有的芯片是逻辑地址（Cache缓存的是经过MMU转换后的虚拟地址），这个和芯片的实现有关，不是这里的重点。我们就简单的认为，Cache一般速度远比主存快，用于缓存最常用的内存数据（页）。</p>
+<p><img src="/6.S081-lab-page-table/1642057536.png"></p>
+<p>当L1、L2、L3都没有命中（Write Miss）的时候，会走总线去内存里面找。至于L1、L2、L3缓存的置换、一致性这些问题，我们也简单的认为芯片已经帮我们做好了，这里我们不去管它。</p>
+<h2 id="页表"><a href="#页表" class="headerlink" title="页表"></a>页表</h2><p>以页为单位完成了物理内存到虚拟内存的映射，要访问这些页我们需要查表，于是就有了页表（Page Table）。但是如果把每个页都映射成一张页表，这一个页表是很大的，于是就有了多级页表。多级页表中每一级都有index和offset用于定位页和页中的偏移量。</p>
+<p><img src="/6.S081-lab-page-table/1642065542.png"></p>
+<p>上图中的PPN是物理page号（PPN，Physical Page Number）。</p>
+<h3 id="进程页表和内核页表"><a href="#进程页表和内核页表" class="headerlink" title="进程页表和内核页表"></a>进程页表和内核页表</h3><p>xv6里面有，内核页表和用户页表（进程页表），每个进程都有自己独立的页表。内核页表只有一个。一般进程页表都有一份内核页表的直接copy，但是一些开了内核页表隔离（KPTI, Kernel Page Table Isolation）的，情况会比较复杂。</p>
+<p><img src="/6.S081-lab-page-table/1642124957.png"></p>
+<p>我们这里先不考虑这些复杂情况，做Lab的时候只需要知道进程地址空间是<code>exec</code>创建的，进程页表是<code>proc_pagetable</code>创建的</p>
+<h2 id="页表放在哪"><a href="#页表放在哪" class="headerlink" title="页表放在哪"></a>页表放在哪</h2><p>放在内存里面（是虚拟内存）。准确的说，是在内存的内核空间（kernel address space）里。在RISC-V中，SATP寄存器保存当前进程的页表地址，通过切换SATP的值来切换进程页表，MMU通过这个地址去找页表（先去TLB找，那里放的是页表的缓存）。<br>x86的寄存器是CR3，作用类似。</p>
+<h2 id="这么多年过去了页大小怎么还是4K"><a href="#这么多年过去了页大小怎么还是4K" class="headerlink" title="这么多年过去了页大小怎么还是4K"></a>这么多年过去了页大小怎么还是4K</h2><p>如果你执行<code>getconf PAGE_SIZE</code>看一下，大概率还是<code>4096</code>。<br>页表的级数一直在增加，ARM的嵌入式soc（比如Cortex-A系列）一般是二级页表，Linux一开始也是二级，后来有了3级和4级页表。然而这么多年过去了，页表大小基本还是4k。</p>
+<p>透明大页</p>
+<h2 id="Lab作业笔记"><a href="#Lab作业笔记" class="headerlink" title="Lab作业笔记"></a>Lab作业笔记</h2><p>这个Lab是第四章内存管理的配套Lab，做之前推荐还是看一下第四章的讲义。涉及到的几个函数在<code>vm.c</code>中</p>
+<h3 id="Speed-up-system-calls"><a href="#Speed-up-system-calls" class="headerlink" title="Speed up system calls"></a>Speed up system calls</h3><blockquote>
+<p>Some operating systems (e.g., Linux) speed up certain system calls by sharing data in a read-only region between userspace and the kernel. This eliminates the need for kernel crossings when performing these system calls.</p>
+</blockquote>
+<p>仿照Linux通过共享内存来加快syscall。一开始看lwm这篇：<span class="exturl" data-url="aHR0cHM6Ly9sd24ubmV0L0FydGljbGVzLzE4NDExLw==">How to speed up system calls<i class="fa fa-external-link-alt"></i></span> 02年的文章和<span class="exturl" data-url="aHR0cHM6Ly9sd24ubmV0L0FydGljbGVzLzE4NDE0Lw==">Patch<i class="fa fa-external-link-alt"></i></span>没看懂是要干嘛，后来搜了一下vsyscall才明白这个Lab想让我们做什么。  </p>
+<blockquote>
+<p>vsyscall 或 virtual system call 是第一种也是最古老的一种用于加快系统调用的机制。 vsyscall 的工作原则其实十分简单。Linux 内核在用户空间映射一个包含一些变量及一些系统调用的实现的内存页。<br>不过后来vsyscall几乎都换成vDSO和vvar了（安全原因），现在不少发行版默认禁用这个的。  </p>
+</blockquote>
+<p>知道干什么就好办了，我们照着课程提示先看<code>user/ulib.c</code>中的<code>ugetpid()</code>，这里已经将共享地址<code>USYSCALL</code>转成usyscall结构体，然后返回pid</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span>
+<span class="token function">ugetpid</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+  <span class="token keyword">struct</span> <span class="token class-name">usyscall</span> <span class="token operator">*</span>u <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">usyscall</span> <span class="token operator">*</span><span class="token punctuation">)</span>USYSCALL<span class="token punctuation">;</span>
+  <span class="token keyword">return</span> u<span class="token operator">-></span>pid<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>我们只要在<code>kernel/proc.h</code>中补全USYSCALL的映射（mapping），这个仿照trapframe就好了，在<code>proc.h</code>中</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">struct</span> <span class="token class-name">usyscall</span> <span class="token operator">*</span>usyscall    <span class="token comment">// data page for getpid syscall</span>
+<span class="token keyword">struct</span> <span class="token class-name">trapframe</span> <span class="token operator">*</span>trapframe<span class="token punctuation">;</span> <span class="token comment">// data page for trampoline.S</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>然后在<code>proc.c</code>设置映射和读权限（PTE_U、PTE_R，详见xv6文档）。我们继续照着trapframe的写法加上：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">// map the getpid (for systemcall return)</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">mappages</span><span class="token punctuation">(</span>pagetable<span class="token punctuation">,</span> USYSCALL<span class="token punctuation">,</span> PGSIZE<span class="token punctuation">,</span>
+            <span class="token punctuation">(</span>uint64<span class="token punctuation">)</span><span class="token punctuation">(</span>p<span class="token operator">-></span>usyscall<span class="token punctuation">)</span><span class="token punctuation">,</span> PTE_R <span class="token operator">|</span> PTE_U<span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">uvmfree</span><span class="token punctuation">(</span>pagetable<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后在<code>allocproc()</code>中分配，在<code>freeproc()</code>中释放内存（这个直接照抄trapframe的分配和释放就可以了）。注意还要在<code>proc.c</code>中的<code>proc_freepagetable</code>释放一下<code>uvmunmap(pagetable, USYSCALL, 1, 0);</code></p>
+<h3 id="Print-a-page-table"><a href="#Print-a-page-table" class="headerlink" title="Print a page table"></a>Print a page table</h3><p>这个也简单，实现一个打印页表方便下面调试。</p>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><span class="exturl" data-url="aHR0cHM6Ly9uaWV5b25nLmdpdGh1Yi5pby93aWtpX2NwdS9DUFUlRTQlQkQlOTMlRTclQjMlQkIlRTYlOUUlQjYlRTYlOUUlODQtTU1VLmh0bWw=">CPU体系架构-MMU<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vTG95ZW5XYW5nL3AvMTE0MDY2OTMuaHRtbA==">（一）ARMv8 MMU及Linux页表映射<i class="fa fa-external-link-alt"></i></span>  </p>
+<p>阅读更多</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9sd24ubmV0L0FydGljbGVzLzE4NDExLw==">How to speed up system calls<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly92dmwubWUvMjAxOS8wNi9saW51eC1zeXNjYWxsLWFuZC12c3lzY2FsbC12ZHNvLWluLXg4Ni8=">x86 架构下 Linux 的系统调用与 vsyscall, vDSO<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cua2VybmVsLm9yZy9kb2MvaHRtbC9sYXRlc3QveDg2L3B0aS5odG1s">17. Page Table Isolation (PTI)<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9jdGYtd2lraS5vcmcvcHduL2xpbnV4L2tlcm5lbC1tb2RlL2RlZmVuc2UvaXNvbGF0aW9uL3VzZXIta2VybmVsL2twdGk=">KPTI - Kernel Page Table Isolation CTF-Wiki<i class="fa fa-external-link-alt"></i></span>  </p>
+]]></content>
+      <categories>
+        <category>Linux&amp;Unix</category>
+      </categories>
+      <tags>
+        <tag>6.S081</tag>
+        <tag>page table</tag>
       </tags>
   </entry>
   <entry>
@@ -1108,79 +1421,6 @@ Score: <span class="token number">60</span>/60<span aria-hidden="true" class="li
       <tags>
         <tag>6.S081</tag>
         <tag>thread</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>6.S081 Lab Page table 笔记：虚拟内存、页表和MMU</title>
-    <url>/6.S081-lab-page-table/</url>
-    <content><![CDATA[<p>这个Lab前几个月写的，最近比较闲整理一下之前做的Lab。内存管理这块比较复杂，当时做Lab的时候对内存这块理解也浅，实现有些挺蠢的地方，重新整理了一下。接下来的笔记会多一点和Lab作业关系不是特别大的东西，闲着没事看OS相关的东西觉得有意思就一起记到笔记里了。</p>
-<span id="more"></span>
-
-<h2 id="从单片机的内存和MMU说起"><a href="#从单片机的内存和MMU说起" class="headerlink" title="从单片机的内存和MMU说起"></a>从单片机的内存和MMU说起</h2><p>早期的操作系统是就像现在的一些单片机一样没有虚拟内存、页表这些东西的。以前我一开始用ARM的STM32的单片机的时候，用的是cortex-m系列，没有MMU（Memory Management Unit，内存管理单元）的，直接访问物理地址。当时我上嵌入式的课上也不讲这些东西，上课、做实验讲到内存的时候都直接访问物理地址的（Keil里面直接看物理地址的值确实比较简单）。</p>
-<p>这个时候内存的管理方式挺简单的，<strong>可能为数不多的坑就是大小端</strong>，有一次被坑了挺久</p>
-<p>下面这张图很熟悉了，堆、栈，数据段、代码段</p>
-<p>访问栈就直接用sp去寻址就可以了，简单直接。</p>
-<p>没有MMU也有好处，这样便宜、功耗低、而且比较简单。有的对实时性要求比较高的东西，也没有MMU（比如Cortex-R系列）</p>
-<p>注：嵌入式的soc芯片，如果能跑操作系统的大概率有MMU，但是两者之前没有必然关系。比如uCLinux，就是为了在没有MMU上的设备跑。有MMU，当然也可以不用操作系统，直接跑裸机（MMU其实可以关掉，但是我们一般不关，手动指定映射，因为MMU的cache对性能提升很大）。（uClinux要小心内存碎片，而且由于MMU没了，内存保护、内存置换、COW基本都没了，大部分时候还是用mmap和内存直接打交道）</p>
-<p>单片机可以不要MMU，但是一个运行着很多任务的操作系统需要对内存进行抽象和封装，提供给应用。于是后来诞生了虚拟内存&#x2F;虚拟存储器（Virtual Memory），虚拟内存可以比物理内存大，可以让每个程序都认为自己拥有一段连续独立的内存，还可以权限控制（内存保护），虚拟内存在硬件上是MMU实现的。操作系统的虚拟内存几乎都依赖MMU。（当然，操作系统有自己的页表，这个一会再说）<br>像Cortex-A系列的soc芯片，是有mmu的，上面能跑一些完整的操作系统，有页表等一系列完整的内存管理机制。下图来自xv6 book，每个进程都有自己独立的虚拟内存，这样主要的好处一个是安全隔离，一个是让进程操作一段连续的内存，即使映射到物理内存上是不连续的（你可以<strong>试试在Cortex-A系列soc的板子上跑个uClinux这种没有虚拟内存的，很容易搞出内存碎片然后OOM了</strong>）。</p>
-<p><img src="/6.S081-lab-page-table/1642081823.png"></p>
-<p>下面这是ARM的图，RISC-V和x86我不熟，就没找RISC的图。下面这些图来自：<span class="exturl" data-url="aHR0cHM6Ly9jczE0MGUuc2VyZ2lvLmJ6L2RvY3MvQVJNdjgtQS1Qcm9ncmFtbWVyLUd1aWRlLnBkZg==">ARMv8-A-Programmer-Guide<i class="fa fa-external-link-alt"></i></span></p>
-<p><img src="/6.S081-lab-page-table/1642057127.png"></p>
-<p>MMU以页为最小单位将内存从物理地址映射到虚拟地址，页表大小一般是4k。除了地址映射MMU还实现了内存保护。每个页有读、写、执行三种权限。</p>
-<p>MMU里有TLB（Translation Lookaside Buffer），专门用来缓存页表，CPU要访问内存的时候会先去TLB里面找，没有命中再去遍历找物理地址（Translation Table Walk）。</p>
-<p>图中的Caches就是我们熟悉的L1、L2、L3缓存，l1一般有ICache和DCache，分别用来缓存指令和数据。</p>
-<p><img src="/6.S081-lab-page-table/1642057382.png"></p>
-<p>一部分ARM的芯片是将L1的ICache做成逻辑地址的（不经过MMU），有的芯片是逻辑地址（Cache缓存的是经过MMU转换后的虚拟地址），这个和芯片的实现有关，不是这里的重点。我们就简单的认为，Cache一般速度远比主存快，用于缓存最常用的内存数据（页）。</p>
-<p><img src="/6.S081-lab-page-table/1642057536.png"></p>
-<p>当L1、L2、L3都没有命中（Write Miss）的时候，会走总线去内存里面找。至于L1、L2、L3缓存的置换、一致性这些问题，我们也简单的认为芯片已经帮我们做好了，这里我们不去管它。</p>
-<h2 id="页表"><a href="#页表" class="headerlink" title="页表"></a>页表</h2><p>以页为单位完成了物理内存到虚拟内存的映射，要访问这些页我们需要查表，于是就有了页表（Page Table）。但是如果把每个页都映射成一张页表，这一个页表是很大的，于是就有了多级页表。多级页表中每一级都有index和offset用于定位页和页中的偏移量。</p>
-<p><img src="/6.S081-lab-page-table/1642065542.png"></p>
-<p>上图中的PPN是物理page号（PPN，Physical Page Number）。</p>
-<h3 id="进程页表和内核页表"><a href="#进程页表和内核页表" class="headerlink" title="进程页表和内核页表"></a>进程页表和内核页表</h3><p>xv6里面有，内核页表和用户页表（进程页表），每个进程都有自己独立的页表。内核页表只有一个。一般进程页表都有一份内核页表的直接copy，但是一些开了内核页表隔离（KPTI, Kernel Page Table Isolation）的，情况会比较复杂。</p>
-<p><img src="/6.S081-lab-page-table/1642124957.png"></p>
-<p>我们这里先不考虑这些复杂情况，做Lab的时候只需要知道进程地址空间是<code>exec</code>创建的，进程页表是<code>proc_pagetable</code>创建的</p>
-<h2 id="页表放在哪"><a href="#页表放在哪" class="headerlink" title="页表放在哪"></a>页表放在哪</h2><p>放在内存里面（是虚拟内存）。准确的说，是在内存的内核空间（kernel address space）里。在RISC-V中，SATP寄存器保存当前进程的页表地址，通过切换SATP的值来切换进程页表，MMU通过这个地址去找页表（先去TLB找，那里放的是页表的缓存）。<br>x86的寄存器是CR3，作用类似。</p>
-<h2 id="这么多年过去了页大小怎么还是4K"><a href="#这么多年过去了页大小怎么还是4K" class="headerlink" title="这么多年过去了页大小怎么还是4K"></a>这么多年过去了页大小怎么还是4K</h2><p>如果你执行<code>getconf PAGE_SIZE</code>看一下，大概率还是<code>4096</code>。<br>页表的级数一直在增加，ARM的嵌入式soc（比如Cortex-A系列）一般是二级页表，Linux一开始也是二级，后来有了3级和4级页表。然而这么多年过去了，页表大小基本还是4k。</p>
-<p>透明大页</p>
-<h2 id="Lab作业笔记"><a href="#Lab作业笔记" class="headerlink" title="Lab作业笔记"></a>Lab作业笔记</h2><p>这个Lab是第四章内存管理的配套Lab，做之前推荐还是看一下第四章的讲义。涉及到的几个函数在<code>vm.c</code>中</p>
-<h3 id="Speed-up-system-calls"><a href="#Speed-up-system-calls" class="headerlink" title="Speed up system calls"></a>Speed up system calls</h3><blockquote>
-<p>Some operating systems (e.g., Linux) speed up certain system calls by sharing data in a read-only region between userspace and the kernel. This eliminates the need for kernel crossings when performing these system calls.</p>
-</blockquote>
-<p>仿照Linux通过共享内存来加快syscall。一开始看lwm这篇：<span class="exturl" data-url="aHR0cHM6Ly9sd24ubmV0L0FydGljbGVzLzE4NDExLw==">How to speed up system calls<i class="fa fa-external-link-alt"></i></span> 02年的文章和<span class="exturl" data-url="aHR0cHM6Ly9sd24ubmV0L0FydGljbGVzLzE4NDE0Lw==">Patch<i class="fa fa-external-link-alt"></i></span>没看懂是要干嘛，后来搜了一下vsyscall才明白这个Lab想让我们做什么。  </p>
-<blockquote>
-<p>vsyscall 或 virtual system call 是第一种也是最古老的一种用于加快系统调用的机制。 vsyscall 的工作原则其实十分简单。Linux 内核在用户空间映射一个包含一些变量及一些系统调用的实现的内存页。<br>不过后来vsyscall几乎都换成vDSO和vvar了（安全原因），现在不少发行版默认禁用这个的。  </p>
-</blockquote>
-<p>知道干什么就好办了，我们照着课程提示先看<code>user/ulib.c</code>中的<code>ugetpid()</code>，这里已经将共享地址<code>USYSCALL</code>转成usyscall结构体，然后返回pid</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span>
-<span class="token function">ugetpid</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-  <span class="token keyword">struct</span> <span class="token class-name">usyscall</span> <span class="token operator">*</span>u <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">usyscall</span> <span class="token operator">*</span><span class="token punctuation">)</span>USYSCALL<span class="token punctuation">;</span>
-  <span class="token keyword">return</span> u<span class="token operator">-></span>pid<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>我们只要在<code>kernel/proc.h</code>中补全USYSCALL的映射（mapping），这个仿照trapframe就好了，在<code>proc.h</code>中</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">struct</span> <span class="token class-name">usyscall</span> <span class="token operator">*</span>usyscall    <span class="token comment">// data page for getpid syscall</span>
-<span class="token keyword">struct</span> <span class="token class-name">trapframe</span> <span class="token operator">*</span>trapframe<span class="token punctuation">;</span> <span class="token comment">// data page for trampoline.S</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>然后在<code>proc.c</code>设置映射和读权限（PTE_U、PTE_R，详见xv6文档）。我们继续照着trapframe的写法加上：</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">// map the getpid (for systemcall return)</span>
-<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">mappages</span><span class="token punctuation">(</span>pagetable<span class="token punctuation">,</span> USYSCALL<span class="token punctuation">,</span> PGSIZE<span class="token punctuation">,</span>
-            <span class="token punctuation">(</span>uint64<span class="token punctuation">)</span><span class="token punctuation">(</span>p<span class="token operator">-></span>usyscall<span class="token punctuation">)</span><span class="token punctuation">,</span> PTE_R <span class="token operator">|</span> PTE_U<span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token function">uvmfree</span><span class="token punctuation">(</span>pagetable<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>然后在<code>allocproc()</code>中分配，在<code>freeproc()</code>中释放内存（这个直接照抄trapframe的分配和释放就可以了）。注意还要在<code>proc.c</code>中的<code>proc_freepagetable</code>释放一下<code>uvmunmap(pagetable, USYSCALL, 1, 0);</code></p>
-<h3 id="Print-a-page-table"><a href="#Print-a-page-table" class="headerlink" title="Print a page table"></a>Print a page table</h3><p>这个也简单，实现一个打印页表方便下面调试。</p>
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3><h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><span class="exturl" data-url="aHR0cHM6Ly9uaWV5b25nLmdpdGh1Yi5pby93aWtpX2NwdS9DUFUlRTQlQkQlOTMlRTclQjMlQkIlRTYlOUUlQjYlRTYlOUUlODQtTU1VLmh0bWw=">CPU体系架构-MMU<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vTG95ZW5XYW5nL3AvMTE0MDY2OTMuaHRtbA==">（一）ARMv8 MMU及Linux页表映射<i class="fa fa-external-link-alt"></i></span>  </p>
-<p>阅读更多</p>
-<p><span class="exturl" data-url="aHR0cHM6Ly9sd24ubmV0L0FydGljbGVzLzE4NDExLw==">How to speed up system calls<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly92dmwubWUvMjAxOS8wNi9saW51eC1zeXNjYWxsLWFuZC12c3lzY2FsbC12ZHNvLWluLXg4Ni8=">x86 架构下 Linux 的系统调用与 vsyscall, vDSO<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cua2VybmVsLm9yZy9kb2MvaHRtbC9sYXRlc3QveDg2L3B0aS5odG1s">17. Page Table Isolation (PTI)<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9jdGYtd2lraS5vcmcvcHduL2xpbnV4L2tlcm5lbC1tb2RlL2RlZmVuc2UvaXNvbGF0aW9uL3VzZXIta2VybmVsL2twdGk=">KPTI - Kernel Page Table Isolation CTF-Wiki<i class="fa fa-external-link-alt"></i></span>  </p>
-]]></content>
-      <categories>
-        <category>Linux&amp;Unix</category>
-      </categories>
-      <tags>
-        <tag>6.S081</tag>
-        <tag>page table</tag>
       </tags>
   </entry>
   <entry>
@@ -3131,6 +3371,34 @@ size_t <span class="token class-name">ByteStream</span><span class="token double
       </tags>
   </entry>
   <entry>
+    <title>MySQL从入门到跑路</title>
+    <url>/45b9/</url>
+    <content><![CDATA[<p>用了这么久数据库，现在还只会增删查改，开个坑学学优化。</p>
+<span id="more"></span>
+<p>等待填坑</p>
+<p>这个图比较清晰</p>
+<p><img src="/45b9/db.webp"></p>
+<p>看到clickhouse的速度很快，有空看一下</p>
+<h2 id="轻如鸿毛的SQLite"><a href="#轻如鸿毛的SQLite" class="headerlink" title="轻如鸿毛的SQLite"></a>轻如鸿毛的SQLite</h2><p>好东西，在性能严重受限的开发板上跑着非常舒服，反正以前我试着感觉比另一个嵌入式数据库BerkeleyDB感觉好用多了。</p>
+<p>其实我感觉很多小网站什么的，根本没必要上MySQL之类的东西，SQLite完全够了。什么存储过程啊，什么访问控制用户权限管理啊，基本上不怎么能用得到。数据量也小，那就索性连索引都不要了。<br>没有那一堆臃肿的东西，也没有那一堆乱七八糟的依赖。</p>
+<p>而且这个东西快啊，数据量不怎么大的情况下比MySQL快，配置也简单</p>
+<h2 id="你们这个是什么教材啊，你们真的是害人不浅啊你们这个教材"><a href="#你们这个是什么教材啊，你们真的是害人不浅啊你们这个教材" class="headerlink" title="你们这个是什么教材啊，你们真的是害人不浅啊你们这个教材"></a>你们这个是什么教材啊，你们真的是害人不浅啊你们这个教材</h2><h3 id="一张大表不好吗"><a href="#一张大表不好吗" class="headerlink" title="一张大表不好吗"></a>一张大表不好吗</h3><blockquote>
+<p>范式，什么范式？</p>
+</blockquote>
+<p>课本上这个要新建一张表，那一张表，好多个表</p>
+<h3 id="隔离性"><a href="#隔离性" class="headerlink" title="隔离性"></a>隔离性</h3><p>clickhouse那么快的原因就是一定程度上破坏了隔离性</p>
+<h3 id="原子性"><a href="#原子性" class="headerlink" title="原子性"></a>原子性</h3><p>MySQL在5.7以后支持了json，或许是感受到了Postgres的压力。</p>
+<h2 id="好用的干活工具"><a href="#好用的干活工具" class="headerlink" title="好用的干活工具"></a>好用的干活工具</h2><p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2RiY2xpL215Y2xp">mycli<i class="fa fa-external-link-alt"></i></span> MySQL的cli工具，能高亮和自动补全</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+        <tag>Database</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>处理电子病历</title>
     <url>/81d4/</url>
     <content><![CDATA[<p>有两种鬼画符，一种是医生的字，一种是正则表达式</p>
@@ -3315,34 +3583,6 @@ connection<span class="token punctuation">.</span>commit<span class="token punct
       <tags>
         <tag>xml</tag>
         <tag>电子病历</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>MySQL从入门到跑路</title>
-    <url>/45b9/</url>
-    <content><![CDATA[<p>用了这么久数据库，现在还只会增删查改，开个坑学学优化。</p>
-<span id="more"></span>
-<p>等待填坑</p>
-<p>这个图比较清晰</p>
-<p><img src="/45b9/db.webp"></p>
-<p>看到clickhouse的速度很快，有空看一下</p>
-<h2 id="轻如鸿毛的SQLite"><a href="#轻如鸿毛的SQLite" class="headerlink" title="轻如鸿毛的SQLite"></a>轻如鸿毛的SQLite</h2><p>好东西，在性能严重受限的开发板上跑着非常舒服，反正以前我试着感觉比另一个嵌入式数据库BerkeleyDB感觉好用多了。</p>
-<p>其实我感觉很多小网站什么的，根本没必要上MySQL之类的东西，SQLite完全够了。什么存储过程啊，什么访问控制用户权限管理啊，基本上不怎么能用得到。数据量也小，那就索性连索引都不要了。<br>没有那一堆臃肿的东西，也没有那一堆乱七八糟的依赖。</p>
-<p>而且这个东西快啊，数据量不怎么大的情况下比MySQL快，配置也简单</p>
-<h2 id="你们这个是什么教材啊，你们真的是害人不浅啊你们这个教材"><a href="#你们这个是什么教材啊，你们真的是害人不浅啊你们这个教材" class="headerlink" title="你们这个是什么教材啊，你们真的是害人不浅啊你们这个教材"></a>你们这个是什么教材啊，你们真的是害人不浅啊你们这个教材</h2><h3 id="一张大表不好吗"><a href="#一张大表不好吗" class="headerlink" title="一张大表不好吗"></a>一张大表不好吗</h3><blockquote>
-<p>范式，什么范式？</p>
-</blockquote>
-<p>课本上这个要新建一张表，那一张表，好多个表</p>
-<h3 id="隔离性"><a href="#隔离性" class="headerlink" title="隔离性"></a>隔离性</h3><p>clickhouse那么快的原因就是一定程度上破坏了隔离性</p>
-<h3 id="原子性"><a href="#原子性" class="headerlink" title="原子性"></a>原子性</h3><p>MySQL在5.7以后支持了json，或许是感受到了Postgres的压力。</p>
-<h2 id="好用的干活工具"><a href="#好用的干活工具" class="headerlink" title="好用的干活工具"></a>好用的干活工具</h2><p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2RiY2xpL215Y2xp">mycli<i class="fa fa-external-link-alt"></i></span> MySQL的cli工具，能高亮和自动补全</p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>MySQL</tag>
-        <tag>Database</tag>
       </tags>
   </entry>
   <entry>
@@ -3802,6 +4042,119 @@ yay -S lxappearance <span aria-hidden="true" class="line-numbers-rows"><span></s
       </tags>
   </entry>
   <entry>
+    <title>也谈心率变异性</title>
+    <url>/2873/</url>
+    <content><![CDATA[<p>等待填坑</p>
+<span id="more"></span>
+
+<h2 id="采集"><a href="#采集" class="headerlink" title="采集"></a>采集</h2><p>HRV测定的是NN间期(在正常的窦性心律时就是RR间期)的波动，主要与自主神经调控机制有关。标准的HRV根据正常窦性搏动的NN间期得出的（正常对正常间期，normal-to-normal,<em>NN</em> intervals，即由窦房结除极所致相邻QRS波群之间的所有间期）的变化来表示心率的变异性。</p>
+<p><img src="/2873/201804091523323502.png" alt="提取心率变异性"></p>
+<h3 id="心电（ECG）"><a href="#心电（ECG）" class="headerlink" title="心电（ECG）"></a>心电（ECG）</h3><p>可以从心电图中直接提取R波尖峰并将RR间期的值用于心率变异性分析</p>
+<h3 id="心冲击图（BCG）"><a href="#心冲击图（BCG）" class="headerlink" title="心冲击图（BCG）"></a>心冲击图（BCG）</h3><p>心冲击图去除呼吸和活动的干扰后提取JJ间期时间计算心率变异</p>
+<h3 id="光电容积图（PPG）"><a href="#光电容积图（PPG）" class="headerlink" title="光电容积图（PPG）"></a>光电容积图（PPG）</h3><p>目前市面上主要的脉搏波测量方法是光电容积脉搏波描记法（photoplethysmography），用光电传感器检测光经过人体的反射和衰减转换成电信号后得到，包括Apple Waltch等手环产品，用光电容积法检测血氧、心率、心率变异性等生理参数。</p>
+<p><img src="/2873/figure-1-optical-heart-rate-sensing.jpg" alt="光电容积法原理"></p>
+<p>PPG法采集到的脉搏波经过去噪和整流等处理后提取PP间期可以计算心率变异。</p>
+<h4 id="远程光电容积扫描"><a href="#远程光电容积扫描" class="headerlink" title="远程光电容积扫描"></a>远程光电容积扫描</h4><p>（rPPG，remote PPG）是一种新的方法，只要高清摄像头检测光线变化，真正的无创非接触。</p>
+<p>但是这种方法成本高，易受到运动和光线变化的干扰。目前这个领域比较热门，进展也很快。一些补偿和增强鲁棒性的方法包括全局和局部运动跟踪和独立成分分析等。</p>
+<p>现在此类研究缺乏可靠的公开数据集支持，现有研究大多采用MAHNOB-HCI和DEAP等用于活体识别和情感识别的公开数据集和私有数据集。</p>
+<p><img src="/2873/figure-3-overview-hr-and-hrv.jpg" alt="rPPG-HRV"></p>
+<h2 id="产生机理和影响因素"><a href="#产生机理和影响因素" class="headerlink" title="产生机理和影响因素"></a>产生机理和影响因素</h2><p><img src="/2873/%E7%A4%BA%E6%84%8F%E5%9B%BE.png" alt="示意图"></p>
+<blockquote>
+<p>HRV反映的是自主神经和非自主神经系统所有反馈回路极其复杂的非线性交互作用。自主神经系统是窦性节律条件下心率的主要调节机制。</p>
+</blockquote>
+<p>忽略微小的影响，HRV的高频部分主要受迷走神经的调节，低频部分受到迷走和交感神经的双重作用。</p>
+<p><img src="/2873/nero2.jpg"></p>
+<blockquote>
+<p>交感神经增强自律性，而副交感神经抑制自律性。交感神经通过增加起搏点去极化程度产生变时性作用，而对心脏起搏点细胞的迷走刺激会引起超极化而降低去极化程度。自主神经的这两个分支均影响与心脏起搏细胞去极化相关的离子通道的活动。</p>
+</blockquote>
+<p>被测者的体位也会显著影响HRV，多数人处于仰卧位时，副交感神经活动明显增强。</p>
+<p>在突然站立或倾斜时，压力反射活动也会引起心率的同步波动。</p>
+<p>在24小时HRV中，白天交感神经活动相对增强，心率较快，而夜间迷走神经活动增强，心率较慢。正常睡眠时，生理活动也随每个睡眠周期(约90分钟)而呈现明显节律。</p>
+<p>精神情绪的波动也会影响HRV，和迷走神经和交感神经系统的兴奋性有关。</p>
+<p><img src="/2873/image-20191225214555467.png"></p>
+<p>此外，非自主神经因素(如神经内分泌功能)也会影响HRV。心率变异性也和年龄、性别等因素有关。</p>
+<h2 id="主要指标和数据分析"><a href="#主要指标和数据分析" class="headerlink" title="主要指标和数据分析"></a>主要指标和数据分析</h2><h3 id="时域特征"><a href="#时域特征" class="headerlink" title="时域特征"></a>时域特征</h3><p>医学上通常要求5分钟以上的的HRV做短时分析，但是有研究表明30s内的HF和LF和5分钟的没有太大区别，应用是可以进一步缩短检测时间。</p>
+<ul>
+<li><p>SDNN(ms)：NN间期(正常RR间期)的标准差(5分钟)</p>
+</li>
+<li><p>SDANN(ms)：NN间期(正常RR间期)的标准差（24小时）</p>
+</li>
+<li><p>pNN50：相邻NN间期相差&gt;50ms的数量占总心搏数的百<br>分比</p>
+</li>
+<li><p>rMSSD(ms)：相邻NN间期差值的均方根</p>
+</li>
+</ul>
+<p>rMSSD反映每搏NN间期变化的平均绝对值，对不规律心搏和&#x2F;或心搏波形标记错误的敏感性也很高。</p>
+<p>24小时记录得到的SDANN值低下表明缺乏昼夜节律。</p>
+<h3 id="频域特征"><a href="#频域特征" class="headerlink" title="频域特征"></a>频域特征</h3><ul>
+<li><p>总功率（TP）：频段≤0. 4Hz。</p>
+</li>
+<li><p>超低频功率（ULF）：频段≤ 0. 003Hz。</p>
+</li>
+<li><p>极低频功率（VLF）：频段 0. 003~0. 04Hz。</p>
+</li>
+<li><p>低频功率（LF）：频段 0. 04~0. 15Hz。</p>
+</li>
+<li><p>高频功率（HF）：频段 0. 15~0. 4Hz。</p>
+</li>
+<li><p>LF&#x2F;HF: 低频功率和高频功率的比值</p>
+</li>
+</ul>
+<p>LF反映副交感传出神经(迷走神经)和交感传出神经系统活性的综合调节</p>
+<p>HF反映副交感传出神经(迷走神经)活动的调节</p>
+<h3 id="非线性分析"><a href="#非线性分析" class="headerlink" title="非线性分析"></a>非线性分析</h3><h4 id="动态心电图（Holter-monitor）"><a href="#动态心电图（Holter-monitor）" class="headerlink" title="动态心电图（Holter monitor）"></a>动态心电图（Holter monitor）</h4><p>持续记录24小时或更久（几个月或一年以上）的长时间心电图数据，主要用来检测心律失常或传导异常和晕厥或晕厥前兆。</p>
+<p>$a\dot{b}c$</p>
+<h5 id="洛伦兹散点图"><a href="#洛伦兹散点图" class="headerlink" title="洛伦兹散点图"></a>洛伦兹散点图</h5><p><img src="/2873/201804091524569747.png"></p>
+<p>把前1个心动周期长度（ms）定为横坐标、后1个心动周期长度（ms）定为纵坐标，即可在直角坐标系中确定一点。这样一个点就由3个QRS波（R波）、2个RR间期决定。第1个RR间期R1R2和第2个RR间期R2R3为第1个点，第2个RR间期R2R3和第3个RR间期R3R4为第2个点，依次类推，从R1 -&gt; Rn作图就可得到 n-2 个点，绘制心率散点图（洛伦兹散点图，Lorenz Plot），判断窦性心率、室上性和室性心率失常。正常窦性心律呈彗星状，心衰、房颤等症状会出现不同的散点图。窦性心律沿45°线分布，呈彗星状</p>
+<p><img src="/2873/image-20191224202624859.png" alt="室性早搏"></p>
+<p><img src="/2873/image-20191224202756257.png" alt="房性早搏"></p>
+<p>散点图可用于：</p>
+<p>评价心率波动范围（散点图的位置分布）</p>
+<p>评价自主神经调节（长轴）</p>
+<p>评价心率变异（短轴）</p>
+<p>诊断心律失常（散点图的形态）</p>
+<h5 id="差值散点图"><a href="#差值散点图" class="headerlink" title="差值散点图"></a>差值散点图</h5><p>首先对序列 $RiR_{i+1}$ 做一阶差分, 得到序列 $d_j ,j&#x3D;1,2,\dots N-1$ 然后以 $(d_j, d_{j+1})$ 为坐标绘制散点图（Poincaré散点图）。差值散点图反映了RR间期差值的离散度 ,对连续RR间期的变化十分敏感。</p>
+<p>首先对序列$R_iR_{i\times1}$做一阶差分, 得到序列 $d_j,j&#x3D;1,2,\dots N-1$ 然后以 $(d_j, d_{j+1})$ 为坐标绘制散点图（Poincaré散点图）。差值散点图反映了RR间期差值的离散度 ,对连续RR间期的变化十分敏感。</p>
+<p><img src="/2873/image-20191225111057030.png" alt="健康人和CHF患者的散点图"></p>
+<h5 id="三维散点图"><a href="#三维散点图" class="headerlink" title="三维散点图"></a>三维散点图</h5><p>三维散点图的一些意义还不明确，医院里实际用的也很少<br><img src="/2873/3D-scatter-plot.png" alt="心率变异性三维散点图"></p>
+<h5 id="心率震荡（HRT）"><a href="#心率震荡（HRT）" class="headerlink" title="心率震荡（HRT）"></a>心率震荡（HRT）</h5><p>心率震荡（heart rate turbulence）是指发生室性早搏后，窦性心律出现短暂的加速和减速的过程。检测HRT异常有助于预测自主神经功能障碍以及心血管事件的风险增加。</p>
+<p>分析HRT通常需要24小时HRV动态心电图，主要有震荡初始(turbulence onset, TO)和震荡斜率(turbulence slope, TS)两个指标。</p>
+<h2 id="临床价值和应用"><a href="#临床价值和应用" class="headerlink" title="临床价值和应用"></a>临床价值和应用</h2><h3 id="心肌梗死死亡率预测"><a href="#心肌梗死死亡率预测" class="headerlink" title="心肌梗死死亡率预测"></a>心肌梗死死亡率预测</h3><p>心梗后早期(14日内)，若检测到患者的HRV指标降低，则心梗后3年内的死亡风险增至3-4倍。</p>
+<h3 id="心力衰竭"><a href="#心力衰竭" class="headerlink" title="心力衰竭"></a>心力衰竭</h3><p>已知就预后而言，HRV降低是总体死亡、心力衰竭死亡、心脏性猝死、室性心律失常和心脏移植的<br>独立预测指标</p>
+<h3 id="评估自主神经病变"><a href="#评估自主神经病变" class="headerlink" title="评估自主神经病变"></a>评估自主神经病变</h3><p>HRV明显降低或缺失可以作为辅助指标。</p>
+<h3 id="冠心病"><a href="#冠心病" class="headerlink" title="冠心病"></a>冠心病</h3><p>冠心病患者的HRV显著降低,且与冠状动脉病变支数及狭窄程度呈负相关,但与冠状动脉病变部位无关。</p>
+<h3 id="检测精神压力"><a href="#检测精神压力" class="headerlink" title="检测精神压力"></a>检测精神压力</h3><p>短时HRV变化可用于辅助检测精神压力</p>
+<p>迷走神经的冲动传导频率受呼吸频率和深度的调节而呈现节律性波动，呼吸性窦性心律不齐(respiratory sinus arrhythmia, RSA)。在有节奏的呼吸或冥想时，RSA可被放大。</p>
+<h3 id="评估体育表现"><a href="#评估体育表现" class="headerlink" title="评估体育表现"></a>评估体育表现</h3><p>可以作为推测无氧阈的较为精确的指标之一</p>
+<blockquote>
+<p>注意<br>在运动评估中一般只有要求无伤等才会首先考虑HRV，一般是用血清肌酸激酶(CK)、血清睾酮(T)、血红蛋白、乳酸等</p>
+</blockquote>
+<h3 id="监测训练负荷及诊断运动性疲劳"><a href="#监测训练负荷及诊断运动性疲劳" class="headerlink" title="监测训练负荷及诊断运动性疲劳"></a>监测训练负荷及诊断运动性疲劳</h3><p>交感一副交感神经张力的平衡会随着运动强度的改变而波</p>
+<h3 id="运动康复医学领域"><a href="#运动康复医学领域" class="headerlink" title="运动康复医学领域"></a>运动康复医学领域</h3><p>用于自主神经功能改善的评估</p>
+<h3 id="睡眠分期"><a href="#睡眠分期" class="headerlink" title="睡眠分期"></a>睡眠分期</h3><p>略</p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="呼吸和心率变异性"><a href="#呼吸和心率变异性" class="headerlink" title="呼吸和心率变异性"></a>呼吸和心率变异性</h3><h4 id="BCG信号中的呼吸信息"><a href="#BCG信号中的呼吸信息" class="headerlink" title="BCG信号中的呼吸信息"></a>BCG信号中的呼吸信息</h4><p>在采集到的BCG信号中，会包含呼吸信息，提取心率变异性通常要去除呼吸的干扰。</p>
+<p>但是在一些利用HRV进一步分析情绪、压力、睡眠分期的时候，可以考虑保留部分呼吸特征并将呼吸特征纳入到检测和分类中，有时可以提高检测的准确率。</p>
+<p>在心率变异性分析中纳入呼吸频率信息以进行压力评估</p>
+<h4 id="呼吸变异性"><a href="#呼吸变异性" class="headerlink" title="呼吸变异性"></a>呼吸变异性</h4><p>呼吸频率变异性(Respiratory Rate Variability，RRV, 有的地方也叫Breath Rate Variability），和心率变异性一样反映了一些生理特征，但是这种非电信号采集难，噪声大，不规律，包含的信息也比心电和脉搏波等信号少。除了</p>
+<p>目前对于RRV的研究比较少，也很少有人用这个特征做睡眠分期检测、疲劳压力检测或睡眠呼吸暂停的检测。一些使用雷达等手段检测疲劳或者睡眠的研究将这项指标作为判断依据。雷达和监控视频等可以在较近的距离探测人体呼吸活动和心率，但是这样采集分离出的心动信息用作睡眠和疲劳监测不如直接采集呼吸和运动的信息进行分析。对于体重指数（body mass index ）过高的的超重人群、较复杂的干扰和活动等情景，使用雷达等方式检测压力或疲劳时HRV准确率大幅降低，从心动信息检测不如直接从呼吸信息检测。在这些场景下会使用呼吸和体动信息来作为指标。</p>
+<h2 id="数据和软件"><a href="#数据和软件" class="headerlink" title="数据和软件"></a>数据和软件</h2><ol>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cua3ViaW9zLmNvbS9ocnYtc3RhbmRhcmQv">https://www.kubios.com/hrv-standard/<i class="fa fa-external-link-alt"></i></span> 免费的HRV分析软件</li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cucGh5c2lvbmV0Lm9yZy8jbGF0ZXN0">https://www.physionet.org/#latest<i class="fa fa-external-link-alt"></i></span> 心电图数据</li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj1EX0tZdjdwWEF2UQ==">https://www.youtube.com/watch?v=D_KYv7pXAvQ<i class="fa fa-external-link-alt"></i></span> rPPG检测心率</li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9weXBpLm9yZy9wcm9qZWN0L2JvYi5ycHBnLmJhc2Uv">https://pypi.org/project/bob.rppg.base/<i class="fa fa-external-link-alt"></i></span> rPPG的开源库，数据集MAHNOB-HCI和DEAP</li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cuaHJ2NHRyYWluaW5nLmNvbS8=">https://www.hrv4training.com/<i class="fa fa-external-link-alt"></i></span> 一个用蓝牙测HRV的APP，准确率貌似还可以</li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cuZmlyc3RiZWF0LmNvbS9lbi9maXJzdGJlYXQtaHJ2LXN1bW1pdC0yMDE5Lw==">Firstbeat HRV Summit<i class="fa fa-external-link-alt"></i></span> Firstbeat公司的HRV峰会，一些商用搞的比较好的东西</li>
+</ol>
+]]></content>
+      <categories>
+        <category>102网吧日常</category>
+      </categories>
+      <tags>
+        <tag>HRV</tag>
+        <tag>BCG</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hackergame 2021 (中科大信安赛) Write Up</title>
     <url>/hackergame-2021-write-up/</url>
     <content><![CDATA[<p>吃瓜群众第一次参赛，从LUG过来的，打酱油路过，没学过信安和密码学，然而很遗憾，跟Linux有关的那几个题全都没做出来。。。。<br>很意外自己能挤进200名的，事前完全没有准备，也没接触过CTF之类的东西，甚至比赛开始3天，进行到一半了我才突然发现这比赛它已经开始了，如果早知道 p😭q<br>对，今年这个Hackergame就是UTF-8比赛，对萌新可友好了（确信  </p>
@@ -4111,116 +4464,42 @@ p <span class="token operator">=</span> x
       </tags>
   </entry>
   <entry>
-    <title>也谈心率变异性</title>
-    <url>/2873/</url>
-    <content><![CDATA[<p>等待填坑</p>
+    <title>重装Ubuntu</title>
+    <url>/2d5/</url>
+    <content><![CDATA[<p>祖传服务器传到了我的手里, 行吧。其实我想把标题改成Ubuntu内部错误的解决办法（不是</p>
 <span id="more"></span>
 
-<h2 id="采集"><a href="#采集" class="headerlink" title="采集"></a>采集</h2><p>HRV测定的是NN间期(在正常的窦性心律时就是RR间期)的波动，主要与自主神经调控机制有关。标准的HRV根据正常窦性搏动的NN间期得出的（正常对正常间期，normal-to-normal,<em>NN</em> intervals，即由窦房结除极所致相邻QRS波群之间的所有间期）的变化来表示心率的变异性。</p>
-<p><img src="/2873/201804091523323502.png" alt="提取心率变异性"></p>
-<h3 id="心电（ECG）"><a href="#心电（ECG）" class="headerlink" title="心电（ECG）"></a>心电（ECG）</h3><p>可以从心电图中直接提取R波尖峰并将RR间期的值用于心率变异性分析</p>
-<h3 id="心冲击图（BCG）"><a href="#心冲击图（BCG）" class="headerlink" title="心冲击图（BCG）"></a>心冲击图（BCG）</h3><p>心冲击图去除呼吸和活动的干扰后提取JJ间期时间计算心率变异</p>
-<h3 id="光电容积图（PPG）"><a href="#光电容积图（PPG）" class="headerlink" title="光电容积图（PPG）"></a>光电容积图（PPG）</h3><p>目前市面上主要的脉搏波测量方法是光电容积脉搏波描记法（photoplethysmography），用光电传感器检测光经过人体的反射和衰减转换成电信号后得到，包括Apple Waltch等手环产品，用光电容积法检测血氧、心率、心率变异性等生理参数。</p>
-<p><img src="/2873/figure-1-optical-heart-rate-sensing.jpg" alt="光电容积法原理"></p>
-<p>PPG法采集到的脉搏波经过去噪和整流等处理后提取PP间期可以计算心率变异。</p>
-<h4 id="远程光电容积扫描"><a href="#远程光电容积扫描" class="headerlink" title="远程光电容积扫描"></a>远程光电容积扫描</h4><p>（rPPG，remote PPG）是一种新的方法，只要高清摄像头检测光线变化，真正的无创非接触。</p>
-<p>但是这种方法成本高，易受到运动和光线变化的干扰。目前这个领域比较热门，进展也很快。一些补偿和增强鲁棒性的方法包括全局和局部运动跟踪和独立成分分析等。</p>
-<p>现在此类研究缺乏可靠的公开数据集支持，现有研究大多采用MAHNOB-HCI和DEAP等用于活体识别和情感识别的公开数据集和私有数据集。</p>
-<p><img src="/2873/figure-3-overview-hr-and-hrv.jpg" alt="rPPG-HRV"></p>
-<h2 id="产生机理和影响因素"><a href="#产生机理和影响因素" class="headerlink" title="产生机理和影响因素"></a>产生机理和影响因素</h2><p><img src="/2873/%E7%A4%BA%E6%84%8F%E5%9B%BE.png" alt="示意图"></p>
-<blockquote>
-<p>HRV反映的是自主神经和非自主神经系统所有反馈回路极其复杂的非线性交互作用。自主神经系统是窦性节律条件下心率的主要调节机制。</p>
-</blockquote>
-<p>忽略微小的影响，HRV的高频部分主要受迷走神经的调节，低频部分受到迷走和交感神经的双重作用。</p>
-<p><img src="/2873/nero2.jpg"></p>
-<blockquote>
-<p>交感神经增强自律性，而副交感神经抑制自律性。交感神经通过增加起搏点去极化程度产生变时性作用，而对心脏起搏点细胞的迷走刺激会引起超极化而降低去极化程度。自主神经的这两个分支均影响与心脏起搏细胞去极化相关的离子通道的活动。</p>
-</blockquote>
-<p>被测者的体位也会显著影响HRV，多数人处于仰卧位时，副交感神经活动明显增强。</p>
-<p>在突然站立或倾斜时，压力反射活动也会引起心率的同步波动。</p>
-<p>在24小时HRV中，白天交感神经活动相对增强，心率较快，而夜间迷走神经活动增强，心率较慢。正常睡眠时，生理活动也随每个睡眠周期(约90分钟)而呈现明显节律。</p>
-<p>精神情绪的波动也会影响HRV，和迷走神经和交感神经系统的兴奋性有关。</p>
-<p><img src="/2873/image-20191225214555467.png"></p>
-<p>此外，非自主神经因素(如神经内分泌功能)也会影响HRV。心率变异性也和年龄、性别等因素有关。</p>
-<h2 id="主要指标和数据分析"><a href="#主要指标和数据分析" class="headerlink" title="主要指标和数据分析"></a>主要指标和数据分析</h2><h3 id="时域特征"><a href="#时域特征" class="headerlink" title="时域特征"></a>时域特征</h3><p>医学上通常要求5分钟以上的的HRV做短时分析，但是有研究表明30s内的HF和LF和5分钟的没有太大区别，应用是可以进一步缩短检测时间。</p>
-<ul>
-<li><p>SDNN(ms)：NN间期(正常RR间期)的标准差(5分钟)</p>
-</li>
-<li><p>SDANN(ms)：NN间期(正常RR间期)的标准差（24小时）</p>
-</li>
-<li><p>pNN50：相邻NN间期相差&gt;50ms的数量占总心搏数的百<br>分比</p>
-</li>
-<li><p>rMSSD(ms)：相邻NN间期差值的均方根</p>
-</li>
-</ul>
-<p>rMSSD反映每搏NN间期变化的平均绝对值，对不规律心搏和&#x2F;或心搏波形标记错误的敏感性也很高。</p>
-<p>24小时记录得到的SDANN值低下表明缺乏昼夜节律。</p>
-<h3 id="频域特征"><a href="#频域特征" class="headerlink" title="频域特征"></a>频域特征</h3><ul>
-<li><p>总功率（TP）：频段≤0. 4Hz。</p>
-</li>
-<li><p>超低频功率（ULF）：频段≤ 0. 003Hz。</p>
-</li>
-<li><p>极低频功率（VLF）：频段 0. 003~0. 04Hz。</p>
-</li>
-<li><p>低频功率（LF）：频段 0. 04~0. 15Hz。</p>
-</li>
-<li><p>高频功率（HF）：频段 0. 15~0. 4Hz。</p>
-</li>
-<li><p>LF&#x2F;HF: 低频功率和高频功率的比值</p>
-</li>
-</ul>
-<p>LF反映副交感传出神经(迷走神经)和交感传出神经系统活性的综合调节</p>
-<p>HF反映副交感传出神经(迷走神经)活动的调节</p>
-<h3 id="非线性分析"><a href="#非线性分析" class="headerlink" title="非线性分析"></a>非线性分析</h3><h4 id="动态心电图（Holter-monitor）"><a href="#动态心电图（Holter-monitor）" class="headerlink" title="动态心电图（Holter monitor）"></a>动态心电图（Holter monitor）</h4><p>持续记录24小时或更久（几个月或一年以上）的长时间心电图数据，主要用来检测心律失常或传导异常和晕厥或晕厥前兆。</p>
-<p>$a\dot{b}c$</p>
-<h5 id="洛伦兹散点图"><a href="#洛伦兹散点图" class="headerlink" title="洛伦兹散点图"></a>洛伦兹散点图</h5><p><img src="/2873/201804091524569747.png"></p>
-<p>把前1个心动周期长度（ms）定为横坐标、后1个心动周期长度（ms）定为纵坐标，即可在直角坐标系中确定一点。这样一个点就由3个QRS波（R波）、2个RR间期决定。第1个RR间期R1R2和第2个RR间期R2R3为第1个点，第2个RR间期R2R3和第3个RR间期R3R4为第2个点，依次类推，从R1 -&gt; Rn作图就可得到 n-2 个点，绘制心率散点图（洛伦兹散点图，Lorenz Plot），判断窦性心率、室上性和室性心率失常。正常窦性心律呈彗星状，心衰、房颤等症状会出现不同的散点图。窦性心律沿45°线分布，呈彗星状</p>
-<p><img src="/2873/image-20191224202624859.png" alt="室性早搏"></p>
-<p><img src="/2873/image-20191224202756257.png" alt="房性早搏"></p>
-<p>散点图可用于：</p>
-<p>评价心率波动范围（散点图的位置分布）</p>
-<p>评价自主神经调节（长轴）</p>
-<p>评价心率变异（短轴）</p>
-<p>诊断心律失常（散点图的形态）</p>
-<h5 id="差值散点图"><a href="#差值散点图" class="headerlink" title="差值散点图"></a>差值散点图</h5><p>首先对序列 $RiR_{i+1}$ 做一阶差分, 得到序列 $d_j ,j&#x3D;1,2,\dots N-1$ 然后以 $(d_j, d_{j+1})$ 为坐标绘制散点图（Poincaré散点图）。差值散点图反映了RR间期差值的离散度 ,对连续RR间期的变化十分敏感。</p>
-<p>首先对序列$R_iR_{i\times1}$做一阶差分, 得到序列 $d_j,j&#x3D;1,2,\dots N-1$ 然后以 $(d_j, d_{j+1})$ 为坐标绘制散点图（Poincaré散点图）。差值散点图反映了RR间期差值的离散度 ,对连续RR间期的变化十分敏感。</p>
-<p><img src="/2873/image-20191225111057030.png" alt="健康人和CHF患者的散点图"></p>
-<h5 id="三维散点图"><a href="#三维散点图" class="headerlink" title="三维散点图"></a>三维散点图</h5><p>三维散点图的一些意义还不明确，医院里实际用的也很少<br><img src="/2873/3D-scatter-plot.png" alt="心率变异性三维散点图"></p>
-<h5 id="心率震荡（HRT）"><a href="#心率震荡（HRT）" class="headerlink" title="心率震荡（HRT）"></a>心率震荡（HRT）</h5><p>心率震荡（heart rate turbulence）是指发生室性早搏后，窦性心律出现短暂的加速和减速的过程。检测HRT异常有助于预测自主神经功能障碍以及心血管事件的风险增加。</p>
-<p>分析HRT通常需要24小时HRV动态心电图，主要有震荡初始(turbulence onset, TO)和震荡斜率(turbulence slope, TS)两个指标。</p>
-<h2 id="临床价值和应用"><a href="#临床价值和应用" class="headerlink" title="临床价值和应用"></a>临床价值和应用</h2><h3 id="心肌梗死死亡率预测"><a href="#心肌梗死死亡率预测" class="headerlink" title="心肌梗死死亡率预测"></a>心肌梗死死亡率预测</h3><p>心梗后早期(14日内)，若检测到患者的HRV指标降低，则心梗后3年内的死亡风险增至3-4倍。</p>
-<h3 id="心力衰竭"><a href="#心力衰竭" class="headerlink" title="心力衰竭"></a>心力衰竭</h3><p>已知就预后而言，HRV降低是总体死亡、心力衰竭死亡、心脏性猝死、室性心律失常和心脏移植的<br>独立预测指标</p>
-<h3 id="评估自主神经病变"><a href="#评估自主神经病变" class="headerlink" title="评估自主神经病变"></a>评估自主神经病变</h3><p>HRV明显降低或缺失可以作为辅助指标。</p>
-<h3 id="冠心病"><a href="#冠心病" class="headerlink" title="冠心病"></a>冠心病</h3><p>冠心病患者的HRV显著降低,且与冠状动脉病变支数及狭窄程度呈负相关,但与冠状动脉病变部位无关。</p>
-<h3 id="检测精神压力"><a href="#检测精神压力" class="headerlink" title="检测精神压力"></a>检测精神压力</h3><p>短时HRV变化可用于辅助检测精神压力</p>
-<p>迷走神经的冲动传导频率受呼吸频率和深度的调节而呈现节律性波动，呼吸性窦性心律不齐(respiratory sinus arrhythmia, RSA)。在有节奏的呼吸或冥想时，RSA可被放大。</p>
-<h3 id="评估体育表现"><a href="#评估体育表现" class="headerlink" title="评估体育表现"></a>评估体育表现</h3><p>可以作为推测无氧阈的较为精确的指标之一</p>
-<blockquote>
-<p>注意<br>在运动评估中一般只有要求无伤等才会首先考虑HRV，一般是用血清肌酸激酶(CK)、血清睾酮(T)、血红蛋白、乳酸等</p>
-</blockquote>
-<h3 id="监测训练负荷及诊断运动性疲劳"><a href="#监测训练负荷及诊断运动性疲劳" class="headerlink" title="监测训练负荷及诊断运动性疲劳"></a>监测训练负荷及诊断运动性疲劳</h3><p>交感一副交感神经张力的平衡会随着运动强度的改变而波</p>
-<h3 id="运动康复医学领域"><a href="#运动康复医学领域" class="headerlink" title="运动康复医学领域"></a>运动康复医学领域</h3><p>用于自主神经功能改善的评估</p>
-<h3 id="睡眠分期"><a href="#睡眠分期" class="headerlink" title="睡眠分期"></a>睡眠分期</h3><p>略</p>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="呼吸和心率变异性"><a href="#呼吸和心率变异性" class="headerlink" title="呼吸和心率变异性"></a>呼吸和心率变异性</h3><h4 id="BCG信号中的呼吸信息"><a href="#BCG信号中的呼吸信息" class="headerlink" title="BCG信号中的呼吸信息"></a>BCG信号中的呼吸信息</h4><p>在采集到的BCG信号中，会包含呼吸信息，提取心率变异性通常要去除呼吸的干扰。</p>
-<p>但是在一些利用HRV进一步分析情绪、压力、睡眠分期的时候，可以考虑保留部分呼吸特征并将呼吸特征纳入到检测和分类中，有时可以提高检测的准确率。</p>
-<p>在心率变异性分析中纳入呼吸频率信息以进行压力评估</p>
-<h4 id="呼吸变异性"><a href="#呼吸变异性" class="headerlink" title="呼吸变异性"></a>呼吸变异性</h4><p>呼吸频率变异性(Respiratory Rate Variability，RRV, 有的地方也叫Breath Rate Variability），和心率变异性一样反映了一些生理特征，但是这种非电信号采集难，噪声大，不规律，包含的信息也比心电和脉搏波等信号少。除了</p>
-<p>目前对于RRV的研究比较少，也很少有人用这个特征做睡眠分期检测、疲劳压力检测或睡眠呼吸暂停的检测。一些使用雷达等手段检测疲劳或者睡眠的研究将这项指标作为判断依据。雷达和监控视频等可以在较近的距离探测人体呼吸活动和心率，但是这样采集分离出的心动信息用作睡眠和疲劳监测不如直接采集呼吸和运动的信息进行分析。对于体重指数（body mass index ）过高的的超重人群、较复杂的干扰和活动等情景，使用雷达等方式检测压力或疲劳时HRV准确率大幅降低，从心动信息检测不如直接从呼吸信息检测。在这些场景下会使用呼吸和体动信息来作为指标。</p>
-<h2 id="数据和软件"><a href="#数据和软件" class="headerlink" title="数据和软件"></a>数据和软件</h2><ol>
-<li><span class="exturl" data-url="aHR0cHM6Ly93d3cua3ViaW9zLmNvbS9ocnYtc3RhbmRhcmQv">https://www.kubios.com/hrv-standard/<i class="fa fa-external-link-alt"></i></span> 免费的HRV分析软件</li>
-<li><span class="exturl" data-url="aHR0cHM6Ly93d3cucGh5c2lvbmV0Lm9yZy8jbGF0ZXN0">https://www.physionet.org/#latest<i class="fa fa-external-link-alt"></i></span> 心电图数据</li>
-<li><span class="exturl" data-url="aHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj1EX0tZdjdwWEF2UQ==">https://www.youtube.com/watch?v=D_KYv7pXAvQ<i class="fa fa-external-link-alt"></i></span> rPPG检测心率</li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9weXBpLm9yZy9wcm9qZWN0L2JvYi5ycHBnLmJhc2Uv">https://pypi.org/project/bob.rppg.base/<i class="fa fa-external-link-alt"></i></span> rPPG的开源库，数据集MAHNOB-HCI和DEAP</li>
-<li><span class="exturl" data-url="aHR0cHM6Ly93d3cuaHJ2NHRyYWluaW5nLmNvbS8=">https://www.hrv4training.com/<i class="fa fa-external-link-alt"></i></span> 一个用蓝牙测HRV的APP，准确率貌似还可以</li>
-<li><span class="exturl" data-url="aHR0cHM6Ly93d3cuZmlyc3RiZWF0LmNvbS9lbi9maXJzdGJlYXQtaHJ2LXN1bW1pdC0yMDE5Lw==">Firstbeat HRV Summit<i class="fa fa-external-link-alt"></i></span> Firstbeat公司的HRV峰会，一些商用搞的比较好的东西</li>
-</ol>
+<h2 id="更新（和洗手）"><a href="#更新（和洗手）" class="headerlink" title="更新（和洗手）"></a>更新（和洗手）</h2><p>19年写的这个20年不知道怎么在2020年有一段时间被扔到了<code>重装Ubuntu</code>搜索结果的最前面，我这个小破站访问量暴增。然而那个时候20.04LTS都出了，已经有点过时了，而我19年那会写的那个几乎属于个人吐槽，差不多是我博客迁到，完全不适合作为一个教程。可能骗了很多人进来，</p>
+<p>装什么Ubuntu啊，还是Arch香，群里个个都是人才，说话又好听</p>
+<p><img src="/2d5/1611832700.webp"></p>
+<p><del>但是随便装个Ubuntu不仅快，他们跑深度学习的时候抄CSDN配置环境也方便</del></p>
+<p><del>最重要的，又不是我用。</del></p>
+<p><del>GNOME内存泄漏关我什么事</del></p>
+<p><del>Ubuntu内部错误关我什么事</del></p>
+<p>还是去用Ubuntu吧.jpg</p>
+<p><img src="/2d5/1611834396.webp"></p>
+<p><img src="/2d5/1611834449.webp"></p>
+<h2 id="认真发言"><a href="#认真发言" class="headerlink" title="认真发言"></a>认真发言</h2><p>其实你可以试试Debian（Canonical强推snap太烦人了）</p>
+<h3 id="关于桌面（DE）"><a href="#关于桌面（DE）" class="headerlink" title="关于桌面（DE）"></a>关于桌面（DE）</h3><p>带桌面的版本建议避开Ubuntu的GNOME，那个东西。。。</p>
+<p>可以试试Linux Mint，或者Fedora（这个的GNOME应该比 Ubuntu 16、18 那几个整天内存泄露的GNOME版本稳多了）</p>
+<p>其实我推荐KDE，可以试试Kubuntu（或者KDE Neon？）</p>
+<p>机器配置较差请直接Lubuntu，稳如老狗，除了略简陋没有别的缺点。</p>
+<p>一众WM用户应该不会搜索这么蠢的关键词搜到我这里来，这里不谈WM了。</p>
+<h3 id="关于服务器"><a href="#关于服务器" class="headerlink" title="关于服务器"></a>关于服务器</h3><p>小作坊没有专职运维和技术支持，其实服务器建议试试Debian或者Ubuntu LTS，Debian stable稳如老狗</p>
+<p><del>众所周知，Debian testing 都比 Ubuntu LTS 稳（注意这个安全更新比较慢，个人用户可以testing，开了公网端口的工作站不要用这个）</del></p>
+<p>不过Ubuntu和CentOS6、7比起来，还是瞬间和蔼可亲了不少</p>
+<p>求求新入坑的别再跟着什么鸟哥私房菜之类的老教程用CentOS了，2020年 CentOS 8 都被扬了，REHL马上就要给小作坊免费了，小作坊真迷信稳定上REHL吧。</p>
+<p>没事不要用所谓稳定的老版本然后找不到包只能自己手动编译，就不说c&#x2F;c++那一堆lib了，我已经见过不少人在编译python的时候没开ssl当场翻车。</p>
+<p>什么你说容器？你试过在CentOS6上面弄Docker和k8s吗，我在教研室的祖传阿里云上试过一次，从此再也不想看到CentOS了</p>
+<p>（整天在CentOS上手动编译凸显运维重要性和工作量的除外）</p>
+<h2 id="安装参考"><a href="#安装参考" class="headerlink" title="安装参考"></a>安装参考</h2><p><span class="exturl" data-url="dHRwczovL3R1dG9yaWFscy51YnVudHUuY29tL3R1dG9yaWFsL3R1dG9yaWFsLWluc3RhbGwtdWJ1bnR1LXNlcnZlcg==">tutorial-install-ubuntu-server<i class="fa fa-external-link-alt"></i></span><br> <span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL0xWTV8oJUU3JUFFJTgwJUU0JUJEJTkzJUU0JUI4JUFEJUU2JTk2JTg3KQ==">LVM arch-wiki<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly95ZWFzeS5naXRib29rcy5pby9kb2NrZXJfcHJhY3RpY2UvaW5zdGFsbC91YnVudHUuaHRtbA==">Ubuntu 安装 Docker CE<i class="fa fa-external-link-alt"></i></span>、<span class="exturl" data-url="aHR0cHM6Ly95ZWFzeS5naXRib29rcy5pby9kb2NrZXJfcHJhY3RpY2UvaW5zdGFsbC9taXJyb3IuaHRtbA==">镜像加速器<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cudGVjbWludC5jb20vY29uZmlndXJlLW5ldHdvcmstc3RhdGljLWlwLWFkZHJlc3MtaW4tdWJ1bnR1Lw==">How to Configure Network Static IP Address in Ubuntu 18.04<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9uZXRwbGFuLmlvL2V4YW1wbGVz">netplan官网的配置示例<i class="fa fa-external-link-alt"></i></span></p>
 ]]></content>
       <categories>
         <category>102网吧日常</category>
       </categories>
       <tags>
-        <tag>HRV</tag>
-        <tag>BCG</tag>
+        <tag>ubuntu</tag>
+        <tag>重装</tag>
       </tags>
   </entry>
   <entry>
@@ -4265,45 +4544,6 @@ p <span class="token operator">=</span> x
       <tags>
         <tag>Archlinux</tag>
         <tag>manjaro</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>重装Ubuntu</title>
-    <url>/2d5/</url>
-    <content><![CDATA[<p>祖传服务器传到了我的手里, 行吧。其实我想把标题改成Ubuntu内部错误的解决办法（不是</p>
-<span id="more"></span>
-
-<h2 id="更新（和洗手）"><a href="#更新（和洗手）" class="headerlink" title="更新（和洗手）"></a>更新（和洗手）</h2><p>19年写的这个20年不知道怎么在2020年有一段时间被扔到了<code>重装Ubuntu</code>搜索结果的最前面，我这个小破站访问量暴增。然而那个时候20.04LTS都出了，已经有点过时了，而我19年那会写的那个几乎属于个人吐槽，差不多是我博客迁到，完全不适合作为一个教程。可能骗了很多人进来，</p>
-<p>装什么Ubuntu啊，还是Arch香，群里个个都是人才，说话又好听</p>
-<p><img src="/2d5/1611832700.webp"></p>
-<p><del>但是随便装个Ubuntu不仅快，他们跑深度学习的时候抄CSDN配置环境也方便</del></p>
-<p><del>最重要的，又不是我用。</del></p>
-<p><del>GNOME内存泄漏关我什么事</del></p>
-<p><del>Ubuntu内部错误关我什么事</del></p>
-<p>还是去用Ubuntu吧.jpg</p>
-<p><img src="/2d5/1611834396.webp"></p>
-<p><img src="/2d5/1611834449.webp"></p>
-<h2 id="认真发言"><a href="#认真发言" class="headerlink" title="认真发言"></a>认真发言</h2><p>其实你可以试试Debian（Canonical强推snap太烦人了）</p>
-<h3 id="关于桌面（DE）"><a href="#关于桌面（DE）" class="headerlink" title="关于桌面（DE）"></a>关于桌面（DE）</h3><p>带桌面的版本建议避开Ubuntu的GNOME，那个东西。。。</p>
-<p>可以试试Linux Mint，或者Fedora（这个的GNOME应该比 Ubuntu 16、18 那几个整天内存泄露的GNOME版本稳多了）</p>
-<p>其实我推荐KDE，可以试试Kubuntu（或者KDE Neon？）</p>
-<p>机器配置较差请直接Lubuntu，稳如老狗，除了略简陋没有别的缺点。</p>
-<p>一众WM用户应该不会搜索这么蠢的关键词搜到我这里来，这里不谈WM了。</p>
-<h3 id="关于服务器"><a href="#关于服务器" class="headerlink" title="关于服务器"></a>关于服务器</h3><p>小作坊没有专职运维和技术支持，其实服务器建议试试Debian或者Ubuntu LTS，Debian stable稳如老狗</p>
-<p><del>众所周知，Debian testing 都比 Ubuntu LTS 稳（注意这个安全更新比较慢，个人用户可以testing，开了公网端口的工作站不要用这个）</del></p>
-<p>不过Ubuntu和CentOS6、7比起来，还是瞬间和蔼可亲了不少</p>
-<p>求求新入坑的别再跟着什么鸟哥私房菜之类的老教程用CentOS了，2020年 CentOS 8 都被扬了，REHL马上就要给小作坊免费了，小作坊真迷信稳定上REHL吧。</p>
-<p>没事不要用所谓稳定的老版本然后找不到包只能自己手动编译，就不说c&#x2F;c++那一堆lib了，我已经见过不少人在编译python的时候没开ssl当场翻车。</p>
-<p>什么你说容器？你试过在CentOS6上面弄Docker和k8s吗，我在教研室的祖传阿里云上试过一次，从此再也不想看到CentOS了</p>
-<p>（整天在CentOS上手动编译凸显运维重要性和工作量的除外）</p>
-<h2 id="安装参考"><a href="#安装参考" class="headerlink" title="安装参考"></a>安装参考</h2><p><span class="exturl" data-url="dHRwczovL3R1dG9yaWFscy51YnVudHUuY29tL3R1dG9yaWFsL3R1dG9yaWFsLWluc3RhbGwtdWJ1bnR1LXNlcnZlcg==">tutorial-install-ubuntu-server<i class="fa fa-external-link-alt"></i></span><br> <span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL0xWTV8oJUU3JUFFJTgwJUU0JUJEJTkzJUU0JUI4JUFEJUU2JTk2JTg3KQ==">LVM arch-wiki<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly95ZWFzeS5naXRib29rcy5pby9kb2NrZXJfcHJhY3RpY2UvaW5zdGFsbC91YnVudHUuaHRtbA==">Ubuntu 安装 Docker CE<i class="fa fa-external-link-alt"></i></span>、<span class="exturl" data-url="aHR0cHM6Ly95ZWFzeS5naXRib29rcy5pby9kb2NrZXJfcHJhY3RpY2UvaW5zdGFsbC9taXJyb3IuaHRtbA==">镜像加速器<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cudGVjbWludC5jb20vY29uZmlndXJlLW5ldHdvcmstc3RhdGljLWlwLWFkZHJlc3MtaW4tdWJ1bnR1Lw==">How to Configure Network Static IP Address in Ubuntu 18.04<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9uZXRwbGFuLmlvL2V4YW1wbGVz">netplan官网的配置示例<i class="fa fa-external-link-alt"></i></span></p>
-]]></content>
-      <categories>
-        <category>102网吧日常</category>
-      </categories>
-      <tags>
-        <tag>ubuntu</tag>
-        <tag>重装</tag>
       </tags>
   </entry>
   <entry>
@@ -4601,6 +4841,42 @@ https://cloud.tencent.com/developer/article/1603974 -->
       </tags>
   </entry>
   <entry>
+    <title>用Markdown制做PPT</title>
+    <url>/make-ppt-with-markdown/</url>
+    <content><![CDATA[<p>纯文本好，富文本坏。这是一个劝你放弃PowerPoint和Wps演示的安利文，回归简陋，回归开源。</p>
+<span id="more"></span>
+
+<p>这是迫于毕业不得不向PPT低头才干出来的事情，在PPT上浪费时光真没意思。能不做PPT还是不做PPT最好。（没推荐Beamer是因为LaTeX这种专业排版工具还是太复杂了，还是会浪费不少时间在排版上。）</p>
+<h2 id="喧宾夺主的PPT"><a href="#喧宾夺主的PPT" class="headerlink" title="喧宾夺主的PPT"></a>喧宾夺主的PPT</h2><p><del>但是根据约翰霍普金斯大学的研究，喜欢做PPT的大概率是个传销分子</del></p>
+<p>Office三件套里面，我对word只是喜欢不起来（真要做到内容样式分离还是可以的，而且把富文本的所见即所得做到了地表最强），对Excel有点厌恶（谁让你多管闲事把身份者号给我改成科学计数法了？），PPT我真的心力憔悴了。Beamer一类的Slides演示还比较重视内容，你软家的</p>
+<p>如果不是生活所迫谁愿意做PPT呢，直接拿Markdown写文档呗。（我们现在确实除了毕业答辩这种迫不得已的事情，都用Markdown给老板讲东西了。PPT？当年老板嫌弃小胡师兄PPT做的烂，反正PPT不好好做看起来甚至不如Markdown在typora里面或者hexo里面好看）。好在毕业答辩类的学术PPT不用做的太好看，简陋一点反而显得比较朴实无华，Markdown生成的PPT也够看了。而且我前期给老板交差的调研材料什么的基本都是用Markdown写的，改一改就成PPT了。其实如果不是开题、毕设答辩要求PPT，我真的想用Markdown列一个大纲讲。</p>
+<p>至于为什么不用LaTeX的Beamer，那是我对LaTeX不熟，而我对CSS和HTML比较熟，Markdown做不到的可以伤感CSS魔改。<br>功能简陋也好，这样免得我在PPT上面调格式浪费很多时间。<strong>而且可以用键盘操作</strong>。</p>
+<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>作为一个毕业答辩之类的PPT，Marp的功能已经足够做一个丐版的学术简陋风格PPT了，Beamer的功能Marp几乎都有。这个东西有VSCode插件，直接装就好了。网页版也可以直接用。</p>
+<p>当然这个东西没有什么惊艳的动画效果和对布局细致的控制和调整，Markdown本来就不适合干这个事情呢。如果是做传销风格的PPT那还请<del>直接用Office</del>试试隔壁的reveal.js，像写前端一样写你的演示，各种漂亮的动画效果全都有。</p>
+<p>直接新建一个Markdown，在开头启用marp就好了。</p>
+<pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown"><span class="token front-matter-block"><span class="token punctuation">---</span>
+<span class="token front-matter yaml language-yaml"><span class="token key atrule">marp</span><span class="token punctuation">:</span> <span class="token boolean important">true</span></span>
+<span class="token punctuation">---</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>语法都是markdown的语法，每一张PPT之间隔断就用<code>---</code>就可以了（最好在<code>---</code>前面空一行）</p>
+<p>为了更符合传统的PPT界面的布局，VSCode打开Preview，然后将preview调到左边侧栏。好，它现在看起来和wps演示和PowerPoint完全一致。</p>
+<p><img src="/make-ppt-with-markdown/1641736904.png"></p>
+<h2 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h2><p>图片的支持当然没有PowerPoint那么好。Markdown本来就不支持调整图片的大小、图片缩放、指定图片位置这种操作。对于博客文章或者文档可以统一用css去设置居中、边框这些，但是PPT的图片几乎每页的布局和位置都不太一样。Marp对Markdown提供了一些扩展，能基本满足我对图片的位置调整需求。如果不满足要求可以用html标签去调图片。</p>
+<p>下面的操作是一些粗略调整宽度高度的语法、以及上下左右、居中、背景图片。</p>
+<pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown">
+<span class="token url"><span class="token operator">!</span>[<span class="token content">bg right vertical weight:600</span>](<span class="token url">zhixi.png</span>)</span>
+<span class="token comment">&lt;!-- 将图片置于右上，宽度600px --></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h2><p>Marp自带的模板合适可以自己定制，只需要一点CSS就可以了</p>
+<p>定制可以参考：<span class="exturl" data-url="aHR0cHM6Ly9tYXJwaXQubWFycC5hcHAvdGhlbWUtY3Nz">https://marpit.marp.app/theme-css<i class="fa fa-external-link-alt"></i></span></p>
+<p>太长不看版：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21hcnAtdGVhbS9tYXJwL2Rpc2N1c3Npb25zLzExNQ==">How to create a theme?<i class="fa fa-external-link-alt"></i></span>  </p>
+]]></content>
+      <tags>
+        <tag>ppt</tag>
+        <tag>markdown</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Linux系统的抢救和维护（桌面篇）</title>
     <url>/linux-rescue/</url>
     <content><![CDATA[<p>这篇水文主要是写给桌面玩家看的，如果您的服务器打出了GG&#x2F;被黑了&#x2F;库被删了，可能不适合来这里找答案。</p>
@@ -4785,42 +5061,6 @@ i8042.noloop	[HW] Disable the AUX Loopback command while probing
       <tags>
         <tag>Linux</tag>
         <tag>rescue</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>用Markdown制做PPT</title>
-    <url>/make-ppt-with-markdown/</url>
-    <content><![CDATA[<p>纯文本好，富文本坏。这是一个劝你放弃PowerPoint和Wps演示的安利文，回归简陋，回归开源。</p>
-<span id="more"></span>
-
-<p>这是迫于毕业不得不向PPT低头才干出来的事情，在PPT上浪费时光真没意思。能不做PPT还是不做PPT最好。（没推荐Beamer是因为LaTeX这种专业排版工具还是太复杂了，还是会浪费不少时间在排版上。）</p>
-<h2 id="喧宾夺主的PPT"><a href="#喧宾夺主的PPT" class="headerlink" title="喧宾夺主的PPT"></a>喧宾夺主的PPT</h2><p><del>但是根据约翰霍普金斯大学的研究，喜欢做PPT的大概率是个传销分子</del></p>
-<p>Office三件套里面，我对word只是喜欢不起来（真要做到内容样式分离还是可以的，而且把富文本的所见即所得做到了地表最强），对Excel有点厌恶（谁让你多管闲事把身份者号给我改成科学计数法了？），PPT我真的心力憔悴了。Beamer一类的Slides演示还比较重视内容，你软家的</p>
-<p>如果不是生活所迫谁愿意做PPT呢，直接拿Markdown写文档呗。（我们现在确实除了毕业答辩这种迫不得已的事情，都用Markdown给老板讲东西了。PPT？当年老板嫌弃小胡师兄PPT做的烂，反正PPT不好好做看起来甚至不如Markdown在typora里面或者hexo里面好看）。好在毕业答辩类的学术PPT不用做的太好看，简陋一点反而显得比较朴实无华，Markdown生成的PPT也够看了。而且我前期给老板交差的调研材料什么的基本都是用Markdown写的，改一改就成PPT了。其实如果不是开题、毕设答辩要求PPT，我真的想用Markdown列一个大纲讲。</p>
-<p>至于为什么不用LaTeX的Beamer，那是我对LaTeX不熟，而我对CSS和HTML比较熟，Markdown做不到的可以伤感CSS魔改。<br>功能简陋也好，这样免得我在PPT上面调格式浪费很多时间。<strong>而且可以用键盘操作</strong>。</p>
-<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>作为一个毕业答辩之类的PPT，Marp的功能已经足够做一个丐版的学术简陋风格PPT了，Beamer的功能Marp几乎都有。这个东西有VSCode插件，直接装就好了。网页版也可以直接用。</p>
-<p>当然这个东西没有什么惊艳的动画效果和对布局细致的控制和调整，Markdown本来就不适合干这个事情呢。如果是做传销风格的PPT那还请<del>直接用Office</del>试试隔壁的reveal.js，像写前端一样写你的演示，各种漂亮的动画效果全都有。</p>
-<p>直接新建一个Markdown，在开头启用marp就好了。</p>
-<pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown"><span class="token front-matter-block"><span class="token punctuation">---</span>
-<span class="token front-matter yaml language-yaml"><span class="token key atrule">marp</span><span class="token punctuation">:</span> <span class="token boolean important">true</span></span>
-<span class="token punctuation">---</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<p>语法都是markdown的语法，每一张PPT之间隔断就用<code>---</code>就可以了（最好在<code>---</code>前面空一行）</p>
-<p>为了更符合传统的PPT界面的布局，VSCode打开Preview，然后将preview调到左边侧栏。好，它现在看起来和wps演示和PowerPoint完全一致。</p>
-<p><img src="/make-ppt-with-markdown/1641736904.png"></p>
-<h2 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h2><p>图片的支持当然没有PowerPoint那么好。Markdown本来就不支持调整图片的大小、图片缩放、指定图片位置这种操作。对于博客文章或者文档可以统一用css去设置居中、边框这些，但是PPT的图片几乎每页的布局和位置都不太一样。Marp对Markdown提供了一些扩展，能基本满足我对图片的位置调整需求。如果不满足要求可以用html标签去调图片。</p>
-<p>下面的操作是一些粗略调整宽度高度的语法、以及上下左右、居中、背景图片。</p>
-<pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown">
-<span class="token url"><span class="token operator">!</span>[<span class="token content">bg right vertical weight:600</span>](<span class="token url">zhixi.png</span>)</span>
-<span class="token comment">&lt;!-- 将图片置于右上，宽度600px --></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h2><p>Marp自带的模板合适可以自己定制，只需要一点CSS就可以了</p>
-<p>定制可以参考：<span class="exturl" data-url="aHR0cHM6Ly9tYXJwaXQubWFycC5hcHAvdGhlbWUtY3Nz">https://marpit.marp.app/theme-css<i class="fa fa-external-link-alt"></i></span></p>
-<p>太长不看版：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21hcnAtdGVhbS9tYXJwL2Rpc2N1c3Npb25zLzExNQ==">How to create a theme?<i class="fa fa-external-link-alt"></i></span>  </p>
-]]></content>
-      <tags>
-        <tag>ppt</tag>
-        <tag>markdown</tag>
       </tags>
   </entry>
   <entry>
@@ -6179,6 +6419,36 @@ Unit pipewire-pulse.service could not be found.<span aria-hidden="true" class="l
       </tags>
   </entry>
   <entry>
+    <title>Quorum机制和边界问题</title>
+    <url>/quorum/</url>
+    <content><![CDATA[<p>在分布式的多副本复制中，一个简单的做法是单主节点+多副本，另一种是多主节点，此时需要处理主节点冲突问题。在无主节点的写入一致性上，经常会用到Quorum机制（类似鸽笼原理），在Raft里面也有类似的机制（joint consensus），用来在多个节点变更的时候达成共识选出master</p>
+<span id="more"></span>
+
+<h2 id="Quorum"><a href="#Quorum" class="headerlink" title="Quorum"></a>Quorum</h2><p>n个节点要获取最新的值，一种方案是只有一个主节点，其他的都是副本。读取的时候只读主节点。这样对主节点压力很大，而且容错性低，主节点一旦故障就无法读取了。</p>
+<p>所以有了一些多主节点和无主节点的方案。</p>
+<p>先看比较简单的无主节点的情况，假设有n个节点，客户端向节点发送写请求w，读请求r。类似鸽巢原理，当$w+r&gt;n$的时候，读取到的节点包含最新值。</p>
+<p>这样一个好处是容错，如果有少量节点故障依然可以正常工作。另一个好处是不必等写入全部完成后再进行读取，只要等到满足$w+r&gt;n$就可以读到新值。</p>
+<p>那么如何找到最新的节点？可以用时间戳或者递增id等方式，从所有读取中找到一个最新的。</p>
+<p>实际上关键问题是我们<strong>只要找到一个最新的就可以了</strong>，于是我们其实可以不用严格的$w+r&gt;n$，比如elasticsearch的consistency的quorum选项，区分了primary和replicas，<code>quroum = int( (primary + number_of_replicas) / 2 ) + 1</code>。这样区分了主从之后基本上只要从主节点读就可以了。考虑最简单最常用的主从备份，一个主节点一个从节点，只要从主节点读到就可以了（或者主从节点都读到）</p>
+<p>再比如etcd的joint consensus，要选出leader，同时变更多个节点的时候要达成共识（不然有可能同时选出两个leader）<br>变更之前是C_old, 变更之后是C_new, 中间状态是C_old,new, 也需要用鸽巢原理选出majority认可的leader。（注意中间达成共识是需要时间的，不能从C_old直接跳到C_new, 在边界条件从C_old,new才能避免）。通过一个中间状态保证了要么是C_old,new的leader，要么是C_new的leader，这样就不会选出两个。</p>
+<p>在类似elasticsearch的系统中w和r的参数可以配置，读多写少的场景下就将w设置的大一点。一种很简单的复制方法是WARO（Write All Read One），其实这就是w&#x3D;n, r&#x3D;1情况下的一种特例。这个时候容错很低，只要有1个节点出问题，就会出现写入失败的情况，此时读就没法读到新值。</p>
+<h2 id="边界条件"><a href="#边界条件" class="headerlink" title="边界条件"></a>边界条件</h2><p>读写都是随机均匀的，有节点不可用的情况:</p>
+<p>n&#x3D;3, w&#x3D;2, r&#x3D;2时可以容忍一个副本节点故障<br>n&#x3D;5, w&#x3D;3, r&#x3D;3时可以容忍2个<br>一般设置w和r都是$\frac{n}{2}$ ，可以容忍$\frac{n}{2}$个问题副本（读写都在$\frac{n}{2}$个剩余节点上）</p>
+<p>当对读到新值的要求不那么高时，可以设置$w+r&lt;n$, 此时有概率不满足一致性，有可能读到旧数据。不过这样可以提供更高的可用性，只有当可用节点低于$min(w,r)$时，才会无法读写（不可用）。这个一般被称为sloppy quorum</p>
+<h2 id="Quorum的问题"><a href="#Quorum的问题" class="headerlink" title="Quorum的问题"></a>Quorum的问题</h2><p>TLDR, Quorum无法保证强一致性。</p>
+<p>没有返回最新的值的情况：</p>
+<p>1.并发写入，解决并发写冲突的一种办法是丢弃早的（覆盖掉，会产生新的问题）<br>2.同时读写，但一部分节点还没写完（如果对时效要求不是很高那这个没关系）<br>3.之前新值大于w,但是某个节点故障了，恢复的时候恢复了一个旧值，此时新值为w-1，此时读不到新值</p>
+<p>那有什么办法来保证强一致性呢，当然是Paxos和Raft啦（逃</p>
+<p>那么如何判断并发写呢，下一篇再说吧（逃</p>
+]]></content>
+      <categories>
+        <category>Concurrency&amp;Go</category>
+      </categories>
+      <tags>
+        <tag>quorum</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>RCU，读多写少的锁实现</title>
     <url>/rcu-and-userspace-rcu/</url>
     <content><![CDATA[<p>之前做的垃圾骗钱项目有很多都是读多写少，而且不怎么需要实时。一直比较好奇应该用什么锁，读写锁总是不满意，最近看6.S081看到rcu，咦，是我想要找的东西。</p>
@@ -6244,6 +6514,244 @@ Unit pipewire-pulse.service could not be found.<span aria-hidden="true" class="l
       </categories>
       <tags>
         <tag>rcu</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>文件系统的Reflink</title>
+    <url>/reflink-hardlink-symlink/</url>
+    <content><![CDATA[<p>reflink暂且翻译成引用链接吧，新版coreutils的cp和mv的默认行为就是reflink（如果文件系统支持）。硬链接和软链接的</p>
+<span id="more"></span>
+
+<h2 id="Reflink"><a href="#Reflink" class="headerlink" title="Reflink"></a>Reflink</h2><p>如果你的coreutils&gt;9.0，而且装的是Btrfs或XFS等支持Reflink的文件系统，那么<code>cp</code>和<code>mv</code>的默认行为是使用reflink(mv应该是在不同子卷之间，when moving files across BTRFS subvols)，<code>cp --reflink=auto</code></p>
+<p>最早是从Btrfs听说的reflink,以为这就是一个COW，后来发现它并不一定需要COW，而是和de-duplication（重复数据删除）有关。</p>
+<h2 id="整理碎片对reflink的影响"><a href="#整理碎片对reflink的影响" class="headerlink" title="整理碎片对reflink的影响"></a>整理碎片对reflink的影响</h2><p>以Btrfs为例，defragment会打断reflink，于是你做完defrag以后会发现占用空间可能大了好多。不过像Btrfs之类的文件系统几乎都跑在SSD上，整理碎片不仅不会像机械那样提升性能，而且会增加写入。所以直接不整理碎片就好了。</p>
+<h2 id="硬链接和软链接和Reflink的区别"><a href="#硬链接和软链接和Reflink的区别" class="headerlink" title="硬链接和软链接和Reflink的区别"></a>硬链接和软链接和Reflink的区别</h2><p>这两个东西的区别基本上网上都说烂了。这里再简单说一下。</p>
+<p>硬链接（hardlink）的inode号和原来的一样</p>
+<p>但是hardlink和symlink有一些问题，创建的时候很开心，修改和删除就比较麻烦。</p>
+<h2 id="Reflink这个东西有啥用"><a href="#Reflink这个东西有啥用" class="headerlink" title="Reflink这个东西有啥用"></a>Reflink这个东西有啥用</h2><p>1.加快复制和移动速度<br>2.节省空间</p>
+<p>比如wine的reflink补丁。比如你steam开proton下了很多游戏，你会发现<code>.local/share/Steam</code>下面每个游戏的目录都有一堆相同的ddl。reflink的补丁可以有效减小Wine应用的体积，很多重复的ddl文件都会以reflink的方式复制。</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cucGhvcm9uaXguY29tL3NjYW4ucGhwP3BhZ2U9bmV3c19pdGVtJnB4PVJlZmxpbmstRm9yLVdpbmUtUGF0Y2hlcw==">Proposed Reflink Support Would Provide Big Space Savings For Wine<i class="fa fa-external-link-alt"></i></span>， <span class="exturl" data-url="aHR0cHM6Ly93d3cucGhvcm9uaXguY29tL3NjYW4ucGhwP3BhZ2U9bmV3c19pdGVtJnB4PVdpbmUtUmVmbGluay1SZXZpc2Vk">Wine Reflink Support Continues To Be Worked On For Significant Space Savings<i class="fa fa-external-link-alt"></i></span>  </p>
+<p>坏消息这玩意暂时不支持ext4，好消息Steam Deck将采用Btrfs。对于不支持的文件系统，可以通过OVerlayfs实现，不过好像没多少人这么干（Overlayfs这个名字你也在Docker那里听说过对罢？坑也不少）</p>
+<p>那wine为什么不用符号链接呢？看起来这种情况下用symlink不是也挺合适的？</p>
+<blockquote>
+<p>Because most of the file WINE is running didn’t have symlink support in mind.They assumes that the open give them the file, not a symlink.After opening the file, they would just update it without replacing that symlink with an actual file.</p>
+</blockquote>
+<p>另一个麻烦的问题是相当多的游戏反作弊软件，他们在检查的时候不认符号链接。于是就认为你这ddl有问题，然后就封号了。用reflink就比较好解决了，在Wine应用和你看来是感觉不到链接存在的，reflink看起来就像是正常的文件一样；而symlink看起来就是一个link，如果Wine应用和外挂检测不去处理他会出问题。举一个不恰当的例子，reflink就像透明代理一样，用户和软件感觉不到它的存在。</p>
+<p>要不我们叫它透明链接算了（逃</p>
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><span class="exturl" data-url="aHR0cHM6Ly9ibG9ncy5vcmFjbGUuY29tL2xpbnV4L3Bvc3QveGZzLWRhdGEtYmxvY2stc2hhcmluZy1yZWZsaW5r">https://blogs.oracle.com/linux/post/xfs-data-block-sharing-reflink<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9idHJmcy53aWtpLmtlcm5lbC5vcmcvaW5kZXgucGhwL0RlZHVwbGljYXRpb24=">Deduplication Btrfs Wiki<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cuY3J1Y2lhbC5jb20vYXJ0aWNsZXMvYWJvdXQtc3NkL3Nob3VsZC15b3UtZGVmcmFnLWFuLXNzZA==">Should You Defrag an SSD? <i class="fa fa-external-link-alt"></i></span> </p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9tYW43Lm9yZy9saW51eC9tYW4tcGFnZXMvbWFuMi9pb2N0bF9maWNsb25lLjIuaHRtbA==">https://man7.org/linux/man-pages/man2/ioctl_ficlone.2.html<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9sd24ubmV0L0FydGljbGVzLzMzMTgwOC8=">https://lwn.net/Articles/331808/<i class="fa fa-external-link-alt"></i></span></p>
+]]></content>
+      <tags>
+        <tag>fs</tag>
+        <tag>reflink</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>推荐系统笔记</title>
+    <url>/bccd/</url>
+    <content><![CDATA[<p>要啥DNN、LSTM、BERT啊，真用起来FM就完事了</p>
+<span id="more"></span>
+
+<h2 id="推荐系统的简单模型"><a href="#推荐系统的简单模型" class="headerlink" title="推荐系统的简单模型"></a>推荐系统的简单模型</h2><p>在处理文章、记录、电子病历、购物记录等真实数据时，常常将用户和文本对应，用横纵坐标分别代表用户（m个人）和对应的物品、浏览记录（n个），以每个二维坐标的数值代表用户的喜好程度或浏览时长，可以将用户和物品的关系对应表示成一个$m \times n$的矩阵$A$（在推荐系统中通常称为评分矩阵）。这样，在分析不同用户评分或喜好相似程度，不同物品间受欢迎的关联程度等问题都可以转化为矩阵和向量的计算。</p>
+<p>假设user对item的打分$\hat{r}_{ui}$由下式决定</p>
+<p>$$<br>\hat{r}_{ui} &#x3D; q_i^T p_u + \mu + b_i + b_u<br>$$</p>
+<p>其中$q_i$是第i个item对相应的隐向量，$p_u$是第u个user对应的隐向量，$b_i$代表item的偏置，用于解释商品本身的热门和冷门，$b_u$代表user的偏置，用于解释用户本身的打分偏好（例如有些人喜欢打低分），μ是常数。</p>
+<p>为了简便起见，这里先不考虑物品的偏置和常数项，简单的将评分视为用户对物品的打分，评分矩阵表示为：</p>
+<p>$$<br>A_{m \times n} &#x3D; U_{m \times r}V_{r \times n}^T<br>$$</p>
+<p>其中，$U$表示用户对隐含特征的偏好矩阵，$V$表示物品对隐含特征的归属矩阵。</p>
+<p><img src="/bccd/mfcf.png" alt="User-item"></p>
+<p>通常，用户数量可能大于几千甚至几万几十万，而电商物品、电影书籍或文章的数量也通常高于几千。一个用户通常会浏览或评论几个物品，此时的评分矩阵是一个维度很大的稀疏矩阵，这时需要用到降维等方法进行计算。（这里将维度简单的视为矩阵的秩）矩阵分解（Matrix Factorization）是一类常用的降维方法，包括经典的特征值、奇异值分解，以及对于奇异值分解的多种改进方法，以及新的非负矩阵分解和概率矩阵分解等新算法。</p>
+<p>最简单的矩阵分解是特征值分解，将方阵$A$分解为</p>
+<p>$$<br>A_{n \times n} &#x3D; Q \lambda Q^{-1}<br>$$</p>
+<p>只要取对角矩阵$\lambda$的前k大的k个特征值，舍弃其他特征值，得到维度为k的近似矩阵$A’$，维度就降为了k。但是实际的数据几乎没有方阵，此时就要用到特征值分解等其他方法。</p>
+<h2 id="奇异值分解"><a href="#奇异值分解" class="headerlink" title="奇异值分解"></a>奇异值分解</h2><p>计算奇异值分解的时间复杂度为$O(N^3)$，不过通常稀疏矩阵的计算中，计算量会远小于$O(N^3)$</p>
+<p>评分矩阵$A_{m \times n}$可以分解为</p>
+<p>$$<br>A_{m\times n}&#x3D;U_{m\times k}\Sigma_{k\times k}V^T_{k\times n}<br>$$</p>
+<p>其中，$U$是酉矩阵，$\Sigma$为对角矩阵，对角元的奇异值为$\sigma_i &#x3D; \sqrt{\lambda_i}$，其中$\lambda_i$为矩阵$A$的特征值</p>
+<p>为了方便，以下分析过程省略矩阵下标。</p>
+<p>由于</p>
+<p>$$<br>(AA^T)u_i &#x3D; \lambda_i u_i<br>$$</p>
+<p>计算$U$可以用$AA^T$的所有特征向量得到</p>
+<p>类似的，</p>
+<p>$$<br>(A^TA)v_i &#x3D; \lambda_i v_i<br>$$</p>
+<p>计算$V$可以用$A^TA$的所有特征向量得到</p>
+<p>求奇异值可以使用下面的方法</p>
+<p>$$<br>A&#x3D;U\Sigma V^T \Rightarrow AV&#x3D;U\Sigma V^TV \Rightarrow AV&#x3D;U\Sigma \Rightarrow  Av_i &#x3D; \sigma_i u_i  \Rightarrow  \sigma_i &#x3D;  Av_i &#x2F; u_i<br>$$</p>
+<p>此时矩阵分解的复杂度为$O((max(m,n)^3)$</p>
+<p>通常在实际计算时会舍弃很多奇异值，用前k大的k个奇异值来近似估计原矩阵，此时维度降为k</p>
+<p>$$<br>A_{m \times n} &#x3D; U_{m \times m}\Sigma_{m \times n} V^T_{n \times n} \approx U_{m \times k}\Sigma_{k \times k} V^T_{k \times n}<br>$$</p>
+<p><img src="/bccd/SVD.png"></p>
+<p>在考虑用户的偏见和物品的偏置后，评分会更加复杂，损失函数变为</p>
+<p>$$<br>C &#x3D; \sum_{(u,i)\in{R}}(r_{u,i} - b_i - b_u - u_u*v_i^T)^2 + \lambda(\parallel {u_u} \parallel ^2 + \parallel{v_i}\parallel ^2 + b_u^2 + b_i^2)<br>$$</p>
+<p>其中$r_{u,i}$为包含用户偏见和物品偏置的评分。</p>
+<p>当加入了用户对物品的隐式行为，评分变为</p>
+<p>$$<br>r_{u,i} &#x3D; \mu + b_i + b_u + v_i^T * (u_u + \mid{I_u}\mid^{-\frac{1}{2}}* \sum_{j\in I_u}{y_j})<br>$$</p>
+<p>其中$I_u$是该用户有隐式行为的所有物品集合，而$y_j$是隐式评分电影j反应出的喜好值。损失函数相应的变为：</p>
+<p>$$<br>\begin{equation}<br>\begin{split}<br>C &#x3D; \sum_{(u,i)\in{R}}(a_{u,i} - u - b_u - b_i - v_i^T* (u_u + \min I_u \mid^{-\frac{1}{2}}\sum_{j \in I_u}y_j))^2 \</p>
+<ul>
+<li>\lambda(\sum_u(bi_u^2 + \parallel{u_u}\parallel^2) + \sum_i(b_i^2 + \parallel{v_i}\parallel^2 + \parallel{y_j}\parallel^2)))<br>\end{split}<br>\end{equation}<br>$$</li>
+</ul>
+<p>对此式的分解算法优化成为SVD++算法，较为复杂，此处不详细推导。此外，还有将时间流逝用户兴趣变化纳入考虑的多种推荐评分的改进版，奇异值分解计算与普通的评分矩阵类似。</p>
+<p>实际计算稀疏矩阵奇异值分解的时候，会采用因子机(Factorization Machine, FM)模型或者FFM模型或者交替最小二乘法(Alternating Least Squares)算法加速奇异值的计算。其中，因子机算法在实际商业公司的推荐算法中使用最广。<br><img src="https://tracholar.github.io/assets/images/ffm.png" alt="ffm.png"></p>
+<h2 id="非负矩阵分解"><a href="#非负矩阵分解" class="headerlink" title="非负矩阵分解"></a>非负矩阵分解</h2><p>非负矩阵分解的一些算法的时间复杂度效果好于SVD的分解算法。</p>
+<p>然而各种看起来没多少优化好的库函数，更不要提什么多线程或者分布式版本，，真用起来自己写一个或者现成的库大概率跑不过原有的模型，所以没太多人用</p>
+<h2 id="计算相似度"><a href="#计算相似度" class="headerlink" title="计算相似度"></a>计算相似度</h2><h3 id="协同过滤算法"><a href="#协同过滤算法" class="headerlink" title="协同过滤算法"></a>协同过滤算法</h3><p>最老最经典的一个算法了，通过计算相似度给用户推荐兴趣和关注点相似用户的感兴趣内容。</p>
+<h4 id="基于物品的协同过滤"><a href="#基于物品的协同过滤" class="headerlink" title="基于物品的协同过滤"></a>基于物品的协同过滤</h4><p>（item-based collaborative filtering，ItemCF）<br>找到物品之间的属性关联，向用户推荐属性相似的物品<br>设N(i)是喜欢i物品的用户数<br>相似度：</p>
+<p>$$w_{ij}&#x3D;\frac{|N(i)\cap N(j)|}{|N(j)|}$$</p>
+<p>避免热门物品干扰，改为</p>
+<p>$$w_{ij}&#x3D;\frac{|N(i)\cap N(j)|}{\sqrt{|N(j)||N(i)|}}$$</p>
+<h4 id="基于用户的协同过滤"><a href="#基于用户的协同过滤" class="headerlink" title="基于用户的协同过滤"></a>基于用户的协同过滤</h4><p>（User-based collaborative filtering，UserCF）<br>找到和用户相似的其他用户，将其他用户感兴趣的产品推荐给用户。还有一种是“购买过XXX等用户也XXX”，算是这个方法的一个变种</p>
+<p>计算相似度，N(u)是用户正反馈的集合，N(v)是用户负反馈物品的集合<br>Jaccard相似度：</p>
+<p>$$w_{u,v}&#x3D; \frac{|N(u)\cap N(v)|}{|N(u)\cup N(v)|}$$</p>
+<p>余弦相似度：</p>
+<p>$$w_{u,v}&#x3D; \frac{|N(u)\cap N(v)|}{\sqrt{|N(u)||N(v)|}}$$</p>
+<p>余弦相似度用的特别多</p>
+<h2 id="冷启动问题"><a href="#冷启动问题" class="headerlink" title="冷启动问题"></a>冷启动问题</h2><p>等待填坑，利用用户注册信息，人工标注等。<br>已经弃坑，冷启动这个不太好搞，搞不太定。</p>
+<h2 id="大众行为-x2F-个性化推荐"><a href="#大众行为-x2F-个性化推荐" class="headerlink" title="大众行为&#x2F;个性化推荐"></a>大众行为&#x2F;个性化推荐</h2><p>等待填坑。<br>半弃坑，没怎么深入做</p>
+<h2 id="imdb电影评论推荐例子"><a href="#imdb电影评论推荐例子" class="headerlink" title="imdb电影评论推荐例子"></a>imdb电影评论推荐例子</h2><p>还是用最最经典的那个电影评分抄袭过来作为示例吧，用户的打分</p>
+<p>这里使用<span class="exturl" data-url="aHR0cDovL2ZpbGVzLmdyb3VwbGVucy5vcmcvZGF0YXNldHMvbW92aWVsZW5zLw==">movielens数据集<i class="fa fa-external-link-alt"></i></span>，<br>数据集的rating.csv包括用户id，物品id，评分，评论时间。(这个csv文件第一行是userid，movieid，·····，把第一行直接删掉或者从第二行开始读取，不然会报TypeError: unsupported operand type(s) for -: ‘str’ and ‘int’的错)<br>使用的算法是SVD矩阵分解。构建一个用户-物品矩阵，每一项的值是评分，这是一个极其稀疏的矩阵<br>我们导入数据集并分割：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">header <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'user_id'</span><span class="token punctuation">,</span> <span class="token string">'item_id'</span><span class="token punctuation">,</span> <span class="token string">'rating'</span><span class="token punctuation">,</span> <span class="token string">'timestamp'</span><span class="token punctuation">]</span>  <span class="token comment"># 用户id，物品id，评分，评论时间</span>
+
+df <span class="token operator">=</span> pd<span class="token punctuation">.</span>read_csv<span class="token punctuation">(</span><span class="token string">'../data/u.data'</span><span class="token punctuation">,</span> sep<span class="token operator">=</span><span class="token string">'\t'</span><span class="token punctuation">,</span> names<span class="token operator">=</span>header<span class="token punctuation">)</span>
+n_users <span class="token operator">=</span> df<span class="token punctuation">.</span>user_id<span class="token punctuation">.</span>unique<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>  <span class="token comment">#用户数量</span>
+n_items <span class="token operator">=</span> df<span class="token punctuation">.</span>item_id<span class="token punctuation">.</span>unique<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>  <span class="token comment">#物品数量</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'Number of users = '</span> <span class="token operator">+</span> <span class="token builtin">str</span><span class="token punctuation">(</span>n_users<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">' | Number of movies = '</span> <span class="token operator">+</span> <span class="token builtin">str</span><span class="token punctuation">(</span>n_items<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token comment"># 数据集分割——训练集：测试集 = 3:1</span>
+train_data<span class="token punctuation">,</span>test_data <span class="token operator">=</span> train_test_split<span class="token punctuation">(</span>df<span class="token punctuation">,</span> test_size <span class="token operator">=</span> <span class="token number">0.25</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>建立评分矩阵</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">train_data_matrix <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span><span class="token punctuation">(</span>n_users<span class="token punctuation">,</span> n_items<span class="token punctuation">)</span><span class="token punctuation">)</span>
+test_data_matrix <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span><span class="token punctuation">(</span>n_users<span class="token punctuation">,</span> n_items<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token comment">#使用 pandas 遍历行数据</span>
+<span class="token keyword">for</span> line <span class="token keyword">in</span> train_data<span class="token punctuation">.</span>itertuples<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment">#训练集评分矩阵</span>
+    train_data_matrix<span class="token punctuation">[</span>line<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> line<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> line<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span>
+<span class="token keyword">for</span> line <span class="token keyword">in</span> test_data<span class="token punctuation">.</span>itertuples<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment">#测试集评分矩阵</span>
+    test_data_matrix<span class="token punctuation">[</span>line<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> line<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> line<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>计算余弦相似度：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">user_similarity <span class="token operator">=</span> pairwise_distances<span class="token punctuation">(</span>train_data_matrix<span class="token punctuation">,</span> metric <span class="token operator">=</span> <span class="token string">"cosine"</span><span class="token punctuation">)</span>  <span class="token comment"># 计算余弦距离</span>
+item_similarity <span class="token operator">=</span> pairwise_distances<span class="token punctuation">(</span>train_data_matrix<span class="token punctuation">.</span>T<span class="token punctuation">,</span> metric <span class="token operator">=</span> <span class="token string">"cosine"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>基于用户和基于物品的协同过滤</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">predict</span><span class="token punctuation">(</span>rating<span class="token punctuation">,</span> similarity<span class="token punctuation">,</span> <span class="token builtin">type</span> <span class="token operator">=</span> <span class="token string">'user'</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">if</span> <span class="token builtin">type</span> <span class="token operator">==</span> <span class="token string">'user'</span><span class="token punctuation">:</span>
+        <span class="token comment"># </span>
+        mean_user_rating <span class="token operator">=</span> rating<span class="token punctuation">.</span>mean<span class="token punctuation">(</span>axis <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">)</span>    <span class="token comment">#mean函数：压缩列，对各行求均值，返回 m *1 矩阵</span>
+        <span class="token comment"># print(mean_user_rating)</span>
+        rating_diff <span class="token operator">=</span> <span class="token punctuation">(</span>rating <span class="token operator">-</span> mean_user_rating<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span>np<span class="token punctuation">.</span>newaxis<span class="token punctuation">]</span><span class="token punctuation">)</span>
+        pred <span class="token operator">=</span> mean_user_rating<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span>np<span class="token punctuation">.</span>newaxis<span class="token punctuation">]</span> <span class="token operator">+</span> similarity<span class="token punctuation">.</span>dot<span class="token punctuation">(</span>rating_diff<span class="token punctuation">)</span> <span class="token operator">/</span> np<span class="token punctuation">.</span>array<span class="token punctuation">(</span><span class="token punctuation">[</span>np<span class="token punctuation">.</span><span class="token builtin">abs</span><span class="token punctuation">(</span>similarity<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span>axis<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">.</span>T
+        <span class="token comment">#dot函数：矩阵相乘；np.abs()：矩阵元素的绝对值  .T:转置</span>
+        <span class="token comment"># print('test',pred.min())</span>
+    <span class="token keyword">elif</span> <span class="token builtin">type</span> <span class="token operator">==</span> <span class="token string">'item'</span><span class="token punctuation">:</span>
+        pred <span class="token operator">=</span> rating<span class="token punctuation">.</span>dot<span class="token punctuation">(</span>similarity<span class="token punctuation">)</span> <span class="token operator">/</span> np<span class="token punctuation">.</span>array<span class="token punctuation">(</span><span class="token punctuation">[</span>np<span class="token punctuation">.</span><span class="token builtin">abs</span><span class="token punctuation">(</span>similarity<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span>axis<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        <span class="token comment"># print('test2',pred.max())</span>
+    <span class="token keyword">return</span> pred<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">item_prediction <span class="token operator">=</span> predict<span class="token punctuation">(</span>train_data_matrix<span class="token punctuation">,</span> item_similarity<span class="token punctuation">,</span> <span class="token builtin">type</span> <span class="token operator">=</span> <span class="token string">'item'</span><span class="token punctuation">)</span>
+user_prediction <span class="token operator">=</span> predict<span class="token punctuation">(</span>train_data_matrix<span class="token punctuation">,</span> user_similarity<span class="token punctuation">,</span> <span class="token builtin">type</span> <span class="token operator">=</span> <span class="token string">'user'</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>item_prediction<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>item_prediction<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>np<span class="token punctuation">.</span>argsort<span class="token punctuation">(</span>item_prediction<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>计算均方误差</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">rmse</span><span class="token punctuation">(</span>prediction<span class="token punctuation">,</span> ground_truth<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment"># 计算均方误差</span>
+    <span class="token comment">#nonzero(a)返回数组a中值不为零的元素的下标</span>
+    <span class="token comment">#flatten()创建矩阵</span>
+    prediction <span class="token operator">=</span> prediction<span class="token punctuation">[</span>ground_truth<span class="token punctuation">.</span>nonzero<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">.</span>flatten<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    ground_truth <span class="token operator">=</span> ground_truth<span class="token punctuation">[</span>ground_truth<span class="token punctuation">.</span>nonzero<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">.</span>flatten<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> sqrt<span class="token punctuation">(</span>mean_squared_error<span class="token punctuation">(</span>prediction<span class="token punctuation">,</span> ground_truth<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'User based CF RMSE: '</span> <span class="token operator">+</span> <span class="token builtin">str</span><span class="token punctuation">(</span>rmse<span class="token punctuation">(</span>user_prediction<span class="token punctuation">,</span> test_data_matrix<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'Item based CF RMSE: '</span> <span class="token operator">+</span> <span class="token builtin">str</span><span class="token punctuation">(</span>rmse<span class="token punctuation">(</span>item_prediction<span class="token punctuation">,</span> test_data_matrix<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>SVD分解的方法，其中k是特征值个数，指定将分解为$m<em>k$和$k</em>n$，中间的对角矩阵有k个特征值</p>
+<blockquote>
+<p>k: int, optional,Number of singular values and vectors to compute. Must be 1 &lt;&#x3D; k &lt; min(A.shape)</p>
+</blockquote>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">u<span class="token punctuation">,</span> s<span class="token punctuation">,</span> vt <span class="token operator">=</span> svds<span class="token punctuation">(</span>train_data_matrix<span class="token punctuation">,</span> k<span class="token operator">=</span><span class="token number">500</span><span class="token punctuation">)</span>
+s_diag_matrix <span class="token operator">=</span> np<span class="token punctuation">.</span>diag<span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+X_pred <span class="token operator">=</span> np<span class="token punctuation">.</span>dot<span class="token punctuation">(</span>np<span class="token punctuation">.</span>dot<span class="token punctuation">(</span>u<span class="token punctuation">,</span> s_diag_matrix<span class="token punctuation">)</span><span class="token punctuation">,</span> vt<span class="token punctuation">)</span>
+
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'User-based CF MSE: '</span> <span class="token operator">+</span> <span class="token builtin">str</span><span class="token punctuation">(</span>rmse<span class="token punctuation">(</span>X_pred<span class="token punctuation">,</span> test_data_matrix<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>参考</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9sdW1pbmdkb25nLmNuL3JlY29tbWVuZGF0aW9uLWFsZ29yaXRobS1iYXNlZC1vbi1tYXRyaXgtZGVjb21wb3NpdGlvbi5odG1s">基于矩阵分解的推荐算法<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3FjeW1reHljL1JlY1N5cw==">项亮的《推荐系统实践》的代码实现<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9saWFtLnBhZ2UvMjAxOS8wMy8yNS9GYWN0b3JpemF0aW9uLU1hY2hpbmUv">谈谈因子分解机模型（FM）<i class="fa fa-external-link-alt"></i></span>  </p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>推荐系统</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>记一次Spring Cloud上线内存优化</title>
+    <url>/spring-cloud-performance-optimization/</url>
+    <content><![CDATA[<p>没钱买 256G 内存的服务器的人是这样的</p>
+<span id="more"></span>
+
+<p>其实本来想说Spring Cloud上线性能优化的，想了想不是，这波，这波啊是性能反向优化（性能不性能的已经不重要了，用户量应该也不太大，先把成本压下来再说吧）。</p>
+<h2 id="怎么回事"><a href="#怎么回事" class="headerlink" title="怎么回事"></a>怎么回事</h2><p>朋友们好啊，<br>我是浑元形意太极门掌门人马保国。<br>刚才有个朋友问我：<br>“马老师发生肾么事了？”<br>我说怎么回事。给我发了几张截图。<br>我一看！哦，原来是昨天，有两个微服务，<br>上线一天，一个内存<strong>996M</strong>，一个内存<strong>888M</strong>。<br><img src="/spring-cloud-performance-optimization/image-20201118095216036.png" alt="它也说，啊，它截图也说了"><br><del>其实是我调了一下凑出来的这两个数</del><br>它说要吃一点资源，我说可以。<br>诶，我一说它“啪”就站起来了，很快啊！<br>然后上来就是，一个虚拟机，一个Docker，一个mysql，我全部防出去，防出去了啊。<br>防出去以后，自然是，上线部署以点到为止。没有限制它内存。<br>我笑一下，准备收工，因为这时间，按传统部署的点到为止，服务器已经够用了。我收工的时间回宿舍啦。<br>它突然袭击，还有8个微服务，来打我机子，啊。我大意了啊，没有闪。<br>来，抢！来，偷吃，我DDR3的，老内存，这好吗？这不好。<br>它说它是乱占用的，它可不是乱占用的。一个996，一个888，这明显是，有备而来！</p>
+<h2 id="服务器"><a href="#服务器" class="headerlink" title="服务器"></a>服务器</h2><p>正常的操作是加钱上大一点的内存，但是大内存VPS、杜甫它贵啊。以套路云香港为例，明晃晃的抢钱。而且16G内存及以上的版本已经无了。其他华南华北的VPS更贵一点，而且全都是1M小水管。</p>
+<p><img src="/spring-cloud-performance-optimization/image-20201120103456546.png" alt="套路云香港"></p>
+<p><del>服务器内存比本地台式还小是要出大问题的,上线炸内存警告</del></p>
+<p>102网吧里面服务器是有32G内存的，然而网速…..</p>
+<p>服务器的套餐是学校20一个月20M的普通套餐（20M是下载速度，要想对外服务，上传速度可能只有几M）同为校园网。而且你电的教育网会有各种小问题，比如逢年过节十一国庆公网IP就被信息中心收回去了、校园网出口线路很差、域名也不好搞。</p>
+<p>加钱换校园网的套餐也没用，你电沙河主楼的网速我很少见有人跑出过100Mbps以上的。而且问题是主楼那个墙里的网线，貌似是百兆网…教研室的老交换机上面还赫然贴着一张2010年的封条。。。</p>
+<p>VPS的话选Debian，根据我多年用128M-1G内存VPS灵车漂移的印象，占用资源最少的少的就这个了（CentOS占用&gt;Ubuntu Server&gt;Debian&gt;VSP2ARCH）</p>
+<p><del>其实我很想VPS2ARCH再次灵车漂移，但是毕竟是要出事背锅生产环境我不敢</del></p>
+<h2 id="考虑扔掉Docker"><a href="#考虑扔掉Docker" class="headerlink" title="考虑扔掉Docker"></a>考虑扔掉Docker</h2><p>直接裸跑吧，不要再套几层了。</p>
+<h2 id="其他能扔的"><a href="#其他能扔的" class="headerlink" title="其他能扔的"></a>其他能扔的</h2><h3 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h3><p>这么点用户量没啥缓存的必要，关了</p>
+<h3 id="NACOS"><a href="#NACOS" class="headerlink" title="NACOS"></a>NACOS</h3><p>动态注册发现之类的单机版也没必要用了，直接手动排查和维护吧。</p>
+<p>NACOS的内存占用单机版在几百M左右（默认参数是<code>-Xms512m -Xmx512m -Xmn256m</code>，可以在startup.sh里面改，不过还是直接关掉比较清静。</p>
+<p><img src="/spring-cloud-performance-optimization/image-20201120212626344.png" alt="NACOS内存使用情况"></p>
+<h2 id="JDK版本"><a href="#JDK版本" class="headerlink" title="JDK版本"></a>JDK版本</h2><p>之前一直用的java8-Openjdk。</p>
+<p>后来看到据说 Oracle JDK 和 Open JDK 有性能差异，不同版本的jdk也有性能差异，java 8 的64位版本和32位版本也有区别（据说不超过2G内存的情况下貌似32位会好一些）</p>
+<p>那就都试试吧。在Arch上打的jar包，就在本地测试了一下，没在服务器上试。</p>
+<h3 id="不同版本内存占用"><a href="#不同版本内存占用" class="headerlink" title="不同版本内存占用"></a>不同版本内存占用</h3><p>Arch有个脚本，可以切换OpenJDK的版本，</p>
+<p><img src="/spring-cloud-performance-optimization/image-20201124123102440.png" alt="archlinux-java"></p>
+<p>Oracle JDK 由于甲骨文公司不武德，跟各路开源组织（以及很多闭源福报公司）都闹僵了，Arch仓库不提供支持，得自己安装。</p>
+<p>从AUR安装结果报错说<code>**==&gt; ERROR:** **Failure while downloading manual://jdk-8u271-linux-x64.tar.gz**    **Aborting...** error downloading sources: jdk8</code>，看了一下还得跑到<span class="exturl" data-url="aHR0cHM6Ly93d3cub3JhY2xlLmNvbS9qYXZhL3RlY2hub2xvZ2llcy9qYXZhc2UvamF2YXNlLWpkazgtZG93bmxvYWRzLmh0bWw=">Oracle<i class="fa fa-external-link-alt"></i></span>那里去注册下载然后pkgbuild</p>
+<p>从阿里云的镜像可以不用注册下载<span class="exturl" data-url="aHR0cHM6Ly9jb2RlLmFsaXl1bi5jb20va2FyL29qZGs4LTh1MjcxL3Jhdy9tYXN0ZXIvamRrLTh1MjcxLWxpbnV4LXg2NC50YXIuZ3o=">jdk8<i class="fa fa-external-link-alt"></i></span>和<span class="exturl" data-url="aHR0cHM6Ly9jb2RlLmFsaXl1bi5jb20va2FyL29qZGsxMS0xMS4wLjkvcmF3L21hc3Rlci9qZGstMTEuMC45X2xpbnV4LXg2NF9iaW4udGFyLmd6">jdk11<i class="fa fa-external-link-alt"></i></span>，然后扔到<code>~/Downloads</code>里面，再运行<code>yay -Syu jdk8 jdk11</code>就好了。</p>
+<p>java8 和java11 的编译通过了，看起来Oracle JDK效果是要好一点(也只有十几兆的微弱差别，感觉区别不大)，java14和java15还没试，以后有空再说。</p>
+<h3 id="32位和64位的差异"><a href="#32位和64位的差异" class="headerlink" title="32位和64位的差异"></a>32位和64位的差异</h3><p>试了一下java8的32位和64位，貌似有一点区别，32位是节省一点资源。大概差距也在十几兆左右，区别不太大。</p>
+<h2 id="JVM调参"><a href="#JVM调参" class="headerlink" title="JVM调参"></a>JVM调参</h2><p>大概调了调，冲着压榨内存占用调的</p>
+<p>几个比较重要的参数：</p>
+<ul>
+<li>-Xms</li>
+<li>-Xmx</li>
+<li></li>
+</ul>
+<p>暂时把参数改成这样子了：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">java -Xms16m -Xmx32m -XX:MaxMetaspaceSize<span class="token operator">=</span>48m -XX:CompressedClassSpaceSize<span class="token operator">=</span>8m -Xss256k -Xmn300m -XX:InitialCodeCacheSize<span class="token operator">=</span>4m -XX:ReservedCodeCacheSize<span class="token operator">=</span>8m -XX:MaxDirectMemorySize<span class="token operator">=</span>16m -jar service_ucenter-0.0.1-SNAPSHOT.jar<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>不太敢压榨的太狠，怕上线了OutofMemory。</p>
+<p>现在每个jar包跑起来大概内存占用在300M以下。</p>
+<h2 id="压缩MySQL内存占用"><a href="#压缩MySQL内存占用" class="headerlink" title="压缩MySQL内存占用"></a>压缩MySQL内存占用</h2><p>MySQL的内存占用压缩一下还是很低的，之前还在用wordpress的时候128M内存的灵车VPS跑起来没什么大问题。</p>
+<h2 id="图片压缩"><a href="#图片压缩" class="headerlink" title="图片压缩"></a>图片压缩</h2><p>浏览器F12 可以看到，在加载首页的时候，大部分html、css、js资源在300ms内加载完成，500ms以后开始加载图床资源，一直到最4000ms以后才加载完成。</p>
+<p><img src="/spring-cloud-performance-optimization/image-20201124170847425.png" alt="加载首页"></p>
+<p>下图是打开首页时png图片（阿里云图床，大小 926k）的时候的加载速度，耗时最长的就是下载图片的过程。</p>
+<p><img src="/spring-cloud-performance-optimization/image-20201124165004678.png" alt="image load speed"></p>
+<p>主要就是压缩图片大小了，jpg和png全换成webp，今年6月份Safari14已经支持webp了，现在主流浏览器都问题不大。</p>
+<h2 id="重构"><a href="#重构" class="headerlink" title="重构"></a>重构</h2><p>暂时不考虑，不过上线的时候砍掉几个无关紧要的功能倒是问题不大，这样只开4个微服务就差不多能用了。</p>
+<h2 id="最终结果"><a href="#最终结果" class="headerlink" title="最终结果"></a>最终结果</h2><p>如果不跑别的东西，一个4G内存的VPS已经够用了。</p>
+<p><img src="/spring-cloud-performance-optimization/image-20201124120817137.png" alt="首页"></p>
+<p><img src="/spring-cloud-performance-optimization/image-20201124120944296.png" alt="全部课程页面"></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXJzLnJlZGhhdC5jb20vYmxvZy8yMDE3LzA0LzA0L29wZW5qZGstYW5kLWNvbnRhaW5lcnMv">https://developers.redhat.com/blog/2017/04/04/openjdk-and-containers/<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmtlbHUub3JnL3RlY2gvMjAxOC8wNS8zMC9ydW5uaW5nLWEtanZtLWluLWEtY29udGFpbmVyLXdpdGhvdXQtZ2V0dGluZy1raWxsZWQuaHRtbA==">https://blog.kelu.org/tech/2018/05/30/running-a-jvm-in-a-container-without-getting-killed.html<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vaXR5b3Vrbm93L3AvNTYxMDIzMi5odG1s">https://www.cnblogs.com/ityouknow/p/5610232.html<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2ZseWxlZnQvdGlwL2Jsb2IvbWFzdGVyL2Jsb2cvc3ByaW5nYm9vdCVFNiU4MCVBNyVFOCU4MyVCRCVFOCVCMCU4MyVFNCVCQyU5OC5tZA==">https://github.com/flyleft/tip/blob/master/blog/springboot%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98.md<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9tZWRpdW0uY29tL0B5b3J0dWMvanZtLW1lbW9yeS1hbGxvY2F0aW9uLWluLWRvY2tlci1jb250YWluZXItYTI2YmJjZTNhM2Yy">https://medium.com/@yortuc/jvm-memory-allocation-in-docker-container-a26bbce3a3f2<i class="fa fa-external-link-alt"></i></span></p>
+]]></content>
+      <categories>
+        <category>102网吧日常</category>
+      </categories>
+      <tags>
+        <tag>jvm</tag>
+        <tag>Spring</tag>
       </tags>
   </entry>
   <entry>
@@ -6458,244 +6966,6 @@ error installing repo packages<span aria-hidden="true" class="line-numbers-rows"
         <tag>qv2ray</tag>
         <tag>cgproxy</tag>
         <tag>transparent-proxy</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>推荐系统笔记</title>
-    <url>/bccd/</url>
-    <content><![CDATA[<p>要啥DNN、LSTM、BERT啊，真用起来FM就完事了</p>
-<span id="more"></span>
-
-<h2 id="推荐系统的简单模型"><a href="#推荐系统的简单模型" class="headerlink" title="推荐系统的简单模型"></a>推荐系统的简单模型</h2><p>在处理文章、记录、电子病历、购物记录等真实数据时，常常将用户和文本对应，用横纵坐标分别代表用户（m个人）和对应的物品、浏览记录（n个），以每个二维坐标的数值代表用户的喜好程度或浏览时长，可以将用户和物品的关系对应表示成一个$m \times n$的矩阵$A$（在推荐系统中通常称为评分矩阵）。这样，在分析不同用户评分或喜好相似程度，不同物品间受欢迎的关联程度等问题都可以转化为矩阵和向量的计算。</p>
-<p>假设user对item的打分$\hat{r}_{ui}$由下式决定</p>
-<p>$$<br>\hat{r}_{ui} &#x3D; q_i^T p_u + \mu + b_i + b_u<br>$$</p>
-<p>其中$q_i$是第i个item对相应的隐向量，$p_u$是第u个user对应的隐向量，$b_i$代表item的偏置，用于解释商品本身的热门和冷门，$b_u$代表user的偏置，用于解释用户本身的打分偏好（例如有些人喜欢打低分），μ是常数。</p>
-<p>为了简便起见，这里先不考虑物品的偏置和常数项，简单的将评分视为用户对物品的打分，评分矩阵表示为：</p>
-<p>$$<br>A_{m \times n} &#x3D; U_{m \times r}V_{r \times n}^T<br>$$</p>
-<p>其中，$U$表示用户对隐含特征的偏好矩阵，$V$表示物品对隐含特征的归属矩阵。</p>
-<p><img src="/bccd/mfcf.png" alt="User-item"></p>
-<p>通常，用户数量可能大于几千甚至几万几十万，而电商物品、电影书籍或文章的数量也通常高于几千。一个用户通常会浏览或评论几个物品，此时的评分矩阵是一个维度很大的稀疏矩阵，这时需要用到降维等方法进行计算。（这里将维度简单的视为矩阵的秩）矩阵分解（Matrix Factorization）是一类常用的降维方法，包括经典的特征值、奇异值分解，以及对于奇异值分解的多种改进方法，以及新的非负矩阵分解和概率矩阵分解等新算法。</p>
-<p>最简单的矩阵分解是特征值分解，将方阵$A$分解为</p>
-<p>$$<br>A_{n \times n} &#x3D; Q \lambda Q^{-1}<br>$$</p>
-<p>只要取对角矩阵$\lambda$的前k大的k个特征值，舍弃其他特征值，得到维度为k的近似矩阵$A’$，维度就降为了k。但是实际的数据几乎没有方阵，此时就要用到特征值分解等其他方法。</p>
-<h2 id="奇异值分解"><a href="#奇异值分解" class="headerlink" title="奇异值分解"></a>奇异值分解</h2><p>计算奇异值分解的时间复杂度为$O(N^3)$，不过通常稀疏矩阵的计算中，计算量会远小于$O(N^3)$</p>
-<p>评分矩阵$A_{m \times n}$可以分解为</p>
-<p>$$<br>A_{m\times n}&#x3D;U_{m\times k}\Sigma_{k\times k}V^T_{k\times n}<br>$$</p>
-<p>其中，$U$是酉矩阵，$\Sigma$为对角矩阵，对角元的奇异值为$\sigma_i &#x3D; \sqrt{\lambda_i}$，其中$\lambda_i$为矩阵$A$的特征值</p>
-<p>为了方便，以下分析过程省略矩阵下标。</p>
-<p>由于</p>
-<p>$$<br>(AA^T)u_i &#x3D; \lambda_i u_i<br>$$</p>
-<p>计算$U$可以用$AA^T$的所有特征向量得到</p>
-<p>类似的，</p>
-<p>$$<br>(A^TA)v_i &#x3D; \lambda_i v_i<br>$$</p>
-<p>计算$V$可以用$A^TA$的所有特征向量得到</p>
-<p>求奇异值可以使用下面的方法</p>
-<p>$$<br>A&#x3D;U\Sigma V^T \Rightarrow AV&#x3D;U\Sigma V^TV \Rightarrow AV&#x3D;U\Sigma \Rightarrow  Av_i &#x3D; \sigma_i u_i  \Rightarrow  \sigma_i &#x3D;  Av_i &#x2F; u_i<br>$$</p>
-<p>此时矩阵分解的复杂度为$O((max(m,n)^3)$</p>
-<p>通常在实际计算时会舍弃很多奇异值，用前k大的k个奇异值来近似估计原矩阵，此时维度降为k</p>
-<p>$$<br>A_{m \times n} &#x3D; U_{m \times m}\Sigma_{m \times n} V^T_{n \times n} \approx U_{m \times k}\Sigma_{k \times k} V^T_{k \times n}<br>$$</p>
-<p><img src="/bccd/SVD.png"></p>
-<p>在考虑用户的偏见和物品的偏置后，评分会更加复杂，损失函数变为</p>
-<p>$$<br>C &#x3D; \sum_{(u,i)\in{R}}(r_{u,i} - b_i - b_u - u_u*v_i^T)^2 + \lambda(\parallel {u_u} \parallel ^2 + \parallel{v_i}\parallel ^2 + b_u^2 + b_i^2)<br>$$</p>
-<p>其中$r_{u,i}$为包含用户偏见和物品偏置的评分。</p>
-<p>当加入了用户对物品的隐式行为，评分变为</p>
-<p>$$<br>r_{u,i} &#x3D; \mu + b_i + b_u + v_i^T * (u_u + \mid{I_u}\mid^{-\frac{1}{2}}* \sum_{j\in I_u}{y_j})<br>$$</p>
-<p>其中$I_u$是该用户有隐式行为的所有物品集合，而$y_j$是隐式评分电影j反应出的喜好值。损失函数相应的变为：</p>
-<p>$$<br>\begin{equation}<br>\begin{split}<br>C &#x3D; \sum_{(u,i)\in{R}}(a_{u,i} - u - b_u - b_i - v_i^T* (u_u + \min I_u \mid^{-\frac{1}{2}}\sum_{j \in I_u}y_j))^2 \</p>
-<ul>
-<li>\lambda(\sum_u(bi_u^2 + \parallel{u_u}\parallel^2) + \sum_i(b_i^2 + \parallel{v_i}\parallel^2 + \parallel{y_j}\parallel^2)))<br>\end{split}<br>\end{equation}<br>$$</li>
-</ul>
-<p>对此式的分解算法优化成为SVD++算法，较为复杂，此处不详细推导。此外，还有将时间流逝用户兴趣变化纳入考虑的多种推荐评分的改进版，奇异值分解计算与普通的评分矩阵类似。</p>
-<p>实际计算稀疏矩阵奇异值分解的时候，会采用因子机(Factorization Machine, FM)模型或者FFM模型或者交替最小二乘法(Alternating Least Squares)算法加速奇异值的计算。其中，因子机算法在实际商业公司的推荐算法中使用最广。<br><img src="https://tracholar.github.io/assets/images/ffm.png" alt="ffm.png"></p>
-<h2 id="非负矩阵分解"><a href="#非负矩阵分解" class="headerlink" title="非负矩阵分解"></a>非负矩阵分解</h2><p>非负矩阵分解的一些算法的时间复杂度效果好于SVD的分解算法。</p>
-<p>然而各种看起来没多少优化好的库函数，更不要提什么多线程或者分布式版本，，真用起来自己写一个或者现成的库大概率跑不过原有的模型，所以没太多人用</p>
-<h2 id="计算相似度"><a href="#计算相似度" class="headerlink" title="计算相似度"></a>计算相似度</h2><h3 id="协同过滤算法"><a href="#协同过滤算法" class="headerlink" title="协同过滤算法"></a>协同过滤算法</h3><p>最老最经典的一个算法了，通过计算相似度给用户推荐兴趣和关注点相似用户的感兴趣内容。</p>
-<h4 id="基于物品的协同过滤"><a href="#基于物品的协同过滤" class="headerlink" title="基于物品的协同过滤"></a>基于物品的协同过滤</h4><p>（item-based collaborative filtering，ItemCF）<br>找到物品之间的属性关联，向用户推荐属性相似的物品<br>设N(i)是喜欢i物品的用户数<br>相似度：</p>
-<p>$$w_{ij}&#x3D;\frac{|N(i)\cap N(j)|}{|N(j)|}$$</p>
-<p>避免热门物品干扰，改为</p>
-<p>$$w_{ij}&#x3D;\frac{|N(i)\cap N(j)|}{\sqrt{|N(j)||N(i)|}}$$</p>
-<h4 id="基于用户的协同过滤"><a href="#基于用户的协同过滤" class="headerlink" title="基于用户的协同过滤"></a>基于用户的协同过滤</h4><p>（User-based collaborative filtering，UserCF）<br>找到和用户相似的其他用户，将其他用户感兴趣的产品推荐给用户。还有一种是“购买过XXX等用户也XXX”，算是这个方法的一个变种</p>
-<p>计算相似度，N(u)是用户正反馈的集合，N(v)是用户负反馈物品的集合<br>Jaccard相似度：</p>
-<p>$$w_{u,v}&#x3D; \frac{|N(u)\cap N(v)|}{|N(u)\cup N(v)|}$$</p>
-<p>余弦相似度：</p>
-<p>$$w_{u,v}&#x3D; \frac{|N(u)\cap N(v)|}{\sqrt{|N(u)||N(v)|}}$$</p>
-<p>余弦相似度用的特别多</p>
-<h2 id="冷启动问题"><a href="#冷启动问题" class="headerlink" title="冷启动问题"></a>冷启动问题</h2><p>等待填坑，利用用户注册信息，人工标注等。<br>已经弃坑，冷启动这个不太好搞，搞不太定。</p>
-<h2 id="大众行为-x2F-个性化推荐"><a href="#大众行为-x2F-个性化推荐" class="headerlink" title="大众行为&#x2F;个性化推荐"></a>大众行为&#x2F;个性化推荐</h2><p>等待填坑。<br>半弃坑，没怎么深入做</p>
-<h2 id="imdb电影评论推荐例子"><a href="#imdb电影评论推荐例子" class="headerlink" title="imdb电影评论推荐例子"></a>imdb电影评论推荐例子</h2><p>还是用最最经典的那个电影评分抄袭过来作为示例吧，用户的打分</p>
-<p>这里使用<span class="exturl" data-url="aHR0cDovL2ZpbGVzLmdyb3VwbGVucy5vcmcvZGF0YXNldHMvbW92aWVsZW5zLw==">movielens数据集<i class="fa fa-external-link-alt"></i></span>，<br>数据集的rating.csv包括用户id，物品id，评分，评论时间。(这个csv文件第一行是userid，movieid，·····，把第一行直接删掉或者从第二行开始读取，不然会报TypeError: unsupported operand type(s) for -: ‘str’ and ‘int’的错)<br>使用的算法是SVD矩阵分解。构建一个用户-物品矩阵，每一项的值是评分，这是一个极其稀疏的矩阵<br>我们导入数据集并分割：</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python">header <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'user_id'</span><span class="token punctuation">,</span> <span class="token string">'item_id'</span><span class="token punctuation">,</span> <span class="token string">'rating'</span><span class="token punctuation">,</span> <span class="token string">'timestamp'</span><span class="token punctuation">]</span>  <span class="token comment"># 用户id，物品id，评分，评论时间</span>
-
-df <span class="token operator">=</span> pd<span class="token punctuation">.</span>read_csv<span class="token punctuation">(</span><span class="token string">'../data/u.data'</span><span class="token punctuation">,</span> sep<span class="token operator">=</span><span class="token string">'\t'</span><span class="token punctuation">,</span> names<span class="token operator">=</span>header<span class="token punctuation">)</span>
-n_users <span class="token operator">=</span> df<span class="token punctuation">.</span>user_id<span class="token punctuation">.</span>unique<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>  <span class="token comment">#用户数量</span>
-n_items <span class="token operator">=</span> df<span class="token punctuation">.</span>item_id<span class="token punctuation">.</span>unique<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>  <span class="token comment">#物品数量</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'Number of users = '</span> <span class="token operator">+</span> <span class="token builtin">str</span><span class="token punctuation">(</span>n_users<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">' | Number of movies = '</span> <span class="token operator">+</span> <span class="token builtin">str</span><span class="token punctuation">(</span>n_items<span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token comment"># 数据集分割——训练集：测试集 = 3:1</span>
-train_data<span class="token punctuation">,</span>test_data <span class="token operator">=</span> train_test_split<span class="token punctuation">(</span>df<span class="token punctuation">,</span> test_size <span class="token operator">=</span> <span class="token number">0.25</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>建立评分矩阵</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python">train_data_matrix <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span><span class="token punctuation">(</span>n_users<span class="token punctuation">,</span> n_items<span class="token punctuation">)</span><span class="token punctuation">)</span>
-test_data_matrix <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span><span class="token punctuation">(</span>n_users<span class="token punctuation">,</span> n_items<span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token comment">#使用 pandas 遍历行数据</span>
-<span class="token keyword">for</span> line <span class="token keyword">in</span> train_data<span class="token punctuation">.</span>itertuples<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token comment">#训练集评分矩阵</span>
-    train_data_matrix<span class="token punctuation">[</span>line<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> line<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> line<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span>
-<span class="token keyword">for</span> line <span class="token keyword">in</span> test_data<span class="token punctuation">.</span>itertuples<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token comment">#测试集评分矩阵</span>
-    test_data_matrix<span class="token punctuation">[</span>line<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> line<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> line<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>计算余弦相似度：</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python">user_similarity <span class="token operator">=</span> pairwise_distances<span class="token punctuation">(</span>train_data_matrix<span class="token punctuation">,</span> metric <span class="token operator">=</span> <span class="token string">"cosine"</span><span class="token punctuation">)</span>  <span class="token comment"># 计算余弦距离</span>
-item_similarity <span class="token operator">=</span> pairwise_distances<span class="token punctuation">(</span>train_data_matrix<span class="token punctuation">.</span>T<span class="token punctuation">,</span> metric <span class="token operator">=</span> <span class="token string">"cosine"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p>基于用户和基于物品的协同过滤</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">predict</span><span class="token punctuation">(</span>rating<span class="token punctuation">,</span> similarity<span class="token punctuation">,</span> <span class="token builtin">type</span> <span class="token operator">=</span> <span class="token string">'user'</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">if</span> <span class="token builtin">type</span> <span class="token operator">==</span> <span class="token string">'user'</span><span class="token punctuation">:</span>
-        <span class="token comment"># </span>
-        mean_user_rating <span class="token operator">=</span> rating<span class="token punctuation">.</span>mean<span class="token punctuation">(</span>axis <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">)</span>    <span class="token comment">#mean函数：压缩列，对各行求均值，返回 m *1 矩阵</span>
-        <span class="token comment"># print(mean_user_rating)</span>
-        rating_diff <span class="token operator">=</span> <span class="token punctuation">(</span>rating <span class="token operator">-</span> mean_user_rating<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span>np<span class="token punctuation">.</span>newaxis<span class="token punctuation">]</span><span class="token punctuation">)</span>
-        pred <span class="token operator">=</span> mean_user_rating<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span>np<span class="token punctuation">.</span>newaxis<span class="token punctuation">]</span> <span class="token operator">+</span> similarity<span class="token punctuation">.</span>dot<span class="token punctuation">(</span>rating_diff<span class="token punctuation">)</span> <span class="token operator">/</span> np<span class="token punctuation">.</span>array<span class="token punctuation">(</span><span class="token punctuation">[</span>np<span class="token punctuation">.</span><span class="token builtin">abs</span><span class="token punctuation">(</span>similarity<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span>axis<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">.</span>T
-        <span class="token comment">#dot函数：矩阵相乘；np.abs()：矩阵元素的绝对值  .T:转置</span>
-        <span class="token comment"># print('test',pred.min())</span>
-    <span class="token keyword">elif</span> <span class="token builtin">type</span> <span class="token operator">==</span> <span class="token string">'item'</span><span class="token punctuation">:</span>
-        pred <span class="token operator">=</span> rating<span class="token punctuation">.</span>dot<span class="token punctuation">(</span>similarity<span class="token punctuation">)</span> <span class="token operator">/</span> np<span class="token punctuation">.</span>array<span class="token punctuation">(</span><span class="token punctuation">[</span>np<span class="token punctuation">.</span><span class="token builtin">abs</span><span class="token punctuation">(</span>similarity<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span>axis<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-        <span class="token comment"># print('test2',pred.max())</span>
-    <span class="token keyword">return</span> pred<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<pre class="line-numbers language-python" data-language="python"><code class="language-python">item_prediction <span class="token operator">=</span> predict<span class="token punctuation">(</span>train_data_matrix<span class="token punctuation">,</span> item_similarity<span class="token punctuation">,</span> <span class="token builtin">type</span> <span class="token operator">=</span> <span class="token string">'item'</span><span class="token punctuation">)</span>
-user_prediction <span class="token operator">=</span> predict<span class="token punctuation">(</span>train_data_matrix<span class="token punctuation">,</span> user_similarity<span class="token punctuation">,</span> <span class="token builtin">type</span> <span class="token operator">=</span> <span class="token string">'user'</span><span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>item_prediction<span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>item_prediction<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>np<span class="token punctuation">.</span>argsort<span class="token punctuation">(</span>item_prediction<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>计算均方误差</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">rmse</span><span class="token punctuation">(</span>prediction<span class="token punctuation">,</span> ground_truth<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token comment"># 计算均方误差</span>
-    <span class="token comment">#nonzero(a)返回数组a中值不为零的元素的下标</span>
-    <span class="token comment">#flatten()创建矩阵</span>
-    prediction <span class="token operator">=</span> prediction<span class="token punctuation">[</span>ground_truth<span class="token punctuation">.</span>nonzero<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">.</span>flatten<span class="token punctuation">(</span><span class="token punctuation">)</span>
-    ground_truth <span class="token operator">=</span> ground_truth<span class="token punctuation">[</span>ground_truth<span class="token punctuation">.</span>nonzero<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">.</span>flatten<span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token keyword">return</span> sqrt<span class="token punctuation">(</span>mean_squared_error<span class="token punctuation">(</span>prediction<span class="token punctuation">,</span> ground_truth<span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'User based CF RMSE: '</span> <span class="token operator">+</span> <span class="token builtin">str</span><span class="token punctuation">(</span>rmse<span class="token punctuation">(</span>user_prediction<span class="token punctuation">,</span> test_data_matrix<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'Item based CF RMSE: '</span> <span class="token operator">+</span> <span class="token builtin">str</span><span class="token punctuation">(</span>rmse<span class="token punctuation">(</span>item_prediction<span class="token punctuation">,</span> test_data_matrix<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>SVD分解的方法，其中k是特征值个数，指定将分解为$m<em>k$和$k</em>n$，中间的对角矩阵有k个特征值</p>
-<blockquote>
-<p>k: int, optional,Number of singular values and vectors to compute. Must be 1 &lt;&#x3D; k &lt; min(A.shape)</p>
-</blockquote>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python">u<span class="token punctuation">,</span> s<span class="token punctuation">,</span> vt <span class="token operator">=</span> svds<span class="token punctuation">(</span>train_data_matrix<span class="token punctuation">,</span> k<span class="token operator">=</span><span class="token number">500</span><span class="token punctuation">)</span>
-s_diag_matrix <span class="token operator">=</span> np<span class="token punctuation">.</span>diag<span class="token punctuation">(</span>s<span class="token punctuation">)</span>
-X_pred <span class="token operator">=</span> np<span class="token punctuation">.</span>dot<span class="token punctuation">(</span>np<span class="token punctuation">.</span>dot<span class="token punctuation">(</span>u<span class="token punctuation">,</span> s_diag_matrix<span class="token punctuation">)</span><span class="token punctuation">,</span> vt<span class="token punctuation">)</span>
-
-<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'User-based CF MSE: '</span> <span class="token operator">+</span> <span class="token builtin">str</span><span class="token punctuation">(</span>rmse<span class="token punctuation">(</span>X_pred<span class="token punctuation">,</span> test_data_matrix<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>参考</p>
-<p><span class="exturl" data-url="aHR0cHM6Ly9sdW1pbmdkb25nLmNuL3JlY29tbWVuZGF0aW9uLWFsZ29yaXRobS1iYXNlZC1vbi1tYXRyaXgtZGVjb21wb3NpdGlvbi5odG1s">基于矩阵分解的推荐算法<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3FjeW1reHljL1JlY1N5cw==">项亮的《推荐系统实践》的代码实现<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9saWFtLnBhZ2UvMjAxOS8wMy8yNS9GYWN0b3JpemF0aW9uLU1hY2hpbmUv">谈谈因子分解机模型（FM）<i class="fa fa-external-link-alt"></i></span>  </p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>推荐系统</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>文件系统的Reflink</title>
-    <url>/reflink-hardlink-symlink/</url>
-    <content><![CDATA[<p>reflink暂且翻译成引用链接吧，新版coreutils的cp和mv的默认行为就是reflink（如果文件系统支持）。硬链接和软链接的</p>
-<span id="more"></span>
-
-<h2 id="Reflink"><a href="#Reflink" class="headerlink" title="Reflink"></a>Reflink</h2><p>如果你的coreutils&gt;9.0，而且装的是Btrfs或XFS等支持Reflink的文件系统，那么<code>cp</code>和<code>mv</code>的默认行为是使用reflink(mv应该是在不同子卷之间，when moving files across BTRFS subvols)，<code>cp --reflink=auto</code></p>
-<p>最早是从Btrfs听说的reflink,以为这就是一个COW，后来发现它并不一定需要COW，而是和de-duplication（重复数据删除）有关。</p>
-<h2 id="整理碎片对reflink的影响"><a href="#整理碎片对reflink的影响" class="headerlink" title="整理碎片对reflink的影响"></a>整理碎片对reflink的影响</h2><p>以Btrfs为例，defragment会打断reflink，于是你做完defrag以后会发现占用空间可能大了好多。不过像Btrfs之类的文件系统几乎都跑在SSD上，整理碎片不仅不会像机械那样提升性能，而且会增加写入。所以直接不整理碎片就好了。</p>
-<h2 id="硬链接和软链接和Reflink的区别"><a href="#硬链接和软链接和Reflink的区别" class="headerlink" title="硬链接和软链接和Reflink的区别"></a>硬链接和软链接和Reflink的区别</h2><p>这两个东西的区别基本上网上都说烂了。这里再简单说一下。</p>
-<p>硬链接（hardlink）的inode号和原来的一样</p>
-<p>但是hardlink和symlink有一些问题，创建的时候很开心，修改和删除就比较麻烦。</p>
-<h2 id="Reflink这个东西有啥用"><a href="#Reflink这个东西有啥用" class="headerlink" title="Reflink这个东西有啥用"></a>Reflink这个东西有啥用</h2><p>1.加快复制和移动速度<br>2.节省空间</p>
-<p>比如wine的reflink补丁。比如你steam开proton下了很多游戏，你会发现<code>.local/share/Steam</code>下面每个游戏的目录都有一堆相同的ddl。reflink的补丁可以有效减小Wine应用的体积，很多重复的ddl文件都会以reflink的方式复制。</p>
-<p><span class="exturl" data-url="aHR0cHM6Ly93d3cucGhvcm9uaXguY29tL3NjYW4ucGhwP3BhZ2U9bmV3c19pdGVtJnB4PVJlZmxpbmstRm9yLVdpbmUtUGF0Y2hlcw==">Proposed Reflink Support Would Provide Big Space Savings For Wine<i class="fa fa-external-link-alt"></i></span>， <span class="exturl" data-url="aHR0cHM6Ly93d3cucGhvcm9uaXguY29tL3NjYW4ucGhwP3BhZ2U9bmV3c19pdGVtJnB4PVdpbmUtUmVmbGluay1SZXZpc2Vk">Wine Reflink Support Continues To Be Worked On For Significant Space Savings<i class="fa fa-external-link-alt"></i></span>  </p>
-<p>坏消息这玩意暂时不支持ext4，好消息Steam Deck将采用Btrfs。对于不支持的文件系统，可以通过OVerlayfs实现，不过好像没多少人这么干（Overlayfs这个名字你也在Docker那里听说过对罢？坑也不少）</p>
-<p>那wine为什么不用符号链接呢？看起来这种情况下用symlink不是也挺合适的？</p>
-<blockquote>
-<p>Because most of the file WINE is running didn’t have symlink support in mind.They assumes that the open give them the file, not a symlink.After opening the file, they would just update it without replacing that symlink with an actual file.</p>
-</blockquote>
-<p>另一个麻烦的问题是相当多的游戏反作弊软件，他们在检查的时候不认符号链接。于是就认为你这ddl有问题，然后就封号了。用reflink就比较好解决了，在Wine应用和你看来是感觉不到链接存在的，reflink看起来就像是正常的文件一样；而symlink看起来就是一个link，如果Wine应用和外挂检测不去处理他会出问题。举一个不恰当的例子，reflink就像透明代理一样，用户和软件感觉不到它的存在。</p>
-<p>要不我们叫它透明链接算了（逃</p>
-<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><span class="exturl" data-url="aHR0cHM6Ly9ibG9ncy5vcmFjbGUuY29tL2xpbnV4L3Bvc3QveGZzLWRhdGEtYmxvY2stc2hhcmluZy1yZWZsaW5r">https://blogs.oracle.com/linux/post/xfs-data-block-sharing-reflink<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9idHJmcy53aWtpLmtlcm5lbC5vcmcvaW5kZXgucGhwL0RlZHVwbGljYXRpb24=">Deduplication Btrfs Wiki<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cuY3J1Y2lhbC5jb20vYXJ0aWNsZXMvYWJvdXQtc3NkL3Nob3VsZC15b3UtZGVmcmFnLWFuLXNzZA==">Should You Defrag an SSD? <i class="fa fa-external-link-alt"></i></span> </p>
-<p><span class="exturl" data-url="aHR0cHM6Ly9tYW43Lm9yZy9saW51eC9tYW4tcGFnZXMvbWFuMi9pb2N0bF9maWNsb25lLjIuaHRtbA==">https://man7.org/linux/man-pages/man2/ioctl_ficlone.2.html<i class="fa fa-external-link-alt"></i></span></p>
-<p><span class="exturl" data-url="aHR0cHM6Ly9sd24ubmV0L0FydGljbGVzLzMzMTgwOC8=">https://lwn.net/Articles/331808/<i class="fa fa-external-link-alt"></i></span></p>
-]]></content>
-      <tags>
-        <tag>fs</tag>
-        <tag>reflink</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>记一次Spring Cloud上线内存优化</title>
-    <url>/spring-cloud-performance-optimization/</url>
-    <content><![CDATA[<p>没钱买 256G 内存的服务器的人是这样的</p>
-<span id="more"></span>
-
-<p>其实本来想说Spring Cloud上线性能优化的，想了想不是，这波，这波啊是性能反向优化（性能不性能的已经不重要了，用户量应该也不太大，先把成本压下来再说吧）。</p>
-<h2 id="怎么回事"><a href="#怎么回事" class="headerlink" title="怎么回事"></a>怎么回事</h2><p>朋友们好啊，<br>我是浑元形意太极门掌门人马保国。<br>刚才有个朋友问我：<br>“马老师发生肾么事了？”<br>我说怎么回事。给我发了几张截图。<br>我一看！哦，原来是昨天，有两个微服务，<br>上线一天，一个内存<strong>996M</strong>，一个内存<strong>888M</strong>。<br><img src="/spring-cloud-performance-optimization/image-20201118095216036.png" alt="它也说，啊，它截图也说了"><br><del>其实是我调了一下凑出来的这两个数</del><br>它说要吃一点资源，我说可以。<br>诶，我一说它“啪”就站起来了，很快啊！<br>然后上来就是，一个虚拟机，一个Docker，一个mysql，我全部防出去，防出去了啊。<br>防出去以后，自然是，上线部署以点到为止。没有限制它内存。<br>我笑一下，准备收工，因为这时间，按传统部署的点到为止，服务器已经够用了。我收工的时间回宿舍啦。<br>它突然袭击，还有8个微服务，来打我机子，啊。我大意了啊，没有闪。<br>来，抢！来，偷吃，我DDR3的，老内存，这好吗？这不好。<br>它说它是乱占用的，它可不是乱占用的。一个996，一个888，这明显是，有备而来！</p>
-<h2 id="服务器"><a href="#服务器" class="headerlink" title="服务器"></a>服务器</h2><p>正常的操作是加钱上大一点的内存，但是大内存VPS、杜甫它贵啊。以套路云香港为例，明晃晃的抢钱。而且16G内存及以上的版本已经无了。其他华南华北的VPS更贵一点，而且全都是1M小水管。</p>
-<p><img src="/spring-cloud-performance-optimization/image-20201120103456546.png" alt="套路云香港"></p>
-<p><del>服务器内存比本地台式还小是要出大问题的,上线炸内存警告</del></p>
-<p>102网吧里面服务器是有32G内存的，然而网速…..</p>
-<p>服务器的套餐是学校20一个月20M的普通套餐（20M是下载速度，要想对外服务，上传速度可能只有几M）同为校园网。而且你电的教育网会有各种小问题，比如逢年过节十一国庆公网IP就被信息中心收回去了、校园网出口线路很差、域名也不好搞。</p>
-<p>加钱换校园网的套餐也没用，你电沙河主楼的网速我很少见有人跑出过100Mbps以上的。而且问题是主楼那个墙里的网线，貌似是百兆网…教研室的老交换机上面还赫然贴着一张2010年的封条。。。</p>
-<p>VPS的话选Debian，根据我多年用128M-1G内存VPS灵车漂移的印象，占用资源最少的少的就这个了（CentOS占用&gt;Ubuntu Server&gt;Debian&gt;VSP2ARCH）</p>
-<p><del>其实我很想VPS2ARCH再次灵车漂移，但是毕竟是要出事背锅生产环境我不敢</del></p>
-<h2 id="考虑扔掉Docker"><a href="#考虑扔掉Docker" class="headerlink" title="考虑扔掉Docker"></a>考虑扔掉Docker</h2><p>直接裸跑吧，不要再套几层了。</p>
-<h2 id="其他能扔的"><a href="#其他能扔的" class="headerlink" title="其他能扔的"></a>其他能扔的</h2><h3 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h3><p>这么点用户量没啥缓存的必要，关了</p>
-<h3 id="NACOS"><a href="#NACOS" class="headerlink" title="NACOS"></a>NACOS</h3><p>动态注册发现之类的单机版也没必要用了，直接手动排查和维护吧。</p>
-<p>NACOS的内存占用单机版在几百M左右（默认参数是<code>-Xms512m -Xmx512m -Xmn256m</code>，可以在startup.sh里面改，不过还是直接关掉比较清静。</p>
-<p><img src="/spring-cloud-performance-optimization/image-20201120212626344.png" alt="NACOS内存使用情况"></p>
-<h2 id="JDK版本"><a href="#JDK版本" class="headerlink" title="JDK版本"></a>JDK版本</h2><p>之前一直用的java8-Openjdk。</p>
-<p>后来看到据说 Oracle JDK 和 Open JDK 有性能差异，不同版本的jdk也有性能差异，java 8 的64位版本和32位版本也有区别（据说不超过2G内存的情况下貌似32位会好一些）</p>
-<p>那就都试试吧。在Arch上打的jar包，就在本地测试了一下，没在服务器上试。</p>
-<h3 id="不同版本内存占用"><a href="#不同版本内存占用" class="headerlink" title="不同版本内存占用"></a>不同版本内存占用</h3><p>Arch有个脚本，可以切换OpenJDK的版本，</p>
-<p><img src="/spring-cloud-performance-optimization/image-20201124123102440.png" alt="archlinux-java"></p>
-<p>Oracle JDK 由于甲骨文公司不武德，跟各路开源组织（以及很多闭源福报公司）都闹僵了，Arch仓库不提供支持，得自己安装。</p>
-<p>从AUR安装结果报错说<code>**==&gt; ERROR:** **Failure while downloading manual://jdk-8u271-linux-x64.tar.gz**    **Aborting...** error downloading sources: jdk8</code>，看了一下还得跑到<span class="exturl" data-url="aHR0cHM6Ly93d3cub3JhY2xlLmNvbS9qYXZhL3RlY2hub2xvZ2llcy9qYXZhc2UvamF2YXNlLWpkazgtZG93bmxvYWRzLmh0bWw=">Oracle<i class="fa fa-external-link-alt"></i></span>那里去注册下载然后pkgbuild</p>
-<p>从阿里云的镜像可以不用注册下载<span class="exturl" data-url="aHR0cHM6Ly9jb2RlLmFsaXl1bi5jb20va2FyL29qZGs4LTh1MjcxL3Jhdy9tYXN0ZXIvamRrLTh1MjcxLWxpbnV4LXg2NC50YXIuZ3o=">jdk8<i class="fa fa-external-link-alt"></i></span>和<span class="exturl" data-url="aHR0cHM6Ly9jb2RlLmFsaXl1bi5jb20va2FyL29qZGsxMS0xMS4wLjkvcmF3L21hc3Rlci9qZGstMTEuMC45X2xpbnV4LXg2NF9iaW4udGFyLmd6">jdk11<i class="fa fa-external-link-alt"></i></span>，然后扔到<code>~/Downloads</code>里面，再运行<code>yay -Syu jdk8 jdk11</code>就好了。</p>
-<p>java8 和java11 的编译通过了，看起来Oracle JDK效果是要好一点(也只有十几兆的微弱差别，感觉区别不大)，java14和java15还没试，以后有空再说。</p>
-<h3 id="32位和64位的差异"><a href="#32位和64位的差异" class="headerlink" title="32位和64位的差异"></a>32位和64位的差异</h3><p>试了一下java8的32位和64位，貌似有一点区别，32位是节省一点资源。大概差距也在十几兆左右，区别不太大。</p>
-<h2 id="JVM调参"><a href="#JVM调参" class="headerlink" title="JVM调参"></a>JVM调参</h2><p>大概调了调，冲着压榨内存占用调的</p>
-<p>几个比较重要的参数：</p>
-<ul>
-<li>-Xms</li>
-<li>-Xmx</li>
-<li></li>
-</ul>
-<p>暂时把参数改成这样子了：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">java -Xms16m -Xmx32m -XX:MaxMetaspaceSize<span class="token operator">=</span>48m -XX:CompressedClassSpaceSize<span class="token operator">=</span>8m -Xss256k -Xmn300m -XX:InitialCodeCacheSize<span class="token operator">=</span>4m -XX:ReservedCodeCacheSize<span class="token operator">=</span>8m -XX:MaxDirectMemorySize<span class="token operator">=</span>16m -jar service_ucenter-0.0.1-SNAPSHOT.jar<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>不太敢压榨的太狠，怕上线了OutofMemory。</p>
-<p>现在每个jar包跑起来大概内存占用在300M以下。</p>
-<h2 id="压缩MySQL内存占用"><a href="#压缩MySQL内存占用" class="headerlink" title="压缩MySQL内存占用"></a>压缩MySQL内存占用</h2><p>MySQL的内存占用压缩一下还是很低的，之前还在用wordpress的时候128M内存的灵车VPS跑起来没什么大问题。</p>
-<h2 id="图片压缩"><a href="#图片压缩" class="headerlink" title="图片压缩"></a>图片压缩</h2><p>浏览器F12 可以看到，在加载首页的时候，大部分html、css、js资源在300ms内加载完成，500ms以后开始加载图床资源，一直到最4000ms以后才加载完成。</p>
-<p><img src="/spring-cloud-performance-optimization/image-20201124170847425.png" alt="加载首页"></p>
-<p>下图是打开首页时png图片（阿里云图床，大小 926k）的时候的加载速度，耗时最长的就是下载图片的过程。</p>
-<p><img src="/spring-cloud-performance-optimization/image-20201124165004678.png" alt="image load speed"></p>
-<p>主要就是压缩图片大小了，jpg和png全换成webp，今年6月份Safari14已经支持webp了，现在主流浏览器都问题不大。</p>
-<h2 id="重构"><a href="#重构" class="headerlink" title="重构"></a>重构</h2><p>暂时不考虑，不过上线的时候砍掉几个无关紧要的功能倒是问题不大，这样只开4个微服务就差不多能用了。</p>
-<h2 id="最终结果"><a href="#最终结果" class="headerlink" title="最终结果"></a>最终结果</h2><p>如果不跑别的东西，一个4G内存的VPS已经够用了。</p>
-<p><img src="/spring-cloud-performance-optimization/image-20201124120817137.png" alt="首页"></p>
-<p><img src="/spring-cloud-performance-optimization/image-20201124120944296.png" alt="全部课程页面"></p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXJzLnJlZGhhdC5jb20vYmxvZy8yMDE3LzA0LzA0L29wZW5qZGstYW5kLWNvbnRhaW5lcnMv">https://developers.redhat.com/blog/2017/04/04/openjdk-and-containers/<i class="fa fa-external-link-alt"></i></span></p>
-<p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmtlbHUub3JnL3RlY2gvMjAxOC8wNS8zMC9ydW5uaW5nLWEtanZtLWluLWEtY29udGFpbmVyLXdpdGhvdXQtZ2V0dGluZy1raWxsZWQuaHRtbA==">https://blog.kelu.org/tech/2018/05/30/running-a-jvm-in-a-container-without-getting-killed.html<i class="fa fa-external-link-alt"></i></span></p>
-<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vaXR5b3Vrbm93L3AvNTYxMDIzMi5odG1s">https://www.cnblogs.com/ityouknow/p/5610232.html<i class="fa fa-external-link-alt"></i></span></p>
-<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2ZseWxlZnQvdGlwL2Jsb2IvbWFzdGVyL2Jsb2cvc3ByaW5nYm9vdCVFNiU4MCVBNyVFOCU4MyVCRCVFOCVCMCU4MyVFNCVCQyU5OC5tZA==">https://github.com/flyleft/tip/blob/master/blog/springboot%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98.md<i class="fa fa-external-link-alt"></i></span></p>
-<p><span class="exturl" data-url="aHR0cHM6Ly9tZWRpdW0uY29tL0B5b3J0dWMvanZtLW1lbW9yeS1hbGxvY2F0aW9uLWluLWRvY2tlci1jb250YWluZXItYTI2YmJjZTNhM2Yy">https://medium.com/@yortuc/jvm-memory-allocation-in-docker-container-a26bbce3a3f2<i class="fa fa-external-link-alt"></i></span></p>
-]]></content>
-      <categories>
-        <category>102网吧日常</category>
-      </categories>
-      <tags>
-        <tag>jvm</tag>
-        <tag>Spring</tag>
       </tags>
   </entry>
   <entry>
@@ -7524,6 +7794,33 @@ python scripts/clang-tools/gen_compile_commands.py<span aria-hidden="true" class
       </tags>
   </entry>
   <entry>
+    <title>重启博客</title>
+    <url>/1a9a/</url>
+    <content><![CDATA[<p>新博客又开通了(搬家)，不定期更新</p>
+<span id="more"></span>
+
+<p>原域名到期，加上之前的Wordpress网站不太喜欢，索性换到Hexo了，主题域名什么的都全换了。没换Hugo是因为没发现和Next一样这么喜欢的主题，这主题让我感到这个页面的却就是一个博客应该有的样子。</p>
+<p>倒不是说这个主题多好看，它是我印象里博客的样子，让我找回了还是个小朋友的时候第一次注册博客的感觉。对呀，博客就长这个样子。左边是导航栏，下面一小栏放头像和放点徽章挂件；中间是文章，文章最下面是评论。再随便加个背景，简直完美。咿，空荡荡的好像还少点什么；是弹窗小广告，这个就算了…..</p>
+<p>最早的时候沉迷三维弹球和扫雷，以及桌面屏保。后来开始上网，已经错过了聊天室的时代，也错过了拨号上网和Telnet论坛的时代，论坛已经流行用Discuz了，QQ号已经8位了。跟风注册了雅虎伊妹儿和搜狐博客，以及一些论坛帐号，开始了网上冲浪。后来换到Wordpress了，加上一个穷学生手头零花钱也不多，中间关了两次没有续上。</p>
+<p>偶当年还是一只小网虫的时候，并不是特别喜欢发博客，喜欢泡在BBS里，写的东西也都喜欢放在BBS里水帖。论坛里看的人比较多，偶尔斑竹还会出来给加个精。大概从15年开始BBS一个个都亡了。有的因为用户大量出走宣布死亡，有的像贴吧一样开始杀鸡取卵式变现挣钱，还有的因为政策原因关了。有的多次改版丢了好多老帖子，有的格式也乱了，老用户抱怨出走。有的一直停留在远古版本的Discuz，然后有一天站被黑了….</p>
+<p>看多了Flarum的新论坛现在偶尔点进一些没见过的Discuz论坛还是会瞬间恍惚，仿佛又回到了当年</p>
+<p>有的是还没亡却从当年的人声鼎沸变得门可罗雀，不时传来哪个一年到头也没几个人说话的论坛站长支撑不下去又要关站了的消息。认识的好多网友也有逐渐沉寂，失去了联系。</p>
+<p>之前博客里的东西不适合放出来，就默默存在硬盘里了。在论坛里写的东西就放在论坛里和BBS一起消亡吧。</p>
+<blockquote class="blockquote-center">
+<p>山中友，试高吟楚些，重与招魂</p>
+
+</blockquote>
+
+<p><img src="/1a9a/cyperpunk.png" alt="Welcome"></p>
+]]></content>
+      <categories>
+        <category>杂七杂八</category>
+      </categories>
+      <tags>
+        <tag>杂记</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>VSCode Neovim插件配置——将VSCode作为Neovim的GUI客户端</title>
     <url>/vscode-neovim-setting/</url>
     <content><![CDATA[<p>本来不报希望的试了试这套不伦不类的缝合怪配置，结果缝合出了很好的效果，可以拿这套配置在VSCode下养老了。</p>
@@ -7650,33 +7947,6 @@ Plug &#39;asvetliakov&#x2F;vim-easymotion&#39;, Cond(exists(&#39;g:vscode&#39;),
         <tag>VSCode</tag>
         <tag>Vim</tag>
         <tag>Neovim</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>重启博客</title>
-    <url>/1a9a/</url>
-    <content><![CDATA[<p>新博客又开通了(搬家)，不定期更新</p>
-<span id="more"></span>
-
-<p>原域名到期，加上之前的Wordpress网站不太喜欢，索性换到Hexo了，主题域名什么的都全换了。没换Hugo是因为没发现和Next一样这么喜欢的主题，这主题让我感到这个页面的却就是一个博客应该有的样子。</p>
-<p>倒不是说这个主题多好看，它是我印象里博客的样子，让我找回了还是个小朋友的时候第一次注册博客的感觉。对呀，博客就长这个样子。左边是导航栏，下面一小栏放头像和放点徽章挂件；中间是文章，文章最下面是评论。再随便加个背景，简直完美。咿，空荡荡的好像还少点什么；是弹窗小广告，这个就算了…..</p>
-<p>最早的时候沉迷三维弹球和扫雷，以及桌面屏保。后来开始上网，已经错过了聊天室的时代，也错过了拨号上网和Telnet论坛的时代，论坛已经流行用Discuz了，QQ号已经8位了。跟风注册了雅虎伊妹儿和搜狐博客，以及一些论坛帐号，开始了网上冲浪。后来换到Wordpress了，加上一个穷学生手头零花钱也不多，中间关了两次没有续上。</p>
-<p>偶当年还是一只小网虫的时候，并不是特别喜欢发博客，喜欢泡在BBS里，写的东西也都喜欢放在BBS里水帖。论坛里看的人比较多，偶尔斑竹还会出来给加个精。大概从15年开始BBS一个个都亡了。有的因为用户大量出走宣布死亡，有的像贴吧一样开始杀鸡取卵式变现挣钱，还有的因为政策原因关了。有的多次改版丢了好多老帖子，有的格式也乱了，老用户抱怨出走。有的一直停留在远古版本的Discuz，然后有一天站被黑了….</p>
-<p>看多了Flarum的新论坛现在偶尔点进一些没见过的Discuz论坛还是会瞬间恍惚，仿佛又回到了当年</p>
-<p>有的是还没亡却从当年的人声鼎沸变得门可罗雀，不时传来哪个一年到头也没几个人说话的论坛站长支撑不下去又要关站了的消息。认识的好多网友也有逐渐沉寂，失去了联系。</p>
-<p>之前博客里的东西不适合放出来，就默默存在硬盘里了。在论坛里写的东西就放在论坛里和BBS一起消亡吧。</p>
-<blockquote class="blockquote-center">
-<p>山中友，试高吟楚些，重与招魂</p>
-
-</blockquote>
-
-<p><img src="/1a9a/cyperpunk.png" alt="Welcome"></p>
-]]></content>
-      <categories>
-        <category>杂七杂八</category>
-      </categories>
-      <tags>
-        <tag>杂记</tag>
       </tags>
   </entry>
   <entry>
