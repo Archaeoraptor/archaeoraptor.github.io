@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/uploads/wizard-hat-16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/uploads/wizard-hat-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/uploads/wizard-hat-16.png">
+  <link rel="mask-icon" href="/uploads/wizard-hat-32.png" color="#222">
+  <meta name="google-site-verification" content="4Rj54anORAwcoMXLe3miFnoH78ZtUZfdamS--ffoxVE">
+  <meta name="msvalidate.01" content="872DC4637276109A6B54FF149DCABA8A">
+  <meta name="yandex-verification" content="0d554b4a05a80f0d">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhangjk98.xyz","root":"/","images":"/images","scheme":"Pisces","darkmode":"auto","version":"8.15.1","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqusjs","storage":true,"lazyload":false,"nav":{"disqusjs":{"text":"Load Disqus","order":-1},"utterances":{"order":-2}},"activeClass":"disqusjs"},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"none","post_header":"none","post_body":"none","coll_header":"none","sidebar":"none"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="这个Lab前几个月写的，最近比较闲整理一下之前做的Lab。内存管理这块比较复杂，当时做Lab的时候对内存这块理解也浅，实现有些挺蠢的地方，重新整理了一下。接下来的笔记会多一点和Lab作业关系不是特别大的东西，闲着没事看OS相关的东西觉得有意思就一起记到笔记里了。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="6.S081 Lab Page table 笔记：虚拟内存、页表和MMU">
+<meta property="og:url" content="https://zhangjk98.xyz/6.S081-lab-page-table/index.html">
+<meta property="og:site_name" content="止息的博客">
+<meta property="og:description" content="这个Lab前几个月写的，最近比较闲整理一下之前做的Lab。内存管理这块比较复杂，当时做Lab的时候对内存这块理解也浅，实现有些挺蠢的地方，重新整理了一下。接下来的笔记会多一点和Lab作业关系不是特别大的东西，闲着没事看OS相关的东西觉得有意思就一起记到笔记里了。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://zhangjk98.xyz/6.S081-lab-page-table/1642081823.png">
+<meta property="og:image" content="https://zhangjk98.xyz/6.S081-lab-page-table/1642057127.png">
+<meta property="og:image" content="https://zhangjk98.xyz/6.S081-lab-page-table/1642057382.png">
+<meta property="og:image" content="https://zhangjk98.xyz/6.S081-lab-page-table/1642057536.png">
+<meta property="og:image" content="https://zhangjk98.xyz/6.S081-lab-page-table/1642065542.png">
+<meta property="og:image" content="https://zhangjk98.xyz/6.S081-lab-page-table/1642124957.png">
+<meta property="article:published_time" content="2022-01-12T09:56:03.000Z">
+<meta property="article:author" content="Zhang.j.k">
+<meta property="article:tag" content="6.S081">
+<meta property="article:tag" content="page table">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zhangjk98.xyz/6.S081-lab-page-table/1642081823.png">
+
+
+<link rel="canonical" href="https://zhangjk98.xyz/6.S081-lab-page-table/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zhangjk98.xyz/6.S081-lab-page-table/","path":"6.S081-lab-page-table/","title":"6.S081 Lab Page table 笔记：虚拟内存、页表和MMU"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>6.S081 Lab Page table 笔记：虚拟内存、页表和MMU | 止息的博客</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143393734-1"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-143393734-1","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="止息的博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">止息的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">唯见月寒日暖，来煎人寿</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8E%E5%8D%95%E7%89%87%E6%9C%BA%E7%9A%84%E5%86%85%E5%AD%98%E5%92%8CMMU%E8%AF%B4%E8%B5%B7"><span class="nav-number">1.</span> <span class="nav-text">从单片机的内存和MMU说起</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B5%E8%A1%A8"><span class="nav-number">2.</span> <span class="nav-text">页表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E9%A1%B5%E8%A1%A8%E5%92%8C%E5%86%85%E6%A0%B8%E9%A1%B5%E8%A1%A8"><span class="nav-number">2.1.</span> <span class="nav-text">进程页表和内核页表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B5%E8%A1%A8%E6%94%BE%E5%9C%A8%E5%93%AA"><span class="nav-number">3.</span> <span class="nav-text">页表放在哪</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%99%E4%B9%88%E5%A4%9A%E5%B9%B4%E8%BF%87%E5%8E%BB%E4%BA%86%E9%A1%B5%E5%A4%A7%E5%B0%8F%E6%80%8E%E4%B9%88%E8%BF%98%E6%98%AF4K"><span class="nav-number">4.</span> <span class="nav-text">这么多年过去了页大小怎么还是4K</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lab%E4%BD%9C%E4%B8%9A%E7%AC%94%E8%AE%B0"><span class="nav-number">5.</span> <span class="nav-text">Lab作业笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Speed-up-system-calls"><span class="nav-number">5.1.</span> <span class="nav-text">Speed up system calls</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Print-a-page-table"><span class="nav-number">5.2.</span> <span class="nav-text">Print a page table</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.3.</span> <span class="nav-text"></span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%93%BE%E6%8E%A5"><span class="nav-number">6.</span> <span class="nav-text">链接</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Zhang.j.k"
+      src="/uploads/jinmao.webp">
+  <p class="site-author-name" itemprop="name">Zhang.j.k</p>
+  <div class="site-description" itemprop="description">in darkest night</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">64</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">103</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FyY2hhZW9yYXB0b3I=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;archaeoraptor"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOnpoaXhpQHVlc3RjbHVnLm9yZw==" title="E-Mail → mailto:zhixi@uestclug.org"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml" rel="noopener me"><i class="fa fa-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><img src="https://unpkg.com/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly96aGFuZ3NodXFpYW8ub3Jn" title="https:&#x2F;&#x2F;zhangshuqiao.org">米米的博客</span>
+            </li>
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly95YW5xaXl1LmluZm8=" title="https:&#x2F;&#x2F;yanqiyu.info">Karuboniru's Blog</span>
+            </li>
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnNhbWNodS5jbg==" title="https:&#x2F;&#x2F;blog.samchu.cn">Sam's Blog</span>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zhangjk98.xyz/6.S081-lab-page-table/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/jinmao.webp">
+      <meta itemprop="name" content="Zhang.j.k">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="止息的博客">
+      <meta itemprop="description" content="in darkest night">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="6.S081 Lab Page table 笔记：虚拟内存、页表和MMU | 止息的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          6.S081 Lab Page table 笔记：虚拟内存、页表和MMU
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-01-12 17:56:03" itemprop="dateCreated datePublished" datetime="2022-01-12T17:56:03+08:00">2022-01-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux-Unix/" itemprop="url" rel="index"><span itemprop="name">Linux&Unix</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>这个Lab前几个月写的，最近比较闲整理一下之前做的Lab。内存管理这块比较复杂，当时做Lab的时候对内存这块理解也浅，实现有些挺蠢的地方，重新整理了一下。接下来的笔记会多一点和Lab作业关系不是特别大的东西，闲着没事看OS相关的东西觉得有意思就一起记到笔记里了。</p>
+<span id="more"></span>
+
+<h2 id="从单片机的内存和MMU说起"><a href="#从单片机的内存和MMU说起" class="headerlink" title="从单片机的内存和MMU说起"></a>从单片机的内存和MMU说起</h2><p>早期的操作系统是就像现在的一些单片机一样没有虚拟内存、页表这些东西的。以前我一开始用ARM的STM32的单片机的时候，用的是cortex-m系列，没有MMU（Memory Management Unit，内存管理单元）的，直接访问物理地址。当时我上嵌入式的课上也不讲这些东西，上课、做实验讲到内存的时候都直接访问物理地址的（Keil里面直接看物理地址的值确实比较简单）。</p>
+<p>这个时候内存的管理方式挺简单的，<strong>可能为数不多的坑就是大小端</strong>，有一次被坑了挺久</p>
+<p>下面这张图很熟悉了，堆、栈，数据段、代码段</p>
+<p>访问栈就直接用sp去寻址就可以了，简单直接。</p>
+<p>没有MMU也有好处，这样便宜、功耗低、而且比较简单。有的对实时性要求比较高的东西，也没有MMU（比如Cortex-R系列）</p>
+<p>注：嵌入式的soc芯片，如果能跑操作系统的大概率有MMU，但是两者之前没有必然关系。比如uCLinux，就是为了在没有MMU上的设备跑。有MMU，当然也可以不用操作系统，直接跑裸机（MMU其实可以关掉，但是我们一般不关，手动指定映射，因为MMU的cache对性能提升很大）。（uClinux要小心内存碎片，而且由于MMU没了，内存保护、内存置换、COW基本都没了，大部分时候还是用mmap和内存直接打交道）</p>
+<p>单片机可以不要MMU，但是一个运行着很多任务的操作系统需要对内存进行抽象和封装，提供给应用。于是后来诞生了虚拟内存&#x2F;虚拟存储器（Virtual Memory），虚拟内存可以比物理内存大，可以让每个程序都认为自己拥有一段连续独立的内存，还可以权限控制（内存保护），虚拟内存在硬件上是MMU实现的。操作系统的虚拟内存几乎都依赖MMU。（当然，操作系统有自己的页表，这个一会再说）<br>像Cortex-A系列的soc芯片，是有mmu的，上面能跑一些完整的操作系统，有页表等一系列完整的内存管理机制。下图来自xv6 book，每个进程都有自己独立的虚拟内存，这样主要的好处一个是安全隔离，一个是让进程操作一段连续的内存，即使映射到物理内存上是不连续的（你可以<strong>试试在Cortex-A系列soc的板子上跑个uClinux这种没有虚拟内存的，很容易搞出内存碎片然后OOM了</strong>）。</p>
+<p><img src="/6.S081-lab-page-table/1642081823.png"></p>
+<p>下面这是ARM的图，RISC-V和x86我不熟，就没找RISC的图。下面这些图来自：<span class="exturl" data-url="aHR0cHM6Ly9jczE0MGUuc2VyZ2lvLmJ6L2RvY3MvQVJNdjgtQS1Qcm9ncmFtbWVyLUd1aWRlLnBkZg==">ARMv8-A-Programmer-Guide<i class="fa fa-external-link-alt"></i></span></p>
+<p><img src="/6.S081-lab-page-table/1642057127.png"></p>
+<p>MMU以页为最小单位将内存从物理地址映射到虚拟地址，页表大小一般是4k。除了地址映射MMU还实现了内存保护。每个页有读、写、执行三种权限。</p>
+<p>MMU里有TLB（Translation Lookaside Buffer），专门用来缓存页表，CPU要访问内存的时候会先去TLB里面找，没有命中再去遍历找物理地址（Translation Table Walk）。</p>
+<p>图中的Caches就是我们熟悉的L1、L2、L3缓存，l1一般有ICache和DCache，分别用来缓存指令和数据。</p>
+<p><img src="/6.S081-lab-page-table/1642057382.png"></p>
+<p>一部分ARM的芯片是将L1的ICache做成逻辑地址的（不经过MMU），有的芯片是逻辑地址（Cache缓存的是经过MMU转换后的虚拟地址），这个和芯片的实现有关，不是这里的重点。我们就简单的认为，Cache一般速度远比主存快，用于缓存最常用的内存数据（页）。</p>
+<p><img src="/6.S081-lab-page-table/1642057536.png"></p>
+<p>当L1、L2、L3都没有命中（Write Miss）的时候，会走总线去内存里面找。至于L1、L2、L3缓存的置换、一致性这些问题，我们也简单的认为芯片已经帮我们做好了，这里我们不去管它。</p>
+<h2 id="页表"><a href="#页表" class="headerlink" title="页表"></a>页表</h2><p>以页为单位完成了物理内存到虚拟内存的映射，要访问这些页我们需要查表，于是就有了页表（Page Table）。但是如果把每个页都映射成一张页表，这一个页表是很大的，于是就有了多级页表。多级页表中每一级都有index和offset用于定位页和页中的偏移量。</p>
+<p><img src="/6.S081-lab-page-table/1642065542.png"></p>
+<p>上图中的PPN是物理page号（PPN，Physical Page Number）。</p>
+<h3 id="进程页表和内核页表"><a href="#进程页表和内核页表" class="headerlink" title="进程页表和内核页表"></a>进程页表和内核页表</h3><p>xv6里面有，内核页表和用户页表（进程页表），每个进程都有自己独立的页表。内核页表只有一个。一般进程页表都有一份内核页表的直接copy，但是一些开了内核页表隔离（KPTI, Kernel Page Table Isolation）的，情况会比较复杂。</p>
+<p><img src="/6.S081-lab-page-table/1642124957.png"></p>
+<p>我们这里先不考虑这些复杂情况，做Lab的时候只需要知道进程地址空间是<code>exec</code>创建的，进程页表是<code>proc_pagetable</code>创建的</p>
+<h2 id="页表放在哪"><a href="#页表放在哪" class="headerlink" title="页表放在哪"></a>页表放在哪</h2><p>放在内存里面（是虚拟内存）。准确的说，是在内存的内核空间（kernel address space）里。在RISC-V中，SATP寄存器保存当前进程的页表地址，通过切换SATP的值来切换进程页表，MMU通过这个地址去找页表（先去TLB找，那里放的是页表的缓存）。<br>x86的寄存器是CR3，作用类似。</p>
+<h2 id="这么多年过去了页大小怎么还是4K"><a href="#这么多年过去了页大小怎么还是4K" class="headerlink" title="这么多年过去了页大小怎么还是4K"></a>这么多年过去了页大小怎么还是4K</h2><p>如果你执行<code>getconf PAGE_SIZE</code>看一下，大概率还是<code>4096</code>。<br>页表的级数一直在增加，ARM的嵌入式soc（比如Cortex-A系列）一般是二级页表，Linux一开始也是二级，后来有了3级和4级页表。然而这么多年过去了，页表大小基本还是4k。</p>
+<p>透明大页</p>
+<h2 id="Lab作业笔记"><a href="#Lab作业笔记" class="headerlink" title="Lab作业笔记"></a>Lab作业笔记</h2><p>这个Lab是第四章内存管理的配套Lab，做之前推荐还是看一下第四章的讲义。涉及到的几个函数在<code>vm.c</code>中</p>
+<h3 id="Speed-up-system-calls"><a href="#Speed-up-system-calls" class="headerlink" title="Speed up system calls"></a>Speed up system calls</h3><blockquote>
+<p>Some operating systems (e.g., Linux) speed up certain system calls by sharing data in a read-only region between userspace and the kernel. This eliminates the need for kernel crossings when performing these system calls.</p>
+</blockquote>
+<p>仿照Linux通过共享内存来加快syscall。一开始看lwm这篇：<span class="exturl" data-url="aHR0cHM6Ly9sd24ubmV0L0FydGljbGVzLzE4NDExLw==">How to speed up system calls<i class="fa fa-external-link-alt"></i></span> 02年的文章和<span class="exturl" data-url="aHR0cHM6Ly9sd24ubmV0L0FydGljbGVzLzE4NDE0Lw==">Patch<i class="fa fa-external-link-alt"></i></span>没看懂是要干嘛，后来搜了一下vsyscall才明白这个Lab想让我们做什么。  </p>
+<blockquote>
+<p>vsyscall 或 virtual system call 是第一种也是最古老的一种用于加快系统调用的机制。 vsyscall 的工作原则其实十分简单。Linux 内核在用户空间映射一个包含一些变量及一些系统调用的实现的内存页。<br>不过后来vsyscall几乎都换成vDSO和vvar了（安全原因），现在不少发行版默认禁用这个的。  </p>
+</blockquote>
+<p>知道干什么就好办了，我们照着课程提示先看<code>user/ulib.c</code>中的<code>ugetpid()</code>，这里已经将共享地址<code>USYSCALL</code>转成usyscall结构体，然后返回pid</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span>
+<span class="token function">ugetpid</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+  <span class="token keyword">struct</span> <span class="token class-name">usyscall</span> <span class="token operator">*</span>u <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">usyscall</span> <span class="token operator">*</span><span class="token punctuation">)</span>USYSCALL<span class="token punctuation">;</span>
+  <span class="token keyword">return</span> u<span class="token operator">-></span>pid<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>我们只要在<code>kernel/proc.h</code>中补全USYSCALL的映射（mapping），这个仿照trapframe就好了，在<code>proc.h</code>中</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">struct</span> <span class="token class-name">usyscall</span> <span class="token operator">*</span>usyscall    <span class="token comment">// data page for getpid syscall</span>
+<span class="token keyword">struct</span> <span class="token class-name">trapframe</span> <span class="token operator">*</span>trapframe<span class="token punctuation">;</span> <span class="token comment">// data page for trampoline.S</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>然后在<code>proc.c</code>设置映射和读权限（PTE_U、PTE_R，详见xv6文档）。我们继续照着trapframe的写法加上：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">// map the getpid (for systemcall return)</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">mappages</span><span class="token punctuation">(</span>pagetable<span class="token punctuation">,</span> USYSCALL<span class="token punctuation">,</span> PGSIZE<span class="token punctuation">,</span>
+            <span class="token punctuation">(</span>uint64<span class="token punctuation">)</span><span class="token punctuation">(</span>p<span class="token operator">-></span>usyscall<span class="token punctuation">)</span><span class="token punctuation">,</span> PTE_R <span class="token operator">|</span> PTE_U<span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">uvmfree</span><span class="token punctuation">(</span>pagetable<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后在<code>allocproc()</code>中分配，在<code>freeproc()</code>中释放内存（这个直接照抄trapframe的分配和释放就可以了）。注意还要在<code>proc.c</code>中的<code>proc_freepagetable</code>释放一下<code>uvmunmap(pagetable, USYSCALL, 1, 0);</code></p>
+<h3 id="Print-a-page-table"><a href="#Print-a-page-table" class="headerlink" title="Print a page table"></a>Print a page table</h3><p>这个也简单，实现一个打印页表方便下面调试。</p>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><span class="exturl" data-url="aHR0cHM6Ly9uaWV5b25nLmdpdGh1Yi5pby93aWtpX2NwdS9DUFUlRTQlQkQlOTMlRTclQjMlQkIlRTYlOUUlQjYlRTYlOUUlODQtTU1VLmh0bWw=">CPU体系架构-MMU<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vTG95ZW5XYW5nL3AvMTE0MDY2OTMuaHRtbA==">（一）ARMv8 MMU及Linux页表映射<i class="fa fa-external-link-alt"></i></span>  </p>
+<p>阅读更多</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9sd24ubmV0L0FydGljbGVzLzE4NDExLw==">How to speed up system calls<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly92dmwubWUvMjAxOS8wNi9saW51eC1zeXNjYWxsLWFuZC12c3lzY2FsbC12ZHNvLWluLXg4Ni8=">x86 架构下 Linux 的系统调用与 vsyscall, vDSO<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cua2VybmVsLm9yZy9kb2MvaHRtbC9sYXRlc3QveDg2L3B0aS5odG1s">17. Page Table Isolation (PTI)<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9jdGYtd2lraS5vcmcvcHduL2xpbnV4L2tlcm5lbC1tb2RlL2RlZmVuc2UvaXNvbGF0aW9uL3VzZXIta2VybmVsL2twdGk=">KPTI - Kernel Page Table Isolation CTF-Wiki<i class="fa fa-external-link-alt"></i></span>  </p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/6-S081/" rel="tag"><i class="fa fa-tag"></i> 6.S081</a>
+              <a href="/tags/page-table/" rel="tag"><i class="fa fa-tag"></i> page table</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/make-ppt-with-markdown/" rel="prev" title="用Markdown制做PPT">
+                  <i class="fa fa-chevron-left"></i> 用Markdown制做PPT
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/6.S081-lab-trap/" rel="next" title="6.S081 Lab Traps 笔记">
+                  6.S081 Lab Traps 笔记 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+      <div class="tabs tabs-comment">
+        <ul class="nav-tabs">
+            <li class="tab"><a href="#comment-utterances">utterances</a></li>
+            <li class="tab"><a href="#comment-disqusjs">Load Disqus</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane utterances" id="comment-utterances">
+              <div class="comments utterances-container"></div>
+            </div>
+            <div class="tab-pane disqusjs" id="comment-disqusjs">
+              
+  <div class="comments disqusjs-container">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+            </div>
+        </div>
+      </div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">止息</span>
+</div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FyY2hhZW9yYXB0b3I=" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@next-theme/pjax@0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/medium-zoom@1.0.8/dist/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://unpkg.com/hexo-generator-searchdb@1.4.1/dist/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://unpkg.com/pdfobject@2.2.8/pdfobject.min.js","integrity":"sha256-tu9j5pBilBQrWSDePOOajCUdz6hWsid/lBNzK4KgEPM="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="/js/third-party/tags/pdf.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://unpkg.com/mathjax@3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<link rel="stylesheet" href="https://unpkg.com/disqusjs@3.0.2/dist/browser/styles/disqusjs.css" integrity="sha256-71XarXwNr1Td27HmZI9zjY+rMzRdush6/glo6VFXp7o=" crossorigin="anonymous">
+
+<script class="next-config" data-name="disqusjs" type="application/json">{"enable":true,"api":"https://disqus.skk.moe/disqus/","apikey":"3qJ515uApWlP58gXhzPCCk3L0NlOvrMLwt5dDITBndS8fp8She7PT1gvBdDcgwrt","shortname":"arcaheoraptor","js":{"url":"https://unpkg.com/disqusjs@3.0.2/dist/browser/disqusjs.es2015.umd.min.js","integrity":"sha256-okP99ZQKVpIy7+NogAMpGlIQzJa9XKXhIJcFgdju5bU="}}</script>
+<script src="/js/third-party/comments/disqusjs.js"></script>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"Archaeoraptor/archaeoraptor.github.io","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

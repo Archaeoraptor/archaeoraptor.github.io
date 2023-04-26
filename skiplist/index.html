@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/uploads/wizard-hat-16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/uploads/wizard-hat-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/uploads/wizard-hat-16.png">
+  <link rel="mask-icon" href="/uploads/wizard-hat-32.png" color="#222">
+  <meta name="google-site-verification" content="4Rj54anORAwcoMXLe3miFnoH78ZtUZfdamS--ffoxVE">
+  <meta name="msvalidate.01" content="872DC4637276109A6B54FF149DCABA8A">
+  <meta name="yandex-verification" content="0d554b4a05a80f0d">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhangjk98.xyz","root":"/","images":"/images","scheme":"Pisces","darkmode":"auto","version":"8.15.1","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqusjs","storage":true,"lazyload":false,"nav":{"disqusjs":{"text":"Load Disqus","order":-1},"utterances":{"order":-2}},"activeClass":"disqusjs"},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"none","post_header":"none","post_body":"none","coll_header":"none","sidebar":"none"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="写起来确实比树家族简单太多了，树家族的并发我不太会整。为什么要费劲左旋右旋去平衡呢，跳表靠概率分布多么简单优雅啊">
+<meta property="og:type" content="article">
+<meta property="og:title" content="写一个跳表">
+<meta property="og:url" content="https://zhangjk98.xyz/skiplist/index.html">
+<meta property="og:site_name" content="止息的博客">
+<meta property="og:description" content="写起来确实比树家族简单太多了，树家族的并发我不太会整。为什么要费劲左旋右旋去平衡呢，跳表靠概率分布多么简单优雅啊">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://zhangjk98.xyz/skiplist/1653038576.png">
+<meta property="article:published_time" content="2022-05-20T11:14:02.000Z">
+<meta property="article:author" content="Zhang.j.k">
+<meta property="article:tag" content="skiplist">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zhangjk98.xyz/skiplist/1653038576.png">
+
+
+<link rel="canonical" href="https://zhangjk98.xyz/skiplist/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zhangjk98.xyz/skiplist/","path":"skiplist/","title":"写一个跳表"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>写一个跳表 | 止息的博客</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143393734-1"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-143393734-1","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="止息的博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">止息的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">唯见月寒日暖，来煎人寿</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E8%B7%B3%E8%A1%A8"><span class="nav-number">1.</span> <span class="nav-text">关于跳表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.</span> <span class="nav-text">实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%93%BE%E6%8E%A5"><span class="nav-number">3.</span> <span class="nav-text">链接</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Zhang.j.k"
+      src="/uploads/jinmao.webp">
+  <p class="site-author-name" itemprop="name">Zhang.j.k</p>
+  <div class="site-description" itemprop="description">in darkest night</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">64</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">103</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FyY2hhZW9yYXB0b3I=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;archaeoraptor"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOnpoaXhpQHVlc3RjbHVnLm9yZw==" title="E-Mail → mailto:zhixi@uestclug.org"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml" rel="noopener me"><i class="fa fa-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><img src="https://unpkg.com/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly96aGFuZ3NodXFpYW8ub3Jn" title="https:&#x2F;&#x2F;zhangshuqiao.org">米米的博客</span>
+            </li>
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly95YW5xaXl1LmluZm8=" title="https:&#x2F;&#x2F;yanqiyu.info">Karuboniru's Blog</span>
+            </li>
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnNhbWNodS5jbg==" title="https:&#x2F;&#x2F;blog.samchu.cn">Sam's Blog</span>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zhangjk98.xyz/skiplist/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/jinmao.webp">
+      <meta itemprop="name" content="Zhang.j.k">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="止息的博客">
+      <meta itemprop="description" content="in darkest night">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="写一个跳表 | 止息的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          写一个跳表
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-05-20 19:14:02" itemprop="dateCreated datePublished" datetime="2022-05-20T19:14:02+08:00">2022-05-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>写起来确实比树家族简单太多了，树家族的并发我不太会整。为什么要费劲左旋右旋去平衡呢，跳表靠概率分布多么简单优雅啊</p>
+<span id="more"></span>
+
+<h2 id="关于跳表"><a href="#关于跳表" class="headerlink" title="关于跳表"></a>关于跳表</h2><p>跳表上个世纪的论文里面就有了，不过有业界大量使用貌似比较晚， 貌似是leveldb开始的，后来redis等很多数据库都上了跳表。</p>
+<p>跳表在单链表上面加了一层一层的稀疏节点，于是查找的复杂度就降到了$O(\log_2n)$, 类似二分查找，从稀疏节点向下逐级找就行了。如果每一层的节点数量都是下一层的$\frac{1}{2}$</p>
+<p><img src="/skiplist/1653038576.png"></p>
+<p>跳表我很喜欢的一个地方是这个玩意不需要像树家族那样去靠左旋右旋来平衡，于是实现就特别简单。</p>
+<p>跳表这个结构对缓存不是很友好（链表在内存里面不连续）但是实现很简单，而且加锁比较容易做到加锁力度小。</p>
+<p>MuQSS调度器用的就是跳表， 取代了原来BFS调度器里面runqueue的链表，然后查找runqueue的插入复杂度变成了$O(logN)$，然后由于skiplist是有序的，每次只要取出头节点就可以了（优先级最高的），对于MuQSS查找task的复杂度是$O(1)$</p>
+<p>MuQSS加锁的时候就直接对每个CPU的skiplist加了一把大锁（task不是很多，加小锁没必要）</p>
+<p>这里多说一下BFS调度器的遍历$O(N)$复杂度，这个其实并不慢的，在绝大多数没有跑很多东西的桌面用户，可能链表里面就只有十几个task，遍历起来并不一定比$O(logN)$或者$O(1)$的调度器慢</p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>leetcode上就有一道设计跳表的题，直接做呗 <span class="exturl" data-url="aHR0cHM6Ly9sZWV0Y29kZS5jb20vcHJvYmxlbXMvZGVzaWduLXNraXBsaXN0Lw==">design skiplist<i class="fa fa-external-link-alt"></i></span></p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">package</span> main
+
+<span class="token keyword">import</span> <span class="token punctuation">(</span>
+  <span class="token string">"fmt"</span>
+	<span class="token string">"math/rand"</span>
+	<span class="token string">"time"</span>
+<span class="token punctuation">)</span>
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	skl <span class="token operator">:=</span> <span class="token function">Constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	skl<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+	skl<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>
+	skl<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span>
+
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>skl<span class="token punctuation">.</span><span class="token function">Search</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">// false</span>
+	skl<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>skl<span class="token punctuation">.</span><span class="token function">Search</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">// true</span>
+	skl<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span>
+	skl<span class="token punctuation">.</span><span class="token function">Erase</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+	skl<span class="token punctuation">.</span><span class="token function">Erase</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>skl<span class="token punctuation">.</span><span class="token function">Search</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">// true</span>
+	<span class="token comment">// fmt.Println(skl.Search(6)) // false</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// @lc code=start</span>
+
+<span class="token keyword">const</span> MAX_LEVEL <span class="token builtin">int</span> <span class="token operator">=</span> <span class="token number">32</span>
+
+<span class="token keyword">type</span> Skiplist <span class="token keyword">struct</span> <span class="token punctuation">&#123;</span>
+	currentLevel <span class="token builtin">int</span>
+	root         <span class="token operator">*</span>Node
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">type</span> Node <span class="token keyword">struct</span> <span class="token punctuation">&#123;</span>
+	Val  <span class="token builtin">int</span>
+	Prev <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">*</span>Node
+	Next <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">*</span>Node
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">func</span> <span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	rand<span class="token punctuation">.</span><span class="token function">Seed</span><span class="token punctuation">(</span>time<span class="token punctuation">.</span><span class="token function">Now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">UnixNano</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">func</span> <span class="token function">randomLevel</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">int</span> <span class="token punctuation">&#123;</span>
+	level <span class="token operator">:=</span> <span class="token number">1</span>
+	<span class="token keyword">for</span> rand<span class="token punctuation">.</span><span class="token function">Intn</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">1</span> <span class="token punctuation">&#123;</span>
+		level<span class="token operator">++</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token keyword">if</span> level <span class="token operator">></span> MAX_LEVEL <span class="token punctuation">&#123;</span>
+		level <span class="token operator">=</span> MAX_LEVEL
+	<span class="token punctuation">&#125;</span>
+	<span class="token keyword">return</span> level
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">func</span> <span class="token function">Constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> Skiplist <span class="token punctuation">&#123;</span>
+	<span class="token keyword">var</span> skiplist Skiplist
+	<span class="token keyword">var</span> node Node
+	skiplist<span class="token punctuation">.</span>root <span class="token operator">=</span> <span class="token operator">&amp;</span>node
+	skiplist<span class="token punctuation">.</span>currentLevel <span class="token operator">=</span> <span class="token number">0</span>
+	<span class="token keyword">return</span> skiplist
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">func</span> <span class="token punctuation">(</span>sk <span class="token operator">*</span>Skiplist<span class="token punctuation">)</span> <span class="token function">Search</span><span class="token punctuation">(</span>target <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">bool</span> <span class="token punctuation">&#123;</span>
+	<span class="token boolean">_</span><span class="token punctuation">,</span> ok <span class="token operator">:=</span> <span class="token function">search</span><span class="token punctuation">(</span>sk<span class="token punctuation">.</span>root<span class="token punctuation">,</span> target<span class="token punctuation">)</span>
+	<span class="token keyword">return</span> ok
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">func</span> <span class="token function">search</span><span class="token punctuation">(</span>root <span class="token operator">*</span>Node<span class="token punctuation">,</span> target <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>node <span class="token operator">*</span>Node<span class="token punctuation">,</span> ok <span class="token builtin">bool</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token function">len</span><span class="token punctuation">(</span>root<span class="token punctuation">.</span>Next<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">>=</span> <span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">--</span> <span class="token punctuation">&#123;</span>
+		<span class="token keyword">var</span> head <span class="token operator">=</span> root<span class="token punctuation">.</span>Next<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+		<span class="token keyword">if</span> head <span class="token operator">==</span> <span class="token boolean">nil</span> <span class="token operator">||</span> head<span class="token punctuation">.</span>Val <span class="token operator">></span> target <span class="token punctuation">&#123;</span>
+			<span class="token keyword">continue</span>
+		<span class="token punctuation">&#125;</span>
+		<span class="token keyword">if</span> head<span class="token punctuation">.</span>Val <span class="token operator">==</span> target <span class="token punctuation">&#123;</span>
+			node<span class="token punctuation">,</span> ok <span class="token operator">=</span> head<span class="token punctuation">,</span> <span class="token boolean">true</span>
+			<span class="token keyword">return</span>
+		<span class="token punctuation">&#125;</span>
+		<span class="token keyword">if</span> head<span class="token punctuation">.</span>Val <span class="token operator">&lt;</span> target <span class="token punctuation">&#123;</span> <span class="token comment">// 小于则向下</span>
+			root <span class="token operator">=</span> head
+			i <span class="token operator">=</span> <span class="token function">len</span><span class="token punctuation">(</span>root<span class="token punctuation">.</span>Next<span class="token punctuation">)</span>
+			<span class="token keyword">continue</span>
+		<span class="token punctuation">&#125;</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token keyword">return</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// 添加元素</span>
+<span class="token keyword">func</span> <span class="token punctuation">(</span>sk <span class="token operator">*</span>Skiplist<span class="token punctuation">)</span> <span class="token function">Add</span><span class="token punctuation">(</span>num <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	level <span class="token operator">:=</span> <span class="token function">randomLevel</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// 随机选择level</span>
+	node <span class="token operator">:=</span> Node<span class="token punctuation">&#123;</span>
+		Val<span class="token punctuation">:</span>  num<span class="token punctuation">,</span>
+		Prev<span class="token punctuation">:</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">*</span>Node<span class="token punctuation">,</span> level<span class="token punctuation">)</span><span class="token punctuation">,</span>
+		Next<span class="token punctuation">:</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">*</span>Node<span class="token punctuation">,</span> level<span class="token punctuation">)</span><span class="token punctuation">,</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token function">add</span><span class="token punctuation">(</span>sk<span class="token punctuation">.</span>root<span class="token punctuation">,</span> <span class="token operator">&amp;</span>node<span class="token punctuation">)</span>
+	<span class="token keyword">if</span> level <span class="token operator">></span> sk<span class="token punctuation">.</span>currentLevel <span class="token punctuation">&#123;</span>
+		<span class="token keyword">for</span> i <span class="token operator">:=</span> sk<span class="token punctuation">.</span>currentLevel<span class="token punctuation">;</span> i <span class="token operator">&lt;</span> level<span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">&#123;</span>
+			sk<span class="token punctuation">.</span>root<span class="token punctuation">.</span>Next <span class="token operator">=</span> <span class="token function">append</span><span class="token punctuation">(</span>sk<span class="token punctuation">.</span>root<span class="token punctuation">.</span>Next<span class="token punctuation">,</span> <span class="token operator">&amp;</span>node<span class="token punctuation">)</span>
+			node<span class="token punctuation">.</span>Prev<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> sk<span class="token punctuation">.</span>root
+		<span class="token punctuation">&#125;</span>
+		sk<span class="token punctuation">.</span>currentLevel <span class="token operator">=</span> level
+	<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">func</span> <span class="token function">add</span><span class="token punctuation">(</span>root <span class="token operator">*</span>Node<span class="token punctuation">,</span> node <span class="token operator">*</span>Node<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token function">len</span><span class="token punctuation">(</span>root<span class="token punctuation">.</span>Next<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">>=</span> <span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">--</span> <span class="token punctuation">&#123;</span>
+		<span class="token keyword">var</span> head <span class="token operator">=</span> root<span class="token punctuation">.</span>Next<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+		<span class="token keyword">if</span> head <span class="token operator">==</span> <span class="token boolean">nil</span> <span class="token punctuation">&#123;</span>
+			<span class="token keyword">if</span> i <span class="token operator">&lt;</span> <span class="token function">len</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>Next<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+				root<span class="token punctuation">.</span>Next<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> node
+				node<span class="token punctuation">.</span>Prev<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> root
+			<span class="token punctuation">&#125;</span>
+			<span class="token keyword">continue</span>
+		<span class="token punctuation">&#125;</span>
+		<span class="token keyword">if</span> head<span class="token punctuation">.</span>Val <span class="token operator">>=</span> node<span class="token punctuation">.</span>Val <span class="token punctuation">&#123;</span>
+			<span class="token keyword">if</span> i <span class="token operator">&lt;</span> <span class="token function">len</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>Next<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+				root<span class="token punctuation">.</span>Next<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> node
+				node<span class="token punctuation">.</span>Next<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> head
+				node<span class="token punctuation">.</span>Prev<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> root
+				node<span class="token punctuation">.</span>Next<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>Prev<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> node
+			<span class="token punctuation">&#125;</span>
+			<span class="token keyword">continue</span>
+		<span class="token punctuation">&#125;</span>
+		<span class="token keyword">if</span> head<span class="token punctuation">.</span>Val <span class="token operator">&lt;</span> node<span class="token punctuation">.</span>Val <span class="token punctuation">&#123;</span>
+			root <span class="token operator">=</span> head
+			i <span class="token operator">=</span> <span class="token function">len</span><span class="token punctuation">(</span>root<span class="token punctuation">.</span>Next<span class="token punctuation">)</span>
+			<span class="token keyword">continue</span>
+		<span class="token punctuation">&#125;</span>
+	<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// 移除元素，然后直接</span>
+<span class="token keyword">func</span> <span class="token punctuation">(</span>sk <span class="token operator">*</span>Skiplist<span class="token punctuation">)</span> <span class="token function">Erase</span><span class="token punctuation">(</span>num <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">bool</span> <span class="token punctuation">&#123;</span>
+	node<span class="token punctuation">,</span> ok <span class="token operator">:=</span> <span class="token function">search</span><span class="token punctuation">(</span>sk<span class="token punctuation">.</span>root<span class="token punctuation">,</span> num<span class="token punctuation">)</span>
+	<span class="token keyword">if</span> <span class="token operator">!</span>ok <span class="token punctuation">&#123;</span>
+		<span class="token keyword">return</span> <span class="token boolean">false</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token function">len</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>Next<span class="token punctuation">)</span><span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">&#123;</span>
+		node<span class="token punctuation">.</span>Prev<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>Next<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> node<span class="token punctuation">.</span>Next<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+		<span class="token keyword">if</span> node<span class="token punctuation">.</span>Next<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">&#123;</span>
+			node<span class="token punctuation">.</span>Next<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>Prev<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> node<span class="token punctuation">.</span>Prev<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+		<span class="token punctuation">&#125;</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token keyword">return</span> <span class="token boolean">true</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><a target="_blank" rel="noopener" href="https://15721.courses.cs.cmu.edu/spring2018/papers/08-oltpindexes1/pugh-skiplists-cacm1990.pdf">Skip Lists: A Probabilistic Alternative to<br>Balanced Trees</a>  </p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/skiplist/" rel="tag"><i class="fa fa-tag"></i> skiplist</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/cs144-note/" rel="prev" title="CS144 Lab0 笔记：环境配置和热身">
+                  <i class="fa fa-chevron-left"></i> CS144 Lab0 笔记：环境配置和热身
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/quorum/" rel="next" title="Quorum机制和边界问题">
+                  Quorum机制和边界问题 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+      <div class="tabs tabs-comment">
+        <ul class="nav-tabs">
+            <li class="tab"><a href="#comment-utterances">utterances</a></li>
+            <li class="tab"><a href="#comment-disqusjs">Load Disqus</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane utterances" id="comment-utterances">
+              <div class="comments utterances-container"></div>
+            </div>
+            <div class="tab-pane disqusjs" id="comment-disqusjs">
+              
+  <div class="comments disqusjs-container">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+            </div>
+        </div>
+      </div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">止息</span>
+</div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FyY2hhZW9yYXB0b3I=" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@next-theme/pjax@0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/medium-zoom@1.0.8/dist/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://unpkg.com/hexo-generator-searchdb@1.4.1/dist/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://unpkg.com/pdfobject@2.2.8/pdfobject.min.js","integrity":"sha256-tu9j5pBilBQrWSDePOOajCUdz6hWsid/lBNzK4KgEPM="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="/js/third-party/tags/pdf.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://unpkg.com/mathjax@3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<link rel="stylesheet" href="https://unpkg.com/disqusjs@3.0.2/dist/browser/styles/disqusjs.css" integrity="sha256-71XarXwNr1Td27HmZI9zjY+rMzRdush6/glo6VFXp7o=" crossorigin="anonymous">
+
+<script class="next-config" data-name="disqusjs" type="application/json">{"enable":true,"api":"https://disqus.skk.moe/disqus/","apikey":"3qJ515uApWlP58gXhzPCCk3L0NlOvrMLwt5dDITBndS8fp8She7PT1gvBdDcgwrt","shortname":"arcaheoraptor","js":{"url":"https://unpkg.com/disqusjs@3.0.2/dist/browser/disqusjs.es2015.umd.min.js","integrity":"sha256-okP99ZQKVpIy7+NogAMpGlIQzJa9XKXhIJcFgdju5bU="}}</script>
+<script src="/js/third-party/comments/disqusjs.js"></script>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"Archaeoraptor/archaeoraptor.github.io","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

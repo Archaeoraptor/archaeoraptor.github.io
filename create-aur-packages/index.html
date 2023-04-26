@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/uploads/wizard-hat-16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/uploads/wizard-hat-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/uploads/wizard-hat-16.png">
+  <link rel="mask-icon" href="/uploads/wizard-hat-32.png" color="#222">
+  <meta name="google-site-verification" content="4Rj54anORAwcoMXLe3miFnoH78ZtUZfdamS--ffoxVE">
+  <meta name="msvalidate.01" content="872DC4637276109A6B54FF149DCABA8A">
+  <meta name="yandex-verification" content="0d554b4a05a80f0d">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhangjk98.xyz","root":"/","images":"/images","scheme":"Pisces","darkmode":"auto","version":"8.15.1","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqusjs","storage":true,"lazyload":false,"nav":{"disqusjs":{"text":"Load Disqus","order":-1},"utterances":{"order":-2}},"activeClass":"disqusjs"},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"none","post_header":"none","post_body":"none","coll_header":"none","sidebar":"none"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="（长期施工中，未完待续）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AUR打包指北">
+<meta property="og:url" content="https://zhangjk98.xyz/create-aur-packages/index.html">
+<meta property="og:site_name" content="止息的博客">
+<meta property="og:description" content="（长期施工中，未完待续）">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-12-20T08:36:47.000Z">
+<meta property="article:author" content="Zhang.j.k">
+<meta property="article:tag" content="AUR">
+<meta property="article:tag" content="Archlinux">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://zhangjk98.xyz/create-aur-packages/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zhangjk98.xyz/create-aur-packages/","path":"create-aur-packages/","title":"AUR打包指北"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>AUR打包指北 | 止息的博客</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143393734-1"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-143393734-1","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="止息的博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">止息的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">唯见月寒日暖，来煎人寿</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E8%87%B4%E6%B5%81%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">大致流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B0%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83"><span class="nav-number">1.1.</span> <span class="nav-text">新建一个测试环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E5%86%99PKGBUILD"><span class="nav-number">1.2.</span> <span class="nav-text">编写PKGBUILD</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A3%80%E6%9F%A5"><span class="nav-number">1.3.</span> <span class="nav-text">检查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E8%AF%91"><span class="nav-number">1.4.</span> <span class="nav-text">编译</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8A%E4%BC%A0%E5%92%8C%E5%88%86%E4%BA%AB"><span class="nav-number">1.5.</span> <span class="nav-text">上传和分享</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#AUR"><span class="nav-number">1.5.1.</span> <span class="nav-text">AUR</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9D%9E%E5%AE%98%E6%96%B9%E8%BD%AF%E4%BB%B6%E4%BB%93%E5%BA%93"><span class="nav-number">1.5.2.</span> <span class="nav-text">非官方软件仓库</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E5%B7%A5%E5%85%B7"><span class="nav-number">2.</span> <span class="nav-text">一些工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#namcap"><span class="nav-number">2.1.</span> <span class="nav-text">namcap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#devtools"><span class="nav-number">2.2.</span> <span class="nav-text">devtools</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#debtap"><span class="nav-number">2.3.</span> <span class="nav-text">debtap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pip2pkgbuilds"><span class="nav-number">2.4.</span> <span class="nav-text">pip2pkgbuilds</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#npm-pkgbuild"><span class="nav-number">2.5.</span> <span class="nav-text">npm-pkgbuild</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E5%8C%96"><span class="nav-number">3.</span> <span class="nav-text">自动化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Github-Action"><span class="nav-number">3.1.</span> <span class="nav-text">Github Action</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E5%B0%8F%E9%97%AE%E9%A2%98"><span class="nav-number">4.</span> <span class="nav-text">一些小问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#AUR%E7%9A%84%E4%BE%9D%E8%B5%96%E5%8C%85makepkg%E6%97%A0%E6%B3%95%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB"><span class="nav-number">4.1.</span> <span class="nav-text">AUR的依赖包makepkg无法自动识别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git%E5%88%9D%E6%AC%A1commit%E4%B8%8D%E5%8C%85%E5%90%ABSRCINFO%E5%AF%BC%E8%87%B4%E6%8B%92%E7%BB%9D%E6%8F%90%E4%BA%A4"><span class="nav-number">4.2.</span> <span class="nav-text">git初次commit不包含SRCINFO导致拒绝提交</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E5%86%99%E6%B3%95%E5%92%8C%E5%91%BD%E4%BB%A4"><span class="nav-number">5.</span> <span class="nav-text">常见写法和命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#install%E5%91%BD%E4%BB%A4"><span class="nav-number">5.1.</span> <span class="nav-text">install命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E5%86%99%E6%B3%95"><span class="nav-number">5.2.</span> <span class="nav-text">常见写法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%83%E6%89%8B%E6%8E%A8%E8%8D%90"><span class="nav-number">6.</span> <span class="nav-text">练手推荐</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%B2%E8%AF%9D"><span class="nav-number">7.</span> <span class="nav-text">闲话</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E5%92%8C%E6%8E%A8%E8%8D%90%E9%98%85%E8%AF%BB"><span class="nav-number">8.</span> <span class="nav-text">参考和推荐阅读</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E7%9A%84%E4%B8%80%E4%BA%9B%E6%89%93%E5%8C%85%E7%9A%84%E9%98%85%E8%AF%BB%E8%B5%84%E6%96%99"><span class="nav-number">8.1.</span> <span class="nav-text">其他的一些打包的阅读资料</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Zhang.j.k"
+      src="/uploads/jinmao.webp">
+  <p class="site-author-name" itemprop="name">Zhang.j.k</p>
+  <div class="site-description" itemprop="description">in darkest night</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">64</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">103</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FyY2hhZW9yYXB0b3I=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;archaeoraptor"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOnpoaXhpQHVlc3RjbHVnLm9yZw==" title="E-Mail → mailto:zhixi@uestclug.org"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml" rel="noopener me"><i class="fa fa-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><img src="https://unpkg.com/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly96aGFuZ3NodXFpYW8ub3Jn" title="https:&#x2F;&#x2F;zhangshuqiao.org">米米的博客</span>
+            </li>
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly95YW5xaXl1LmluZm8=" title="https:&#x2F;&#x2F;yanqiyu.info">Karuboniru's Blog</span>
+            </li>
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnNhbWNodS5jbg==" title="https:&#x2F;&#x2F;blog.samchu.cn">Sam's Blog</span>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zhangjk98.xyz/create-aur-packages/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/jinmao.webp">
+      <meta itemprop="name" content="Zhang.j.k">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="止息的博客">
+      <meta itemprop="description" content="in darkest night">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="AUR打包指北 | 止息的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          AUR打包指北
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-12-20 16:36:47" itemprop="dateCreated datePublished" datetime="2020-12-20T16:36:47+08:00">2020-12-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E4%B8%8D%E5%8A%A1%E6%AD%A3%E4%B8%9A%E7%B3%BB%E5%88%97/" itemprop="url" rel="index"><span itemprop="name">不务正业系列</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>（长期施工中，未完待续）</p>
+<span id="more"></span>
+
+<blockquote class="blockquote-center">
+<p>快来当AUR打包工具人&#x2F;打包苦力吧(笑</p>
+
+</blockquote>
+
+<p>其实还是建议你去先看看官方文档</p>
+<h2 id="大致流程"><a href="#大致流程" class="headerlink" title="大致流程"></a>大致流程</h2><h3 id="新建一个测试环境"><a href="#新建一个测试环境" class="headerlink" title="新建一个测试环境"></a>新建一个测试环境</h3><p>在本机上直接打包可能会把你自己的机子环境搞乱搞崩，或者忽略了已经在自己电脑上装了了但是没有的依赖，又或者你想…<br>反正弄一个干净的测试环境是有必要的。可以参考官方Wiki：<span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL0RldmVsb3Blcldpa2k6QnVpbGRpbmdfaW5fYV9jbGVhbl9jaHJvb3Q=">DeveloperWiki:Building in a clean chroot<i class="fa fa-external-link-alt"></i></span>, 或者看肥猫这篇：<span class="exturl" data-url="aHR0cHM6Ly9mZWxpeGMuYXQvMjAxNy8wOC9pbnRyb2R1Y3Rpb24tdG8tYXJjaC1saW51eC1kZXZ0b29scy1idWlsZC1wYWNrYWdlcy1mcm9tLWEtY2xlYW4tY2hyb290Lw==">Arch Linux devtools 简介 – 在干净的环境里编译软件包<i class="fa fa-external-link-alt"></i></span></p>
+<p>当然打包一些很简单、依赖很明确的东西，确定没必要也可以不要这一步。</p>
+<h3 id="编写PKGBUILD"><a href="#编写PKGBUILD" class="headerlink" title="编写PKGBUILD"></a>编写PKGBUILD</h3><p>最快的方法是去找找有没有和你要打包的东西类似的包，然后抄一下它的PKGBUILD。</p>
+<h3 id="检查"><a href="#检查" class="headerlink" title="检查"></a>检查</h3><p>先用namcap检查一下，有没有语法错误或者其他不符合规范的地方</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">namcap PKGBUILD<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">makepkg <span class="token parameter variable">-s</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>生成的 <code>XXX.tar.xz</code>可以再用 <code>namcap</code>检查一下</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">namcap XXX.tar.xz<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="上传和分享"><a href="#上传和分享" class="headerlink" title="上传和分享"></a>上传和分享</h3><h4 id="AUR"><a href="#AUR" class="headerlink" title="AUR"></a>AUR</h4><p>如果想分享出来，你可以上传到AUR仓库里面。AUR帐号随便就能注册几乎没有审查的（所以传点恶意代码上去也能传的），但是尽量不要把有版权问题之类的东西传上去（虽然出了事应该是你自己负责）</p>
+<p>新建一个账号，然后上传你的SSH公钥和密钥指纹。</p>
+<p>用 <code>git clone</code>拉取一个</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> clone ssh://aur@aur.archlinux.org/your-package-name.git <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>AUR软件仓库需要<span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwLy5TUkNJTkZPXyglRTclQUUlODAlRTQlQkQlOTMlRTQlQjglQUQlRTYlOTYlODcp">SRCINFO<i class="fa fa-external-link-alt"></i></span>,不然会拒绝你的提交</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">makepkg <span class="token parameter variable">--printsrcinfo</span> <span class="token operator">></span> .SRCINFO<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h4 id="非官方软件仓库"><a href="#非官方软件仓库" class="headerlink" title="非官方软件仓库"></a>非官方软件仓库</h4><p>或者你可以去其他非官方的仓库，这有一大堆：<span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL1Vub2ZmaWNpYWxfdXNlcl9yZXBvc2l0b3JpZXNfKCVFNyVBRSU4MCVFNCVCRCU5MyVFNCVCOCVBRCVFNiU5NiU4Nyk=">Unofficial user repositories<i class="fa fa-external-link-alt"></i></span></p>
+<p>中文用户人最多的是ArchlinuxCN，我猜你很熟悉这个了。</p>
+<p>其他的还有chaotic-aur（里面的包不少，但是国内速度很慢，镜像都在国外，直接访问可能比从AUR拉下来编译还慢），arch4edu（一些教育软件和包，清华的弄得，国内速度还行），blackarch（这个包也很多，约等于arch系的kali源）</p>
+<p>要添加到这些非官方仓库里，可以请求打包，或者跟仓库管理员py。</p>
+<p>或者可以自建一个仓库。</p>
+<p>可参考：</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuYWxveGFmLmNvbS8yMDIwLzA2L2J1aWxkX2F1cl93aXRoX2dpdGh1Yl9hY3Rpb25zLw==">利用 GitHub Actions 编译 AUR 包并建立自己的软件源<i class="fa fa-external-link-alt"></i></span></p>
+<h2 id="一些工具"><a href="#一些工具" class="headerlink" title="一些工具"></a>一些工具</h2><h3 id="namcap"><a href="#namcap" class="headerlink" title="namcap"></a>namcap</h3><p>用来检查打包是否正确</p>
+<h3 id="devtools"><a href="#devtools" class="headerlink" title="devtools"></a>devtools</h3><p>可以干很多事情，最常用的是新建一个干净的环境用来测试你的包。</p>
+<p>还有很多用法去看文档吧，</p>
+<h3 id="debtap"><a href="#debtap" class="headerlink" title="debtap"></a>debtap</h3><p>大多数情况下可以快速把deb包转成aur包<br>有些deb的包或者rpm的包可以拆包然后重新手动打包一下。一般的用debtap可以解决大部分deb包，有些依赖可能没办法需要手动处理。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yay <span class="token parameter variable">-Syu</span> debtap
+<span class="token function">sudo</span> debtap <span class="token parameter variable">-u</span> <span class="token comment">#同步数据库，可能比较慢</span>
+debtap <span class="token parameter variable">-p</span> XXX.deb <span class="token comment"># -p 选项生成PKGBUILD</span>
+<span class="token comment">## 然后根据提示输入包名和协议等</span>
+<span class="token comment">## 然后稍等一会，会比较慢</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后 <code>pacman -U XXX.tar.xz</code>可以装到你的电脑上试一下。</p>
+<h3 id="pip2pkgbuilds"><a href="#pip2pkgbuilds" class="headerlink" title="pip2pkgbuilds"></a>pip2pkgbuilds</h3><p>将pip的包转成aur的包，这个工具很久没更新了（But it works）。这个工具有不少情况不会帮你自动处理，python的不少pip包本身也不太遵循pip的打包规范，要做不少手动检查和调整。</p>
+<h3 id="npm-pkgbuild"><a href="#npm-pkgbuild" class="headerlink" title="npm-pkgbuild"></a>npm-pkgbuild</h3><p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FybGFjNzcvbnBtLXBrZ2J1aWxkI3JlYWRtZQ==">npm-pkgbuild<i class="fa fa-external-link-alt"></i></span> 一个将npm包转成aur的包，和上面那个类似，也是自动生成PKGBUILD。没用过不好评价。</p>
+<h2 id="自动化"><a href="#自动化" class="headerlink" title="自动化"></a>自动化</h2><p>人肉测试每个包然后传上去给大家用是最好的，不过有的上游更新太勤测试不过来，或者一些<span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL1ZDU19wYWNrYWdlX2d1aWRlbGluZXNfKCVFNyVBRSU4MCVFNCVCRCU5MyVFNCVCOCVBRCVFNiU5NiU4Nyk=">用版本控制紧跟上游的包<i class="fa fa-external-link-alt"></i></span><br><del>又或者有的时候你想让用户当小白鼠</del></p>
+<p>可以试试Travis CI、Github Action 之类的CI&#x2F;CD工具，不过最好还是更新之前人肉测试一下</p>
+<h3 id="Github-Action"><a href="#Github-Action" class="headerlink" title="Github Action"></a>Github Action</h3><p>Github Action的好处是可以白嫖（划掉</p>
+<p>可以用Github Action自动生成PKGBUILD：<br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21hcmtldHBsYWNlL2FjdGlvbnMvcHVibGlzaC1hdXItcGFja2FnZQ==">publish-aur-package<i class="fa fa-external-link-alt"></i></span></p>
+<p>鸭鸭的<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0R1Y2tTb2Z0L2J1aWxkLWF1ci1hY3Rpb24=">build-aur-action<i class="fa fa-external-link-alt"></i></span>,用Github Action编译一个AUR包（有时候你不想在自己电脑上编译可以试试这个）</p>
+<p>使用见：<span class="exturl" data-url="aHR0cHM6Ly92aWZseXRoaW5rLmNvbS9Vc2VfR2l0SHViQWN0aW9uc190b19idWlsZF9BVVIv">GitHub Actions 打造 AUR 打包下载一条龙服务<i class="fa fa-external-link-alt"></i></span></p>
+<h2 id="一些小问题"><a href="#一些小问题" class="headerlink" title="一些小问题"></a>一些小问题</h2><h3 id="AUR的依赖包makepkg无法自动识别"><a href="#AUR的依赖包makepkg无法自动识别" class="headerlink" title="AUR的依赖包makepkg无法自动识别"></a>AUR的依赖包makepkg无法自动识别</h3><p>打包的时候如果依赖AUR的包，在 <code>makepkg -s</code>pacman是不会自动安装的需要手动安装</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">error: target not found: python-django-cors-headers
+<span class="token operator">==</span><span class="token operator">></span> ERROR: <span class="token string">'pacman'</span> failed to <span class="token function">install</span> missing dependencies.
+<span class="token operator">==</span><span class="token operator">></span> ERROR: Could not resolve all dependencies.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>如果依赖太多装不过来，可以加 <code>makepkg -d</code>参数忽略依赖，然后对生成的 <code>XXX.tar.xz</code>使用yay或者pikaur之类的AUR helper</p>
+<h3 id="git初次commit不包含SRCINFO导致拒绝提交"><a href="#git初次commit不包含SRCINFO导致拒绝提交" class="headerlink" title="git初次commit不包含SRCINFO导致拒绝提交"></a>git初次commit不包含SRCINFO导致拒绝提交</h3><p>可以用 <code>git filter branch</code></p>
+<p>（其实直接删了重新 <code>git init</code>可能更快）</p>
+<h2 id="常见写法和命令"><a href="#常见写法和命令" class="headerlink" title="常见写法和命令"></a>常见写法和命令</h2><h3 id="install命令"><a href="#install命令" class="headerlink" title="install命令"></a>install命令</h3><p>用过 <code>cmake</code>等编译工具的人应该对 <code>make install</code>很熟了，它在PKGBUILD里面大概像这样</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function-name function">package</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token function">make</span> <span class="token parameter variable">-C</span> <span class="token string">"<span class="token variable">$pkgname</span>-<span class="token variable">$pkgver</span>"</span> <span class="token assign-left variable">DESTDIR</span><span class="token operator">=</span><span class="token string">"<span class="token variable">$pkgdir</span>"</span> <span class="token function">install</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>在PKGBUILD里面，还经常用它把文件安装到制定目录，并指定权限（一般不用 <code>cp</code>来干这种事）</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function-name function">package</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token builtin class-name">cd</span> <span class="token string">"<span class="token variable">$srcdir</span>/<span class="token variable">$pkgname</span>"</span>
+  <span class="token function">install</span> <span class="token parameter variable">-vDm</span> <span class="token number">644</span> <span class="token variable">$&#123;pkgname<span class="token operator">%</span>-git&#125;</span><span class="token punctuation">&#123;</span>,.plugin<span class="token punctuation">&#125;</span>.zsh <span class="token punctuation">\</span>
+    <span class="token parameter variable">-t</span> <span class="token string">"<span class="token variable">$&#123;pkgdir&#125;</span>/usr/share/zsh/plugins/<span class="token variable">$&#123;pkgname&#125;</span>/"</span>
+  <span class="token function">install</span> <span class="token parameter variable">-Dm644</span> LICENSE <span class="token string">"<span class="token variable">$pkgdir</span>"</span>/usr/share/licenses/<span class="token variable">$pkgname</span>/LICENSE
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>将可执行文件和LICENSE分别放到指定目录，像LICENSE或者doc权限644就好了，其他的可执行文件酌情给个755权限。</p>
+<p>如果有需要打印详细安装信息方便调试，可以加 <code>-v</code>选项，像这样 <code>install -Dvm755</code></p>
+<h3 id="常见写法"><a href="#常见写法" class="headerlink" title="常见写法"></a>常见写法</h3><p>获取Github Release</p>
+<h2 id="练手推荐"><a href="#练手推荐" class="headerlink" title="练手推荐"></a>练手推荐</h2><p>上手AUR打包基本只需要一点bash脚本的知识就可以了。当然最好还要对打包的项目和所用的语言、框架、依赖比较熟悉。</p>
+<p>反正我感觉比deb和rpm的打包简单太多了，而且由于包管理的机制，虽然容易挂，但是依赖一般不会特别麻烦（除了有些要拆包的东西）</p>
+<p>你看看依赖问题<span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzI5MTYwNjEyOC9hbnN3ZXIvMTE5NDU5NjU5MQ==">都把隔壁deb系的老哥逼成什么样了<i class="fa fa-external-link-alt"></i></span>。</p>
+<p>可以看这个<span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuaWJtLmNvbS96aC9hcnRpY2xlcy9sLWxvLXJwbS1idWlsZC1wYWNrYWdlLw==">Linux 中 RPM 的构建与打包<i class="fa fa-external-link-alt"></i></span>感受一下打包流程<br>（当然rpm包用<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2pvcmRhbnNpc3NlbC9mcG0=">fpm<i class="fa fa-external-link-alt"></i></span>之类的打包工具也没有那么麻烦）</p>
+<p>官方的打包示例是要用到make编译c&#x2F;c++包的例子，但是一些c&#x2F;c++的包，运行环境和依赖会比较麻烦，而且在x86和arm等不同架构下面也会有很多问题。拿来熟悉打包流程对萌新不太友好。</p>
+<p>练手打包建议用从自己最熟悉的项目和语言开始。如果你什么语言都不熟悉呢，推荐用一些主题或者可以用debtap之类的工具方便的转成AUR包的东西来熟悉一下打包。</p>
+<p>有的系统主题、grub主题、输入法主题之类的包比较好打包，一般来说依赖也少，不会搞出什么大问题。而且主题的文件存放位置和PKGBUILD里面的其他东西可以找AUR里面打包好的其他主题参考，基本大同小异，上手打包不会有太太高难度和坑，不太熟悉流程的可以先用一些主题练手熟悉一下打包流程。（主要是这个依赖也少，破坏性比较小，萌新打出低质量的AUR包也不至于把装这个包的人一波带走闯下大祸）</p>
+<p>而且他们不需要编译，也没有依赖报错，总之非常的适合熟悉一下PKGBUILD的流程</p>
+<p>当然打包不能包揽所有工作，一些设置需要用户手动启用或者修改的（比如一些配置，又比如systemd之类的daemon），比如我这里打包了一个GRUB的Cyberpunk主题，需要用户手动修改</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">vim</span> /etc/default/grub<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token assign-left variable">GRUB_THEME</span><span class="token operator">=</span><span class="token string">"/usr/share/grub/themes/Cyberpunk/theme.txt"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">grub-mkconfig</span> <span class="token parameter variable">-o</span> /boot/grub/grub.cfg<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>需要用户手动修改设置来启用（基本上主题、桌面挂件之类的包都是这么做的）</p>
+<h2 id="闲话"><a href="#闲话" class="headerlink" title="闲话"></a>闲话</h2><p>暑假的时候打了十几个野包，当时水平也菜，刚洗手变成Arch玩家没多久，打的十几个包都没放到AUR上丢人。虽然现在还是真蒟蒻在群里围观各路大佬卖弱不敢说话，看到中文的打包教程这么少，决定还是写点什么。</p>
+<p>当时搜AUR打包相关的资料，发现相关的文章、博客、资料并不多（尤其是中文的）。中文资料保守估计不到Archlinux安装教程的百分之一，也不到deb、rpm、Flatpak打包教程的百分之一。</p>
+<p>Archlinux安装弄的这么难初衷可能是为了筛掉一部分小白和伸手党，不过网上各路保姆级安装教程（一步一步手把手教的视频演示那种）和各种一键安装脚本和 Arch based 的发行版基本上快让<span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL0FyY2hfTGludXhfKCVFNyVBRSU4MCVFNCVCRCU5MyVFNCVCOCVBRCVFNiU5NiU4Nyk=">Arch的理念<i class="fa fa-external-link-alt"></i></span>流产了(特别是广为诟病的Manjaro和网上一大堆不负责任的教程，一口一个适合小白，动不动就教人添加ArchlinuxCN源，搞得很多打包者不堪骚扰)</p>
+<p>小白倒没什么，主要是被伸手党搞怕了。</p>
+<p>独立打一个包应该不会比独立装一个Archlinux难（不考虑Nvidia双显卡博通网卡阴间主板诡异驱动等….）。<br>如果一个用户能参照ArchWiki独立装好、配置好自己的Arch，那就应该有能力自己打包。<br>Arch没有Mac、Windows、ChromeOS那样的财大气粗的公司和掏钱买服务的客户，甚至不能跟RHEL和Ubuntu比，社区纯靠热情。而且由于deb系和rpm系用户众多，基本大部分软件如果支持Linux会给出deb或者rpm的包，有的可能会给个appimage的包，Arch的支持基本没太多上游会管，很多包都是Arch的维护者和用户自行编译打包的（不少还是deb拆包转的）。<br>伸手党太多而打包者太少，那就离凉凉不远了。<br>下次看到没有包当伸手党可不好，没有包就自己打一个吧。</p>
+<h2 id="参考和推荐阅读"><a href="#参考和推荐阅读" class="headerlink" title="参考和推荐阅读"></a>参考和推荐阅读</h2><p><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL0RldmVsb3Blcldpa2k6SW5kZXg=">DeveloperWiki<i class="fa fa-external-link-alt"></i></span> 里面关于打包的部分可以看看<br><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL0FyY2hfcGFja2FnZV9ndWlkZWxpbmVz">Arch package guidelines<i class="fa fa-external-link-alt"></i></span> Arch官方的打包指南<br>[PKGBUILD_(简体中文)]<span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL1BLR0JVSUxEXyglRTclQUUlODAlRTQlQkQlOTMlRTQlQjglQUQlRTYlOTYlODcp">https://wiki.archlinux.org/index.php/PKGBUILD_(简体中文)<i class="fa fa-external-link-alt"></i></span> PKGBUILD的简要介绍<br><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmFyY2hsaW51eC5vcmcvaW5kZXgucGhwL01ha2Vwa2dfKCVFNyVBRSU4MCVFNCVCRCU5MyVFNCVCOCVBRCVFNiU5NiU4Nyk=">Makepkg_(简体中文)<i class="fa fa-external-link-alt"></i></span> Makepkg也比较重要，有需要可以参考维基修改一下参数<br><span class="exturl" data-url="aHR0cHM6Ly9mZWxpeGMuYXQvMjAxNy8wOC9tYWtlLWFuLWFyY2gtcGFja2FnZS1mb3ItcHl0aG9uLW1vZHVsZS8=">给 Arch 打一个包 – Python 模块篇<i class="fa fa-external-link-alt"></i></span> python的包经常没什么人愿意打（确实依赖比较麻烦，好在有肥猫，打了一大堆python包），希望多来点熟悉python的大佬<br><span class="exturl" data-url="aHR0cHM6Ly9tYW4uYXJjaGxpbnV4Lm9yZy9tYW4vUEtHQlVJTEQuNQ==">PKGBUILD参考手册<i class="fa fa-external-link-alt"></i></span> Arch官网的参考手册，话说Arch最近新上的<span class="exturl" data-url="aHR0cHM6Ly9tYW4uYXJjaGxpbnV4Lm9yZy8=">手册索引<i class="fa fa-external-link-alt"></i></span>挺香的（btw I use tldr）<br><span class="exturl" data-url="aHR0cHM6Ly93d3cudnVsdHIuY29tL2RvY3MvYnVpbGRpbmctcGFja2FnZXMtb24tYXJjaC1saW51eA==">Building Packages on Arch Linux (Including the AUR)<i class="fa fa-external-link-alt"></i></span> Vultr的教程（我也不知道Vultr怎么会有这种东西）<br><span class="exturl" data-url="aHR0cHM6Ly9qdW55dXNzaC5naXRodWIuaW8vcC9hcmNoLWxpbnV4LXBhY2thZ2UtcXVpY2stc3RhcnQv">Arch Linux 第一次打包就上手<i class="fa fa-external-link-alt"></i></span>  新手可以看看这个<br><span class="exturl" data-url="aHR0cHM6Ly9zbGVlcG1hcC5kZS8yMDIyL3BhY2thZ2luZy1mb3ItYXJjaC1saW51eC8=">Packaging for Arch Linux<i class="fa fa-external-link-alt"></i></span>  一个TU写的</p>
+<h3 id="其他的一些打包的阅读资料"><a href="#其他的一些打包的阅读资料" class="headerlink" title="其他的一些打包的阅读资料"></a>其他的一些打包的阅读资料</h3><p>下面这些和AUR关系不是很大，闲着没事可以看着玩</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9sd24ubmV0L0FydGljbGVzLzM1OTA3MC8=">FatELF: universal binaries for Linux<i class="fa fa-external-link-alt"></i></span>  </p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/AUR/" rel="tag"><i class="fa fa-tag"></i> AUR</a>
+              <a href="/tags/Archlinux/" rel="tag"><i class="fa fa-tag"></i> Archlinux</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/pipewire/" rel="prev" title="Linux新一代音视频服务Pipewire尝鲜">
+                  <i class="fa fa-chevron-left"></i> Linux新一代音视频服务Pipewire尝鲜
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/curse-of-traditional-medicine/" rel="next" title="死灰复燃的传统医学">
+                  死灰复燃的传统医学 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+      <div class="tabs tabs-comment">
+        <ul class="nav-tabs">
+            <li class="tab"><a href="#comment-utterances">utterances</a></li>
+            <li class="tab"><a href="#comment-disqusjs">Load Disqus</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane utterances" id="comment-utterances">
+              <div class="comments utterances-container"></div>
+            </div>
+            <div class="tab-pane disqusjs" id="comment-disqusjs">
+              
+  <div class="comments disqusjs-container">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+            </div>
+        </div>
+      </div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">止息</span>
+</div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FyY2hhZW9yYXB0b3I=" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@next-theme/pjax@0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/medium-zoom@1.0.8/dist/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://unpkg.com/hexo-generator-searchdb@1.4.1/dist/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://unpkg.com/pdfobject@2.2.8/pdfobject.min.js","integrity":"sha256-tu9j5pBilBQrWSDePOOajCUdz6hWsid/lBNzK4KgEPM="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="/js/third-party/tags/pdf.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://unpkg.com/mathjax@3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<link rel="stylesheet" href="https://unpkg.com/disqusjs@3.0.2/dist/browser/styles/disqusjs.css" integrity="sha256-71XarXwNr1Td27HmZI9zjY+rMzRdush6/glo6VFXp7o=" crossorigin="anonymous">
+
+<script class="next-config" data-name="disqusjs" type="application/json">{"enable":true,"api":"https://disqus.skk.moe/disqus/","apikey":"3qJ515uApWlP58gXhzPCCk3L0NlOvrMLwt5dDITBndS8fp8She7PT1gvBdDcgwrt","shortname":"arcaheoraptor","js":{"url":"https://unpkg.com/disqusjs@3.0.2/dist/browser/disqusjs.es2015.umd.min.js","integrity":"sha256-okP99ZQKVpIy7+NogAMpGlIQzJa9XKXhIJcFgdju5bU="}}</script>
+<script src="/js/third-party/comments/disqusjs.js"></script>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"Archaeoraptor/archaeoraptor.github.io","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>
