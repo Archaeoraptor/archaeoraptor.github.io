@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/uploads/wizard-hat-16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/uploads/wizard-hat-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/uploads/wizard-hat-16.png">
+  <link rel="mask-icon" href="/uploads/wizard-hat-32.png" color="#222">
+  <meta name="google-site-verification" content="4Rj54anORAwcoMXLe3miFnoH78ZtUZfdamS--ffoxVE">
+  <meta name="msvalidate.01" content="872DC4637276109A6B54FF149DCABA8A">
+  <meta name="yandex-verification" content="0d554b4a05a80f0d">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhangjk98.xyz","root":"/","images":"/images","scheme":"Pisces","darkmode":"auto","version":"8.19.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqusjs","storage":true,"lazyload":false,"nav":{"disqusjs":{"text":"Load Disqus","order":-1},"utterances":{"order":-2}},"activeClass":"disqusjs"},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"none","post_header":"none","post_body":"none","coll_header":"none","sidebar":"none"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="这个Lab跟其他的比起来挺简单的，主要是汇编要去翻翻手册，简单说一下吧。顺便讲一下中断之类的东西。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="6.S081 Lab Traps 笔记">
+<meta property="og:url" content="https://zhangjk98.xyz/6.S081-lab-trap/index.html">
+<meta property="og:site_name" content="止息&#39;幻想乡">
+<meta property="og:description" content="这个Lab跟其他的比起来挺简单的，主要是汇编要去翻翻手册，简单说一下吧。顺便讲一下中断之类的东西。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://zhangjk98.xyz/6.S081-lab-trap/1651803380.png">
+<meta property="og:image" content="https://zhangjk98.xyz/6.S081-lab-trap/1651762525.png">
+<meta property="og:image" content="https://zhangjk98.xyz/6.S081-lab-trap/1651803349.png">
+<meta property="og:image" content="https://zhangjk98.xyz/6.S081-lab-trap/1651825910.png">
+<meta property="og:image" content="https://zhangjk98.xyz/6.S081-lab-trap/1651827112.png">
+<meta property="article:published_time" content="2022-01-12T11:19:30.000Z">
+<meta property="article:author" content="zhixi">
+<meta property="article:tag" content="6.S081">
+<meta property="article:tag" content="trap">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zhangjk98.xyz/6.S081-lab-trap/1651803380.png">
+
+
+<link rel="canonical" href="https://zhangjk98.xyz/6.S081-lab-trap/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zhangjk98.xyz/6.S081-lab-trap/","path":"6.S081-lab-trap/","title":"6.S081 Lab Traps 笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>6.S081 Lab Traps 笔记 | 止息'幻想乡</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143393734-1"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-143393734-1","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="止息'幻想乡" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">止息'幻想乡</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">风雪夜归人</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#xv6%E7%9A%84Trap"><span class="nav-number">1.</span> <span class="nav-text">xv6的Trap</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E7%9A%84%E5%AF%84%E5%AD%98%E5%99%A8%E5%92%8C%E6%8C%87%E4%BB%A4"><span class="nav-number">1.1.</span> <span class="nav-text">相关的寄存器和指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Trap%E7%A7%8D%E7%B1%BB"><span class="nav-number">1.2.</span> <span class="nav-text">Trap种类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lab"><span class="nav-number">2.</span> <span class="nav-text">Lab</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#RISC-V-assembly-easy"><span class="nav-number">2.1.</span> <span class="nav-text">RISC-V assembly (easy)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Backtrace-moderate"><span class="nav-number">2.2.</span> <span class="nav-text">Backtrace (moderate)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Alarm-hard"><span class="nav-number">2.3.</span> <span class="nav-text">Alarm (hard)</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="zhixi"
+      src="/uploads/jinmao.webp">
+  <p class="site-author-name" itemprop="name">zhixi</p>
+  <div class="site-description" itemprop="description">in darkest night</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">91</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FyY2hhZW9yYXB0b3I=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;archaeoraptor"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOnpoaXhpQHVlc3RjbHVnLm9yZw==" title="E-Mail → mailto:zhixi@uestclug.org"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml" rel="noopener me"><i class="fa fa-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><img src="https://unpkg.com/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly96aGFuZ3NodXFpYW8ub3Jn" title="https:&#x2F;&#x2F;zhangshuqiao.org">米米的博客</span>
+            </li>
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly95YW5xaXl1LmluZm8=" title="https:&#x2F;&#x2F;yanqiyu.info">Karuboniru's Blog</span>
+            </li>
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnNhbWNodS5jbg==" title="https:&#x2F;&#x2F;blog.samchu.cn">Sam's Blog</span>
+            </li>
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly9seWstbG92ZS5jbi8=" title="https:&#x2F;&#x2F;lyk-love.cn&#x2F;">LYK-love</span>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zhangjk98.xyz/6.S081-lab-trap/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/jinmao.webp">
+      <meta itemprop="name" content="zhixi">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="止息'幻想乡">
+      <meta itemprop="description" content="in darkest night">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="6.S081 Lab Traps 笔记 | 止息'幻想乡">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          6.S081 Lab Traps 笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-01-12 19:19:30" itemprop="dateCreated datePublished" datetime="2022-01-12T19:19:30+08:00">2022-01-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux-Unix/" itemprop="url" rel="index"><span itemprop="name">Linux&Unix</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>这个Lab跟其他的比起来挺简单的，主要是汇编要去翻翻手册，简单说一下吧。顺便讲一下中断之类的东西。</p>
+<span id="more"></span>
+
+<h2 id="xv6的Trap"><a href="#xv6的Trap" class="headerlink" title="xv6的Trap"></a>xv6的Trap</h2><p>xv6的trap包括interrupt这些，就是大部分切入内核态的东西都算作中断。以<code>write</code>系统调用为例，一般是<code>ecall</code>指令进入特权模式，然后<code>uservec</code>保存 寄存器进入内核态，然后<code>usertrap</code>, 然后syscall执行16号<code>sys_write</code>, 执行完之后<code>usertrapret</code>调用<code>userret</code>返回用户空间</p>
+<h3 id="相关的寄存器和指令"><a href="#相关的寄存器和指令" class="headerlink" title="相关的寄存器和指令"></a>相关的寄存器和指令</h3><p>RISC-V的汇编指令和ARM的还是有挺多不一样的地方，我一开始凭着本科学的那点ARM汇编的印象，搞错了好几次（最后还是翻手册的时候才意识到我错了，太坑了，说好的RISC-V和ARM指令差不多呢）</p>
+<p><img src="/6.S081-lab-trap/1651803380.png"></p>
+<p>通用寄存器和ARM差不多，a0-a2这些是函数的参数，t0-t9和s0-s7这些都是保存临时值的（saved registers），区别是t开头的是caller-saved，可以被其他函数返回值更改，s开头的是callee-saved，不会被函数返回值之类的的东西更改。</p>
+<p>ECALL会进入特权模式，这个syscall的时候讲过了不多说了。risc-v跟中断有关的寄存器比较多，建议下面看到什么直接去翻手册：<span class="exturl" data-url="aHR0cDovL3Jpc2N2Ym9vay5jb20vY2hpbmVzZS9SSVNDLVYtUmVhZGVyLUNoaW5lc2UtdjJwMS5wZGY=">RISC-V 手册<i class="fa fa-external-link-alt"></i></span>  </p>
+<p><img src="/6.S081-lab-trap/1651762525.png"></p>
+<p>在RISC-V中，下面这些跟中断有关的寄存器属于CSR（Control and Status Registers）寄存器</p>
+<p>SP寄存器： 栈寄存器，不说了<br>PC寄存器： 程序计数器，不说了<br>SATP寄存器： 用来控制分页的特权模式<br>STVEC寄存器：中断向量基址寄存器<br>SEPC寄存器：记录触发中断的向量地址，用来trap返回时恢复<br>SSRATCH寄存器：一般通过csrrw指令交换，在用户态保存内核栈的地址，在内核态值为0（可以通过这个判断是否处于内核态）<br>SCAUSE寄存器：中断类型和原因<br>STVAL寄存器：用来存储其他异常有关的东西</p>
+<p>SIE寄存器：Supervisor Interrupt Enable， 中断使能<br>SIP寄存器：记录每种中断是否被触发<br>SSTAUTS寄存器：也是记录状态  </p>
+<p>再简单说一下用到的指令：</p>
+<p>sd指令（Store Double）<br>sd rs2, offset(rs1)<br>将 x[rs2]中的 8 字节存入内存地址 x[rs1]+sign-extend(offset)。</p>
+<p>ld指令（load double，双字加载）<br>ld rd, offset(rs1) x[rd] &#x3D; M[x[rs1] + sext(offset)][63:0]<br>双字加载 (Load Doubleword). I-type, RV32I and RV64I.<br>从地址 x[rs1] + sign-extend(offset)读取八个字节，写入 x[rd]。</p>
+<p><img src="/6.S081-lab-trap/1651803349.png"></p>
+<p>读写CSR寄存器的指令：</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 控制状态寄存器</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># CSR Read Write, 将csr读入rd， 同时将zimm写入csr（原子操作）</span></span><br><span class="line"><span class="symbol">csrrw</span> rd, csr, zimm </span><br><span class="line"><span class="comment"># Control ans Status Register Read, 读控制状态寄存器, 读取csr</span></span><br><span class="line"><span class="symbol">csrr</span> rd, csr</span><br><span class="line"><span class="comment"># CSR Write， 写控制状态寄存器, 作用相当于将rs1的值写入csr</span></span><br><span class="line"><span class="symbol">csrw</span> csr, rs1</span><br></pre></td></tr></table></figure>
+
+<p>还有csrs和csrc，用来将csr指定位置的值置为0或1。此外还有csrrs、csrrc这些，用来读取（read）一个csr的值然后, 将csr中特定的bit置为0&#x2F;1，trap的相关操作没有涉及到，暂时不用管。</p>
+<p>然后是中断切换的指令</p>
+<p>ecall：切换特权模式触发中断<br>sret：从S MODE（内核态）返回用户态，将PC的值设置为SEPC<br>ebreak：断点（调试的时候用）<br>mret：从M MODE（机器态）返回内核态，将PC置为MEPC（这个不用管，这个Lab没涉及到）</p>
+<p>然后是用来保证内存屏障的指令，用来在更改页表的时候刷新内存屏障的</p>
+<p>sfemce.vma rs1, rs2<br>虚拟内存屏障(Fence Virtual Memory). R-type, RV32I and RV64I 特权指令。<br>根据后续的虚拟地址翻译对之前的页表存入进行排序。当 rs2&#x3D;0 时，所有地址空间的翻译都<br>会受到影响；否则，仅对 x[rs2]标识的地址空间的翻译进行排序。当 rs1&#x3D;0 时，对所选地址<br>空间中的所有虚拟地址的翻译进行排序；否则，仅对其中包含虚拟地址 x[rs1]的页面地址翻<br>译进行排序。</p>
+<h3 id="Trap种类"><a href="#Trap种类" class="headerlink" title="Trap种类"></a>Trap种类</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// xv6中用户态trap的代码</span></span><br><span class="line"><span class="comment">// handle an interrupt, exception, or system call from user space.</span></span><br><span class="line"><span class="comment">// called from trampoline.S</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="type">void</span></span><br><span class="line"><span class="title function_">usertrap</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">int</span> which_dev = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>((r_sstatus() &amp; SSTATUS_SPP) != <span class="number">0</span>)</span><br><span class="line">    panic(<span class="string">&quot;usertrap: not from user mode&quot;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// send interrupts and exceptions to kerneltrap(),</span></span><br><span class="line">  <span class="comment">// since we&#x27;re now in the kernel.</span></span><br><span class="line">  w_stvec((uint64)kernelvec);</span><br><span class="line"></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">proc</span> *<span class="title">p</span> =</span> myproc();</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// save user program counter.</span></span><br><span class="line">  p-&gt;trapframe-&gt;epc = r_sepc();</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">if</span>(r_scause() == <span class="number">8</span>)&#123;</span><br><span class="line">    <span class="comment">// system call</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(p-&gt;killed)</span><br><span class="line">      <span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// sepc points to the ecall instruction,</span></span><br><span class="line">    <span class="comment">// but we want to return to the next instruction.</span></span><br><span class="line">    p-&gt;trapframe-&gt;epc += <span class="number">4</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// an interrupt will change sstatus &amp;c registers,</span></span><br><span class="line">    <span class="comment">// so don&#x27;t enable until done with those registers.</span></span><br><span class="line">    intr_on();</span><br><span class="line"></span><br><span class="line">    syscall();</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span>((which_dev = devintr()) != <span class="number">0</span>)&#123;</span><br><span class="line">    <span class="comment">// ok</span></span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;usertrap(): unexpected scause %p pid=%d\n&quot;</span>, r_scause(), p-&gt;pid);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;            sepc=%p stval=%p\n&quot;</span>, r_sepc(), r_stval());</span><br><span class="line">    p-&gt;killed = <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>(p-&gt;killed)</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// give up the CPU if this is a timer interrupt.</span></span><br><span class="line">  <span class="keyword">if</span>(which_dev == <span class="number">2</span>)</span><br><span class="line">    yield();</span><br><span class="line"></span><br><span class="line">  usertrapret();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Trap在xv6里面指的是用户空间和内核空间的切换，包括系统调用、page fault、中断等。（<strong>xv6这里的Trap是一个统称</strong>，跟其他地方的称呼习惯不一样，比如CSAPP和一些linux的书习惯把syscall之类的东西叫trap，而把键盘I&#x2F;O这种interrupt叫做中断，<strong>大部分其他的书认为trap、interrupt、fault是三种不同的东西</strong>）</p>
+<p>一般Trap干了这些事：</p>
+<p>保存32个用户寄存器<br>保存pc和sp寄存器<br>切到supervisor mode<br>从user page table切到kernel page table<br>进入内核态执行程序</p>
+<p>完成这些过程的就是<code>kernel/trampoline.S</code>中的<code>uservec</code>函数，加了点注释，直接看注释吧。</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">.globl</span> uservec</span><br><span class="line"><span class="symbol">uservec:</span>    </span><br><span class="line">  <span class="comment">#</span></span><br><span class="line">        <span class="comment"># trap.c sets stvec to point here, so</span></span><br><span class="line">        <span class="comment"># traps from user space start here,</span></span><br><span class="line">        <span class="comment"># in supervisor mode, but with a</span></span><br><span class="line">        <span class="comment"># user page table.</span></span><br><span class="line">        <span class="comment">#</span></span><br><span class="line">        <span class="comment"># sscratch points to where the process&#x27;s p-&gt;trapframe is</span></span><br><span class="line">        <span class="comment"># mapped into user space, at TRAPFRAME.</span></span><br><span class="line">        <span class="comment">#</span></span><br><span class="line">        </span><br><span class="line">  <span class="comment"># swap a0 and sscratch</span></span><br><span class="line">        <span class="comment"># so that a0 is TRAPFRAME</span></span><br><span class="line">        csrrw a0, sscratch, a0</span><br><span class="line"></span><br><span class="line">        <span class="comment"># save the user registers in TRAPFRAME</span></span><br><span class="line">        <span class="comment"># sd（store指令)，sd  rs2, offset(rs1)  ，将rs1寄存器的值加上offset偏移存入rs2</span></span><br><span class="line">        sd ra, <span class="number">40</span>(a0) # return address, 返回地址</span><br><span class="line">        sd <span class="built_in">sp</span>, <span class="number">48</span>(a0) # stack pointer， 栈指针</span><br><span class="line">        sd gp, <span class="number">56</span>(a0) # gloabl pointer，全局指针寄存器</span><br><span class="line">        sd tp, <span class="number">64</span>(a0) # thread pointer，线程指针</span><br><span class="line">        sd t0, <span class="number">72</span>(a0) # t0-t2 是临时寄存器</span><br><span class="line">        sd t1, <span class="number">80</span>(a0)</span><br><span class="line">        sd t2, <span class="number">88</span>(a0)</span><br><span class="line">        sd <span class="built_in">s0</span>, <span class="number">96</span>(a0) # saved register</span><br><span class="line">        sd <span class="built_in">s1</span>, <span class="number">104</span>(a0)</span><br><span class="line">        sd <span class="built_in">a1</span>, <span class="number">120</span>(a0)  # a0-a7是<span class="meta">function</span> arguements，函数参数</span><br><span class="line">        sd <span class="built_in">a2</span>, <span class="number">128</span>(a0)</span><br><span class="line">        sd <span class="built_in">a3</span>, <span class="number">136</span>(a0)</span><br><span class="line">        sd <span class="built_in">a4</span>, <span class="number">144</span>(a0)</span><br><span class="line">        sd a5, <span class="number">152</span>(a0)</span><br><span class="line">        sd a6, <span class="number">160</span>(a0)</span><br><span class="line">        sd a7, <span class="number">168</span>(a0)</span><br><span class="line">        sd <span class="built_in">s2</span>, <span class="number">176</span>(a0) # saved registers，</span><br><span class="line">        sd <span class="built_in">s3</span>, <span class="number">184</span>(a0)</span><br><span class="line">        sd <span class="built_in">s4</span>, <span class="number">192</span>(a0)</span><br><span class="line">        sd <span class="built_in">s5</span>, <span class="number">200</span>(a0)</span><br><span class="line">        sd <span class="built_in">s6</span>, <span class="number">208</span>(a0)</span><br><span class="line">        sd <span class="built_in">s7</span>, <span class="number">216</span>(a0)</span><br><span class="line">        sd <span class="built_in">s8</span>, <span class="number">224</span>(a0)</span><br><span class="line">        sd <span class="built_in">s9</span>, <span class="number">232</span>(a0)</span><br><span class="line">        sd <span class="built_in">s10</span>, <span class="number">240</span>(a0)</span><br><span class="line">        sd <span class="built_in">s11</span>, <span class="number">248</span>(a0)</span><br><span class="line">        sd t3, <span class="number">256</span>(a0)</span><br><span class="line">        sd t4, <span class="number">264</span>(a0)</span><br><span class="line">        sd t5, <span class="number">272</span>(a0)</span><br><span class="line">        sd t6, <span class="number">280</span>(a0)</span><br><span class="line"></span><br><span class="line">  <span class="comment"># save the user a0 in p-&gt;trapframe-&gt;a0</span></span><br><span class="line">        csrr t0, sscratch</span><br><span class="line">        sd t0, <span class="number">112</span>(a0)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># restore kernel stack pointer from p-&gt;trapframe-&gt;kernel_sp</span></span><br><span class="line">        ld <span class="built_in">sp</span>, <span class="number">8</span>(a0)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># make tp hold the current hartid, from p-&gt;trapframe-&gt;kernel_hartid</span></span><br><span class="line">        ld tp, <span class="number">32</span>(a0)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># load the address of usertrap(), p-&gt;trapframe-&gt;kernel_trap</span></span><br><span class="line">        ld t0, <span class="number">16</span>(a0)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># restore kernel page table from p-&gt;trapframe-&gt;kernel_satp</span></span><br><span class="line">        ld t1, <span class="number">0</span>(a0)</span><br><span class="line">        csrw satp, t1</span><br><span class="line">        sfence.vma zero, zero</span><br><span class="line"></span><br><span class="line">        <span class="comment"># a0 is no longer valid, since the kernel page</span></span><br><span class="line">        <span class="comment"># table does not specially map p-&gt;tf.</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># jump to usertrap(), which does not return</span></span><br><span class="line">        jr t0</span><br></pre></td></tr></table></figure>
+
+
+
+<p>与之对应的是<code>userret</code>，用来在返回userspace的时候恢复这些寄存器</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">.globl</span> userret</span><br><span class="line"><span class="symbol">userret:</span></span><br><span class="line">        <span class="comment"># userret(TRAPFRAME, pagetable)</span></span><br><span class="line">        <span class="comment"># switch from kernel to user.</span></span><br><span class="line">        <span class="comment"># usertrapret() calls here.</span></span><br><span class="line">        <span class="comment"># a0: TRAPFRAME, in user page table.</span></span><br><span class="line">        <span class="comment"># a1: user page table, for satp.</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># switch to the user page table.</span></span><br><span class="line">        将<span class="built_in">a1</span>的值写入satp，切换到user page table</span><br><span class="line">        csrw satp, <span class="built_in">a1</span></span><br><span class="line">        <span class="comment">#  sfence是虚拟内存屏障的指令，sfence.vma是用来通知处理器页表已经更改，需要刷新TLB缓存</span></span><br><span class="line">        sfence.vma zero, zero</span><br><span class="line"></span><br><span class="line">        <span class="comment"># put the saved user a0 in sscratch, so we</span></span><br><span class="line">        <span class="comment"># can swap it with our a0 (TRAPFRAME) in the last step.</span></span><br><span class="line">        ld t0, <span class="number">112</span>(a0)</span><br><span class="line">        csrw sscratch, t0</span><br><span class="line"></span><br><span class="line">        <span class="comment"># restore all but a0 from TRAPFRAME</span></span><br><span class="line">        <span class="comment"># ld a0, a1 是将a1的值load进a0，方向不要搞反了</span></span><br><span class="line">        ld ra, <span class="number">40</span>(a0) # return address, 返回地址</span><br><span class="line">        ld <span class="built_in">sp</span>, <span class="number">48</span>(a0) # stack pointer， 栈指针</span><br><span class="line">        ld gp, <span class="number">56</span>(a0) # gloabl pointer，全局指针寄存器</span><br><span class="line">        ld tp, <span class="number">64</span>(a0) # thread pointer，线程指针</span><br><span class="line">        ld t0, <span class="number">72</span>(a0) # t0-t2 是临时寄存器</span><br><span class="line">        ld t1, <span class="number">80</span>(a0)</span><br><span class="line">        ld t2, <span class="number">88</span>(a0)</span><br><span class="line">        ld <span class="built_in">s0</span>, <span class="number">96</span>(a0) # saved register</span><br><span class="line">        ld <span class="built_in">s1</span>, <span class="number">104</span>(a0)</span><br><span class="line">        ld <span class="built_in">a1</span>, <span class="number">120</span>(a0)  # a0-a7是<span class="meta">function</span> arguements，函数参数</span><br><span class="line">        ld <span class="built_in">a2</span>, <span class="number">128</span>(a0)</span><br><span class="line">        ld <span class="built_in">a3</span>, <span class="number">136</span>(a0)</span><br><span class="line">        ld <span class="built_in">a4</span>, <span class="number">144</span>(a0)</span><br><span class="line">        ld a5, <span class="number">152</span>(a0)</span><br><span class="line">        ld a6, <span class="number">160</span>(a0)</span><br><span class="line">        ld a7, <span class="number">168</span>(a0)</span><br><span class="line">        ld <span class="built_in">s2</span>, <span class="number">176</span>(a0) # saved registers</span><br><span class="line">        ld <span class="built_in">s3</span>, <span class="number">184</span>(a0) </span><br><span class="line">        ld <span class="built_in">s4</span>, <span class="number">192</span>(a0)</span><br><span class="line">        ld <span class="built_in">s5</span>, <span class="number">200</span>(a0)</span><br><span class="line">        ld <span class="built_in">s6</span>, <span class="number">208</span>(a0)</span><br><span class="line">        ld <span class="built_in">s7</span>, <span class="number">216</span>(a0)</span><br><span class="line">        ld <span class="built_in">s8</span>, <span class="number">224</span>(a0)</span><br><span class="line">        ld <span class="built_in">s9</span>, <span class="number">232</span>(a0)</span><br><span class="line">        ld <span class="built_in">s10</span>, <span class="number">240</span>(a0)</span><br><span class="line">        ld <span class="built_in">s11</span>, <span class="number">248</span>(a0)</span><br><span class="line">        ld t3, <span class="number">256</span>(a0)  # 临时寄存器</span><br><span class="line">        ld t4, <span class="number">264</span>(a0)</span><br><span class="line">        ld t5, <span class="number">272</span>(a0)</span><br><span class="line">        ld t6, <span class="number">280</span>(a0)</span><br><span class="line"></span><br><span class="line">  <span class="comment"># restore user a0, and save TRAPFRAME in sscratch</span></span><br><span class="line">  <span class="comment"># csrrw 是同时读写的原子操作，将sscratch的值写入a0，将a0写入sscratch</span></span><br><span class="line">  <span class="comment"># csrrw 这里的效果是将sscratch和a0两个寄存器的值交换（原子的）</span></span><br><span class="line">        csrrw a0, sscratch, a0</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># return to user mode and user pc.</span></span><br><span class="line">        <span class="comment"># usertrapret() set up sstatus and sepc.</span></span><br><span class="line">        <span class="comment"># sert 从S MODE（内核态）返回用户态，将PC的值设置为SEPC</span></span><br><span class="line">        sret</span><br></pre></td></tr></table></figure>
+
+<p>除了上面的usertrap，还有内核态引发的trap</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// interrupts and exceptions from kernel code go here via kernelvec,</span></span><br><span class="line"><span class="comment">// on whatever the current kernel stack is.</span></span><br><span class="line"><span class="type">void</span> </span><br><span class="line"><span class="title function_">kerneltrap</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">int</span> which_dev = <span class="number">0</span>;</span><br><span class="line">  uint64 sepc = r_sepc();</span><br><span class="line">  uint64 sstatus = r_sstatus();</span><br><span class="line">  uint64 scause = r_scause();</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">if</span>((sstatus &amp; SSTATUS_SPP) == <span class="number">0</span>)</span><br><span class="line">    panic(<span class="string">&quot;kerneltrap: not from supervisor mode&quot;</span>);</span><br><span class="line">  <span class="keyword">if</span>(intr_get() != <span class="number">0</span>)</span><br><span class="line">    panic(<span class="string">&quot;kerneltrap: interrupts enabled&quot;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>((which_dev = devintr()) == <span class="number">0</span>)&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;scause %p\n&quot;</span>, scause);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;sepc=%p stval=%p\n&quot;</span>, r_sepc(), r_stval());</span><br><span class="line">    panic(<span class="string">&quot;kerneltrap&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// give up the CPU if this is a timer interrupt.</span></span><br><span class="line">  <span class="keyword">if</span>(which_dev == <span class="number">2</span> &amp;&amp; myproc() != <span class="number">0</span> &amp;&amp; myproc()-&gt;state == RUNNING)</span><br><span class="line">    yield();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// the yield() may have caused some traps to occur,</span></span><br><span class="line">  <span class="comment">// so restore trap registers for use by kernelvec.S&#x27;s sepc instruction.</span></span><br><span class="line">  w_sepc(sepc);</span><br><span class="line">  w_sstatus(sstatus);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>还有一个trap就是时钟，这个东西做过单片机的应该非常熟悉，就是用来做时钟嘀嗒的（ticks）。一般板子上有晶振等东西产生时钟信号，然后在固定的时间每次都出发一个时钟中断，用来做基准时间。（在linux里面就是会变成我们熟悉的那个jiffies）<br>这个比较特殊，直接用的比较少，不多说了。</p>
+<p>详见<code>kernel/kernelvec.S</code>中的timervec函数。需要注意的是这个玩意虽然也算作interrupt，但是它是不归中断处理函数管的。我们在一些spinlock等操作关中断的时候<code>intr_off</code>是不会把时钟中断也关掉的。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span></span><br><span class="line"><span class="title function_">clockintr</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  acquire(&amp;tickslock);  <span class="comment">// 自旋锁</span></span><br><span class="line">  ticks++;</span><br><span class="line">  wakeup(&amp;ticks);</span><br><span class="line">  release(&amp;tickslock);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此外还有来自设备的trap，就是别的系统习惯成为外部中断（external interrupt）的东西，定义在<code>kernel/trap.c</code>的<code>devintr</code>函数，这个后面说道驱动的时候再讲。</p>
+<p>ps：外部中断的优先级是很高的，比syscall等其他的trap都高</p>
+<h2 id="Lab"><a href="#Lab" class="headerlink" title="Lab"></a>Lab</h2><h3 id="RISC-V-assembly-easy"><a href="#RISC-V-assembly-easy" class="headerlink" title="RISC-V assembly (easy)"></a>RISC-V assembly (easy)</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">g</span><span class="params">(<span class="type">int</span> x)</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> x+<span class="number">3</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">f</span><span class="params">(<span class="type">int</span> x)</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> g(x);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span> &#123;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d %d\n&quot;</span>, f(<span class="number">8</span>)+<span class="number">1</span>, <span class="number">13</span>);</span><br><span class="line">  <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">int</span> g(int x) &#123;</span><br><span class="line">   <span class="number">0</span>:  <span class="number">1141</span>                	addi	<span class="built_in">sp</span>,<span class="built_in">sp</span>,-<span class="number">16</span></span><br><span class="line">   <span class="number">2</span>:  e422                	sd	<span class="built_in">s0</span>,<span class="number">8</span>(<span class="built_in">sp</span>)</span><br><span class="line">   <span class="number">4</span>:  <span class="number">0800</span>                	addi	<span class="built_in">s0</span>,<span class="built_in">sp</span>,<span class="number">16</span></span><br><span class="line">  return x+<span class="number">3</span><span class="comment">;</span></span><br><span class="line">&#125;</span><br><span class="line">   <span class="number">6</span>:  <span class="number">250</span>d                	addiw	a0,a0,<span class="number">3</span></span><br><span class="line">   <span class="number">8</span>:  <span class="number">6422</span>                	ld	<span class="built_in">s0</span>,<span class="number">8</span>(<span class="built_in">sp</span>)</span><br><span class="line">   a:  <span class="number">0141</span>                	addi	<span class="built_in">sp</span>,<span class="built_in">sp</span>,<span class="number">16</span></span><br><span class="line">   c:  <span class="number">8082</span>                	ret</span><br><span class="line"></span><br><span class="line"><span class="number">000000000000000</span>e &lt;f&gt;:</span><br><span class="line"></span><br><span class="line"><span class="symbol">int</span> f(int x) &#123;</span><br><span class="line">   e:  <span class="number">1141</span>                	addi	<span class="built_in">sp</span>,<span class="built_in">sp</span>,-<span class="number">16</span></span><br><span class="line">  <span class="number">10</span>:  e422                	sd	<span class="built_in">s0</span>,<span class="number">8</span>(<span class="built_in">sp</span>)</span><br><span class="line">  <span class="number">12</span>:  <span class="number">0800</span>                	addi	<span class="built_in">s0</span>,<span class="built_in">sp</span>,<span class="number">16</span></span><br><span class="line">  return g(x)<span class="comment">;</span></span><br><span class="line">&#125;</span><br><span class="line">  <span class="number">14</span>:  <span class="number">250</span>d                	addiw	a0,a0,<span class="number">3</span></span><br><span class="line">  <span class="number">16</span>:  <span class="number">6422</span>                	ld	<span class="built_in">s0</span>,<span class="number">8</span>(<span class="built_in">sp</span>)</span><br><span class="line">  <span class="number">18</span>:  <span class="number">0141</span>                	addi	<span class="built_in">sp</span>,<span class="built_in">sp</span>,<span class="number">16</span></span><br><span class="line">  <span class="number">1</span>a:  <span class="number">8082</span>                	ret</span><br><span class="line"></span><br><span class="line"><span class="number">000000000000001</span>c &lt;main&gt;:</span><br><span class="line"></span><br><span class="line"><span class="symbol">void</span> main(void) &#123;</span><br><span class="line">  <span class="number">1</span>c:  <span class="number">1141</span>                	addi	<span class="built_in">sp</span>,<span class="built_in">sp</span>,-<span class="number">16</span></span><br><span class="line">  <span class="number">1</span>e:  e406                	sd	ra,<span class="number">8</span>(<span class="built_in">sp</span>)</span><br><span class="line">  <span class="number">20</span>:  e022                	sd	<span class="built_in">s0</span>,<span class="number">0</span>(<span class="built_in">sp</span>)</span><br><span class="line">  <span class="number">22</span>:  <span class="number">0800</span>                	addi	<span class="built_in">s0</span>,<span class="built_in">sp</span>,<span class="number">16</span></span><br><span class="line">  printf(<span class="string">&quot;%d %d\n&quot;</span>, f(<span class="number">8</span>)+<span class="number">1</span>, <span class="number">13</span>)<span class="comment">;</span></span><br><span class="line">  <span class="number">24</span>:  <span class="number">4635</span>                	li	<span class="built_in">a2</span>,<span class="number">13</span></span><br><span class="line">  <span class="number">26</span>:  <span class="number">45</span>b1                	li	<span class="built_in">a1</span>,<span class="number">12</span></span><br><span class="line">  <span class="number">28</span>:  <span class="number">00000517</span>          	auipc	a0,<span class="number">0x0</span></span><br><span class="line">  <span class="number">2</span>c:  <span class="number">7</span>a050513          	addi	a0,a0,<span class="number">1952</span> # <span class="number">7</span><span class="built_in">c8</span> &lt;malloc+<span class="number">0xe8</span>&gt;</span><br><span class="line">  <span class="number">30</span>:  <span class="number">00000097</span>          	auipc	ra,<span class="number">0x0</span></span><br><span class="line">  <span class="number">34</span>:  <span class="number">5</span>f8080e7          	jalr	<span class="number">1528</span>(ra) # <span class="number">628</span> &lt;printf&gt;</span><br><span class="line">  exit(<span class="number">0</span>)<span class="comment">;</span></span><br><span class="line">  <span class="number">38</span>:  <span class="number">4501</span>                	li	a0,<span class="number">0</span></span><br><span class="line">  <span class="number">3</span>a:  <span class="number">00000097</span>          	auipc	ra,<span class="number">0x0</span></span><br><span class="line">  <span class="number">3</span>e:  <span class="number">274080</span>e7          	jalr	<span class="number">628</span>(ra) # <span class="number">2</span>ae &lt;exit&gt;</span><br></pre></td></tr></table></figure>
+
+<p>给你一个<code>call.c</code>，然后<code>make fs.img</code>之后会生成一个<code>call.asm</code>，下面问了你几个汇编的问题（然而我懒，我直接掏出gdb回答）</p>
+<p>这个简单，翻手册就完事了</p>
+<blockquote>
+<p>Which registers contain arguments to functions? For example, which register holds 13 in main’s call to printf?</p>
+</blockquote>
+<p>a0-a7这些a开头的呗，没啥好说的。第二问， 我们直接打开<code>call.asm</code>，然后找到<code>main</code>函数，发现main函数第45行赫然写着<code>li a2,13</code> 那就是a2呗。</p>
+<p>（这直接<code>cat user/call.asm | rg 13</code>搜索13不就好了, 逃）</p>
+<blockquote>
+<p>Where is the call to function f in the assembly code for main? Where is the call to g? (Hint: the compiler may inline functions.)</p>
+</blockquote>
+<p>我一开始傻乎乎的找调用没找到，一看提示才发现直接内联了。第46行，<code>li a1,12</code>，紧挨刚才那个13，f(8)+1 &#x3D; 8 + 3 + 1 &#x3D; 12，这个12就是了。（你比编译器聪明系列</p>
+<blockquote>
+<p>At what address is the function printf located?</p>
+</blockquote>
+<p>就是pc的address，就是ra寄存器的值呗，gdb看一下就知道了。算了算了不偷懒了，看一下汇编，接着刚才的12向下面找，</p>
+<p>查手册发现<code>auipc rd, immediate</code>，是左移12 immediate立即数加到rd上<br>jalr指令： <code>jalr rd, offset(rs1)</code>， 把 pc 设置为 x[rs1] + sign-extend(offset),把计算出的地址的最低有效位设为 0,并将原 pc+4的值写入 f[rd]。rd 默认为 x1。 大概就是跳转到rs1, 然后将下一条指令（pc+4）保存到rd里面。</p>
+<p>auipc和jalr这一对指令就相当于jal跳转，参见stackoverflow的这个问题<span class="exturl" data-url="aHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9xdWVzdGlvbnMvNDM5NTY2MTIvdW5kZXJzdGFuZGluZy10aGUtYXVpcGNqYWxyLXNlcXVlbmNlLXVzZWQtZm9yLWZ1bmN0aW9uLWNhbGxz">Understanding the auipc+jalr sequence used for function calls<i class="fa fa-external-link-alt"></i></span>  </p>
+<p>说人话就是<code>jalr	1528(ra) # 628 &lt;printf&gt;</code>，在jalr这个无条件跳转的时候，将printf的pc的值（628）放到了ra里面</p>
+<p>答案就是628</p>
+<blockquote>
+<p>Run the following code.<br>unsigned int i &#x3D; 0x00646c72;<br>printf(“H%x Wo%s”, 57616, &amp;i);</p>
+<p>What is the output? </p>
+</blockquote>
+<p>这一看就是hello, world啦</p>
+<p>结果<code>HE110 World</code>。直接查表就好了（唯一的小坑是大小端的问题，我这是小端，所以你还得倒过来查，不过这个坑很隐蔽，因为57616不管是大端还是小端结果都是一样的<code>e110</code>，所以第二问的回答是不需要改57616，i要倒过来，改成<code>0x00726c64</code>）</p>
+<blockquote>
+<p>In the following code, what is going to be printed after ‘y&#x3D;’? (note: the answer is not a specific value.) Why does this happen?<br>printf(“x&#x3D;%d y&#x3D;%d”, 3);</p>
+</blockquote>
+<p><code>call.asm</code>是这样，对比<code>printf(&quot;x=%d y=%d&quot;, 3, 4);</code>, 只少了一行<code>li a2，4</code>, 推测这个printf函数打印出的y的值是寄存器a2中的值，由于我们没有赋值所以打印出来是原来的a2</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;x=%d, y=%d&quot;</span>, <span class="number">3</span>);</span><br><span class="line"> <span class="number">8</span>:  <span class="number">458</span>d                	li	a1,<span class="number">3</span></span><br><span class="line"> a:  <span class="number">00000517</span>          	auipc	a0,<span class="number">0x0</span></span><br><span class="line"> e:  <span class="number">79e50513</span>          	addi	a0,a0,<span class="number">1950</span> # <span class="number">7</span>a8 &lt;<span class="built_in">malloc</span>+<span class="number">0xe6</span>&gt;</span><br><span class="line"><span class="number">12</span>:  <span class="number">00000097</span>          	auipc	ra,<span class="number">0x0</span></span><br><span class="line"><span class="number">16</span>:  <span class="number">5f</span>8080e7          	jalr	<span class="number">1528</span>(ra) # <span class="number">60</span>a &lt;<span class="built_in">printf</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果y&#x3D;5301，然后我们用gdb验证一下呗，断点打到<code>file user/_call.c</code>, 然后<code>b mian</code>， 然后<code>info registers</code>发现a2寄存器是5301，好了，问答环节结束，我们看下面的Lab</p>
+<p><img src="/6.S081-lab-trap/1651825910.png"></p>
+<p>多说一下printf的实现，这个在csapp的第八章里面有讲，大概就是 调用 vspringf 然后调用sys_write, 然后去跟显示驱动打交道</p>
+<h3 id="Backtrace-moderate"><a href="#Backtrace-moderate" class="headerlink" title="Backtrace (moderate)"></a>Backtrace (moderate)</h3><p>实现这个方便panic的时候看到backtrace结果，这个搞懂他想让我们干什么就很简单了，我们只要读出fp寄存器然后打印就好了。</p>
+<p>怎么读 frame poiner提示已经告诉我们了，编辑<code>kernel/riscv.h</code>:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="keyword">inline</span> uint64</span><br><span class="line"><span class="title function_">r_fp</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  uint64 x;</span><br><span class="line">  <span class="keyword">asm</span> <span class="title function_">volatile</span><span class="params">(<span class="string">&quot;mv %0, s0&quot;</span> : <span class="string">&quot;=r&quot;</span> (x) )</span>;</span><br><span class="line">  <span class="keyword">return</span> x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在<code>kernel/printf.c</code>那里加一个backtrace函数，然后输出照抄<code>printint</code>和<code>printptr</code>用consputc就好了。</p>
+<p>提示甚至连栈顶和栈底怎么获取都告诉你了（PGROUNDDOWN(fp) and PGROUNDUP(fp)）， 那就直接把这一段地址中间的所有东西打印出来就好了</p>
+<h3 id="Alarm-hard"><a href="#Alarm-hard" class="headerlink" title="Alarm (hard)"></a>Alarm (hard)</h3><blockquote>
+<p>In this exercise you’ll add a feature to xv6 that periodically alerts a process as it uses CPU time. This might be useful for compute-bound processes that want to limit how much CPU time they chew up, or for processes that want to compute but also want to take some periodic action. More generally, you’ll be implementing a primitive form of user-level interrupt&#x2F;fault handlers; you could use something similar to handle page faults in the application, for example. Your solution is correct if it passes alarmtest and usertests.</p>
+</blockquote>
+<p>这个也不是很难，有点繁琐。就是添加一个syscall而已，做法跟syscall那个Lab的内容差不多。大概思路就是先trap进内核态看中断然后返回用户态打印，搞清楚流程照着做就行了。</p>
+<p>保存和恢复寄存器这个我一开始是照抄uservec,全部保存的，后来看到Lab的Hints, 又看了一遍讲义</p>
+<blockquote>
+<p>Your solution will require you to save and restore registers—what registers do you need to save and restore to resume the interrupted code correctly? (Hint: it will be many).</p>
+</blockquote>
+<p>这里只要保存那些caller寄存器就可以了，像s开头的callee寄存器可以不管。Caller寄存器需要调用者主动保存，不然会被函数返回值覆盖（比如临时寄存器），Callee寄存器在函数调用的过程中不需要调用者保存，会由被调用者保存 。</p>
+<p><img src="/6.S081-lab-trap/1651827112.png"></p>
+<p>只保存和恢复这些就可以了（注意sp寄存器也是callee寄存器）</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">sd</span> ra, <span class="number">40</span>(a0)</span><br><span class="line"><span class="symbol">sd</span> gp, <span class="number">56</span>(a0)</span><br><span class="line"><span class="symbol">sd</span> tp, <span class="number">64</span>(a0)</span><br><span class="line"><span class="symbol">sd</span> t0, <span class="number">72</span>(a0)</span><br><span class="line"><span class="symbol">sd</span> t1, <span class="number">80</span>(a0)</span><br><span class="line"><span class="symbol">sd</span> t2, <span class="number">88</span>(a0)</span><br><span class="line"><span class="symbol">sd</span> <span class="built_in">a1</span>, <span class="number">120</span>(a0)</span><br><span class="line"><span class="symbol">sd</span> <span class="built_in">a2</span>, <span class="number">128</span>(a0)</span><br><span class="line"><span class="symbol">sd</span> <span class="built_in">a3</span>, <span class="number">136</span>(a0)</span><br><span class="line"><span class="symbol">sd</span> <span class="built_in">a4</span>, <span class="number">144</span>(a0)</span><br><span class="line"><span class="symbol">sd</span> a5, <span class="number">152</span>(a0)</span><br><span class="line"><span class="symbol">sd</span> a6, <span class="number">160</span>(a0)</span><br><span class="line"><span class="symbol">sd</span> a7, <span class="number">168</span>(a0)</span><br><span class="line"><span class="symbol">sd</span> t3, <span class="number">256</span>(a0)</span><br><span class="line"><span class="symbol">sd</span> t4, <span class="number">264</span>(a0)</span><br><span class="line"><span class="symbol">sd</span> t5, <span class="number">272</span>(a0)</span><br><span class="line"><span class="symbol">sd</span> t6, <span class="number">280</span>(a0)</span><br></pre></td></tr></table></figure>
+
+<p>那s0-s11是谁保存的？是被调用者保存的，比如进程的context上下文保存的就是这些callee寄存器，保存和恢复context就是操作这些callee-saved registers。哦，扯远了，到multithreading那个Lab再说</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Saved registers for kernel context switches.</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">context</span> &#123;</span></span><br><span class="line">  uint64 ra;</span><br><span class="line">  uint64 sp;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// callee-saved</span></span><br><span class="line">  uint64 s0;</span><br><span class="line">  uint64 s1;</span><br><span class="line">  uint64 s2;</span><br><span class="line">  uint64 s3;</span><br><span class="line">  uint64 s4;</span><br><span class="line">  uint64 s5;</span><br><span class="line">  uint64 s6;</span><br><span class="line">  uint64 s7;</span><br><span class="line">  uint64 s8;</span><br><span class="line">  uint64 s9;</span><br><span class="line">  uint64 s10;</span><br><span class="line">  uint64 s11;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/6-S081/" rel="tag"><i class="fa fa-tag"></i> 6.S081</a>
+              <a href="/tags/trap/" rel="tag"><i class="fa fa-tag"></i> trap</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/6.S081-lab-page-table/" rel="prev" title="6.S081 Lab Page table 笔记：虚拟内存、页表和MMU">
+                  <i class="fa fa-angle-left"></i> 6.S081 Lab Page table 笔记：虚拟内存、页表和MMU
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/map-reduce/" rel="next" title="6.824 Lab1 MapReduce 经典老番">
+                  6.824 Lab1 MapReduce 经典老番 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+      <div class="tabs tabs-comment">
+        <ul class="nav-tabs">
+            <li class="tab"><a href="#comment-utterances">utterances</a></li>
+            <li class="tab"><a href="#comment-disqusjs">Load Disqus</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane utterances" id="comment-utterances">
+              <div class="comments utterances-container"></div>
+            </div>
+            <div class="tab-pane disqusjs" id="comment-disqusjs">
+              
+  <div class="comments disqusjs-container">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+            </div>
+        </div>
+      </div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2019 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heartbeat"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">止息</span>
+  </div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FyY2hhZW9yYXB0b3I=" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@next-theme/pjax@0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://unpkg.com/hexo-generator-searchdb@1.4.1/dist/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://unpkg.com/pdfobject@2.2.12/pdfobject.min.js","integrity":"sha256-g2xji1rlE3KsGVClvuxTbcR0Kn2+wtQADSff2Tbb4zA="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="/js/third-party/tags/pdf.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://unpkg.com/mathjax@3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<link rel="stylesheet" href="https://unpkg.com/disqusjs@3.0.2/dist/browser/styles/disqusjs.css" integrity="sha256-71XarXwNr1Td27HmZI9zjY+rMzRdush6/glo6VFXp7o=" crossorigin="anonymous">
+
+<script class="next-config" data-name="disqusjs" type="application/json">{"enable":true,"api":"https://disqus.skk.moe/disqus/","apikey":"3qJ515uApWlP58gXhzPCCk3L0NlOvrMLwt5dDITBndS8fp8She7PT1gvBdDcgwrt","shortname":"arcaheoraptor","js":{"url":"https://unpkg.com/disqusjs@3.0.2/dist/browser/disqusjs.es2015.umd.min.js","integrity":"sha256-okP99ZQKVpIy7+NogAMpGlIQzJa9XKXhIJcFgdju5bU="}}</script>
+<script src="/js/third-party/comments/disqusjs.js"></script>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"Archaeoraptor/archaeoraptor.github.io","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

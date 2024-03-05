@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/uploads/wizard-hat-16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/uploads/wizard-hat-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/uploads/wizard-hat-16.png">
+  <link rel="mask-icon" href="/uploads/wizard-hat-32.png" color="#222">
+  <meta name="google-site-verification" content="4Rj54anORAwcoMXLe3miFnoH78ZtUZfdamS--ffoxVE">
+  <meta name="msvalidate.01" content="872DC4637276109A6B54FF149DCABA8A">
+  <meta name="yandex-verification" content="0d554b4a05a80f0d">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhangjk98.xyz","root":"/","images":"/images","scheme":"Pisces","darkmode":"auto","version":"8.19.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqusjs","storage":true,"lazyload":false,"nav":{"disqusjs":{"text":"Load Disqus","order":-1},"utterances":{"order":-2}},"activeClass":"disqusjs"},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"none","post_header":"none","post_body":"none","coll_header":"none","sidebar":"none"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="用了一周linux-ck和MuQSS，发现没有想象中的那么好。哦，这还要从一个麻醉师说起。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux进程调度，从服务器到桌面">
+<meta property="og:url" content="https://zhangjk98.xyz/linux-processing-scheduling/index.html">
+<meta property="og:site_name" content="止息&#39;幻想乡">
+<meta property="og:description" content="用了一周linux-ck和MuQSS，发现没有想象中的那么好。哦，这还要从一个麻醉师说起。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-08-30T03:26:55.000Z">
+<meta property="article:author" content="zhixi">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="scheduler">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://zhangjk98.xyz/linux-processing-scheduling/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zhangjk98.xyz/linux-processing-scheduling/","path":"linux-processing-scheduling/","title":"Linux进程调度，从服务器到桌面"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Linux进程调度，从服务器到桌面 | 止息'幻想乡</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143393734-1"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-143393734-1","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="止息'幻想乡" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">止息'幻想乡</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">风雪夜归人</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E8%B0%83%E5%BA%A6%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">进程调度简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E8%BF%9B%E7%A8%8B"><span class="nav-number">1.1.</span> <span class="nav-text">关于进程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9D%E4%BB%A3%E8%B0%83%E5%BA%A6%E5%99%A8"><span class="nav-number">1.2.</span> <span class="nav-text">初代调度器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#O-n-%E8%B0%83%E5%BA%A6%E5%99%A8"><span class="nav-number">1.3.</span> <span class="nav-text">O(n)调度器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#O-1-%E8%B0%83%E5%BA%A6%E5%99%A8"><span class="nav-number">1.4.</span> <span class="nav-text">O(1)调度器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CFS"><span class="nav-number">1.5.</span> <span class="nav-text">CFS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RT%E8%B0%83%E5%BA%A6%E5%99%A8"><span class="nav-number">1.6.</span> <span class="nav-text">RT调度器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E6%A0%B8"><span class="nav-number">1.7.</span> <span class="nav-text">多核</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%84%E8%B0%83%E5%BA%A6"><span class="nav-number">1.8.</span> <span class="nav-text">组调度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E7%9A%84%E8%B0%83%E5%BA%A6%E5%99%A8"><span class="nav-number">1.9.</span> <span class="nav-text">其他的调度器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%82%E5%90%88%E6%A1%8C%E9%9D%A2%E7%9A%84%E8%BF%9B%E7%A8%8B%E8%B0%83%E5%BA%A6"><span class="nav-number">2.</span> <span class="nav-text">适合桌面的进程调度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9B%E7%A8%8B%E8%B0%83%E5%BA%A6"><span class="nav-number">3.</span> <span class="nav-text">服务器进程调度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%94%B9%E8%BF%9B%E7%A8%8B%E8%B0%83%E5%BA%A6"><span class="nav-number">4.</span> <span class="nav-text">更改进程调度</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#chrt%E6%9B%B4%E6%94%B9%E8%B0%83%E5%BA%A6%E7%AD%96%E7%95%A5"><span class="nav-number">4.1.</span> <span class="nav-text">chrt更改调度策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E6%A0%B8%E9%80%89%E6%8B%A9"><span class="nav-number">4.2.</span> <span class="nav-text">内核选择</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%93%BE%E6%8E%A5"><span class="nav-number">5.</span> <span class="nav-text">链接</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="zhixi"
+      src="/uploads/jinmao.webp">
+  <p class="site-author-name" itemprop="name">zhixi</p>
+  <div class="site-description" itemprop="description">in darkest night</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">91</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FyY2hhZW9yYXB0b3I=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;archaeoraptor"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOnpoaXhpQHVlc3RjbHVnLm9yZw==" title="E-Mail → mailto:zhixi@uestclug.org"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml" rel="noopener me"><i class="fa fa-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><img src="https://unpkg.com/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly96aGFuZ3NodXFpYW8ub3Jn" title="https:&#x2F;&#x2F;zhangshuqiao.org">米米的博客</span>
+            </li>
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly95YW5xaXl1LmluZm8=" title="https:&#x2F;&#x2F;yanqiyu.info">Karuboniru's Blog</span>
+            </li>
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnNhbWNodS5jbg==" title="https:&#x2F;&#x2F;blog.samchu.cn">Sam's Blog</span>
+            </li>
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly9seWstbG92ZS5jbi8=" title="https:&#x2F;&#x2F;lyk-love.cn&#x2F;">LYK-love</span>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zhangjk98.xyz/linux-processing-scheduling/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/jinmao.webp">
+      <meta itemprop="name" content="zhixi">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="止息'幻想乡">
+      <meta itemprop="description" content="in darkest night">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Linux进程调度，从服务器到桌面 | 止息'幻想乡">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux进程调度，从服务器到桌面
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-08-30 11:26:55" itemprop="dateCreated datePublished" datetime="2021-08-30T11:26:55+08:00">2021-08-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux-Unix/" itemprop="url" rel="index"><span itemprop="name">Linux&Unix</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>用了一周linux-ck和MuQSS，发现没有想象中的那么好。哦，这还要从一个麻醉师说起。</p>
+<span id="more"></span>
+
+<p>没仔细看调度器之前我以为Linux进程调度都是和内存管理一样很复杂的东西。实现比较简单的进程调度就几十行代码。CFS这种比较复杂的就不仔细说了、多核和分布式调度这些比较复杂的下面也不会多讲。（主要是我水平太菜了，怕讲错）</p>
+<h2 id="进程调度简介"><a href="#进程调度简介" class="headerlink" title="进程调度简介"></a>进程调度简介</h2><p>进程是操作系统虚拟化出来的东西，</p>
+<p>Linux里面基本不区分进程和线程，统称为task（任务）。下面的进程等词都指task。</p>
+<p>CPU的资源是有限的，进程之间需要一个调度器来分配资源使用。最常见的调度器是Linux内核主线默认采用的CFS。</p>
+<p>注：不要只盯着复杂度O(n), O(1), O(log n), 效果还是得看实测。引用一下cauche调度器readme里的一段话</p>
+<p>O(n) sounds scary, but usually for a machine with 4 CPUS where it is used for desktop or mobile jobs, the maximum number of runnable tasks might not exceeds 10 (at the pick next run time) - the idle tasks are excluded since they are dequeued when sleeping and enqueued when they wake up.</p>
+<p>在电脑桌面和手机、4核CPU使用场景，最多运行任务不超过10个。所以复杂度O(n)不一定比O(1)调度速度快。</p>
+<h3 id="关于进程"><a href="#关于进程" class="headerlink" title="关于进程"></a>关于进程</h3><p>在<code>include/linux/sched.h</code>头文件里面有进程的定义（一个结构体来表示的task）</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">task_struct</span></span></span><br></pre></td></tr></table></figure>
+
+<p>Linux系统在启动的时候会首先执行<code>start_kernel()</code>函数<span class="exturl" data-url="aHR0cHM6Ly9lbGl4aXIuYm9vdGxpbi5jb20vbGludXgvdjUuNy1yYzEvc291cmNlL2luaXQvbWFpbi5j">init&#x2F;main.c<i class="fa fa-external-link-alt"></i></span>。</p>
+<p>首先是<code>set_task_stack_end_magic(&amp;init_task)</code>创建一个叫<code>init_task</code>的进程，一般管它叫0号进程（也就是后面的idle进程）。</p>
+<p>然后调用<code>sched_init();</code>函数初始化进程调度。</p>
+<p>然后在<code>start_kernel()</code>函数最后调用<code>rest_init</code>, 两个<code>kernel_thread</code>分别创建了一号进程（<code>init</code>）和二号进程(<code>kthreadd</code>)。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">noinline <span class="type">void</span> __ref <span class="title function_">rest_init</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">task_struct</span> *<span class="title">tsk</span>;</span></span><br><span class="line">  <span class="type">int</span> pid;</span><br><span class="line"></span><br><span class="line">  rcu_scheduler_starting();</span><br><span class="line">    ...........</span><br><span class="line">  pid = kernel_thread(kernel_init, <span class="literal">NULL</span>, CLONE_FS);</span><br><span class="line">  ...........</span><br><span class="line">  pid = kernel_thread(kthreadd, <span class="literal">NULL</span>, CLONE_FS | CLONE_FILES);</span><br><span class="line">  ...........</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>一般1号进程是用户态进程，整个用户态的进程树都是它<code>fork</code>出来的。关于1号进程的介绍可以看看systemd作者写的<a target="_blank" rel="noopener" href="http://0pointer.de/blog/projects/systemd.html"><span class="exturl" data-url="aHR0cDovLzBwb2ludGVyLm5ldC9ibG9nL3Byb2plY3RzL3N5c3RlbWQuaHRtbA==">Rethinking PID 1<i class="fa fa-external-link-alt"></i></span></a> 中文翻译: <span class="exturl" data-url="aHR0cDovL2thaXdhbmdjaGVuLmdpdGh1Yi5pby8yMDE0LzEwLzA4L3N5c3RlbWQuaHRtbA==">重新思考 1 号进程<i class="fa fa-external-link-alt"></i></span></p>
+<p>2号进程是内核进程，负责管理和调度内核线程。</p>
+<p>进程描述符里面有一些调度需要的信息，比如。</p>
+<h3 id="初代调度器"><a href="#初代调度器" class="headerlink" title="初代调度器"></a>初代调度器</h3><p>初代调度器非常简单，就是一个runqueue（运行队列），源码在<span class="exturl" data-url="aHR0cHM6Ly9lbGl4aXIuYm9vdGxpbi5jb20vbGludXgvMC4xMS9zb3VyY2Uva2VybmVsL3NjaGVkLmM=">kernel&#x2F;sched.c<i class="fa fa-external-link-alt"></i></span>,   我们忽略掉系统调用和printk日志以及floppy之类的，只看调度部分：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> *  &#x27;schedule()&#x27; is the scheduler function. This is GOOD CODE! There</span></span><br><span class="line"><span class="comment"> * probably won&#x27;t be any reason to change this, as it should work well</span></span><br><span class="line"><span class="comment"> * in all circumstances (ie gives IO-bound processes good response etc).</span></span><br><span class="line"><span class="comment"> * The one thing you might take a look at is the signal-handler code here.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> *   NOTE!!  Task 0 is the &#x27;idle&#x27; task, which gets called when no other</span></span><br><span class="line"><span class="comment"> * tasks can run. It can not be killed, and it cannot sleep. The &#x27;state&#x27;</span></span><br><span class="line"><span class="comment"> * information in task[0] is never used.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">schedule</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">int</span> i,next,c;</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">task_struct</span> ** <span class="title">p</span>;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* check alarm, wake up any interruptible tasks that have got a signal */</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span>(p = &amp;LAST_TASK ; p &gt; &amp;FIRST_TASK ; --p)</span><br><span class="line">    <span class="keyword">if</span> (*p) &#123;</span><br><span class="line">      <span class="keyword">if</span> ((*p)-&gt;alarm &amp;&amp; (*p)-&gt;alarm &lt; jiffies) &#123;</span><br><span class="line">          (*p)-&gt;signal |= (<span class="number">1</span>&lt;&lt;(SIGALRM<span class="number">-1</span>));</span><br><span class="line">          (*p)-&gt;alarm = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">      <span class="keyword">if</span> (((*p)-&gt;signal &amp; ~(_BLOCKABLE &amp; (*p)-&gt;blocked)) &amp;&amp;</span><br><span class="line">      (*p)-&gt;state==TASK_INTERRUPTIBLE)</span><br><span class="line">        (*p)-&gt;state=TASK_RUNNING;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* this is the scheduler proper: */</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">    c = <span class="number">-1</span>;</span><br><span class="line">    next = <span class="number">0</span>;</span><br><span class="line">    i = NR_TASKS;</span><br><span class="line">    p = &amp;task[NR_TASKS];</span><br><span class="line">    <span class="keyword">while</span> (--i) &#123;</span><br><span class="line">      <span class="keyword">if</span> (!*--p)</span><br><span class="line">        <span class="keyword">continue</span>;</span><br><span class="line">      <span class="keyword">if</span> ((*p)-&gt;state == TASK_RUNNING &amp;&amp; (*p)-&gt;counter &gt; c)</span><br><span class="line">        c = (*p)-&gt;counter, next = i;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (c) <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">for</span>(p = &amp;LAST_TASK ; p &gt; &amp;FIRST_TASK ; --p)</span><br><span class="line">      <span class="keyword">if</span> (*p)</span><br><span class="line">        (*p)-&gt;counter = ((*p)-&gt;counter &gt;&gt; <span class="number">1</span>) +</span><br><span class="line">            (*p)-&gt;priority;</span><br><span class="line">  &#125;</span><br><span class="line">  switch_to(next);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>就只有这么几行。也没有nice值和多核，甚至没有生命周期，还是很容易理解的。</p>
+<p>jiffies是系统开机以来tick的次数（alarm&gt;jiffies说明过期了，重置为0）</p>
+<p>counter是时间片，单位是tick（时钟滴答），调度器根据couter大小决定优先级（couter越大优先级越高）</p>
+<p>NR_TASKS是task（进程）总数。</p>
+<p>第一个循环是检查一遍<span class="exturl" data-url="aHR0cHM6Ly9tYW43Lm9yZy9saW51eC9tYW4tcGFnZXMvbWFuMi9hbGFybS4yLmh0bWw=">alarm()<i class="fa fa-external-link-alt"></i></span>函数，唤醒任何收到alarm传来的signal的没有被阻塞的tasks，将<code>TASK_INTERRUPTIBLE</code>（挂起）改为<code>TASK_RUNNING</code>可执行。</p>
+<p>然后<code>while(1)</code> 这个死循环一直执行到关机，每次循环先<code>while (--i)</code>找出counter（时间片）最大的task。（couter越大说明）</p>
+<p><code>if (c) break;</code>和下面的这些是说如果c为0（所有进程的counter用完了），就重新分配counter。</p>
+<p>最后调用<code>switch_to(next)</code>切换进程。（切换到counter最大的一个）</p>
+<p>然后还有几个函数，是几个状态的转换，也很简单。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">sys_pause</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">  current-&gt;state = TASK_INTERRUPTIBLE;</span><br><span class="line">  schedule();</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">sleep_on</span><span class="params">(<span class="keyword">struct</span> task_struct **p)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">task_struct</span> *<span class="title">tmp</span>;</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (!p)</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  <span class="keyword">if</span> (current == &amp;(init_task.task))</span><br><span class="line">    panic(<span class="string">&quot;task[0] trying to sleep&quot;</span>);</span><br><span class="line">  tmp = *p;</span><br><span class="line">  *p = current;</span><br><span class="line">  current-&gt;state = TASK_UNINTERRUPTIBLE;</span><br><span class="line">  schedule();</span><br><span class="line">  <span class="keyword">if</span> (tmp)小</span><br><span class="line">    tmp-&gt;state=<span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">interruptible_sleep_on</span><span class="params">(<span class="keyword">struct</span> task_struct **p)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">task_struct</span> *<span class="title">tmp</span>;</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (!p)</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  <span class="keyword">if</span> (current == &amp;(init_task.task))</span><br><span class="line">    panic(<span class="string">&quot;task[0] trying to sleep&quot;</span>);</span><br><span class="line">  tmp=*p;</span><br><span class="line">  *p=current;</span><br><span class="line">repeat:  current-&gt;state = TASK_INTERRUPTIBLE;</span><br><span class="line">  schedule();</span><br><span class="line">  <span class="keyword">if</span> (*p &amp;&amp; *p != current) &#123;</span><br><span class="line">    (**p).state=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">goto</span> repeat;</span><br><span class="line">  &#125;</span><br><span class="line">  *p=<span class="literal">NULL</span>;</span><br><span class="line">  <span class="keyword">if</span> (tmp)</span><br><span class="line">    tmp-&gt;state=<span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">wake_up</span><span class="params">(<span class="keyword">struct</span> task_struct **p)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">if</span> (p &amp;&amp; *p) &#123;</span><br><span class="line">    (**p).state=<span class="number">0</span>;</span><br><span class="line">    *p=<span class="literal">NULL</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个调度器复杂度是O(n)的（复杂度没啥用，因为NR_TASKS早期特别小）。只有分配的counter值作为调度优先级</p>
+<p>0号进程的优先级是最低的（最后被调度）。在后面的调度器中0号进程根本不参与调度。</p>
+<h3 id="O-n-调度器"><a href="#O-n-调度器" class="headerlink" title="O(n)调度器"></a>O(n)调度器</h3><p>早期的调度器是和UNIX的差不多，就是O(n)调度器。</p>
+<p>O(n)调度器是用runqueue（运行队列），和初代调度器不同的是CPU每个核都有一个runqueue。</p>
+<h3 id="O-1-调度器"><a href="#O-1-调度器" class="headerlink" title="O(1)调度器"></a>O(1)调度器</h3><p>2.6版本</p>
+<p>O(1)调度器比较适合服务器，基本上做到了将I&#x2F;O利用率最大化。</p>
+<p>静态优先级（一般叫nice值）</p>
+<h3 id="CFS"><a href="#CFS" class="headerlink" title="CFS"></a>CFS</h3><p>CFS调度器（Completely Fair Scheduler），用的最广的一个（从2.6开始Linux内核主线默认就是他）。CFS的意思是完全公平调度器，完全公平是说每一个进程在一个周期时间内运行相同的时间。在一个生命周期<code>T</code>内，<code>N</code>个task占用CPU的时间均为$T&#x2F;N$</p>
+<p>CFS是一个红黑树实现的。是几种调度器中实现很复杂的一个调度器，源码在这里：<span class="exturl" data-url="aHR0cHM6Ly9lbGl4aXIuYm9vdGxpbi5jb20vbGludXgvbGF0ZXN0L3NvdXJjZS9rZXJuZWwvc2NoZWQvZmFpci5j">sched_fair.c Linux Kernel Source<i class="fa fa-external-link-alt"></i></span></p>
+<p>文档在这里：<span class="exturl" data-url="aHR0cHM6Ly93d3cua2VybmVsLm9yZy9kb2MvRG9jdW1lbnRhdGlvbi9zY2hlZHVsZXIvc2NoZWQtZGVzaWduLUNGUy50eHQ=">https://www.kernel.org/doc/Documentation/scheduler/sched-design-CFS.txt<i class="fa fa-external-link-alt"></i></span></p>
+<p>调度实体sched_entity，虚拟运行时间vruntime</p>
+<h3 id="RT调度器"><a href="#RT调度器" class="headerlink" title="RT调度器"></a>RT调度器</h3><p>实时调度器，Real Time Scheduler。一般使用优先级队列（priority queue）实现的</p>
+<p>进程根据优先级（priority）</p>
+<p>实时调度器调度的实时进程的优先级通常很高（优先级0-99，不同内核可能不太一样）</p>
+<p>非实时的进程优先级在100-139</p>
+<p>执行<code>ps</code>命令可以查看优先级，PRI这一列是优先级（priority），NI这一列是NICE值</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ps</span> -el</span><br><span class="line">F S   UID     PID    PPID  C PRI  NI ADDR SZ WCHAN  TTY          TIME CMD</span><br><span class="line">4 R     0       1       0  0  80   0 - 25249 -      ?        00:00:07 systemd</span><br><span class="line">1 S     0       2       0  0  80   0 -     0 -      ?        00:00:00 kthreadd</span><br><span class="line">1 I     0       3       2  0  60 -20 -     0 -      ?        00:00:00 rcu_gp</span><br><span class="line">1 I     0       4       2  0  60 -20 -     0 -      ?        00:00:00 rcu_par_gp</span><br><span class="line">1 I     0       6       2  0  60 -20 -     0 -      ?        00:00:00 kworker/0:0H-events_highpri</span><br><span class="line">1 I     0       8       2  0  60 -20 -     0 -      ?        00:00:00 mm_percpu_wq</span><br><span class="line">1 S     0       9       2  0  80   0 -     0 -      ?        00:00:00 rcu_tasks_rude_</span><br><span class="line">1 S     0      10       2  0  80   0 -     0 -      ?        00:00:00 rcu_tasks_trace</span><br><span class="line">1 S     0      11       2  0  80   0 -     0 -      ?        00:00:08 ksoftirqd/0</span><br><span class="line">1 I     0      12       2  0  80   0 -     0 -      ?        00:00:18 rcu_sched</span><br><span class="line">1 S     0      13       2  0 -40   - -     0 -      ?        00:00:00 migration/0</span><br><span class="line">1 S     0      14       2  0   9   - -     0 -      ?        00:00:00 idle_inject/0</span><br><span class="line">1 S     0      16       2  0  80   0 -     0 -      ?        00:00:00 cpuhp/0</span><br><span class="line">5 S     0      17       2  0  80   0 -     0 -      ?        00:00:00 cpuhp/1</span><br><span class="line">1 S     0      18       2  0   9   - -     0 -      ?        00:00:00 idle_inject/1</span><br></pre></td></tr></table></figure>
+
+<h3 id="多核"><a href="#多核" class="headerlink" title="多核"></a>多核</h3><p>CPU的每个核都有一个runqueue</p>
+<h3 id="组调度"><a href="#组调度" class="headerlink" title="组调度"></a>组调度</h3><p>本来打算先跳过这一部分的，以后写cgroup的时候再说。但是这个东西对桌面的优化很重要，比如这个很老的补丁。</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cucGhvcm9uaXguY29tL3NjYW4ucGhwP3BhZ2U9YXJ0aWNsZSZpdGVtPWxpbnV4XzI2MzdfdmlkZW8mbnVtPTE=">The ~200 Line Linux Kernel Patch That Does Wonders<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9tYXJjLmluZm8vP2w9bGludXgta2VybmVsJm09MTI4OTc4MzYxNzAwODk4Jnc9Mg==">Re: [RFC&#x2F;RFT PATCH v3] sched: automated per tty task groups<i class="fa fa-external-link-alt"></i></span> </p>
+<p>现在Linux的调度策略比较多，不同用户通过组调度进行资源的分配和隔离。说到这里你是不是想起了cgroup，对，这个东西就是用cgroup实现的。</p>
+<h3 id="其他的调度器"><a href="#其他的调度器" class="headerlink" title="其他的调度器"></a>其他的调度器</h3><p>官方不支持调度器像kernel module一样做成可插拔的，所以其他魔改的调度策略通常单独做一个内核。</p>
+<h2 id="适合桌面的进程调度"><a href="#适合桌面的进程调度" class="headerlink" title="适合桌面的进程调度"></a>适合桌面的进程调度</h2><p>Linux的一些设计和参数偏向服务器、嵌入式设备等用途，毕竟普通桌面用户的意见加起来都比不上半个红帽。<br>IO调度没关系，反正有个SSD就完全够了，用NOOP调度甚至直接不要IO调度都没关系。<br>进程调度就不太行了，默认的CFS (Completely Fair Scheduler)调度非常不适合日常桌面使用。<br>通常服务器多是I&#x2F;O密集型任务，而桌面（Desktop Enviroment，比如KDE和GNOME这种）需要快速响应（低延迟）和不断切换任务，CFS就不适合了（没法做到不断的切换优先级和抢占）。</p>
+<p>比如编译、看视频CPU硬解码、玩游戏，负载高了之后，如果用CFS调度桌面会非常卡，极大影响体验。</p>
+<p>好吧这不太符合Unix哲学，你在terminal里面用管道</p>
+<p>麻醉师Con Kolivas针对桌面系统做的BFS（后来改名叫MuQSS了）</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cubGludXgtbWFnYXppbmUuY29tL3Zhci9saW51eF9tYWdhemluL3N0b3JhZ2UvaW1hZ2VzL21lZGlhL2xpbnV4LW1hZ2F6aW5lLWVuZy11cy9pbWFnZXMvbmV3cy1pbWFnZXMvY2FydG9vbi1mZWF0dXJlcy8zNjc5MDgtMS1lbmctVVMvQ2FydG9vbi1GZWF0dXJlc19tZWRpdW0ucG5n">https://www.linux-magazine.com/var/linux_magazin/storage/images/media/linux-magazine-eng-us/images/news-images/cartoon-features/367908-1-eng-US/Cartoon-Features_medium.png<i class="fa fa-external-link-alt"></i></span></p>
+<h2 id="服务器进程调度"><a href="#服务器进程调度" class="headerlink" title="服务器进程调度"></a>服务器进程调度</h2><p>大多数服务器默认的CFS以及足够合适了。</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1RlbmNlbnQvVGVuY2VudE9TLWtlcm5lbCMlRTclQTYlQkIlRTclQkElQkYlRTglQjAlODMlRTUlQkElQTYlRTclQUUlOTclRTYlQjMlOTVidA==">https://github.com/Tencent/TencentOS-kernel#离线调度算法bt<i class="fa fa-external-link-alt"></i></span></p>
+<h2 id="更改进程调度"><a href="#更改进程调度" class="headerlink" title="更改进程调度"></a>更改进程调度</h2><h3 id="chrt更改调度策略"><a href="#chrt更改调度策略" class="headerlink" title="chrt更改调度策略"></a>chrt更改调度策略</h3><p>使用见<span class="exturl" data-url="aHR0cDovL2Jsb2cubHVqdW45OTcyLndpbi9ibG9nLzIwMTgvMDgvMjgvJUU0JUJEJUJGJUU3JTk0JUE4Y2hydCVFNCVCRiVBRSVFNiU5NCVCOSVFOCVCRiU5QiVFNyVBOCU4QiVFOCVCMCU4MyVFNSVCQSVBNiVFNyVBRCU5NiVFNyU5NSVBNSVFNSU4RiU4QSVFNCVCQyU5OCVFNSU4NSU4OCVFNyVCQSVBNy9pbmRleC5odG1s">使用chrt修改进程调度策略及优先级<i class="fa fa-external-link-alt"></i></span></p>
+<h3 id="内核选择"><a href="#内核选择" class="headerlink" title="内核选择"></a>内核选择</h3><p><em>选择非官方支持的内核请谨慎，因为可能有很多不兼容的问题。</em>没有特别需求和强迫症还是推荐使用有官方支持的内核，比如Archlinux官方源支持维护&#96;&#96;linux<code>（没啥特殊偏好就这个呗），</code>linux-lts<code>（lts版，不想天天更新内核就用这个）， </code>linux-zen<code>（跟AMD的zen关系不太大，主要是针对桌面的），</code>linux-harended&#96;（有安全加固，会牺牲一定性能）</p>
+<p><code>linux</code>这个包的调度器是CFS，大多数情况下表现都不差。（lts当然也是喽）</p>
+<p>如果你是桌面用户，对性能和延迟有需求，可以试试linux-ck、linux-zen、linux-xanmod、linux-tgk等一堆针对桌面和性能优化的内核。<code>linux-ck</code>的调度器是MuQSS。xanmod的调度器可以选cauche。</p>
+<p>我个人体验是xanmod内核的延迟最低（直接拯救了我玩空洞骑士时肉眼可见的延迟）。玩OSU音游的喜欢用linux-zen，这个包是官方维护，比较省心，xanmod延迟虽然跑分上比这个低，对延迟要求不苛刻、反应慢的，可能体验不出来太大区别。</p>
+<p>（音游在Linux上的声音延迟应该是PulseAudio的锅，但是现在Pipewire又不稳，实际效果还不如PulseAudio,等pipewire稳定下来不知道要多久，只有打点补丁才能维持的了生活的样子。感谢这位玩家给wine-osu打的补丁<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnRoZXBvb24uZnIvb3N1TGludXhBdWRpb0xhdGVuY3kv">Low-latency osu! on Linux<i class="fa fa-external-link-alt"></i></span>）<br><em>关于游戏的题外话</em><br>Archlinux可以装gamemode和performance-tweaks（这个在chaotic-aur里面）。</p>
+<p>xanmod实测见：<span class="exturl" data-url="aHR0cHM6Ly93d3cucGhvcm9uaXguY29tL3NjYW4ucGhwP3BhZ2U9YXJ0aWNsZSZpdGVtPXhhbm1vZC1saXF1b3JpeC01MTA=">XanMod’s Linux 5.10 Kernel Helping Tap Extra Performance With The AMD Ryzen 9 5900X<i class="fa fa-external-link-alt"></i></span><br>cuache相关讨论：<span class="exturl" data-url="aHR0cHM6Ly9mb3J1bS5lbmRlYXZvdXJvcy5jb20vdC9pbnRyb2R1Y2luZy10aGUtY2FjdWxlLXNjaGVkdWxlci1hLWNmcy1yZXBsYWNlbWVudC8xMzY0NA==">https://forum.endeavouros.com/t/introducing-the-cacule-scheduler-a-cfs-replacement/13644<i class="fa fa-external-link-alt"></i></span></p>
+<p>如果要用btrfs或者cgroups，请注意MuQSS兼容性不太好。</p>
+<p>Archlinux直接AUR编译就行了。不过很多人换ck内核是因为老机器性能不好，找一个编译好的源（比如repo-ck）或者在别的机子上编译一个吧。</p>
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><span class="exturl" data-url="aHR0cHM6Ly9sd24ubmV0L0FydGljbGVzLzcyMDIyNy8=">https://lwn.net/Articles/720227/<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cubGludXgtbWFnYXppbmUuY29tL09ubGluZS9OZXdzL0Nvbi1Lb2xpdmFzLUludHJvZHVjZXMtTmV3LUJGUy1TY2hlZHVsZXI=">https://www.linux-magazine.com/Online/News/Con-Kolivas-Introduces-New-BFS-Scheduler<i class="fa fa-external-link-alt"></i></span></p>
+<p>为什么Linux CFS调度器没有带来惊艳的碾压效果<br><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2RvZzI1MC9hcnRpY2xlL2RldGFpbHMvOTY1MDAxODY=">Linux桌面GUI系统的调度器应该怎么做才不卡顿呢？<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2RvZzI1MC9hcnRpY2xlL2RldGFpbHMvOTYzNjI3ODk=">为什么Windows&#x2F;iOS操作很流畅而Linux&#x2F;Android却很卡顿呢<i class="fa fa-external-link-alt"></i></span> dog250这位博主在CSDN上从2009年开始，一直在写，文章还不错（不要因为CSDN就不看啊，这是早期良心用户）。这样的稀有博主是我一直没舍得狠下心屏蔽CSDN的原因（颇有一种在垃圾坑里淘宝的感觉）</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9kcmF2ZW5lc3MubWUvc3lzdGVtLWRlc2lnbi1zY2hlZHVsZXIv">调度系统设计精要 - 面向信仰编程<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cDovL2NrLmtvbGl2YXMub3JnLw==">http://ck.kolivas.org/<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9saXF1b3JpeC5uZXQv">https://liquorix.net/<i class="fa fa-external-link-alt"></i></span> 这个内核是基于zen内核加了一些其他的补丁和改动（有ck补丁，但是没有MuQSS，原因<code>I&#39;m severely prejudiced against MuQSS, so it will continue &quot;giving a null&quot;.</code>, 见这里<span class="exturl" data-url="aHR0cHM6Ly9idWdzLmFyY2hsaW51eC5vcmcvdGFzay81NjMxMiVFRiVCQyU4OQ==">https://bugs.archlinux.org/task/56312）<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9wZW9wbGUuZWNlLnViYy5jYS9zYXNoYS9wYXBlcnMvZXVyb3N5czE2LWZpbmFsMjkucGRm">The Linux Scheduler: a Decade of Wasted Cores<i class="fa fa-external-link-alt"></i></span> 讲多核的</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmloeXBvLm5ldC8xNTI3OTU1NzcwOTY4NS5odG1s">https://blog.ihypo.net/15279557709685.html<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cDovL2xpbnV4cGVyZi5jb20vP3A9NDI=">http://linuxperf.com/?p=42<i class="fa fa-external-link-alt"></i></span></p>
+<!-- https://blog.csdn.net/XD_hebuters/article/details/79623130
+
+https://cloud.tencent.com/developer/article/1603970
+
+https://cloud.tencent.com/developer/article/1603974 -->
+
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vaGVsbG9raXR0eTIvcC8xNDE5OTc0MS5odG1s">https://www.cnblogs.com/hellokitty2/p/14199741.html<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3RoZWFuYXJraC9yZWFkLWxpbnV4LTAuMTE=">https://github.com/theanarkh/read-linux-0.11<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cDovL3d3dy53b3dvdGVjaC5uZXQvcHJvY2Vzc19tYW5hZ2VtZW50LzQ0OS5odG1s">http://www.wowotech.net/process_management/449.html<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vTG95ZW5XYW5nL3AvMTI0NTkwMDAuaHRtbA==">Linux进程调度-组调度及带宽控制<i class="fa fa-external-link-alt"></i></span></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"><i class="fa fa-tag"></i> Linux</a>
+              <a href="/tags/scheduler/" rel="tag"><i class="fa fa-tag"></i> scheduler</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/6.S081-VSCode-prepare-and-kernel-debugging/" rel="prev" title="6.S081的调试和VSCode环境配置">
+                  <i class="fa fa-angle-left"></i> 6.S081的调试和VSCode环境配置
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/early-oom-and-oomd-for-out-of-memory/" rel="next" title="Earlyoom和oomd使用，解决Linux内存耗尽的一点尝试">
+                  Earlyoom和oomd使用，解决Linux内存耗尽的一点尝试 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+      <div class="tabs tabs-comment">
+        <ul class="nav-tabs">
+            <li class="tab"><a href="#comment-utterances">utterances</a></li>
+            <li class="tab"><a href="#comment-disqusjs">Load Disqus</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane utterances" id="comment-utterances">
+              <div class="comments utterances-container"></div>
+            </div>
+            <div class="tab-pane disqusjs" id="comment-disqusjs">
+              
+  <div class="comments disqusjs-container">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+            </div>
+        </div>
+      </div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2019 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heartbeat"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">止息</span>
+  </div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FyY2hhZW9yYXB0b3I=" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@next-theme/pjax@0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://unpkg.com/hexo-generator-searchdb@1.4.1/dist/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://unpkg.com/pdfobject@2.2.12/pdfobject.min.js","integrity":"sha256-g2xji1rlE3KsGVClvuxTbcR0Kn2+wtQADSff2Tbb4zA="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="/js/third-party/tags/pdf.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://unpkg.com/mathjax@3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<link rel="stylesheet" href="https://unpkg.com/disqusjs@3.0.2/dist/browser/styles/disqusjs.css" integrity="sha256-71XarXwNr1Td27HmZI9zjY+rMzRdush6/glo6VFXp7o=" crossorigin="anonymous">
+
+<script class="next-config" data-name="disqusjs" type="application/json">{"enable":true,"api":"https://disqus.skk.moe/disqus/","apikey":"3qJ515uApWlP58gXhzPCCk3L0NlOvrMLwt5dDITBndS8fp8She7PT1gvBdDcgwrt","shortname":"arcaheoraptor","js":{"url":"https://unpkg.com/disqusjs@3.0.2/dist/browser/disqusjs.es2015.umd.min.js","integrity":"sha256-okP99ZQKVpIy7+NogAMpGlIQzJa9XKXhIJcFgdju5bU="}}</script>
+<script src="/js/third-party/comments/disqusjs.js"></script>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"Archaeoraptor/archaeoraptor.github.io","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

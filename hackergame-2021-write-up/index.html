@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/uploads/wizard-hat-16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/uploads/wizard-hat-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/uploads/wizard-hat-16.png">
+  <link rel="mask-icon" href="/uploads/wizard-hat-32.png" color="#222">
+  <meta name="google-site-verification" content="4Rj54anORAwcoMXLe3miFnoH78ZtUZfdamS--ffoxVE">
+  <meta name="msvalidate.01" content="872DC4637276109A6B54FF149DCABA8A">
+  <meta name="yandex-verification" content="0d554b4a05a80f0d">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhangjk98.xyz","root":"/","images":"/images","scheme":"Pisces","darkmode":"auto","version":"8.19.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqusjs","storage":true,"lazyload":false,"nav":{"disqusjs":{"text":"Load Disqus","order":-1},"utterances":{"order":-2}},"activeClass":"disqusjs"},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"none","post_header":"none","post_body":"none","coll_header":"none","sidebar":"none"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="吃瓜群众第一次参赛，从LUG过来的，打酱油路过，没学过信安和密码学，然而很遗憾，跟Linux有关的那几个题全都没做出来。。。。很意外自己能挤进200名的，事前完全没有准备，也没接触过CTF之类的东西，甚至比赛开始3天，进行到一半了我才突然发现这比赛它已经开始了，如果早知道 p😭q对，今年这个Hackergame就是UTF-8比赛，对萌新可友好了（确信">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hackergame 2021 (中科大信安赛) Write Up">
+<meta property="og:url" content="https://zhangjk98.xyz/hackergame-2021-write-up/index.html">
+<meta property="og:site_name" content="止息&#39;幻想乡">
+<meta property="og:description" content="吃瓜群众第一次参赛，从LUG过来的，打酱油路过，没学过信安和密码学，然而很遗憾，跟Linux有关的那几个题全都没做出来。。。。很意外自己能挤进200名的，事前完全没有准备，也没接触过CTF之类的东西，甚至比赛开始3天，进行到一半了我才突然发现这比赛它已经开始了，如果早知道 p😭q对，今年这个Hackergame就是UTF-8比赛，对萌新可友好了（确信">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://zhangjk98.xyz/hackergame-2021-write-up/image-20211030121230343.png">
+<meta property="og:image" content="https://zhangjk98.xyz/hackergame-2021-write-up/image-20211026131723641-16352255218271.png">
+<meta property="article:published_time" content="2021-10-30T04:00:01.000Z">
+<meta property="article:author" content="zhixi">
+<meta property="article:tag" content="hackergame">
+<meta property="article:tag" content="UTF-8">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zhangjk98.xyz/hackergame-2021-write-up/image-20211030121230343.png">
+
+
+<link rel="canonical" href="https://zhangjk98.xyz/hackergame-2021-write-up/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zhangjk98.xyz/hackergame-2021-write-up/","path":"hackergame-2021-write-up/","title":"Hackergame 2021 (中科大信安赛) Write Up"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Hackergame 2021 (中科大信安赛) Write Up | 止息'幻想乡</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143393734-1"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-143393734-1","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="止息'幻想乡" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">止息'幻想乡</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">风雪夜归人</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%81%9A%E5%87%BA%E4%BA%86%E6%9D%A5%E7%9A%84%E7%9A%84%E5%B0%8F%E9%A2%98%E7%9B%AE"><span class="nav-number">1.</span> <span class="nav-text">做出了来的的小题目</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%BE%E5%88%B0%E9%A2%98"><span class="nav-number">1.1.</span> <span class="nav-text">签到题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E5%88%B6%E5%8D%81%E5%85%AD%E2%80%94%E2%80%94%E5%8F%82%E4%B8%8A"><span class="nav-number">1.2.</span> <span class="nav-text">进制十六——参上</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%96%E7%93%9C"><span class="nav-number">1.3.</span> <span class="nav-text">卖瓜</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%85%E8%A1%8C%E7%85%A7%E7%89%87"><span class="nav-number">1.4.</span> <span class="nav-text">旅行照片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%BB%E5%90%A7%EF%BC%81%E8%BF%BD%E5%AF%BB%E8%87%AA%E7%94%B1%E7%9A%84%E7%94%B5%E6%B3%A2"><span class="nav-number">1.5.</span> <span class="nav-text">去吧！追寻自由的电波</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%96%B5%E5%92%AA%E9%97%AE%E7%AD%94-Pro-Max"><span class="nav-number">1.6.</span> <span class="nav-text">喵咪问答 Pro Max</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%E4%B9%8B%E4%B8%8A%E7%9A%84%E4%BF%A1%E6%81%AF"><span class="nav-number">1.7.</span> <span class="nav-text">图之上的信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Amnesia-%E8%BD%BB%E5%BA%A6%E5%A4%B1%E5%BF%86%EF%BC%88%E7%AC%AC%E4%B8%80%E4%B8%AAflag%EF%BC%89"><span class="nav-number">1.8.</span> <span class="nav-text">Amnesia 轻度失忆（第一个flag）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B5%9B%E5%8D%9A%E5%8E%A8%E6%88%BF"><span class="nav-number">1.9.</span> <span class="nav-text">赛博厨房</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#p%F0%9F%98%ADq"><span class="nav-number">1.10.</span> <span class="nav-text">p😭q</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9C%8B%E8%B5%B7%E6%9D%A5%E6%9C%89%E7%82%B9%E5%A4%B4%E7%BB%AA%E4%BD%86%E6%98%AF%E6%B2%A1%E5%81%9A%E7%9A%84%E9%A2%98%E7%9B%AE"><span class="nav-number">2.</span> <span class="nav-text">看起来有点头绪但是没做的题目</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Easy-RSA"><span class="nav-number">2.1.</span> <span class="nav-text">Easy RSA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8B%BC%E5%A4%9A%E5%A4%9A%E7%A0%8D%E4%B8%80%E5%88%80"><span class="nav-number">2.2.</span> <span class="nav-text">拼多多砍一刀</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#minecraft"><span class="nav-number">2.3.</span> <span class="nav-text">minecraft</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E7%BB%B4%E7%A0%81"><span class="nav-number">2.4.</span> <span class="nav-text">二维码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A5%E4%B8%BA%E4%BC%9A%E5%81%9A%E7%84%B6%E8%80%8C%E8%A2%AB%E4%B9%B1%E6%9D%80%E5%88%B0%E6%80%80%E7%96%91%E4%BA%BA%E7%94%9F%E7%9A%84%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">以为会做然而被乱杀到怀疑人生的题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Amnsia%E8%AE%B0%E5%BF%86%E6%B8%85%E9%99%A4"><span class="nav-number">3.1.</span> <span class="nav-text">Amnsia记忆清除</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LUKS"><span class="nav-number">3.2.</span> <span class="nav-text">LUKS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RAID%E4%BF%AE%E5%A4%8D"><span class="nav-number">3.3.</span> <span class="nav-text">RAID修复</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B5%9B%E5%8D%9A%E5%8E%A8%E6%88%BF%E5%90%8E%E4%B8%A4%E9%97%AE"><span class="nav-number">3.4.</span> <span class="nav-text">赛博厨房后两问</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">小结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="zhixi"
+      src="/uploads/jinmao.webp">
+  <p class="site-author-name" itemprop="name">zhixi</p>
+  <div class="site-description" itemprop="description">in darkest night</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">91</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FyY2hhZW9yYXB0b3I=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;archaeoraptor"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOnpoaXhpQHVlc3RjbHVnLm9yZw==" title="E-Mail → mailto:zhixi@uestclug.org"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml" rel="noopener me"><i class="fa fa-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><img src="https://unpkg.com/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly96aGFuZ3NodXFpYW8ub3Jn" title="https:&#x2F;&#x2F;zhangshuqiao.org">米米的博客</span>
+            </li>
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly95YW5xaXl1LmluZm8=" title="https:&#x2F;&#x2F;yanqiyu.info">Karuboniru's Blog</span>
+            </li>
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnNhbWNodS5jbg==" title="https:&#x2F;&#x2F;blog.samchu.cn">Sam's Blog</span>
+            </li>
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly9seWstbG92ZS5jbi8=" title="https:&#x2F;&#x2F;lyk-love.cn&#x2F;">LYK-love</span>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zhangjk98.xyz/hackergame-2021-write-up/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/jinmao.webp">
+      <meta itemprop="name" content="zhixi">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="止息'幻想乡">
+      <meta itemprop="description" content="in darkest night">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Hackergame 2021 (中科大信安赛) Write Up | 止息'幻想乡">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Hackergame 2021 (中科大信安赛) Write Up
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-10-30 12:00:01" itemprop="dateCreated datePublished" datetime="2021-10-30T12:00:01+08:00">2021-10-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E4%B8%8D%E5%8A%A1%E6%AD%A3%E4%B8%9A%E7%B3%BB%E5%88%97/" itemprop="url" rel="index"><span itemprop="name">不务正业系列</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>吃瓜群众第一次参赛，从LUG过来的，打酱油路过，没学过信安和密码学，然而很遗憾，跟Linux有关的那几个题全都没做出来。。。。<br>很意外自己能挤进200名的，事前完全没有准备，也没接触过CTF之类的东西，甚至比赛开始3天，进行到一半了我才突然发现这比赛它已经开始了，如果早知道 p😭q<br>对，今年这个Hackergame就是UTF-8比赛，对萌新可友好了（确信  </p>
+<span id="more"></span>
+
+<p>周二还在想今年中科大信安赛是不是要开始了，结果一看已经进行一半了，来划个水吧。由于太菜加上懒，math零蛋，只能流下数理基础不扎实的泪水p😭q 。 </p>
+<p>作为一个纯萌新和老废物，第一次参加Hackergame，以前看到他们中科大LUG办的，就想着下次举办去参加一下玩。以前看到好多Web题和有意思的小题目，虽然我js也特别菜，好歹还能挣扎一下。结果几年一打开就是一堆binary糊脸，二进制和逆向pwm之类的完全不懂，罢了，就做点General吧。</p>
+<p>结果？？？？进前200了？</p>
+<p><img src="/hackergame-2021-write-up/image-20211030121230343.png" alt="image-20211030121230343"></p>
+<p>看来Hackergame真的是萌新友好，明年一定再来玩。</p>
+<h2 id="做出了来的的小题目"><a href="#做出了来的的小题目" class="headerlink" title="做出了来的的小题目"></a>做出了来的的小题目</h2><p>还是有不少对我很友好的题目的</p>
+<h3 id="签到题"><a href="#签到题" class="headerlink" title="签到题"></a>签到题</h3><blockquote>
+<p>为了能让大家顺利签到，命题组把每一秒的 flag 都记录下来制成了日记本的一页。你只需要打开日记，翻到 Hackergame 2021 比赛进行期间的任何一页就能得到 flag！</p>
+</blockquote>
+<p>打开题目，秒是从1970年开始计算的，这就是UNIX时间戳呗。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">date</span> +%s</span><br></pre></td></tr></table></figure>
+
+<p>得到<code>1635213339</code>，修改URL后缀，得到<code>flag&#123;HappyHacking2021-b0e5f6c9af&#125;</code>签到成功</p>
+<h3 id="进制十六——参上"><a href="#进制十六——参上" class="headerlink" title="进制十六——参上"></a>进制十六——参上</h3><p>首先我们OCR识别一下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">456163682068657861646563696D616C</span><br><span class="line">20646967697420726570726573656E74</span><br><span class="line">7320666F75722062697473202862696E</span><br><span class="line">61727920646967697473292C20616C73</span><br><span class="line">6F206B6E6F776E2061732061206E6962</span><br><span class="line">626C6520286F72206E7962626C65292C</span><br><span class="line">20776869636820697320312F32206F66</span><br><span class="line">206120627974652E20666C61677B5930</span><br><span class="line">555F5348305531445F6B6E30775F4830</span><br><span class="line">575F74305F43306E763372745F484558</span><br><span class="line">5F746F5F546578547D20466F72206578</span><br><span class="line">616D706C652C20612073696E676C6520</span><br><span class="line">627974652063616E2068617665207661</span><br><span class="line">6C7565732072616E67696E672066726F</span><br><span class="line">6D20303030303030303020746F203131</span><br><span class="line">31313131313120696E2062696E617279</span><br><span class="line">20666F726D2C2077686963682063616E</span><br><span class="line">20626520636F6E76656E69656E746C79</span><br><span class="line">20726570726573656E74656420617320</span><br><span class="line">303020746F20464620696E2068657861</span><br><span class="line">646563696D616C2E0000000000000000</span><br><span class="line">00000000000000000000000000000000</span><br></pre></td></tr></table></figure>
+
+<p>这个好办，打开Bless Hex Editor之类的Hex编辑器, flag的16进制是<code>66 6C 61 67</code>, 找到相应位置，得到flag为<code>flag&#123;Y0U_SH0U1D_kn0w_H0W_t0_C0nv3rt_HEX_to_TexT&#125;</code></p>
+<h3 id="卖瓜"><a href="#卖瓜" class="headerlink" title="卖瓜"></a>卖瓜</h3><p>F12想直接修改放瓜数量为负是不可以的，我们没有办法放上一个负数或者小数的瓜</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;p&gt;放上 6 斤的瓜 &lt;input type=&quot;number&quot; class=&quot;number&quot; name=&quot;b6&quot; value=&quot;0&quot; min=&quot;0&quot;&gt; 个&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+
+<p>然后开始填一个很大的数尝试溢出，果然。</p>
+<p><img src="/hackergame-2021-write-up/image-20211026131723641-16352255218271.png" alt="image-20211026131723641"></p>
+<p>然后就是打开WolframAlpha, 一边算一边试，试出了一个正好二十。</p>
+<h3 id="旅行照片"><a href="#旅行照片" class="headerlink" title="旅行照片"></a>旅行照片</h3><p>一开始没什么头绪，但是看到左下角那个彩色方块的小房子实在是太显眼了，可能是什么地标建筑。我们以图搜图找一下呗。</p>
+<p>Google搜图没有结果，TineEye也没有。算了算了，打开我最讨厌的百度（毕竟这可能是一个国内的位置）</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9ncmFwaC5iYWlkdS5jb20vcGNwYWdlL3NpbWlsYXI/b3JpZ2luU2lnbj0xMjZjMGQ1YjgyZjIzMmYzMDY5YjkwMTYzNTMxMTc1OSZzcmNwPWNyc19wY19zaW1pbGFyJnRuPXBjJmlkY3RhZz1neiZzaWRzPTEwMDA3XzEwNTEyXzEwNTIxXzEwOTE0XzEwOTEzXzExMDA2XzEwOTI0XzEwOTA1XzEwMDE4XzEwOTAxXzEwOTQyXzEwOTA3XzExMDEyXzEwOTcwXzEwOTY4XzEwOTc0XzExMDMyXzE3ODUxXzE3MDcwXzE4MDEzXzE4MTAxXzE3MjAwXzE3MjAyXzE4MzAxXzE4MzExXzE4MzMwXzE5MzAwXzE5MTkxXzE5MTYyXzE5MjIwXzE5MjEwXzE5MjEyXzE5MjE0XzE5MjE3XzE5MjE5XzE5MjU2XzE5MjMwXzE5MjY4XzE5MjgwXzE5NTUwXzE5NjcwXzEwMDAwJmxvZ2lkPTI0Mzg0MjcwMDgmZW50cmFuY2U9Z2VuZXJhbCZ0cGxfZnJvbT1wYyZwYWdlRnJvbT1ncmFwaF91cGxvYWRfcGNzaGl0dSZpbWFnZT1odHRwOi8vaW1nMS5iYWlkdS5jb20vaXQvdT0zODI1MzQwMjIwLDkyNzYwNTA0NiZmbT0yNTMmYXBwPTEzOCZmPUpQRUc/dz02NDAmaD00ODAmY2Fyb3VzZWw9NTAzJmluZGV4PTEmcGFnZT0xJnNoaXR1VG9rZW49YzkyM2Qz">百度搜图的结果<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9ncmFwaC5iYWlkdS5jb20vcGNwYWdlL3NpbWlsYXI/b3JpZ2luU2lnbj0xMjZjMGQ1YjgyZjIzMmYzMDY5YjkwMTYzNTMxMTc1OSZzcmNwPWNyc19wY19zaW1pbGFyJnRuPXBjJmlkY3RhZz1neiZzaWRzPTEwMDA3XzEwNTEyXzEwNTIxXzEwOTE0XzEwOTEzXzExMDA2XzEwOTI0XzEwOTA1XzEwMDE4XzEwOTAxXzEwOTQyXzEwOTA3XzExMDEyXzEwOTcwXzEwOTY4XzEwOTc0XzExMDMyXzE3ODUxXzE3MDcwXzE4MDEzXzE4MTAxXzE3MjAwXzE3MjAyXzE4MzAxXzE4MzExXzE4MzMwXzE5MzAwXzE5MTkxXzE5MTYyXzE5MjIwXzE5MjEwXzE5MjEyXzE5MjE0XzE5MjE3XzE5MjE5XzE5MjU2XzE5MjMwXzE5MjY4XzE5MjgwXzE5NTUwXzE5NjcwXzEwMDAwJmxvZ2lkPTI0Mzg0MjcwMDgmZW50cmFuY2U9Z2VuZXJhbCZ0cGxfZnJvbT1wYyZwYWdlRnJvbT1ncmFwaF91cGxvYWRfcGNzaGl0dSZpbWFnZT1odHRwOi8vaW1nMi5iYWlkdS5jb20vaXQvdT0zMjUxMjkwNzY1LDE0NjUyMzc0ODkmZm09MjUzJmFwcD0xMzgmZj1KUEVHP3c9MjQ5Jmg9MjQ5JmNhcm91c2VsPTUwMyZpbmRleD01JnBhZ2U9MSZzaGl0dVRva2VuPTlkMDk3OA==">百度搜图的结果<i class="fa fa-external-link-alt"></i></span></p>
+<p>搜到了，是秦皇岛西浴场。这个彩色方块的小房子是海边的救助亭。</p>
+<p>秦皇岛西沙滩，附近有酒店和KFC，而且旁边就是海，应该就是这里了。</p>
+<p>旁边甚至还有一个停车场。和一个秦皇岛国际大酒店（最后根据位置发现酒店应该不是这个）</p>
+<p>然后查找一下周围的KFC（这种事情应该让馒狗来），果不其然有一个网红Tiffany KFC,一群人在小红书打卡。</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cueGlhb2hvbmdzaHUuY29tL2Rpc2NvdmVyeS9pdGVtLzVlOTZjOTE5MDAwMDAwMDAwMTAwNTdjMQ==">https://www.xiaohongshu.com/discovery/item/5e96c91900000000010057c1<i class="fa fa-external-link-alt"></i></span></p>
+<p>高德地图上可以找到电话：0335-7168800</p>
+<p>大众点评的照片上可以看到左侧建筑的三个字为：<strong>海豚馆</strong></p>
+<p><span class="exturl" data-url="aHR0cDovL3d3dy5kaWFucGluZy5jb20vc2hvcC8yNDQzNDA4Nw==">http://www.dianping.com/shop/24434087<i class="fa fa-external-link-alt"></i></span></p>
+<p>从地图上看可能是东南方向，从阳光照射方向看可能是傍晚。</p>
+<p>然后就剩下了楼层数，大概有15、16层左右的样子，随便试几个。结果是16，好的，得到flag</p>
+<h3 id="去吧！追寻自由的电波"><a href="#去吧！追寻自由的电波" class="headerlink" title="去吧！追寻自由的电波"></a>去吧！追寻自由的电波</h3><p>这个是我精通八门乐器的校艺术团室友秒掉的，听了一遍就说修改采样率（大概从48000调到了18000的样子），就可以听到正常的声音了。<br>是一串北约音标字母。</p>
+<p>真好，虽然找不到中科大少年班的神通口算口算RSA，但是我有精通乐理的室友。</p>
+<h3 id="喵咪问答-Pro-Max"><a href="#喵咪问答-Pro-Max" class="headerlink" title="喵咪问答 Pro Max"></a>喵咪问答 Pro Max</h3><p>这个没啥好说的，Google搜就完事了（已经关闭的网站看Web Archive的快照就好了）</p>
+<p>report地址是<code>/dev/null</code>可还行</p>
+<h3 id="图之上的信息"><a href="#图之上的信息" class="headerlink" title="图之上的信息"></a>图之上的信息</h3><p>graphql查询，这个也比较简单，没做什么严格的限制去卡你，直接查就完事了</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    user(id<span class="punctuation">:</span><span class="number">1</span>)<span class="punctuation">&#123;</span></span><br><span class="line">        username</span><br><span class="line">        privateEmail</span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>url接口是<code>/graphql?query=&#123;.....&#125;</code>, 会得到一个：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;data&quot;</span><span class="punctuation">:</span><span class="punctuation">&#123;</span><span class="attr">&quot;user&quot;</span><span class="punctuation">:</span><span class="punctuation">&#123;</span><span class="attr">&quot;username&quot;</span><span class="punctuation">:</span><span class="string">&quot;admin&quot;</span><span class="punctuation">,</span><span class="attr">&quot;privateEmail&quot;</span><span class="punctuation">:</span><span class="string">&quot;flag&#123;dont_let_graphql_l3ak_data_dad4053dd4@hackergame.ustc&#125;&quot;</span><span class="punctuation">&#125;</span><span class="punctuation">&#125;</span><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>收工。。。</p>
+<h3 id="Amnesia-轻度失忆（第一个flag）"><a href="#Amnesia-轻度失忆（第一个flag）" class="headerlink" title="Amnesia 轻度失忆（第一个flag）"></a>Amnesia 轻度失忆（第一个flag）</h3><blockquote>
+<p>编译后 ELF 文件的 .data 和 .rodata 段会被清零。</p>
+</blockquote>
+<p>唯一整出来的binary题目（避免了binary和math双双爆零的惨状），虽然这个好像也不算binary，更像是在考我编译原理。使劲浑身解数。。。。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;malloc.h&gt;</span></span></span><br><span class="line"><span class="type">char</span> * hello;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    hello = (<span class="type">char</span>*)<span class="built_in">malloc</span>(<span class="number">13</span>);</span><br><span class="line">    hello[<span class="number">0</span>] = <span class="string">&#x27;H&#x27;</span>;</span><br><span class="line">    hello[<span class="number">1</span>] = <span class="string">&#x27;e&#x27;</span>;</span><br><span class="line">    hello[<span class="number">2</span>] = <span class="string">&#x27;l&#x27;</span>;</span><br><span class="line">    hello[<span class="number">3</span>] = <span class="string">&#x27;l&#x27;</span>;</span><br><span class="line">    hello[<span class="number">4</span>] = <span class="string">&#x27;o&#x27;</span>;</span><br><span class="line">    hello[<span class="number">5</span>] = <span class="string">&#x27;,&#x27;</span>;</span><br><span class="line">    hello[<span class="number">6</span>] = <span class="string">&#x27; &#x27;</span>;</span><br><span class="line">    hello[<span class="number">7</span>] = <span class="string">&#x27;w&#x27;</span>;</span><br><span class="line">    hello[<span class="number">8</span>] = <span class="string">&#x27;o&#x27;</span>;</span><br><span class="line">    hello[<span class="number">9</span>] = <span class="string">&#x27;r&#x27;</span>;</span><br><span class="line">    hello[<span class="number">10</span>] = <span class="string">&#x27;l&#x27;</span>;</span><br><span class="line">    hello[<span class="number">11</span>] = <span class="string">&#x27;d&#x27;</span>;</span><br><span class="line">    hello[<span class="number">12</span>] = <span class="string">&#x27;!&#x27;</span>;</span><br><span class="line">    <span class="keyword">asm</span> <span class="title function_">volatile</span> <span class="params">(</span></span><br><span class="line"><span class="params">    <span class="string">&quot;mov $4,%eax;&quot;</span></span></span><br><span class="line"><span class="params">    <span class="string">&quot;mov $1,%ebx;&quot;</span></span></span><br><span class="line"><span class="params">    <span class="string">&quot;mov hello ,%ecx;&quot;</span></span></span><br><span class="line"><span class="params">    <span class="string">&quot;mov $13,%edx;&quot;</span></span></span><br><span class="line"><span class="params">    <span class="string">&quot;int $0x80&quot;</span></span></span><br><span class="line"><span class="params">    )</span>;</span><br><span class="line">    <span class="comment">//free(hello);</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>有个小问题是它会内存泄漏，但是想不出什么更好的解答了。</p>
+<h3 id="赛博厨房"><a href="#赛博厨房" class="headerlink" title="赛博厨房"></a>赛博厨房</h3><p>level0 简单，level1 也简单，就是实现一个循环呗。</p>
+<p>剩下两个给我整不会了，人都傻了。</p>
+<h3 id="p😭q"><a href="#p😭q" class="headerlink" title="p😭q"></a>p😭q</h3><p>我也不知道这道题何德何能排在倒数第三个，甚至还有400分的分值。在学了信号与系统、数字信号处理、数字图像处理、生物医学信号处理的我看来，这应该属于送分题。（不过之前都是用matlab做的，python的库都没用过）</p>
+<p>先将gif每一帧转成图像再转成numpy的array再转成一维数组得到功率谱，傅立叶反变换回去得到音频信号……</p>
+<p>等等。。。。它只有功率谱的幅度没有相位信息我可怎么恢复。难道要我猜一个相位吗？</p>
+<p>搜了一下librosa，有一个自带的恢复库，用的是一个迭代估计的算法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image, ImageSequence</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> librosa</span><br><span class="line"><span class="keyword">import</span> soundfile <span class="keyword">as</span> sf</span><br><span class="line"></span><br><span class="line">sample_rate = <span class="number">22050</span></span><br><span class="line">num_freqs = <span class="number">32</span></span><br><span class="line">quantize = <span class="number">2</span></span><br><span class="line">min_db = -<span class="number">60</span></span><br><span class="line">max_db = <span class="number">30</span></span><br><span class="line">fft_window_size = <span class="number">2048</span></span><br><span class="line">frame_step_size = <span class="number">512</span></span><br><span class="line">window_function_type = <span class="string">&#x27;hann&#x27;</span></span><br><span class="line"></span><br><span class="line">im = Image.<span class="built_in">open</span>(<span class="string">&#x27;flag.gif&#x27;</span>)</span><br><span class="line"><span class="built_in">iter</span> = ImageSequence.Iterator(im)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">index = <span class="number">1</span></span><br><span class="line">spec = np.zeros(<span class="number">32</span>, dtype=<span class="built_in">int</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> frame <span class="keyword">in</span> <span class="built_in">iter</span>:</span><br><span class="line">    <span class="comment"># print(&quot;image %d: mode %s, size %s&quot; % (index, frame.mode, frame.size))</span></span><br><span class="line">    frame.save(<span class="string">&quot;./imgs/frame%d.png&quot;</span> % index)</span><br><span class="line">    index += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    image_arr = np.array(frame, dtype=<span class="built_in">int</span>)</span><br><span class="line"></span><br><span class="line">    image_list = np.<span class="built_in">sum</span>(image_arr, axis=<span class="number">0</span>)</span><br><span class="line">    <span class="comment"># print(image_list)</span></span><br><span class="line"></span><br><span class="line">    image_list = image_list[<span class="number">3</span>::<span class="number">4</span>]</span><br><span class="line">    <span class="comment"># print(image_list)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># print(image_list.shape)</span></span><br><span class="line">    spec = np.vstack((spec, image_list))</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(spec)</span><br><span class="line"></span><br><span class="line">np.savetxt(<span class="string">&#x27;output1.txt&#x27;</span>, spec, fmt=<span class="string">&quot;%d&quot;</span>)</span><br><span class="line"></span><br><span class="line">spec = np.delete(spec, <span class="number">1</span>, <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">melspectrogram = librosa.db_to_power(spec.T/<span class="number">2</span>) * <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># print(melspectrogram.shape)</span></span><br><span class="line"></span><br><span class="line">audio_signal = librosa.feature.inverse.mel_to_audio(</span><br><span class="line">    melspectrogram,</span><br><span class="line">    n_iter=<span class="number">32</span>,</span><br><span class="line">    sr=sample_rate,</span><br><span class="line">    n_fft=fft_window_size,</span><br><span class="line">    hop_length=frame_step_size,</span><br><span class="line">    window=window_function_type</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># print(audio_signal, audio_signal.shape)</span></span><br><span class="line">sf.write(<span class="string">&#x27;test.wav&#x27;</span>, audio_signal, sample_rate)</span><br></pre></td></tr></table></figure>
+
+<p>好的，秒了。（怎么有种回到本科写课堂作业的感觉）</p>
+<p>声音是有了，但是这个相位好像还是不太对的样子。我超，回声不绝于耳。。。</p>
+<p>调一下参数，让他多迭代几轮<code>n_iter=8192,</code>，行了，现在清晰度有个高中大喇叭放英语早读听力的样子。</p>
+<p><strong>衬衫的价格是九磅十五便士，现在你有十秒钟时间，将Flag填到输入框上</strong>…….</p>
+<h2 id="看起来有点头绪但是没做的题目"><a href="#看起来有点头绪但是没做的题目" class="headerlink" title="看起来有点头绪但是没做的题目"></a>看起来有点头绪但是没做的题目</h2><p>懒癌又犯了，周六休息一会，周五天气太好了，还有其他事情要做，算了</p>
+<h3 id="Easy-RSA"><a href="#Easy-RSA" class="headerlink" title="Easy RSA"></a>Easy RSA</h3><p>由于我找不到中科大少年班的神通，而我自己的数论还停留在高中水平（当年数竞还过了校队选拔，然后上来就听了好几节数论和组合，直接退出了（后悔，现在就是非常后悔））</p>
+<p>只能找山大网安的大二学弟来帮帮我看看这个密码学的问题，问问这种形式该怎么解(已知n, p, q, c)</p>
+<p>$$<br>a^n mod(p*q) &#x3D; c<br>$$</p>
+<p>他当场就给我秒了，还随手写了3页。</p>
+<p>然后问题是怎么跑出这个p来，这次学弟也没什么好办法了</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">get_p</span>():</span><br><span class="line">    x = <span class="number">11124440021748127159092076861405454814981575144744508857178576572929321435002942998531420985771090167262256877805902135304112271641074498386662361391760451</span></span><br><span class="line">    y = <span class="number">11124440021748127159092076861405454814981575144744508857178576572929321435002942998531420985771090167262256877805902135304112271641074498386662361391661439</span></span><br><span class="line">    value_p = sympy.nextprime((math.factorial(y)) %</span><br><span class="line">                              x)  <span class="comment"># Hint：这里直接计算会溢出，请你仔细观察 x 和 y 的特征</span></span><br><span class="line">    <span class="keyword">return</span> value_p</span><br></pre></td></tr></table></figure>
+
+<p>一开始我是这样跑的：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">x = <span class="number">11124440021748127159092076861405454814981575144744508857178576572929321435002942998531420985771090167262256877805902135304112271641074498386662361391760451</span></span><br><span class="line">y = <span class="number">11124440021748127159092076861405454814981575144744508857178576572929321435002942998531420985771090167262256877805902135304112271641074498386662361391661439</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">sum</span> = <span class="number">1</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, y+<span class="number">1</span>):</span><br><span class="line">    <span class="built_in">sum</span> = (<span class="built_in">sum</span>*i) % x</span><br><span class="line">    <span class="comment"># print(sum)</span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">sum</span> == <span class="number">0</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;sum的值是&quot;</span>, <span class="built_in">sum</span>)</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;sum的值是&quot;</span>, <span class="built_in">sum</span>)</span><br></pre></td></tr></table></figure>
+
+<p>结果一跑就是一天，看到我的5600g只有1个CPU在跑，我决定整个multiprocessing（本来想用Golang整一个，但是Golang的数值计算库不太行，还得去用那个难用的<code>math/big</code>包）</p>
+<p>结果再次发现，甚至上了multiprocessing，反而更慢了。</p>
+<p>于是我决定搜一下，结果就找到了这个网站的两种算法：<span class="exturl" data-url="aHR0cHM6Ly93d3cuZ2Vla3Nmb3JnZWVrcy5vcmcvY29tcHV0ZS1uLXVuZGVyLW1vZHVsby1wLw==">Compute n! under modulo p<i class="fa fa-external-link-alt"></i></span></p>
+<p>哦，有个复杂度$O((p-n)*Logn)$的算法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Python3 program to comput</span></span><br><span class="line"><span class="comment"># n! % p using Wilson&#x27;s Theorem</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Utility function to do modular</span></span><br><span class="line"><span class="comment"># exponentiation. It returns (x^y) % p</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">power</span>(<span class="params">x, y, p</span>):</span><br><span class="line"></span><br><span class="line">    res = <span class="number">1</span>  <span class="comment"># Initialize result</span></span><br><span class="line">    x = x % p  <span class="comment"># Update x if it is more</span></span><br><span class="line">    <span class="comment"># than or equal to p</span></span><br><span class="line">    <span class="keyword">while</span> (y &gt; <span class="number">0</span>):</span><br><span class="line"></span><br><span class="line">        <span class="comment"># If y is odd, multiply</span></span><br><span class="line">        <span class="comment"># x with result</span></span><br><span class="line">        <span class="keyword">if</span> (y &amp; <span class="number">1</span>):</span><br><span class="line">            res = (res * x) % p</span><br><span class="line"></span><br><span class="line">        <span class="comment"># y must be even now</span></span><br><span class="line">        y = y &gt;&gt; <span class="number">1</span>  <span class="comment"># y = y/2</span></span><br><span class="line">        x = (x * x) % p</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> res</span><br><span class="line"></span><br><span class="line"><span class="comment"># Function to find modular inverse</span></span><br><span class="line"><span class="comment"># of a under modulo p using Fermat&#x27;s</span></span><br><span class="line"><span class="comment"># method. Assumption: p is prime</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">modInverse</span>(<span class="params">a, p</span>):</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> power(a, p - <span class="number">2</span>, p)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Returns n! % p using</span></span><br><span class="line"><span class="comment"># Wilson&#x27;s Theorem</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">modFact</span>(<span class="params">n, p</span>):</span><br><span class="line"></span><br><span class="line">    <span class="comment"># n! % p is 0 if n &gt;= p</span></span><br><span class="line">    <span class="keyword">if</span> (p &lt;= n):</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Initialize result as (p-1)!</span></span><br><span class="line">    <span class="comment"># which is -1 or (p-1)</span></span><br><span class="line">    res = (p - <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Multiply modulo inverse of</span></span><br><span class="line">    <span class="comment"># all numbers from (n+1) to p</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n + <span class="number">1</span>, p):</span><br><span class="line">        res = (res * modInverse(i, p)) % p</span><br><span class="line">    <span class="keyword">return</span> res</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Driver code</span></span><br><span class="line"></span><br><span class="line">x = <span class="number">11124440021748127159092076861405454814981575144744508857178576572929321435002942998531420985771090167262256877805902135304112271641074498386662361391760451</span></span><br><span class="line">y = <span class="number">11124440021748127159092076861405454814981575144744508857178576572929321435002942998531420985771090167262256877805902135304112271641074498386662361391661439</span></span><br><span class="line"><span class="comment"># y = 10</span></span><br><span class="line"></span><br><span class="line">n = y</span><br><span class="line">p = x</span><br><span class="line"><span class="built_in">print</span>(modFact(n, p))</span><br><span class="line"></span><br><span class="line"><span class="comment"># This code is contributed by ihritik</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>只用了1分钟</strong>就跑了出来。这算法好强！</p>
+<p>我把这个做法发给学弟，学弟表示：</p>
+<p>“可以，回头我看看”<br>“<strong>我比较关心这个是怎么构造出来和怎么证明的</strong>”<br>“<strong>初等数论比较巧妙</strong>”<br>“<strong>可以看一下</strong>”  </p>
+<p>听完学弟的话，接下来的内容我不太想做了。<br>我这样数理基础不扎实的菜狗（尤其是数论，一窍不通），做出来也<strong>改变不了我是个数论白痴的事实</strong>。都是些trival的东西了，<strong>有这个时间折腾这些应该去系统的补习一下数论</strong>。</p>
+<h3 id="拼多多砍一刀"><a href="#拼多多砍一刀" class="headerlink" title="拼多多砍一刀"></a>拼多多砍一刀</h3><p>FLAG 助力大红包，这个东西应该挂一个爬虫代理池能做。但是这个方法好像太暴力了点，而且我不想再爬东西了，免费的那几个IP池都不太好用，要钱的又不想掏钱。</p>
+<h3 id="minecraft"><a href="#minecraft" class="headerlink" title="minecraft"></a>minecraft</h3><p>随便乱走亮了两盏灯，还有一盏。看起来应该F12找找线索，有一个flag.js的东西，但是它一堆16进制的变量和函数名，看起来挺费劲，算了，不看了。</p>
+<h3 id="二维码"><a href="#二维码" class="headerlink" title="二维码"></a>二维码</h3><p>应该就是根据奇偶校验和他给的打码过程的那个python文件。上一次做二维码和奇偶校验的东西还是大二上数字电路的时候。</p>
+<p>看起来像是第十版二维码，结果打开qrazybox想手动修复一下最高只有ver.9</p>
+<p>然后写了十几行发现好像这个东西要枚举遍历？？可能的二维码团还不止一种。（不知道是不是我漏了什么条件，但看起来还原出来确实不止一种）</p>
+<p>周五周六天气真好，成都难得出太阳，不做了，出去玩。</p>
+<h2 id="以为会做然而被乱杀到怀疑人生的题"><a href="#以为会做然而被乱杀到怀疑人生的题" class="headerlink" title="以为会做然而被乱杀到怀疑人生的题"></a>以为会做然而被乱杀到怀疑人生的题</h2><h3 id="Amnsia记忆清除"><a href="#Amnsia记忆清除" class="headerlink" title="Amnsia记忆清除"></a>Amnsia记忆清除</h3><p>抹除掉ELF文件的<code>.text</code>段，完全不会</p>
+<h3 id="LUKS"><a href="#LUKS" class="headerlink" title="LUKS"></a>LUKS</h3><p>就觉得我这么长时间的Linux白用了，整不出来。我只会hashcat爆破，Hashcat爆破又没啥意思，算了，放弃。</p>
+<h3 id="RAID修复"><a href="#RAID修复" class="headerlink" title="RAID修复"></a>RAID修复</h3><p>文件系统白学了，直接不会，白给。RAID-0做不出来，RAID-5也做不出来。</p>
+<h3 id="赛博厨房后两问"><a href="#赛博厨房后两问" class="headerlink" title="赛博厨房后两问"></a>赛博厨房后两问</h3><p>直接人都傻了，找不到规律，根本找不到。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>现在是周六中午12点，总排名187&#x2F;2679，很幸运没有掉出200名。</p>
+<blockquote>
+<p>当前分数：1600， 总排名：187 &#x2F; 2679<br>binary：150 ， general：1050 ， math：0 ， web：400</p>
+</blockquote>
+<p>今年是第一次参见Hackergame，玩的很开心。binary的题比往年多了很多，不过我一个都不会，好在有个打印<code>Hello, world!</code>的题，很幸运没有爆零。  </p>
+<p>当然，general和web题还是给了我一点信心，让我有种我上我也行的感觉，不过打开排行榜看到mcfx乱秒的样子，嗯，我是傻逼。</p>
+<p>主要感想就是数理基础太差，数论是真的是一窍不通，这几个月正好有空，准备去恶补一下数学。    </p>
+<p>当然进前100名和CTF师傅们以及天神下凡的mcfx合影留念是无望了，明年再来玩耍吧。欢度周末去了，再见。   </p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/hackergame/" rel="tag"><i class="fa fa-tag"></i> hackergame</a>
+              <a href="/tags/UTF-8/" rel="tag"><i class="fa fa-tag"></i> UTF-8</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/vscode-neovim-setting/" rel="prev" title="VSCode Neovim插件配置——将VSCode作为Neovim的GUI客户端">
+                  <i class="fa fa-angle-left"></i> VSCode Neovim插件配置——将VSCode作为Neovim的GUI客户端
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/aware-docker-yaml/" rel="next" title="又被Docker坑了（其实是被Yaml坑了">
+                  又被Docker坑了（其实是被Yaml坑了 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+      <div class="tabs tabs-comment">
+        <ul class="nav-tabs">
+            <li class="tab"><a href="#comment-utterances">utterances</a></li>
+            <li class="tab"><a href="#comment-disqusjs">Load Disqus</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane utterances" id="comment-utterances">
+              <div class="comments utterances-container"></div>
+            </div>
+            <div class="tab-pane disqusjs" id="comment-disqusjs">
+              
+  <div class="comments disqusjs-container">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+            </div>
+        </div>
+      </div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2019 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heartbeat"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">止息</span>
+  </div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FyY2hhZW9yYXB0b3I=" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@next-theme/pjax@0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://unpkg.com/hexo-generator-searchdb@1.4.1/dist/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://unpkg.com/pdfobject@2.2.12/pdfobject.min.js","integrity":"sha256-g2xji1rlE3KsGVClvuxTbcR0Kn2+wtQADSff2Tbb4zA="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="/js/third-party/tags/pdf.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://unpkg.com/mathjax@3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<link rel="stylesheet" href="https://unpkg.com/disqusjs@3.0.2/dist/browser/styles/disqusjs.css" integrity="sha256-71XarXwNr1Td27HmZI9zjY+rMzRdush6/glo6VFXp7o=" crossorigin="anonymous">
+
+<script class="next-config" data-name="disqusjs" type="application/json">{"enable":true,"api":"https://disqus.skk.moe/disqus/","apikey":"3qJ515uApWlP58gXhzPCCk3L0NlOvrMLwt5dDITBndS8fp8She7PT1gvBdDcgwrt","shortname":"arcaheoraptor","js":{"url":"https://unpkg.com/disqusjs@3.0.2/dist/browser/disqusjs.es2015.umd.min.js","integrity":"sha256-okP99ZQKVpIy7+NogAMpGlIQzJa9XKXhIJcFgdju5bU="}}</script>
+<script src="/js/third-party/comments/disqusjs.js"></script>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"Archaeoraptor/archaeoraptor.github.io","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

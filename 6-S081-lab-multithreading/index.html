@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/uploads/wizard-hat-16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/uploads/wizard-hat-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/uploads/wizard-hat-16.png">
+  <link rel="mask-icon" href="/uploads/wizard-hat-32.png" color="#222">
+  <meta name="google-site-verification" content="4Rj54anORAwcoMXLe3miFnoH78ZtUZfdamS--ffoxVE">
+  <meta name="msvalidate.01" content="872DC4637276109A6B54FF149DCABA8A">
+  <meta name="yandex-verification" content="0d554b4a05a80f0d">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhangjk98.xyz","root":"/","images":"/images","scheme":"Pisces","darkmode":"auto","version":"8.19.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqusjs","storage":true,"lazyload":false,"nav":{"disqusjs":{"text":"Load Disqus","order":-1},"utterances":{"order":-2}},"activeClass":"disqusjs"},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"none","post_header":"none","post_body":"none","coll_header":"none","sidebar":"none"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="实现一个用户态线程uthread，就照着xv6的内核态线程抄呗。怎么什么FUSE啊、UIO啊，什么东西都想往用户态搬啊，连RCU都有人想往用户态搬。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="6.S081 Lab Multithreading 笔记">
+<meta property="og:url" content="https://zhangjk98.xyz/6-S081-lab-multithreading/index.html">
+<meta property="og:site_name" content="止息&#39;幻想乡">
+<meta property="og:description" content="实现一个用户态线程uthread，就照着xv6的内核态线程抄呗。怎么什么FUSE啊、UIO啊，什么东西都想往用户态搬啊，连RCU都有人想往用户态搬。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://zhangjk98.xyz/6-S081-lab-multithreading/1650459636.png">
+<meta property="og:image" content="https://zhangjk98.xyz/6-S081-lab-multithreading/1650459961.png">
+<meta property="article:published_time" content="2022-04-20T11:27:58.000Z">
+<meta property="article:author" content="zhixi">
+<meta property="article:tag" content="6.S081">
+<meta property="article:tag" content="thread">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zhangjk98.xyz/6-S081-lab-multithreading/1650459636.png">
+
+
+<link rel="canonical" href="https://zhangjk98.xyz/6-S081-lab-multithreading/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zhangjk98.xyz/6-S081-lab-multithreading/","path":"6-S081-lab-multithreading/","title":"6.S081 Lab Multithreading 笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>6.S081 Lab Multithreading 笔记 | 止息'幻想乡</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143393734-1"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-143393734-1","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="止息'幻想乡" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">止息'幻想乡</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">风雪夜归人</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#xv6%E4%B8%AD%E7%9A%84process"><span class="nav-number">1.</span> <span class="nav-text">xv6中的process</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#process%E7%9A%84%E7%8A%B6%E6%80%81"><span class="nav-number">1.1.</span> <span class="nav-text">process的状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#process%E8%B0%83%E5%BA%A6"><span class="nav-number">1.2.</span> <span class="nav-text">process调度</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E7%8A%B6%E6%80%81%E5%88%87%E6%8D%A2"><span class="nav-number">1.2.1.</span> <span class="nav-text">运行状态切换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9D%A1%E7%9C%A0%E5%92%8C%E5%94%A4%E9%86%92"><span class="nav-number">1.2.2.</span> <span class="nav-text">睡眠和唤醒</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lab"><span class="nav-number">2.</span> <span class="nav-text">Lab</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Uthread-switching-between-threads-moderate"><span class="nav-number">2.1.</span> <span class="nav-text">Uthread: switching between threads (moderate)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-threads-moderate"><span class="nav-number">2.2.</span> <span class="nav-text">Using threads (moderate)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Barrier"><span class="nav-number">2.3.</span> <span class="nav-text">Barrier</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">3.</span> <span class="nav-text">小结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%93%BE%E6%8E%A5"><span class="nav-number">4.</span> <span class="nav-text">链接</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="zhixi"
+      src="/uploads/jinmao.webp">
+  <p class="site-author-name" itemprop="name">zhixi</p>
+  <div class="site-description" itemprop="description">in darkest night</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">91</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FyY2hhZW9yYXB0b3I=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;archaeoraptor"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOnpoaXhpQHVlc3RjbHVnLm9yZw==" title="E-Mail → mailto:zhixi@uestclug.org"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml" rel="noopener me"><i class="fa fa-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><img src="https://unpkg.com/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly96aGFuZ3NodXFpYW8ub3Jn" title="https:&#x2F;&#x2F;zhangshuqiao.org">米米的博客</span>
+            </li>
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly95YW5xaXl1LmluZm8=" title="https:&#x2F;&#x2F;yanqiyu.info">Karuboniru's Blog</span>
+            </li>
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnNhbWNodS5jbg==" title="https:&#x2F;&#x2F;blog.samchu.cn">Sam's Blog</span>
+            </li>
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly9seWstbG92ZS5jbi8=" title="https:&#x2F;&#x2F;lyk-love.cn&#x2F;">LYK-love</span>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zhangjk98.xyz/6-S081-lab-multithreading/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/jinmao.webp">
+      <meta itemprop="name" content="zhixi">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="止息'幻想乡">
+      <meta itemprop="description" content="in darkest night">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="6.S081 Lab Multithreading 笔记 | 止息'幻想乡">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          6.S081 Lab Multithreading 笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-04-20 19:27:58" itemprop="dateCreated datePublished" datetime="2022-04-20T19:27:58+08:00">2022-04-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux-Unix/" itemprop="url" rel="index"><span itemprop="name">Linux&Unix</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>实现一个用户态线程uthread，就照着xv6的内核态线程抄呗。怎么什么FUSE啊、UIO啊，什么东西都想往用户态搬啊，连RCU都有人想往用户态搬。</p>
+<span id="more"></span>
+
+<h2 id="xv6中的process"><a href="#xv6中的process" class="headerlink" title="xv6中的process"></a>xv6中的process</h2><h3 id="process的状态"><a href="#process的状态" class="headerlink" title="process的状态"></a>process的状态</h3><p>xv6的线程状态包括 UNUSED, USED, SLEEPING, RUNNABLE, RUNNING, ZOMBIE</p>
+<p><img src="/6-S081-lab-multithreading/1650459636.png"></p>
+<h3 id="process调度"><a href="#process调度" class="headerlink" title="process调度"></a>process调度</h3><p>用户态进程的切换是需要内核态的 kstack scheduler的</p>
+<p><img src="/6-S081-lab-multithreading/1650459961.png"></p>
+<p>我们下面来看调度过程，相比linux里面的调度器这个简单多了。就是一个最简单的时间片轮转。</p>
+<p>首先我们看proc这个结构体（就相当于linux里面的task这个结构体）</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Per-process state</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">proc</span> &#123;</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">spinlock</span> <span class="title">lock</span>;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// p-&gt;lock must be held when using these:</span></span><br><span class="line">  <span class="class"><span class="keyword">enum</span> <span class="title">procstate</span> <span class="title">state</span>;</span>        <span class="comment">// Process state</span></span><br><span class="line">  <span class="type">void</span> *chan;                  <span class="comment">// If non-zero, sleeping on chan</span></span><br><span class="line">  <span class="type">int</span> killed;                  <span class="comment">// If non-zero, have been killed</span></span><br><span class="line">  <span class="type">int</span> xstate;                  <span class="comment">// Exit status to be returned to parent&#x27;s wait</span></span><br><span class="line">  <span class="type">int</span> pid;                     <span class="comment">// Process ID</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// wait_lock must be held when using this:</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">proc</span> *<span class="title">parent</span>;</span>         <span class="comment">// Parent process</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// these are private to the process, so p-&gt;lock need not be held.</span></span><br><span class="line">  uint64 kstack;               <span class="comment">// Virtual address of kernel stack</span></span><br><span class="line">  uint64 sz;                   <span class="comment">// Size of process memory (bytes)</span></span><br><span class="line">  <span class="type">pagetable_t</span> pagetable;       <span class="comment">// User page table</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">trapframe</span> *<span class="title">trapframe</span>;</span> <span class="comment">// data page for trampoline.S</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">context</span> <span class="title">context</span>;</span>      <span class="comment">// swtch() here to run process</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">file</span> *<span class="title">ofile</span>[<span class="title">NOFILE</span>];</span>  <span class="comment">// Open files</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">inode</span> *<span class="title">cwd</span>;</span>           <span class="comment">// Current directory</span></span><br><span class="line">  <span class="type">char</span> name[<span class="number">16</span>];               <span class="comment">// Process name (debugging)</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>在process切换的时候，保存proc的trapframe和context用来恢复，然后还有proc的状态（STATE）、pid等。</p>
+<p>在切换的时候主要的工作是context和trapframe的保存和恢复。context被翻译成上下文，然后当年书里说半天我也没搞懂这到底是个啥玩意。后来看了xv6的源码才知道这是个啥。到底是谁最先把context翻译成上下文的啊？？？？ 我们直接看源码， <code>kernel/proc.h</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Saved registers for kernel context switches.</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">context</span> &#123;</span></span><br><span class="line">  uint64 ra; <span class="meta"># return address, 返回地址</span></span><br><span class="line">  uint64 sp; <span class="meta"># stack pointer，栈指针寄存器</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// callee-saved</span></span><br><span class="line">  uint64 s0;</span><br><span class="line">  uint64 s1;</span><br><span class="line">  uint64 s2;</span><br><span class="line">  uint64 s3;</span><br><span class="line">  uint64 s4;</span><br><span class="line">  uint64 s5;</span><br><span class="line">  uint64 s6;</span><br><span class="line">  uint64 s7;</span><br><span class="line">  uint64 s8;</span><br><span class="line">  uint64 s9;</span><br><span class="line">  uint64 s10;</span><br><span class="line">  uint64 s11;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>context是一个结构体，里面是寄存器的值（用来保存和恢复process的状态）</p>
+<p>trapframe也是一个结构体，放的东西更多了点。比如process的内核页表、比如kernel_sp寄存器，比如epc寄存器</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">trapframe</span> &#123;</span></span><br><span class="line">  <span class="comment">/*   0 */</span> uint64 kernel_satp;   <span class="comment">// kernel page table</span></span><br><span class="line">  <span class="comment">/*   8 */</span> uint64 kernel_sp;     <span class="comment">// top of process&#x27;s kernel stack</span></span><br><span class="line">  <span class="comment">/*  16 */</span> uint64 kernel_trap;   <span class="comment">// usertrap()</span></span><br><span class="line">  <span class="comment">/*  24 */</span> uint64 epc;           <span class="comment">// saved user program counter</span></span><br><span class="line">  <span class="comment">/*  32 */</span> uint64 kernel_hartid; <span class="comment">// saved kernel tp</span></span><br><span class="line">  <span class="comment">/*  40 */</span> uint64 ra;</span><br><span class="line">  <span class="comment">/*  48 */</span> uint64 sp;</span><br><span class="line">  <span class="comment">/*  56 */</span> uint64 gp;</span><br><span class="line">  <span class="comment">/*  64 */</span> uint64 tp;</span><br><span class="line">  <span class="comment">/*  72 */</span> uint64 t0;</span><br><span class="line">  <span class="comment">/*  80 */</span> uint64 t1;</span><br><span class="line">  <span class="comment">/*  88 */</span> uint64 t2;</span><br><span class="line">  <span class="comment">/*  96 */</span> uint64 s0;</span><br><span class="line">  <span class="comment">/* 104 */</span> uint64 s1;</span><br><span class="line">  <span class="comment">/* 112 */</span> uint64 a0;</span><br><span class="line">  <span class="comment">/* 120 */</span> uint64 a1;</span><br><span class="line">  <span class="comment">/* 128 */</span> uint64 a2;</span><br><span class="line">  <span class="comment">/* 136 */</span> uint64 a3;</span><br><span class="line">  <span class="comment">/* 144 */</span> uint64 a4;</span><br><span class="line">  <span class="comment">/* 152 */</span> uint64 a5;</span><br><span class="line">  <span class="comment">/* 160 */</span> uint64 a6;</span><br><span class="line">  <span class="comment">/* 168 */</span> uint64 a7;</span><br><span class="line">  <span class="comment">/* 176 */</span> uint64 s2;</span><br><span class="line">  <span class="comment">/* 184 */</span> uint64 s3;</span><br><span class="line">  <span class="comment">/* 192 */</span> uint64 s4;</span><br><span class="line">  <span class="comment">/* 200 */</span> uint64 s5;</span><br><span class="line">  <span class="comment">/* 208 */</span> uint64 s6;</span><br><span class="line">  <span class="comment">/* 216 */</span> uint64 s7;</span><br><span class="line">  <span class="comment">/* 224 */</span> uint64 s8;</span><br><span class="line">  <span class="comment">/* 232 */</span> uint64 s9;</span><br><span class="line">  <span class="comment">/* 240 */</span> uint64 s10;</span><br><span class="line">  <span class="comment">/* 248 */</span> uint64 s11;</span><br><span class="line">  <span class="comment">/* 256 */</span> uint64 t3;</span><br><span class="line">  <span class="comment">/* 264 */</span> uint64 t4;</span><br><span class="line">  <span class="comment">/* 272 */</span> uint64 t5;</span><br><span class="line">  <span class="comment">/* 280 */</span> uint64 t6;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>说一下trapframe和context的区别，context保存的是线程切换（比如调度器切换线程）时候的数据（寄存器），trapframe保存的是trap的时候（切换内核态时候）的数据</p>
+<h4 id="运行状态切换"><a href="#运行状态切换" class="headerlink" title="运行状态切换"></a>运行状态切换</h4><p>进入RUNNING是由<code>scheduler</code>处理的，这里就直接是一个简单的for循环，加锁找到可用的直接将状态变成RUNNING释放锁。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span></span><br><span class="line"><span class="title function_">scheduler</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">proc</span> *<span class="title">p</span>;</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">cpu</span> *<span class="title">c</span> =</span> mycpu();</span><br><span class="line">  </span><br><span class="line">  c-&gt;proc = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span>(;;)&#123;</span><br><span class="line">    <span class="comment">// Avoid deadlock by ensuring that devices can interrupt.</span></span><br><span class="line">    intr_on();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(p = proc; p &lt; &amp;proc[NPROC]; p++) &#123;</span><br><span class="line">      acquire(&amp;p-&gt;lock);</span><br><span class="line">      <span class="keyword">if</span>(p-&gt;state == RUNNABLE) &#123;</span><br><span class="line">        <span class="comment">// Switch to chosen process.  It is the process&#x27;s job</span></span><br><span class="line">        <span class="comment">// to release its lock and then reacquire it</span></span><br><span class="line">        <span class="comment">// before jumping back to us.</span></span><br><span class="line">        p-&gt;state = RUNNING;</span><br><span class="line">        c-&gt;proc = p;</span><br><span class="line">        swtch(&amp;c-&gt;context, &amp;p-&gt;context);    <span class="comment">// 保存context（上下文）</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// Process is done running for now.</span></span><br><span class="line">        <span class="comment">// It should have changed its p-&gt;state before coming back.</span></span><br><span class="line">        c-&gt;proc = <span class="number">0</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      release(&amp;p-&gt;lock);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里swtch是保存并切换context。<code>swtch(&amp;c-&gt;context, &amp;p-&gt;context);</code>表示保存c的context, 加载p的context。我们直接看一下<code>swtch.S</code>的代码就明白了：</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">.globl</span> swtch</span><br><span class="line"><span class="symbol">swtch:</span></span><br><span class="line">        sd ra, <span class="number">0</span>(a0)</span><br><span class="line">        sd <span class="built_in">sp</span>, <span class="number">8</span>(a0)</span><br><span class="line">        sd <span class="built_in">s0</span>, <span class="number">16</span>(a0)</span><br><span class="line">        .......</span><br><span class="line"></span><br><span class="line">        ld ra, <span class="number">0</span>(<span class="built_in">a1</span>)</span><br><span class="line">        ld <span class="built_in">sp</span>, <span class="number">8</span>(<span class="built_in">a1</span>)</span><br><span class="line">        ld <span class="built_in">s0</span>, <span class="number">16</span>(<span class="built_in">a1</span>)</span><br><span class="line">        .......</span><br><span class="line"></span><br><span class="line">        ret</span><br></pre></td></tr></table></figure>
+
+<p>退出的过程是调用了<code>yield</code>，从RUNNING进入RUNNABLE</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Give up the CPU for one scheduling round.</span></span><br><span class="line"><span class="type">void</span></span><br><span class="line"><span class="title function_">yield</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">proc</span> *<span class="title">p</span> =</span> myproc();</span><br><span class="line">  acquire(&amp;p-&gt;lock);    <span class="comment">// 这里也要加一个自旋锁，如果不加，在yield过程中来一个中断之类的会出问题</span></span><br><span class="line">  p-&gt;state = RUNNABLE;</span><br><span class="line">  sched();  <span class="comment">// 这里调用sched切换进程（恢复上下文等操作）</span></span><br><span class="line">  release(&amp;p-&gt;lock);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>yield 调用了 sched</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span></span><br><span class="line"><span class="title function_">sched</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">int</span> intena;</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">proc</span> *<span class="title">p</span> =</span> myproc();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>(!holding(&amp;p-&gt;lock))    <span class="comment">// 必须持有锁</span></span><br><span class="line">    panic(<span class="string">&quot;sched p-&gt;lock&quot;</span>);</span><br><span class="line">  <span class="keyword">if</span>(mycpu()-&gt;noff != <span class="number">1</span>)    <span class="comment">//中断是关的</span></span><br><span class="line">    panic(<span class="string">&quot;sched locks&quot;</span>);</span><br><span class="line">  <span class="keyword">if</span>(p-&gt;state == RUNNING)   <span class="comment">//之前已经设为RUNNABLE，肯定不能是RUNNING</span></span><br><span class="line">    panic(<span class="string">&quot;sched running&quot;</span>);</span><br><span class="line">  <span class="keyword">if</span>(intr_get())    <span class="comment">// 中断不能是enabled</span></span><br><span class="line">    panic(<span class="string">&quot;sched interruptible&quot;</span>);</span><br><span class="line"></span><br><span class="line">  intena = mycpu()-&gt;intena; <span class="comment">//将itena置为当前CPU的itena</span></span><br><span class="line">  swtch(&amp;p-&gt;context, &amp;mycpu()-&gt;context);    <span class="comment">//恢复context（上下文）</span></span><br><span class="line">  mycpu()-&gt;intena = intena;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>说一下这个itena，定义在<code>kernel/proc.h</code>中，就是中断（interrupt）是否在push_off之前enable了</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Per-CPU state.</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">cpu</span> &#123;</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">proc</span> *<span class="title">proc</span>;</span>          <span class="comment">// The process running on this cpu, or null.</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">context</span> <span class="title">context</span>;</span>     <span class="comment">// swtch() here to enter scheduler().</span></span><br><span class="line">  <span class="type">int</span> noff;                   <span class="comment">// Depth of push_off() nesting.</span></span><br><span class="line">  <span class="type">int</span> intena;                 <span class="comment">// Were interrupts enabled before push_off()?</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>从RUNNING退出到别的状态可能是收到了中断，也可能是进入SLEEPING（比如耗时较长的文件IO），也可能是被kill了或者父进程被kill了进入了ZOMBIE状态</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span></span><br><span class="line"><span class="title function_">kill</span><span class="params">(<span class="type">int</span> pid)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">proc</span> *<span class="title">p</span>;</span></span><br><span class="line"> </span><br><span class="line">  <span class="keyword">for</span>(p = proc; p &lt; &amp;proc[NPROC]; p++)&#123;</span><br><span class="line">    acquire(&amp;p-&gt;lock);</span><br><span class="line">    <span class="keyword">if</span>(p-&gt;pid == pid)&#123;</span><br><span class="line">      p-&gt;killed = <span class="number">1</span>;</span><br><span class="line">      <span class="keyword">if</span>(p-&gt;state == SLEEPING)&#123;</span><br><span class="line">        <span class="comment">// Wake process from sleep().</span></span><br><span class="line">        p-&gt;state = RUNNABLE;</span><br><span class="line">      &#125;</span><br><span class="line">      release(&amp;p-&gt;lock);</span><br><span class="line">      <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    release(&amp;p-&gt;lock);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="睡眠和唤醒"><a href="#睡眠和唤醒" class="headerlink" title="睡眠和唤醒"></a>睡眠和唤醒</h4><p>wakeup比较简单，就正常的加锁然后置为RUNNABLE就好了</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Wake up all processes sleeping on chan.</span></span><br><span class="line"><span class="comment">// Must be called without any p-&gt;lock.</span></span><br><span class="line"><span class="type">void</span></span><br><span class="line"><span class="title function_">wakeup</span><span class="params">(<span class="type">void</span> *chan)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">proc</span> *<span class="title">p</span>;</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span>(p = proc; p &lt; &amp;proc[NPROC]; p++) &#123;</span><br><span class="line">    <span class="keyword">if</span>(p != myproc())&#123;</span><br><span class="line">      acquire(&amp;p-&gt;lock);</span><br><span class="line">      <span class="keyword">if</span>(p-&gt;state == SLEEPING &amp;&amp; p-&gt;chan == chan) &#123;</span><br><span class="line">        p-&gt;state = RUNNABLE;</span><br><span class="line">      &#125;</span><br><span class="line">      release(&amp;p-&gt;lock);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>sleep这里要注意！这个spinlock是为了保证在执行sleep的时候没有别的进程调用wakeup。开始执行sleep之后lk就可以释放掉了。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Atomically release lock and sleep on chan.</span></span><br><span class="line"><span class="comment">// Reacquires lock when awakened.</span></span><br><span class="line"><span class="type">void</span></span><br><span class="line"><span class="title function_">sleep</span><span class="params">(<span class="type">void</span> *chan, <span class="keyword">struct</span> spinlock *lk)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">proc</span> *<span class="title">p</span> =</span> myproc();</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// Must acquire p-&gt;lock in order to</span></span><br><span class="line">  <span class="comment">// change p-&gt;state and then call sched.</span></span><br><span class="line">  <span class="comment">// Once we hold p-&gt;lock, we can be</span></span><br><span class="line">  <span class="comment">// guaranteed that we won&#x27;t miss any wakeup</span></span><br><span class="line">  <span class="comment">// (wakeup locks p-&gt;lock),</span></span><br><span class="line">  <span class="comment">// so it&#x27;s okay to release lk.</span></span><br><span class="line"></span><br><span class="line">  acquire(&amp;p-&gt;lock);  <span class="comment">//DOC: sleeplock1</span></span><br><span class="line">  release(lk);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Go to sleep.</span></span><br><span class="line">  p-&gt;chan = chan;</span><br><span class="line">  p-&gt;state = SLEEPING;</span><br><span class="line"></span><br><span class="line">  sched();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Tidy up.</span></span><br><span class="line">  p-&gt;chan = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Reacquire original lock.</span></span><br><span class="line">  release(&amp;p-&gt;lock);</span><br><span class="line">  acquire(lk);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Lab"><a href="#Lab" class="headerlink" title="Lab"></a>Lab</h2><p>这个Lab有点意思，实现可以直接照抄内核态线程，做一个naive的用户态线程</p>
+<h3 id="Uthread-switching-between-threads-moderate"><a href="#Uthread-switching-between-threads-moderate" class="headerlink" title="Uthread: switching between threads (moderate)"></a>Uthread: switching between threads (moderate)</h3><p>用户态线程的状态只有三种，FREE, RUNNING, RUNNABLE。状态机比较简单。<code>thread_init</code>初始化的时候状态设为RUNNING</p>
+<p>创建a,b,c三个用户态thread,然后每个线程打印一次后就执行<code>thread_yield</code>切换线程，并将当前线程的状态设置为RUNNABLE</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">thread_yield</span><span class="params">(<span class="type">void</span>)</span> &#123;</span><br><span class="line">    current_thread-&gt;state = RUNNABLE;</span><br><span class="line">    thread_schedule();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后在线程结束的时候将状态置为FREE, <code>current_thread-&gt;state = FREE;</code>，调用</p>
+<p><code>thread_create</code>传进来的参数是一个函数指针（比如thread_a）, 我们把函数指针存入ra寄存器，用来做恢复。<code>thread_create</code>实现可以参考<code>kernel/proc.c</code>里面的<code>allcproc()</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">thread_create</span><span class="params">(<span class="type">void</span> (*func)())</span> &#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">thread</span> *<span class="title">t</span>;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (t = all_thread; t &lt; all_thread + MAX_THREAD; t++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (t-&gt;state == FREE)</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    t-&gt;state = RUNNABLE;</span><br><span class="line">    t-&gt;thread_context.ra = (uint64)func;</span><br><span class="line">    t-&gt;thread_context.sp = t-&gt;<span class="built_in">stack</span> + STACK_SIZE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们把<code>kernel/proc.h</code>中的context抄过来</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Saved registers for user context switches.</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">user_context</span> &#123;</span></span><br><span class="line">  uint64 ra;</span><br><span class="line">  uint64 sp;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// callee-saved</span></span><br><span class="line">  uint64 s0;</span><br><span class="line">  uint64 s1;</span><br><span class="line">  uint64 s2;</span><br><span class="line">  uint64 s3;</span><br><span class="line">  uint64 s4;</span><br><span class="line">  uint64 s5;</span><br><span class="line">  uint64 s6;</span><br><span class="line">  uint64 s7;</span><br><span class="line">  uint64 s8;</span><br><span class="line">  uint64 s9;</span><br><span class="line">  uint64 s10;</span><br><span class="line">  uint64 s11;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">thread</span> &#123;</span></span><br><span class="line">    <span class="type">char</span> <span class="built_in">stack</span>[STACK_SIZE]; <span class="comment">/* the thread&#x27;s stack */</span></span><br><span class="line">    <span class="type">int</span> state;              <span class="comment">/* FREE, RUNNING, RUNNABLE */</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">user_context</span> <span class="title">thread_context</span>;</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>然后<code>user/uthread_switch.S</code>中的<code>thread_switch</code>照抄<code>kernel/swtch.S</code>实现状态切换，不过<code>thread_switch</code>这里的上下文只保存Callee-saved的寄存器就可以了，所以我们删掉<code>sd ra, 0(a0)</code>和<code>ld ra, 0(a1)</code></p>
+<p><strong>sp寄存器是callee寄存器，只有ra寄存器是caller寄存器</strong>，这个不能删，删了之后用户线程没法切换了！一开始记错了把sp寄存器也记成caller寄存器了，没输出调了好久</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># void thread_switch(struct context *old, struct context *new);</span></span><br><span class="line"><span class="symbol">thread_switch:</span></span><br><span class="line">    sd <span class="built_in">sp</span>, <span class="number">8</span>(a0)</span><br><span class="line">    sd <span class="built_in">s0</span>, <span class="number">16</span>(a0)</span><br><span class="line">    sd <span class="built_in">s1</span>, <span class="number">24</span>(a0)</span><br><span class="line">    sd <span class="built_in">s2</span>, <span class="number">32</span>(a0)</span><br><span class="line">    sd <span class="built_in">s3</span>, <span class="number">40</span>(a0)</span><br><span class="line">    sd <span class="built_in">s4</span>, <span class="number">48</span>(a0)</span><br><span class="line">    sd <span class="built_in">s5</span>, <span class="number">56</span>(a0)</span><br><span class="line">    sd <span class="built_in">s6</span>, <span class="number">64</span>(a0)</span><br><span class="line">    sd <span class="built_in">s7</span>, <span class="number">72</span>(a0)</span><br><span class="line">    sd <span class="built_in">s8</span>, <span class="number">80</span>(a0)</span><br><span class="line">    sd <span class="built_in">s9</span>, <span class="number">88</span>(a0)</span><br><span class="line">    sd <span class="built_in">s10</span>, <span class="number">96</span>(a0)</span><br><span class="line">    sd <span class="built_in">s11</span>, <span class="number">104</span>(a0)</span><br><span class="line"></span><br><span class="line">    ld <span class="built_in">sp</span>, <span class="number">8</span>(<span class="built_in">a1</span>)</span><br><span class="line">    ld <span class="built_in">s0</span>, <span class="number">16</span>(<span class="built_in">a1</span>)</span><br><span class="line">    ld <span class="built_in">s1</span>, <span class="number">24</span>(<span class="built_in">a1</span>)</span><br><span class="line">    ld <span class="built_in">s2</span>, <span class="number">32</span>(<span class="built_in">a1</span>)</span><br><span class="line">    ld <span class="built_in">s3</span>, <span class="number">40</span>(<span class="built_in">a1</span>)</span><br><span class="line">    ld <span class="built_in">s4</span>, <span class="number">48</span>(<span class="built_in">a1</span>)</span><br><span class="line">    ld <span class="built_in">s5</span>, <span class="number">56</span>(<span class="built_in">a1</span>)</span><br><span class="line">    ld <span class="built_in">s6</span>, <span class="number">64</span>(<span class="built_in">a1</span>)</span><br><span class="line">    ld <span class="built_in">s7</span>, <span class="number">72</span>(<span class="built_in">a1</span>)</span><br><span class="line">    ld <span class="built_in">s8</span>, <span class="number">80</span>(<span class="built_in">a1</span>)</span><br><span class="line">    ld <span class="built_in">s9</span>, <span class="number">88</span>(<span class="built_in">a1</span>)</span><br><span class="line">    ld <span class="built_in">s10</span>, <span class="number">96</span>(<span class="built_in">a1</span>)</span><br><span class="line">    ld <span class="built_in">s11</span>, <span class="number">104</span>(<span class="built_in">a1</span>)</span><br><span class="line"></span><br><span class="line">  ret    <span class="comment">/* return to ra */</span></span><br></pre></td></tr></table></figure>
+
+<p>然后在<code>thread_switch</code>里面直接调用<code>thread_switch((uint64)t, (uint64)current_thread);</code></p>
+<p>然后。。。报错了。调了一下午没找到哪出问题了，gdb打出来的调试信息看不出来。这个报错跟当初页表那个很像，debug的时候被误导了。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ uthread</span><br><span class="line">usertrap(): unexpected scause 0x000000000000000f pid=3</span><br><span class="line">            sepc=0x0000000000000002 stval=0xfffffffffffffff8</span><br></pre></td></tr></table></figure>
+
+<p>调了半天发现是我thread_switch的函数参数传错了，传进去的应该是context，寄存器a0是第一个参数，寄存器a1是参数，放的是寄存器的struct，然后按照地址偏移分别对应s0，s1等Callee寄存器的值</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">thread_switch((uint64)&amp;t-&gt;thread_context, (uint64)&amp;current_thread-&gt;thread_context);</span><br></pre></td></tr></table></figure>
+
+<p>终于正常了</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">$ uthread</span><br><span class="line"><span class="number">310514718</span>thread_a started</span><br><span class="line">thread_b started</span><br><span class="line">thread_c started</span><br><span class="line">thread_c <span class="number">0</span></span><br><span class="line">thread_a <span class="number">0</span></span><br><span class="line">thread_b <span class="number">0</span></span><br><span class="line">thread_c <span class="number">1</span></span><br><span class="line">thread_a <span class="number">1</span></span><br><span class="line">thread_b <span class="number">1</span></span><br><span class="line">thread_c <span class="number">2</span></span><br><span class="line">thread_a <span class="number">2</span></span><br><span class="line">......</span><br><span class="line">thread_c <span class="number">99</span></span><br><span class="line">thread_a <span class="number">99</span></span><br><span class="line">thread_b <span class="number">99</span></span><br><span class="line">thread_c: <span class="built_in">exit</span> after <span class="number">100</span></span><br><span class="line">thread_a: <span class="built_in">exit</span> after <span class="number">100</span></span><br><span class="line">thread_b: <span class="built_in">exit</span> after <span class="number">100</span></span><br><span class="line">thread_schedule: no runnable threads</span><br></pre></td></tr></table></figure>
+
+<h3 id="Using-threads-moderate"><a href="#Using-threads-moderate" class="headerlink" title="Using threads (moderate)"></a>Using threads (moderate)</h3><p>这个就是学一下怎么用pthread（这个是在unix&#x2F;linux里面，不是在qemu里），练习一下加mutex锁。<code>ph.c</code>里面有一个并发不安全的哈希表，就是一个简单的取模，然后放到相应的bucket里面，bucket中有重复的key就依次加到链表的后面。实现就和leetcode 706 设计哈希映射的官方题解差不多。这里bucket数量是5，所以很容易发生冲突，缓解hash冲突的一般做法是bucket去一个更大的质数，或者设计其他更好的hash函数减少hash冲突，或者我们不要链表，用开放定址或者rehash去解决hash冲突</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$make</span> ph</span><br><span class="line">$./ph 1</span><br><span class="line">100000 puts, 5.690 seconds, 17573 puts/second</span><br><span class="line">0: 0 keys missing</span><br><span class="line">100000 gets, 5.491 seconds, 18211 gets/second</span><br></pre></td></tr></table></figure>
+
+<p>我们把线程开多一点</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$./ph 10</span><br><span class="line">100000 puts, 0.333 seconds, 300217 puts/second</span><br><span class="line">2: 63594 keys missing</span><br><span class="line">7: 63594 keys missing</span><br><span class="line">1: 63594 keys missing</span><br><span class="line">9: 63594 keys missing</span><br><span class="line">5: 63594 keys missing</span><br><span class="line">8: 63594 keys missing</span><br><span class="line">6: 63594 keys missing</span><br><span class="line">4: 63594 keys missing</span><br><span class="line">0: 63594 keys missing</span><br><span class="line">3: 63594 keys missing</span><br><span class="line">1000000 gets, 5.871 seconds, 170320 gets/second</span><br></pre></td></tr></table></figure>
+
+<p>然后我们把线程开到100，现在打字都卡了, 成千上万个 key missng。这里的hashmap在并发写的时候会冲突，就像go的map一样并发写的时候会直接报<code>fatal error: concurrent map writes</code>。读是没有关系的，但是<code>ph.c</code>第26行那个insert在写的时候是向entry（存key和value的链表后面加），并发写会把同时正在插入的覆盖掉。</p>
+<p>Go map in actions 中有一个非常简单的给map加锁的例子</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> counter = <span class="keyword">struct</span>&#123;</span><br><span class="line">    sync.RWMutex</span><br><span class="line">    m <span class="keyword">map</span>[<span class="type">string</span>]<span class="type">int</span></span><br><span class="line">&#125;&#123;m: <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="type">string</span>]<span class="type">int</span>)&#125;</span><br><span class="line"></span><br><span class="line">counter.RLock()</span><br><span class="line">n := counter.m[<span class="string">&quot;some_key&quot;</span>]</span><br><span class="line">counter.RUnlock()</span><br><span class="line">fmt.Println(<span class="string">&quot;some_key:&quot;</span>, n)</span><br><span class="line"></span><br><span class="line">counter.Lock()</span><br><span class="line">counter.m[<span class="string">&quot;some_key&quot;</span>]++</span><br><span class="line">counter.Unlock()</span><br></pre></td></tr></table></figure>
+
+<p>我们仿照go的map写入加<code>sync.Mutex</code>，给insert加互斥锁。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">pthread_mutex_t</span> lock; <span class="comment">// declare a lock</span></span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">void</span> *<span class="title function_">put_thread</span><span class="params">(<span class="type">void</span> *xa)</span> &#123;</span><br><span class="line">    <span class="type">int</span> n = (<span class="type">int</span>)(<span class="type">long</span>)xa; <span class="comment">// thread number</span></span><br><span class="line">    <span class="type">int</span> b = NKEYS / nthread;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; b; i++) &#123;</span><br><span class="line">        pthread_mutex_lock(&amp;lock);</span><br><span class="line">        put(keys[b * n + i], n);</span><br><span class="line">        pthread_mutex_unlock(&amp;lock);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后就没有missing了</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$make</span> ph</span><br><span class="line">$./ph 2</span><br><span class="line">100000 puts, 5.522 seconds, 18111 puts/second</span><br><span class="line">1: 0 keys missing</span><br><span class="line">0: 0 keys missing</span><br><span class="line">200000 gets, 5.628 seconds, 35535 gets/second</span><br></pre></td></tr></table></figure>
+
+<p>但是这样有一个问题，速度没什么优势，把nthread开到10，puts用时6.094 seconds，还不如单线程。<code>make grade</code>的时候只能跑过<code>ph_safe</code>，没法通过<code>ph_fast</code>的。</p>
+<p>想要速度我们需要更细粒度的锁，我们仿照go的concurrent-map那样分片加锁的方案在insert插入的时候给对应的bucket加锁。（go的sync.Map的那个加锁比较适合读多写少的方案，这里大量写入优势不大）这里我们只要对每个bucket单独加锁就可以了，问题转换为对entry链表加锁，我们用NBUCKET把小锁分别对NBUCKET个entry链表加锁。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">pthread_mutex_t</span> lock[NBUCKET]; <span class="comment">// declare a lock</span></span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">put</span><span class="params">(<span class="type">int</span> key, <span class="type">int</span> value)</span> &#123;</span><br><span class="line">    <span class="type">int</span> i = key % NBUCKET;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// is the key already present?</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">entry</span> *<span class="title">e</span> =</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (e = table[i]; e != <span class="number">0</span>; e = e-&gt;next) &#123;</span><br><span class="line">        <span class="keyword">if</span> (e-&gt;key == key)</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (e) &#123;</span><br><span class="line">        <span class="comment">// update the existing key.</span></span><br><span class="line">        e-&gt;value = value;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// the new is new.</span></span><br><span class="line">        pthread_mutex_lock(&amp;lock[i]);</span><br><span class="line">        insert(key, value, &amp;table[i], table[i]);</span><br><span class="line">        pthread_mutex_lock(&amp;lock[i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span> &#123;</span><br><span class="line">    pthread_mutex_init(&amp;lock[NBUCKET], <span class="literal">NULL</span>);</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$./ph 10</span><br><span class="line">100000 puts, 0.684 seconds, 146180 puts/second</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
+
+<p>这样就足以跑过<code>ph_fast</code>的测试了（其实如果想偷鸡直接将NBUCKET改成一个大点的质数减少一下hash冲突就能用大锁跑过测试）</p>
+<p>还有更细粒度的加锁方案，就是对链表（entry）的节点加锁，不过通常设计比较好的hashmap的拉链，链表不会很长。这里就不这么加了。</p>
+<p>还有一种链表并发的方案就是rcu，不过这个是在内核态实现的，想要在userspace模仿一个有点难。</p>
+<h3 id="Barrier"><a href="#Barrier" class="headerlink" title="Barrier"></a>Barrier</h3><p>这个也是在Unix&#x2F;linux真机下面，练习一下条件变量。这个barrier是用<code>pthread_cond</code>实现的，<code>a point in an application at which all participating threads must wait until all other participating threads reach that point too. </code></p>
+<p>让执行完的线程wait(睡眠)，然后面足条件的时候调用signal唤醒，这里全部唤醒用broadcast就好了。</p>
+<p>注意使用条件变量的时候需要加锁，参考Three Easy Piecies第30章。某些情况下signal可以不加锁，但是wait必须要加锁。<code>hold the lock when calling signal</code>，不然会发生race，书里给了一个例子：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">thr_exit</span><span class="params">()</span> &#123;</span><br><span class="line">  done = <span class="number">1</span>;</span><br><span class="line">  Pthread_cond_signal(&amp;c);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">thr_join</span><span class="params">()</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (done == <span class="number">0</span>) &#123;</span><br><span class="line">    Pthread_cond_wait(&amp;c);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个时候如果一个thread执行<code>thr_join</code>，满足done为0，开始wait睡眠，但是在判断完if到执行wait睡眠的期间，<code>thr_exit()</code>开始执行唤醒全部全部线程，那么这个thread执行wait就会一直sleep醒不过来了（书里面是用的parent和child的例子）</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">barrier</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">// Block until all threads have called barrier() and</span></span><br><span class="line">    pthread_mutex_lock(&amp;bstate.barrier_mutex);</span><br><span class="line">    bstate.nthread++;</span><br><span class="line">    <span class="keyword">if</span> (bstate.nthread &lt; nthread) &#123;</span><br><span class="line">        pthread_cond_wait(&amp;bstate.barrier_cond, &amp;bstate.barrier_mutex);</span><br><span class="line">    &#125; </span><br><span class="line">    pthread_mutex_unlock(&amp;bstate.barrier_mutex);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 这个锁也要加上，不然唤醒的时候如果有线程睡眠会睡死</span></span><br><span class="line">    pthread_mutex_lock(&amp;bstate.barrier_mutex);</span><br><span class="line">    <span class="keyword">if</span> (bstate.nthread == nthread) &#123;</span><br><span class="line">        bstate.nthread = <span class="number">0</span>;</span><br><span class="line">        bstate.round++;</span><br><span class="line">        pthread_cond_broadcast(&amp;bstate.barrier_cond);</span><br><span class="line">        pthread_mutex_unlock(&amp;bstate.barrier_mutex);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样<code>./barrier 100</code>就pass了。如果我们不加mutex锁，那么<code>./barrier 100</code>是会一直卡在那里结束不了的。如果我们执行strace看一下<code>strace ./barrier 100</code>，会发现卡在这个地方</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">futex(<span class="number">0x7f0a8b7a1910</span>, FUTEX_WAIT_BITSET|FUTEX_CLOCK_REALTIME, <span class="number">219673</span>, <span class="literal">NULL</span>, FUTEX_BITSET_MATCH_ANY) = ? ERESTARTSYS (To be restarted <span class="keyword">if</span> SA_RESTART is <span class="built_in">set</span>)</span><br><span class="line">--- SIGWINCH &#123;si_signo=SIGWINCH, si_code=SI_KERNEL&#125; ---</span><br><span class="line">futex(<span class="number">0x7f0a8b7a1910</span>, FUTEX_WAIT_BITSET|FUTEX_CLOCK_REALTIME, <span class="number">219673</span>, <span class="literal">NULL</span>, FUTEX_BITSET_MATCH_ANY</span><br></pre></td></tr></table></figure>
+
+<p>用<code>valgrind --tool=helgrind ./barrier 2</code>检查了一下，应该这样也是可以的，都加到一把锁里面</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">barrier</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">// Block until all threads have called barrier() and</span></span><br><span class="line">    pthread_mutex_lock(&amp;bstate.barrier_mutex);</span><br><span class="line">    bstate.nthread++;</span><br><span class="line">    <span class="keyword">if</span> (bstate.nthread &lt; nthread) &#123;</span><br><span class="line">        pthread_cond_wait(&amp;bstate.barrier_cond, &amp;bstate.barrier_mutex);</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">if</span> (bstate.nthread == nthread) &#123;</span><br><span class="line">        bstate.nthread = <span class="number">0</span>;</span><br><span class="line">        bstate.round++;</span><br><span class="line">        pthread_cond_broadcast(&amp;bstate.barrier_cond);</span><br><span class="line">        pthread_mutex_unlock(&amp;bstate.barrier_mutex);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>这次看题目本来以为很简单的，用户态thread就照着内核线程抄一个呗，剩下两个就是用一下pthread和锁呗。然后写起来debug就花了很久的时间，对寄存器不太熟，频繁翻车。然后折腾了两天才整出来</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">$ make grade</span><br><span class="line">uthread: OK (2.5s) </span><br><span class="line">== Test answers-thread.txt == answers-thread.txt: OK </span><br><span class="line">== Test ph_safe == make[1]: Entering directory <span class="string">&#x27;/home/zhixi/codes/xv6-labs-2021&#x27;</span></span><br><span class="line">gcc -o ph -g -O2 -DSOL_THREAD -DLAB_THREAD notxv6/ph.c -pthread</span><br><span class="line">make[1]: Leaving directory <span class="string">&#x27;/home/zhixi/codes/xv6-labs-2021&#x27;</span></span><br><span class="line">ph_safe: OK (8.0s) </span><br><span class="line">== Test ph_fast == make[1]: Entering directory <span class="string">&#x27;/home/zhixi/codes/xv6-labs-2021&#x27;</span></span><br><span class="line">make[1]: <span class="string">&#x27;ph&#x27;</span> is up to <span class="built_in">date</span>.</span><br><span class="line">make[1]: Leaving directory <span class="string">&#x27;/home/zhixi/codes/xv6-labs-2021&#x27;</span></span><br><span class="line">ph_fast: OK (19.7s) </span><br><span class="line">== Test barrier == make[1]: Entering directory <span class="string">&#x27;/home/zhixi/codes/xv6-labs-2021&#x27;</span></span><br><span class="line">gcc -o barrier -g -O2 -DSOL_THREAD -DLAB_THREAD notxv6/barrier.c -pthread</span><br><span class="line">make[1]: Leaving directory <span class="string">&#x27;/home/zhixi/codes/xv6-labs-2021&#x27;</span></span><br><span class="line">barrier: OK (2.7s) </span><br><span class="line">== Test time == </span><br><span class="line">time: OK </span><br><span class="line">Score: 60/60</span><br></pre></td></tr></table></figure>
+
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><span class="exturl" data-url="aHR0cHM6Ly9wZG9zLmNzYWlsLm1pdC5lZHUvNi5TMDgxLzIwMjAvbGFicy90aHJlYWQuaHRtbA==">https://pdos.csail.mit.edu/6.S081/2020/labs/thread.html<i class="fa fa-external-link-alt"></i></span>   </p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9xdWVzdGlvbnMvOTQxMC9ob3ctZG8teW91LXBhc3MtYS1mdW5jdGlvbi1hcy1hLXBhcmFtZXRlci1pbi1j">How do you pass a function as a parameter in C?<i class="fa fa-external-link-alt"></i></span>  </p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9nby5kZXYvYmxvZy9tYXBz">Go Map in Actions<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2dvbGFuZy9nby9ibG9iL21hc3Rlci9zcmMvc3luYy9tYXAuZ28=">https://github.com/golang/go/blob/master/src/sync/map.go<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9wa2cuZ28uZGV2L3N5bmM/dXRtX3NvdXJjZT1nb2RvYyNNYXA=">https://pkg.go.dev/sync?utm_source=godoc#Map<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9jb2xvYnUuY29tLzIwMTcvMDcvMTEvZGl2ZS1pbnRvLXN5bmMtTWFwLw==">Go 1.9 sync.Map揭秘<i class="fa fa-external-link-alt"></i></span> 鸟窝大大写的sync.Mutex介绍  </p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9wYWdlcy5jcy53aXNjLmVkdS9+cmVtemkvT1NURVAv">Operating Systems Three Easy Pices<i class="fa fa-external-link-alt"></i></span>，中文就是那个蓝皮的操作系统导论<br>第29章，讲并发链表、并发队列和并发散列表<br>第20章，讲条件变量  </p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/6-S081/" rel="tag"><i class="fa fa-tag"></i> 6.S081</a>
+              <a href="/tags/thread/" rel="tag"><i class="fa fa-tag"></i> thread</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/6-S081-lab-cow/" rel="prev" title="6.S081 Lab Copy on Write笔记">
+                  <i class="fa fa-angle-left"></i> 6.S081 Lab Copy on Write笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/aware-docker-memory/" rel="next" title="又被Docker坑了（这次是内存">
+                  又被Docker坑了（这次是内存 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+      <div class="tabs tabs-comment">
+        <ul class="nav-tabs">
+            <li class="tab"><a href="#comment-utterances">utterances</a></li>
+            <li class="tab"><a href="#comment-disqusjs">Load Disqus</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane utterances" id="comment-utterances">
+              <div class="comments utterances-container"></div>
+            </div>
+            <div class="tab-pane disqusjs" id="comment-disqusjs">
+              
+  <div class="comments disqusjs-container">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+            </div>
+        </div>
+      </div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2019 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heartbeat"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">止息</span>
+  </div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FyY2hhZW9yYXB0b3I=" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@next-theme/pjax@0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://unpkg.com/hexo-generator-searchdb@1.4.1/dist/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://unpkg.com/pdfobject@2.2.12/pdfobject.min.js","integrity":"sha256-g2xji1rlE3KsGVClvuxTbcR0Kn2+wtQADSff2Tbb4zA="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="/js/third-party/tags/pdf.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://unpkg.com/mathjax@3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<link rel="stylesheet" href="https://unpkg.com/disqusjs@3.0.2/dist/browser/styles/disqusjs.css" integrity="sha256-71XarXwNr1Td27HmZI9zjY+rMzRdush6/glo6VFXp7o=" crossorigin="anonymous">
+
+<script class="next-config" data-name="disqusjs" type="application/json">{"enable":true,"api":"https://disqus.skk.moe/disqus/","apikey":"3qJ515uApWlP58gXhzPCCk3L0NlOvrMLwt5dDITBndS8fp8She7PT1gvBdDcgwrt","shortname":"arcaheoraptor","js":{"url":"https://unpkg.com/disqusjs@3.0.2/dist/browser/disqusjs.es2015.umd.min.js","integrity":"sha256-okP99ZQKVpIy7+NogAMpGlIQzJa9XKXhIJcFgdju5bU="}}</script>
+<script src="/js/third-party/comments/disqusjs.js"></script>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"Archaeoraptor/archaeoraptor.github.io","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

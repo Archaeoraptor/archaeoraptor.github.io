@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/uploads/wizard-hat-16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/uploads/wizard-hat-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/uploads/wizard-hat-16.png">
+  <link rel="mask-icon" href="/uploads/wizard-hat-32.png" color="#222">
+  <meta name="google-site-verification" content="4Rj54anORAwcoMXLe3miFnoH78ZtUZfdamS--ffoxVE">
+  <meta name="msvalidate.01" content="872DC4637276109A6B54FF149DCABA8A">
+  <meta name="yandex-verification" content="0d554b4a05a80f0d">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zhangjk98.xyz","root":"/","images":"/images","scheme":"Pisces","darkmode":"auto","version":"8.19.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqusjs","storage":true,"lazyload":false,"nav":{"disqusjs":{"text":"Load Disqus","order":-1},"utterances":{"order":-2}},"activeClass":"disqusjs"},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"none","post_header":"none","post_body":"none","coll_header":"none","sidebar":"none"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="鸽了有点日子的6.S081的filesystem笔记，主要是看到ZFS和Btrfs之类的现代文件系统，再看看自己做的Lab，感觉跟幼儿园哄小孩玩的一样  不过，如果你只是一个路过的普通用户，懂的越少越幸福。在我接触Btrfs之前，我根本没担心过我电脑的文件系统。THERE POWER LEADS ONLY TO RUIN.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="6.S081 Lab Filesystem 笔记">
+<meta property="og:url" content="https://zhangjk98.xyz/6-S081-lab-filesystem/index.html">
+<meta property="og:site_name" content="止息&#39;幻想乡">
+<meta property="og:description" content="鸽了有点日子的6.S081的filesystem笔记，主要是看到ZFS和Btrfs之类的现代文件系统，再看看自己做的Lab，感觉跟幼儿园哄小孩玩的一样  不过，如果你只是一个路过的普通用户，懂的越少越幸福。在我接触Btrfs之前，我根本没担心过我电脑的文件系统。THERE POWER LEADS ONLY TO RUIN.">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://imgs.xkcd.com/comics/dark_arts.png">
+<meta property="og:image" content="https://zhangjk98.xyz/6-S081-lab-filesystem/1649948946.png">
+<meta property="og:image" content="https://zhangjk98.xyz/6-S081-lab-filesystem/1649988331.png">
+<meta property="og:image" content="https://zhangjk98.xyz/6-S081-lab-filesystem/1649949073.png">
+<meta property="og:image" content="https://zhangjk98.xyz/6-S081-lab-filesystem/1649992014.png">
+<meta property="og:image" content="https://zhangjk98.xyz/6-S081-lab-filesystem/1650031214.png">
+<meta property="og:image" content="https://zhangjk98.xyz/6-S081-lab-filesystem/1650032123.png">
+<meta property="article:published_time" content="2022-04-13T03:22:50.000Z">
+<meta property="article:author" content="zhixi">
+<meta property="article:tag" content="6.S081">
+<meta property="article:tag" content="fs">
+<meta property="article:tag" content="btrfs">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://imgs.xkcd.com/comics/dark_arts.png">
+
+
+<link rel="canonical" href="https://zhangjk98.xyz/6-S081-lab-filesystem/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zhangjk98.xyz/6-S081-lab-filesystem/","path":"6-S081-lab-filesystem/","title":"6.S081 Lab Filesystem 笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>6.S081 Lab Filesystem 笔记 | 止息'幻想乡</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143393734-1"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-143393734-1","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="止息'幻想乡" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">止息'幻想乡</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">风雪夜归人</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0"><span class="nav-number">1.</span> <span class="nav-text">文件系统笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Btrfs"><span class="nav-number">1.1.</span> <span class="nav-text">Btrfs</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#B-Tree%E7%B4%A2%E5%BC%95"><span class="nav-number">1.1.1.</span> <span class="nav-text">B-Tree索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%98%E5%82%A8"><span class="nav-number">1.1.2.</span> <span class="nav-text">存储</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E4%BA%8EBtrfs%E7%9A%84%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98"><span class="nav-number">1.1.3.</span> <span class="nav-text">关于Btrfs的性能问题</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E8%AF%B4%E4%B8%80%E4%B8%8BLab"><span class="nav-number">2.</span> <span class="nav-text">简单说一下Lab</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xv6%E4%B8%AD%E7%9A%84%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="nav-number">3.</span> <span class="nav-text">xv6中的文件系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sleeplock"><span class="nav-number">4.</span> <span class="nav-text">sleeplock</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#xv6%E7%9A%84%E6%97%A5%E5%BF%97"><span class="nav-number">4.1.</span> <span class="nav-text">xv6的日志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#block-cache"><span class="nav-number">4.2.</span> <span class="nav-text">block cache</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lab%E5%86%85%E5%AE%B9"><span class="nav-number">5.</span> <span class="nav-text">Lab内容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Large-Files"><span class="nav-number">5.1.</span> <span class="nav-text">Large Files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Symbolic-Links"><span class="nav-number">5.2.</span> <span class="nav-text">Symbolic Links</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%93%BE%E6%8E%A5"><span class="nav-number">6.</span> <span class="nav-text">链接</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="zhixi"
+      src="/uploads/jinmao.webp">
+  <p class="site-author-name" itemprop="name">zhixi</p>
+  <div class="site-description" itemprop="description">in darkest night</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">91</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FyY2hhZW9yYXB0b3I=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;archaeoraptor"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOnpoaXhpQHVlc3RjbHVnLm9yZw==" title="E-Mail → mailto:zhixi@uestclug.org"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml" rel="noopener me"><i class="fa fa-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><img src="https://unpkg.com/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly96aGFuZ3NodXFpYW8ub3Jn" title="https:&#x2F;&#x2F;zhangshuqiao.org">米米的博客</span>
+            </li>
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly95YW5xaXl1LmluZm8=" title="https:&#x2F;&#x2F;yanqiyu.info">Karuboniru's Blog</span>
+            </li>
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnNhbWNodS5jbg==" title="https:&#x2F;&#x2F;blog.samchu.cn">Sam's Blog</span>
+            </li>
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly9seWstbG92ZS5jbi8=" title="https:&#x2F;&#x2F;lyk-love.cn&#x2F;">LYK-love</span>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zhangjk98.xyz/6-S081-lab-filesystem/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/jinmao.webp">
+      <meta itemprop="name" content="zhixi">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="止息'幻想乡">
+      <meta itemprop="description" content="in darkest night">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="6.S081 Lab Filesystem 笔记 | 止息'幻想乡">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          6.S081 Lab Filesystem 笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-04-13 11:22:50" itemprop="dateCreated datePublished" datetime="2022-04-13T11:22:50+08:00">2022-04-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux-Unix/" itemprop="url" rel="index"><span itemprop="name">Linux&Unix</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>鸽了有点日子的6.S081的filesystem笔记，主要是看到ZFS和Btrfs之类的现代文件系统，再看看自己做的Lab，感觉跟幼儿园哄小孩玩的一样</p>
+<p><img src="https://imgs.xkcd.com/comics/dark_arts.png"></p>
+<p>不过，如果你只是一个路过的普通用户，懂的越少越幸福。在我接触Btrfs之前，我根本没担心过我电脑的文件系统。<br>THERE POWER LEADS ONLY TO RUIN.  </p>
+<span id="more"></span>
+
+<h2 id="文件系统笔记"><a href="#文件系统笔记" class="headerlink" title="文件系统笔记"></a>文件系统笔记</h2><p>经典的文件系统网上各种资料和介绍太多了，也无外乎inode、多级索引、引用计数、权限这些。现代文件系统比较复杂，像Btrfs的那些日志、秒级快照、COW我又不太懂不敢讲，像Ceph这些分布式的文件系统我也不太懂。我感觉像Btrfs这样的文件系统已经很像数据库了，你看b-tree索引啊日志啊COW事物啊。</p>
+<p>这一篇写的比较凌乱，而且大部分内容都和Lab没关系，随便说说吧</p>
+<h3 id="Btrfs"><a href="#Btrfs" class="headerlink" title="Btrfs"></a>Btrfs</h3><p>Btrfs我不太敢讲，相比ext4比较复杂、资料也更少。把台式主力的文件系统换成Btrfs后我都有些提心吊胆的，一直害怕哪一天Boom-tree-fs炸了。还好，快一年了，依然存活。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$sudo</span> btrfs device stats /dev/nvme0n1p1</span><br><span class="line">[/dev/nvme0n1p1].write_io_errs    0</span><br><span class="line">[/dev/nvme0n1p1].read_io_errs     0</span><br><span class="line">[/dev/nvme0n1p1].flush_io_errs    0</span><br><span class="line">[/dev/nvme0n1p1].corruption_errs  0</span><br><span class="line">[/dev/nvme0n1p1].generation_errs  0</span><br></pre></td></tr></table></figure>
+
+<p>普通用户用Btrfs的一些好处是透明压缩、快照、COW。不过，Btrfs的问题是真要是出了什么问题会修的人不多，用ext4什么的坏了实在不行可以花钱找数据恢复，btrfs就自求多福吧（或者你在群里大喊fc老师救我，fc老师没空就自求多福吧）。而且市面上的磁盘修复工具几乎也都不怎么支持btrfs。</p>
+<p>Btrfs可以直接添加、删除设备、调整大小（增加和缩小都行，XFS暂时还不支持缩）。我用Btrfs将两个500G的固态硬盘拼成了一个1T的逻辑分区（这个东西有点像LVM的逻辑卷）<br>Btrfs可以直接热插拔增删设备，比如我要加一快硬盘，直接添加然后balance一下就可以了。我要移除一块硬盘，直接remove就可以了。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo btrfs device add /dev/nvme0n1p1 / -f   <span class="comment"># 添加设备</span></span><br><span class="line">sudo btrfs balance start /  <span class="comment"># 开始平衡</span></span><br><span class="line">sudo btrfs device remove /dev/nvme0n1p1</span><br></pre></td></tr></table></figure>
+
+<p>之前用ext4等文件系统很多都习惯<code>/</code>，<code>/home</code>, <code>/var</code>，Btrfs一般不分那么多区，而是用子卷。一般对<code>var</code>这样的目录单独建一个子卷，然后禁用COW。</p>
+<h4 id="B-Tree索引"><a href="#B-Tree索引" class="headerlink" title="B-Tree索引"></a>B-Tree索引</h4><p>b-tree有三种结构：keys, items, and a block header</p>
+<p>block header 包括uuid和checksum之类的东西</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">btrfs_header</span> &#123;</span></span><br><span class="line">    u8 csum[<span class="number">32</span>];</span><br><span class="line">    u8 fsid[<span class="number">16</span>];</span><br><span class="line">    __le64 bytenr;</span><br><span class="line">    __le64 flags;</span><br><span class="line"></span><br><span class="line">    u8 chunk_tree_uid[<span class="number">16</span>];</span><br><span class="line">    __le64 generation;</span><br><span class="line">    __le64 owner;</span><br><span class="line">    __le32 nritems;</span><br><span class="line">    u8 level;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>key中包括了存储的数据类型</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">btrfs_disk_key</span> &#123;</span></span><br><span class="line">    __le64 objectid;</span><br><span class="line">    u8 type;</span><br><span class="line">    __le64 offset;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>item的大小是可变的</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">btrfs_item</span> &#123;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">btrfs_disk_key</span> <span class="title">key</span>;</span></span><br><span class="line">    __le32 offset;</span><br><span class="line">    __le32 size;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>文件系统的struct放在 item data 里面，比如objectid、inode和offset这些。每个文件都有一个objectid，然后根据objectid组成了一个B-tree的索引。inode放在<code>btrfs_inode_item</code>结构体里面。</p>
+<p>Btrfs的索引是b树（free space tree），每个子卷（subvolume）有一颗b-tree索引，大概长这个样子<br><img src="/6-S081-lab-filesystem/1649948946.png"></p>
+<p>Btrfs中有很多的树索引，包括FS Tree(包括Extent tree, Root tree)，Chunk tree(区块索引)，Checksum tree， Device Tree。</p>
+<p><img src="/6-S081-lab-filesystem/1649988331.png"></p>
+<p>其中文件树（FS Tree）长这样</p>
+<p><img src="/6-S081-lab-filesystem/1649949073.png"></p>
+<p>Btrfs的snapshot是类似COW的操作，增量备份节点</p>
+<p><img src="/6-S081-lab-filesystem/1649992014.png"></p>
+<h4 id="存储"><a href="#存储" class="headerlink" title="存储"></a>存储</h4><p>大多数比较新的文件系统都对SSD存储的优化。这里简单说一下Btrfs的文件存储。Btrfs的一个对小文件的优化是直接塞进Metadata里面，这样就不用占一个块（block）了。大文件存在将block合并的Extent中，这样就不用每个block一个Metadata占空间了。<br>Btrfs还有一个很出名的特性是透明压缩，此外还有COW的reflink（这个不能），de-duplicaiton，这个之前写过不多说了</p>
+<h4 id="关于Btrfs的性能问题"><a href="#关于Btrfs的性能问题" class="headerlink" title="关于Btrfs的性能问题"></a>关于Btrfs的性能问题</h4><p>Btrfs性能不好的说法主要来源于跑分跑不过ext4等等。不过跑分这种事情对于普通的桌面用户意义不大，以下引用fc老师的话</p>
+<blockquote>
+<p>phoronix 測文件系統性能的最大問題在於容易讓讀者以為文件系統是左右存儲性能的關鍵，實際上文件系統只是夾在內存子系統和塊IO子系統中間的決策層，通常瓶頸不會在文件系統，除非文件系統過度簡化設計，對存儲性能影響更大的是別的層面的東西，按他們的方式測試文件系統只能測出一堆難以預計到的副作用的結果，沒法對文件系統優化提供可供參考的提示<br>要測純讀寫做對比肯定不考慮 reflink 和透明壓縮，但是實際幹活的時候這些新特性很節省時間（</p>
+</blockquote>
+<p>当然Btrfs在重io的情况下桌面特别卡，那很有可能是quota的问题，把quota关掉吧，quota有已知的性能问题，尤其是在ssd上。（关了这个磁盘配额你就看不到快照大小、指定不了每个子卷的大小）</p>
+<h2 id="简单说一下Lab"><a href="#简单说一下Lab" class="headerlink" title="简单说一下Lab"></a>简单说一下Lab</h2><p>这个Lab很简单，一个是让给xv6的文件系统做一个二级索引用来支持大文件，一个是让你给xv6实现一下软链接。xv6作为一个教学的系统，文件系统索引很简单，并没有像Btrfs等文件系统那样采用b-tree等树形结构。软链接的实现也很简单，就类似一个指针+引用计数嘛，不像一些现代文件系统的reflink那样类似COW的操作实现de-duplication很麻烦。</p>
+<p>其实没啥好说的，但是这一篇一开始是6.S081的Lab笔记，一点Lab的内容都没有有点挂羊头卖狗肉的嫌疑。还是写点吧。</p>
+<h2 id="xv6中的文件系统"><a href="#xv6中的文件系统" class="headerlink" title="xv6中的文件系统"></a>xv6中的文件系统</h2><p>这里简化起见不讲磁盘结构了。不考虑底层差异，磁盘直接被文件系统视为一连串块（block），xv6中block大小是1024k。block0一般是引导块，然后block1是superblock，然后是log, inodes，bitmap，这些统称为Metadata block。再后面都是 data block</p>
+<p><img src="/6-S081-lab-filesystem/1650031214.png"></p>
+<p>这里xv6的精简实现比较简单，不像linux那样很复杂，我们直接看源码好了。超级块superblock用来记录总共有多少个block、inode block、log block，以及它们的开始位置</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// super block describes the disk layout:</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">superblock</span> &#123;</span></span><br><span class="line">  uint magic;        <span class="comment">// Must be FSMAGIC</span></span><br><span class="line">  uint size;         <span class="comment">// Size of file system image (blocks)</span></span><br><span class="line">  uint nblocks;      <span class="comment">// Number of data blocks</span></span><br><span class="line">  uint ninodes;      <span class="comment">// Number of inodes.</span></span><br><span class="line">  uint nlog;         <span class="comment">// Number of log blocks</span></span><br><span class="line">  uint logstart;     <span class="comment">// Block number of first log block</span></span><br><span class="line">  uint inodestart;   <span class="comment">// Block number of first inode block</span></span><br><span class="line">  uint bmapstart;    <span class="comment">// Block number of first free map block</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>inode的定义也非常简单，inode在磁盘中大概就记录文件类型、大小、链接数量这些信息。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// On-disk inode structure</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">dinode</span> &#123;</span></span><br><span class="line">  <span class="type">short</span> type;           <span class="comment">// File type</span></span><br><span class="line">  <span class="type">short</span> major;          <span class="comment">// Major device number (T_DEVICE only)</span></span><br><span class="line">  <span class="type">short</span> minor;          <span class="comment">// Minor device number (T_DEVICE only)</span></span><br><span class="line">  <span class="type">short</span> nlink;          <span class="comment">// Number of links to inode in file system</span></span><br><span class="line">  uint size;            <span class="comment">// Size of file (bytes)</span></span><br><span class="line">  uint addrs[NDIRECT+<span class="number">1</span>];   <span class="comment">// Data block addresses</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// in-memory copy of an inode</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">inode</span> &#123;</span></span><br><span class="line">  uint dev;           <span class="comment">// Device number</span></span><br><span class="line">  uint inum;          <span class="comment">// Inode number</span></span><br><span class="line">  <span class="type">int</span> ref;            <span class="comment">// Reference count</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">sleeplock</span> <span class="title">lock</span>;</span> <span class="comment">// protects everything below here</span></span><br><span class="line">  <span class="type">int</span> valid;          <span class="comment">// inode has been read from disk?</span></span><br><span class="line"></span><br><span class="line">  <span class="type">short</span> type;         <span class="comment">// copy of disk inode</span></span><br><span class="line">  <span class="type">short</span> major;</span><br><span class="line">  <span class="type">short</span> minor;</span><br><span class="line">  <span class="type">short</span> nlink;</span><br><span class="line">  uint size;</span><br><span class="line">  uint addrs[NDIRECT+<span class="number">1</span>];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>在内存中inode有 refernce conut，这个就是引用计数，删除文件的时候只有当引用计数减为0的时候才会真正删除</p>
+<p><img src="/6-S081-lab-filesystem/1650032123.png"></p>
+<h2 id="sleeplock"><a href="#sleeplock" class="headerlink" title="sleeplock"></a>sleeplock</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Long-term locks for processes</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sleeplock</span> &#123;</span></span><br><span class="line">  uint locked;       <span class="comment">// Is the lock held? 0是没有， 1是hold</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">spinlock</span> <span class="title">lk</span>;</span> <span class="comment">// spinlock protecting this sleep lock</span></span><br><span class="line">  </span><br><span class="line">  <span class="comment">// For debugging:</span></span><br><span class="line">  <span class="type">char</span> *name;        <span class="comment">// Name of lock.</span></span><br><span class="line">  <span class="type">int</span> pid;           <span class="comment">// Process holding lock</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>xv6的文件系统用的是睡眠锁而不是spinlock，因为读写这种io操作耗时很长。相关定义在<code>kernel/sleeplock.c</code>，其中<code>wakeup</code>和<code>sleep</code>定义在<code>kernel/proc.c</code>， 这里就简单认为sleep操作干了<code>p-&gt;state = SLEEPING;</code>这一件事，而<code>wakeup</code>干了<code>p-&gt;state = RUNNABLE;</code>，作用是让process睡眠和唤醒</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Wake up all processes sleeping on chan.</span></span><br><span class="line"><span class="comment">// Must be called without any p-&gt;lock.</span></span><br><span class="line"><span class="type">void</span></span><br><span class="line"><span class="title function_">wakeup</span><span class="params">(<span class="type">void</span> *chan)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">proc</span> *<span class="title">p</span>;</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span>(p = proc; p &lt; &amp;proc[NPROC]; p++) &#123;</span><br><span class="line">    <span class="keyword">if</span>(p != myproc())&#123;</span><br><span class="line">      acquire(&amp;p-&gt;lock);</span><br><span class="line">      <span class="keyword">if</span>(p-&gt;state == SLEEPING &amp;&amp; p-&gt;chan == chan) &#123;</span><br><span class="line">        p-&gt;state = RUNNABLE;  <span class="comment">// 这里我们只关注这一行就行了</span></span><br><span class="line">      &#125;</span><br><span class="line">      release(&amp;p-&gt;lock);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">initsleeplock</span><span class="params">(<span class="keyword">struct</span> sleeplock *lk, <span class="type">char</span> *name)</span></span><br><span class="line">&#123;</span><br><span class="line">  initlock(&amp;lk-&gt;lk, <span class="string">&quot;sleep lock&quot;</span>);</span><br><span class="line">  lk-&gt;name = name;</span><br><span class="line">  lk-&gt;locked = <span class="number">0</span>; <span class="comment">//locked = 0 没上锁，= 1 表示被锁住了</span></span><br><span class="line">  lk-&gt;pid = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">acquiresleep</span><span class="params">(<span class="keyword">struct</span> sleeplock *lk)</span></span><br><span class="line">&#123;</span><br><span class="line">  acquire(&amp;lk-&gt;lk); <span class="comment">// 获取spinlock</span></span><br><span class="line">  <span class="keyword">while</span> (lk-&gt;locked) &#123;  <span class="comment">// 如果其他pid持有锁</span></span><br><span class="line">    sleep(lk, &amp;lk-&gt;lk); <span class="comment">//睡眠</span></span><br><span class="line">  &#125;</span><br><span class="line">  lk-&gt;locked = <span class="number">1</span>;       <span class="comment">// 上锁</span></span><br><span class="line">  lk-&gt;pid = myproc()-&gt;pid;  <span class="comment">//拿锁进程的pid</span></span><br><span class="line">  release(&amp;lk-&gt;lk); <span class="comment">//释放spinlock</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">releasesleep</span><span class="params">(<span class="keyword">struct</span> sleeplock *lk)</span></span><br><span class="line">&#123;</span><br><span class="line">  acquire(&amp;lk-&gt;lk);</span><br><span class="line">  lk-&gt;locked = <span class="number">0</span>; <span class="comment">// 释放锁</span></span><br><span class="line">  lk-&gt;pid = <span class="number">0</span>;</span><br><span class="line">  wakeup(lk); <span class="comment">// 唤醒</span></span><br><span class="line">  release(&amp;lk-&gt;lk);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 检查是否持有sleeplock锁</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">holdingsleep</span><span class="params">(<span class="keyword">struct</span> sleeplock *lk)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">int</span> r;</span><br><span class="line">  acquire(&amp;lk-&gt;lk);</span><br><span class="line">  r = lk-&gt;locked &amp;&amp; (lk-&gt;pid == myproc()-&gt;pid); <span class="comment">// r表示当前proc的pid是否持有锁</span></span><br><span class="line">  release(&amp;lk-&gt;lk);</span><br><span class="line">  <span class="keyword">return</span> r;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>sleeplock是用spinlock实现的，在中断（IO）操作的时候可以持有锁。实现比较精简，我加了点注释，不多说了。</p>
+<p>ps：睡眠锁类似linux里面的信号量semaphore（后来改用mutex了）</p>
+<h3 id="xv6的日志"><a href="#xv6的日志" class="headerlink" title="xv6的日志"></a>xv6的日志</h3><p>xv6的日志实现比较简单，在磁盘上有一段固定的block。<br>日志这里不多说了，log-structured的文件系统和COW这些有点跑题了。掉电恢复什么的建议买个UPS电源。</p>
+<h3 id="block-cache"><a href="#block-cache" class="headerlink" title="block cache"></a>block cache</h3><p>这里就是经典的LRU和睡眠锁</p>
+<h2 id="Lab内容"><a href="#Lab内容" class="headerlink" title="Lab内容"></a>Lab内容</h2><h3 id="Large-Files"><a href="#Large-Files" class="headerlink" title="Large Files"></a>Large Files</h3><blockquote>
+<p>In this assignment you’ll increase the maximum size of an xv6 file. Currently xv6 files are limited to 268 blocks, or 268*BSIZE bytes (BSIZE is 1024 in xv6). This limit comes from the fact that an xv6 inode contains 12 “direct” block numbers and one “singly-indirect” block number, which refers to a block that holds up to 256 more block numbers, for a total of 12+256&#x3D;268 blocks.</p>
+</blockquote>
+<p>ext3支持4TB的大文件，ext4支持16TB的大文件，ZFS、Btrfs等现代文件系统支持16EB（如果你执行<code>ulimit -a</code>会显示file size (blocks)，其实这个数字是64位操作系统的上限（16EB&#x3D;2^64））</p>
+<p>这里让xv6的文件系统支持大文件的做法很naive，做一个二级索引，让inode有更多block就行了。</p>
+<h3 id="Symbolic-Links"><a href="#Symbolic-Links" class="headerlink" title="Symbolic Links"></a>Symbolic Links</h3><p>这个也很简单，实现一个符号链接就行了。之前看了醉卧沙场写的XFS的符号链接的实现，这里做的很顺利。</p>
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><span class="exturl" data-url="aHR0cHM6Ly9wZWtvcGVrbzExLnNha3VyYS5uZS5qcC91bml4X3Y2L3h2Ni1ib29rL2VuL0ZpbGVfc3lzdGVtLmh0bWw=">Chapter 6 File system<i class="fa fa-external-link-alt"></i></span>  </p>
+<p>下面放的链接是一些文件系统相关的文章，跟这个Lab关系并不是特别大，适合无聊的时候读着玩</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9mYXJzZWVyZmMubWUvemhzL3RhZy9mc2JpLWppLmh0bWw=">fc老师的fs笔记<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9hcnhpdi5vcmcvcGRmLzE3MDcuMDg1MTQucGRm">Analyzing IO Amplification in Linux File Systems<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9sd24ubmV0L0FydGljbGVzLzYzODU0Ni8=">XFS: There and back … and there again?<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9mYXJzZWVyZmMubWUvemhzL2J0cmZzLXZzLXpmcy1kaWZmZXJlbmNlLWluLWltcGxlbWVudGluZy1zbmFwc2hvdHMuaHRtbA==">Btrfs vs ZFS 实现 snapshot 的差异<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC82NzY4NjgxNw==">醉卧沙场 README - 计算机专业性文章及回答总索引<i class="fa fa-external-link-alt"></i></span> 这个知乎答主写了好多XFS的文章  </p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cucGF0aG5hbWUuY29tL2Zocy8yLjIvaW5kZXguaHRtbA==">Filesystem Hierarchy Standard<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9idHJmcy5yZWFkdGhlZG9jcy5pby8=">BTRFS documentation<i class="fa fa-external-link-alt"></i></span> 偏向使用文档，没怎么介绍原理<br><span class="exturl" data-url="aHR0cHM6Ly9idHJmcy53aWtpLmtlcm5lbC5vcmcvaW5kZXgucGhwL1RyZWVz">Btrfs Trees<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9idHJmcy53aWtpLmtlcm5lbC5vcmcvaW5kZXgucGhwL0J0cmZzX2Rlc2lnbg==">Btrfs Design<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93ZWIuYXJjaGl2ZS5vcmcvd2ViLzIwMjAwMjI2MTMzNzQ3L2h0dHBzOi8vd3d3LmlibS5jb20vZGV2ZWxvcGVyd29ya3MvY24vbGludXgvbC1jbi1idHJmcy9pbmRleC5odG1s">新一代 Linux 文件系统 btrfs 简介
+<i class="fa fa-external-link-alt"></i></span>  比较老的一篇文章<br><span class="exturl" data-url="aHR0cHM6Ly9idHJmcy53aWtpLmtlcm5lbC5vcmcvaW5kZXgucGhwL0ZBUQ==">Btrfs FAQ<i class="fa fa-external-link-alt"></i></span> 希望你用不到这些东西，有一天要翻这那你Btrfs多半是出问题了  </p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/6-S081/" rel="tag"><i class="fa fa-tag"></i> 6.S081</a>
+              <a href="/tags/fs/" rel="tag"><i class="fa fa-tag"></i> fs</a>
+              <a href="/tags/btrfs/" rel="tag"><i class="fa fa-tag"></i> btrfs</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/systemd-boot/" rel="prev" title="用systemd-boot做bootloader">
+                  <i class="fa fa-angle-left"></i> 用systemd-boot做bootloader
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/6-S081-lab-cow/" rel="next" title="6.S081 Lab Copy on Write笔记">
+                  6.S081 Lab Copy on Write笔记 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+      <div class="tabs tabs-comment">
+        <ul class="nav-tabs">
+            <li class="tab"><a href="#comment-utterances">utterances</a></li>
+            <li class="tab"><a href="#comment-disqusjs">Load Disqus</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane utterances" id="comment-utterances">
+              <div class="comments utterances-container"></div>
+            </div>
+            <div class="tab-pane disqusjs" id="comment-disqusjs">
+              
+  <div class="comments disqusjs-container">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+            </div>
+        </div>
+      </div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2019 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heartbeat"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">止息</span>
+  </div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9waXNjZXMv">NexT.Pisces</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FyY2hhZW9yYXB0b3I=" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@next-theme/pjax@0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://unpkg.com/hexo-generator-searchdb@1.4.1/dist/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://unpkg.com/pdfobject@2.2.12/pdfobject.min.js","integrity":"sha256-g2xji1rlE3KsGVClvuxTbcR0Kn2+wtQADSff2Tbb4zA="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="/js/third-party/tags/pdf.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://unpkg.com/mathjax@3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<link rel="stylesheet" href="https://unpkg.com/disqusjs@3.0.2/dist/browser/styles/disqusjs.css" integrity="sha256-71XarXwNr1Td27HmZI9zjY+rMzRdush6/glo6VFXp7o=" crossorigin="anonymous">
+
+<script class="next-config" data-name="disqusjs" type="application/json">{"enable":true,"api":"https://disqus.skk.moe/disqus/","apikey":"3qJ515uApWlP58gXhzPCCk3L0NlOvrMLwt5dDITBndS8fp8She7PT1gvBdDcgwrt","shortname":"arcaheoraptor","js":{"url":"https://unpkg.com/disqusjs@3.0.2/dist/browser/disqusjs.es2015.umd.min.js","integrity":"sha256-okP99ZQKVpIy7+NogAMpGlIQzJa9XKXhIJcFgdju5bU="}}</script>
+<script src="/js/third-party/comments/disqusjs.js"></script>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"Archaeoraptor/archaeoraptor.github.io","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>
